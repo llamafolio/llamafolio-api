@@ -1,0 +1,35 @@
+{
+  "id": "sharering",
+  "symbol": "shr",
+  "name": "Share",
+  "image": "https://assets.coingecko.com/coins/images/3609/large/74586729_2443914875881351_2785018663453851648_n.png?1696504289",
+  "current_price": 0.00315374,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 13800332,
+  "total_volume": 526576,
+  "high_24h": 0.0033023,
+  "low_24h": 0.00293698,
+  "price_change_24h": 0.00000106,
+  "price_change_percentage_24h": 0.03369,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 4396000000,
+  "max_supply": null,
+  "ath": 0.098334,
+  "ath_change_percentage": -96.79758,
+  "ath_date": "2021-03-31T21:37:17.160Z",
+  "atl": 0.00008787,
+  "atl_change_percentage": 3483.96815,
+  "atl_date": "2020-02-28T05:20:11.672Z",
+  "roi": {
+    "times": -0.8423131831948145,
+    "currency": "usd",
+    "percentage": -84.23131831948145
+  },
+  "last_updated": "2024-04-25T09:12:29.451Z",
+  "platforms": {
+    "bsc": "0x5fb4968fc85868df3ad2d6e59883a10570f01d18"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "life-crypto",
+  "symbol": "life",
+  "name": "Life Crypto",
+  "image": "https://assets.coingecko.com/coins/images/18245/large/communityIcon_t3kzc5skazh81.png?1696517741",
+  "current_price": 0.0001322,
+  "market_cap": 362311,
+  "market_cap_rank": 3221,
+  "fully_diluted_valuation": 1319787,
+  "total_volume": 62375,
+  "high_24h": 0.00014348,
+  "low_24h": 0.00013165,
+  "price_change_24h": -0.000011112117816772,
+  "price_change_percentage_24h": -7.75388,
+  "market_cap_change_24h": -32363.377489663137,
+  "market_cap_change_percentage_24h": -8.20003,
+  "circulating_supply": 2745220053.920564,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.02097488,
+  "ath_change_percentage": -99.37213,
+  "ath_date": "2021-09-11T02:07:29.427Z",
+  "atl": 0.00008519,
+  "atl_change_percentage": 54.5822,
+  "atl_date": "2024-02-27T01:02:43.308Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:17.670Z",
+  "platforms": {
+    "ethereum": "0x6c936d4ae98e6d2172db18c16c4b601c99918ee6"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "stader-ethx",
+  "symbol": "ethx",
+  "name": "Stader ETHx",
+  "image": "https://assets.coingecko.com/coins/images/30870/large/staderx.png?1696529717",
+  "current_price": 3217.49,
+  "market_cap": 386427960,
+  "market_cap_rank": 197,
+  "fully_diluted_valuation": 386427960,
+  "total_volume": 2813153,
+  "high_24h": 3370.41,
+  "low_24h": 3194.51,
+  "price_change_24h": -115.42272797668466,
+  "price_change_percentage_24h": -3.46312,
+  "market_cap_change_24h": -13878187.180701733,
+  "market_cap_change_percentage_24h": -3.46689,
+  "circulating_supply": 120347.455239666,
+  "total_supply": 120347.455239666,
+  "max_supply": null,
+  "ath": 4143.4,
+  "ath_change_percentage": -22.40878,
+  "ath_date": "2024-03-13T08:36:12.483Z",
+  "atl": 1537.24,
+  "atl_change_percentage": 109.13511,
+  "atl_date": "2023-10-12T17:37:32.660Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:51.045Z",
+  "platforms": {
+    "ethereum": "0xa35b1b31ce002fbf2058d22f30f95d405200a15b"
+  }
+}

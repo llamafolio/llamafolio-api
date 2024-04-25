@@ -1,0 +1,31 @@
+{
+  "id": "fuse-network-token",
+  "symbol": "fuse",
+  "name": "Fuse",
+  "image": "https://assets.coingecko.com/coins/images/10347/large/fuse.png?1696510348",
+  "current_price": 0.067733,
+  "market_cap": 17020931,
+  "market_cap_rank": 1189,
+  "fully_diluted_valuation": 24872985,
+  "total_volume": 1330317,
+  "high_24h": 0.070736,
+  "low_24h": 0.067319,
+  "price_change_24h": -0.002554617231160447,
+  "price_change_percentage_24h": -3.63452,
+  "market_cap_change_24h": -651158.9889022186,
+  "market_cap_change_percentage_24h": -3.68467,
+  "circulating_supply": 251462581.031752,
+  "total_supply": 367466688.216656,
+  "max_supply": null,
+  "ath": 2.13,
+  "ath_change_percentage": -96.82881,
+  "ath_date": "2022-01-20T20:30:10.237Z",
+  "atl": 0.00433097,
+  "atl_change_percentage": 1461.11677,
+  "atl_date": "2020-03-16T16:04:44.170Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:58.195Z",
+  "platforms": {
+    "gnosis": "0xd589f00fa2eb83367f732ab3cda92ee0940389cf"
+  }
+}

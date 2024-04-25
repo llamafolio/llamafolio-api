@@ -1,0 +1,31 @@
+{
+  "id": "cash-driver",
+  "symbol": "cd",
+  "name": "Cash Driver",
+  "image": "https://assets.coingecko.com/coins/images/28293/large/20221123_013230.jpg?1696527292",
+  "current_price": 0.00155348,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 32623020,
+  "total_volume": 0,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 21000000000,
+  "max_supply": 21000000000,
+  "ath": 0.00467748,
+  "ath_change_percentage": -66.78815,
+  "ath_date": "2022-11-26T09:47:46.653Z",
+  "atl": 0.000001,
+  "atl_change_percentage": 155190.19,
+  "atl_date": "2022-11-27T09:01:22.414Z",
+  "roi": null,
+  "last_updated": "2023-04-03T20:00:02.935Z",
+  "platforms": {
+    "bsc": "0x4e5ef3493bcfb5e7548913c3f2a40623be7d7f98"
+  }
+}

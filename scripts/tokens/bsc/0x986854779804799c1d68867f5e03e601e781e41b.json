@@ -1,0 +1,31 @@
+{
+  "id": "lido-dao-wormhole",
+  "symbol": "ldo",
+  "name": "Lido DAO (Wormhole)",
+  "image": "https://assets.coingecko.com/coins/images/22995/large/LDO_wh_small.png?1696522291",
+  "current_price": 2.13,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 1474.38,
+  "high_24h": 2.17,
+  "low_24h": 2.06,
+  "price_change_24h": 0.01192029,
+  "price_change_percentage_24h": 0.56232,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 33.96,
+  "ath_change_percentage": -93.79573,
+  "ath_date": "2022-03-22T22:14:12.224Z",
+  "atl": 0.108195,
+  "atl_change_percentage": 1847.54434,
+  "atl_date": "2022-06-30T11:52:31.879Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:44.124Z",
+  "platforms": {
+    "bsc": "0x986854779804799c1d68867f5e03e601e781e41b"
+  }
+}

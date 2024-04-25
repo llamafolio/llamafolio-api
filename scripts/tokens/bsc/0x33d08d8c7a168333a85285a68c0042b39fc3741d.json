@@ -1,0 +1,31 @@
+{
+  "id": "aioz-network",
+  "symbol": "aioz",
+  "name": "AIOZ Network",
+  "image": "https://assets.coingecko.com/coins/images/14631/large/aioz-logo-200.png?1696514309",
+  "current_price": 0.698876,
+  "market_cap": 758298987,
+  "market_cap_rank": 118,
+  "fully_diluted_valuation": 761371330,
+  "total_volume": 7188925,
+  "high_24h": 0.75883,
+  "low_24h": 0.685725,
+  "price_change_24h": -0.05124396994528302,
+  "price_change_percentage_24h": -6.83144,
+  "market_cap_change_24h": -57225452.739792466,
+  "market_cap_change_percentage_24h": -7.01701,
+  "circulating_supply": 1084558448.74651,
+  "total_supply": 1088952671.8492,
+  "max_supply": null,
+  "ath": 2.65,
+  "ath_change_percentage": -73.6811,
+  "ath_date": "2021-04-03T11:55:34.211Z",
+  "atl": 0.01099588,
+  "atl_change_percentage": 6244.99432,
+  "atl_date": "2023-09-13T19:20:42.446Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:40.835Z",
+  "platforms": {
+    "bsc": "0x33d08d8c7a168333a85285a68c0042b39fc3741d"
+  }
+}

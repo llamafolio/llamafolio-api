@@ -1,0 +1,31 @@
+{
+  "id": "ordi-launch",
+  "symbol": "orla",
+  "name": "Ordi Launch",
+  "image": "https://assets.coingecko.com/coins/images/34889/large/Ordinal_Launch.png?1706540288",
+  "current_price": 0.00126041,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1260411,
+  "total_volume": 97.31,
+  "high_24h": 0.00130222,
+  "low_24h": 0.00119749,
+  "price_change_24h": -0.0000393965483193,
+  "price_change_percentage_24h": -3.03095,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00315025,
+  "ath_change_percentage": -59.99015,
+  "ath_date": "2024-02-13T12:01:38.900Z",
+  "atl": 0.00032068,
+  "atl_change_percentage": 293.0403,
+  "atl_date": "2024-02-04T21:45:25.646Z",
+  "roi": null,
+  "last_updated": "2024-04-25T04:07:08.149Z",
+  "platforms": {
+    "ethereum": "0xf024e6387392a3c3a03ebd0b9d6b747ff5359417"
+  }
+}

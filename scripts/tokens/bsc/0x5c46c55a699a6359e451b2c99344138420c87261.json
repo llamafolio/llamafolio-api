@@ -1,0 +1,31 @@
+{
+  "id": "ibg-token",
+  "symbol": "ibg",
+  "name": "iBG Finance (BSC)",
+  "image": "https://assets.coingecko.com/coins/images/18026/large/IBG.png?1696517542",
+  "current_price": 0.00744397,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3982.92,
+  "total_volume": 177.61,
+  "high_24h": 0.00752354,
+  "low_24h": 0.00737354,
+  "price_change_24h": -0.000051958016085002,
+  "price_change_percentage_24h": -0.69315,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 535053,
+  "max_supply": null,
+  "ath": 1.63,
+  "ath_change_percentage": -99.54306,
+  "ath_date": "2021-08-30T23:32:09.551Z",
+  "atl": 0.00543204,
+  "atl_change_percentage": 37.03824,
+  "atl_date": "2023-08-17T21:51:31.149Z",
+  "roi": null,
+  "last_updated": "2024-04-25T04:48:14.197Z",
+  "platforms": {
+    "bsc": "0x5c46c55a699a6359e451b2c99344138420c87261"
+  }
+}

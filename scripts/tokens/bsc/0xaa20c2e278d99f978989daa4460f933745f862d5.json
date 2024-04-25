@@ -1,0 +1,31 @@
+{
+  "id": "ark-rivals",
+  "symbol": "arkn",
+  "name": "Ark Rivals",
+  "image": "https://assets.coingecko.com/coins/images/23852/large/logo1--1-.png?1696523054",
+  "current_price": 0.00033892,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 338875,
+  "total_volume": 1440157,
+  "high_24h": 0.00043721,
+  "low_24h": 0.00031098,
+  "price_change_24h": -0.000089966232069934,
+  "price_change_percentage_24h": -20.97648,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.145085,
+  "ath_change_percentage": -99.77109,
+  "ath_date": "2022-02-22T14:39:18.808Z",
+  "atl": 0.00014047,
+  "atl_change_percentage": 136.42436,
+  "atl_date": "2023-06-22T02:51:32.074Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:37.897Z",
+  "platforms": {
+    "bsc": "0xaa20c2e278d99f978989daa4460f933745f862d5"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "brc-app",
+  "symbol": "brct",
+  "name": "BRC App",
+  "image": "https://assets.coingecko.com/coins/images/34244/large/BRC_X_Banners-19.jpg?1704338085",
+  "current_price": 0.01130963,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 11309388,
+  "total_volume": 78939,
+  "high_24h": 0.01171121,
+  "low_24h": 0.01027518,
+  "price_change_24h": 0.00082068,
+  "price_change_percentage_24h": 7.82427,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.059017,
+  "ath_change_percentage": -80.84901,
+  "ath_date": "2024-01-06T20:03:51.465Z",
+  "atl": 0.01027518,
+  "atl_change_percentage": 9.99699,
+  "atl_date": "2024-04-25T07:51:00.006Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:06.825Z",
+  "platforms": {
+    "bsc": "0x455ad1bc4e18fd4e369234b6e11d88acbc416758"
+  }
+}

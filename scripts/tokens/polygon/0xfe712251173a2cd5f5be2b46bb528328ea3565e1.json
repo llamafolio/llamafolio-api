@@ -1,0 +1,31 @@
+{
+  "id": "metaverse-index",
+  "symbol": "mvi",
+  "name": "Metaverse Index",
+  "image": "https://assets.coingecko.com/coins/images/14684/large/MVI_logo.png?1696514357",
+  "current_price": 38.97,
+  "market_cap": 6348252,
+  "market_cap_rank": 1677,
+  "fully_diluted_valuation": 6348252,
+  "total_volume": 8253.69,
+  "high_24h": 43.59,
+  "low_24h": 38.92,
+  "price_change_24h": -3.893917607984875,
+  "price_change_percentage_24h": -9.08515,
+  "market_cap_change_24h": -645612.4593580617,
+  "market_cap_change_percentage_24h": -9.23113,
+  "circulating_supply": 163086.472146507,
+  "total_supply": 163086.472146507,
+  "max_supply": null,
+  "ath": 372.65,
+  "ath_change_percentage": -89.55636,
+  "ath_date": "2021-11-25T10:15:50.405Z",
+  "atl": 9.85,
+  "atl_change_percentage": 295.2159,
+  "atl_date": "2023-09-13T05:45:30.789Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:59.801Z",
+  "platforms": {
+    "polygon": "0xfe712251173a2cd5f5be2b46bb528328ea3565e1"
+  }
+}

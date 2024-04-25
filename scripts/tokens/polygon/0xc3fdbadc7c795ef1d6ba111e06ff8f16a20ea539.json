@@ -1,0 +1,31 @@
+{
+  "id": "adamant",
+  "symbol": "addy",
+  "name": "Adamant",
+  "image": "https://assets.coingecko.com/coins/images/15225/large/adamant.png?1696514880",
+  "current_price": 0.052195,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 12.14,
+  "high_24h": 0.054515,
+  "low_24h": 0.051089,
+  "price_change_24h": -0.002220757183266933,
+  "price_change_percentage_24h": -4.08111,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 86.5,
+  "ath_change_percentage": -99.93975,
+  "ath_date": "2021-05-08T17:00:43.287Z",
+  "atl": 0.051089,
+  "atl_change_percentage": 2.00856,
+  "atl_date": "2024-04-24T23:33:05.575Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:06:30.490Z",
+  "platforms": {
+    "polygon": "0xc3fdbadc7c795ef1d6ba111e06ff8f16a20ea539"
+  }
+}

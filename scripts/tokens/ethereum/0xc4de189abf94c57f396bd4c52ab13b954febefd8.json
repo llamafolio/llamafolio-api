@@ -1,0 +1,31 @@
+{
+  "id": "b20",
+  "symbol": "b20",
+  "name": "B20",
+  "image": "https://assets.coingecko.com/coins/images/13803/large/b20.png?1696513550",
+  "current_price": 0.053389,
+  "market_cap": 264943,
+  "market_cap_rank": 3369,
+  "fully_diluted_valuation": 532615,
+  "total_volume": 1555.26,
+  "high_24h": 0.073495,
+  "low_24h": 0.04922395,
+  "price_change_24h": -0.01998667367978563,
+  "price_change_percentage_24h": -27.23867,
+  "market_cap_change_24h": -115861.20120830741,
+  "market_cap_change_percentage_24h": -30.42542,
+  "circulating_supply": 4974378.527037,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 28.62,
+  "ath_change_percentage": -99.81343,
+  "ath_date": "2021-03-10T18:24:15.825Z",
+  "atl": 0.03222958,
+  "atl_change_percentage": 65.65349,
+  "atl_date": "2023-07-06T16:04:55.594Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:59.962Z",
+  "platforms": {
+    "ethereum": "0xc4de189abf94c57f396bd4c52ab13b954febefd8"
+  }
+}

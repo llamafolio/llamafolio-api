@@ -1,0 +1,31 @@
+{
+  "id": "ankreth",
+  "symbol": "ankreth",
+  "name": "Ankr Staked ETH",
+  "image": "https://assets.coingecko.com/coins/images/13403/large/aETHc.png?1696513165",
+  "current_price": 3604.21,
+  "market_cap": 60874623,
+  "market_cap_rank": 619,
+  "fully_diluted_valuation": 60874623,
+  "total_volume": 54482,
+  "high_24h": 3784.51,
+  "low_24h": 3582.21,
+  "price_change_24h": -112.59091301942317,
+  "price_change_percentage_24h": -3.02924,
+  "market_cap_change_24h": -2254398.492055781,
+  "market_cap_change_percentage_24h": -3.5711,
+  "circulating_supply": 16924.5892069175,
+  "total_supply": 16924.5892069175,
+  "max_supply": null,
+  "ath": 4733.13,
+  "ath_change_percentage": -24.00631,
+  "ath_date": "2021-11-26T04:33:49.980Z",
+  "atl": 534.32,
+  "atl_change_percentage": 573.17471,
+  "atl_date": "2020-12-24T06:45:06.825Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:16.640Z",
+  "platforms": {
+    "fantom": "0x12d8ce035c5de3ce39b1fdd4c1d5a745eaba3b8c"
+  }
+}

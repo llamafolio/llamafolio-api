@@ -1,0 +1,31 @@
+{
+  "id": "quiverx",
+  "symbol": "qrx",
+  "name": "QuiverX",
+  "image": "https://assets.coingecko.com/coins/images/12916/large/qrx_logo.png?1696512704",
+  "current_price": 0.00638942,
+  "market_cap": 582068,
+  "market_cap_rank": 2989,
+  "fully_diluted_valuation": 638942,
+  "total_volume": 80.59,
+  "high_24h": 0.00669148,
+  "low_24h": 0.00637489,
+  "price_change_24h": -0.000241239755782029,
+  "price_change_percentage_24h": -3.63824,
+  "market_cap_change_24h": -20252.73505292961,
+  "market_cap_change_percentage_24h": -3.36245,
+  "circulating_supply": 91098594.73543534,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 0.153579,
+  "ath_change_percentage": -95.83966,
+  "ath_date": "2021-03-24T12:47:16.747Z",
+  "atl": 0.00140234,
+  "atl_change_percentage": 355.62688,
+  "atl_date": "2022-10-20T14:31:30.132Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:02.812Z",
+  "platforms": {
+    "ethereum": "0x6e0dade58d2d89ebbe7afc384e3e4f15b70b14d8"
+  }
+}

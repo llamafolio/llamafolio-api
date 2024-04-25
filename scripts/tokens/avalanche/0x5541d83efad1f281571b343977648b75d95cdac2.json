@@ -1,0 +1,31 @@
+{
+  "id": "grape-finance",
+  "symbol": "grape",
+  "name": "Grape Finance",
+  "image": "https://assets.coingecko.com/coins/images/22718/large/grape.png?1696522022",
+  "current_price": 0.00867185,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 221.79,
+  "total_volume": 16.78,
+  "high_24h": 0.00868405,
+  "low_24h": 0.00850759,
+  "price_change_24h": 0.00006522,
+  "price_change_percentage_24h": 0.7578,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 25576,
+  "max_supply": 25576,
+  "ath": 62.89,
+  "ath_change_percentage": -99.98621,
+  "ath_date": "2022-01-18T03:06:35.869Z",
+  "atl": 0.00766757,
+  "atl_change_percentage": 13.09765,
+  "atl_date": "2024-04-13T21:49:18.479Z",
+  "roi": null,
+  "last_updated": "2024-04-25T05:46:22.918Z",
+  "platforms": {
+    "avalanche": "0x5541d83efad1f281571b343977648b75d95cdac2"
+  }
+}

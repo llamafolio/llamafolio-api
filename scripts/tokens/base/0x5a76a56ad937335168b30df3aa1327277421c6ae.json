@@ -1,0 +1,31 @@
+{
+  "id": "vela-token",
+  "symbol": "vela",
+  "name": "Vela Token",
+  "image": "https://assets.coingecko.com/coins/images/28739/large/VELA_logo_-_no_background.png?1696527719",
+  "current_price": 0.561491,
+  "market_cap": 10033501,
+  "market_cap_rank": 1439,
+  "fully_diluted_valuation": 10185839,
+  "total_volume": 577895,
+  "high_24h": 0.641985,
+  "low_24h": 0.560653,
+  "price_change_24h": -0.07326234322577263,
+  "price_change_percentage_24h": -11.54185,
+  "market_cap_change_24h": -1301023.4823971018,
+  "market_cap_change_percentage_24h": -11.47841,
+  "circulating_supply": 17879444,
+  "total_supply": 18150905,
+  "max_supply": 50000000,
+  "ath": 7.67,
+  "ath_change_percentage": -92.67638,
+  "ath_date": "2023-02-20T11:40:30.166Z",
+  "atl": 0.363201,
+  "atl_change_percentage": 54.63729,
+  "atl_date": "2023-10-25T03:59:22.329Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:32.559Z",
+  "platforms": {
+    "base": "0x5a76a56ad937335168b30df3aa1327277421c6ae"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "chronicum",
+  "symbol": "chro",
+  "name": "Chronicum",
+  "image": "https://assets.coingecko.com/coins/images/26165/large/Untitled_%28200_%C3%97_200_px%29.png?1696525253",
+  "current_price": 0.00117543,
+  "market_cap": 146116,
+  "market_cap_rank": 3646,
+  "fully_diluted_valuation": 352629,
+  "total_volume": 87.11,
+  "high_24h": 0.00125391,
+  "low_24h": 0.00117303,
+  "price_change_24h": -0.000074659794273084,
+  "price_change_percentage_24h": -5.97235,
+  "market_cap_change_24h": -9055.981030049297,
+  "market_cap_change_percentage_24h": -5.83611,
+  "circulating_supply": 124308093.370643,
+  "total_supply": 300000000,
+  "max_supply": 300000000,
+  "ath": 0.00712892,
+  "ath_change_percentage": -83.51179,
+  "ath_date": "2022-06-27T11:21:25.049Z",
+  "atl": 0.00036596,
+  "atl_change_percentage": 221.18705,
+  "atl_date": "2023-09-23T02:55:15.411Z",
+  "roi": null,
+  "last_updated": "2024-04-24T19:17:07.532Z",
+  "platforms": {
+    "avalanche": "0xbf1230bb63bfd7f5d628ab7b543bcefa8a24b81b"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "bone-shibaswap",
+  "symbol": "bone",
+  "name": "Bone ShibaSwap",
+  "image": "https://assets.coingecko.com/coins/images/16916/large/bone_icon.png?1696516487",
+  "current_price": 0.618747,
+  "market_cap": 154558771,
+  "market_cap_rank": 355,
+  "fully_diluted_valuation": 154621329,
+  "total_volume": 8189817,
+  "high_24h": 0.66111,
+  "low_24h": 0.608935,
+  "price_change_24h": -0.03367832753466349,
+  "price_change_percentage_24h": -5.16202,
+  "market_cap_change_24h": -8910632.709593475,
+  "market_cap_change_percentage_24h": -5.45095,
+  "circulating_supply": 249898254.16601053,
+  "total_supply": 249999401.824847,
+  "max_supply": 250000000,
+  "ath": 15.5,
+  "ath_change_percentage": -95.991,
+  "ath_date": "2021-07-07T02:52:33.198Z",
+  "atl": 0,
+  "atl_change_percentage": 6.995306443938278e+36,
+  "atl_date": "2021-08-12T23:02:53.007Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:42.619Z",
+  "platforms": {
+    "ethereum": "0x9813037ee2218799597d83d4a5b6f3b6778218d9"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "hokkaido-inu",
+  "symbol": "$hokk",
+  "name": "Hokkaidu Inu",
+  "image": "https://assets.coingecko.com/coins/images/34890/large/IMG29529FNM3.png?1710943740",
+  "current_price": 3.0996e-11,
+  "market_cap": 3070112,
+  "market_cap_rank": 2055,
+  "fully_diluted_valuation": 3070112,
+  "total_volume": 10648.7,
+  "high_24h": 3.2136e-11,
+  "low_24h": 2.969e-11,
+  "price_change_24h": 1.008e-12,
+  "price_change_percentage_24h": 3.36193,
+  "market_cap_change_24h": 96637,
+  "market_cap_change_percentage_24h": 3.24996,
+  "circulating_supply": 99093331891632750,
+  "total_supply": 99093331891632750,
+  "max_supply": 100000000000000000,
+  "ath": 7.7702e-11,
+  "ath_change_percentage": -60.10612,
+  "ath_date": "2024-03-06T23:16:06.132Z",
+  "atl": 3.716e-12,
+  "atl_change_percentage": 734.23983,
+  "atl_date": "2024-02-11T01:14:56.350Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:20.677Z",
+  "platforms": {
+    "ethereum": "0xc40af1e4fecfa05ce6bab79dcd8b373d2e436c4e"
+  }
+}

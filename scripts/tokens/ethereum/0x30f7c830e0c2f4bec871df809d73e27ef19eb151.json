@@ -1,0 +1,31 @@
+{
+  "id": "flooring-protocol-micropudgypenguins",
+  "symbol": "uppg",
+  "name": "FP μPudgyPenguins",
+  "image": "https://assets.coingecko.com/coins/images/32691/large/pudgy_penguins_64_64.png?1698974130",
+  "current_price": 0.03423159,
+  "market_cap": 5062097,
+  "market_cap_rank": 1787,
+  "fully_diluted_valuation": 5062097,
+  "total_volume": 34232,
+  "high_24h": 0.03549042,
+  "low_24h": 0.0339403,
+  "price_change_24h": -0.000442821338221489,
+  "price_change_percentage_24h": -1.27708,
+  "market_cap_change_24h": -35955.21143475268,
+  "market_cap_change_percentage_24h": -0.70527,
+  "circulating_supply": 148000000,
+  "total_supply": 148000000,
+  "max_supply": 8888000000,
+  "ath": 0.06459,
+  "ath_change_percentage": -46.99626,
+  "ath_date": "2024-02-29T12:11:33.452Z",
+  "atl": 0.00617298,
+  "atl_change_percentage": 454.5943,
+  "atl_date": "2023-11-12T00:19:35.028Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:44.164Z",
+  "platforms": {
+    "ethereum": "0x30f7c830e0c2f4bec871df809d73e27ef19eb151"
+  }
+}

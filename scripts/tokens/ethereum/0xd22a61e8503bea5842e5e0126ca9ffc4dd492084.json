@@ -1,0 +1,31 @@
+{
+  "id": "strawberry-elephant",
+  "symbol": "صباح الفر",
+  "name": "Strawberry Elephant",
+  "image": "https://assets.coingecko.com/coins/images/31819/large/photo_2023-09-15_23-44-10.jpg?1696530633",
+  "current_price": 0.077538,
+  "market_cap": 72582,
+  "market_cap_rank": 3883,
+  "fully_diluted_valuation": 72582,
+  "total_volume": 174.83,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 936082.9986331,
+  "total_supply": 936082.9986331,
+  "max_supply": 1000000,
+  "ath": 0.596441,
+  "ath_change_percentage": -86.99991,
+  "ath_date": "2023-10-31T03:50:40.046Z",
+  "atl": 0.03237419,
+  "atl_change_percentage": 139.50519,
+  "atl_date": "2023-09-26T05:54:51.657Z",
+  "roi": null,
+  "last_updated": "2024-04-23T13:19:12.226Z",
+  "platforms": {
+    "ethereum": "0xd22a61e8503bea5842e5e0126ca9ffc4dd492084"
+  }
+}

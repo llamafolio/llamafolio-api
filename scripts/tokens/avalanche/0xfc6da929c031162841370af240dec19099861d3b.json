@@ -1,0 +1,31 @@
+{
+  "id": "domi",
+  "symbol": "domi",
+  "name": "Domi",
+  "image": "https://assets.coingecko.com/coins/images/21633/large/Transparent_Circle_Logo_2.png?1696520993",
+  "current_price": 0.03862344,
+  "market_cap": 13495356,
+  "market_cap_rank": 1297,
+  "fully_diluted_valuation": 38543800,
+  "total_volume": 294269,
+  "high_24h": 0.04427758,
+  "low_24h": 0.0385438,
+  "price_change_24h": -0.004893510689277161,
+  "price_change_percentage_24h": -11.24507,
+  "market_cap_change_24h": -1836094.033219494,
+  "market_cap_change_percentage_24h": -11.976,
+  "circulating_supply": 350130400,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.407925,
+  "ath_change_percentage": -90.54565,
+  "ath_date": "2022-02-01T09:44:14.240Z",
+  "atl": 0.00279227,
+  "atl_change_percentage": 1281.19391,
+  "atl_date": "2023-09-15T00:01:14.248Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:13.751Z",
+  "platforms": {
+    "avalanche": "0xfc6da929c031162841370af240dec19099861d3b"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "twelve-zodiac",
+  "symbol": "twelve",
+  "name": "Twelve Zodiac",
+  "image": "https://assets.coingecko.com/coins/images/30418/large/Twelve_Zodiac.png?1696529306",
+  "current_price": 1.12,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 23455091,
+  "total_volume": 5417.43,
+  "high_24h": 1.29,
+  "low_24h": 1.088,
+  "price_change_24h": -0.01529236478076812,
+  "price_change_percentage_24h": -1.35075,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 21000000,
+  "max_supply": 21000000,
+  "ath": 5.91,
+  "ath_change_percentage": -81.10695,
+  "ath_date": "2023-05-18T11:11:57.892Z",
+  "atl": 0.352786,
+  "atl_change_percentage": 216.54781,
+  "atl_date": "2023-07-04T10:01:14.640Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:07.405Z",
+  "platforms": {
+    "bsc": "0xbd6ceeef56985b608252c3651dd903a3fcc34910"
+  }
+}

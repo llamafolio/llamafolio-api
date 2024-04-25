@@ -1,0 +1,31 @@
+{
+  "id": "dimitra",
+  "symbol": "dmtr",
+  "name": "Dimitra",
+  "image": "https://assets.coingecko.com/coins/images/18530/large/HqEiru32_400x400.jpg?1696518010",
+  "current_price": 0.154168,
+  "market_cap": 78121337,
+  "market_cap_rank": 542,
+  "fully_diluted_valuation": 78121337,
+  "total_volume": 853101,
+  "high_24h": 0.165891,
+  "low_24h": 0.153579,
+  "price_change_24h": -0.011721354925211452,
+  "price_change_percentage_24h": -7.06576,
+  "market_cap_change_24h": -6036072.903594345,
+  "market_cap_change_percentage_24h": -7.17236,
+  "circulating_supply": 507405828.3884498,
+  "total_supply": 507405828.3884498,
+  "max_supply": 1000000000,
+  "ath": 5.95,
+  "ath_change_percentage": -97.41439,
+  "ath_date": "2021-09-22T20:38:15.892Z",
+  "atl": 0.00269344,
+  "atl_change_percentage": 5610.224,
+  "atl_date": "2022-12-16T23:43:15.929Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:46.048Z",
+  "platforms": {
+    "ethereum": "0x51cb253744189f11241becb29bedd3f1b5384fdb"
+  }
+}

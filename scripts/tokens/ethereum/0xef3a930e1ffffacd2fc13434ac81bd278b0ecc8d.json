@@ -1,0 +1,31 @@
+{
+  "id": "stafi",
+  "symbol": "fis",
+  "name": "Stafi",
+  "image": "https://assets.coingecko.com/coins/images/12423/large/FIS.png?1696512244",
+  "current_price": 0.574916,
+  "market_cap": 81243877,
+  "market_cap_rank": 530,
+  "fully_diluted_valuation": 81243877,
+  "total_volume": 4204392,
+  "high_24h": 0.622277,
+  "low_24h": 0.571012,
+  "price_change_24h": -0.03942248795031544,
+  "price_change_percentage_24h": -6.41706,
+  "market_cap_change_24h": -5619727.037687987,
+  "market_cap_change_percentage_24h": -6.4696,
+  "circulating_supply": 141595715.811008,
+  "total_supply": 141595715.811008,
+  "max_supply": 141595715.811008,
+  "ath": 4.7,
+  "ath_change_percentage": -87.76487,
+  "ath_date": "2021-03-19T10:53:51.335Z",
+  "atl": 0.176583,
+  "atl_change_percentage": 225.31513,
+  "atl_date": "2022-05-12T07:21:20.834Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:29.629Z",
+  "platforms": {
+    "ethereum": "0xef3a930e1ffffacd2fc13434ac81bd278b0ecc8d"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "shiba-saga",
+  "symbol": "shia",
+  "name": "Shiba Saga",
+  "image": "https://assets.coingecko.com/coins/images/31437/large/51nmYxm3_400x400.jpg?1696530252",
+  "current_price": 0.01996107,
+  "market_cap": 5564612,
+  "market_cap_rank": 1736,
+  "fully_diluted_valuation": 39735844,
+  "total_volume": 868482,
+  "high_24h": 0.02116556,
+  "low_24h": 0.01966719,
+  "price_change_24h": -0.001021475585421497,
+  "price_change_percentage_24h": -4.86822,
+  "market_cap_change_24h": -236603.4838770749,
+  "market_cap_change_percentage_24h": -4.07852,
+  "circulating_supply": 280080208.82463354,
+  "total_supply": 2000000000,
+  "max_supply": 2000000000,
+  "ath": 0.785605,
+  "ath_change_percentage": -97.46514,
+  "ath_date": "2023-08-26T19:54:46.281Z",
+  "atl": 0.01808144,
+  "atl_change_percentage": 10.13504,
+  "atl_date": "2024-04-19T02:41:51.636Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:00.845Z",
+  "platforms": {
+    "ethereum": "0x43d7e65b8ff49698d9550a7f315c87e67344fb59"
+  }
+}

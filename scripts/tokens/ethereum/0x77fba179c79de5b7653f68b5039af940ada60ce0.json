@@ -1,0 +1,31 @@
+{
+  "id": "ampleforth-governance-token",
+  "symbol": "forth",
+  "name": "Ampleforth Governance",
+  "image": "https://assets.coingecko.com/coins/images/14917/large/photo_2021-04-22_00.00.03.jpeg?1696514579",
+  "current_price": 4.48,
+  "market_cap": 47231341,
+  "market_cap_rank": 716,
+  "fully_diluted_valuation": 68434821,
+  "total_volume": 2941693,
+  "high_24h": 4.96,
+  "low_24h": 4.44,
+  "price_change_24h": -0.4403265112265755,
+  "price_change_percentage_24h": -8.95561,
+  "market_cap_change_24h": -4573538.828069106,
+  "market_cap_change_percentage_24h": -8.82839,
+  "circulating_supply": 10558078.253496453,
+  "total_supply": 15297897.1445593,
+  "max_supply": null,
+  "ath": 180.47,
+  "ath_change_percentage": -97.51824,
+  "ath_date": "2021-04-21T16:13:43.320Z",
+  "atl": 1.98,
+  "atl_change_percentage": 126.04376,
+  "atl_date": "2022-05-12T07:20:35.946Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:55.851Z",
+  "platforms": {
+    "ethereum": "0x77fba179c79de5b7653f68b5039af940ada60ce0"
+  }
+}

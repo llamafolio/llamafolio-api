@@ -1,0 +1,31 @@
+{
+  "id": "spiraldao-coil",
+  "symbol": "coil",
+  "name": "SpiralDAO Coil",
+  "image": "https://assets.coingecko.com/coins/images/29773/large/200x200.png?1696528704",
+  "current_price": 0.989463,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 223.97,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 3.09,
+  "ath_change_percentage": -67.96033,
+  "ath_date": "2023-04-15T19:55:42.802Z",
+  "atl": 0.975582,
+  "atl_change_percentage": 1.42277,
+  "atl_date": "2024-02-22T22:31:06.784Z",
+  "roi": null,
+  "last_updated": "2024-04-22T15:21:52.149Z",
+  "platforms": {
+    "ethereum": "0x823e1b82ce1dc147bbdb25a203f046afab1ce918"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "feisty-doge-nft",
+  "symbol": "nfd",
+  "name": "Feisty Doge NFT",
+  "image": "https://assets.coingecko.com/coins/images/17834/large/doge-fractionalized.png?1696517355",
+  "current_price": 0.00031355,
+  "market_cap": 17571057,
+  "market_cap_rank": 1167,
+  "fully_diluted_valuation": 31357110,
+  "total_volume": 85462,
+  "high_24h": 0.00033341,
+  "low_24h": 0.00030971,
+  "price_change_24h": -0.000016578109355354,
+  "price_change_percentage_24h": -5.0217,
+  "market_cap_change_24h": -935287.1439947225,
+  "market_cap_change_percentage_24h": -5.05387,
+  "circulating_supply": 56042983567.15788,
+  "total_supply": 100013673040.335,
+  "max_supply": 100013673040.335,
+  "ath": 0.00103774,
+  "ath_change_percentage": -69.77123,
+  "ath_date": "2021-08-22T16:20:38.683Z",
+  "atl": 0,
+  "atl_change_percentage": 3.603467810070123e+33,
+  "atl_date": "2022-04-12T02:31:05.104Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:29.986Z",
+  "platforms": {
+    "ethereum": "0xdfdb7f72c1f195c5951a234e8db9806eb0635346"
+  }
+}

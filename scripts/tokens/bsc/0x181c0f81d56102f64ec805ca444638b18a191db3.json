@@ -1,0 +1,31 @@
+{
+  "id": "pepe-dao",
+  "symbol": "peped",
+  "name": "PEPE DAO",
+  "image": "https://assets.coingecko.com/coins/images/30286/large/IMG_20230510_010937_683.jpg?1696529191",
+  "current_price": 0.00001329,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1329261,
+  "total_volume": 12253.32,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.00003641,
+  "ath_change_percentage": -63.48752,
+  "ath_date": "2023-05-12T04:08:47.936Z",
+  "atl": 0.0000132,
+  "atl_change_percentage": 0.72015,
+  "atl_date": "2023-05-18T18:30:11.664Z",
+  "roi": null,
+  "last_updated": "2023-05-18T20:30:21.198Z",
+  "platforms": {
+    "bsc": "0x181c0f81d56102f64ec805ca444638b18a191db3"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "stakeborg-dao",
+  "symbol": "standard",
+  "name": "Construct",
+  "image": "https://assets.coingecko.com/coins/images/20119/large/construct200px.png?1696519536",
+  "current_price": 0.04736506,
+  "market_cap": 494267,
+  "market_cap_rank": 3066,
+  "fully_diluted_valuation": 947301,
+  "total_volume": 494.51,
+  "high_24h": 0.04753666,
+  "low_24h": 0.04734161,
+  "price_change_24h": -0.000026180676153967,
+  "price_change_percentage_24h": -0.05524,
+  "market_cap_change_24h": -129.27675273566274,
+  "market_cap_change_percentage_24h": -0.02615,
+  "circulating_supply": 10435265.7827908,
+  "total_supply": 20000000,
+  "max_supply": 20000000,
+  "ath": 25.25,
+  "ath_change_percentage": -99.81238,
+  "ath_date": "2021-12-12T18:54:55.339Z",
+  "atl": 0.04520911,
+  "atl_change_percentage": 4.76885,
+  "atl_date": "2024-04-20T12:34:57.351Z",
+  "roi": null,
+  "last_updated": "2024-04-24T16:11:13.429Z",
+  "platforms": {
+    "ethereum": "0xda0c94c73d127ee191955fb46bacd7ff999b2bcd"
+  }
+}

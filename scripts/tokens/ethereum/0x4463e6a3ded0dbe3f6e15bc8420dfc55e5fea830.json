@@ -1,0 +1,31 @@
+{
+  "id": "txa",
+  "symbol": "txa",
+  "name": "TXA",
+  "image": "https://assets.coingecko.com/coins/images/17746/large/jwjcN5Kx_400x400.jpg?1696517273",
+  "current_price": 0.03454833,
+  "market_cap": 542278,
+  "market_cap_rank": 3022,
+  "fully_diluted_valuation": 1667515,
+  "total_volume": 251672,
+  "high_24h": 0.03781413,
+  "low_24h": 0.0337798,
+  "price_change_24h": -0.002329277720180781,
+  "price_change_percentage_24h": -6.31624,
+  "market_cap_change_24h": -37352.12703577487,
+  "market_cap_change_percentage_24h": -6.44413,
+  "circulating_supply": 15636607,
+  "total_supply": 48082840.9688701,
+  "max_supply": 50000000,
+  "ath": 5.85,
+  "ath_change_percentage": -99.40926,
+  "ath_date": "2021-08-17T10:07:47.176Z",
+  "atl": 0.02510357,
+  "atl_change_percentage": 37.61524,
+  "atl_date": "2024-04-13T21:59:44.593Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:51.818Z",
+  "platforms": {
+    "ethereum": "0x4463e6a3ded0dbe3f6e15bc8420dfc55e5fea830"
+  }
+}

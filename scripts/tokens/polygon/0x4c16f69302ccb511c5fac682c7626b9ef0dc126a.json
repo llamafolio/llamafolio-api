@@ -1,0 +1,31 @@
+{
+  "id": "bunny-token-polygon",
+  "symbol": "polybunny",
+  "name": "Pancake Bunny Polygon",
+  "image": "https://assets.coingecko.com/coins/images/16855/large/token-bunny.a8b61846.png?1696516422",
+  "current_price": 0.00912867,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 24159,
+  "total_volume": 9.77,
+  "high_24h": 0.00966252,
+  "low_24h": 0.00911803,
+  "price_change_24h": -0.000403942022362491,
+  "price_change_percentage_24h": -4.23747,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2644893,
+  "max_supply": null,
+  "ath": 22.9,
+  "ath_change_percentage": -99.96011,
+  "ath_date": "2021-07-07T05:02:13.351Z",
+  "atl": 0.00396497,
+  "atl_change_percentage": 130.40983,
+  "atl_date": "2023-09-11T20:06:20.786Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:44.742Z",
+  "platforms": {
+    "polygon": "0x4c16f69302ccb511c5fac682c7626b9ef0dc126a"
+  }
+}

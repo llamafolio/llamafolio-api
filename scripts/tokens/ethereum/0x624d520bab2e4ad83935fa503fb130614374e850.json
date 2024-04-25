@@ -1,0 +1,31 @@
+{
+  "id": "smartshare",
+  "symbol": "ssp",
+  "name": "Smartshare",
+  "image": "https://assets.coingecko.com/coins/images/4642/large/smartshare.png?1696505210",
+  "current_price": 0.000009,
+  "market_cap": 43106,
+  "market_cap_rank": 4024,
+  "fully_diluted_valuation": 89964,
+  "total_volume": 123.87,
+  "high_24h": 0.00000903,
+  "low_24h": 0.00000798,
+  "price_change_24h": 9.95791e-7,
+  "price_change_percentage_24h": 12.44653,
+  "market_cap_change_24h": 4775.11,
+  "market_cap_change_percentage_24h": 12.45774,
+  "circulating_supply": 4791431487.0121,
+  "total_supply": 10000000000,
+  "max_supply": null,
+  "ath": 0.0045508,
+  "ath_change_percentage": -99.80211,
+  "ath_date": "2018-06-20T19:59:42.341Z",
+  "atl": 0.00000492,
+  "atl_change_percentage": 82.96891,
+  "atl_date": "2022-12-13T13:53:01.977Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:16.772Z",
+  "platforms": {
+    "ethereum": "0x624d520bab2e4ad83935fa503fb130614374e850"
+  }
+}

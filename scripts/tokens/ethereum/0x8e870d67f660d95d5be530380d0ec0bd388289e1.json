@@ -1,0 +1,35 @@
+{
+  "id": "paxos-standard",
+  "symbol": "usdp",
+  "name": "Pax Dollar",
+  "image": "https://assets.coingecko.com/coins/images/6013/large/Pax_Dollar.png?1696506427",
+  "current_price": 1.004,
+  "market_cap": 139221757,
+  "market_cap_rank": 385,
+  "fully_diluted_valuation": 139221757,
+  "total_volume": 12993215,
+  "high_24h": 1.006,
+  "low_24h": 0.998255,
+  "price_change_24h": 0.00015216,
+  "price_change_percentage_24h": 0.01516,
+  "market_cap_change_24h": 194383,
+  "market_cap_change_percentage_24h": 0.13982,
+  "circulating_supply": 138777747.270683,
+  "total_supply": 138777747.270683,
+  "max_supply": null,
+  "ath": 1.18,
+  "ath_change_percentage": -15.35982,
+  "ath_date": "2024-04-16T16:20:21.365Z",
+  "atl": 0.863529,
+  "atl_change_percentage": 16.11148,
+  "atl_date": "2021-05-19T13:14:42.046Z",
+  "roi": {
+    "times": 0.003752911995816,
+    "currency": "usd",
+    "percentage": 0.3752911995816
+  },
+  "last_updated": "2024-04-25T08:55:48.329Z",
+  "platforms": {
+    "ethereum": "0x8e870d67f660d95d5be530380d0ec0bd388289e1"
+  }
+}

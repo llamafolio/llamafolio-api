@@ -1,0 +1,31 @@
+{
+  "id": "openai-erc",
+  "symbol": "openai erc",
+  "name": "OpenAI ERC",
+  "image": "https://assets.coingecko.com/coins/images/28412/large/OpenAI.jpeg?1696527410",
+  "current_price": 0.00373939,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 372193,
+  "total_volume": 2293.15,
+  "high_24h": 0.00525654,
+  "low_24h": 0.00233461,
+  "price_change_24h": -0.001201700440071082,
+  "price_change_percentage_24h": -24.32056,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.307906,
+  "ath_change_percentage": -98.79121,
+  "ath_date": "2024-02-16T16:56:56.444Z",
+  "atl": 0.00018246,
+  "atl_change_percentage": 1939.90034,
+  "atl_date": "2023-09-04T01:06:22.954Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:45.372Z",
+  "platforms": {
+    "ethereum": "0x6a6aa13393b7d1100c00a57c76c39e8b6c835041"
+  }
+}

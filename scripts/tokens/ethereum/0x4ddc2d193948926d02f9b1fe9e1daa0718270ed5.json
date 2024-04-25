@@ -1,0 +1,31 @@
+{
+  "id": "compound-ether",
+  "symbol": "ceth",
+  "name": "cETH",
+  "image": "https://assets.coingecko.com/coins/images/10643/large/ceth.png?1696510617",
+  "current_price": 63.06,
+  "market_cap": 377455420,
+  "market_cap_rank": 203,
+  "fully_diluted_valuation": 377455420,
+  "total_volume": 7127.87,
+  "high_24h": 66.12,
+  "low_24h": 62.53,
+  "price_change_24h": -2.491292447194674,
+  "price_change_percentage_24h": -3.8137,
+  "market_cap_change_24h": -12456230.482064784,
+  "market_cap_change_percentage_24h": -3.19463,
+  "circulating_supply": 5985924.44247159,
+  "total_supply": 5985924.44247159,
+  "max_supply": null,
+  "ath": 97.75,
+  "ath_change_percentage": -35.49176,
+  "ath_date": "2021-11-21T12:39:57.508Z",
+  "atl": 1.89,
+  "atl_change_percentage": 3242.92318,
+  "atl_date": "2020-03-13T02:22:33.711Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:29.153Z",
+  "platforms": {
+    "ethereum": "0x4ddc2d193948926d02f9b1fe9e1daa0718270ed5"
+  }
+}

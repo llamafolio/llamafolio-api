@@ -1,0 +1,31 @@
+{
+  "id": "spice-trade",
+  "symbol": "spice",
+  "name": "Spice Trade",
+  "image": "https://assets.coingecko.com/coins/images/25770/large/SPICE.png?1696524857",
+  "current_price": 0.00033673,
+  "market_cap": 490.85,
+  "market_cap_rank": 4287,
+  "fully_diluted_valuation": 19402.68,
+  "total_volume": 15.09,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 1457682.314736,
+  "total_supply": 57620591.384736,
+  "max_supply": null,
+  "ath": 0.113911,
+  "ath_change_percentage": -99.70439,
+  "ath_date": "2022-06-02T04:46:19.477Z",
+  "atl": 0.00019895,
+  "atl_change_percentage": 69.25157,
+  "atl_date": "2023-11-03T17:49:03.201Z",
+  "roi": null,
+  "last_updated": "2024-04-14T09:47:11.450Z",
+  "platforms": {
+    "ethereum": "0x18a1ea69a50a85752b7bc204a2c45a95ce6e429d"
+  }
+}

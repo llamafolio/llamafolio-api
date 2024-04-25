@@ -1,0 +1,31 @@
+{
+  "id": "gemtools",
+  "symbol": "gems",
+  "name": "Gemtools",
+  "image": "https://assets.coingecko.com/coins/images/35815/large/53121b16-ddea-4b35-b43a-53335d8426ea.png?1709885212",
+  "current_price": 0.00013333,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 13332.93,
+  "total_volume": 324.51,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.00291121,
+  "ath_change_percentage": -95.42015,
+  "ath_date": "2024-03-08T16:53:25.800Z",
+  "atl": 0.00013103,
+  "atl_change_percentage": 1.75746,
+  "atl_date": "2024-04-22T02:29:29.889Z",
+  "roi": null,
+  "last_updated": "2024-04-22T13:50:50.770Z",
+  "platforms": {
+    "ethereum": "0xea55f9d4a1bcea5e3e806f169f33f0092d5fb7f0"
+  }
+}

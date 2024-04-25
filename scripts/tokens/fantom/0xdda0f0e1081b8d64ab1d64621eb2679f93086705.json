@@ -1,0 +1,31 @@
+{
+  "id": "diamond-coin",
+  "symbol": "diamond",
+  "name": "Diamond Coin",
+  "image": "https://assets.coingecko.com/coins/images/24493/large/diamondtoken_%281%29.png?1696523673",
+  "current_price": 0.255248,
+  "market_cap": 45590,
+  "market_cap_rank": 4007,
+  "fully_diluted_valuation": 255191,
+  "total_volume": 254.23,
+  "high_24h": 0.281101,
+  "low_24h": 0.251681,
+  "price_change_24h": -0.02336479425345989,
+  "price_change_percentage_24h": -8.38612,
+  "market_cap_change_24h": -4334.057221046758,
+  "market_cap_change_percentage_24h": -8.68131,
+  "circulating_supply": 178649.89,
+  "total_supply": 1000000,
+  "max_supply": null,
+  "ath": 5.23,
+  "ath_change_percentage": -95.1199,
+  "ath_date": "2022-04-02T02:39:01.837Z",
+  "atl": 0.073238,
+  "atl_change_percentage": 248.51867,
+  "atl_date": "2023-10-15T14:00:36.770Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:30.467Z",
+  "platforms": {
+    "fantom": "0xdda0f0e1081b8d64ab1d64621eb2679f93086705"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "jp",
+  "symbol": "jp",
+  "name": "JP",
+  "image": "https://assets.coingecko.com/coins/images/28967/large/Jp.png?1696527940",
+  "current_price": 0.0003451,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1035303,
+  "total_volume": 7463.77,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 3000000000,
+  "max_supply": 3000000000,
+  "ath": 0.00121446,
+  "ath_change_percentage": -71.58411,
+  "ath_date": "2023-02-08T12:59:10.036Z",
+  "atl": 0.00016682,
+  "atl_change_percentage": 106.86786,
+  "atl_date": "2023-03-25T20:05:42.164Z",
+  "roi": null,
+  "last_updated": "2023-05-18T20:00:09.998Z",
+  "platforms": {
+    "bsc": "0x86cd1faf05abbb705842ec3c98ef5006173fb4d6"
+  }
+}

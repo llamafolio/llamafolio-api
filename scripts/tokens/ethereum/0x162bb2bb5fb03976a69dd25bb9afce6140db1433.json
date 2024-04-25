@@ -1,0 +1,31 @@
+{
+  "id": "dog-3",
+  "symbol": "dog",
+  "name": "dog",
+  "image": "https://assets.coingecko.com/coins/images/32464/large/200.png?1698242675",
+  "current_price": 0.00024529,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 245292,
+  "total_volume": 3281.62,
+  "high_24h": 0.00026764,
+  "low_24h": 0.00025378,
+  "price_change_24h": -0.000021094197803867,
+  "price_change_percentage_24h": -7.91865,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00237637,
+  "ath_change_percentage": -89.67785,
+  "ath_date": "2023-10-26T19:14:51.833Z",
+  "atl": 0.00008036,
+  "atl_change_percentage": 205.25627,
+  "atl_date": "2024-01-15T00:40:52.276Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:15.820Z",
+  "platforms": {
+    "ethereum": "0x162bb2bb5fb03976a69dd25bb9afce6140db1433"
+  }
+}

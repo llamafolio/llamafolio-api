@@ -1,0 +1,31 @@
+{
+  "id": "luna-rush",
+  "symbol": "lus",
+  "name": "Luna Rush",
+  "image": "https://assets.coingecko.com/coins/images/22295/large/16197.png?1696521641",
+  "current_price": 0.00259971,
+  "market_cap": 57503,
+  "market_cap_rank": 3947,
+  "fully_diluted_valuation": 908954,
+  "total_volume": 19820.83,
+  "high_24h": 0.00271934,
+  "low_24h": 0.00259596,
+  "price_change_24h": -0.000074653215577732,
+  "price_change_percentage_24h": -2.79144,
+  "market_cap_change_24h": -2096.0740544323344,
+  "market_cap_change_percentage_24h": -3.51693,
+  "circulating_supply": 22142136.667,
+  "total_supply": 350000000,
+  "max_supply": 350000000,
+  "ath": 4.95,
+  "ath_change_percentage": -99.94744,
+  "ath_date": "2022-01-30T13:34:08.982Z",
+  "atl": 0.00076221,
+  "atl_change_percentage": 241.18196,
+  "atl_date": "2023-06-26T22:28:32.993Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:21.514Z",
+  "platforms": {
+    "bsc": "0xde301d6a2569aefcfe271b9d98f318baee1d30a4"
+  }
+}

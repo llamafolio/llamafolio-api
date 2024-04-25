@@ -1,0 +1,31 @@
+{
+  "id": "defitankland",
+  "symbol": "dftl",
+  "name": "DefiTankLand",
+  "image": "https://assets.coingecko.com/coins/images/29136/large/tank_%282%29.png?1696528097",
+  "current_price": 0.01993777,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 59813,
+  "total_volume": 14071.89,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 3000000,
+  "max_supply": 10000000,
+  "ath": 0.481104,
+  "ath_change_percentage": -95.85583,
+  "ath_date": "2023-02-21T10:09:03.100Z",
+  "atl": 0.0195635,
+  "atl_change_percentage": 1.91311,
+  "atl_date": "2023-03-30T17:39:45.214Z",
+  "roi": null,
+  "last_updated": "2023-03-31T01:00:09.304Z",
+  "platforms": {
+    "arbitrum": "0xcb6460d56825ddc12229c7a7d94b6b26a9f9c867"
+  }
+}

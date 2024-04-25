@@ -1,0 +1,31 @@
+{
+  "id": "omisego",
+  "symbol": "omg",
+  "name": "OMG Network",
+  "image": "https://assets.coingecko.com/coins/images/776/large/OMG_Network.jpg?1696501928",
+  "current_price": 0.651761,
+  "market_cap": 91311647,
+  "market_cap_rank": 499,
+  "fully_diluted_valuation": 91311647,
+  "total_volume": 17546600,
+  "high_24h": 0.724519,
+  "low_24h": 0.649831,
+  "price_change_24h": -0.06032783984590828,
+  "price_change_percentage_24h": -8.47195,
+  "market_cap_change_24h": -8757889.55034037,
+  "market_cap_change_percentage_24h": -8.7518,
+  "circulating_supply": 140245398.245133,
+  "total_supply": 140245398.245133,
+  "max_supply": 140245398.245133,
+  "ath": 25.62,
+  "ath_change_percentage": -97.45891,
+  "ath_date": "2018-01-13T00:00:00.000Z",
+  "atl": 0.350917,
+  "atl_change_percentage": 85.52683,
+  "atl_date": "2020-03-13T02:30:10.072Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:56:09.709Z",
+  "platforms": {
+    "ethereum": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07"
+  }
+}

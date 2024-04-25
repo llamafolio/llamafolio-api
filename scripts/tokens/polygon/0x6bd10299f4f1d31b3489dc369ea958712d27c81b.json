@@ -1,0 +1,31 @@
+{
+  "id": "art-de-finance",
+  "symbol": "adf",
+  "name": "Art de Finance",
+  "image": "https://assets.coingecko.com/coins/images/31348/large/200x200.png?1696530165",
+  "current_price": 0.588556,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 596149205,
+  "total_volume": 64009942,
+  "high_24h": 0.635953,
+  "low_24h": 0.561706,
+  "price_change_24h": -0.025383186903481625,
+  "price_change_percentage_24h": -4.13448,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 8.14,
+  "ath_change_percentage": -92.83364,
+  "ath_date": "2023-11-13T20:30:04.195Z",
+  "atl": 0.546795,
+  "atl_change_percentage": 6.70333,
+  "atl_date": "2024-04-12T02:50:30.510Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:29.446Z",
+  "platforms": {
+    "polygon": "0x6bd10299f4f1d31b3489dc369ea958712d27c81b"
+  }
+}

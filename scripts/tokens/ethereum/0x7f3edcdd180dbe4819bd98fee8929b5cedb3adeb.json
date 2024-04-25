@@ -1,0 +1,31 @@
+{
+  "id": "xtoken",
+  "symbol": "xtk",
+  "name": "xToken",
+  "image": "https://assets.coingecko.com/coins/images/14089/large/xtk.png?1696513811",
+  "current_price": 0.0003022,
+  "market_cap": 122105,
+  "market_cap_rank": 3718,
+  "fully_diluted_valuation": 301848,
+  "total_volume": 75.75,
+  "high_24h": 0.00033271,
+  "low_24h": 0.00030165,
+  "price_change_24h": -0.000029696061188094,
+  "price_change_percentage_24h": -8.94731,
+  "market_cap_change_24h": -12074.852247353818,
+  "market_cap_change_percentage_24h": -8.99902,
+  "circulating_supply": 404524036.87629426,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 1.39,
+  "ath_change_percentage": -99.97835,
+  "ath_date": "2021-04-02T23:53:33.376Z",
+  "atl": 0.00003336,
+  "atl_change_percentage": 804.47797,
+  "atl_date": "2023-09-13T08:00:34.456Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:29.236Z",
+  "platforms": {
+    "ethereum": "0x7f3edcdd180dbe4819bd98fee8929b5cedb3adeb"
+  }
+}

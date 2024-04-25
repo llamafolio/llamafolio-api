@@ -1,0 +1,31 @@
+{
+  "id": "have-fun-598a6209-8136-4282-a14c-1f2b2b5d0c26",
+  "symbol": "hf",
+  "name": "Have Fun Token",
+  "image": "https://assets.coingecko.com/coins/images/30257/large/0XUodgfR_400x400.jpg?1696529165",
+  "current_price": 2.84154e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 5967243,
+  "total_volume": 41914,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 21000000000000,
+  "max_supply": 21000000000000,
+  "ath": 4.04788e-7,
+  "ath_change_percentage": -29.80174,
+  "ath_date": "2023-05-11T11:33:37.155Z",
+  "atl": 1.72896e-7,
+  "atl_change_percentage": 64.34946,
+  "atl_date": "2023-05-16T14:01:55.907Z",
+  "roi": null,
+  "last_updated": "2023-05-18T20:30:15.227Z",
+  "platforms": {
+    "bsc": "0x759bd4ed07a34b9ea761f8f2ed9f0e102675a29c"
+  }
+}

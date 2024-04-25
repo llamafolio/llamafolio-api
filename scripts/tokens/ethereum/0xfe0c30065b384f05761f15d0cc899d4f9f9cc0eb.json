@@ -1,0 +1,31 @@
+{
+  "id": "ether-fi",
+  "symbol": "ethfi",
+  "name": "Ether.fi",
+  "image": "https://assets.coingecko.com/coins/images/35958/large/etherfi.jpeg?1710254562",
+  "current_price": 3.61,
+  "market_cap": 415941554,
+  "market_cap_rank": 193,
+  "fully_diluted_valuation": 3610603768,
+  "total_volume": 143079039,
+  "high_24h": 3.96,
+  "low_24h": 3.6,
+  "price_change_24h": -0.2505677222181979,
+  "price_change_percentage_24h": -6.48851,
+  "market_cap_change_24h": -31692726.535822034,
+  "market_cap_change_percentage_24h": -7.08005,
+  "circulating_supply": 115200000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 8.53,
+  "ath_change_percentage": -57.80601,
+  "ath_date": "2024-03-27T23:14:46.721Z",
+  "atl": 2.86,
+  "atl_change_percentage": 25.85088,
+  "atl_date": "2024-03-19T23:06:19.027Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:48.101Z",
+  "platforms": {
+    "ethereum": "0xfe0c30065b384f05761f15d0cc899d4f9f9cc0eb"
+  }
+}

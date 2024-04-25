@@ -1,0 +1,31 @@
+{
+  "id": "bella-protocol",
+  "symbol": "bel",
+  "name": "Bella Protocol",
+  "image": "https://assets.coingecko.com/coins/images/12478/large/Bella.png?1696512296",
+  "current_price": 0.877012,
+  "market_cap": 52016217,
+  "market_cap_rank": 675,
+  "fully_diluted_valuation": 87422213,
+  "total_volume": 7017100,
+  "high_24h": 0.969861,
+  "low_24h": 0.864046,
+  "price_change_24h": -0.06640823273625207,
+  "price_change_percentage_24h": -7.03909,
+  "market_cap_change_24h": -4140390.9388448223,
+  "market_cap_change_percentage_24h": -7.37294,
+  "circulating_supply": 59500000,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 9.99,
+  "ath_change_percentage": -91.24562,
+  "ath_date": "2020-09-15T11:44:52.153Z",
+  "atl": 0.215285,
+  "atl_change_percentage": 306.40009,
+  "atl_date": "2022-05-12T07:20:45.886Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:00.151Z",
+  "platforms": {
+    "bsc": "0x8443f091997f06a61670b735ed92734f5628692f"
+  }
+}

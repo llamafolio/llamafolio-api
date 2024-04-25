@@ -1,0 +1,31 @@
+{
+  "id": "ctrl",
+  "symbol": "ctrl",
+  "name": "Ctrl",
+  "image": "https://assets.coingecko.com/coins/images/33356/large/ctrl_200x200.png?1701600824",
+  "current_price": 0.057294,
+  "market_cap": 354705,
+  "market_cap_rank": 3237,
+  "fully_diluted_valuation": 572937,
+  "total_volume": 874.51,
+  "high_24h": 0.059913,
+  "low_24h": 0.056613,
+  "price_change_24h": -0.002618894798475539,
+  "price_change_percentage_24h": -4.3712,
+  "market_cap_change_24h": -18753.70110348385,
+  "market_cap_change_percentage_24h": -5.02163,
+  "circulating_supply": 6190996.739130435,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.616395,
+  "ath_change_percentage": -90.70504,
+  "ath_date": "2023-12-07T17:35:01.316Z",
+  "atl": 0.052033,
+  "atl_change_percentage": 10.11069,
+  "atl_date": "2024-04-13T21:32:26.442Z",
+  "roi": null,
+  "last_updated": "2024-04-25T01:03:27.604Z",
+  "platforms": {
+    "ethereum": "0x556bb0b27e855e6f2cebb47174495b9bbeb97ff1"
+  }
+}

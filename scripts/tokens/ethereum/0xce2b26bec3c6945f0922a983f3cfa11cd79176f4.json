@@ -1,0 +1,31 @@
+{
+  "id": "elonium",
+  "symbol": "elon",
+  "name": "Elonium",
+  "image": "https://assets.coingecko.com/coins/images/32642/large/ELONIUM.png?1698892015",
+  "current_price": 4.79746e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 47975,
+  "total_volume": 248.19,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.00000133,
+  "ath_change_percentage": -63.98603,
+  "ath_date": "2023-11-12T08:19:48.048Z",
+  "atl": 4.78657e-7,
+  "atl_change_percentage": 0.22764,
+  "atl_date": "2024-02-01T02:00:35.240Z",
+  "roi": null,
+  "last_updated": "2024-02-01T02:30:31.620Z",
+  "platforms": {
+    "ethereum": "0xce2b26bec3c6945f0922a983f3cfa11cd79176f4"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "tridentdao",
+  "symbol": "psi",
+  "name": "TridentDAO",
+  "image": "https://assets.coingecko.com/coins/images/28955/large/trident.jpg?1696527928",
+  "current_price": 0.00856896,
+  "market_cap": 17966.21,
+  "market_cap_rank": 4158,
+  "fully_diluted_valuation": 80850,
+  "total_volume": 62611,
+  "high_24h": 0.00867537,
+  "low_24h": 0.0084531,
+  "price_change_24h": 0.00007036,
+  "price_change_percentage_24h": 0.8279,
+  "market_cap_change_24h": -6.698230820642493,
+  "market_cap_change_percentage_24h": -0.03727,
+  "circulating_supply": 2097902,
+  "total_supply": 9440815,
+  "max_supply": 9440815,
+  "ath": 9.27,
+  "ath_change_percentage": -99.90758,
+  "ath_date": "2023-02-15T22:43:59.955Z",
+  "atl": 0.00499987,
+  "atl_change_percentage": 71.3617,
+  "atl_date": "2024-01-11T10:36:09.746Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:16.324Z",
+  "platforms": {
+    "arbitrum": "0x602eb0d99a5e3e76d1510372c4d2020e12eaea8a"
+  }
+}

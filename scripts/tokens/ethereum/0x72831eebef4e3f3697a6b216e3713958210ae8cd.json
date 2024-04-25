@@ -1,0 +1,31 @@
+{
+  "id": "blob-2",
+  "symbol": "blob",
+  "name": "Blob",
+  "image": "https://assets.coingecko.com/coins/images/35309/large/Blob.jpeg?1708158035",
+  "current_price": 0.00388679,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 10880.69,
+  "high_24h": 0.00393766,
+  "low_24h": 0.0033222,
+  "price_change_24h": 0.0004631,
+  "price_change_percentage_24h": 13.52635,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.02375374,
+  "ath_change_percentage": -83.63715,
+  "ath_date": "2024-02-18T23:29:45.687Z",
+  "atl": 0.00294414,
+  "atl_change_percentage": 32.01787,
+  "atl_date": "2024-04-18T00:38:07.907Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:15.915Z",
+  "platforms": {
+    "ethereum": "0x72831eebef4e3f3697a6b216e3713958210ae8cd"
+  }
+}

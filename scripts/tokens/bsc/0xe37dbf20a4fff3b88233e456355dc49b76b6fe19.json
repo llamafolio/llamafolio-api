@@ -1,0 +1,31 @@
+{
+  "id": "love-earn-enjoy",
+  "symbol": "lee",
+  "name": "Love Earn Enjoy",
+  "image": "https://assets.coingecko.com/coins/images/31158/large/LEE_200x200_PNG.png?1696529985",
+  "current_price": 2.33,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 16276024025,
+  "total_volume": 530078,
+  "high_24h": 2.34,
+  "low_24h": 2.23,
+  "price_change_24h": 0.099876,
+  "price_change_percentage_24h": 4.47822,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 7000000000,
+  "max_supply": 7000000000,
+  "ath": 2.68,
+  "ath_change_percentage": -13.05337,
+  "ath_date": "2023-12-14T13:31:26.290Z",
+  "atl": 0.689813,
+  "atl_change_percentage": 237.97775,
+  "atl_date": "2023-12-25T07:22:39.137Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:25.499Z",
+  "platforms": {
+    "bsc": "0xe37dbf20a4fff3b88233e456355dc49b76b6fe19"
+  }
+}

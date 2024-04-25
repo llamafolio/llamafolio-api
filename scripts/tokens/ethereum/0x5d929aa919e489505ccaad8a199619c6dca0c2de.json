@@ -1,0 +1,31 @@
+{
+  "id": "baasid",
+  "symbol": "baas",
+  "name": "BaaSid",
+  "image": "https://assets.coingecko.com/coins/images/5463/large/baasid.png?1696505940",
+  "current_price": 0.00048654,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 4863422,
+  "total_volume": 3185.92,
+  "high_24h": 0.00067051,
+  "low_24h": 0.00046248,
+  "price_change_24h": -0.000002495851756134,
+  "price_change_percentage_24h": -0.51037,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": null,
+  "ath": 0.02764465,
+  "ath_change_percentage": -98.24065,
+  "ath_date": "2021-04-05T08:14:24.092Z",
+  "atl": 0.00021255,
+  "atl_change_percentage": 128.82695,
+  "atl_date": "2020-04-17T17:19:30.318Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:35.003Z",
+  "platforms": {
+    "ethereum": "0x5d929aa919e489505ccaad8a199619c6dca0c2de"
+  }
+}

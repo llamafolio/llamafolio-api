@@ -1,0 +1,31 @@
+{
+  "id": "aave-v3-aave",
+  "symbol": "aaave",
+  "name": "Aave v3 AAVE",
+  "image": "https://assets.coingecko.com/coins/images/32887/large/aave.png?1699773604",
+  "current_price": 89.35,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 0,
+  "high_24h": 96.47,
+  "low_24h": 88.45,
+  "price_change_24h": -6.578778929999999,
+  "price_change_percentage_24h": -6.85373,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 151.26,
+  "ath_change_percentage": -40.93075,
+  "ath_date": "2024-03-13T12:05:24.675Z",
+  "atl": 73.12,
+  "atl_change_percentage": 22.19628,
+  "atl_date": "2024-04-13T21:30:34.701Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:33.572Z",
+  "platforms": {
+    "avalanche": "0xf329e36c7bf6e5e86ce2150875a84ce77f477375"
+  }
+}

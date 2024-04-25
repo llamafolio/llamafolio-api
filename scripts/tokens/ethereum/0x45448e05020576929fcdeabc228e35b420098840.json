@@ -1,0 +1,31 @@
+{
+  "id": "idavoll-network",
+  "symbol": "idv",
+  "name": "Idavoll DAO",
+  "image": "https://assets.coingecko.com/coins/images/14229/large/71922199.png?1696513943",
+  "current_price": 0.00119051,
+  "market_cap": 950577,
+  "market_cap_rank": 2718,
+  "fully_diluted_valuation": 2409459,
+  "total_volume": 247240,
+  "high_24h": 0.0013315,
+  "low_24h": 0.00095048,
+  "price_change_24h": 0.00006987,
+  "price_change_percentage_24h": 6.23443,
+  "market_cap_change_24h": 40326,
+  "market_cap_change_percentage_24h": 4.43019,
+  "circulating_supply": 789037448.3433609,
+  "total_supply": 2000000000,
+  "max_supply": null,
+  "ath": 0.382351,
+  "ath_change_percentage": -99.68875,
+  "ath_date": "2021-03-31T16:07:48.863Z",
+  "atl": 0.0006996,
+  "atl_change_percentage": 70.10578,
+  "atl_date": "2023-07-04T22:19:23.043Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:24.735Z",
+  "platforms": {
+    "ethereum": "0x45448e05020576929fcdeabc228e35b420098840"
+  }
+}

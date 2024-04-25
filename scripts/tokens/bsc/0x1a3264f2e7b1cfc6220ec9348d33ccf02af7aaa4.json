@@ -1,0 +1,31 @@
+{
+  "id": "dypius",
+  "symbol": "dyp",
+  "name": "Dypius",
+  "image": "https://assets.coingecko.com/coins/images/33016/large/RS-zDhFE_400x400.jpg?1700157370",
+  "current_price": 0.069312,
+  "market_cap": 6775551,
+  "market_cap_rank": 1639,
+  "fully_diluted_valuation": 16000696,
+  "total_volume": 511464,
+  "high_24h": 0.074135,
+  "low_24h": 0.067719,
+  "price_change_24h": -0.001996589667302554,
+  "price_change_percentage_24h": -2.79993,
+  "market_cap_change_24h": -206350.39183483087,
+  "market_cap_change_percentage_24h": -2.9555,
+  "circulating_supply": 97363336,
+  "total_supply": 229926862,
+  "max_supply": 229926862,
+  "ath": 0.211299,
+  "ath_change_percentage": -67.08731,
+  "ath_date": "2023-11-16T18:00:33.334Z",
+  "atl": 0.01539572,
+  "atl_change_percentage": 351.71017,
+  "atl_date": "2023-11-23T09:24:59.831Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:03.970Z",
+  "platforms": {
+    "bsc": "0x1a3264f2e7b1cfc6220ec9348d33ccf02af7aaa4"
+  }
+}

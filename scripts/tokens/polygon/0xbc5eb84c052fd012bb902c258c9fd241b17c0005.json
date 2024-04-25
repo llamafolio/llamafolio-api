@@ -1,0 +1,31 @@
+{
+  "id": "xnet-mobile",
+  "symbol": "xnet",
+  "name": "XNET Mobile",
+  "image": "https://assets.coingecko.com/coins/images/31799/large/depin.jpeg?1696530614",
+  "current_price": 0.05233,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1255919761,
+  "total_volume": 4329.72,
+  "high_24h": 0.059929,
+  "low_24h": 0.052298,
+  "price_change_24h": -0.007397056439288411,
+  "price_change_percentage_24h": -12.38476,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 23999990394,
+  "max_supply": 24000000000,
+  "ath": 0.214225,
+  "ath_change_percentage": -75.58728,
+  "ath_date": "2024-04-02T13:08:17.874Z",
+  "atl": 0.00155104,
+  "atl_change_percentage": 3271.80447,
+  "atl_date": "2023-10-08T12:54:39.943Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:48.950Z",
+  "platforms": {
+    "polygon": "0xbc5eb84c052fd012bb902c258c9fd241b17c0005"
+  }
+}

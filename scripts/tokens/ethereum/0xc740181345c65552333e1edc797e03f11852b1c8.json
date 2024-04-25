@@ -1,0 +1,31 @@
+{
+  "id": "kento",
+  "symbol": "knto",
+  "name": "Kento",
+  "image": "https://assets.coingecko.com/coins/images/31352/large/knto-cg-200.png?1696530169",
+  "current_price": 3.706e-9,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1742328,
+  "total_volume": 28074,
+  "high_24h": 3.692e-9,
+  "low_24h": 2.784e-9,
+  "price_change_24h": 9.21988e-10,
+  "price_change_percentage_24h": 33.12172,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 471959000000000,
+  "max_supply": 471959000000000,
+  "ath": 3.692e-9,
+  "ath_change_percentage": 0,
+  "ath_date": "2024-04-25T09:03:01.588Z",
+  "atl": 7.3507e-11,
+  "atl_change_percentage": 4922.21657,
+  "atl_date": "2024-01-30T13:04:22.894Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:45.452Z",
+  "platforms": {
+    "ethereum": "0xc740181345c65552333e1edc797e03f11852b1c8"
+  }
+}

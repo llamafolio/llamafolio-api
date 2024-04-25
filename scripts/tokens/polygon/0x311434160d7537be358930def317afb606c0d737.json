@@ -1,0 +1,31 @@
+{
+  "id": "nakamoto-games",
+  "symbol": "naka",
+  "name": "Nakamoto Games",
+  "image": "https://assets.coingecko.com/coins/images/19073/large/flCKDeh6_400x400.jpg?1696518523",
+  "current_price": 1.71,
+  "market_cap": 111273516,
+  "market_cap_rank": 443,
+  "fully_diluted_valuation": 308216597,
+  "total_volume": 24692101,
+  "high_24h": 1.88,
+  "low_24h": 1.71,
+  "price_change_24h": -0.10359100010337574,
+  "price_change_percentage_24h": -5.70109,
+  "market_cap_change_24h": -6818936.384882823,
+  "market_cap_change_percentage_24h": -5.77424,
+  "circulating_supply": 64984277.5,
+  "total_supply": 180000000,
+  "max_supply": 180000000,
+  "ath": 6.71,
+  "ath_change_percentage": -74.44091,
+  "ath_date": "2021-10-30T12:46:33.020Z",
+  "atl": 0.050412,
+  "atl_change_percentage": 3300.42173,
+  "atl_date": "2022-09-28T10:27:20.307Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:43.685Z",
+  "platforms": {
+    "polygon": "0x311434160d7537be358930def317afb606c0d737"
+  }
+}

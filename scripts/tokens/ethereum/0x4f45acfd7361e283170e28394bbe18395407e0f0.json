@@ -1,0 +1,31 @@
+{
+  "id": "linktensor",
+  "symbol": "lts",
+  "name": "LinkTensor",
+  "image": "https://assets.coingecko.com/coins/images/35990/large/4XIsLD9h_400x400.jpg?1710314291",
+  "current_price": 0.00293996,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 827.49,
+  "high_24h": 0.00298331,
+  "low_24h": 0.00260974,
+  "price_change_24h": 0.00032866,
+  "price_change_percentage_24h": 12.58599,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.08376,
+  "ath_change_percentage": -96.49001,
+  "ath_date": "2024-03-13T09:35:49.743Z",
+  "atl": 0.00210914,
+  "atl_change_percentage": 39.39135,
+  "atl_date": "2024-04-04T04:24:19.578Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:18.039Z",
+  "platforms": {
+    "ethereum": "0x4f45acfd7361e283170e28394bbe18395407e0f0"
+  }
+}

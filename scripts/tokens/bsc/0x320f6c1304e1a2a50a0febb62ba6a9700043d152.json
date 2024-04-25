@@ -1,0 +1,31 @@
+{
+  "id": "pomerium-community-meme-t",
+  "symbol": "pme",
+  "name": "Pomerium Community Meme Token",
+  "image": "https://assets.coingecko.com/coins/images/32880/large/Logo.png?1699711684",
+  "current_price": 1.841e-9,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 48.33,
+  "high_24h": 1.868e-9,
+  "low_24h": 1.786e-9,
+  "price_change_24h": -6.96743e-13,
+  "price_change_percentage_24h": -0.03783,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": null,
+  "ath": 2.2487e-8,
+  "ath_change_percentage": -91.81371,
+  "ath_date": "2023-11-20T00:41:46.432Z",
+  "atl": 1.566e-9,
+  "atl_change_percentage": 17.51862,
+  "atl_date": "2024-04-17T16:50:50.998Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:48.046Z",
+  "platforms": {
+    "bsc": "0x320f6c1304e1a2a50a0febb62ba6a9700043d152"
+  }
+}

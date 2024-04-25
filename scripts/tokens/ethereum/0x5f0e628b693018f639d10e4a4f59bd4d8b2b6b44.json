@@ -1,0 +1,31 @@
+{
+  "id": "whiteheart",
+  "symbol": "white",
+  "name": "Whiteheart",
+  "image": "https://assets.coingecko.com/coins/images/13484/large/whiteheart.png?1696513245",
+  "current_price": 5377.37,
+  "market_cap": 47794107,
+  "market_cap_rank": 711,
+  "fully_diluted_valuation": 47794107,
+  "total_volume": 38.89,
+  "high_24h": 5411.18,
+  "low_24h": 5338.26,
+  "price_change_24h": 39.11,
+  "price_change_percentage_24h": 0.73269,
+  "market_cap_change_24h": -1756511.003905423,
+  "market_cap_change_percentage_24h": -3.54488,
+  "circulating_supply": 8888,
+  "total_supply": 8888,
+  "max_supply": 8888,
+  "ath": 6393.22,
+  "ath_change_percentage": -15.88941,
+  "ath_date": "2024-03-05T06:01:09.997Z",
+  "atl": 57.1,
+  "atl_change_percentage": 9317.46681,
+  "atl_date": "2022-06-18T21:11:01.884Z",
+  "roi": null,
+  "last_updated": "2024-04-25T07:37:25.700Z",
+  "platforms": {
+    "ethereum": "0x5f0e628b693018f639d10e4a4f59bd4d8b2b6b44"
+  }
+}

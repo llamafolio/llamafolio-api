@@ -1,0 +1,31 @@
+{
+  "id": "z-cubed",
+  "symbol": "z3",
+  "name": "Z-Cubed",
+  "image": "https://assets.coingecko.com/coins/images/29478/large/Z3-BLACK-200x200.png?1696528422",
+  "current_price": 0.02259996,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 68770,
+  "total_volume": 69.04,
+  "high_24h": 0.02274523,
+  "low_24h": 0.02250814,
+  "price_change_24h": -0.000017181293180905,
+  "price_change_percentage_24h": -0.07597,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 3042911,
+  "max_supply": 21000000,
+  "ath": 1.11,
+  "ath_change_percentage": -97.96799,
+  "ath_date": "2023-05-27T01:21:59.744Z",
+  "atl": 0.01544268,
+  "atl_change_percentage": 46.3474,
+  "atl_date": "2023-10-21T07:46:25.408Z",
+  "roi": null,
+  "last_updated": "2024-04-25T06:38:38.069Z",
+  "platforms": {
+    "ethereum": "0x50eec6d765792dcfb0913c8403ef2a12e1b861a6"
+  }
+}

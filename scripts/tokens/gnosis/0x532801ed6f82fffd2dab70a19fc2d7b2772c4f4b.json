@@ -1,0 +1,31 @@
+{
+  "id": "swapr",
+  "symbol": "swpr",
+  "name": "Swapr",
+  "image": "https://assets.coingecko.com/coins/images/18740/large/swapr.jpg?1696518206",
+  "current_price": 0.00916002,
+  "market_cap": 362005,
+  "market_cap_rank": 3222,
+  "fully_diluted_valuation": 916002,
+  "total_volume": 14.92,
+  "high_24h": 0.0106409,
+  "low_24h": 0.00907941,
+  "price_change_24h": -0.001244766849028231,
+  "price_change_percentage_24h": -11.9634,
+  "market_cap_change_24h": -49381.64538336801,
+  "market_cap_change_percentage_24h": -12.00369,
+  "circulating_supply": 39520135.6656047,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.318784,
+  "ath_change_percentage": -97.12658,
+  "ath_date": "2021-10-17T07:24:18.823Z",
+  "atl": 0.00488992,
+  "atl_change_percentage": 87.32459,
+  "atl_date": "2023-09-13T10:43:19.740Z",
+  "roi": null,
+  "last_updated": "2024-04-25T06:31:31.522Z",
+  "platforms": {
+    "gnosis": "0x532801ed6f82fffd2dab70a19fc2d7b2772c4f4b"
+  }
+}

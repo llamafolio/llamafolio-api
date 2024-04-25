@@ -1,0 +1,31 @@
+{
+  "id": "tronpad",
+  "symbol": "tronpad",
+  "name": "TRONPAD",
+  "image": "https://assets.coingecko.com/coins/images/16066/large/weUUiy33_400x400.jpg?1696515675",
+  "current_price": 0.00177001,
+  "market_cap": 1355744,
+  "market_cap_rank": 2505,
+  "fully_diluted_valuation": 1355744,
+  "total_volume": 1796.99,
+  "high_24h": 0.00192122,
+  "low_24h": 0.00169501,
+  "price_change_24h": -0.000131251960744866,
+  "price_change_percentage_24h": -6.90342,
+  "market_cap_change_24h": -98729.50446996232,
+  "market_cap_change_percentage_24h": -6.78799,
+  "circulating_supply": 765212999.98,
+  "total_supply": 765212999.98,
+  "max_supply": 765212999.98,
+  "ath": 0.311792,
+  "ath_change_percentage": -99.43386,
+  "ath_date": "2021-06-04T20:34:30.608Z",
+  "atl": 0.00129704,
+  "atl_change_percentage": 36.09234,
+  "atl_date": "2023-10-15T22:26:34.595Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:46.638Z",
+  "platforms": {
+    "bsc": "0x1bf7aedec439d6bfe38f8f9b20cf3dc99e3571c4"
+  }
+}

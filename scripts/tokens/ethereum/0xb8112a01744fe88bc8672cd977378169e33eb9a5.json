@@ -1,0 +1,31 @@
+{
+  "id": "ordinals-inscription-bot",
+  "symbol": "oib",
+  "name": "Ordinals Inscription Bot",
+  "image": "https://assets.coingecko.com/coins/images/33456/large/logov2_%281%29_%281%29.png?1701923425",
+  "current_price": 0.00011248,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 11247.94,
+  "total_volume": 19.43,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.00648296,
+  "ath_change_percentage": -98.265,
+  "ath_date": "2023-12-07T13:59:51.910Z",
+  "atl": 0.000091,
+  "atl_change_percentage": 23.60437,
+  "atl_date": "2023-12-21T15:25:47.940Z",
+  "roi": null,
+  "last_updated": "2024-02-16T19:33:30.863Z",
+  "platforms": {
+    "ethereum": "0xb8112a01744fe88bc8672cd977378169e33eb9a5"
+  }
+}

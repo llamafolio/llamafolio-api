@@ -1,0 +1,31 @@
+{
+  "id": "ado-network",
+  "symbol": "ado",
+  "name": "ADO Protocol",
+  "image": "https://assets.coingecko.com/coins/images/27346/large/ado-200x200.png?1696526393",
+  "current_price": 0.00773111,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3030466,
+  "total_volume": 1.58,
+  "high_24h": 0.00800376,
+  "low_24h": 0.00770263,
+  "price_change_24h": -0.000247587082408881,
+  "price_change_percentage_24h": -3.1031,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 391983319,
+  "max_supply": 1000000000,
+  "ath": 0.01090946,
+  "ath_change_percentage": -29.13392,
+  "ath_date": "2022-09-23T16:56:42.943Z",
+  "atl": 0.00001165,
+  "atl_change_percentage": 66256.84633,
+  "atl_date": "2023-04-18T11:12:28.318Z",
+  "roi": null,
+  "last_updated": "2024-04-24T19:19:21.395Z",
+  "platforms": {
+    "bsc": "0x883916d358d6262a47b0516a4243bb08310dbdf0"
+  }
+}

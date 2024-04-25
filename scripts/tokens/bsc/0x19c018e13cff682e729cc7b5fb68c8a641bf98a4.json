@@ -1,0 +1,31 @@
+{
+  "id": "burnedfi",
+  "symbol": "burn",
+  "name": "BurnedFi",
+  "image": "https://assets.coingecko.com/coins/images/33995/large/IMG_9641.jpeg?1709180084",
+  "current_price": 5.77,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 121258323,
+  "total_volume": 266241,
+  "high_24h": 6.02,
+  "low_24h": 5.57,
+  "price_change_24h": -0.036749865204774856,
+  "price_change_percentage_24h": -0.63242,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 21000000,
+  "max_supply": null,
+  "ath": 10.25,
+  "ath_change_percentage": -44.38234,
+  "ath_date": "2024-03-23T02:44:29.337Z",
+  "atl": 1.18,
+  "atl_change_percentage": 382.92467,
+  "atl_date": "2024-03-02T15:56:04.068Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:48.794Z",
+  "platforms": {
+    "bsc": "0x19c018e13cff682e729cc7b5fb68c8a641bf98a4"
+  }
+}

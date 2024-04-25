@@ -1,0 +1,31 @@
+{
+  "id": "chaintools",
+  "symbol": "ctls",
+  "name": "Chaintools",
+  "image": "https://assets.coingecko.com/coins/images/30896/large/IMG_0501.png?1696529742",
+  "current_price": 0.00415796,
+  "market_cap": 43235,
+  "market_cap_rank": 4023,
+  "fully_diluted_valuation": 45738,
+  "total_volume": 181.85,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 10398209.6635314,
+  "total_supply": 11000000,
+  "max_supply": 11000000,
+  "ath": 0.300583,
+  "ath_change_percentage": -98.6167,
+  "ath_date": "2023-09-04T06:00:29.605Z",
+  "atl": 0.00076782,
+  "atl_change_percentage": 441.52628,
+  "atl_date": "2023-08-20T17:24:19.579Z",
+  "roi": null,
+  "last_updated": "2024-04-20T00:10:48.800Z",
+  "platforms": {
+    "ethereum": "0xdbecdd726f6ad8e24afc78fe3cc8eb7b73c2d94d"
+  }
+}

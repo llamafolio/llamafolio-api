@@ -1,0 +1,31 @@
+{
+  "id": "artgpt",
+  "symbol": "agpt",
+  "name": "artGPT",
+  "image": "https://assets.coingecko.com/coins/images/29111/large/IMG_20230217_063445_776.png?1696528073",
+  "current_price": 0.00008029,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 20.09,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00008833,
+  "ath_change_percentage": -9.1015,
+  "ath_date": "2023-02-23T04:39:24.690Z",
+  "atl": 0.00005905,
+  "atl_change_percentage": 35.97599,
+  "atl_date": "2023-03-10T11:26:06.958Z",
+  "roi": null,
+  "last_updated": "2023-03-24T07:30:02.789Z",
+  "platforms": {
+    "arbitrum": "0xd2f8b81cfff297c70e5d58ac58762dd5d213ea20"
+  }
+}

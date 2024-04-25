@@ -1,0 +1,31 @@
+{
+  "id": "loong",
+  "symbol": "loong",
+  "name": "Loong",
+  "image": "https://assets.coingecko.com/coins/images/32176/large/200x200.png?1696742804",
+  "current_price": 7.8436e-8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 78436,
+  "total_volume": 2594.38,
+  "high_24h": 1.02402e-7,
+  "low_24h": 6.9895e-8,
+  "price_change_24h": 7.547e-9,
+  "price_change_percentage_24h": 10.64623,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000,
+  "max_supply": 1000000000000,
+  "ath": 0.00000612,
+  "ath_change_percentage": -98.7183,
+  "ath_date": "2024-02-09T06:54:55.191Z",
+  "atl": 3.6273e-8,
+  "atl_change_percentage": 116.23847,
+  "atl_date": "2024-02-06T14:50:03.963Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:02.599Z",
+  "platforms": {
+    "ethereum": "0xcaeda9650ccd356af7776057a105f9e6ffe68213"
+  }
+}

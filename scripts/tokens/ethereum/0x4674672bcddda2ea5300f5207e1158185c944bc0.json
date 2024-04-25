@@ -1,0 +1,31 @@
+{
+  "id": "gem-exchange-and-trading",
+  "symbol": "gxt",
+  "name": "Gem Exchange and Trading",
+  "image": "https://assets.coingecko.com/coins/images/12226/large/a.png?1696512059",
+  "current_price": 0.00017163,
+  "market_cap": 14351.17,
+  "market_cap_rank": 4182,
+  "fully_diluted_valuation": 85905,
+  "total_volume": 60.84,
+  "high_24h": 0.00019329,
+  "low_24h": 0.0001677,
+  "price_change_24h": -0.000002064440013226,
+  "price_change_percentage_24h": -1.18854,
+  "market_cap_change_24h": -155.35360655766817,
+  "market_cap_change_percentage_24h": -1.07092,
+  "circulating_supply": 83529285.8013,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 1.022,
+  "ath_change_percentage": -99.9832,
+  "ath_date": "2022-04-23T00:58:17.748Z",
+  "atl": 0.00007321,
+  "atl_change_percentage": 134.42392,
+  "atl_date": "2024-04-15T22:57:53.621Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:35.085Z",
+  "platforms": {
+    "ethereum": "0x4674672bcddda2ea5300f5207e1158185c944bc0"
+  }
+}

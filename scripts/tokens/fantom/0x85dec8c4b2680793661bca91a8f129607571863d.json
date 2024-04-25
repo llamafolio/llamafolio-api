@@ -1,0 +1,31 @@
+{
+  "id": "paint-swap",
+  "symbol": "brush",
+  "name": "Paint Swap",
+  "image": "https://assets.coingecko.com/coins/images/18579/large/ps-cmc-200x200.png?1707862125",
+  "current_price": 0.02159745,
+  "market_cap": 7926701,
+  "market_cap_rank": 1553,
+  "fully_diluted_valuation": 8254657,
+  "total_volume": 23268,
+  "high_24h": 0.02335996,
+  "low_24h": 0.02156926,
+  "price_change_24h": -0.001327988928286554,
+  "price_change_percentage_24h": -5.79264,
+  "market_cap_change_24h": -562198.464827491,
+  "market_cap_change_percentage_24h": -6.62275,
+  "circulating_supply": 367158536.750212,
+  "total_supply": 382349168.658889,
+  "max_supply": 450000000,
+  "ath": 0.249255,
+  "ath_change_percentage": -91.33345,
+  "ath_date": "2022-01-16T14:08:46.860Z",
+  "atl": 0.0051472,
+  "atl_change_percentage": 319.68112,
+  "atl_date": "2023-08-22T21:44:17.397Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:05.107Z",
+  "platforms": {
+    "fantom": "0x85dec8c4b2680793661bca91a8f129607571863d"
+  }
+}

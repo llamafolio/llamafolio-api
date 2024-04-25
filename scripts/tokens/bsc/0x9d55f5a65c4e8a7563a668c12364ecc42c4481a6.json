@@ -1,0 +1,31 @@
+{
+  "id": "bitscrow",
+  "symbol": "btscrw",
+  "name": "Bitscrow",
+  "image": "https://assets.coingecko.com/coins/images/28634/large/HFDZGM.jpg?1696527617",
+  "current_price": 0.00227256,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 530644,
+  "total_volume": 634.61,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 233500000,
+  "max_supply": 233500000,
+  "ath": 0.00325103,
+  "ath_change_percentage": -30.09721,
+  "ath_date": "2023-03-25T15:57:33.778Z",
+  "atl": 0.00225509,
+  "atl_change_percentage": 0.77484,
+  "atl_date": "2023-05-11T18:45:07.652Z",
+  "roi": null,
+  "last_updated": "2023-05-11T23:10:05.458Z",
+  "platforms": {
+    "bsc": "0x9d55f5a65c4e8a7563a668c12364ecc42c4481a6"
+  }
+}

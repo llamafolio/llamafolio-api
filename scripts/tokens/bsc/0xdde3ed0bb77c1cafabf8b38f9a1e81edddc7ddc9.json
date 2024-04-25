@@ -1,0 +1,31 @@
+{
+  "id": "metaverse-vr",
+  "symbol": "mevr",
+  "name": "Metaverse VR",
+  "image": "https://assets.coingecko.com/coins/images/23437/large/cmc3.png?1696522650",
+  "current_price": 0.00460789,
+  "market_cap": 155643,
+  "market_cap_rank": 3613,
+  "fully_diluted_valuation": 230381,
+  "total_volume": 6145.35,
+  "high_24h": 0.00461409,
+  "low_24h": 0.00440164,
+  "price_change_24h": 0.00003005,
+  "price_change_percentage_24h": 0.65651,
+  "market_cap_change_24h": 507.61,
+  "market_cap_change_percentage_24h": 0.3272,
+  "circulating_supply": 33779566.15298251,
+  "total_supply": 50000000,
+  "max_supply": 100000000,
+  "ath": 0.314864,
+  "ath_change_percentage": -98.54157,
+  "ath_date": "2022-04-15T19:49:37.161Z",
+  "atl": 0.001554,
+  "atl_change_percentage": 195.50152,
+  "atl_date": "2024-03-11T14:29:40.230Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:31.081Z",
+  "platforms": {
+    "bsc": "0xdde3ed0bb77c1cafabf8b38f9a1e81edddc7ddc9"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "0xnumber",
+  "symbol": "oxn",
+  "name": "0xNumber",
+  "image": "https://assets.coingecko.com/coins/images/33870/large/200x200.png?1703131812",
+  "current_price": 0.271204,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2712037,
+  "total_volume": 40247,
+  "high_24h": 0.355647,
+  "low_24h": 0.241686,
+  "price_change_24h": -0.07810737493927528,
+  "price_change_percentage_24h": -22.36041,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 0,
+  "ath": 0.970458,
+  "ath_change_percentage": -72.05405,
+  "ath_date": "2024-02-25T13:25:36.889Z",
+  "atl": 0.00617036,
+  "atl_change_percentage": 4295.26562,
+  "atl_date": "2023-12-21T14:01:10.520Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:09.761Z",
+  "platforms": {
+    "ethereum": "0x9012744b7a564623b6c3e40b144fc196bdedf1a9"
+  }
+}

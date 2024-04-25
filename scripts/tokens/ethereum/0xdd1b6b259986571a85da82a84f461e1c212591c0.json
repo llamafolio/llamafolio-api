@@ -1,0 +1,31 @@
+{
+  "id": "blazex",
+  "symbol": "blazex",
+  "name": "BlazeX",
+  "image": "https://assets.coingecko.com/coins/images/31194/large/200x200.png?1696530022",
+  "current_price": 0.00029443,
+  "market_cap": 279616,
+  "market_cap_rank": 3349,
+  "fully_diluted_valuation": 279616,
+  "total_volume": 306.48,
+  "high_24h": 0.00029698,
+  "low_24h": 0.00023822,
+  "price_change_24h": 0.00000279,
+  "price_change_percentage_24h": 0.95639,
+  "market_cap_change_24h": 1062.71,
+  "market_cap_change_percentage_24h": 0.38151,
+  "circulating_supply": 952604185.032263,
+  "total_supply": 952604185.032263,
+  "max_supply": 952604185.032263,
+  "ath": 0.0015049,
+  "ath_change_percentage": -80.44854,
+  "ath_date": "2023-08-22T12:49:35.723Z",
+  "atl": 0.00023822,
+  "atl_change_percentage": 23.51184,
+  "atl_date": "2024-04-24T19:04:03.569Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:01.452Z",
+  "platforms": {
+    "ethereum": "0xdd1b6b259986571a85da82a84f461e1c212591c0"
+  }
+}

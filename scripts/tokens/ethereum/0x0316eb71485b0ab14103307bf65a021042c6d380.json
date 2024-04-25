@@ -1,0 +1,31 @@
+{
+  "id": "huobi-btc",
+  "symbol": "hbtc",
+  "name": "Huobi BTC",
+  "image": "https://assets.coingecko.com/coins/images/12407/large/hbtc.png?1696512229",
+  "current_price": 15745.26,
+  "market_cap": 141234592,
+  "market_cap_rank": 380,
+  "fully_diluted_valuation": 141234592,
+  "total_volume": 17509.07,
+  "high_24h": 23212,
+  "low_24h": 6635.63,
+  "price_change_24h": -7339.332630661011,
+  "price_change_percentage_24h": -31.7932,
+  "market_cap_change_24h": -66041184.66222867,
+  "market_cap_change_percentage_24h": -31.86151,
+  "circulating_supply": 8969.487004742,
+  "total_supply": 8969.487004742,
+  "max_supply": 8969.487004742,
+  "ath": 166135,
+  "ath_change_percentage": -90.52264,
+  "ath_date": "2022-04-21T18:59:43.859Z",
+  "atl": 4441.05,
+  "atl_change_percentage": 254.53759,
+  "atl_date": "2024-03-08T04:40:44.412Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:54:29.609Z",
+  "platforms": {
+    "ethereum": "0x0316eb71485b0ab14103307bf65a021042c6d380"
+  }
+}

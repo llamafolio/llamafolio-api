@@ -1,0 +1,31 @@
+{
+  "id": "federal-ai",
+  "symbol": "fedai",
+  "name": "Federal AI",
+  "image": "https://assets.coingecko.com/coins/images/34912/large/fed-ai-logo-200px.png?1706604536",
+  "current_price": 0.00324137,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 324137,
+  "total_volume": 7276.33,
+  "high_24h": 0.00424868,
+  "low_24h": 0.00322908,
+  "price_change_24h": -0.000960871030614235,
+  "price_change_percentage_24h": -22.8657,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.066048,
+  "ath_change_percentage": -95.09241,
+  "ath_date": "2024-03-06T19:50:41.230Z",
+  "atl": 0.00322908,
+  "atl_change_percentage": 0.38052,
+  "atl_date": "2024-04-25T08:51:35.558Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:16.364Z",
+  "platforms": {
+    "ethereum": "0xd4318fa09c45cfb6355ded6085b0d698b64ec1cd"
+  }
+}

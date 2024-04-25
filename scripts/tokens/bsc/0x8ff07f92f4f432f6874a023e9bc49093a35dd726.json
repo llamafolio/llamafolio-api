@@ -1,0 +1,31 @@
+{
+  "id": "nexbox",
+  "symbol": "nexbox",
+  "name": "NEXBOX",
+  "image": "https://assets.coingecko.com/coins/images/31739/large/200pngnexbox.png?1696530558",
+  "current_price": 0.00275888,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 2.98,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.073014,
+  "ath_change_percentage": -96.22142,
+  "ath_date": "2023-09-14T07:35:07.973Z",
+  "atl": 0.00113941,
+  "atl_change_percentage": 142.13187,
+  "atl_date": "2023-12-18T10:39:56.230Z",
+  "roi": null,
+  "last_updated": "2024-04-23T11:49:07.837Z",
+  "platforms": {
+    "bsc": "0x8ff07f92f4f432f6874a023e9bc49093a35dd726"
+  }
+}

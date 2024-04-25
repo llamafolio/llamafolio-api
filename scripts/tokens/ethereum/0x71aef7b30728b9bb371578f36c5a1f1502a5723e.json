@@ -1,0 +1,31 @@
+{
+  "id": "aave-v3-1inch",
+  "symbol": "a1inch",
+  "name": "Aave v3 1INCH",
+  "image": "https://assets.coingecko.com/coins/images/32906/large/1INCH.png?1699804523",
+  "current_price": 0.426066,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 0,
+  "high_24h": 0.45187,
+  "low_24h": 0.417268,
+  "price_change_24h": -0.025804349999999976,
+  "price_change_percentage_24h": -5.71057,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.695666,
+  "ath_change_percentage": -38.75431,
+  "ath_date": "2024-03-13T07:45:27.991Z",
+  "atl": 0.323569,
+  "atl_change_percentage": 31.67689,
+  "atl_date": "2023-11-22T00:05:05.211Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:31.170Z",
+  "platforms": {
+    "ethereum": "0x71aef7b30728b9bb371578f36c5a1f1502a5723e"
+  }
+}

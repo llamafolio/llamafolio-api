@@ -1,0 +1,31 @@
+{
+  "id": "julswap",
+  "symbol": "juld",
+  "name": "JulSwap",
+  "image": "https://assets.coingecko.com/coins/images/13839/large/Logo-D-Unicorn.png?1696513581",
+  "current_price": 0.00361393,
+  "market_cap": 2143412,
+  "market_cap_rank": 2256,
+  "fully_diluted_valuation": 2895686,
+  "total_volume": 193296,
+  "high_24h": 0.0037215,
+  "low_24h": 0.00360911,
+  "price_change_24h": -0.00005526638595295,
+  "price_change_percentage_24h": -1.50623,
+  "market_cap_change_24h": -21363.663747351617,
+  "market_cap_change_percentage_24h": -0.98688,
+  "circulating_supply": 592166808.131989,
+  "total_supply": 800000000,
+  "max_supply": 800000000,
+  "ath": 0.75279,
+  "ath_change_percentage": -99.51917,
+  "ath_date": "2021-02-22T04:23:02.936Z",
+  "atl": 0.00094365,
+  "atl_change_percentage": 283.57347,
+  "atl_date": "2022-12-22T22:36:14.010Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:03.228Z",
+  "platforms": {
+    "bsc": "0xf5d8015d625be6f59b8073c8189bd51ba28792e1"
+  }
+}

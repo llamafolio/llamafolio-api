@@ -1,0 +1,31 @@
+{
+  "id": "artyfact",
+  "symbol": "arty",
+  "name": "Artyfact",
+  "image": "https://assets.coingecko.com/coins/images/33879/large/arty.png?1703146847",
+  "current_price": 0.914253,
+  "market_cap": 11945889,
+  "market_cap_rank": 1344,
+  "fully_diluted_valuation": 22818482,
+  "total_volume": 1672107,
+  "high_24h": 1.016,
+  "low_24h": 0.900697,
+  "price_change_24h": -0.08364070512236553,
+  "price_change_percentage_24h": -8.38173,
+  "market_cap_change_24h": -1085855.4738505278,
+  "market_cap_change_percentage_24h": -8.33239,
+  "circulating_supply": 13066289,
+  "total_supply": 24958618.9996,
+  "max_supply": 25000000,
+  "ath": 3.2,
+  "ath_change_percentage": -71.35855,
+  "ath_date": "2023-12-27T04:25:28.633Z",
+  "atl": 0.788412,
+  "atl_change_percentage": 16.09349,
+  "atl_date": "2024-04-18T08:11:34.754Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:35.498Z",
+  "platforms": {
+    "bsc": "0x617cab4aaae1f8dfb3ee138698330776a1e1b324"
+  }
+}

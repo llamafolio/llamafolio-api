@@ -1,0 +1,31 @@
+{
+  "id": "zelwin",
+  "symbol": "zlw",
+  "name": "Zelwin",
+  "image": "https://assets.coingecko.com/coins/images/11547/large/5614.png?1696511447",
+  "current_price": 0.0042045,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1262237,
+  "total_volume": 95847,
+  "high_24h": 0.00430651,
+  "low_24h": 0.0039921,
+  "price_change_24h": -0.000078903382017829,
+  "price_change_percentage_24h": -1.84207,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 300000000,
+  "max_supply": null,
+  "ath": 8.24,
+  "ath_change_percentage": -99.94895,
+  "ath_date": "2021-08-25T17:12:58.238Z",
+  "atl": 0.0039921,
+  "atl_change_percentage": 5.40894,
+  "atl_date": "2024-04-25T07:45:43.395Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:16:21.146Z",
+  "platforms": {
+    "bsc": "0x5dd1e31e1a0e2e077ac98d2a4b781f418ca50387"
+  }
+}

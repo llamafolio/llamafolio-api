@@ -1,0 +1,31 @@
+{
+  "id": "bluejay",
+  "symbol": "blu",
+  "name": "Bluejay",
+  "image": "https://assets.coingecko.com/coins/images/28085/large/Bluejay.png?1696527095",
+  "current_price": 0.168757,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1687.57,
+  "total_volume": 142.14,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 10000,
+  "max_supply": null,
+  "ath": 10.04,
+  "ath_change_percentage": -98.31899,
+  "ath_date": "2022-11-03T05:21:38.801Z",
+  "atl": 0.166243,
+  "atl_change_percentage": 1.51219,
+  "atl_date": "2024-03-25T20:11:13.591Z",
+  "roi": null,
+  "last_updated": "2024-03-29T09:13:23.315Z",
+  "platforms": {
+    "ethereum": "0xe5d2e173b120341face9e9970889c9fe64081ffd"
+  }
+}

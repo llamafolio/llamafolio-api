@@ -1,0 +1,31 @@
+{
+  "id": "zer0zer0",
+  "symbol": "00",
+  "name": "00 Token",
+  "image": "https://assets.coingecko.com/coins/images/27742/large/200x200.png?1696526765",
+  "current_price": 0.083857,
+  "market_cap": 19444537,
+  "market_cap_rank": 1120,
+  "fully_diluted_valuation": 83564672,
+  "total_volume": 291082,
+  "high_24h": 0.089925,
+  "low_24h": 0.081388,
+  "price_change_24h": -0.003660141577409473,
+  "price_change_percentage_24h": -4.1822,
+  "market_cap_change_24h": -924176.6765172258,
+  "market_cap_change_percentage_24h": -4.53724,
+  "circulating_supply": 232688484.59306446,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.980104,
+  "ath_change_percentage": -91.46614,
+  "ath_date": "2022-10-13T01:12:31.076Z",
+  "atl": 0.054147,
+  "atl_change_percentage": 54.4684,
+  "atl_date": "2023-05-19T09:35:35.858Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:17.771Z",
+  "platforms": {
+    "ethereum": "0x881ba05de1e78f549cc63a8f6cabb1d4ad32250d"
+  }
+}

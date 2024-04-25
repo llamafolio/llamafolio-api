@@ -1,0 +1,31 @@
+{
+  "id": "caviar",
+  "symbol": "cvr",
+  "name": "Caviar",
+  "image": "https://assets.coingecko.com/coins/images/31354/large/caviar-token_200x200.png?1696530171",
+  "current_price": 0.134496,
+  "market_cap": 2312937,
+  "market_cap_rank": 2213,
+  "fully_diluted_valuation": 2312937,
+  "total_volume": 2163.61,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 17197005.5705805,
+  "total_supply": 17197005.5705805,
+  "max_supply": 310000000,
+  "ath": 0.421115,
+  "ath_change_percentage": -68.06181,
+  "ath_date": "2023-10-02T16:55:45.354Z",
+  "atl": 0.01117725,
+  "atl_change_percentage": 1103.3054,
+  "atl_date": "2023-10-13T17:49:34.522Z",
+  "roi": null,
+  "last_updated": "2024-04-23T21:30:34.916Z",
+  "platforms": {
+    "polygon": "0x6ae96cc93331c19148541d4d2f31363684917092"
+  }
+}

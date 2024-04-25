@@ -1,0 +1,31 @@
+{
+  "id": "wrapped-accumulate",
+  "symbol": "wacme",
+  "name": "Wrapped Accumulate",
+  "image": "https://assets.coingecko.com/coins/images/27207/large/accumulate-logo-200x200.png?1696526255",
+  "current_price": 0.01102046,
+  "market_cap": 2615077,
+  "market_cap_rank": 2148,
+  "fully_diluted_valuation": 2925172,
+  "total_volume": 302.08,
+  "high_24h": 0.01101299,
+  "low_24h": 0.0101825,
+  "price_change_24h": 0.00051954,
+  "price_change_percentage_24h": 4.94755,
+  "market_cap_change_24h": 121729,
+  "market_cap_change_percentage_24h": 4.88216,
+  "circulating_supply": 237453814,
+  "total_supply": 265611033.164244,
+  "max_supply": 500000000,
+  "ath": 0.297899,
+  "ath_change_percentage": -96.30343,
+  "ath_date": "2022-11-26T09:13:20.464Z",
+  "atl": 0.0049958,
+  "atl_change_percentage": 120.42614,
+  "atl_date": "2023-11-28T06:59:50.126Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:53.484Z",
+  "platforms": {
+    "ethereum": "0xdf4ef6ee483953fe3b84abd08c6a060445c01170"
+  }
+}

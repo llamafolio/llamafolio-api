@@ -1,0 +1,31 @@
+{
+  "id": "wrapped-turtlecoin",
+  "symbol": "wtrtl",
+  "name": "Wrapped TurtleCoin",
+  "image": "https://assets.coingecko.com/coins/images/24891/large/scC6JQJQ_400x400.jpg?1696524049",
+  "current_price": 0.03103878,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 42970,
+  "total_volume": 288.91,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1384408,
+  "max_supply": null,
+  "ath": 3.75,
+  "ath_change_percentage": -99.17248,
+  "ath_date": "2022-08-02T17:18:19.428Z",
+  "atl": 0.00637254,
+  "atl_change_percentage": 387.07049,
+  "atl_date": "2023-06-10T16:58:07.869Z",
+  "roi": null,
+  "last_updated": "2024-04-22T21:54:47.927Z",
+  "platforms": {
+    "fantom": "0x6a31aca4d2f7398f04d9b6ffae2d898d9a8e7938"
+  }
+}

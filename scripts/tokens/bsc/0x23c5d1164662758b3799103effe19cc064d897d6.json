@@ -1,0 +1,31 @@
+{
+  "id": "aura-network-old",
+  "symbol": "aura",
+  "name": "Aura Network [OLD]",
+  "image": "https://assets.coingecko.com/coins/images/30364/large/aura.jpeg?1696529261",
+  "current_price": 0.052401,
+  "market_cap": 2127472,
+  "market_cap_rank": 2266,
+  "fully_diluted_valuation": 21652004,
+  "total_volume": 297.12,
+  "high_24h": 0.054148,
+  "low_24h": 0.051824,
+  "price_change_24h": -0.001241275560823527,
+  "price_change_percentage_24h": -2.314,
+  "market_cap_change_24h": -52825.87835997902,
+  "market_cap_change_percentage_24h": -2.42287,
+  "circulating_supply": 40600000,
+  "total_supply": 413200000,
+  "max_supply": null,
+  "ath": 0.068809,
+  "ath_change_percentage": -23.89389,
+  "ath_date": "2023-05-17T19:20:37.514Z",
+  "atl": 0.03134443,
+  "atl_change_percentage": 67.07135,
+  "atl_date": "2023-10-23T22:49:36.116Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:13.852Z",
+  "platforms": {
+    "bsc": "0x23c5d1164662758b3799103effe19cc064d897d6"
+  }
+}

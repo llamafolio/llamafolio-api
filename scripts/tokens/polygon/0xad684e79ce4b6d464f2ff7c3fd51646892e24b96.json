@@ -1,0 +1,31 @@
+{
+  "id": "autonio",
+  "symbol": "niox",
+  "name": "Autonio",
+  "image": "https://assets.coingecko.com/coins/images/1122/large/NewLogo.png?1696502216",
+  "current_price": 0.00149481,
+  "market_cap": 255286,
+  "market_cap_rank": 3386,
+  "fully_diluted_valuation": 496021,
+  "total_volume": 299663,
+  "high_24h": 0.00155044,
+  "low_24h": 0.0014898,
+  "price_change_24h": -0.000054076739853858,
+  "price_change_percentage_24h": -3.49132,
+  "market_cap_change_24h": -7598.07109141539,
+  "market_cap_change_percentage_24h": -2.89028,
+  "circulating_supply": 169840151.6504,
+  "total_supply": 330000000,
+  "max_supply": null,
+  "ath": 0.822057,
+  "ath_change_percentage": -99.81715,
+  "ath_date": "2018-01-08T00:00:00.000Z",
+  "atl": 0.00000977,
+  "atl_change_percentage": 15286.513,
+  "atl_date": "2020-06-15T06:28:50.660Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:14.274Z",
+  "platforms": {
+    "polygon": "0xad684e79ce4b6d464f2ff7c3fd51646892e24b96"
+  }
+}

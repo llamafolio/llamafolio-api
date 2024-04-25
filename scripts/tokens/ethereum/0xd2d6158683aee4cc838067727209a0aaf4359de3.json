@@ -1,0 +1,35 @@
+{
+  "id": "bounty0x",
+  "symbol": "bnty",
+  "name": "Bounty0x",
+  "image": "https://assets.coingecko.com/coins/images/1444/large/bounty0x.png?1696502494",
+  "current_price": 0.00046013,
+  "market_cap": 75755,
+  "market_cap_rank": 3868,
+  "fully_diluted_valuation": 230063,
+  "total_volume": 23167,
+  "high_24h": 0.00055472,
+  "low_24h": 0.00045917,
+  "price_change_24h": -0.000065895953913944,
+  "price_change_percentage_24h": -12.52721,
+  "market_cap_change_24h": -10721.189331761896,
+  "market_cap_change_percentage_24h": -12.39783,
+  "circulating_supply": 164639794.7270723,
+  "total_supply": 499999999.96,
+  "max_supply": null,
+  "ath": 0.911897,
+  "ath_change_percentage": -99.94965,
+  "ath_date": "2018-01-08T00:00:00.000Z",
+  "atl": 0.00019911,
+  "atl_change_percentage": 130.60197,
+  "atl_date": "2023-10-23T11:24:46.567Z",
+  "roi": {
+    "times": -0.9884968355102768,
+    "currency": "usd",
+    "percentage": -98.84968355102768
+  },
+  "last_updated": "2024-04-25T09:01:00.779Z",
+  "platforms": {
+    "ethereum": "0xd2d6158683aee4cc838067727209a0aaf4359de3"
+  }
+}

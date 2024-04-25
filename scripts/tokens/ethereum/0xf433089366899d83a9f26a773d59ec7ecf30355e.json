@@ -1,0 +1,35 @@
+{
+  "id": "metal",
+  "symbol": "mtl",
+  "name": "Metal DAO",
+  "image": "https://assets.coingecko.com/coins/images/763/large/Metal.png?1696501916",
+  "current_price": 1.64,
+  "market_cap": 105721956,
+  "market_cap_rank": 466,
+  "fully_diluted_valuation": 108919799,
+  "total_volume": 29067345,
+  "high_24h": 1.94,
+  "low_24h": 1.59,
+  "price_change_24h": -0.0654618676269405,
+  "price_change_percentage_24h": -3.84885,
+  "market_cap_change_24h": -4454072.67171222,
+  "market_cap_change_percentage_24h": -4.04269,
+  "circulating_supply": 64633864.147,
+  "total_supply": 66588888,
+  "max_supply": null,
+  "ath": 17.03,
+  "ath_change_percentage": -90.37925,
+  "ath_date": "2018-06-21T04:04:27.124Z",
+  "atl": 0.117252,
+  "atl_change_percentage": 1297.13635,
+  "atl_date": "2020-03-13T02:29:54.468Z",
+  "roi": {
+    "times": 8.085310990095929,
+    "currency": "usd",
+    "percentage": 808.5310990095928
+  },
+  "last_updated": "2024-04-25T08:55:48.316Z",
+  "platforms": {
+    "ethereum": "0xf433089366899d83a9f26a773d59ec7ecf30355e"
+  }
+}

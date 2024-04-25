@@ -1,0 +1,31 @@
+{
+  "id": "acute-angle-cloud",
+  "symbol": "aac",
+  "name": "Double-A Chain",
+  "image": "https://assets.coingecko.com/coins/images/2577/large/acute-angle-cloud.png?1696503381",
+  "current_price": 0.00004638,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 46415,
+  "total_volume": 4362.4,
+  "high_24h": 0.0000508,
+  "low_24h": 0.00004608,
+  "price_change_24h": -0.000001605148298101,
+  "price_change_percentage_24h": -3.34491,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.234028,
+  "ath_change_percentage": -99.98015,
+  "ath_date": "2018-01-25T00:00:00.000Z",
+  "atl": 0.00004199,
+  "atl_change_percentage": 10.60133,
+  "atl_date": "2024-04-13T22:09:56.570Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:19.267Z",
+  "platforms": {
+    "ethereum": "0xe75ad3aab14e4b0df8c5da4286608dabb21bd864"
+  }
+}

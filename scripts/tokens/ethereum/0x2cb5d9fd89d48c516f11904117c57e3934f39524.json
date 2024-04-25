@@ -1,0 +1,31 @@
+{
+  "id": "pepe-uwu",
+  "symbol": "cute",
+  "name": "PEPE UWU",
+  "image": "https://assets.coingecko.com/coins/images/33691/large/Resized_AvEWEWA5_200x200_%281%29.png?1702796454",
+  "current_price": 0.00000125,
+  "market_cap": 973821,
+  "market_cap_rank": 2700,
+  "fully_diluted_valuation": 973821,
+  "total_volume": 53656,
+  "high_24h": 0.00000168,
+  "low_24h": 0.00000125,
+  "price_change_24h": -3.89537750148e-7,
+  "price_change_percentage_24h": -23.72926,
+  "market_cap_change_24h": -308092.4491269636,
+  "market_cap_change_percentage_24h": -24.0338,
+  "circulating_supply": 777777777777,
+  "total_supply": 777777777777,
+  "max_supply": 777777777777,
+  "ath": 0.00025795,
+  "ath_change_percentage": -99.51616,
+  "ath_date": "2024-03-07T03:01:04.643Z",
+  "atl": 6.2962e-8,
+  "atl_change_percentage": 1882.24027,
+  "atl_date": "2023-12-24T20:54:57.437Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:52:22.683Z",
+  "platforms": {
+    "ethereum": "0x2cb5d9fd89d48c516f11904117c57e3934f39524"
+  }
+}

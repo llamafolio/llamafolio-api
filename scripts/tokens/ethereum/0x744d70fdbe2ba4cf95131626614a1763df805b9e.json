@@ -1,0 +1,31 @@
+{
+  "id": "status",
+  "symbol": "snt",
+  "name": "Status",
+  "image": "https://assets.coingecko.com/coins/images/779/large/status.png?1696501931",
+  "current_price": 0.040189,
+  "market_cap": 159021753,
+  "market_cap_rank": 348,
+  "fully_diluted_valuation": 273229848,
+  "total_volume": 8621540,
+  "high_24h": 0.04797817,
+  "low_24h": 0.04013784,
+  "price_change_24h": -0.004893516139660423,
+  "price_change_percentage_24h": -10.85458,
+  "market_cap_change_24h": -18566847.12480545,
+  "market_cap_change_percentage_24h": -10.45498,
+  "circulating_supply": 3960483788.3096976,
+  "total_supply": 6804870174,
+  "max_supply": null,
+  "ath": 0.684918,
+  "ath_change_percentage": -94.13976,
+  "ath_date": "2018-01-03T00:00:00.000Z",
+  "atl": 0.00592935,
+  "atl_change_percentage": 576.93538,
+  "atl_date": "2020-03-13T02:10:36.877Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:56:00.635Z",
+  "platforms": {
+    "ethereum": "0x744d70fdbe2ba4cf95131626614a1763df805b9e"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "amulet-protocol",
+  "symbol": "amu",
+  "name": "Amulet Protocol",
+  "image": "https://assets.coingecko.com/coins/images/34716/large/AMT200x200.png?1705904544",
+  "current_price": 0.02715623,
+  "market_cap": 8407937,
+  "market_cap_rank": 1526,
+  "fully_diluted_valuation": 40133351,
+  "total_volume": 3044652,
+  "high_24h": 0.0291091,
+  "low_24h": 0.02716407,
+  "price_change_24h": -0.001899723485002978,
+  "price_change_percentage_24h": -6.53816,
+  "market_cap_change_24h": -264339.94820523635,
+  "market_cap_change_percentage_24h": -3.0481,
+  "circulating_supply": 209500000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.063632,
+  "ath_change_percentage": -56.76681,
+  "ath_date": "2024-03-03T23:03:21.418Z",
+  "atl": 0.01688187,
+  "atl_change_percentage": 62.9577,
+  "atl_date": "2024-02-24T04:04:30.003Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:46.752Z",
+  "platforms": {
+    "ethereum": "0x174c47d6a4e548ed2b7d369dc0ffb2e60a6ac0f8"
+  }
+}

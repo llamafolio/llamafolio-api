@@ -1,0 +1,31 @@
+{
+  "id": "element-black",
+  "symbol": "elt",
+  "name": "Element Black",
+  "image": "https://assets.coingecko.com/coins/images/25160/large/4TCtUKHs_400x400.jpg?1696524307",
+  "current_price": 0.00013824,
+  "market_cap": 195992,
+  "market_cap_rank": 3509,
+  "fully_diluted_valuation": 566141,
+  "total_volume": 118768,
+  "high_24h": 0.00016972,
+  "low_24h": 0.00011378,
+  "price_change_24h": -0.000018166245879285,
+  "price_change_percentage_24h": -11.61446,
+  "market_cap_change_24h": -17185.54743848776,
+  "market_cap_change_percentage_24h": -8.0616,
+  "circulating_supply": 1384760129.66,
+  "total_supply": 4000000000,
+  "max_supply": 4000000000,
+  "ath": 0.153254,
+  "ath_change_percentage": -99.90668,
+  "ath_date": "2022-04-21T15:59:07.493Z",
+  "atl": 0.00006465,
+  "atl_change_percentage": 121.20917,
+  "atl_date": "2023-10-12T15:38:52.435Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:20.090Z",
+  "platforms": {
+    "ethereum": "0xc0ae17eb994fa828540ffa53776b3830233a1b02"
+  }
+}

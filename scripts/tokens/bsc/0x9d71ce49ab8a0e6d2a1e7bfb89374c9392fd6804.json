@@ -1,0 +1,31 @@
+{
+  "id": "nvirworld",
+  "symbol": "nvir",
+  "name": "NvirWorld",
+  "image": "https://assets.coingecko.com/coins/images/21359/large/Nvir_symbol.png?1696520724",
+  "current_price": 0.01198398,
+  "market_cap": 14386715,
+  "market_cap_rank": 1269,
+  "fully_diluted_valuation": 127673478,
+  "total_volume": 2097643,
+  "high_24h": 0.01311982,
+  "low_24h": 0.01185196,
+  "price_change_24h": -0.001071554394463967,
+  "price_change_percentage_24h": -8.20766,
+  "market_cap_change_24h": -1344263.5408112034,
+  "market_cap_change_percentage_24h": -8.54533,
+  "circulating_supply": 1205567772.3729947,
+  "total_supply": 10698691797,
+  "max_supply": 10700000000,
+  "ath": 1.67,
+  "ath_change_percentage": -99.28374,
+  "ath_date": "2022-03-24T16:59:34.660Z",
+  "atl": 0.00000305,
+  "atl_change_percentage": 391669.48569,
+  "atl_date": "2022-04-04T17:40:37.090Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:26.866Z",
+  "platforms": {
+    "bsc": "0x9d71ce49ab8a0e6d2a1e7bfb89374c9392fd6804"
+  }
+}

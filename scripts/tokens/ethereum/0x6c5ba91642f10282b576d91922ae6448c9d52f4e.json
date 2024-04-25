@@ -1,0 +1,31 @@
+{
+  "id": "pha",
+  "symbol": "pha",
+  "name": "Phala",
+  "image": "https://assets.coingecko.com/coins/images/12451/large/phala.png?1696512270",
+  "current_price": 0.203769,
+  "market_cap": 145194354,
+  "market_cap_rank": 372,
+  "fully_diluted_valuation": 203056761,
+  "total_volume": 9977002,
+  "high_24h": 0.228535,
+  "low_24h": 0.203086,
+  "price_change_24h": -0.018042634143583734,
+  "price_change_percentage_24h": -8.13421,
+  "market_cap_change_24h": 3334246,
+  "market_cap_change_percentage_24h": 2.35038,
+  "circulating_supply": 715043188.142398,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 1.39,
+  "ath_change_percentage": -85.31098,
+  "ath_date": "2021-05-15T04:20:32.741Z",
+  "atl": 0.064594,
+  "atl_change_percentage": 216.24428,
+  "atl_date": "2020-09-12T12:15:05.468Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:37.117Z",
+  "platforms": {
+    "ethereum": "0x6c5ba91642f10282b576d91922ae6448c9d52f4e"
+  }
+}

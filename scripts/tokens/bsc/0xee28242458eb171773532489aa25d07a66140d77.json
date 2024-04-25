@@ -1,0 +1,31 @@
+{
+  "id": "nuson-chain",
+  "symbol": "nsc",
+  "name": "Nuson Chain",
+  "image": "https://assets.coingecko.com/coins/images/34931/large/1000002044.png?1706689580",
+  "current_price": 0.00002592,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 25924,
+  "total_volume": 33514,
+  "high_24h": 0.00002973,
+  "low_24h": 0.00002524,
+  "price_change_24h": -0.000002470975535895,
+  "price_change_percentage_24h": -8.70223,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.915735,
+  "ath_change_percentage": -99.99716,
+  "ath_date": "2024-02-18T12:47:05.725Z",
+  "atl": 0.000012,
+  "atl_change_percentage": 116.40867,
+  "atl_date": "2024-04-04T20:08:44.102Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:55.258Z",
+  "platforms": {
+    "bsc": "0xee28242458eb171773532489aa25d07a66140d77"
+  }
+}

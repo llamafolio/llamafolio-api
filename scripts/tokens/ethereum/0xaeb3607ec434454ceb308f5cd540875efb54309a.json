@@ -1,0 +1,31 @@
+{
+  "id": "sturdy",
+  "symbol": "strdy",
+  "name": "Sturdy",
+  "image": "https://assets.coingecko.com/coins/images/30581/large/SF-Dark-Logomark.png?1696529445",
+  "current_price": 0.765138,
+  "market_cap": 3864479,
+  "market_cap_rank": 1925,
+  "fully_diluted_valuation": 76385342,
+  "total_volume": 126515,
+  "high_24h": 0.953065,
+  "low_24h": 0.764461,
+  "price_change_24h": -0.17217088262020297,
+  "price_change_percentage_24h": -18.36864,
+  "market_cap_change_24h": -894017.1555827348,
+  "market_cap_change_percentage_24h": -18.78781,
+  "circulating_supply": 5059189.022743177,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 2.59,
+  "ath_change_percentage": -70.49663,
+  "ath_date": "2024-03-21T13:40:34.860Z",
+  "atl": 0.261236,
+  "atl_change_percentage": 193.04006,
+  "atl_date": "2024-03-05T20:15:52.717Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:51.428Z",
+  "platforms": {
+    "ethereum": "0xaeb3607ec434454ceb308f5cd540875efb54309a"
+  }
+}

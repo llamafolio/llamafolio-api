@@ -1,0 +1,31 @@
+{
+  "id": "xai-blockchain",
+  "symbol": "xai",
+  "name": "Xai",
+  "image": "https://assets.coingecko.com/coins/images/34258/large/2024-01-09_16.31.28.jpg?1704789138",
+  "current_price": 0.730774,
+  "market_cap": 202666539,
+  "market_cap_rank": 296,
+  "fully_diluted_valuation": 719990886,
+  "total_volume": 20473364,
+  "high_24h": 0.839005,
+  "low_24h": 0.730044,
+  "price_change_24h": -0.08624512917640959,
+  "price_change_percentage_24h": -10.55607,
+  "market_cap_change_24h": -23866593.30355698,
+  "market_cap_change_percentage_24h": -10.53559,
+  "circulating_supply": 277118150,
+  "total_supply": 984486851,
+  "max_supply": 2500000000,
+  "ath": 1.59,
+  "ath_change_percentage": -53.92528,
+  "ath_date": "2024-02-25T16:20:31.509Z",
+  "atl": 0.455001,
+  "atl_change_percentage": 60.9856,
+  "atl_date": "2024-01-10T16:24:28.833Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:41.512Z",
+  "platforms": {
+    "arbitrum": "0x4cb9a7ae498cedcbb5eae9f25736ae7d428c9d66"
+  }
+}

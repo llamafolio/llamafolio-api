@@ -1,0 +1,35 @@
+{
+  "id": "substratum",
+  "symbol": "sub",
+  "name": "Substratum",
+  "image": "https://assets.coingecko.com/coins/images/950/large/substratum.png?1696502066",
+  "current_price": 0.0001272,
+  "market_cap": 32001,
+  "market_cap_rank": 4086,
+  "fully_diluted_valuation": 60037,
+  "total_volume": 0.01653569,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 251584925.64,
+  "total_supply": 472000000,
+  "max_supply": null,
+  "ath": 3.11,
+  "ath_change_percentage": -99.99592,
+  "ath_date": "2018-01-09T00:00:00.000Z",
+  "atl": 0.00001999,
+  "atl_change_percentage": 536.25748,
+  "atl_date": "2023-10-16T09:46:15.792Z",
+  "roi": {
+    "times": -0.9981828913999815,
+    "currency": "usd",
+    "percentage": -99.81828913999816
+  },
+  "last_updated": "2024-04-20T01:25:51.477Z",
+  "platforms": {
+    "ethereum": "0x8d75959f1e61ec2571aa72798237101f084de63a"
+  }
+}

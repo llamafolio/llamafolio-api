@@ -1,0 +1,31 @@
+{
+  "id": "gamegpt",
+  "symbol": "duel",
+  "name": "GameGPT",
+  "image": "https://assets.coingecko.com/coins/images/34491/large/duel.jpeg?1705056819",
+  "current_price": 0.01413862,
+  "market_cap": 32903649,
+  "market_cap_rank": 871,
+  "fully_diluted_valuation": 141413741,
+  "total_volume": 7813396,
+  "high_24h": 0.01580953,
+  "low_24h": 0.01402823,
+  "price_change_24h": -0.001308984289994701,
+  "price_change_percentage_24h": -8.47371,
+  "market_cap_change_24h": -2952619.316574432,
+  "market_cap_change_percentage_24h": -8.2346,
+  "circulating_supply": 2326764621,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.03294884,
+  "ath_change_percentage": -56.71974,
+  "ath_date": "2024-04-04T21:36:10.006Z",
+  "atl": 0.0043633,
+  "atl_change_percentage": 226.82454,
+  "atl_date": "2024-02-12T06:29:29.046Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:40.222Z",
+  "platforms": {
+    "bsc": "0xa1ed0bd9a4776830c5b7ba004f26427b71152ca5"
+  }
+}

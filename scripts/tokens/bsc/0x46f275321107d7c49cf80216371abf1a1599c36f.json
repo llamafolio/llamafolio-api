@@ -1,0 +1,31 @@
+{
+  "id": "tg-dao",
+  "symbol": "tgdao",
+  "name": "TG DAO",
+  "image": "https://assets.coingecko.com/coins/images/22834/large/JjRiXuqw_400x400.jpg?1696522135",
+  "current_price": 0.00024315,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 243146,
+  "total_volume": 1.62,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.0307894,
+  "ath_change_percentage": -99.21029,
+  "ath_date": "2022-02-08T14:00:05.782Z",
+  "atl": 0.00024181,
+  "atl_change_percentage": 0.55476,
+  "atl_date": "2023-07-25T14:44:28.740Z",
+  "roi": null,
+  "last_updated": "2023-08-03T10:30:29.134Z",
+  "platforms": {
+    "bsc": "0x46f275321107d7c49cf80216371abf1a1599c36f"
+  }
+}

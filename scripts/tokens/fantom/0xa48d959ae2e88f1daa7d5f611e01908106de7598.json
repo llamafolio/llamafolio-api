@@ -1,0 +1,31 @@
+{
+  "id": "boo-mirrorworld",
+  "symbol": "xboo",
+  "name": "Boo MirrorWorld",
+  "image": "https://assets.coingecko.com/coins/images/22609/large/xboo.png?1696521926",
+  "current_price": 4.59,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 26.25,
+  "high_24h": 4.83,
+  "low_24h": 4.53,
+  "price_change_24h": -0.13584444641164328,
+  "price_change_percentage_24h": -2.87393,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 63.37,
+  "ath_change_percentage": -92.74648,
+  "ath_date": "2022-01-16T21:00:43.310Z",
+  "atl": 0.729924,
+  "atl_change_percentage": 529.75537,
+  "atl_date": "2023-09-28T14:00:03.542Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:50.659Z",
+  "platforms": {
+    "fantom": "0xa48d959ae2e88f1daa7d5f611e01908106de7598"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "dot-dot-finance",
+  "symbol": "ddd",
+  "name": "Dot Dot Finance",
+  "image": "https://assets.coingecko.com/coins/images/25212/large/batkXqm.png?1696524355",
+  "current_price": 0.0005373,
+  "market_cap": 67156,
+  "market_cap_rank": 3911,
+  "fully_diluted_valuation": 669681,
+  "total_volume": 194.2,
+  "high_24h": 0.00055067,
+  "low_24h": 0.00052607,
+  "price_change_24h": -0.000004478269276131,
+  "price_change_percentage_24h": -0.82658,
+  "market_cap_change_24h": 69.14,
+  "market_cap_change_percentage_24h": 0.10306,
+  "circulating_supply": 124894965.40138295,
+  "total_supply": 1245462662.42751,
+  "max_supply": null,
+  "ath": 0.04782957,
+  "ath_change_percentage": -98.8797,
+  "ath_date": "2022-04-26T06:42:49.824Z",
+  "atl": 0.0003735,
+  "atl_change_percentage": 43.46459,
+  "atl_date": "2023-12-18T10:39:56.337Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:59.325Z",
+  "platforms": {
+    "bsc": "0x84c97300a190676a19d1e13115629a11f8482bd1"
+  }
+}

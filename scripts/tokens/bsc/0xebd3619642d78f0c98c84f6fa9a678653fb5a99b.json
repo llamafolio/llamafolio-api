@@ -1,0 +1,31 @@
+{
+  "id": "asx-capital",
+  "symbol": "asx",
+  "name": "ASX Capital",
+  "image": "https://assets.coingecko.com/coins/images/34993/large/AXVII_007_500px_Black_Background.png?1706950900",
+  "current_price": 0.260207,
+  "market_cap": 1870442,
+  "market_cap_rank": 2339,
+  "fully_diluted_valuation": 2601398,
+  "total_volume": 1533.7,
+  "high_24h": 0.273009,
+  "low_24h": 0.258427,
+  "price_change_24h": -0.0094104865635839,
+  "price_change_percentage_24h": -3.49031,
+  "market_cap_change_24h": -69326.41087082936,
+  "market_cap_change_percentage_24h": -3.57395,
+  "circulating_supply": 7190141.856861774,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.324318,
+  "ath_change_percentage": -20.19014,
+  "ath_date": "2024-03-13T14:33:38.129Z",
+  "atl": 0.175255,
+  "atl_change_percentage": 47.69209,
+  "atl_date": "2024-02-05T03:29:35.506Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:19.470Z",
+  "platforms": {
+    "bsc": "0xebd3619642d78f0c98c84f6fa9a678653fb5a99b"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "spheresxs",
+  "symbol": "sxs",
+  "name": "SphereSXS",
+  "image": "https://assets.coingecko.com/coins/images/27924/large/IMG_0354.jpeg?1703176663",
+  "current_price": 0.00357021,
+  "market_cap": 67705,
+  "market_cap_rank": 3906,
+  "fully_diluted_valuation": 356506,
+  "total_volume": 32541,
+  "high_24h": 0.0035851,
+  "low_24h": 0.00321326,
+  "price_change_24h": 0.00024619,
+  "price_change_percentage_24h": 7.40629,
+  "market_cap_change_24h": 5180.64,
+  "market_cap_change_percentage_24h": 8.28579,
+  "circulating_supply": 18991248.89532959,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.089484,
+  "ath_change_percentage": -96.01219,
+  "ath_date": "2023-06-08T13:10:06.805Z",
+  "atl": 0.00311024,
+  "atl_change_percentage": 14.73309,
+  "atl_date": "2024-04-24T08:02:00.851Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:32.009Z",
+  "platforms": {
+    "ethereum": "0x259ce0cb3581995d40cbb03fd4badeaaba1edaff"
+  }
+}

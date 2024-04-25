@@ -1,0 +1,31 @@
+{
+  "id": "polydoge",
+  "symbol": "polydoge",
+  "name": "PolyDoge",
+  "image": "https://assets.coingecko.com/coins/images/15146/large/p1kSco1h_400x400.jpg?1696514802",
+  "current_price": 9.402e-9,
+  "market_cap": 8022671,
+  "market_cap_rank": 1550,
+  "fully_diluted_valuation": 8033994,
+  "total_volume": 1037171,
+  "high_24h": 1.0791e-8,
+  "low_24h": 9.065e-9,
+  "price_change_24h": -6.07836788e-10,
+  "price_change_percentage_24h": -6.07256,
+  "market_cap_change_24h": -541015.351371632,
+  "market_cap_change_percentage_24h": -6.31755,
+  "circulating_supply": 853848329240710,
+  "total_supply": 855053366995362.2,
+  "max_supply": 1000000000000000,
+  "ath": 9.3272e-8,
+  "ath_change_percentage": -89.80246,
+  "ath_date": "2021-11-10T03:43:36.399Z",
+  "atl": 1.794e-9,
+  "atl_change_percentage": 430.18147,
+  "atl_date": "2021-05-09T21:42:35.994Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:11.246Z",
+  "platforms": {
+    "polygon": "0x8a953cfe442c5e8855cc6c61b1293fa648bae472"
+  }
+}

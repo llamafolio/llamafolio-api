@@ -1,0 +1,31 @@
+{
+  "id": "answer-governance",
+  "symbol": "agov",
+  "name": "Answer Governance",
+  "image": "https://assets.coingecko.com/coins/images/14383/large/AgoV_Logo1.png?1696514074",
+  "current_price": 0.00010849,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 108490,
+  "total_volume": 2.25,
+  "high_24h": 0.00012066,
+  "low_24h": 0.00010824,
+  "price_change_24h": -0.000011170805589204,
+  "price_change_percentage_24h": -9.33538,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.15375,
+  "ath_change_percentage": -99.9296,
+  "ath_date": "2022-10-29T17:53:14.959Z",
+  "atl": 0.00005375,
+  "atl_change_percentage": 101.39035,
+  "atl_date": "2024-03-19T01:44:44.762Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:33.296Z",
+  "platforms": {
+    "ethereum": "0xd1420af453fd7bf940573431d416cace7ff8280c"
+  }
+}

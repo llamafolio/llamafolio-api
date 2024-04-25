@@ -1,0 +1,31 @@
+{
+  "id": "trava-finance",
+  "symbol": "trava",
+  "name": "Trava Finance",
+  "image": "https://assets.coingecko.com/coins/images/17553/large/TRAVA_OFFICIAL_LOGO.png?1696517089",
+  "current_price": 0.00045249,
+  "market_cap": 1223335,
+  "market_cap_rank": 2572,
+  "fully_diluted_valuation": 2258986,
+  "total_volume": 1050015,
+  "high_24h": 0.00051072,
+  "low_24h": 0.00044273,
+  "price_change_24h": -0.000055381800504081,
+  "price_change_percentage_24h": -10.90464,
+  "market_cap_change_24h": -150410.95515876962,
+  "market_cap_change_percentage_24h": -10.94896,
+  "circulating_supply": 2707709386.93012,
+  "total_supply": 5000000000,
+  "max_supply": 5000000000,
+  "ath": 0.04616243,
+  "ath_change_percentage": -99.02201,
+  "ath_date": "2021-09-19T20:37:14.121Z",
+  "atl": 0.0002164,
+  "atl_change_percentage": 108.62507,
+  "atl_date": "2023-10-11T17:54:56.768Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:47.532Z",
+  "platforms": {
+    "fantom": "0x477a9d5df9beda06f6b021136a2efe7be242fcc9"
+  }
+}

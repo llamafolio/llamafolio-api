@@ -1,0 +1,35 @@
+{
+  "id": "asd",
+  "symbol": "asd",
+  "name": "AscendEx",
+  "image": "https://assets.coingecko.com/coins/images/5003/large/bitmax.png?1696505535",
+  "current_price": 0.051004,
+  "market_cap": 37973714,
+  "market_cap_rank": 807,
+  "fully_diluted_valuation": 37973714,
+  "total_volume": 2647694,
+  "high_24h": 0.052342,
+  "low_24h": 0.0493356,
+  "price_change_24h": 0.00000619,
+  "price_change_percentage_24h": 0.01214,
+  "market_cap_change_24h": 61581,
+  "market_cap_change_percentage_24h": 0.16243,
+  "circulating_supply": 742983477.862,
+  "total_supply": 742983477.862,
+  "max_supply": null,
+  "ath": 3.26,
+  "ath_change_percentage": -98.4369,
+  "ath_date": "2021-03-27T18:14:42.486Z",
+  "atl": 0.01194798,
+  "atl_change_percentage": 326.13912,
+  "atl_date": "2022-07-12T04:44:33.749Z",
+  "roi": {
+    "times": 1.802414013846877,
+    "currency": "usd",
+    "percentage": 180.2414013846877
+  },
+  "last_updated": "2024-04-25T09:03:38.238Z",
+  "platforms": {
+    "ethereum": "0xff742d05420b6aca4481f635ad8341f81a6300c2"
+  }
+}

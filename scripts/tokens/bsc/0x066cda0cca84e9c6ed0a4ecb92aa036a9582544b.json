@@ -1,0 +1,31 @@
+{
+  "id": "sonic-inu",
+  "symbol": "sonic",
+  "name": "Sonic Inu",
+  "image": "https://assets.coingecko.com/coins/images/30259/large/Sonic_inu-1.png?1696529167",
+  "current_price": 1.703e-12,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 715375,
+  "total_volume": 2291.03,
+  "high_24h": 1.903e-12,
+  "low_24h": 1.701e-12,
+  "price_change_24h": -1.24345e-13,
+  "price_change_percentage_24h": -6.80366,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 420000000000000000,
+  "max_supply": 420000000000000000,
+  "ath": 2.8704e-11,
+  "ath_change_percentage": -94.06602,
+  "ath_date": "2023-05-18T06:02:47.486Z",
+  "atl": 7.1287e-13,
+  "atl_change_percentage": 138.93204,
+  "atl_date": "2023-10-10T15:11:27.712Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:24.801Z",
+  "platforms": {
+    "bsc": "0x066cda0cca84e9c6ed0a4ecb92aa036a9582544b"
+  }
+}

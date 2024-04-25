@@ -1,0 +1,31 @@
+{
+  "id": "eurocoinpay",
+  "symbol": "ecte",
+  "name": "EurocoinToken",
+  "image": "https://assets.coingecko.com/coins/images/7634/large/logotoken200x200.png?1696507889",
+  "current_price": 0.111438,
+  "market_cap": 605105,
+  "market_cap_rank": 2967,
+  "fully_diluted_valuation": 11126243,
+  "total_volume": 79827,
+  "high_24h": 0.115466,
+  "low_24h": 0.097092,
+  "price_change_24h": 0.01094703,
+  "price_change_percentage_24h": 10.89354,
+  "market_cap_change_24h": 58015,
+  "market_cap_change_percentage_24h": 10.6042,
+  "circulating_supply": 5438542.231706,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 1.026,
+  "ath_change_percentage": -89.15692,
+  "ath_date": "2021-09-28T19:53:55.298Z",
+  "atl": 0.00009998,
+  "atl_change_percentage": 111188.46356,
+  "atl_date": "2020-09-12T10:03:44.387Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:56.729Z",
+  "platforms": {
+    "ethereum": "0xe9fa21e671bcfb04e6868784b89c19d5aa2424ea"
+  }
+}

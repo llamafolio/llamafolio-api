@@ -1,0 +1,31 @@
+{
+  "id": "nerdbot",
+  "symbol": "nerd",
+  "name": "NerdBot",
+  "image": "https://assets.coingecko.com/coins/images/32386/large/nerdbot.png?1698047412",
+  "current_price": 0.01813799,
+  "market_cap": 419871,
+  "market_cap_rank": 3157,
+  "fully_diluted_valuation": 1811606,
+  "total_volume": 93337,
+  "high_24h": 0.01905434,
+  "low_24h": 0.01801474,
+  "price_change_24h": -0.000780407688892627,
+  "price_change_percentage_24h": -4.12513,
+  "market_cap_change_24h": -18236.117035546922,
+  "market_cap_change_percentage_24h": -4.16248,
+  "circulating_supply": 23176728.857964724,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.206293,
+  "ath_change_percentage": -91.2141,
+  "ath_date": "2023-10-26T13:45:26.930Z",
+  "atl": 0.01764428,
+  "atl_change_percentage": 2.72289,
+  "atl_date": "2024-04-19T03:21:49.030Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:38.663Z",
+  "platforms": {
+    "ethereum": "0xed1273928ba97eed7b49e82c2f39d512d7591112"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "0xliquidity",
+  "symbol": "0xlp",
+  "name": "0xLiquidity",
+  "image": "https://assets.coingecko.com/coins/images/35367/large/Logo_MAIN.jpg?1708400938",
+  "current_price": 0.00740521,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 737263,
+  "total_volume": 8505.65,
+  "high_24h": 0.00873175,
+  "low_24h": 0.00737263,
+  "price_change_24h": -0.001120982431643921,
+  "price_change_percentage_24h": -13.14751,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.01935496,
+  "ath_change_percentage": -61.73997,
+  "ath_date": "2024-02-24T20:14:31.763Z",
+  "atl": 0.00404725,
+  "atl_change_percentage": 82.9688,
+  "atl_date": "2024-02-21T21:59:38.749Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:06:31.884Z",
+  "platforms": {
+    "ethereum": "0xd377f28245bc505190c8f34d2bfe5f215754f634"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "spacedawgs",
+  "symbol": "dawgs",
+  "name": "SpaceDawgs",
+  "image": "https://assets.coingecko.com/coins/images/17076/large/twitter-facebook-Instagram-pfp.png?1696516638",
+  "current_price": 0.0000013,
+  "market_cap": 985074,
+  "market_cap_rank": 2693,
+  "fully_diluted_valuation": 1298048,
+  "total_volume": 1109.64,
+  "high_24h": 0.00000131,
+  "low_24h": 7.25084e-7,
+  "price_change_24h": 5.78804e-7,
+  "price_change_percentage_24h": 79.82582,
+  "market_cap_change_24h": 433742,
+  "market_cap_change_percentage_24h": 78.67173,
+  "circulating_supply": 758888726199.7623,
+  "total_supply": 1000000000000,
+  "max_supply": 1000000000000,
+  "ath": 0.00009883,
+  "ath_change_percentage": -98.68532,
+  "ath_date": "2021-11-09T10:39:51.808Z",
+  "atl": 1.62289e-7,
+  "atl_change_percentage": 700.60793,
+  "atl_date": "2023-07-24T15:14:48.642Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:02.784Z",
+  "platforms": {
+    "ethereum": "0x64a77277e37d44957fe5815d6ff442ab8b16cc29"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "symbiosis-finance",
+  "symbol": "sis",
+  "name": "Symbiosis",
+  "image": "https://assets.coingecko.com/coins/images/20805/large/SymbiosisFinance_logo-150x150.jpeg?1696520198",
+  "current_price": 0.346963,
+  "market_cap": 21580368,
+  "market_cap_rank": 1075,
+  "fully_diluted_valuation": 34675314,
+  "total_volume": 3761793,
+  "high_24h": 0.362316,
+  "low_24h": 0.344107,
+  "price_change_24h": -0.007775275152924477,
+  "price_change_percentage_24h": -2.19183,
+  "market_cap_change_24h": -446807.3184448406,
+  "market_cap_change_percentage_24h": -2.02844,
+  "circulating_supply": 62074436.54036606,
+  "total_supply": 99741144.99302,
+  "max_supply": 100000000,
+  "ath": 5.59,
+  "ath_change_percentage": -93.77995,
+  "ath_date": "2022-01-16T17:11:28.691Z",
+  "atl": 0.055617,
+  "atl_change_percentage": 525.01017,
+  "atl_date": "2022-11-09T22:54:20.704Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:19.740Z",
+  "platforms": {
+    "ethereum": "0xd38bb40815d2b0c2d2c866e0c72c5728ffc76dd9"
+  }
+}

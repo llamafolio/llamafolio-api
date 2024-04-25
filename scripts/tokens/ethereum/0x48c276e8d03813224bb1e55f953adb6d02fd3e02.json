@@ -1,0 +1,31 @@
+{
+  "id": "kuma-inu",
+  "symbol": "kuma",
+  "name": "Kuma Inu",
+  "image": "https://assets.coingecko.com/coins/images/15526/large/kuma_inu.PNG?1696515168",
+  "current_price": 7.892e-9,
+  "market_cap": 936120,
+  "market_cap_rank": 2725,
+  "fully_diluted_valuation": 7883101,
+  "total_volume": 22525,
+  "high_24h": 8.291e-9,
+  "low_24h": 7.805e-9,
+  "price_change_24h": -3.19790311e-10,
+  "price_change_percentage_24h": -3.89414,
+  "market_cap_change_24h": -41709.32183672674,
+  "market_cap_change_percentage_24h": -4.2655,
+  "circulating_supply": 118750167011962.6,
+  "total_supply": 1000000000000000,
+  "max_supply": null,
+  "ath": 6.03179e-7,
+  "ath_change_percentage": -98.69223,
+  "ath_date": "2021-10-12T17:55:28.390Z",
+  "atl": 2.082e-9,
+  "atl_change_percentage": 278.78899,
+  "atl_date": "2023-06-13T09:24:24.276Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:23.243Z",
+  "platforms": {
+    "ethereum": "0x48c276e8d03813224bb1e55f953adb6d02fd3e02"
+  }
+}

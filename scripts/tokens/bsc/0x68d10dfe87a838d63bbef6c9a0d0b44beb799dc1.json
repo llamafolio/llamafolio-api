@@ -1,0 +1,31 @@
+{
+  "id": "magnetgold",
+  "symbol": "mtg",
+  "name": "MagnetGold",
+  "image": "https://assets.coingecko.com/coins/images/19302/large/mtg.PNG?1696518745",
+  "current_price": 0.124427,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 87098850,
+  "total_volume": 190.91,
+  "high_24h": 0.125057,
+  "low_24h": 0.11426,
+  "price_change_24h": 0.01010034,
+  "price_change_percentage_24h": 8.83463,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 700000000,
+  "max_supply": null,
+  "ath": 1.061,
+  "ath_change_percentage": -88.27797,
+  "ath_date": "2022-10-14T06:48:11.034Z",
+  "atl": 0.00002759,
+  "atl_change_percentage": 450900.59855,
+  "atl_date": "2021-12-13T19:43:38.713Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:26.757Z",
+  "platforms": {
+    "bsc": "0x68d10dfe87a838d63bbef6c9a0d0b44beb799dc1"
+  }
+}

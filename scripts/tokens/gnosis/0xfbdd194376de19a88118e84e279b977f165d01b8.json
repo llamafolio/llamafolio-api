@@ -1,0 +1,31 @@
+{
+  "id": "dehive",
+  "symbol": "dhv",
+  "name": "DeHive",
+  "image": "https://assets.coingecko.com/coins/images/14926/large/logo_200x200.png?1696514587",
+  "current_price": 0.04076128,
+  "market_cap": 174994,
+  "market_cap_rank": 3559,
+  "fully_diluted_valuation": 229086,
+  "total_volume": 24081,
+  "high_24h": 0.04229517,
+  "low_24h": 0.04061439,
+  "price_change_24h": -0.001105008548482639,
+  "price_change_percentage_24h": -2.63938,
+  "market_cap_change_24h": -4764.4050152253185,
+  "market_cap_change_percentage_24h": -2.65044,
+  "circulating_supply": 4288705.44724065,
+  "total_supply": 5614361,
+  "max_supply": 10000000,
+  "ath": 7.48,
+  "ath_change_percentage": -99.4498,
+  "ath_date": "2021-05-08T19:16:52.599Z",
+  "atl": 0.0385468,
+  "atl_change_percentage": 6.76121,
+  "atl_date": "2024-04-16T15:35:38.158Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:12.037Z",
+  "platforms": {
+    "gnosis": "0xfbdd194376de19a88118e84e279b977f165d01b8"
+  }
+}

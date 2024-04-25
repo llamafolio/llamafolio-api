@@ -1,0 +1,31 @@
+{
+  "id": "cyclone-protocol",
+  "symbol": "cyc",
+  "name": "Cyclone Protocol",
+  "image": "https://assets.coingecko.com/coins/images/14065/large/b3_DFjFp_400x400.jpg?1696513790",
+  "current_price": 22.62,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 129688,
+  "total_volume": 781.76,
+  "high_24h": 23.68,
+  "low_24h": 22.45,
+  "price_change_24h": -0.5616564522062468,
+  "price_change_percentage_24h": -2.42274,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 5726,
+  "max_supply": null,
+  "ath": 6994.22,
+  "ath_change_percentage": -99.67746,
+  "ath_date": "2021-04-16T08:54:00.237Z",
+  "atl": 9.76,
+  "atl_change_percentage": 131.22139,
+  "atl_date": "2023-09-01T21:55:29.793Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:49.496Z",
+  "platforms": {
+    "bsc": "0x810ee35443639348adbbc467b33310d2ab43c168"
+  }
+}

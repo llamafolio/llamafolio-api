@@ -1,0 +1,31 @@
+{
+  "id": "bullieverse",
+  "symbol": "bull",
+  "name": "Bullieverse",
+  "image": "https://assets.coingecko.com/coins/images/24174/large/KR3qVAQe_400x400.jpg?1696523362",
+  "current_price": 0.0075378,
+  "market_cap": 5445052,
+  "market_cap_rank": 1750,
+  "fully_diluted_valuation": 7561847,
+  "total_volume": 148399,
+  "high_24h": 0.0081709,
+  "low_24h": 0.00753381,
+  "price_change_24h": -0.000536559007897528,
+  "price_change_percentage_24h": -6.64522,
+  "market_cap_change_24h": -375226.5999619104,
+  "market_cap_change_percentage_24h": -6.44688,
+  "circulating_supply": 720069044.507971,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.377315,
+  "ath_change_percentage": -97.99968,
+  "ath_date": "2022-03-09T13:10:35.955Z",
+  "atl": 0.00073057,
+  "atl_change_percentage": 933.10231,
+  "atl_date": "2023-08-19T02:45:15.229Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:54.392Z",
+  "platforms": {
+    "polygon": "0x9f95e17b2668afe01f8fbd157068b0a4405cc08d"
+  }
+}

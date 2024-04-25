@@ -1,0 +1,35 @@
+{
+  "id": "ocean-protocol",
+  "symbol": "ocean",
+  "name": "Ocean Protocol",
+  "image": "https://assets.coingecko.com/coins/images/3687/large/ocean-protocol-logo.jpg?1696504363",
+  "current_price": 0.946038,
+  "market_cap": 572542180,
+  "market_cap_rank": 153,
+  "fully_diluted_valuation": 1328573787,
+  "total_volume": 59072398,
+  "high_24h": 1.084,
+  "low_24h": 0.939166,
+  "price_change_24h": -0.09120600072131213,
+  "price_change_percentage_24h": -8.79311,
+  "market_cap_change_24h": -62249413.5864079,
+  "market_cap_change_percentage_24h": -9.80628,
+  "circulating_supply": 607158417.9615499,
+  "total_supply": 1408900141.1674242,
+  "max_supply": 1410000000,
+  "ath": 1.93,
+  "ath_change_percentage": -50.95871,
+  "ath_date": "2021-04-10T09:24:58.915Z",
+  "atl": 0.01284832,
+  "atl_change_percentage": 7266.57747,
+  "atl_date": "2019-08-11T00:00:00.000Z",
+  "roi": {
+    "times": 6.883653359990725,
+    "currency": "usd",
+    "percentage": 688.3653359990725
+  },
+  "last_updated": "2024-04-25T09:02:49.037Z",
+  "platforms": {
+    "polygon": "0x282d8efce846a88b159800bd4130ad77443fa1a1"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "timechain-swap-token",
+  "symbol": "tcs",
+  "name": "Timechain Swap",
+  "image": "https://assets.coingecko.com/coins/images/18677/large/0xFbfAE0DD49882e503982f8eb4b8B1e464ecA0b91.png?1696518146",
+  "current_price": 0.01964127,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 392825,
+  "total_volume": 1.7,
+  "high_24h": 0.01976401,
+  "low_24h": 0.0196202,
+  "price_change_24h": -0.000122732572088932,
+  "price_change_percentage_24h": -0.62099,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 20000000,
+  "max_supply": 20000000,
+  "ath": 4.37,
+  "ath_change_percentage": -99.55069,
+  "ath_date": "2021-10-07T16:05:14.403Z",
+  "atl": 0.00539702,
+  "atl_change_percentage": 263.92796,
+  "atl_date": "2023-10-19T17:45:20.400Z",
+  "roi": null,
+  "last_updated": "2024-04-24T13:01:08.244Z",
+  "platforms": {
+    "fantom": "0xfbfae0dd49882e503982f8eb4b8b1e464eca0b91"
+  }
+}

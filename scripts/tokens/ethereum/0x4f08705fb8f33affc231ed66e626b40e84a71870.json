@@ -1,0 +1,31 @@
+{
+  "id": "flute",
+  "symbol": "flut",
+  "name": "Flute",
+  "image": "https://assets.coingecko.com/coins/images/29148/large/TheFlute200x200.png?1696528108",
+  "current_price": 0.00014775,
+  "market_cap": 1136495,
+  "market_cap_rank": 2616,
+  "fully_diluted_valuation": 1477219,
+  "total_volume": 2131.55,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 7691782253.08642,
+  "total_supply": 9997800000,
+  "max_supply": 10000000000,
+  "ath": 0.00099088,
+  "ath_change_percentage": -85.08862,
+  "ath_date": "2023-02-24T10:12:49.765Z",
+  "atl": 0.00014679,
+  "atl_change_percentage": 0.65479,
+  "atl_date": "2024-04-21T07:40:02.073Z",
+  "roi": null,
+  "last_updated": "2024-04-21T10:14:07.642Z",
+  "platforms": {
+    "ethereum": "0x4f08705fb8f33affc231ed66e626b40e84a71870"
+  }
+}

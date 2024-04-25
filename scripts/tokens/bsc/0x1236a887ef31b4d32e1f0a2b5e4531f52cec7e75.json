@@ -1,0 +1,31 @@
+{
+  "id": "gami-world",
+  "symbol": "gami",
+  "name": "GAMI World",
+  "image": "https://assets.coingecko.com/coins/images/19841/large/DIKEY_NORMAL.png?1707406368",
+  "current_price": 0.115482,
+  "market_cap": 5005553,
+  "market_cap_rank": 1795,
+  "fully_diluted_valuation": 15276993,
+  "total_volume": 17087.76,
+  "high_24h": 0.120994,
+  "low_24h": 0.11539,
+  "price_change_24h": -0.001079133901270291,
+  "price_change_percentage_24h": -0.92581,
+  "market_cap_change_24h": -91555.49145188928,
+  "market_cap_change_percentage_24h": -1.79622,
+  "circulating_supply": 43193899,
+  "total_supply": 131828172.938392,
+  "max_supply": 150000000,
+  "ath": 5.58,
+  "ath_change_percentage": -97.92672,
+  "ath_date": "2021-11-09T20:47:32.804Z",
+  "atl": 0.04234281,
+  "atl_change_percentage": 173.03271,
+  "atl_date": "2022-11-24T18:53:32.008Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:19.357Z",
+  "platforms": {
+    "bsc": "0x1236a887ef31b4d32e1f0a2b5e4531f52cec7e75"
+  }
+}

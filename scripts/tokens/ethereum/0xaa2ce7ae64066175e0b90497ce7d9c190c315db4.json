@@ -1,0 +1,31 @@
+{
+  "id": "suterusu",
+  "symbol": "suter",
+  "name": "Suterusu",
+  "image": "https://assets.coingecko.com/coins/images/9830/large/p-NFlBlw_400x400.jpg?1696509886",
+  "current_price": 0.00042977,
+  "market_cap": 1564874,
+  "market_cap_rank": 2430,
+  "fully_diluted_valuation": 4300239,
+  "total_volume": 42194,
+  "high_24h": 0.00049024,
+  "low_24h": 0.00040647,
+  "price_change_24h": -0.000025947495456471,
+  "price_change_percentage_24h": -5.69377,
+  "market_cap_change_24h": -101648.28285712213,
+  "market_cap_change_percentage_24h": -6.09942,
+  "circulating_supply": 3639040000,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.082176,
+  "ath_change_percentage": -99.47757,
+  "ath_date": "2019-11-25T01:53:51.388Z",
+  "atl": 0.00024929,
+  "atl_change_percentage": 72.21672,
+  "atl_date": "2023-08-23T11:59:49.147Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:00.761Z",
+  "platforms": {
+    "ethereum": "0xaa2ce7ae64066175e0b90497ce7d9c190c315db4"
+  }
+}

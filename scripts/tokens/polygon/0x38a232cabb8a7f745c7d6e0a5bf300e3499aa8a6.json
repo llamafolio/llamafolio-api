@@ -1,0 +1,31 @@
+{
+  "id": "pivn",
+  "symbol": "pivn",
+  "name": "PIVN",
+  "image": "https://assets.coingecko.com/coins/images/29617/large/pivn.png?1696528553",
+  "current_price": 0.00308589,
+  "market_cap": 506429,
+  "market_cap_rank": 3059,
+  "fully_diluted_valuation": 308558657,
+  "total_volume": 217.64,
+  "high_24h": 0.00342991,
+  "low_24h": 0.00294437,
+  "price_change_24h": -0.000326286838582857,
+  "price_change_percentage_24h": -9.56242,
+  "market_cap_change_24h": -53964.88210786722,
+  "market_cap_change_percentage_24h": -9.62982,
+  "circulating_supply": 164127207,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.052615,
+  "ath_change_percentage": -94.13111,
+  "ath_date": "2023-06-21T00:04:43.186Z",
+  "atl": 0.00238195,
+  "atl_change_percentage": 29.63752,
+  "atl_date": "2024-04-05T21:55:27.999Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:56:54.340Z",
+  "platforms": {
+    "polygon": "0x38a232cabb8a7f745c7d6e0a5bf300e3499aa8a6"
+  }
+}

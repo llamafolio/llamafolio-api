@@ -1,0 +1,31 @@
+{
+  "id": "devil-finance",
+  "symbol": "devil",
+  "name": "Devil Finance",
+  "image": "https://assets.coingecko.com/coins/images/22462/large/gX3bAoQg_400x400.png?1696521785",
+  "current_price": 0.00026192,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 222.95,
+  "total_volume": 66.05,
+  "high_24h": 0.00026935,
+  "low_24h": 0.00025693,
+  "price_change_24h": -0.000002445163957248,
+  "price_change_percentage_24h": -0.9249,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 851215.657228,
+  "max_supply": null,
+  "ath": 1.29,
+  "ath_change_percentage": -99.97979,
+  "ath_date": "2022-01-14T16:36:24.226Z",
+  "atl": 0.00020487,
+  "atl_change_percentage": 27.31161,
+  "atl_date": "2024-04-08T22:42:08.207Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:07:47.847Z",
+  "platforms": {
+    "fantom": "0x174c7106aeecdc11389f7dd21342f05f46ccb40f"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "any-inu",
+  "symbol": "ai",
+  "name": "Any Inu",
+  "image": "https://assets.coingecko.com/coins/images/34126/large/anyinulogo200.png?1704174269",
+  "current_price": 0.00002715,
+  "market_cap": 11421713,
+  "market_cap_rank": 1371,
+  "fully_diluted_valuation": 11421713,
+  "total_volume": 812186,
+  "high_24h": 0.00003009,
+  "low_24h": 0.00002566,
+  "price_change_24h": -0.000002818691058362,
+  "price_change_percentage_24h": -9.40547,
+  "market_cap_change_24h": -1185795.1413421743,
+  "market_cap_change_percentage_24h": -9.40547,
+  "circulating_supply": 420690000000,
+  "total_supply": 420690000000,
+  "max_supply": 420690000000,
+  "ath": 0.000121,
+  "ath_change_percentage": -77.40841,
+  "ath_date": "2024-03-04T14:30:22.595Z",
+  "atl": 0.00000154,
+  "atl_change_percentage": 1672.05577,
+  "atl_date": "2024-01-02T05:55:39.555Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:23.714Z",
+  "platforms": {
+    "polygon": "0x2598c30330d5771ae9f983979209486ae26de875"
+  }
+}

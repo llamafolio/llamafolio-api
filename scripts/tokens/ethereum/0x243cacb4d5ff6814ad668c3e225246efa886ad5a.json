@@ -1,0 +1,31 @@
+{
+  "id": "shina-inu",
+  "symbol": "shi",
+  "name": "Shina Inu",
+  "image": "https://assets.coingecko.com/coins/images/25208/large/coingecko-shina-purple-bg.png?1696524352",
+  "current_price": 7.05354e-7,
+  "market_cap": 9869482,
+  "market_cap_rank": 1446,
+  "fully_diluted_valuation": 10195447,
+  "total_volume": 40110,
+  "high_24h": 7.40903e-7,
+  "low_24h": 6.99346e-7,
+  "price_change_24h": -2.3556511671e-8,
+  "price_change_percentage_24h": -3.23174,
+  "market_cap_change_24h": -352644.5995232463,
+  "market_cap_change_percentage_24h": -3.44982,
+  "circulating_supply": 14019042506619.6,
+  "total_supply": 14482056376677,
+  "max_supply": 20000000000000,
+  "ath": 0.0000036,
+  "ath_change_percentage": -80.43437,
+  "ath_date": "2023-02-14T04:16:51.506Z",
+  "atl": 1.02003e-7,
+  "atl_change_percentage": 591.2672,
+  "atl_date": "2022-05-27T18:46:31.923Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:06.194Z",
+  "platforms": {
+    "ethereum": "0x243cacb4d5ff6814ad668c3e225246efa886ad5a"
+  }
+}

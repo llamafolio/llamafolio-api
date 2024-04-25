@@ -1,0 +1,31 @@
+{
+  "id": "jpg-nft-index",
+  "symbol": "jpg",
+  "name": "JPG NFT Index",
+  "image": "https://assets.coingecko.com/coins/images/25071/large/JPG-token-logo-01.png?1696524219",
+  "current_price": 63.64,
+  "market_cap": 134576,
+  "market_cap_rank": 3685,
+  "fully_diluted_valuation": 134576,
+  "total_volume": 9036.88,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 2114.63417272053,
+  "total_supply": 2114.63417272053,
+  "max_supply": null,
+  "ath": 93.03,
+  "ath_change_percentage": -31.59513,
+  "ath_date": "2022-04-26T08:43:12.962Z",
+  "atl": 9.6,
+  "atl_change_percentage": 563.08615,
+  "atl_date": "2023-10-10T21:02:29.794Z",
+  "roi": null,
+  "last_updated": "2024-04-21T07:57:47.391Z",
+  "platforms": {
+    "arbitrum": "0xafdefd913286a1cec75aca503938c6bba01a5445"
+  }
+}

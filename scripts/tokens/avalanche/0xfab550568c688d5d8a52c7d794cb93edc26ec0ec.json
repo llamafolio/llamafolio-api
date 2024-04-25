@@ -1,0 +1,31 @@
+{
+  "id": "axlusdc",
+  "symbol": "axlusdc",
+  "name": "Axelar Bridged USDC",
+  "image": "https://assets.coingecko.com/coins/images/26476/large/uausdc_D_3x.png?1696525548",
+  "current_price": 1.003,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 59467483,
+  "total_volume": 9882952,
+  "high_24h": 1.003,
+  "low_24h": 0.990611,
+  "price_change_24h": 0.00443421,
+  "price_change_percentage_24h": 0.44414,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 59300000,
+  "max_supply": null,
+  "ath": 1.23,
+  "ath_change_percentage": -18.6914,
+  "ath_date": "2022-08-04T02:25:49.229Z",
+  "atl": 0.858364,
+  "atl_change_percentage": 16.67471,
+  "atl_date": "2023-03-11T08:18:53.860Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:57.861Z",
+  "platforms": {
+    "avalanche": "0xfab550568c688d5d8a52c7d794cb93edc26ec0ec"
+  }
+}

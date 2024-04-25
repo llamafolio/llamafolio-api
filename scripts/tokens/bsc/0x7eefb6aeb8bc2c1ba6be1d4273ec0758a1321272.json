@@ -1,0 +1,31 @@
+{
+  "id": "endless-battlefield",
+  "symbol": "eng",
+  "name": "Endless Board Game",
+  "image": "https://assets.coingecko.com/coins/images/23981/large/ENG_Logo.png?1696523177",
+  "current_price": 0.00011972,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 11972.29,
+  "total_volume": 861.05,
+  "high_24h": 0.00013041,
+  "low_24h": 0.00011975,
+  "price_change_24h": -0.000010273647406975,
+  "price_change_percentage_24h": -7.90301,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 800000000,
+  "ath": 0.200895,
+  "ath_change_percentage": -99.94041,
+  "ath_date": "2022-02-26T15:57:26.389Z",
+  "atl": 0.00002391,
+  "atl_change_percentage": 400.73893,
+  "atl_date": "2022-12-02T17:25:54.608Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:43.892Z",
+  "platforms": {
+    "bsc": "0x7eefb6aeb8bc2c1ba6be1d4273ec0758a1321272"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "plearn",
+  "symbol": "pln",
+  "name": "PLEARN",
+  "image": "https://assets.coingecko.com/coins/images/24723/large/plearn200x200.png?1696523887",
+  "current_price": 0.102099,
+  "market_cap": 8264835,
+  "market_cap_rank": 1530,
+  "fully_diluted_valuation": 34829993,
+  "total_volume": 56664,
+  "high_24h": 0.105954,
+  "low_24h": 0.100558,
+  "price_change_24h": -0.003274226639314773,
+  "price_change_percentage_24h": -3.10726,
+  "market_cap_change_24h": -307613.28579483274,
+  "market_cap_change_percentage_24h": -3.58839,
+  "circulating_supply": 81620800.17173746,
+  "total_supply": 343969593.2933345,
+  "max_supply": 700000000,
+  "ath": 0.577418,
+  "ath_change_percentage": -82.45812,
+  "ath_date": "2022-04-03T22:37:54.824Z",
+  "atl": 0.00704379,
+  "atl_change_percentage": 1338.00263,
+  "atl_date": "2023-10-10T14:20:13.714Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:58.439Z",
+  "platforms": {
+    "bsc": "0xbe0d3526fc797583dada3f30bc390013062a048b"
+  }
+}

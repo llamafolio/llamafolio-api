@@ -1,0 +1,31 @@
+{
+  "id": "pegasus-dex",
+  "symbol": "peg",
+  "name": "Pegasus DEX",
+  "image": "https://assets.coingecko.com/coins/images/29743/large/IMG_4903.PNG?1696528672",
+  "current_price": 0.00003671,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 36715,
+  "total_volume": 269.14,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00026334,
+  "ath_change_percentage": -86.0583,
+  "ath_date": "2023-04-10T06:36:54.108Z",
+  "atl": 0.00003658,
+  "atl_change_percentage": 0.36107,
+  "atl_date": "2023-05-18T06:31:44.610Z",
+  "roi": null,
+  "last_updated": "2023-05-18T12:32:22.740Z",
+  "platforms": {
+    "bsc": "0x03887c177c18140209c0f93adc230d4c5515bf4a"
+  }
+}

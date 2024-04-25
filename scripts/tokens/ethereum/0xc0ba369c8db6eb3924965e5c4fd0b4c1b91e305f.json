@@ -1,0 +1,31 @@
+{
+  "id": "dlp-duck-token",
+  "symbol": "duck",
+  "name": "DLP Duck",
+  "image": "https://assets.coingecko.com/coins/images/13440/large/DLP_Duck_Token.png?1696513204",
+  "current_price": 0.00188439,
+  "market_cap": 85315,
+  "market_cap_rank": 3833,
+  "fully_diluted_valuation": 129260,
+  "total_volume": 154.36,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 45274336.305333614,
+  "total_supply": 68595158.1334123,
+  "max_supply": 68595158.1334123,
+  "ath": 2.33,
+  "ath_change_percentage": -99.91909,
+  "ath_date": "2021-02-17T20:27:10.230Z",
+  "atl": 0.001627,
+  "atl_change_percentage": 15.82016,
+  "atl_date": "2024-01-21T23:22:20.470Z",
+  "roi": null,
+  "last_updated": "2024-04-22T01:36:15.025Z",
+  "platforms": {
+    "ethereum": "0xc0ba369c8db6eb3924965e5c4fd0b4c1b91e305f"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "lever-network",
+  "symbol": "lev",
+  "name": "Lever Network",
+  "image": "https://assets.coingecko.com/coins/images/15323/large/lever.PNG?1696514972",
+  "current_price": 0.0037501,
+  "market_cap": 55729,
+  "market_cap_rank": 3959,
+  "fully_diluted_valuation": 375266,
+  "total_volume": 856.86,
+  "high_24h": 0.00385849,
+  "low_24h": 0.00366328,
+  "price_change_24h": -0.000015091814336584,
+  "price_change_percentage_24h": -0.40082,
+  "market_cap_change_24h": -192.08737224864308,
+  "market_cap_change_percentage_24h": -0.34349,
+  "circulating_supply": 14850629,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 2.7,
+  "ath_change_percentage": -99.86105,
+  "ath_date": "2021-05-09T17:23:25.866Z",
+  "atl": 0.00265909,
+  "atl_change_percentage": 41.21491,
+  "atl_date": "2023-11-11T08:55:35.545Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:50.359Z",
+  "platforms": {
+    "bsc": "0xbc194e6f748a222754c3e8b9946922c09e7d4e91"
+  }
+}

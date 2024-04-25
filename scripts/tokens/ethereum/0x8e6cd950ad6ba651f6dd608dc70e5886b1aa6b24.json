@@ -1,0 +1,31 @@
+{
+  "id": "starlink",
+  "symbol": "starl",
+  "name": "StarLink",
+  "image": "https://assets.coingecko.com/coins/images/16824/large/ZxJbRWJ.png?1696516393",
+  "current_price": 0.0000024,
+  "market_cap": 23917323,
+  "market_cap_rank": 1026,
+  "fully_diluted_valuation": 23967322,
+  "total_volume": 2046660,
+  "high_24h": 0.0000027,
+  "low_24h": 0.00000239,
+  "price_change_24h": -2.71659448108e-7,
+  "price_change_percentage_24h": -10.16947,
+  "market_cap_change_24h": -2708988.5008748434,
+  "market_cap_change_percentage_24h": -10.1741,
+  "circulating_supply": 9979138452609.14,
+  "total_supply": 10000000000000,
+  "max_supply": null,
+  "ath": 0.00008821,
+  "ath_change_percentage": -97.27265,
+  "ath_date": "2021-11-25T10:19:49.634Z",
+  "atl": 1.48142e-7,
+  "atl_change_percentage": 1523.95645,
+  "atl_date": "2021-07-01T22:57:44.002Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:16.642Z",
+  "platforms": {
+    "ethereum": "0x8e6cd950ad6ba651f6dd608dc70e5886b1aa6b24"
+  }
+}

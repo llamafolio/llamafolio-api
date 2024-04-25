@@ -1,0 +1,31 @@
+{
+  "id": "crust-network",
+  "symbol": "cru",
+  "name": "Crust Network",
+  "image": "https://assets.coingecko.com/coins/images/12549/large/sAB3KVzD_400x400.jpg?1696512360",
+  "current_price": 1.073,
+  "market_cap": 32476420,
+  "market_cap_rank": 877,
+  "fully_diluted_valuation": 34094632,
+  "total_volume": 899873,
+  "high_24h": 1.14,
+  "low_24h": 1.061,
+  "price_change_24h": -0.06452000478076814,
+  "price_change_percentage_24h": -5.66964,
+  "market_cap_change_24h": -1914976.1226661317,
+  "market_cap_change_percentage_24h": -5.56818,
+  "circulating_supply": 30201992.754,
+  "total_supply": 31706875.869,
+  "max_supply": null,
+  "ath": 179.24,
+  "ath_change_percentage": -99.40048,
+  "ath_date": "2021-04-12T02:55:09.742Z",
+  "atl": 0.451929,
+  "atl_change_percentage": 137.77501,
+  "atl_date": "2023-10-10T09:10:36.757Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:47.617Z",
+  "platforms": {
+    "ethereum": "0x32a7c02e79c4ea1008dd6564b35f131428673c41"
+  }
+}

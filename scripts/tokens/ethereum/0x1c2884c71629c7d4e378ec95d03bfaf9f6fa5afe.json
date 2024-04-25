@@ -1,0 +1,31 @@
+{
+  "id": "bundl-tools",
+  "symbol": "bundl",
+  "name": "Bundl Tools",
+  "image": "https://assets.coingecko.com/coins/images/34748/large/Bundl_Tools.png?1705953621",
+  "current_price": 0.01054851,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 105485,
+  "total_volume": 41.83,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.388379,
+  "ath_change_percentage": -97.28396,
+  "ath_date": "2024-01-23T10:23:49.199Z",
+  "atl": 0.01020229,
+  "atl_change_percentage": 3.39356,
+  "atl_date": "2024-04-20T10:26:51.887Z",
+  "roi": null,
+  "last_updated": "2024-04-22T02:04:34.372Z",
+  "platforms": {
+    "ethereum": "0x1c2884c71629c7d4e378ec95d03bfaf9f6fa5afe"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "liquity-usd",
+  "symbol": "lusd",
+  "name": "Liquity USD",
+  "image": "https://assets.coingecko.com/coins/images/14666/large/Group_3.png?1696514341",
+  "current_price": 0.999091,
+  "market_cap": 111813851,
+  "market_cap_rank": 440,
+  "fully_diluted_valuation": 111813851,
+  "total_volume": 2302578,
+  "high_24h": 1.004,
+  "low_24h": 0.994939,
+  "price_change_24h": -0.00088746074042001,
+  "price_change_percentage_24h": -0.08875,
+  "market_cap_change_24h": -243780.3095432818,
+  "market_cap_change_percentage_24h": -0.21755,
+  "circulating_supply": 112048550.377688,
+  "total_supply": 112048550.377688,
+  "max_supply": null,
+  "ath": 1.16,
+  "ath_change_percentage": -13.87239,
+  "ath_date": "2021-04-05T14:47:52.665Z",
+  "atl": 0.896722,
+  "atl_change_percentage": 11.25378,
+  "atl_date": "2022-01-27T09:42:06.510Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:10.430Z",
+  "platforms": {
+    "arbitrum": "0x93b346b6bc2548da6a1e7d98e9a421b42541425b"
+  }
+}

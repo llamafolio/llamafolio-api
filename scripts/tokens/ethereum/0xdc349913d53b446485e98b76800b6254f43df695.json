@@ -1,0 +1,31 @@
+{
+  "id": "bezoge-earth",
+  "symbol": "bezoge",
+  "name": "Bezoge Earth",
+  "image": "https://assets.coingecko.com/coins/images/15639/large/token-logo.png?1696515271",
+  "current_price": 6.398e-12,
+  "market_cap": 257037,
+  "market_cap_rank": 3380,
+  "fully_diluted_valuation": 639781,
+  "total_volume": 1485.75,
+  "high_24h": 7.132e-12,
+  "low_24h": 6.206e-12,
+  "price_change_24h": -6.48287e-13,
+  "price_change_percentage_24h": -9.20065,
+  "market_cap_change_24h": -26064.63753943352,
+  "market_cap_change_percentage_24h": -9.20681,
+  "circulating_supply": 40175785146246330,
+  "total_supply": 100000000000000000,
+  "max_supply": 100000000000000000,
+  "ath": 1.5912e-8,
+  "ath_change_percentage": -99.95979,
+  "ath_date": "2021-11-23T05:54:31.858Z",
+  "atl": 2.075e-12,
+  "atl_change_percentage": 208.39308,
+  "atl_date": "2023-06-02T00:29:35.773Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:19.272Z",
+  "platforms": {
+    "ethereum": "0xdc349913d53b446485e98b76800b6254f43df695"
+  }
+}

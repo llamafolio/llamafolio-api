@@ -1,0 +1,31 @@
+{
+  "id": "based-finance",
+  "symbol": "based",
+  "name": "Based Finance",
+  "image": "https://assets.coingecko.com/coins/images/23507/large/based.PNG?1696522717",
+  "current_price": 0.053406,
+  "market_cap": 876923,
+  "market_cap_rank": 2757,
+  "fully_diluted_valuation": 898191,
+  "total_volume": 10874.27,
+  "high_24h": 0.057847,
+  "low_24h": 0.050445,
+  "price_change_24h": 0.00156377,
+  "price_change_percentage_24h": 3.01643,
+  "market_cap_change_24h": 47591,
+  "market_cap_change_percentage_24h": 5.73846,
+  "circulating_supply": 16420007.734283168,
+  "total_supply": 16818255.345291,
+  "max_supply": null,
+  "ath": 41.16,
+  "ath_change_percentage": -99.87017,
+  "ath_date": "2022-02-08T06:38:18.070Z",
+  "atl": 0.00539518,
+  "atl_change_percentage": 890.41556,
+  "atl_date": "2022-10-04T08:46:15.692Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:37.273Z",
+  "platforms": {
+    "fantom": "0x8d7d3409881b51466b483b11ea1b8a03cded89ae"
+  }
+}

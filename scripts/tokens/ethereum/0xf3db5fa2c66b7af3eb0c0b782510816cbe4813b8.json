@@ -1,0 +1,35 @@
+{
+  "id": "everex",
+  "symbol": "evx",
+  "name": "Everex",
+  "image": "https://assets.coingecko.com/coins/images/997/large/everex.png?1696502109",
+  "current_price": 0.0114901,
+  "market_cap": 250484,
+  "market_cap_rank": 3397,
+  "fully_diluted_valuation": 287252,
+  "total_volume": 14012.13,
+  "high_24h": 0.01156197,
+  "low_24h": 0.0086137,
+  "price_change_24h": 0.0028402,
+  "price_change_percentage_24h": 32.83515,
+  "market_cap_change_24h": 61934,
+  "market_cap_change_percentage_24h": 32.84741,
+  "circulating_supply": 21800000,
+  "total_supply": 25000000,
+  "max_supply": null,
+  "ath": 6.13,
+  "ath_change_percentage": -99.81254,
+  "ath_date": "2018-01-07T00:00:00.000Z",
+  "atl": 0.00054814,
+  "atl_change_percentage": 1996.20201,
+  "atl_date": "2023-08-30T08:23:25.618Z",
+  "roi": {
+    "times": -0.9946055888909928,
+    "currency": "usd",
+    "percentage": -99.46055888909929
+  },
+  "last_updated": "2024-04-25T08:58:07.475Z",
+  "platforms": {
+    "ethereum": "0xf3db5fa2c66b7af3eb0c0b782510816cbe4813b8"
+  }
+}

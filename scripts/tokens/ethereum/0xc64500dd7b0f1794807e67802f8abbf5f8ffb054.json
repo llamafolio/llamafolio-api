@@ -1,0 +1,31 @@
+{
+  "id": "locus-chain",
+  "symbol": "locus",
+  "name": "Locus Chain",
+  "image": "https://assets.coingecko.com/coins/images/6903/large/32169759_2050428658545017_7287666225423843328_n.jpg?1696507221",
+  "current_price": 0.01390449,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 97332123,
+  "total_volume": 211541,
+  "high_24h": 0.01517025,
+  "low_24h": 0.01348764,
+  "price_change_24h": -0.000240792321233658,
+  "price_change_percentage_24h": -1.70228,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 7000000000,
+  "max_supply": null,
+  "ath": 0.752938,
+  "ath_change_percentage": -98.15071,
+  "ath_date": "2019-07-10T16:04:18.396Z",
+  "atl": 0.00003026,
+  "atl_change_percentage": 45919.6581,
+  "atl_date": "2020-01-29T12:45:18.576Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:58.157Z",
+  "platforms": {
+    "ethereum": "0xc64500dd7b0f1794807e67802f8abbf5f8ffb054"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "axia",
+  "symbol": "axiav3",
+  "name": "Axia",
+  "image": "https://assets.coingecko.com/coins/images/12906/large/axia_200x200.png?1696512694",
+  "current_price": 0.00159873,
+  "market_cap": 1007.85,
+  "market_cap_rank": 4282,
+  "fully_diluted_valuation": 6040.05,
+  "total_volume": 0.930476,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 630407.75,
+  "total_supply": 3778035.35486762,
+  "max_supply": null,
+  "ath": 5.32,
+  "ath_change_percentage": -99.96993,
+  "ath_date": "2021-09-24T04:51:05.027Z",
+  "atl": 0.00033639,
+  "atl_change_percentage": 375.26632,
+  "atl_date": "2023-09-07T02:52:45.719Z",
+  "roi": null,
+  "last_updated": "2024-04-20T07:17:12.997Z",
+  "platforms": {
+    "polygon": "0x49690541e3f6e933a9aa3cffee6010a7bb5b72d7"
+  }
+}

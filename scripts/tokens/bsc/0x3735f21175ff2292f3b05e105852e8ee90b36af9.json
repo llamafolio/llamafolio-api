@@ -1,0 +1,31 @@
+{
+  "id": "dreampad-capital",
+  "symbol": "dreampad",
+  "name": "DreamPad Capital",
+  "image": "https://assets.coingecko.com/coins/images/29801/large/JCmWx56h_400x400.png?1696528730",
+  "current_price": 0.00000249,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 24926,
+  "total_volume": 134.2,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.0000047,
+  "ath_change_percentage": -47.01052,
+  "ath_date": "2023-04-14T05:45:36.566Z",
+  "atl": 0.00000245,
+  "atl_change_percentage": 1.6375,
+  "atl_date": "2023-05-17T15:04:38.032Z",
+  "roi": null,
+  "last_updated": "2023-05-18T12:32:18.166Z",
+  "platforms": {
+    "bsc": "0x3735f21175ff2292f3b05e105852e8ee90b36af9"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "electric-vehicle-zone",
+  "symbol": "evz",
+  "name": "Electric Vehicle Zone",
+  "image": "https://assets.coingecko.com/coins/images/9456/large/kLohzILUIln6mHFYOlecpWjINVIH-BVghP2vRTeuD0XteaQa7Lpn4sLcuPN4gHw8MU2pKWZCJRNwBmyyl1CYxplCLDcgSVihMC7vvfmkepY-_O_ImWBA27s4pKNlhcBnBYrc8y5WH0ZB2CjmqPh-32nPslrv329tqFWr2DAR8dl4R5LZGgeZ1ubCdtMoUua6gEL3umYShHBxrYLto.jpg?1696509547",
+  "current_price": 0.00820636,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 69365979,
+  "total_volume": 217742,
+  "high_24h": 0.0088215,
+  "low_24h": 0.00803856,
+  "price_change_24h": -0.000603706083470754,
+  "price_change_percentage_24h": -6.85246,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 8420257832,
+  "max_supply": null,
+  "ath": 0.876912,
+  "ath_change_percentage": -99.06693,
+  "ath_date": "2023-02-01T10:52:44.886Z",
+  "atl": 0.0012487,
+  "atl_change_percentage": 555.25374,
+  "atl_date": "2020-07-02T05:44:33.408Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:15.931Z",
+  "platforms": {
+    "ethereum": "0x7a939bb714fd2a48ebeb1e495aa9aaa74ba9fa68"
+  }
+}

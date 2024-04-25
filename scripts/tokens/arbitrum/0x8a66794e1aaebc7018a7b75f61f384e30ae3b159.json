@@ -1,0 +1,31 @@
+{
+  "id": "bluesale",
+  "symbol": "bls",
+  "name": "BlueSale",
+  "image": "https://assets.coingecko.com/coins/images/30300/large/logo_BLS_200_bg.png?1696529204",
+  "current_price": 0.01239432,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 6445.05,
+  "total_volume": 58.79,
+  "high_24h": 0.01290711,
+  "low_24h": 0.01240105,
+  "price_change_24h": -0.00034610007642278,
+  "price_change_percentage_24h": -2.71655,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 520000,
+  "max_supply": 10000000,
+  "ath": 0.740172,
+  "ath_change_percentage": -98.32548,
+  "ath_date": "2023-05-13T03:22:51.593Z",
+  "atl": 0.0111637,
+  "atl_change_percentage": 11.02342,
+  "atl_date": "2024-04-22T03:08:22.788Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:52:16.009Z",
+  "platforms": {
+    "arbitrum": "0x8a66794e1aaebc7018a7b75f61f384e30ae3b159"
+  }
+}

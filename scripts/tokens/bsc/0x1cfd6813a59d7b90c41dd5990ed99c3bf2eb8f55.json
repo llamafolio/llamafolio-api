@@ -1,0 +1,31 @@
+{
+  "id": "the-corgi-of-polkabridge",
+  "symbol": "corgib",
+  "name": "The Corgi of PolkaBridge",
+  "image": "https://assets.coingecko.com/coins/images/16069/large/corbi.PNG?1696515678",
+  "current_price": 2.464e-9,
+  "market_cap": 75619,
+  "market_cap_rank": 3870,
+  "fully_diluted_valuation": 133183,
+  "total_volume": 9.03,
+  "high_24h": 2.499e-9,
+  "low_24h": 2.402e-9,
+  "price_change_24h": 4.432e-12,
+  "price_change_percentage_24h": 0.18021,
+  "market_cap_change_24h": 43.78,
+  "market_cap_change_percentage_24h": 0.05793,
+  "circulating_supply": 30660065868717,
+  "total_supply": 54000000000000,
+  "max_supply": null,
+  "ath": 1.58204e-7,
+  "ath_change_percentage": -98.44679,
+  "ath_date": "2021-11-03T04:29:23.940Z",
+  "atl": 1.264e-9,
+  "atl_change_percentage": 94.33542,
+  "atl_date": "2022-05-12T21:51:48.035Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:50.441Z",
+  "platforms": {
+    "bsc": "0x1cfd6813a59d7b90c41dd5990ed99c3bf2eb8f55"
+  }
+}

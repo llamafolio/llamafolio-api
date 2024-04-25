@@ -1,0 +1,31 @@
+{
+  "id": "lithium-finance",
+  "symbol": "lith",
+  "name": "Lithium Finance",
+  "image": "https://assets.coingecko.com/coins/images/17278/large/Lithium_Logo-03200x200.png?1696516832",
+  "current_price": 0.00152934,
+  "market_cap": 9099615,
+  "market_cap_rank": 1483,
+  "fully_diluted_valuation": 15270371,
+  "total_volume": 591303,
+  "high_24h": 0.00160667,
+  "low_24h": 0.00150484,
+  "price_change_24h": -0.000048753477071756,
+  "price_change_percentage_24h": -3.08939,
+  "market_cap_change_24h": -295469.0670343414,
+  "market_cap_change_percentage_24h": -3.14493,
+  "circulating_supply": 5959000515,
+  "total_supply": 10000000000,
+  "max_supply": null,
+  "ath": 0.070537,
+  "ath_change_percentage": -97.82435,
+  "ath_date": "2021-09-18T01:50:19.135Z",
+  "atl": 0.00022202,
+  "atl_change_percentage": 591.20301,
+  "atl_date": "2023-10-19T13:30:42.264Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:16.516Z",
+  "platforms": {
+    "ethereum": "0x188e817b02e635d482ae4d81e25dda98a97c4a42"
+  }
+}

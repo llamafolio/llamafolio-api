@@ -1,0 +1,31 @@
+{
+  "id": "adadao",
+  "symbol": "adao",
+  "name": "ADADao",
+  "image": "https://assets.coingecko.com/coins/images/24372/large/dkw8F6mr_400x400.jpg?1696523556",
+  "current_price": 0.00220165,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1100823,
+  "total_volume": 619.59,
+  "high_24h": 0.00228881,
+  "low_24h": 0.00219051,
+  "price_change_24h": -0.00004644103453412,
+  "price_change_percentage_24h": -2.0658,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 0.133516,
+  "ath_change_percentage": -98.35103,
+  "ath_date": "2022-03-22T02:38:40.190Z",
+  "atl": 0.00055936,
+  "atl_change_percentage": 293.60073,
+  "atl_date": "2023-06-10T02:54:52.613Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:48:51.254Z",
+  "platforms": {
+    "bsc": "0x3b76374cc2dfe28cc373dca6d5024791b2586335"
+  }
+}

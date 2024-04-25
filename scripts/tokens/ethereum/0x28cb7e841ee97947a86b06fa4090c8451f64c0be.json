@@ -1,0 +1,31 @@
+{
+  "id": "yflink",
+  "symbol": "yfl",
+  "name": "YF Link",
+  "image": "https://assets.coingecko.com/coins/images/12081/large/YFLink.png?1696511928",
+  "current_price": 5.71,
+  "market_cap": 268555,
+  "market_cap_rank": 3363,
+  "fully_diluted_valuation": 296033,
+  "total_volume": 30.3,
+  "high_24h": 5.75,
+  "low_24h": 5.68,
+  "price_change_24h": -0.03397945966699112,
+  "price_change_percentage_24h": -0.59141,
+  "market_cap_change_24h": -3234.2515200422495,
+  "market_cap_change_percentage_24h": -1.18999,
+  "circulating_supply": 47173.27164288456,
+  "total_supply": 52000,
+  "max_supply": 52000,
+  "ath": 1879.17,
+  "ath_change_percentage": -99.69705,
+  "ath_date": "2020-09-02T08:39:32.247Z",
+  "atl": 3.09,
+  "atl_change_percentage": 84.17262,
+  "atl_date": "2023-11-22T14:59:27.203Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:05.281Z",
+  "platforms": {
+    "ethereum": "0x28cb7e841ee97947a86b06fa4090c8451f64c0be"
+  }
+}

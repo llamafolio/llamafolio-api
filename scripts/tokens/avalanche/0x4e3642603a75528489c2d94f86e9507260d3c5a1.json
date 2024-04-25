@@ -1,0 +1,31 @@
+{
+  "id": "juggernaut",
+  "symbol": "jgn",
+  "name": "Juggernaut",
+  "image": "https://assets.coingecko.com/coins/images/12761/large/juggernaut_logo.png?1696512558",
+  "current_price": 0.02644474,
+  "market_cap": 2634665,
+  "market_cap_rank": 2140,
+  "fully_diluted_valuation": 3943699,
+  "total_volume": 143569,
+  "high_24h": 0.02750939,
+  "low_24h": 0.02629133,
+  "price_change_24h": -0.000900134510054967,
+  "price_change_percentage_24h": -3.29179,
+  "market_cap_change_24h": -102856.6282192301,
+  "market_cap_change_percentage_24h": -3.75729,
+  "circulating_supply": 100210415.86298622,
+  "total_supply": 150000000,
+  "max_supply": 150000000,
+  "ath": 5.83,
+  "ath_change_percentage": -99.54863,
+  "ath_date": "2021-05-07T02:09:53.660Z",
+  "atl": 0.01547758,
+  "atl_change_percentage": 70.15725,
+  "atl_date": "2023-06-13T01:40:13.269Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:50.956Z",
+  "platforms": {
+    "avalanche": "0x4e3642603a75528489c2d94f86e9507260d3c5a1"
+  }
+}

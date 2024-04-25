@@ -1,0 +1,31 @@
+{
+  "id": "playnity",
+  "symbol": "ply",
+  "name": "PlayNity",
+  "image": "https://assets.coingecko.com/coins/images/21479/large/ply.png?1696520840",
+  "current_price": 0.00174196,
+  "market_cap": 148767,
+  "market_cap_rank": 3634,
+  "fully_diluted_valuation": 185212,
+  "total_volume": 3.92,
+  "high_24h": 0.00175412,
+  "low_24h": 0.00166481,
+  "price_change_24h": 0.00000598,
+  "price_change_percentage_24h": 0.34456,
+  "market_cap_change_24h": 363.74,
+  "market_cap_change_percentage_24h": 0.2451,
+  "circulating_supply": 85442888,
+  "total_supply": 106374448,
+  "max_supply": 150000000,
+  "ath": 0.357112,
+  "ath_change_percentage": -99.51378,
+  "ath_date": "2021-12-13T19:05:18.277Z",
+  "atl": 0.00134433,
+  "atl_change_percentage": 29.16134,
+  "atl_date": "2023-11-25T11:31:31.251Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:42.945Z",
+  "platforms": {
+    "ethereum": "0x20d60c6eb195868d4643f2c9b0809e4de6cc003d"
+  }
+}

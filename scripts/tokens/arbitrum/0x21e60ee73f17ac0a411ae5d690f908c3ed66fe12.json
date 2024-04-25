@@ -1,0 +1,31 @@
+{
+  "id": "deri-protocol",
+  "symbol": "deri",
+  "name": "Deri Protocol",
+  "image": "https://assets.coingecko.com/coins/images/13931/large/200vs200.jpg?1696513670",
+  "current_price": 0.01497331,
+  "market_cap": 1965174,
+  "market_cap_rank": 2309,
+  "fully_diluted_valuation": 7252342,
+  "total_volume": 56252,
+  "high_24h": 0.01563539,
+  "low_24h": 0.01473163,
+  "price_change_24h": -0.00059415798828954,
+  "price_change_percentage_24h": -3.81666,
+  "market_cap_change_24h": -76581.63087255578,
+  "market_cap_change_percentage_24h": -3.75077,
+  "circulating_supply": 131192006.30776003,
+  "total_supply": 484155290.592577,
+  "max_supply": 484155290.592577,
+  "ath": 3.77,
+  "ath_change_percentage": -99.60317,
+  "ath_date": "2021-02-12T18:27:27.647Z",
+  "atl": 0.00670569,
+  "atl_change_percentage": 123.2701,
+  "atl_date": "2023-10-20T03:05:36.427Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:40.576Z",
+  "platforms": {
+    "arbitrum": "0x21e60ee73f17ac0a411ae5d690f908c3ed66fe12"
+  }
+}

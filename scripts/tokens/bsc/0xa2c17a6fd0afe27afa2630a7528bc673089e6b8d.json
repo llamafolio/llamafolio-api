@@ -1,0 +1,31 @@
+{
+  "id": "the-goat-cz",
+  "symbol": "czgoat",
+  "name": "CZ THE GOAT",
+  "image": "https://assets.coingecko.com/coins/images/33304/large/CZ_THE_GOAT.png?1701404282",
+  "current_price": 0.00034439,
+  "market_cap": 285734,
+  "market_cap_rank": 3340,
+  "fully_diluted_valuation": 343637,
+  "total_volume": 3267.04,
+  "high_24h": 0.00036414,
+  "low_24h": 0.00034139,
+  "price_change_24h": -0.000013945830942326,
+  "price_change_percentage_24h": -3.89185,
+  "market_cap_change_24h": -12840.375372147188,
+  "market_cap_change_percentage_24h": -4.30056,
+  "circulating_supply": 831499414.705915,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.0093404,
+  "ath_change_percentage": -96.31542,
+  "ath_date": "2023-12-12T14:15:24.084Z",
+  "atl": 0.00024589,
+  "atl_change_percentage": 39.96444,
+  "atl_date": "2024-04-17T16:49:53.274Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:22.208Z",
+  "platforms": {
+    "bsc": "0xa2c17a6fd0afe27afa2630a7528bc673089e6b8d"
+  }
+}

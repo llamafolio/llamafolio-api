@@ -1,0 +1,31 @@
+{
+  "id": "toucan-protocol-base-carbon-tonne",
+  "symbol": "bct",
+  "name": "Toucan Protocol: Base Carbon Tonne",
+  "image": "https://assets.coingecko.com/coins/images/19240/large/bct_exchange_enhanced.png?1696518686",
+  "current_price": 0.601623,
+  "market_cap": 11002766,
+  "market_cap_rank": 1386,
+  "fully_diluted_valuation": 11002766,
+  "total_volume": 13163.4,
+  "high_24h": 0.678368,
+  "low_24h": 0.575478,
+  "price_change_24h": -0.07331494502910929,
+  "price_change_percentage_24h": -10.86247,
+  "market_cap_change_24h": -1282463.4262673762,
+  "market_cap_change_percentage_24h": -10.43907,
+  "circulating_supply": 18275297.6222067,
+  "total_supply": 18275297.6222067,
+  "max_supply": null,
+  "ath": 8.6,
+  "ath_change_percentage": -92.99924,
+  "ath_date": "2021-11-29T21:57:39.888Z",
+  "atl": 0.170571,
+  "atl_change_percentage": 252.96459,
+  "atl_date": "2023-10-20T12:36:23.399Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:53:22.809Z",
+  "platforms": {
+    "polygon": "0x2f800db0fdb5223b3c3f354886d907a671414a7f"
+  }
+}

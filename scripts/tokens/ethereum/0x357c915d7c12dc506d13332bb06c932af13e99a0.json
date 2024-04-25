@@ -1,0 +1,31 @@
+{
+  "id": "luckysleprecoin",
+  "symbol": "luckyslp",
+  "name": "LuckysLeprecoin",
+  "image": "https://assets.coingecko.com/coins/images/32303/large/Luckys_Leprecoin_New_Logo_200x200.png?1697187844",
+  "current_price": 3.58495e-7,
+  "market_cap": 223964,
+  "market_cap_rank": 3441,
+  "fully_diluted_valuation": 254883,
+  "total_volume": 707228,
+  "high_24h": 3.79932e-7,
+  "low_24h": 3.52385e-7,
+  "price_change_24h": -1.2708966258e-8,
+  "price_change_percentage_24h": -3.42371,
+  "market_cap_change_24h": -8302.862262700626,
+  "market_cap_change_percentage_24h": -3.57471,
+  "circulating_supply": 624750927335.069,
+  "total_supply": 711000000000,
+  "max_supply": 711000000000,
+  "ath": 0.00000312,
+  "ath_change_percentage": -88.49476,
+  "ath_date": "2023-11-04T05:30:07.092Z",
+  "atl": 2.88319e-7,
+  "atl_change_percentage": 24.54378,
+  "atl_date": "2023-10-24T15:33:49.118Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:09.500Z",
+  "platforms": {
+    "ethereum": "0x357c915d7c12dc506d13332bb06c932af13e99a0"
+  }
+}

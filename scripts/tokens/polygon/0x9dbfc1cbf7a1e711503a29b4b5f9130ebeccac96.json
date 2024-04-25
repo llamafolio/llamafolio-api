@@ -1,0 +1,31 @@
+{
+  "id": "uponly-token",
+  "symbol": "upo",
+  "name": "UpOnly",
+  "image": "https://assets.coingecko.com/coins/images/24900/large/f-WNwLNJ_400x400.jpg?1696524058",
+  "current_price": 0.096543,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 15445225,
+  "total_volume": 1303164,
+  "high_24h": 0.122333,
+  "low_24h": 0.096188,
+  "price_change_24h": -0.02357212699890872,
+  "price_change_percentage_24h": -19.62466,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 160000000,
+  "max_supply": null,
+  "ath": 1.38,
+  "ath_change_percentage": -92.99707,
+  "ath_date": "2022-04-08T10:57:47.767Z",
+  "atl": 0.00388077,
+  "atl_change_percentage": 2384.18372,
+  "atl_date": "2022-11-09T22:25:28.722Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:42.672Z",
+  "platforms": {
+    "polygon": "0x9dbfc1cbf7a1e711503a29b4b5f9130ebeccac96"
+  }
+}

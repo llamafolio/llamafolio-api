@@ -1,0 +1,31 @@
+{
+  "id": "spiritswap",
+  "symbol": "spirit",
+  "name": "SpiritSwap",
+  "image": "https://assets.coingecko.com/coins/images/15118/large/token-icon_m.png?1696514775",
+  "current_price": 0.00711593,
+  "market_cap": 3409343,
+  "market_cap_rank": 1988,
+  "fully_diluted_valuation": 7125740,
+  "total_volume": 42196,
+  "high_24h": 0.00782895,
+  "low_24h": 0.00696353,
+  "price_change_24h": -0.000654040670747096,
+  "price_change_percentage_24h": -8.41754,
+  "market_cap_change_24h": -312629.8538013748,
+  "market_cap_change_percentage_24h": -8.39957,
+  "circulating_supply": 478454672.81738,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.638113,
+  "ath_change_percentage": -98.88256,
+  "ath_date": "2021-10-08T20:14:00.755Z",
+  "atl": 0.0003707,
+  "atl_change_percentage": 1823.51788,
+  "atl_date": "2023-09-22T05:31:58.944Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:19.462Z",
+  "platforms": {
+    "fantom": "0x5cc61a78f164885776aa610fb0fe1257df78e59b"
+  }
+}

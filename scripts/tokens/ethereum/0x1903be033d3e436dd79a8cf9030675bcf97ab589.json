@@ -1,0 +1,31 @@
+{
+  "id": "besiktas",
+  "symbol": "bjk",
+  "name": "Beşiktaş",
+  "image": "https://assets.coingecko.com/coins/images/32038/large/BJK_200x200_2.png?1696530835",
+  "current_price": 0.727187,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 6908278,
+  "total_volume": 90712,
+  "high_24h": 0.736292,
+  "low_24h": 0.724111,
+  "price_change_24h": -0.006595401151076375,
+  "price_change_percentage_24h": -0.89882,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 9500000,
+  "max_supply": 50000000,
+  "ath": 2.5,
+  "ath_change_percentage": -70.87602,
+  "ath_date": "2023-10-03T14:13:12.006Z",
+  "atl": 0.638402,
+  "atl_change_percentage": 13.90732,
+  "atl_date": "2024-04-13T20:12:04.005Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:08.014Z",
+  "platforms": {
+    "ethereum": "0x1903be033d3e436dd79a8cf9030675bcf97ab589"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "nexuspad",
+  "symbol": "nexus",
+  "name": "Nexuspad",
+  "image": "https://assets.coingecko.com/coins/images/28345/large/NEXUS.png?1696527350",
+  "current_price": 0.00278849,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 13942.43,
+  "total_volume": 5.53,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 5000000,
+  "max_supply": 1279850,
+  "ath": 0.135552,
+  "ath_change_percentage": -97.94286,
+  "ath_date": "2022-11-29T12:00:47.568Z",
+  "atl": 0.00226879,
+  "atl_change_percentage": 22.90612,
+  "atl_date": "2023-01-02T05:01:12.102Z",
+  "roi": null,
+  "last_updated": "2023-05-16T07:33:14.462Z",
+  "platforms": {
+    "bsc": "0xefdb93e14cd63b08561e86d3a30aae0f3aabad9a"
+  }
+}

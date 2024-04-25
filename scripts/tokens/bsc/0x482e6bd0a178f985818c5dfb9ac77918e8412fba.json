@@ -1,0 +1,31 @@
+{
+  "id": "colizeum",
+  "symbol": "zeum",
+  "name": "Colizeum",
+  "image": "https://assets.coingecko.com/coins/images/24448/large/AB0cGpnx_400x400.jpg?1696523629",
+  "current_price": 0.00188861,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1888306,
+  "total_volume": 14.65,
+  "high_24h": 0.00194291,
+  "low_24h": 0.0018568,
+  "price_change_24h": -0.000005170625287992,
+  "price_change_percentage_24h": -0.27303,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.149149,
+  "ath_change_percentage": -98.734,
+  "ath_date": "2022-05-04T04:18:41.956Z",
+  "atl": 0.00095998,
+  "atl_change_percentage": 96.69405,
+  "atl_date": "2023-10-17T09:57:12.041Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:14.605Z",
+  "platforms": {
+    "bsc": "0x482e6bd0a178f985818c5dfb9ac77918e8412fba"
+  }
+}

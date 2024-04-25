@@ -1,0 +1,31 @@
+{
+  "id": "binance-peg-litecoin",
+  "symbol": "ltc",
+  "name": "Binance-Peg Litecoin",
+  "image": "https://assets.coingecko.com/coins/images/15456/large/LrysCc5Q_400x400.jpg?1696515103",
+  "current_price": 82.86,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 49415808,
+  "total_volume": 4390070,
+  "high_24h": 87.61,
+  "low_24h": 82.28,
+  "price_change_24h": -4.252078354862022,
+  "price_change_percentage_24h": -4.88092,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 595000,
+  "max_supply": null,
+  "ath": 336.84,
+  "ath_change_percentage": -75.40174,
+  "ath_date": "2021-05-14T15:18:50.354Z",
+  "atl": 0.942282,
+  "atl_change_percentage": 8693.17902,
+  "atl_date": "2021-06-22T10:17:25.625Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:39.998Z",
+  "platforms": {
+    "bsc": "0x4338665cbb7b2485a8855a139b75d5e34ab0db94"
+  }
+}

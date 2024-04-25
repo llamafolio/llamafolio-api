@@ -1,0 +1,31 @@
+{
+  "id": "tarality",
+  "symbol": "taral",
+  "name": "Tarality",
+  "image": "https://assets.coingecko.com/coins/images/21385/large/photo1690369873_%282%29.png?1696520750",
+  "current_price": 0.00087979,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 843867462832,
+  "total_volume": 115529,
+  "high_24h": 0.00089147,
+  "low_24h": 0.00087257,
+  "price_change_24h": -0.000011375591762031,
+  "price_change_percentage_24h": -1.27649,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 959999999999997,
+  "max_supply": 959999999999997,
+  "ath": 0.00289781,
+  "ath_change_percentage": -69.68057,
+  "ath_date": "2021-12-30T12:56:01.354Z",
+  "atl": 0.00001035,
+  "atl_change_percentage": 8386.04387,
+  "atl_date": "2022-11-22T20:20:11.430Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:16:11.215Z",
+  "platforms": {
+    "bsc": "0x69e5420a92e8323c5094fa84f1655e29dd2270c2"
+  }
+}

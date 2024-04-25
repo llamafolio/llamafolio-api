@@ -1,0 +1,31 @@
+{
+  "id": "immutable-x",
+  "symbol": "imx",
+  "name": "Immutable",
+  "image": "https://assets.coingecko.com/coins/images/17233/large/immutableX-symbol-BLK-RGB.png?1696516787",
+  "current_price": 2.17,
+  "market_cap": 3163476660,
+  "market_cap_rank": 38,
+  "fully_diluted_valuation": 4343003221,
+  "total_volume": 52672526,
+  "high_24h": 2.43,
+  "low_24h": 2.16,
+  "price_change_24h": -0.21569544978977762,
+  "price_change_percentage_24h": -9.03551,
+  "market_cap_change_24h": -324059277.55848503,
+  "market_cap_change_percentage_24h": -9.29193,
+  "circulating_supply": 1456815249.3898141,
+  "total_supply": 2000000000,
+  "max_supply": 2000000000,
+  "ath": 9.52,
+  "ath_change_percentage": -77.19009,
+  "ath_date": "2021-11-26T01:03:01.536Z",
+  "atl": 0.378055,
+  "atl_change_percentage": 474.38465,
+  "atl_date": "2022-12-31T07:36:37.649Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:39.524Z",
+  "platforms": {
+    "ethereum": "0xf57e7e7c23978c3caec3c3548e3d615c346e79ff"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "grape-governance-token",
+  "symbol": "ggt",
+  "name": "Grape Governance Token",
+  "image": "https://assets.coingecko.com/coins/images/30807/large/grape_logo.png?1696529664",
+  "current_price": 0.388648,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 439.17,
+  "high_24h": 0.388648,
+  "low_24h": 0.388648,
+  "price_change_24h": 0,
+  "price_change_percentage_24h": 0,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": 10000000,
+  "ath": 1.3,
+  "ath_change_percentage": -70.1096,
+  "ath_date": "2023-09-25T22:05:16.938Z",
+  "atl": 0.04116691,
+  "atl_change_percentage": 844.07871,
+  "atl_date": "2024-03-05T02:10:44.572Z",
+  "roi": null,
+  "last_updated": "2024-04-24T09:31:25.703Z",
+  "platforms": {
+    "ethereum": "0x39b0e13a29c2a27ce88cebd21262a232b0633613"
+  }
+}

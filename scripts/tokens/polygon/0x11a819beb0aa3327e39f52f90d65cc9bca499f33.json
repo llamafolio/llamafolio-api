@@ -1,0 +1,31 @@
+{
+  "id": "scaleswap-token",
+  "symbol": "sca",
+  "name": "Scaleswap",
+  "image": "https://assets.coingecko.com/coins/images/16360/large/thumbnail_1170823958_vertical_logo_lateral_radiance.png?1696515959",
+  "current_price": 0.03299523,
+  "market_cap": 813954,
+  "market_cap_rank": 2812,
+  "fully_diluted_valuation": 813954,
+  "total_volume": 2.16,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 24668824.8983449,
+  "total_supply": 24668824.8983449,
+  "max_supply": 25000000,
+  "ath": 0.900246,
+  "ath_change_percentage": -96.33486,
+  "ath_date": "2022-09-12T07:37:33.967Z",
+  "atl": 0.01027649,
+  "atl_change_percentage": 221.07499,
+  "atl_date": "2022-11-22T07:29:35.797Z",
+  "roi": null,
+  "last_updated": "2024-04-22T04:32:17.472Z",
+  "platforms": {
+    "polygon": "0x11a819beb0aa3327e39f52f90d65cc9bca499f33"
+  }
+}

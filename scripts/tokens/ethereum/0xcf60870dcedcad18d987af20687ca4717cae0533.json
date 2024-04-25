@@ -1,0 +1,31 @@
+{
+  "id": "degen-fighting-championship",
+  "symbol": "dfc",
+  "name": "Degen Fighting Championship",
+  "image": "https://assets.coingecko.com/coins/images/34211/large/DFC-200x200.png?1704276680",
+  "current_price": 0.03736721,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 37367,
+  "total_volume": 785.79,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 1.6,
+  "ath_change_percentage": -97.65745,
+  "ath_date": "2024-01-03T12:03:42.217Z",
+  "atl": 0.03712921,
+  "atl_change_percentage": 0.64101,
+  "atl_date": "2024-02-18T03:44:28.726Z",
+  "roi": null,
+  "last_updated": "2024-02-18T05:24:34.568Z",
+  "platforms": {
+    "ethereum": "0xcf60870dcedcad18d987af20687ca4717cae0533"
+  }
+}

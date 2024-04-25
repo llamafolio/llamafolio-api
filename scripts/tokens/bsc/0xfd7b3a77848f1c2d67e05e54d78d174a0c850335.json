@@ -1,0 +1,31 @@
+{
+  "id": "binance-peg-ontology",
+  "symbol": "ont",
+  "name": "Binance-Peg Ontology",
+  "image": "https://assets.coingecko.com/coins/images/18559/large/ont.png?1696518037",
+  "current_price": 0.411706,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 7360692,
+  "total_volume": 1639.88,
+  "high_24h": 0.437317,
+  "low_24h": 0.400213,
+  "price_change_24h": -0.011487621436274357,
+  "price_change_percentage_24h": -2.71451,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 17900000,
+  "max_supply": null,
+  "ath": 1.39,
+  "ath_change_percentage": -70.42528,
+  "ath_date": "2021-11-04T11:53:23.110Z",
+  "atl": 0.137227,
+  "atl_change_percentage": 199.69365,
+  "atl_date": "2022-11-12T06:58:51.354Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:42.074Z",
+  "platforms": {
+    "bsc": "0xfd7b3a77848f1c2d67e05e54d78d174a0c850335"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "astrobits",
+  "symbol": "astrb",
+  "name": "ASTROBITS",
+  "image": "https://assets.coingecko.com/coins/images/34003/large/Astrobits.jpg?1703603949",
+  "current_price": 1.19584e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1195.84,
+  "total_volume": 218.51,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": null,
+  "ath": 0.0000073,
+  "ath_change_percentage": -98.3613,
+  "ath_date": "2023-12-26T17:06:41.355Z",
+  "atl": 1.15925e-7,
+  "atl_change_percentage": 3.15642,
+  "atl_date": "2024-03-25T13:56:29.081Z",
+  "roi": null,
+  "last_updated": "2024-03-25T21:30:32.520Z",
+  "platforms": {
+    "bsc": "0xca8dd6d8e4b015d9acdc8e06f5a3d5479d88f53f"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "most-global",
+  "symbol": "mgp",
+  "name": "MOST Global",
+  "image": "https://assets.coingecko.com/coins/images/33212/large/mgp200x200.png?1701085068",
+  "current_price": 0.552484,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 540023,
+  "total_volume": 2441.27,
+  "high_24h": 0.556131,
+  "low_24h": 0.549267,
+  "price_change_24h": -0.000225476657661039,
+  "price_change_percentage_24h": -0.04079,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 976396,
+  "max_supply": null,
+  "ath": 1.5,
+  "ath_change_percentage": -63.17505,
+  "ath_date": "2023-11-27T14:10:07.928Z",
+  "atl": 0.526107,
+  "atl_change_percentage": 5.19154,
+  "atl_date": "2024-04-21T14:19:48.005Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:42.902Z",
+  "platforms": {
+    "bsc": "0xe703bcd08af361b3de09a617fb74f98520954fca"
+  }
+}

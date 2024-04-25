@@ -1,0 +1,31 @@
+{
+  "id": "truck",
+  "symbol": "truck",
+  "name": "Truck",
+  "image": "https://assets.coingecko.com/coins/images/32760/large/2023-10-31_19.33.52.jpg?1699328941",
+  "current_price": 0.00231728,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 26190,
+  "total_volume": 869.1,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 11302023,
+  "max_supply": 11302023,
+  "ath": 0.895474,
+  "ath_change_percentage": -99.74122,
+  "ath_date": "2023-11-07T03:49:48.242Z",
+  "atl": 0.00153296,
+  "atl_change_percentage": 51.16363,
+  "atl_date": "2023-12-01T14:05:49.506Z",
+  "roi": null,
+  "last_updated": "2024-01-22T18:31:19.564Z",
+  "platforms": {
+    "ethereum": "0x3f48cce3eabb02304f7cc16fd7a35f3a2df7be8e"
+  }
+}

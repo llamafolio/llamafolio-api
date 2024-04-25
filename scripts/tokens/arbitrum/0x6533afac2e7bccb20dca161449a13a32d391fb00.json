@@ -1,0 +1,31 @@
+{
+  "id": "aave-v3-arb",
+  "symbol": "aarb",
+  "name": "Aave v3 ARB",
+  "image": "https://assets.coingecko.com/coins/images/32912/large/arbitrum.png?1699824441",
+  "current_price": 1.11,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 0,
+  "high_24h": 1.2,
+  "low_24h": 1.082,
+  "price_change_24h": -0.0875999999999999,
+  "price_change_percentage_24h": -7.40929,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 2.4,
+  "ath_change_percentage": -54.1968,
+  "ath_date": "2024-01-12T12:30:49.565Z",
+  "atl": 0.910748,
+  "atl_change_percentage": 20.68518,
+  "atl_date": "2024-04-13T20:30:28.996Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:31.228Z",
+  "platforms": {
+    "arbitrum": "0x6533afac2e7bccb20dca161449a13a32d391fb00"
+  }
+}

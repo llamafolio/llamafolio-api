@@ -1,0 +1,31 @@
+{
+  "id": "govworld",
+  "symbol": "gov",
+  "name": "GovWorld",
+  "image": "https://assets.coingecko.com/coins/images/22261/large/govworld.PNG?1696521606",
+  "current_price": 0.00602969,
+  "market_cap": 355933,
+  "market_cap_rank": 3233,
+  "fully_diluted_valuation": 602588,
+  "total_volume": 52.09,
+  "high_24h": 0.00608334,
+  "low_24h": 0.00598159,
+  "price_change_24h": -0.000007542302595329,
+  "price_change_percentage_24h": -0.12493,
+  "market_cap_change_24h": 277.6,
+  "market_cap_change_percentage_24h": 0.07805,
+  "circulating_supply": 59067421.042157315,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.240885,
+  "ath_change_percentage": -97.50528,
+  "ath_date": "2022-01-17T11:02:46.073Z",
+  "atl": 0.00238498,
+  "atl_change_percentage": 151.96806,
+  "atl_date": "2023-02-21T15:20:49.858Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:22.220Z",
+  "platforms": {
+    "bsc": "0xcc7a91413769891de2e9ebbfc96d2eb1874b5760"
+  }
+}

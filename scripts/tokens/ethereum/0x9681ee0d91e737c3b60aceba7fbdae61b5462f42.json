@@ -1,0 +1,31 @@
+{
+  "id": "crypto-carbon-energy-2",
+  "symbol": "cyce",
+  "name": "Crypto Carbon Energy",
+  "image": "https://assets.coingecko.com/coins/images/29824/large/CYCE.jpg?1696528752",
+  "current_price": 0.450686,
+  "market_cap": 9124794,
+  "market_cap_rank": 1481,
+  "fully_diluted_valuation": 18900622,
+  "total_volume": 284.12,
+  "high_24h": 0.451068,
+  "low_24h": 0.449074,
+  "price_change_24h": 0.00046499,
+  "price_change_percentage_24h": 0.10328,
+  "market_cap_change_24h": -1607.6169651355594,
+  "market_cap_change_percentage_24h": -0.01762,
+  "circulating_supply": 20276652,
+  "total_supply": 42000000,
+  "max_supply": 42000000,
+  "ath": 0.799948,
+  "ath_change_percentage": -43.73218,
+  "ath_date": "2024-01-04T20:41:10.178Z",
+  "atl": 0.11985,
+  "atl_change_percentage": 275.56305,
+  "atl_date": "2024-03-04T10:25:50.863Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:29.539Z",
+  "platforms": {
+    "ethereum": "0x9681ee0d91e737c3b60aceba7fbdae61b5462f42"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "chain-games",
+  "symbol": "chain",
+  "name": "Chain Games",
+  "image": "https://assets.coingecko.com/coins/images/12257/large/chain-pfp-logo.png?1696512087",
+  "current_price": 0.02052444,
+  "market_cap": 6856786,
+  "market_cap_rank": 1633,
+  "fully_diluted_valuation": 10121588,
+  "total_volume": 59593,
+  "high_24h": 0.02515521,
+  "low_24h": 0.02046083,
+  "price_change_24h": -0.004621016304869646,
+  "price_change_percentage_24h": -18.37714,
+  "market_cap_change_24h": -1535594.208456913,
+  "market_cap_change_percentage_24h": -18.29748,
+  "circulating_supply": 334317524.57825387,
+  "total_supply": 493499998.3071,
+  "max_supply": 500000000,
+  "ath": 1.03,
+  "ath_change_percentage": -98.01022,
+  "ath_date": "2021-03-23T14:33:42.003Z",
+  "atl": 0.0055509,
+  "atl_change_percentage": 269.16073,
+  "atl_date": "2023-10-16T05:06:26.103Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:10.046Z",
+  "platforms": {
+    "ethereum": "0xc4c2614e694cf534d407ee49f8e44d125e4681c4"
+  }
+}

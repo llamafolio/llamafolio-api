@@ -1,0 +1,31 @@
+{
+  "id": "99starz",
+  "symbol": "stz",
+  "name": "99Starz",
+  "image": "https://assets.coingecko.com/coins/images/21467/large/stz.png?1696520828",
+  "current_price": 0.0175672,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1747269,
+  "total_volume": 12916.49,
+  "high_24h": 0.02166289,
+  "low_24h": 0.01764918,
+  "price_change_24h": -0.004095686970384552,
+  "price_change_percentage_24h": -18.90647,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 99000000,
+  "max_supply": 99000000,
+  "ath": 0.977213,
+  "ath_change_percentage": -98.19619,
+  "ath_date": "2021-12-19T14:19:38.263Z",
+  "atl": 0.00559441,
+  "atl_change_percentage": 215.08244,
+  "atl_date": "2023-08-26T11:15:33.235Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:18.993Z",
+  "platforms": {
+    "ethereum": "0x3f5294df68f871241c4b18fcf78ebd8ac18ab654"
+  }
+}

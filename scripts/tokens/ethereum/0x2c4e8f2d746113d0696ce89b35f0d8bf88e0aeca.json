@@ -1,0 +1,35 @@
+{
+  "id": "simple-token",
+  "symbol": "ost",
+  "name": "OST",
+  "image": "https://assets.coingecko.com/coins/images/1367/large/ost.jpg?1696502425",
+  "current_price": 0.00027791,
+  "market_cap": 186018,
+  "market_cap_rank": 3529,
+  "fully_diluted_valuation": 215199,
+  "total_volume": 9822.7,
+  "high_24h": 0.00031705,
+  "low_24h": 0.00026097,
+  "price_change_24h": -0.000037869404140732,
+  "price_change_percentage_24h": -11.99237,
+  "market_cap_change_24h": -32490.891849923326,
+  "market_cap_change_percentage_24h": -14.86939,
+  "circulating_supply": 691519031.7033354,
+  "total_supply": 800000000,
+  "max_supply": null,
+  "ath": 1.31,
+  "ath_change_percentage": -99.97887,
+  "ath_date": "2018-01-10T00:00:00.000Z",
+  "atl": 0.00024302,
+  "atl_change_percentage": 13.87294,
+  "atl_date": "2024-04-18T21:44:28.618Z",
+  "roi": {
+    "times": -0.9965261280544776,
+    "currency": "usd",
+    "percentage": -99.65261280544776
+  },
+  "last_updated": "2024-04-25T09:00:56.751Z",
+  "platforms": {
+    "ethereum": "0x2c4e8f2d746113d0696ce89b35f0d8bf88e0aeca"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "maxity",
+  "symbol": "max",
+  "name": "Maxity",
+  "image": "https://assets.coingecko.com/coins/images/26933/large/MAX_token_200.png?1696525989",
+  "current_price": 0.03716959,
+  "market_cap": 5447433,
+  "market_cap_rank": 1749,
+  "fully_diluted_valuation": 37205007,
+  "total_volume": 52700,
+  "high_24h": 0.03992228,
+  "low_24h": 0.03579286,
+  "price_change_24h": -0.002586685238271547,
+  "price_change_percentage_24h": -6.50636,
+  "market_cap_change_24h": -367109.6137671992,
+  "market_cap_change_percentage_24h": -6.31365,
+  "circulating_supply": 146416667.36,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.077676,
+  "ath_change_percentage": -52.00858,
+  "ath_date": "2023-12-20T12:35:19.524Z",
+  "atl": 0.02162119,
+  "atl_change_percentage": 72.41372,
+  "atl_date": "2023-05-25T14:29:37.155Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:39.909Z",
+  "platforms": {
+    "ethereum": "0x63f7b1b538a78cb699e5399621b3d2e047c40de4"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "affyn",
+  "symbol": "fyn",
+  "name": "Affyn",
+  "image": "https://assets.coingecko.com/coins/images/23275/large/fyn.png?1696522495",
+  "current_price": 0.056432,
+  "market_cap": 48383184,
+  "market_cap_rank": 705,
+  "fully_diluted_valuation": 56367072,
+  "total_volume": 463688,
+  "high_24h": 0.060171,
+  "low_24h": 0.056297,
+  "price_change_24h": -0.003490931819727678,
+  "price_change_percentage_24h": -5.82575,
+  "market_cap_change_24h": 27339678,
+  "market_cap_change_percentage_24h": 129.91978,
+  "circulating_supply": 858359011,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 1.84,
+  "ath_change_percentage": -96.94098,
+  "ath_date": "2022-02-01T07:19:38.681Z",
+  "atl": 0.01046309,
+  "atl_change_percentage": 439.28714,
+  "atl_date": "2023-11-23T20:01:06.726Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:47.611Z",
+  "platforms": {
+    "polygon": "0x3b56a704c01d650147ade2b8cee594066b3f9421"
+  }
+}

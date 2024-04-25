@@ -1,0 +1,31 @@
+{
+  "id": "izumi-bond-usd",
+  "symbol": "iusd",
+  "name": "iZUMi Bond USD",
+  "image": "https://assets.coingecko.com/coins/images/25388/large/iusd-logo-symbol-10k%E5%A4%A7%E5%B0%8F.png?1696524521",
+  "current_price": 0.904688,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 27090874,
+  "total_volume": 127021,
+  "high_24h": 0.951634,
+  "low_24h": 0.901937,
+  "price_change_24h": -0.0387025985285534,
+  "price_change_percentage_24h": -4.1025,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 30000000,
+  "max_supply": 30000000,
+  "ath": 3.85,
+  "ath_change_percentage": -76.49053,
+  "ath_date": "2023-04-11T15:17:34.646Z",
+  "atl": 0.307765,
+  "atl_change_percentage": 193.95395,
+  "atl_date": "2023-04-20T13:24:06.699Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:21.239Z",
+  "platforms": {
+    "arbitrum": "0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d"
+  }
+}

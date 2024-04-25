@@ -1,0 +1,31 @@
+{
+  "id": "yvs-finance",
+  "symbol": "yvs",
+  "name": "YVS Finance",
+  "image": "https://assets.coingecko.com/coins/images/13471/large/cu0LSzE.png?1696513232",
+  "current_price": 0.061241,
+  "market_cap": 32639,
+  "market_cap_rank": 4080,
+  "fully_diluted_valuation": 119654,
+  "total_volume": 48.45,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 532964.3943175789,
+  "total_supply": 1953820,
+  "max_supply": null,
+  "ath": 28.05,
+  "ath_change_percentage": -99.78165,
+  "ath_date": "2021-02-20T07:52:10.435Z",
+  "atl": 0.02313072,
+  "atl_change_percentage": 164.76115,
+  "atl_date": "2022-07-05T20:13:04.225Z",
+  "roi": null,
+  "last_updated": "2024-04-17T20:01:11.211Z",
+  "platforms": {
+    "polygon": "0xb565cf70613ca464d68427106af80c67a8e4b801"
+  }
+}

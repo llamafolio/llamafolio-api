@@ -1,0 +1,31 @@
+{
+  "id": "xpet-tech-bpet",
+  "symbol": "bpet",
+  "name": "xPet.tech BPET",
+  "image": "https://assets.coingecko.com/coins/images/33848/large/BPET_logo.png?1703122571",
+  "current_price": 0.067535,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2624359,
+  "total_volume": 16746.01,
+  "high_24h": 0.074579,
+  "low_24h": 0.067848,
+  "price_change_24h": -0.005180119240208919,
+  "price_change_percentage_24h": -7.12381,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 38859005.224697,
+  "max_supply": null,
+  "ath": 1.6,
+  "ath_change_percentage": -95.75922,
+  "ath_date": "2023-12-27T13:35:50.163Z",
+  "atl": 0.067848,
+  "atl_change_percentage": 0.31589,
+  "atl_date": "2024-04-25T08:43:28.227Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:25.373Z",
+  "platforms": {
+    "arbitrum": "0x6daf586b7370b14163171544fca24abcc0862ac5"
+  }
+}

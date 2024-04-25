@@ -1,0 +1,31 @@
+{
+  "id": "magic-gpt-game",
+  "symbol": "mgpt",
+  "name": "Magic GPT Game",
+  "image": "https://assets.coingecko.com/coins/images/31886/large/photo_2023-09-21_17-14-43.jpg?1696530697",
+  "current_price": 0.00003514,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 3.02,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 0.00003851,
+  "ath_change_percentage": -8.7496,
+  "ath_date": "2023-09-22T09:05:11.210Z",
+  "atl": 0.00001323,
+  "atl_change_percentage": 165.59177,
+  "atl_date": "2023-09-22T17:40:04.940Z",
+  "roi": null,
+  "last_updated": "2024-04-21T21:06:34.579Z",
+  "platforms": {
+    "bsc": "0x03450c8c2a9265823a715cad9cd3ade2c840bbc2"
+  }
+}

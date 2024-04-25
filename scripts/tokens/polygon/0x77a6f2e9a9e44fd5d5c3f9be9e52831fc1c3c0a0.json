@@ -1,0 +1,31 @@
+{
+  "id": "the-world-state",
+  "symbol": "w$c",
+  "name": "World$tateCoin",
+  "image": "https://assets.coingecko.com/coins/images/29636/large/wsc_polygon_logo_200.png?1696528573",
+  "current_price": 0.00002893,
+  "market_cap": 26828,
+  "market_cap_rank": 4108,
+  "fully_diluted_valuation": 28792,
+  "total_volume": 3.27,
+  "high_24h": 0.00002905,
+  "low_24h": 0.0000281,
+  "price_change_24h": -3.84774227e-10,
+  "price_change_percentage_24h": -0.00133,
+  "market_cap_change_24h": -0.3568779750930844,
+  "market_cap_change_percentage_24h": -0.00133,
+  "circulating_supply": 927499686.3825,
+  "total_supply": 995378884,
+  "max_supply": 1000000000,
+  "ath": 0.095182,
+  "ath_change_percentage": -99.96965,
+  "ath_date": "2023-07-02T10:11:28.805Z",
+  "atl": 0.00002365,
+  "atl_change_percentage": 22.16602,
+  "atl_date": "2024-04-17T09:49:47.172Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:55.680Z",
+  "platforms": {
+    "polygon": "0x77a6f2e9a9e44fd5d5c3f9be9e52831fc1c3c0a0"
+  }
+}

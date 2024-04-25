@@ -1,0 +1,31 @@
+{
+  "id": "quidd",
+  "symbol": "quidd",
+  "name": "Quidd",
+  "image": "https://assets.coingecko.com/coins/images/19725/large/quidd.png?1696519150",
+  "current_price": 0.0018103,
+  "market_cap": 474798,
+  "market_cap_rank": 3091,
+  "fully_diluted_valuation": 1808250,
+  "total_volume": 324.74,
+  "high_24h": 0.01700155,
+  "low_24h": 0.00180825,
+  "price_change_24h": -0.000118549166128311,
+  "price_change_percentage_24h": -6.14611,
+  "market_cap_change_24h": -31654.793969615595,
+  "market_cap_change_percentage_24h": -6.2503,
+  "circulating_supply": 262573159.682799,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 5.88,
+  "ath_change_percentage": -99.9692,
+  "ath_date": "2021-11-25T08:21:13.077Z",
+  "atl": 0.0015209,
+  "atl_change_percentage": 19.01667,
+  "atl_date": "2024-03-20T16:35:55.715Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:41.918Z",
+  "platforms": {
+    "ethereum": "0xda9fdab21bc4a5811134a6e0ba6ca06624e67c07"
+  }
+}

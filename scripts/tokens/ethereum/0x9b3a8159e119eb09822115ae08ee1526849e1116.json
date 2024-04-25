@@ -1,0 +1,31 @@
+{
+  "id": "meme-alliance",
+  "symbol": "mma",
+  "name": "Meme Alliance",
+  "image": "https://assets.coingecko.com/coins/images/33765/large/200x200.png?1709978615",
+  "current_price": 0.01072044,
+  "market_cap": 745630,
+  "market_cap_rank": 2855,
+  "fully_diluted_valuation": 1072044,
+  "total_volume": 49937,
+  "high_24h": 0.01212913,
+  "low_24h": 0.01057907,
+  "price_change_24h": -0.000495010903546976,
+  "price_change_percentage_24h": -4.41365,
+  "market_cap_change_24h": -34670.42727166414,
+  "market_cap_change_percentage_24h": -4.44322,
+  "circulating_supply": 69552122.01285405,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.073829,
+  "ath_change_percentage": -85.46966,
+  "ath_date": "2024-04-12T06:10:38.869Z",
+  "atl": 0.00738342,
+  "atl_change_percentage": 45.29217,
+  "atl_date": "2024-01-28T03:05:55.891Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:41.959Z",
+  "platforms": {
+    "ethereum": "0x9b3a8159e119eb09822115ae08ee1526849e1116"
+  }
+}

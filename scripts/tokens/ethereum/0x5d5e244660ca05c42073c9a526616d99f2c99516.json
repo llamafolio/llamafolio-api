@@ -1,0 +1,31 @@
+{
+  "id": "game-tree",
+  "symbol": "gtcoin",
+  "name": "Game Tree",
+  "image": "https://assets.coingecko.com/coins/images/24719/large/hUEmunGU_400x400.jpg?1696523883",
+  "current_price": 0.00030133,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3013326,
+  "total_volume": 53775,
+  "high_24h": 0.00032202,
+  "low_24h": 0.00029805,
+  "price_change_24h": -1.3093126943e-8,
+  "price_change_percentage_24h": -0.00434,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": null,
+  "ath": 2.98,
+  "ath_change_percentage": -99.98989,
+  "ath_date": "2022-09-03T10:15:27.724Z",
+  "atl": 0.00028595,
+  "atl_change_percentage": 5.3746,
+  "atl_date": "2024-04-24T05:36:23.991Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:58.583Z",
+  "platforms": {
+    "ethereum": "0x5d5e244660ca05c42073c9a526616d99f2c99516"
+  }
+}

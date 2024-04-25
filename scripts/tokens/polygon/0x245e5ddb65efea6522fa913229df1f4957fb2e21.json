@@ -1,0 +1,31 @@
+{
+  "id": "loserchick-egg",
+  "symbol": "egg",
+  "name": "LoserChick EGG",
+  "image": "https://assets.coingecko.com/coins/images/17574/large/lRAQ2MOTpWqrHhI.png?1696517109",
+  "current_price": 0.03499217,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 19080.25,
+  "total_volume": 3.7,
+  "high_24h": 0.03527165,
+  "low_24h": 0.03487386,
+  "price_change_24h": -0.000204985186368481,
+  "price_change_percentage_24h": -0.58239,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 545272,
+  "max_supply": 7000000,
+  "ath": 2.52,
+  "ath_change_percentage": -98.61039,
+  "ath_date": "2021-08-10T15:51:10.480Z",
+  "atl": 0.01302466,
+  "atl_change_percentage": 168.66086,
+  "atl_date": "2023-08-29T14:35:13.093Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:45.896Z",
+  "platforms": {
+    "polygon": "0x245e5ddb65efea6522fa913229df1f4957fb2e21"
+  }
+}

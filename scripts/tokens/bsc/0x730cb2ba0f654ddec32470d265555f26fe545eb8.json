@@ -1,0 +1,31 @@
+{
+  "id": "elondoge-dao",
+  "symbol": "edao",
+  "name": "ElonDoge DAO",
+  "image": "https://assets.coingecko.com/coins/images/17323/large/edao_logo.png?1696516876",
+  "current_price": 0.583674,
+  "market_cap": 1167.35,
+  "market_cap_rank": 4279,
+  "fully_diluted_valuation": 58367,
+  "total_volume": 26.9,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 2000,
+  "total_supply": 100000,
+  "max_supply": 100000,
+  "ath": 139.84,
+  "ath_change_percentage": -99.58261,
+  "ath_date": "2021-11-01T12:53:52.383Z",
+  "atl": 0.37796,
+  "atl_change_percentage": 54.42731,
+  "atl_date": "2023-07-22T17:44:35.374Z",
+  "roi": null,
+  "last_updated": "2024-04-21T00:26:49.237Z",
+  "platforms": {
+    "bsc": "0x730cb2ba0f654ddec32470d265555f26fe545eb8"
+  }
+}

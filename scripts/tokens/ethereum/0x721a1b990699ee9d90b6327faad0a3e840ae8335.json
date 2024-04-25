@@ -1,0 +1,31 @@
+{
+  "id": "loot",
+  "symbol": "loot",
+  "name": "Lootex",
+  "image": "https://assets.coingecko.com/coins/images/22895/large/loot.png?1696522192",
+  "current_price": 0.03975609,
+  "market_cap": 518966,
+  "market_cap_rank": 3047,
+  "fully_diluted_valuation": 3991741,
+  "total_volume": 222188,
+  "high_24h": 0.04050668,
+  "low_24h": 0.03947842,
+  "price_change_24h": -0.000413681734388591,
+  "price_change_percentage_24h": -1.02983,
+  "market_cap_change_24h": 348.64,
+  "market_cap_change_percentage_24h": 0.06723,
+  "circulating_supply": 13001000.944587374,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 1.67,
+  "ath_change_percentage": -97.61046,
+  "ath_date": "2022-01-25T06:29:15.991Z",
+  "atl": 0.02003445,
+  "atl_change_percentage": 99.54962,
+  "atl_date": "2023-10-23T07:24:59.166Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:23.535Z",
+  "platforms": {
+    "ethereum": "0x721a1b990699ee9d90b6327faad0a3e840ae8335"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "joltify",
+  "symbol": "jolt",
+  "name": "Joltify",
+  "image": "https://assets.coingecko.com/coins/images/25262/large/NSj-jWHR_400x400.jpg?1696524402",
+  "current_price": 0.329616,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 115786457,
+  "total_volume": 200587,
+  "high_24h": 0.341352,
+  "low_24h": 0.312985,
+  "price_change_24h": -0.005649596488895349,
+  "price_change_percentage_24h": -1.68511,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 348750054,
+  "max_supply": 500000000,
+  "ath": 0.747882,
+  "ath_change_percentage": -57.62349,
+  "ath_date": "2024-01-19T03:56:41.765Z",
+  "atl": 0.02360697,
+  "atl_change_percentage": 1242.5109,
+  "atl_date": "2022-04-29T14:01:20.088Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:16:14.487Z",
+  "platforms": {
+    "bsc": "0x7db21353a0c4659b6a9a0519066aa8d52639dfa5"
+  }
+}

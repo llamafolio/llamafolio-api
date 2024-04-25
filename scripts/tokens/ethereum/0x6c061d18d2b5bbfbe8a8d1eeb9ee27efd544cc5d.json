@@ -1,0 +1,31 @@
+{
+  "id": "monarch",
+  "symbol": "mnrch",
+  "name": "Monarch",
+  "image": "https://assets.coingecko.com/coins/images/35139/large/mnrc.jpeg?1707449200",
+  "current_price": 5.46,
+  "market_cap": 48556,
+  "market_cap_rank": 3995,
+  "fully_diluted_valuation": 48556,
+  "total_volume": 191.95,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 8888,
+  "total_supply": 8888,
+  "max_supply": 8888,
+  "ath": 175.03,
+  "ath_change_percentage": -96.87871,
+  "ath_date": "2024-02-15T20:08:38.135Z",
+  "atl": 5.34,
+  "atl_change_percentage": 2.23082,
+  "atl_date": "2024-04-22T02:26:58.784Z",
+  "roi": null,
+  "last_updated": "2024-04-22T17:40:55.843Z",
+  "platforms": {
+    "ethereum": "0x6c061d18d2b5bbfbe8a8d1eeb9ee27efd544cc5d"
+  }
+}

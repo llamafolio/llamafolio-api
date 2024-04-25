@@ -1,0 +1,35 @@
+{
+  "id": "smartmesh",
+  "symbol": "smt",
+  "name": "SmartMesh",
+  "image": "https://assets.coingecko.com/coins/images/1346/large/smartmesh.png?1696502406",
+  "current_price": 0.00409221,
+  "market_cap": 6810698,
+  "market_cap_rank": 1637,
+  "fully_diluted_valuation": 12850374,
+  "total_volume": 72420,
+  "high_24h": 0.0044813,
+  "low_24h": 0.0040077,
+  "price_change_24h": -0.000118721970911056,
+  "price_change_percentage_24h": -2.81938,
+  "market_cap_change_24h": -203783.11518745404,
+  "market_cap_change_percentage_24h": -2.90518,
+  "circulating_supply": 1665044106.09,
+  "total_supply": 3141592653,
+  "max_supply": null,
+  "ath": 0.235215,
+  "ath_change_percentage": -98.26036,
+  "ath_date": "2018-01-07T00:00:00.000Z",
+  "atl": 0.0006158,
+  "atl_change_percentage": 564.48615,
+  "atl_date": "2023-06-04T01:25:04.780Z",
+  "roi": {
+    "times": -0.7953895983360881,
+    "currency": "usd",
+    "percentage": -79.53895983360881
+  },
+  "last_updated": "2024-04-25T08:59:37.447Z",
+  "platforms": {
+    "ethereum": "0x21f15966e07a10554c364b988e91dab01d32794a"
+  }
+}

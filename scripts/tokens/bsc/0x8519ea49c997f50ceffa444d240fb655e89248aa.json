@@ -1,0 +1,31 @@
+{
+  "id": "ramp",
+  "symbol": "ramp",
+  "name": "RAMP [OLD]",
+  "image": "https://assets.coingecko.com/coins/images/12837/large/RAMP-Logo-v2-1000pxsq.png?1696512628",
+  "current_price": 0.118803,
+  "market_cap": 48768140,
+  "market_cap_rank": 697,
+  "fully_diluted_valuation": 118668310,
+  "total_volume": 10824.01,
+  "high_24h": 0.119025,
+  "low_24h": 0.110148,
+  "price_change_24h": 0.00359111,
+  "price_change_percentage_24h": 3.11697,
+  "market_cap_change_24h": 1412747,
+  "market_cap_change_percentage_24h": 2.98329,
+  "circulating_supply": 410961782,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 1.011,
+  "ath_change_percentage": -88.25855,
+  "ath_date": "2021-03-22T06:09:49.758Z",
+  "atl": 0.01170823,
+  "atl_change_percentage": 914.12723,
+  "atl_date": "2020-10-30T22:53:59.409Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:45.584Z",
+  "platforms": {
+    "bsc": "0x8519ea49c997f50ceffa444d240fb655e89248aa"
+  }
+}

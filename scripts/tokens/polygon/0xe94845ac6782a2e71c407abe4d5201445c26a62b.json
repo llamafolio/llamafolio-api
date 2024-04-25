@@ -1,0 +1,31 @@
+{
+  "id": "build",
+  "symbol": "build",
+  "name": "BUILD",
+  "image": "https://assets.coingecko.com/coins/images/26533/large/BUILD.png?1696525607",
+  "current_price": 0.00040089,
+  "market_cap": 4022147,
+  "market_cap_rank": 1903,
+  "fully_diluted_valuation": 5199550,
+  "total_volume": 52868,
+  "high_24h": 0.00050918,
+  "low_24h": 0.00041048,
+  "price_change_24h": -0.000102602117891896,
+  "price_change_percentage_24h": -20.37824,
+  "market_cap_change_24h": -909139.8233417626,
+  "market_cap_change_percentage_24h": -18.43616,
+  "circulating_supply": 9791243707.57041,
+  "total_supply": 12657436079,
+  "max_supply": null,
+  "ath": 0.00213214,
+  "ath_change_percentage": -80.74123,
+  "ath_date": "2023-02-07T16:57:06.595Z",
+  "atl": 0.00004569,
+  "atl_change_percentage": 798.63892,
+  "atl_date": "2023-11-03T10:19:55.985Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:31.732Z",
+  "platforms": {
+    "polygon": "0xe94845ac6782a2e71c407abe4d5201445c26a62b"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "battle-of-guardians-share",
+  "symbol": "bgs",
+  "name": "Battle of Guardians Share",
+  "image": "https://assets.coingecko.com/coins/images/22285/large/K3hU77wS_400x400.jpg?1696521632",
+  "current_price": 0.00109667,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1097473,
+  "total_volume": 448.23,
+  "high_24h": 0.00120714,
+  "low_24h": 0.00109747,
+  "price_change_24h": -0.000097574179352239,
+  "price_change_percentage_24h": -8.17039,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.080159,
+  "ath_change_percentage": -98.63089,
+  "ath_date": "2022-11-18T14:35:05.981Z",
+  "atl": 0.00018309,
+  "atl_change_percentage": 499.43253,
+  "atl_date": "2023-07-31T15:30:02.750Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:48.353Z",
+  "platforms": {
+    "bsc": "0xf339e8c294046e6e7ef6ad4f6fa9e202b59b556b"
+  }
+}

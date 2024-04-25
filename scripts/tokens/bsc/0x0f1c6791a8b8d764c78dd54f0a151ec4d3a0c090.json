@@ -1,0 +1,31 @@
+{
+  "id": "tama-finance",
+  "symbol": "tama",
+  "name": "Tama Finance",
+  "image": "https://assets.coingecko.com/coins/images/15702/large/Q0bhsxl.png?1696515330",
+  "current_price": 6.87205e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 687205,
+  "total_volume": 3.42,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": null,
+  "ath": 3.057e-9,
+  "ath_change_percentage": -77.51832,
+  "ath_date": "2021-05-21T06:49:04.008Z",
+  "atl": 2.3882e-10,
+  "atl_change_percentage": 187.75076,
+  "atl_date": "2023-10-13T05:45:42.283Z",
+  "roi": null,
+  "last_updated": "2024-04-22T22:16:56.513Z",
+  "platforms": {
+    "bsc": "0x0f1c6791a8b8d764c78dd54f0a151ec4d3a0c090"
+  }
+}

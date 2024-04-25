@@ -1,0 +1,31 @@
+{
+  "id": "agave-token",
+  "symbol": "agve",
+  "name": "Agave",
+  "image": "https://assets.coingecko.com/coins/images/14146/large/agve.png?1696513865",
+  "current_price": 46.67,
+  "market_cap": 1297519,
+  "market_cap_rank": 2546,
+  "fully_diluted_valuation": 4667351,
+  "total_volume": 530.44,
+  "high_24h": 50.65,
+  "low_24h": 46.61,
+  "price_change_24h": -3.461526902670606,
+  "price_change_percentage_24h": -6.90441,
+  "market_cap_change_24h": -96230.10174155235,
+  "market_cap_change_percentage_24h": -6.90441,
+  "circulating_supply": 27799.9,
+  "total_supply": 100000,
+  "max_supply": 100000,
+  "ath": 1466.43,
+  "ath_change_percentage": -96.81731,
+  "ath_date": "2021-03-16T15:07:58.157Z",
+  "atl": 4.92,
+  "atl_change_percentage": 848.34933,
+  "atl_date": "2022-12-17T10:19:21.181Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:53:23.720Z",
+  "platforms": {
+    "gnosis": "0x3a97704a1b25f08aa230ae53b352e2e72ef52843"
+  }
+}

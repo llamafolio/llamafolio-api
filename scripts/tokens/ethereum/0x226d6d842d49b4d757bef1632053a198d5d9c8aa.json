@@ -1,0 +1,31 @@
+{
+  "id": "block-browser",
+  "symbol": "block",
+  "name": "Block Browser",
+  "image": "https://assets.coingecko.com/coins/images/31538/large/photo_2023-08-29_01-46-11.jpg?1696530347",
+  "current_price": 0.476535,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 476535,
+  "total_volume": 5691.72,
+  "high_24h": 0.497312,
+  "low_24h": 0.455291,
+  "price_change_24h": -0.015113659143474512,
+  "price_change_percentage_24h": -3.07408,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 3.36,
+  "ath_change_percentage": -85.8284,
+  "ath_date": "2023-09-06T06:59:31.526Z",
+  "atl": 0.357309,
+  "atl_change_percentage": 33.36769,
+  "atl_date": "2023-09-06T13:05:40.051Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:02.690Z",
+  "platforms": {
+    "ethereum": "0x226d6d842d49b4d757bef1632053a198d5d9c8aa"
+  }
+}

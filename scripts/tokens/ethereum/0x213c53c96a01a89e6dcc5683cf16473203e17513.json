@@ -1,0 +1,31 @@
+{
+  "id": "defi-shopping-stake",
+  "symbol": "dss",
+  "name": "Defi Shopping Stake",
+  "image": "https://assets.coingecko.com/coins/images/12602/large/DSS.png?1696512411",
+  "current_price": 0.00768206,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 171311,
+  "total_volume": 31531,
+  "high_24h": 0.00810746,
+  "low_24h": 0.00639375,
+  "price_change_24h": 0.00037249,
+  "price_change_percentage_24h": 5.09599,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 22300119,
+  "max_supply": null,
+  "ath": 1.58,
+  "ath_change_percentage": -99.51604,
+  "ath_date": "2020-10-23T09:32:49.976Z",
+  "atl": 0.00173063,
+  "atl_change_percentage": 342.45387,
+  "atl_date": "2021-05-03T15:53:38.649Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:08.086Z",
+  "platforms": {
+    "ethereum": "0x213c53c96a01a89e6dcc5683cf16473203e17513"
+  }
+}

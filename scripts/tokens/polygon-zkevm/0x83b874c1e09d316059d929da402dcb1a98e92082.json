@@ -1,0 +1,31 @@
+{
+  "id": "lido-staked-matic",
+  "symbol": "stmatic",
+  "name": "Lido Staked Matic",
+  "image": "https://assets.coingecko.com/coins/images/24185/large/stMATIC.png?1696523373",
+  "current_price": 0.786367,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 438405,
+  "total_volume": 2610787,
+  "high_24h": 0.846389,
+  "low_24h": 0.778695,
+  "price_change_24h": -0.049309143955478585,
+  "price_change_percentage_24h": -5.90051,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 560770,
+  "max_supply": 10000000000,
+  "ath": 1.87,
+  "ath_change_percentage": -58.16412,
+  "ath_date": "2022-06-12T05:31:00.750Z",
+  "atl": 0.289137,
+  "atl_change_percentage": 170.57753,
+  "atl_date": "2022-06-19T08:05:59.155Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:49.477Z",
+  "platforms": {
+    "polygon-zkevm": "0x83b874c1e09d316059d929da402dcb1a98e92082"
+  }
+}

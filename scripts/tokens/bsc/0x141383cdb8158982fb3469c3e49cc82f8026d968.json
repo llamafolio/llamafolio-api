@@ -1,0 +1,31 @@
+{
+  "id": "corionx",
+  "symbol": "corx",
+  "name": "CorionX",
+  "image": "https://assets.coingecko.com/coins/images/13129/large/x_log.png?1696512916",
+  "current_price": 0.00027932,
+  "market_cap": 26659,
+  "market_cap_rank": 4109,
+  "fully_diluted_valuation": 111727,
+  "total_volume": 10.81,
+  "high_24h": 0.00028362,
+  "low_24h": 0.00027392,
+  "price_change_24h": 8.93073e-7,
+  "price_change_percentage_24h": 0.32076,
+  "market_cap_change_24h": -68.93110330410491,
+  "market_cap_change_percentage_24h": -0.2579,
+  "circulating_supply": 95442854,
+  "total_supply": 400000000,
+  "max_supply": null,
+  "ath": 0.03473611,
+  "ath_change_percentage": -99.19588,
+  "ath_date": "2021-02-08T00:22:05.687Z",
+  "atl": 0.00004992,
+  "atl_change_percentage": 459.5213,
+  "atl_date": "2023-08-25T08:34:29.548Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:09.888Z",
+  "platforms": {
+    "bsc": "0x141383cdb8158982fb3469c3e49cc82f8026d968"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "donk-inu",
+  "symbol": "donk",
+  "name": "Donk Inu",
+  "image": "https://assets.coingecko.com/coins/images/35939/large/DONK_LOGO.jpg?1710233091",
+  "current_price": 0.0000013,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 89488,
+  "total_volume": 1824,
+  "high_24h": 0.00000152,
+  "low_24h": 0.00000129,
+  "price_change_24h": -1.16356426531e-7,
+  "price_change_percentage_24h": -8.23305,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 69000000000,
+  "max_supply": 69000000000,
+  "ath": 0.00001107,
+  "ath_change_percentage": -88.32554,
+  "ath_date": "2024-03-14T22:06:57.318Z",
+  "atl": 9.50469e-7,
+  "atl_change_percentage": 35.98728,
+  "atl_date": "2024-04-16T16:22:59.699Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:40.185Z",
+  "platforms": {
+    "avalanche": "0xa7e951c0ae1e93af39d73bf3d2f24f72cab73181"
+  }
+}

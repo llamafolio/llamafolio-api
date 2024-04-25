@@ -1,0 +1,31 @@
+{
+  "id": "export-mortos-platform",
+  "symbol": "emp",
+  "name": "Export Motors Platform",
+  "image": "https://assets.coingecko.com/coins/images/24422/large/emp_logo_200.png?1696523603",
+  "current_price": 0.00712434,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 7124338,
+  "total_volume": 80.57,
+  "high_24h": 0.00713225,
+  "low_24h": 0.00708192,
+  "price_change_24h": 0.00002415,
+  "price_change_percentage_24h": 0.34017,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 4,
+  "ath_change_percentage": -99.82206,
+  "ath_date": "2022-08-13T00:09:14.442Z",
+  "atl": 0.00679773,
+  "atl_change_percentage": 4.80467,
+  "atl_date": "2024-04-23T16:39:35.638Z",
+  "roi": null,
+  "last_updated": "2024-04-25T07:32:23.646Z",
+  "platforms": {
+    "ethereum": "0x13a0599c493cc502ed8c4dd26f22f5cedc248fc4"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "xptp",
+  "symbol": "xptp",
+  "name": "xPTP",
+  "image": "https://assets.coingecko.com/coins/images/24965/large/xptp.png?1696524119",
+  "current_price": 0.00423371,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 43.79,
+  "high_24h": 0.00436867,
+  "low_24h": 0.00420362,
+  "price_change_24h": -0.000123046853798447,
+  "price_change_percentage_24h": -2.82428,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": 300000000,
+  "ath": 3.57,
+  "ath_change_percentage": -99.88206,
+  "ath_date": "2022-04-10T21:14:07.881Z",
+  "atl": 0.00210619,
+  "atl_change_percentage": 99.92815,
+  "atl_date": "2024-02-08T13:21:41.769Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:16:51.676Z",
+  "platforms": {
+    "avalanche": "0x060556209e507d30f2167a101bfc6d256ed2f3e1"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "id": "reserve-rights-token",
+  "symbol": "rsr",
+  "name": "Reserve Rights",
+  "image": "https://assets.coingecko.com/coins/images/8365/large/rsr.png?1696508558",
+  "current_price": 0.0061558,
+  "market_cap": 310660646,
+  "market_cap_rank": 227,
+  "fully_diluted_valuation": 613953845,
+  "total_volume": 41567394,
+  "high_24h": 0.00707885,
+  "low_24h": 0.00613921,
+  "price_change_24h": -0.00076232156468837,
+  "price_change_percentage_24h": -11.01919,
+  "market_cap_change_24h": -43852671.29598302,
+  "market_cap_change_percentage_24h": -12.36982,
+  "circulating_supply": 50600000000,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.117424,
+  "ath_change_percentage": -94.75856,
+  "ath_date": "2021-04-16T17:45:02.062Z",
+  "atl": 0.00121354,
+  "atl_change_percentage": 407.16705,
+  "atl_date": "2020-03-16T11:09:08.151Z",
+  "roi": {
+    "times": 4.596184822454103,
+    "currency": "usd",
+    "percentage": 459.6184822454103
+  },
+  "last_updated": "2024-04-25T09:02:53.289Z",
+  "platforms": {
+    "ethereum": "0x320623b8e4ff03373931769a31fc52a4e78b5d70"
+  }
+}

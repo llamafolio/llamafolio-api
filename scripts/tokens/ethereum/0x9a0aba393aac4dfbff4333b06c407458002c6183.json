@@ -1,0 +1,31 @@
+{
+  "id": "acoconut",
+  "symbol": "ac",
+  "name": "ACoconut",
+  "image": "https://assets.coingecko.com/coins/images/12779/large/ac_logo.png?1696512574",
+  "current_price": 0.04254178,
+  "market_cap": 85760,
+  "market_cap_rank": 3831,
+  "fully_diluted_valuation": 268013,
+  "total_volume": 132.6,
+  "high_24h": 0.0457732,
+  "low_24h": 0.04248517,
+  "price_change_24h": -0.002853893583964623,
+  "price_change_percentage_24h": -6.28671,
+  "market_cap_change_24h": -5740.96173379301,
+  "market_cap_change_percentage_24h": -6.27423,
+  "circulating_supply": 2015894.9032583653,
+  "total_supply": 6300000,
+  "max_supply": 21000000,
+  "ath": 9.08,
+  "ath_change_percentage": -99.53204,
+  "ath_date": "2021-04-06T08:03:10.896Z",
+  "atl": 0.01679661,
+  "atl_change_percentage": 153.07701,
+  "atl_date": "2022-08-04T06:36:28.791Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:36.866Z",
+  "platforms": {
+    "ethereum": "0x9a0aba393aac4dfbff4333b06c407458002c6183"
+  }
+}

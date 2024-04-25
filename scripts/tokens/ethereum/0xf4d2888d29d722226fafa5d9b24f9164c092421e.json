@@ -1,0 +1,31 @@
+{
+  "id": "looksrare",
+  "symbol": "looks",
+  "name": "LooksRare",
+  "image": "https://assets.coingecko.com/coins/images/22173/large/circle-black-256.png?1696521517",
+  "current_price": 0.102837,
+  "market_cap": 102471400,
+  "market_cap_rank": 473,
+  "fully_diluted_valuation": 102471400,
+  "total_volume": 7990535,
+  "high_24h": 0.118922,
+  "low_24h": 0.102889,
+  "price_change_24h": -0.0138395181677147,
+  "price_change_percentage_24h": -11.8614,
+  "market_cap_change_24h": -13858229.075513229,
+  "market_cap_change_percentage_24h": -11.9129,
+  "circulating_supply": 995942919.9813312,
+  "total_supply": 995942919.9813312,
+  "max_supply": 1000000000,
+  "ath": 7.1,
+  "ath_change_percentage": -98.54645,
+  "ath_date": "2022-01-20T19:30:02.255Z",
+  "atl": 0.0420877,
+  "atl_change_percentage": 145.2769,
+  "atl_date": "2023-08-17T21:49:56.818Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:39.519Z",
+  "platforms": {
+    "ethereum": "0xf4d2888d29d722226fafa5d9b24f9164c092421e"
+  }
+}

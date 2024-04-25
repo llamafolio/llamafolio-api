@@ -1,0 +1,31 @@
+{
+  "id": "ucrowdme",
+  "symbol": "ucm",
+  "name": "UCROWDME",
+  "image": "https://assets.coingecko.com/coins/images/12079/large/UKm2qXh.png?1696511926",
+  "current_price": 0.00084349,
+  "market_cap": 84147,
+  "market_cap_rank": 3837,
+  "fully_diluted_valuation": 84147,
+  "total_volume": 1.54,
+  "high_24h": 0.0008431,
+  "low_24h": 0.00084056,
+  "price_change_24h": 0.0000016,
+  "price_change_percentage_24h": 0.19055,
+  "market_cap_change_24h": -72489.61360531738,
+  "market_cap_change_percentage_24h": -46.27888,
+  "circulating_supply": 100000000,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 0.154233,
+  "ath_change_percentage": -99.45391,
+  "ath_date": "2021-02-09T05:52:12.820Z",
+  "atl": 0.00010119,
+  "atl_change_percentage": 732.31857,
+  "atl_date": "2023-02-12T19:44:56.138Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:05.117Z",
+  "platforms": {
+    "ethereum": "0x722f97a435278b7383a1e3c47f41773bebf3232c"
+  }
+}

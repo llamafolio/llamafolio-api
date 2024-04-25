@@ -1,0 +1,31 @@
+{
+  "id": "friends-with-benefits-network",
+  "symbol": "fwb",
+  "name": "Friends with Benefits Network",
+  "image": "https://assets.coingecko.com/coins/images/33783/large/Group.png?1702981073",
+  "current_price": 0.449571,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 449571,
+  "total_volume": 1060.73,
+  "high_24h": 0.479666,
+  "low_24h": 0.447369,
+  "price_change_24h": -0.02653916773910797,
+  "price_change_percentage_24h": -5.57416,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 2.16,
+  "ath_change_percentage": -79.23196,
+  "ath_date": "2023-12-19T13:44:43.935Z",
+  "atl": 0.447369,
+  "atl_change_percentage": 0.49221,
+  "atl_date": "2024-04-24T23:03:29.771Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:03:01.635Z",
+  "platforms": {
+    "ethereum": "0x269877f972622d3c293fca595c65cf34b7f527ce"
+  }
+}

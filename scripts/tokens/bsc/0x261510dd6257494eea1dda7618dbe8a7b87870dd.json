@@ -1,0 +1,31 @@
+{
+  "id": "dehero-community-token",
+  "symbol": "heroes",
+  "name": "Dehero Community",
+  "image": "https://assets.coingecko.com/coins/images/17917/large/33b73b5a11f3391dd9ef009985308cf5.png?1696517437",
+  "current_price": 0.00624987,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 80492,
+  "total_volume": 182.76,
+  "high_24h": 0.03481745,
+  "low_24h": 0.0046937,
+  "price_change_24h": 0.00018513,
+  "price_change_percentage_24h": 3.05264,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 12878940.7702632,
+  "max_supply": 21000000,
+  "ath": 2.71,
+  "ath_change_percentage": -99.76926,
+  "ath_date": "2021-09-11T05:44:31.811Z",
+  "atl": 0.00391421,
+  "atl_change_percentage": 59.67142,
+  "atl_date": "2024-03-10T15:21:02.699Z",
+  "roi": null,
+  "last_updated": "2024-04-25T07:46:07.751Z",
+  "platforms": {
+    "bsc": "0x261510dd6257494eea1dda7618dbe8a7b87870dd"
+  }
+}

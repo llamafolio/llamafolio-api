@@ -1,0 +1,31 @@
+{
+  "id": "colony-avalanche-index",
+  "symbol": "cai",
+  "name": "Colony Avalanche Index",
+  "image": "https://assets.coingecko.com/coins/images/27196/large/CAI_logo.png?1696526245",
+  "current_price": 201.72,
+  "market_cap": 2024023,
+  "market_cap_rank": 2290,
+  "fully_diluted_valuation": 635581,
+  "total_volume": 71888,
+  "high_24h": 219.61,
+  "low_24h": 201.41,
+  "price_change_24h": -17.248666844696487,
+  "price_change_percentage_24h": -7.87714,
+  "market_cap_change_24h": -169555.3243841303,
+  "market_cap_change_percentage_24h": -7.72962,
+  "circulating_supply": 10002.5223468291,
+  "total_supply": 3140.977512060106,
+  "max_supply": null,
+  "ath": 659.84,
+  "ath_change_percentage": -69.46991,
+  "ath_date": "2023-12-09T10:44:40.023Z",
+  "atl": 31.6,
+  "atl_change_percentage": 537.43065,
+  "atl_date": "2022-10-11T06:22:50.748Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:38.359Z",
+  "platforms": {
+    "avalanche": "0x48f88a3fe843ccb0b5003e70b4192c1d7448bef0"
+  }
+}

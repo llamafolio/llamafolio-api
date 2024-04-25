@@ -1,0 +1,31 @@
+{
+  "id": "compound-yearn-finance",
+  "symbol": "cyfi",
+  "name": "cYFI",
+  "image": "https://assets.coingecko.com/coins/images/17530/large/cyfi.PNG?1696517068",
+  "current_price": 142.62,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 992.54,
+  "total_volume": 0,
+  "high_24h": 152.8,
+  "low_24h": 139.58,
+  "price_change_24h": -8.36718011318311,
+  "price_change_percentage_24h": -5.58856,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 7,
+  "max_supply": null,
+  "ath": 834.96,
+  "ath_change_percentage": -83.01814,
+  "ath_date": "2022-01-03T05:29:09.208Z",
+  "atl": 82.82,
+  "atl_change_percentage": 71.20767,
+  "atl_date": "2022-06-18T21:00:59.242Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:32.828Z",
+  "platforms": {
+    "ethereum": "0x80a2ae356fc9ef4305676f7a3e2ed04e12c33946"
+  }
+}

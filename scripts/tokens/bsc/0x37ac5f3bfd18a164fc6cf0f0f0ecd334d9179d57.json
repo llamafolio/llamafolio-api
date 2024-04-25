@@ -1,0 +1,31 @@
+{
+  "id": "vulture-peak",
+  "symbol": "vpk",
+  "name": "Vulture Peak",
+  "image": "https://assets.coingecko.com/coins/images/23729/large/vulture_logo_final-05.png?1696522929",
+  "current_price": 0.080113,
+  "market_cap": 378362,
+  "market_cap_rank": 3202,
+  "fully_diluted_valuation": 2399475,
+  "total_volume": 3260.89,
+  "high_24h": 0.089955,
+  "low_24h": 0.07974,
+  "price_change_24h": -0.009287106446695864,
+  "price_change_percentage_24h": -10.38824,
+  "market_cap_change_24h": -48069.08987926715,
+  "market_cap_change_percentage_24h": -11.27241,
+  "circulating_supply": 4725831.773028423,
+  "total_supply": 29970000,
+  "max_supply": 30000000,
+  "ath": 0.785352,
+  "ath_change_percentage": -89.83341,
+  "ath_date": "2022-02-19T22:04:57.284Z",
+  "atl": 0.01621747,
+  "atl_change_percentage": 392.3301,
+  "atl_date": "2023-10-16T13:50:04.395Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:00.914Z",
+  "platforms": {
+    "bsc": "0x37ac5f3bfd18a164fc6cf0f0f0ecd334d9179d57"
+  }
+}

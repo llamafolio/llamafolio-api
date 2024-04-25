@@ -1,0 +1,31 @@
+{
+  "id": "asyagro",
+  "symbol": "asy",
+  "name": "ASYAGRO",
+  "image": "https://assets.coingecko.com/coins/images/10632/large/c0Q4z8HJ_400x400.jpg?1696510608",
+  "current_price": 0.00291091,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 21875777,
+  "total_volume": 14022.77,
+  "high_24h": 0.00292581,
+  "low_24h": 0.00290679,
+  "price_change_24h": -0.000004547186191804,
+  "price_change_percentage_24h": -0.15597,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 7499999000,
+  "max_supply": null,
+  "ath": 0.560578,
+  "ath_change_percentage": -99.47955,
+  "ath_date": "2020-09-15T12:38:52.643Z",
+  "atl": 0.00012892,
+  "atl_change_percentage": 2162.99261,
+  "atl_date": "2024-01-16T18:19:07.868Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:13.672Z",
+  "platforms": {
+    "bsc": "0xc0cc1e5761ba5786916fd055562551798e50d573"
+  }
+}

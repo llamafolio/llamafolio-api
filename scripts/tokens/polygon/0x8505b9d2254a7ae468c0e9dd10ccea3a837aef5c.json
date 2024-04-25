@@ -1,0 +1,31 @@
+{
+  "id": "compound-governance-token",
+  "symbol": "comp",
+  "name": "Compound",
+  "image": "https://assets.coingecko.com/coins/images/10775/large/COMP.png?1696510737",
+  "current_price": 55.37,
+  "market_cap": 379788262,
+  "market_cap_rank": 202,
+  "fully_diluted_valuation": 553943277,
+  "total_volume": 35990117,
+  "high_24h": 60.76,
+  "low_24h": 55.23,
+  "price_change_24h": -4.681569175044459,
+  "price_change_percentage_24h": -7.79608,
+  "market_cap_change_24h": -33182771.72402662,
+  "market_cap_change_percentage_24h": -8.03513,
+  "circulating_supply": 6856085.76329154,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 910.54,
+  "ath_change_percentage": -93.91915,
+  "ath_date": "2021-05-12T02:29:08.794Z",
+  "atl": 25.74,
+  "atl_change_percentage": 115.10513,
+  "atl_date": "2023-06-10T16:15:05.289Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:27.043Z",
+  "platforms": {
+    "polygon": "0x8505b9d2254a7ae468c0e9dd10ccea3a837aef5c"
+  }
+}

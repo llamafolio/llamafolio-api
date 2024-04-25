@@ -1,0 +1,31 @@
+{
+  "id": "vidya",
+  "symbol": "vidya",
+  "name": "Vidya",
+  "image": "https://assets.coingecko.com/coins/images/12219/large/VIDYA_TOKEN.png?1696512053",
+  "current_price": 0.065143,
+  "market_cap": 2711787,
+  "market_cap_rank": 2126,
+  "fully_diluted_valuation": 3255992,
+  "total_volume": 332816,
+  "high_24h": 0.06895,
+  "low_24h": 0.064497,
+  "price_change_24h": -0.003094880284080101,
+  "price_change_percentage_24h": -4.5354,
+  "market_cap_change_24h": -120815.88294856483,
+  "market_cap_change_percentage_24h": -4.26519,
+  "circulating_supply": 41643030.455268525,
+  "total_supply": 50000000,
+  "max_supply": null,
+  "ath": 0.554225,
+  "ath_change_percentage": -88.20368,
+  "ath_date": "2022-04-02T20:26:32.403Z",
+  "atl": 0.01275099,
+  "atl_change_percentage": 412.72969,
+  "atl_date": "2020-10-28T20:40:46.811Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:46.194Z",
+  "platforms": {
+    "ethereum": "0x3d3d35bb9bec23b06ca00fe472b50e7a4c692c30"
+  }
+}

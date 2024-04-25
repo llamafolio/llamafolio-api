@@ -1,0 +1,31 @@
+{
+  "id": "balancer-stable-usd",
+  "symbol": "stabal3",
+  "name": "Balancer Stable USD",
+  "image": "https://assets.coingecko.com/coins/images/32112/large/bal3.png?1696561317",
+  "current_price": 0.996196,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 668735,
+  "high_24h": 1.009,
+  "low_24h": 0.993279,
+  "price_change_24h": -0.002314726723301242,
+  "price_change_percentage_24h": -0.23182,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.062,
+  "ath_change_percentage": -6.16276,
+  "ath_date": "2023-10-16T13:33:47.666Z",
+  "atl": 0.943998,
+  "atl_change_percentage": 5.5294,
+  "atl_date": "2023-12-11T02:17:06.981Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:34.779Z",
+  "platforms": {
+    "gnosis": "0x2086f52651837600180de173b09470f54ef74910"
+  }
+}

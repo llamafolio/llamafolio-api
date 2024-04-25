@@ -1,0 +1,31 @@
+{
+  "id": "probinex",
+  "symbol": "pbx",
+  "name": "Probinex",
+  "image": "https://assets.coingecko.com/coins/images/23677/large/ezgif-4-225dbc8377.jpg?1696522879",
+  "current_price": 0.154088,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 159541836,
+  "total_volume": 243152,
+  "high_24h": 0.160077,
+  "low_24h": 0.155777,
+  "price_change_24h": -0.001842479833827043,
+  "price_change_percentage_24h": -1.1816,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.24951,
+  "ath_change_percentage": -36.34904,
+  "ath_date": "2023-11-01T00:50:09.248Z",
+  "atl": 0.00112382,
+  "atl_change_percentage": 14031.77755,
+  "atl_date": "2022-10-14T18:39:39.000Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:10.839Z",
+  "platforms": {
+    "bsc": "0xa177bdd433aea3702beb46652adcfc64248d4ab3"
+  }
+}

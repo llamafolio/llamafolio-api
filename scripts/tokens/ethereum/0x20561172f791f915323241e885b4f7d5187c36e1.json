@@ -1,0 +1,31 @@
+{
+  "id": "calcium",
+  "symbol": "cal",
+  "name": "Calcium",
+  "image": "https://assets.coingecko.com/coins/images/31971/large/callogo.jpg?1696530776",
+  "current_price": 0.00919071,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3840049,
+  "total_volume": 324420,
+  "high_24h": 0.00928737,
+  "low_24h": 0.00819454,
+  "price_change_24h": 0.00005076,
+  "price_change_percentage_24h": 0.55531,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 420690000,
+  "max_supply": 420690000,
+  "ath": 0.075375,
+  "ath_change_percentage": -87.90607,
+  "ath_date": "2023-09-29T15:11:21.980Z",
+  "atl": 0.00369768,
+  "atl_change_percentage": 146.52699,
+  "atl_date": "2024-01-23T02:04:59.631Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:27.220Z",
+  "platforms": {
+    "ethereum": "0x20561172f791f915323241e885b4f7d5187c36e1"
+  }
+}

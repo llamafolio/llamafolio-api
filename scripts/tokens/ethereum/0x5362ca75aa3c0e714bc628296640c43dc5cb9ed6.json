@@ -1,0 +1,31 @@
+{
+  "id": "dejitaru-hoshi",
+  "symbol": "hoshi",
+  "name": "Dejitaru Hoshi",
+  "image": "https://assets.coingecko.com/coins/images/31488/large/Hoshi_200x200_-_Copy.png?1696530299",
+  "current_price": 0.00047612,
+  "market_cap": 476118,
+  "market_cap_rank": 3085,
+  "fully_diluted_valuation": 476118,
+  "total_volume": 7224.48,
+  "high_24h": 0.00052148,
+  "low_24h": 0.00045847,
+  "price_change_24h": 0.00000167,
+  "price_change_percentage_24h": 0.35298,
+  "market_cap_change_24h": 1418.35,
+  "market_cap_change_percentage_24h": 0.29879,
+  "circulating_supply": 1000000000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00551356,
+  "ath_change_percentage": -91.35409,
+  "ath_date": "2023-12-01T18:40:59.926Z",
+  "atl": 0.00042868,
+  "atl_change_percentage": 11.20047,
+  "atl_date": "2024-04-18T14:04:59.637Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:49:48.468Z",
+  "platforms": {
+    "ethereum": "0x5362ca75aa3c0e714bc628296640c43dc5cb9ed6"
+  }
+}

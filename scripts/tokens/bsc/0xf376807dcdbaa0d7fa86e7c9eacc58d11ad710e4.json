@@ -1,0 +1,31 @@
+{
+  "id": "blitz-labs",
+  "symbol": "blitz",
+  "name": "Blitz Labs",
+  "image": "https://assets.coingecko.com/coins/images/25554/large/cmc2.png?1696524686",
+  "current_price": 0.00082209,
+  "market_cap": 174627,
+  "market_cap_rank": 3560,
+  "fully_diluted_valuation": 221964,
+  "total_volume": 0.47817,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 212418490.14,
+  "total_supply": 270000000,
+  "max_supply": 270000000,
+  "ath": 0.02102077,
+  "ath_change_percentage": -96.08915,
+  "ath_date": "2023-02-15T23:34:42.022Z",
+  "atl": 0.00044991,
+  "atl_change_percentage": 82.72464,
+  "atl_date": "2024-04-10T03:14:45.539Z",
+  "roi": null,
+  "last_updated": "2024-04-11T11:00:54.186Z",
+  "platforms": {
+    "bsc": "0xf376807dcdbaa0d7fa86e7c9eacc58d11ad710e4"
+  }
+}

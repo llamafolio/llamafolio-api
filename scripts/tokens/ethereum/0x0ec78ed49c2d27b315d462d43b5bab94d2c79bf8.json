@@ -1,0 +1,31 @@
+{
+  "id": "zero-tech",
+  "symbol": "meow",
+  "name": "ZERO",
+  "image": "https://assets.coingecko.com/coins/images/21530/large/meowchain.jpeg?1710834471",
+  "current_price": 0.02889567,
+  "market_cap": 43428626,
+  "market_cap_rank": 751,
+  "fully_diluted_valuation": 291947386,
+  "total_volume": 59166,
+  "high_24h": 0.03021864,
+  "low_24h": 0.02874107,
+  "price_change_24h": -0.001221806839062471,
+  "price_change_percentage_24h": -4.0568,
+  "market_cap_change_24h": -1864392.9595036209,
+  "market_cap_change_percentage_24h": -4.11629,
+  "circulating_supply": 1502575485.2425766,
+  "total_supply": 10101010101,
+  "max_supply": 10101010101,
+  "ath": 1.19,
+  "ath_change_percentage": -97.57132,
+  "ath_date": "2021-12-13T13:28:01.311Z",
+  "atl": 0.01005357,
+  "atl_change_percentage": 188.10481,
+  "atl_date": "2024-04-02T06:58:54.065Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:28.323Z",
+  "platforms": {
+    "ethereum": "0x0ec78ed49c2d27b315d462d43b5bab94d2c79bf8"
+  }
+}

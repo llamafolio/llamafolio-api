@@ -1,0 +1,31 @@
+{
+  "id": "xnf",
+  "symbol": "xnf",
+  "name": "XNF",
+  "image": "https://assets.coingecko.com/coins/images/33406/large/XNF-Light_200px.png?1706018312",
+  "current_price": 0.466253,
+  "market_cap": 132244,
+  "market_cap_rank": 3693,
+  "fully_diluted_valuation": 1229677,
+  "total_volume": 4233.62,
+  "high_24h": 0.507617,
+  "low_24h": 0.466419,
+  "price_change_24h": -0.02653588157676401,
+  "price_change_percentage_24h": -5.38484,
+  "market_cap_change_24h": -6632.685301787133,
+  "market_cap_change_percentage_24h": -4.77597,
+  "circulating_supply": 283529.679842919,
+  "total_supply": 2636422.49119491,
+  "max_supply": 22600000,
+  "ath": 9.31,
+  "ath_change_percentage": -94.98774,
+  "ath_date": "2023-12-09T00:35:50.139Z",
+  "atl": 0.466419,
+  "atl_change_percentage": 0,
+  "atl_date": "2024-04-25T08:43:29.949Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:56:38.164Z",
+  "platforms": {
+    "arbitrum": "0xc84fae1141b92fa5bf847276828f69caf651cb7f"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "honeymoon-token",
+  "symbol": "moon",
+  "name": "HoneyMOON",
+  "image": "https://assets.coingecko.com/coins/images/18187/large/download_%2833%29.png?1696517687",
+  "current_price": 0.768339,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 6197.01,
+  "total_volume": 123.03,
+  "high_24h": 0.775866,
+  "low_24h": 0.756364,
+  "price_change_24h": -0.005657034763939195,
+  "price_change_percentage_24h": -0.73089,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 8060,
+  "max_supply": 73482,
+  "ath": 457.11,
+  "ath_change_percentage": -99.83256,
+  "ath_date": "2021-09-06T08:00:28.936Z",
+  "atl": 0.267919,
+  "atl_change_percentage": 185.67368,
+  "atl_date": "2022-05-12T08:38:47.750Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:32.857Z",
+  "platforms": {
+    "bsc": "0xe8c93310af068aa50bd7bf0ebfa459df2a02ceba"
+  }
+}

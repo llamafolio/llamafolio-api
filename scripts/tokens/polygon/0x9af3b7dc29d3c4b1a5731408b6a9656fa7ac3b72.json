@@ -1,0 +1,31 @@
+{
+  "id": "pusd",
+  "symbol": "pusd",
+  "name": "PUSD_Polyquity",
+  "image": "https://assets.coingecko.com/coins/images/16762/large/PUSD-purple-200.png?1696516335",
+  "current_price": 0.979473,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 23532219,
+  "total_volume": 34.17,
+  "high_24h": 0.990108,
+  "low_24h": 0.95911,
+  "price_change_24h": -0.005537957150145045,
+  "price_change_percentage_24h": -0.56222,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 24120942,
+  "max_supply": null,
+  "ath": 1.91,
+  "ath_change_percentage": -48.96676,
+  "ath_date": "2022-03-25T23:05:55.903Z",
+  "atl": 0.475642,
+  "atl_change_percentage": 105.05342,
+  "atl_date": "2023-05-12T07:39:18.843Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:38.865Z",
+  "platforms": {
+    "polygon": "0x9af3b7dc29d3c4b1a5731408b6a9656fa7ac3b72"
+  }
+}

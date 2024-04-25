@@ -1,0 +1,31 @@
+{
+  "id": "shiba-bsc",
+  "symbol": "shibsc",
+  "name": "SHIBA BSC",
+  "image": "https://assets.coingecko.com/coins/images/15800/large/shibsc.png?1696515423",
+  "current_price": 5.34516e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 535166,
+  "total_volume": 16.24,
+  "high_24h": 5.36754e-10,
+  "low_24h": 5.20238e-10,
+  "price_change_24h": 6.318e-12,
+  "price_change_percentage_24h": 1.19608,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": null,
+  "ath": 8.3638e-8,
+  "ath_change_percentage": -99.36268,
+  "ath_date": "2021-05-28T17:56:13.790Z",
+  "atl": 1.62924e-10,
+  "atl_change_percentage": 227.17171,
+  "atl_date": "2023-10-13T05:50:59.292Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:25.439Z",
+  "platforms": {
+    "bsc": "0xdf0816cc717216c8b0863af8d4f0fc20bc65d643"
+  }
+}

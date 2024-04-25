@@ -1,0 +1,31 @@
+{
+  "id": "openworldnft",
+  "symbol": "owner",
+  "name": "OPENWORLDNFT",
+  "image": "https://assets.coingecko.com/coins/images/33429/large/logo-removebg-preview.png?1701817435",
+  "current_price": 5.93882e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 65766818,
+  "total_volume": 67880,
+  "high_24h": 6.12346e-7,
+  "low_24h": 5.79714e-7,
+  "price_change_24h": 6.511e-9,
+  "price_change_percentage_24h": 1.10856,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 110091977000000,
+  "max_supply": 110091977000000,
+  "ath": 0.00000267,
+  "ath_change_percentage": -77.70211,
+  "ath_date": "2023-12-13T12:43:51.376Z",
+  "atl": 5.10355e-7,
+  "atl_change_percentage": 16.47987,
+  "atl_date": "2024-02-27T07:23:21.644Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:25.938Z",
+  "platforms": {
+    "bsc": "0xbfbe5fda3483f6bcd1b3e6fb0647c00667e05d54"
+  }
+}

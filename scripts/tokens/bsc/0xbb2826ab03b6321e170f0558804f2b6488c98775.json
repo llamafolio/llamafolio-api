@@ -1,0 +1,31 @@
+{
+  "id": "babybonk",
+  "symbol": "babybonk",
+  "name": "BabyBonk",
+  "image": "https://assets.coingecko.com/coins/images/33808/large/babybonk-200.png?1702993306",
+  "current_price": 3.2169e-11,
+  "market_cap": 13510916,
+  "market_cap_rank": 1295,
+  "fully_diluted_valuation": 13510916,
+  "total_volume": 1713870,
+  "high_24h": 3.4984e-11,
+  "low_24h": 3.1266e-11,
+  "price_change_24h": -7.56766e-13,
+  "price_change_percentage_24h": -2.29841,
+  "market_cap_change_24h": -323101.13464052044,
+  "market_cap_change_percentage_24h": -2.33556,
+  "circulating_supply": 420000000000000000,
+  "total_supply": 420000000000000000,
+  "max_supply": 420000000000000000,
+  "ath": 1.30065e-10,
+  "ath_change_percentage": -75.28373,
+  "ath_date": "2024-03-10T22:25:23.463Z",
+  "atl": 6.472e-12,
+  "atl_change_percentage": 396.73156,
+  "atl_date": "2024-01-09T01:49:20.597Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:08.513Z",
+  "platforms": {
+    "bsc": "0xbb2826ab03b6321e170f0558804f2b6488c98775"
+  }
+}

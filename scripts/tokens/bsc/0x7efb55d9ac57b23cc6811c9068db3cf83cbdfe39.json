@@ -1,0 +1,31 @@
+{
+  "id": "nsights",
+  "symbol": "nsi",
+  "name": "nSights",
+  "image": "https://assets.coingecko.com/coins/images/19607/large/nsi.png?1696519037",
+  "current_price": 2.659e-9,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2658709,
+  "total_volume": 35.72,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": 1000000000000000,
+  "ath": 3.7715e-8,
+  "ath_change_percentage": -92.95051,
+  "ath_date": "2021-11-07T14:32:36.697Z",
+  "atl": 2.518e-9,
+  "atl_change_percentage": 5.59568,
+  "atl_date": "2023-07-24T15:13:40.449Z",
+  "roi": null,
+  "last_updated": "2023-08-02T00:00:31.768Z",
+  "platforms": {
+    "bsc": "0x7efb55d9ac57b23cc6811c9068db3cf83cbdfe39"
+  }
+}

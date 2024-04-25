@@ -1,0 +1,31 @@
+{
+  "id": "eqifi",
+  "symbol": "eqx",
+  "name": "EQIFi",
+  "image": "https://assets.coingecko.com/coins/images/17490/large/EQIFI_Logo_Color.png?1696517031",
+  "current_price": 0.00801598,
+  "market_cap": 2802089,
+  "market_cap_rank": 2102,
+  "fully_diluted_valuation": 3991602,
+  "total_volume": 150803,
+  "high_24h": 0.00821464,
+  "low_24h": 0.00797557,
+  "price_change_24h": -0.000151818194163,
+  "price_change_percentage_24h": -1.85874,
+  "market_cap_change_24h": -63042.670198825654,
+  "market_cap_change_percentage_24h": -2.20034,
+  "circulating_supply": 350998063.078343,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 0.74023,
+  "ath_change_percentage": -98.9201,
+  "ath_date": "2021-09-02T01:27:37.432Z",
+  "atl": 0.00410122,
+  "atl_change_percentage": 94.91174,
+  "atl_date": "2023-10-13T23:56:00.137Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:43.015Z",
+  "platforms": {
+    "bsc": "0x436c52a8cee41d5e9c5e6f4cb146e66d552fb700"
+  }
+}

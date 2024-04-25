@@ -1,0 +1,31 @@
+{
+  "id": "multidex-ai",
+  "symbol": "mdx",
+  "name": "MultiDEX AI",
+  "image": "https://assets.coingecko.com/coins/images/35403/large/Multidex.jpg?1708499023",
+  "current_price": 0.556085,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 553994,
+  "total_volume": 6804.38,
+  "high_24h": 0.637368,
+  "low_24h": 0.553994,
+  "price_change_24h": -0.0769456861240815,
+  "price_change_percentage_24h": -12.15514,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 2.83,
+  "ath_change_percentage": -80.34716,
+  "ath_date": "2024-03-02T16:24:32.740Z",
+  "atl": 0.284319,
+  "atl_change_percentage": 95.58444,
+  "atl_date": "2024-04-03T03:09:58.690Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:54.423Z",
+  "platforms": {
+    "ethereum": "0x8edc6f7d2f23c10653972e611f707ce0562d61b1"
+  }
+}

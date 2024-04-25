@@ -1,0 +1,31 @@
+{
+  "id": "solidex",
+  "symbol": "sex",
+  "name": "Solidex",
+  "image": "https://assets.coingecko.com/coins/images/23855/large/photo_2022-02-23_09.01.21.jpeg?1696523056",
+  "current_price": 0.00154229,
+  "market_cap": 8895.53,
+  "market_cap_rank": 4223,
+  "fully_diluted_valuation": 14736.09,
+  "total_volume": 5.81,
+  "high_24h": 0.00163045,
+  "low_24h": 0.00153829,
+  "price_change_24h": -0.000054521916175277,
+  "price_change_percentage_24h": -3.41443,
+  "market_cap_change_24h": -366.34196678875924,
+  "market_cap_change_percentage_24h": -3.95538,
+  "circulating_supply": 5767754.412102953,
+  "total_supply": 9554697.11838827,
+  "max_supply": null,
+  "ath": 41.14,
+  "ath_change_percentage": -99.99625,
+  "ath_date": "2022-02-25T07:00:47.927Z",
+  "atl": 0.000343,
+  "atl_change_percentage": 349.64639,
+  "atl_date": "2023-09-25T00:25:34.997Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:36.365Z",
+  "platforms": {
+    "fantom": "0xd31fcd1f7ba190dbc75354046f6024a9b86014d7"
+  }
+}

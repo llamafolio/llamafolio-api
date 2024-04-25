@@ -1,0 +1,31 @@
+{
+  "id": "epillo",
+  "symbol": "epillo",
+  "name": "Epillo",
+  "image": "https://assets.coingecko.com/coins/images/28846/large/2CyKXwGy_400x400.jpg?1696527822",
+  "current_price": 0.139512,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 697558422,
+  "total_volume": 26376,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 5000000000,
+  "max_supply": 5000000000,
+  "ath": 2.01,
+  "ath_change_percentage": -93.06472,
+  "ath_date": "2023-03-07T05:42:44.972Z",
+  "atl": 0.056817,
+  "atl_change_percentage": 145.54507,
+  "atl_date": "2023-07-04T15:07:13.710Z",
+  "roi": null,
+  "last_updated": "2024-03-29T01:31:32.755Z",
+  "platforms": {
+    "polygon": "0x7a6168e5a0ecc9841ad8fad20dcfcc4458fef0fb"
+  }
+}

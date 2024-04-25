@@ -1,0 +1,31 @@
+{
+  "id": "changer",
+  "symbol": "cng",
+  "name": "Changer",
+  "image": "https://assets.coingecko.com/coins/images/21786/large/cng.png?1696521140",
+  "current_price": 0.01508213,
+  "market_cap": 633678,
+  "market_cap_rank": 2939,
+  "fully_diluted_valuation": 3031140,
+  "total_volume": 33934,
+  "high_24h": 0.01616836,
+  "low_24h": 0.01440872,
+  "price_change_24h": 0.00052265,
+  "price_change_percentage_24h": 3.58975,
+  "market_cap_change_24h": 30990,
+  "market_cap_change_percentage_24h": 5.14203,
+  "circulating_supply": 41811235.72219986,
+  "total_supply": 200000000,
+  "max_supply": 200000000,
+  "ath": 1.13,
+  "ath_change_percentage": -98.64675,
+  "ath_date": "2022-01-11T21:14:06.806Z",
+  "atl": 0.0128956,
+  "atl_change_percentage": 18.61337,
+  "atl_date": "2024-04-19T15:38:01.822Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:23.321Z",
+  "platforms": {
+    "ethereum": "0x5c1d9aa868a30795f92fae903edc9eff269044bf"
+  }
+}

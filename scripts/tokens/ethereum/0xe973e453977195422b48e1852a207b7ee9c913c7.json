@@ -1,0 +1,31 @@
+{
+  "id": "adreward",
+  "symbol": "ad",
+  "name": "ADreward",
+  "image": "https://assets.coingecko.com/coins/images/29639/large/ADreward_AD_Logo_CoinGecko_200X200_%EB%B6%88%ED%88%AC%EB%AA%85.png?1696528576",
+  "current_price": 0.00002297,
+  "market_cap": 214044,
+  "market_cap_rank": 3457,
+  "fully_diluted_valuation": 229333,
+  "total_volume": 15011.75,
+  "high_24h": 0.00002627,
+  "low_24h": 0.00002291,
+  "price_change_24h": -0.000003290235022575,
+  "price_change_percentage_24h": -12.52895,
+  "market_cap_change_24h": -31055.094711277867,
+  "market_cap_change_percentage_24h": -12.67044,
+  "circulating_supply": 9333333344,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.00521146,
+  "ath_change_percentage": -99.55972,
+  "ath_date": "2023-06-29T02:23:22.459Z",
+  "atl": 0.00000913,
+  "atl_change_percentage": 151.22124,
+  "atl_date": "2023-12-16T00:50:29.618Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:42.149Z",
+  "platforms": {
+    "ethereum": "0xe973e453977195422b48e1852a207b7ee9c913c7"
+  }
+}

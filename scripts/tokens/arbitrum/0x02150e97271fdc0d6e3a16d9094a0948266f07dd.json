@@ -1,0 +1,31 @@
+{
+  "id": "hamachi-finance",
+  "symbol": "hami",
+  "name": "Hamachi Finance",
+  "image": "https://assets.coingecko.com/coins/images/28783/large/icon.png?1696527762",
+  "current_price": 0.00001082,
+  "market_cap": 296134,
+  "market_cap_rank": 3327,
+  "fully_diluted_valuation": 307103,
+  "total_volume": 250.09,
+  "high_24h": 0.00001144,
+  "low_24h": 0.00001077,
+  "price_change_24h": -4.87752288164e-7,
+  "price_change_percentage_24h": -4.31501,
+  "market_cap_change_24h": -14560.320428780804,
+  "market_cap_change_percentage_24h": -4.68638,
+  "circulating_supply": 27472998607,
+  "total_supply": 28490621989,
+  "max_supply": 50000000000,
+  "ath": 0.00170124,
+  "ath_change_percentage": -99.3664,
+  "ath_date": "2023-03-22T08:00:44.944Z",
+  "atl": 0.00000565,
+  "atl_change_percentage": 90.92097,
+  "atl_date": "2023-11-01T14:59:50.387Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:28.773Z",
+  "platforms": {
+    "arbitrum": "0x02150e97271fdc0d6e3a16d9094a0948266f07dd"
+  }
+}

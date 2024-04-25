@@ -1,0 +1,31 @@
+{
+  "id": "zambesigold",
+  "symbol": "zgd",
+  "name": "ZambesiGold",
+  "image": "https://assets.coingecko.com/coins/images/25544/large/lD1w22TUaUn2AkWmkgI5WWSufl5kZ-1Gu3s-g-2A9qZ-DyW5g9UrrBRaOxKp5fcLEghB2VR-XBxw-4mu4M76SjH3YDCvh27CH4RTfKAbtlrEWHNP7oHN9Y6eBrqwfGu_-M0SAJf-dqDRnMNLWIxP8hKtAxaIFR0_JmxdInlMpBJa2WONniOHCeGomlyYeGfBKa4bYytvpIKDwZNBC-b_-enFwb.jpg?1696524677",
+  "current_price": 0.085054,
+  "market_cap": 3560245,
+  "market_cap_rank": 1965,
+  "fully_diluted_valuation": 15038111,
+  "total_volume": 5616.23,
+  "high_24h": 0.092248,
+  "low_24h": 0.07596,
+  "price_change_24h": -0.004911988940432239,
+  "price_change_percentage_24h": -5.4598,
+  "market_cap_change_24h": -212271.6982598584,
+  "market_cap_change_percentage_24h": -5.62679,
+  "circulating_supply": 41904417,
+  "total_supply": 177000000,
+  "max_supply": 177000000,
+  "ath": 2.5,
+  "ath_change_percentage": -96.59868,
+  "ath_date": "2022-11-17T14:20:21.031Z",
+  "atl": 0.01801056,
+  "atl_change_percentage": 371.94718,
+  "atl_date": "2024-04-18T18:44:51.526Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:49.423Z",
+  "platforms": {
+    "bsc": "0xbf27da33a58de2bc6eb1c7dab6cf2e84e825d7dc"
+  }
+}

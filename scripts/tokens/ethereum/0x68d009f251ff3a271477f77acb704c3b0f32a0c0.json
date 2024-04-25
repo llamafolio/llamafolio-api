@@ -1,0 +1,31 @@
+{
+  "id": "chad",
+  "symbol": "chad",
+  "name": "CHAD",
+  "image": "https://assets.coingecko.com/coins/images/35457/large/LOGO_RED.png?1708669427",
+  "current_price": 0.00000391,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 140771,
+  "total_volume": 603.63,
+  "high_24h": 0.00000397,
+  "low_24h": 0.0000038,
+  "price_change_24h": 1.3976e-8,
+  "price_change_percentage_24h": 0.3587,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 36000000000,
+  "max_supply": 69000000000,
+  "ath": 0.00004332,
+  "ath_change_percentage": -90.97285,
+  "ath_date": "2024-02-23T12:14:32.243Z",
+  "atl": 0.000002,
+  "atl_change_percentage": 95.64368,
+  "atl_date": "2024-03-04T22:45:52.638Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:13.099Z",
+  "platforms": {
+    "ethereum": "0x68d009f251ff3a271477f77acb704c3b0f32a0c0"
+  }
+}

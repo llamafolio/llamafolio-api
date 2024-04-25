@@ -1,0 +1,31 @@
+{
+  "id": "canadian-inuit-dog-2",
+  "symbol": "cadinu",
+  "name": "Canadian Inuit Dog",
+  "image": "https://assets.coingecko.com/coins/images/28508/large/JCM3FITW_400x400.jpg?1696527501",
+  "current_price": 3.39875e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 339875,
+  "total_volume": 31169,
+  "high_24h": 0.0000025,
+  "low_24h": 3.00201e-7,
+  "price_change_24h": 1.2124e-8,
+  "price_change_percentage_24h": 3.69905,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000,
+  "max_supply": null,
+  "ath": 0.00000542,
+  "ath_change_percentage": -93.72415,
+  "ath_date": "2022-12-29T23:51:14.303Z",
+  "atl": 1.49911e-7,
+  "atl_change_percentage": 126.70826,
+  "atl_date": "2024-02-06T18:03:33.600Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:58.522Z",
+  "platforms": {
+    "bsc": "0x76e112203ef59d445452ef7556386dd2df3ed914"
+  }
+}

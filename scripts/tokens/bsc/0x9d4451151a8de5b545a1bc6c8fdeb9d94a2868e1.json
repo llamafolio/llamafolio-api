@@ -1,0 +1,31 @@
+{
+  "id": "lunar",
+  "symbol": "lnr",
+  "name": "Lunar [OLD]",
+  "image": "https://assets.coingecko.com/coins/images/20446/large/rsz_lunarprofileiconcircleblack_1.png?1696519852",
+  "current_price": 1.353e-9,
+  "market_cap": 1085277,
+  "market_cap_rank": 2639,
+  "fully_diluted_valuation": 1238214,
+  "total_volume": 0,
+  "high_24h": 1.353e-9,
+  "low_24h": 1.353e-9,
+  "price_change_24h": 0,
+  "price_change_percentage_24h": 0,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 802145599318781.4,
+  "total_supply": 915183941741783,
+  "max_supply": 1000000000000000,
+  "ath": 5.1262e-8,
+  "ath_change_percentage": -97.36068,
+  "ath_date": "2021-11-30T11:08:46.028Z",
+  "atl": 1.273e-9,
+  "atl_change_percentage": 6.29404,
+  "atl_date": "2022-10-21T08:45:46.552Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:37.984Z",
+  "platforms": {
+    "bsc": "0x9d4451151a8de5b545a1bc6c8fdeb9d94a2868e1"
+  }
+}

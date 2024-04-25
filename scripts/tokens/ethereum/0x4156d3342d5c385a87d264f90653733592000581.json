@@ -1,0 +1,31 @@
+{
+  "id": "salt",
+  "symbol": "salt",
+  "name": "SALT",
+  "image": "https://assets.coingecko.com/coins/images/962/large/salt.png?1696502077",
+  "current_price": 0.01605361,
+  "market_cap": 1404355,
+  "market_cap_rank": 2473,
+  "fully_diluted_valuation": 1926434,
+  "total_volume": 13915.6,
+  "high_24h": 0.01635098,
+  "low_24h": 0.01605411,
+  "price_change_24h": -0.000100228163859063,
+  "price_change_percentage_24h": -0.62046,
+  "market_cap_change_24h": -7425.287285658531,
+  "market_cap_change_percentage_24h": -0.52595,
+  "circulating_supply": 87479056.98918937,
+  "total_supply": 120000000,
+  "max_supply": null,
+  "ath": 17.22,
+  "ath_change_percentage": -99.90677,
+  "ath_date": "2017-12-28T00:00:00.000Z",
+  "atl": 0.01120699,
+  "atl_change_percentage": 43.29362,
+  "atl_date": "2024-04-13T20:55:23.877Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:02.096Z",
+  "platforms": {
+    "ethereum": "0x4156d3342d5c385a87d264f90653733592000581"
+  }
+}

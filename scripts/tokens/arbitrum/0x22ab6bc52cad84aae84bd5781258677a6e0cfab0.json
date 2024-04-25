@@ -1,0 +1,31 @@
+{
+  "id": "elsd-coin",
+  "symbol": "elsd",
+  "name": "ELSD Coin",
+  "image": "https://assets.coingecko.com/coins/images/30746/large/Icon-200.png?1696529616",
+  "current_price": 0.00746816,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 7561.46,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.00971069,
+  "ath_change_percentage": -23.09343,
+  "ath_date": "2023-06-23T19:38:58.267Z",
+  "atl": 0.0045599,
+  "atl_change_percentage": 63.77894,
+  "atl_date": "2023-06-14T17:29:47.533Z",
+  "roi": null,
+  "last_updated": "2023-06-29T01:00:09.416Z",
+  "platforms": {
+    "arbitrum": "0x22ab6bc52cad84aae84bd5781258677a6e0cfab0"
+  }
+}

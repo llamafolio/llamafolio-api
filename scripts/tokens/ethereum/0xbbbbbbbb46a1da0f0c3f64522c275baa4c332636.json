@@ -1,0 +1,31 @@
+{
+  "id": "zkspace",
+  "symbol": "zkb",
+  "name": "ZKBase",
+  "image": "https://assets.coingecko.com/coins/images/13585/large/image_2024-01-16_172847810.png?1705397359",
+  "current_price": 0.03327095,
+  "market_cap": 7454471,
+  "market_cap_rank": 1580,
+  "fully_diluted_valuation": 19950041,
+  "total_volume": 3963760,
+  "high_24h": 0.03404346,
+  "low_24h": 0.03236335,
+  "price_change_24h": 0.00055644,
+  "price_change_percentage_24h": 1.70091,
+  "market_cap_change_24h": 143000,
+  "market_cap_change_percentage_24h": 1.95583,
+  "circulating_supply": 223450000,
+  "total_supply": 598008482.84326,
+  "max_supply": 598008482.84326,
+  "ath": 11.24,
+  "ath_change_percentage": -99.70143,
+  "ath_date": "2021-02-25T01:17:44.288Z",
+  "atl": 0.03203956,
+  "atl_change_percentage": 4.77813,
+  "atl_date": "2024-04-13T22:59:36.321Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:31.210Z",
+  "platforms": {
+    "ethereum": "0xbbbbbbbb46a1da0f0c3f64522c275baa4c332636"
+  }
+}

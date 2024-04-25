@@ -1,0 +1,31 @@
+{
+  "id": "arbitrum",
+  "symbol": "arb",
+  "name": "Arbitrum",
+  "image": "https://assets.coingecko.com/coins/images/16547/large/photo_2023-03-29_21.47.00.jpeg?1696516109",
+  "current_price": 1.098,
+  "market_cap": 2914290659,
+  "market_cap_rank": 44,
+  "fully_diluted_valuation": 10980999327,
+  "total_volume": 327488255,
+  "high_24h": 1.2,
+  "low_24h": 1.088,
+  "price_change_24h": -0.08588545270818426,
+  "price_change_percentage_24h": -7.25554,
+  "market_cap_change_24h": -240667256.300601,
+  "market_cap_change_percentage_24h": -7.62822,
+  "circulating_supply": 2653939384,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 2.39,
+  "ath_change_percentage": -54.15594,
+  "ath_date": "2024-01-12T12:29:59.231Z",
+  "atl": 0.744925,
+  "atl_change_percentage": 47.10241,
+  "atl_date": "2023-09-11T19:40:49.196Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:53.923Z",
+  "platforms": {
+    "arbitrum-nova": "0xf823c3cd3cebe0a1fa952ba88dc9eef8e0bf46ad"
+  }
+}

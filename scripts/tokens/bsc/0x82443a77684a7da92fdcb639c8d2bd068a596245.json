@@ -1,0 +1,31 @@
+{
+  "id": "trustswap",
+  "symbol": "swap",
+  "name": "TrustSwap",
+  "image": "https://assets.coingecko.com/coins/images/11795/large/Untitled_design-removebg-preview.png?1696511671",
+  "current_price": 0.170193,
+  "market_cap": 17132760,
+  "market_cap_rank": 1182,
+  "fully_diluted_valuation": 17132760,
+  "total_volume": 1439722,
+  "high_24h": 0.174472,
+  "low_24h": 0.159671,
+  "price_change_24h": 0.00596101,
+  "price_change_percentage_24h": 3.62963,
+  "market_cap_change_24h": 788515,
+  "market_cap_change_percentage_24h": 4.82442,
+  "circulating_supply": 99995164.2670812,
+  "total_supply": 99995164.2670812,
+  "max_supply": 100000000,
+  "ath": 5,
+  "ath_change_percentage": -96.59802,
+  "ath_date": "2021-04-16T04:42:53.319Z",
+  "atl": 0.03124961,
+  "atl_change_percentage": 444.81972,
+  "atl_date": "2020-07-09T22:28:30.396Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:00.038Z",
+  "platforms": {
+    "bsc": "0x82443a77684a7da92fdcb639c8d2bd068a596245"
+  }
+}

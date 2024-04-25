@@ -1,0 +1,31 @@
+{
+  "id": "pepe-girl",
+  "symbol": "pepeg",
+  "name": "Pepe Girl",
+  "image": "https://assets.coingecko.com/coins/images/29896/large/pepe_sad_reverse_200X200.png?1696528820",
+  "current_price": 1.8173e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 76452,
+  "total_volume": 94.24,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 420690000000000,
+  "max_supply": 420690000000000,
+  "ath": 5.636e-9,
+  "ath_change_percentage": -96.77554,
+  "ath_date": "2023-05-06T02:05:56.704Z",
+  "atl": 8.5757e-11,
+  "atl_change_percentage": 111.91264,
+  "atl_date": "2023-12-20T12:26:35.607Z",
+  "roi": null,
+  "last_updated": "2024-04-24T04:56:58.406Z",
+  "platforms": {
+    "ethereum": "0x8bcbef61acd66537362f38167f11875134ffcd63"
+  }
+}

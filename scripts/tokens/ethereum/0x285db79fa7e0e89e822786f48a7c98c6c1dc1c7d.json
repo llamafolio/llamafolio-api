@@ -1,0 +1,31 @@
+{
+  "id": "magic-internet-cash",
+  "symbol": "mic",
+  "name": "Magic Internet Cash",
+  "image": "https://assets.coingecko.com/coins/images/31405/large/MICsmall.png?1696530221",
+  "current_price": 0.00038035,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 380353,
+  "total_volume": 3277.14,
+  "high_24h": 0.0004162,
+  "low_24h": 0.00034842,
+  "price_change_24h": 0.00003115,
+  "price_change_percentage_24h": 8.92005,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.02891262,
+  "ath_change_percentage": -98.68447,
+  "ath_date": "2024-03-07T03:20:55.419Z",
+  "atl": 0.00005115,
+  "atl_change_percentage": 643.55975,
+  "atl_date": "2024-01-08T12:10:10.962Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:00.832Z",
+  "platforms": {
+    "ethereum": "0x285db79fa7e0e89e822786f48a7c98c6c1dc1c7d"
+  }
+}

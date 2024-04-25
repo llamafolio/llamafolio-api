@@ -1,0 +1,31 @@
+{
+  "id": "project-galaxy",
+  "symbol": "gal",
+  "name": "Galxe",
+  "image": "https://assets.coingecko.com/coins/images/24530/large/galaxy.jpg?1696523708",
+  "current_price": 4.56,
+  "market_cap": 479591671,
+  "market_cap_rank": 167,
+  "fully_diluted_valuation": 910856359,
+  "total_volume": 74589666,
+  "high_24h": 5.07,
+  "low_24h": 4.49,
+  "price_change_24h": 0.068022,
+  "price_change_percentage_24h": 1.51438,
+  "market_cap_change_24h": 6820055,
+  "market_cap_change_percentage_24h": 1.44257,
+  "circulating_supply": 105305664.68661283,
+  "total_supply": 200000000,
+  "max_supply": 200000000,
+  "ath": 18.32,
+  "ath_change_percentage": -75.10003,
+  "ath_date": "2022-05-06T01:14:11.342Z",
+  "atl": 0.897786,
+  "atl_change_percentage": 408.09195,
+  "atl_date": "2023-06-10T06:49:52.957Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:12.162Z",
+  "platforms": {
+    "bsc": "0xe4cc45bb5dbda06db6183e8bf016569f40497aa5"
+  }
+}

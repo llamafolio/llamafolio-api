@@ -1,0 +1,31 @@
+{
+  "id": "supe-infinity",
+  "symbol": "supe",
+  "name": "Supe Infinity",
+  "image": "https://assets.coingecko.com/coins/images/21874/large/nF9bWyQe_400x400.jpg?1696521228",
+  "current_price": 0.00560298,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 5611125,
+  "total_volume": 19902.69,
+  "high_24h": 0.00566303,
+  "low_24h": 0.00536764,
+  "price_change_24h": 0.00016473,
+  "price_change_percentage_24h": 3.02901,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 39.01,
+  "ath_change_percentage": -99.98566,
+  "ath_date": "2022-03-04T12:31:19.263Z",
+  "atl": 0.00381546,
+  "atl_change_percentage": 46.59821,
+  "atl_date": "2023-08-23T17:33:00.516Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:18.729Z",
+  "platforms": {
+    "bsc": "0xb972c4027818223bb7b9399b3ca3ca58186e1590"
+  }
+}

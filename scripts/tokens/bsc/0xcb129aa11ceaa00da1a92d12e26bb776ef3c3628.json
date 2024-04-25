@@ -1,0 +1,31 @@
+{
+  "id": "powblocks",
+  "symbol": "xpb",
+  "name": "PowBlocks",
+  "image": "https://assets.coingecko.com/coins/images/32520/large/logo.png?1698406955",
+  "current_price": 0.053163,
+  "market_cap": 801118,
+  "market_cap_rank": 2820,
+  "fully_diluted_valuation": 2125043,
+  "total_volume": 32791,
+  "high_24h": 0.066373,
+  "low_24h": 0.050483,
+  "price_change_24h": 0.00253166,
+  "price_change_percentage_24h": 5.00014,
+  "market_cap_change_24h": 32665,
+  "market_cap_change_percentage_24h": 4.25072,
+  "circulating_supply": 15079569.758402,
+  "total_supply": 40000000,
+  "max_supply": 40000000,
+  "ath": 1.16,
+  "ath_change_percentage": -95.30115,
+  "ath_date": "2023-11-23T17:34:45.509Z",
+  "atl": 0.0255072,
+  "atl_change_percentage": 113.30923,
+  "atl_date": "2023-10-28T19:25:20.952Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:24.226Z",
+  "platforms": {
+    "bsc": "0xcb129aa11ceaa00da1a92d12e26bb776ef3c3628"
+  }
+}

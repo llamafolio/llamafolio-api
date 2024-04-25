@@ -1,0 +1,31 @@
+{
+  "id": "sonic-hotdog",
+  "symbol": "hotdog",
+  "name": "Sonic",
+  "image": "https://assets.coingecko.com/coins/images/31480/large/Sonic-The-Hot-Dog-NO-BG-NO-TEXT-1.png?1696530292",
+  "current_price": 0.00088449,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 88449,
+  "total_volume": 64.05,
+  "high_24h": 0.00093009,
+  "low_24h": 0.00087935,
+  "price_change_24h": -0.000036410668820935,
+  "price_change_percentage_24h": -3.95382,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.02910736,
+  "ath_change_percentage": -96.96129,
+  "ath_date": "2023-08-30T19:19:32.167Z",
+  "atl": 0.00032579,
+  "atl_change_percentage": 171.48821,
+  "atl_date": "2023-10-14T12:45:48.597Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:01.654Z",
+  "platforms": {
+    "ethereum": "0x01e87d74b11f656a673a3e7c441425816213eb0c"
+  }
+}

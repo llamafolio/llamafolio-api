@@ -1,0 +1,31 @@
+{
+  "id": "dystopia",
+  "symbol": "dyst",
+  "name": "Dystopia",
+  "image": "https://assets.coingecko.com/coins/images/25786/large/dystopialogo.jpg?1696524872",
+  "current_price": 0.00003266,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 4.8,
+  "high_24h": 0.00003594,
+  "low_24h": 0.00003239,
+  "price_change_24h": -0.000002484274862682,
+  "price_change_percentage_24h": -7.06825,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.141528,
+  "ath_change_percentage": -99.97695,
+  "ath_date": "2022-06-10T06:23:04.973Z",
+  "atl": 0.00001578,
+  "atl_change_percentage": 106.64186,
+  "atl_date": "2023-09-27T08:33:56.626Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:36.668Z",
+  "platforms": {
+    "polygon": "0x39ab6574c289c3ae4d88500eec792ab5b947a5eb"
+  }
+}

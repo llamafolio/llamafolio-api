@@ -1,0 +1,31 @@
+{
+  "id": "wrapped-bitcoin",
+  "symbol": "wbtc",
+  "name": "Wrapped Bitcoin",
+  "image": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+  "current_price": 63840,
+  "market_cap": 9922925445,
+  "market_cap_rank": 15,
+  "fully_diluted_valuation": 9922925445,
+  "total_volume": 214902832,
+  "high_24h": 66763,
+  "low_24h": 63756,
+  "price_change_24h": -2763.013120782125,
+  "price_change_percentage_24h": -4.14847,
+  "market_cap_change_24h": -415195201.6644001,
+  "market_cap_change_percentage_24h": -4.01616,
+  "circulating_supply": 155232.81826528,
+  "total_supply": 155232.81826528,
+  "max_supply": 155232.81826528,
+  "ath": 73505,
+  "ath_change_percentage": -13.14907,
+  "ath_date": "2024-03-14T07:10:23.403Z",
+  "atl": 3139.17,
+  "atl_change_percentage": 1933.66311,
+  "atl_date": "2019-04-02T00:00:00.000Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:48.254Z",
+  "platforms": {
+    "polygon": "0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6"
+  }
+}

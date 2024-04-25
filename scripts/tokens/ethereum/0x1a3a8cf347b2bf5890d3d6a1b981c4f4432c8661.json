@@ -1,0 +1,31 @@
+{
+  "id": "flying-avocado-cat",
+  "symbol": "fac",
+  "name": "Flying Avocado Cat",
+  "image": "https://assets.coingecko.com/coins/images/34223/large/Flying_Avocado_Cat.jpg?1704298390",
+  "current_price": 0.255935,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2345159,
+  "total_volume": 23195,
+  "high_24h": 0.262989,
+  "low_24h": 0.229063,
+  "price_change_24h": -0.005485668097831409,
+  "price_change_percentage_24h": -2.0984,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 9163090,
+  "max_supply": 10000000,
+  "ath": 0.319593,
+  "ath_change_percentage": -19.91832,
+  "ath_date": "2024-04-22T17:49:55.144Z",
+  "atl": 0.04068019,
+  "atl_change_percentage": 529.13998,
+  "atl_date": "2024-02-03T10:32:04.935Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:08.692Z",
+  "platforms": {
+    "ethereum": "0x1a3a8cf347b2bf5890d3d6a1b981c4f4432c8661"
+  }
+}

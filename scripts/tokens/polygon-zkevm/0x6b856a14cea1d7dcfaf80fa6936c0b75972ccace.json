@@ -1,0 +1,31 @@
+{
+  "id": "frax-share",
+  "symbol": "fxs",
+  "name": "Frax Share",
+  "image": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183",
+  "current_price": 4.48,
+  "market_cap": 353697816,
+  "market_cap_rank": 210,
+  "fully_diluted_valuation": 446140822,
+  "total_volume": 19907092,
+  "high_24h": 4.86,
+  "low_24h": 4.42,
+  "price_change_24h": -0.32995593649602295,
+  "price_change_percentage_24h": -6.86604,
+  "market_cap_change_24h": -26943755.111379504,
+  "market_cap_change_percentage_24h": -7.07851,
+  "circulating_supply": 79026902.631753,
+  "total_supply": 99681495.5911336,
+  "max_supply": 99681495.5911336,
+  "ath": 42.8,
+  "ath_change_percentage": -89.56289,
+  "ath_date": "2022-01-12T15:22:27.465Z",
+  "atl": 1.5,
+  "atl_change_percentage": 197.17786,
+  "atl_date": "2021-06-25T16:50:51.447Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:57.618Z",
+  "platforms": {
+    "polygon-zkevm": "0x6b856a14cea1d7dcfaf80fa6936c0b75972ccace"
+  }
+}

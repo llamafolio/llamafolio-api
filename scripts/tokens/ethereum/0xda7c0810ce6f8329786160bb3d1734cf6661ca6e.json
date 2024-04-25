@@ -1,0 +1,31 @@
+{
+  "id": "jaypegggers",
+  "symbol": "jay",
+  "name": "Jaypeggers",
+  "image": "https://assets.coingecko.com/coins/images/30074/large/jay.jpg?1696528999",
+  "current_price": 7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 13890248,
+  "total_volume": 11172.15,
+  "high_24h": 7.25,
+  "low_24h": 6.96,
+  "price_change_24h": -0.17696523882981374,
+  "price_change_percentage_24h": -2.46435,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1987470,
+  "max_supply": 1987470,
+  "ath": 8.8,
+  "ath_change_percentage": -20.58178,
+  "ath_date": "2024-03-13T08:31:56.571Z",
+  "atl": 3.12,
+  "atl_change_percentage": 123.7996,
+  "atl_date": "2023-10-13T17:39:39.028Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:45.214Z",
+  "platforms": {
+    "ethereum": "0xda7c0810ce6f8329786160bb3d1734cf6661ca6e"
+  }
+}

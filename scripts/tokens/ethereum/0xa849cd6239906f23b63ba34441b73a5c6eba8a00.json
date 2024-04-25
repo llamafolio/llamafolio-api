@@ -1,0 +1,31 @@
+{
+  "id": "hashmind",
+  "symbol": "hash",
+  "name": "HashMind",
+  "image": "https://assets.coingecko.com/coins/images/35014/large/IMG_20240203_223037_717.jpg?1707107441",
+  "current_price": 0.702206,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 699116,
+  "total_volume": 5568.02,
+  "high_24h": 0.757719,
+  "low_24h": 0.677361,
+  "price_change_24h": -0.04730998883664317,
+  "price_change_percentage_24h": -6.31207,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 3.45,
+  "ath_change_percentage": -79.62945,
+  "ath_date": "2024-04-02T13:00:35.482Z",
+  "atl": 0.075481,
+  "atl_change_percentage": 830.30462,
+  "atl_date": "2024-02-05T04:39:57.247Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:06:30.883Z",
+  "platforms": {
+    "ethereum": "0xa849cd6239906f23b63ba34441b73a5c6eba8a00"
+  }
+}

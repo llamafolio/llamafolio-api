@@ -1,0 +1,31 @@
+{
+  "id": "cryptocart",
+  "symbol": "ccv2",
+  "name": "CryptoCart V2",
+  "image": "https://assets.coingecko.com/coins/images/15210/large/DP7-T6rox-400x400_%281%29.png?1696514866",
+  "current_price": 1.045,
+  "market_cap": 970033,
+  "market_cap_rank": 2703,
+  "fully_diluted_valuation": 1042645,
+  "total_volume": 1108.16,
+  "high_24h": 1.084,
+  "low_24h": 1.042,
+  "price_change_24h": -0.03889010763406242,
+  "price_change_percentage_24h": -3.58659,
+  "market_cap_change_24h": -51965.00893710414,
+  "market_cap_change_percentage_24h": -5.08465,
+  "circulating_supply": 930357.8852991617,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 27.07,
+  "ath_change_percentage": -96.14766,
+  "ath_date": "2021-11-01T01:38:34.749Z",
+  "atl": 0.02534635,
+  "atl_change_percentage": 4014.95039,
+  "atl_date": "2021-11-14T18:01:26.409Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:15.279Z",
+  "platforms": {
+    "ethereum": "0x612e1726435fe38dd49a0b35b4065b56f49c8f11"
+  }
+}

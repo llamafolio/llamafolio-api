@@ -1,0 +1,31 @@
+{
+  "id": "bahamas",
+  "symbol": "bahamas",
+  "name": "Bahamas",
+  "image": "https://assets.coingecko.com/coins/images/34089/large/Bahamas_Logo_200x200.png?1703911941",
+  "current_price": 0.00000775,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 774619,
+  "total_volume": 5143.46,
+  "high_24h": 0.00000823,
+  "low_24h": 0.00000607,
+  "price_change_24h": 0.00000165,
+  "price_change_percentage_24h": 27.05095,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.00003066,
+  "ath_change_percentage": -74.86278,
+  "ath_date": "2023-12-31T02:29:16.014Z",
+  "atl": 0.00000517,
+  "atl_change_percentage": 49.15578,
+  "atl_date": "2024-04-19T02:52:39.430Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:42.022Z",
+  "platforms": {
+    "ethereum": "0x426aedbed16726e3f220cb4fed4d4060b95cca46"
+  }
+}

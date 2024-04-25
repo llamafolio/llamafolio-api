@@ -1,0 +1,31 @@
+{
+  "id": "pool-partyyy",
+  "symbol": "party",
+  "name": "Pool Partyyy",
+  "image": "https://assets.coingecko.com/coins/images/29832/large/dioiHjS2_400x400.jpg?1696528760",
+  "current_price": 0.00005538,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 12183.77,
+  "total_volume": 0,
+  "high_24h": 0.00005538,
+  "low_24h": 0.00005538,
+  "price_change_24h": 0,
+  "price_change_percentage_24h": 0,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 220000000,
+  "max_supply": 910000000,
+  "ath": 0.00839442,
+  "ath_change_percentage": -99.34027,
+  "ath_date": "2023-05-04T18:04:49.441Z",
+  "atl": 0.00002583,
+  "atl_change_percentage": 114.39749,
+  "atl_date": "2023-11-03T01:04:26.147Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:03.159Z",
+  "platforms": {
+    "ethereum": "0x0fe0ed7f146cb12e4b9759aff4fa8d34571802ca"
+  }
+}

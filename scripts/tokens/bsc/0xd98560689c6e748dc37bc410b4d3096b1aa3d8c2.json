@@ -1,0 +1,31 @@
+{
+  "id": "defi-for-you",
+  "symbol": "dfy",
+  "name": "Defi For You",
+  "image": "https://assets.coingecko.com/coins/images/14561/large/DFY-200x200.png?1696514243",
+  "current_price": 0.00023305,
+  "market_cap": 140118,
+  "market_cap_rank": 3671,
+  "fully_diluted_valuation": 197198,
+  "total_volume": 10489.57,
+  "high_24h": 0.00024665,
+  "low_24h": 0.00022739,
+  "price_change_24h": -0.000005258611104952,
+  "price_change_percentage_24h": -2.20666,
+  "market_cap_change_24h": -3454.302921917144,
+  "market_cap_change_percentage_24h": -2.40596,
+  "circulating_supply": 601416467.712,
+  "total_supply": 846416467.712,
+  "max_supply": null,
+  "ath": 0.27096,
+  "ath_change_percentage": -99.91399,
+  "ath_date": "2021-04-21T07:49:21.117Z",
+  "atl": 0.00014735,
+  "atl_change_percentage": 58.15882,
+  "atl_date": "2024-02-05T20:29:54.319Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:19.540Z",
+  "platforms": {
+    "bsc": "0xd98560689c6e748dc37bc410b4d3096b1aa3d8c2"
+  }
+}

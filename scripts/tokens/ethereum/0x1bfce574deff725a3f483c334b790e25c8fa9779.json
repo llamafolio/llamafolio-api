@@ -1,0 +1,31 @@
+{
+  "id": "tao-ceti",
+  "symbol": "ceti",
+  "name": "Tao Ceτi",
+  "image": "https://assets.coingecko.com/coins/images/36097/large/CETI-BLACK-SMALL.png?1710481943",
+  "current_price": 1.14,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 23981520,
+  "total_volume": 339365,
+  "high_24h": 1.36,
+  "low_24h": 1.026,
+  "price_change_24h": -0.1639134784999574,
+  "price_change_percentage_24h": -12.53217,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 21000000,
+  "max_supply": 21000000,
+  "ath": 42.2,
+  "ath_change_percentage": -97.28889,
+  "ath_date": "2024-03-16T08:29:35.520Z",
+  "atl": 0.409297,
+  "atl_change_percentage": 179.51033,
+  "atl_date": "2024-03-24T12:19:45.533Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:24.563Z",
+  "platforms": {
+    "ethereum": "0x1bfce574deff725a3f483c334b790e25c8fa9779"
+  }
+}

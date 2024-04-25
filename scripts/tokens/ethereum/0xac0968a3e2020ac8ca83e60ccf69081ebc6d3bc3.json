@@ -1,0 +1,31 @@
+{
+  "id": "cindrum",
+  "symbol": "cind",
+  "name": "Cindrum",
+  "image": "https://assets.coingecko.com/coins/images/20449/large/1_sbv9l6ArIn7oYIhi0oQWoQ.png?1696519854",
+  "current_price": 0.00084176,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 4202659,
+  "total_volume": 97332,
+  "high_24h": 0.0008602,
+  "low_24h": 0.00083974,
+  "price_change_24h": -0.000016519385405696,
+  "price_change_percentage_24h": -1.92471,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 5000000000,
+  "max_supply": 5000000000,
+  "ath": 0.234078,
+  "ath_change_percentage": -99.64009,
+  "ath_date": "2021-12-09T02:45:18.193Z",
+  "atl": 0.00030529,
+  "atl_change_percentage": 175.95888,
+  "atl_date": "2022-09-13T09:06:15.340Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:57.465Z",
+  "platforms": {
+    "ethereum": "0xac0968a3e2020ac8ca83e60ccf69081ebc6d3bc3"
+  }
+}

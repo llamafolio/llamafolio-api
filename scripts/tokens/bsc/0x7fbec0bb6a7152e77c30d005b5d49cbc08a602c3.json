@@ -1,0 +1,31 @@
+{
+  "id": "disbalancer",
+  "symbol": "ddos",
+  "name": "disBalancer",
+  "image": "https://assets.coingecko.com/coins/images/14791/large/communityIcon_o2yriheuszk61.png?1696514460",
+  "current_price": 0.04000991,
+  "market_cap": 271587,
+  "market_cap_rank": 3360,
+  "fully_diluted_valuation": 298355,
+  "total_volume": 11946.96,
+  "high_24h": 0.04033046,
+  "low_24h": 0.03904318,
+  "price_change_24h": 0.00070123,
+  "price_change_percentage_24h": 1.78391,
+  "market_cap_change_24h": 6114.84,
+  "market_cap_change_percentage_24h": 2.30338,
+  "circulating_supply": 6790716.55,
+  "total_supply": 7460000,
+  "max_supply": 10000000,
+  "ath": 4.51,
+  "ath_change_percentage": -99.11355,
+  "ath_date": "2021-05-12T16:14:47.898Z",
+  "atl": 0.02049549,
+  "atl_change_percentage": 95.13599,
+  "atl_date": "2023-09-15T11:29:03.819Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:43.983Z",
+  "platforms": {
+    "bsc": "0x7fbec0bb6a7152e77c30d005b5d49cbc08a602c3"
+  }
+}

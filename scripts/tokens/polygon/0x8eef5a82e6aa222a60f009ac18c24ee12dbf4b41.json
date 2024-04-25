@@ -1,0 +1,31 @@
+{
+  "id": "autobahn-network",
+  "symbol": "txl",
+  "name": "Autobahn Network",
+  "image": "https://assets.coingecko.com/coins/images/12432/large/txl.png?1696512252",
+  "current_price": 0.00459113,
+  "market_cap": 582019,
+  "market_cap_rank": 2991,
+  "fully_diluted_valuation": 2747042,
+  "total_volume": 27.28,
+  "high_24h": 0.0059567,
+  "low_24h": 0.00454794,
+  "price_change_24h": -0.000019017656528989,
+  "price_change_percentage_24h": -0.41252,
+  "market_cap_change_24h": -5720.227873323485,
+  "market_cap_change_percentage_24h": -0.97326,
+  "circulating_supply": 127121646.93647125,
+  "total_supply": 599995118.64392,
+  "max_supply": 599995118.64392,
+  "ath": 0.812598,
+  "ath_change_percentage": -99.43599,
+  "ath_date": "2021-03-29T20:10:53.176Z",
+  "atl": 0.00054623,
+  "atl_change_percentage": 739.04757,
+  "atl_date": "2023-09-25T05:26:14.466Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:49.223Z",
+  "platforms": {
+    "polygon": "0x8eef5a82e6aa222a60f009ac18c24ee12dbf4b41"
+  }
+}

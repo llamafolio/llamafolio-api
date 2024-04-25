@@ -1,0 +1,35 @@
+{
+  "id": "maidsafecoin",
+  "symbol": "emaid",
+  "name": "MaidSafeCoin",
+  "image": "https://assets.coingecko.com/coins/images/80/large/maidsafecoin.png?1696501470",
+  "current_price": 0.547752,
+  "market_cap": 16015514,
+  "market_cap_rank": 1219,
+  "fully_diluted_valuation": 16015514,
+  "total_volume": 31967,
+  "high_24h": 0.548517,
+  "low_24h": 0.534618,
+  "price_change_24h": 0.00566861,
+  "price_change_percentage_24h": 1.04571,
+  "market_cap_change_24h": 169356,
+  "market_cap_change_percentage_24h": 1.06875,
+  "circulating_supply": 29217608,
+  "total_supply": 29217608,
+  "max_supply": 452552412,
+  "ath": 1.37,
+  "ath_change_percentage": -60.10335,
+  "ath_date": "2021-04-12T14:04:59.247Z",
+  "atl": 0.00503241,
+  "atl_change_percentage": 10793.33126,
+  "atl_date": "2022-12-09T03:15:34.654Z",
+  "roi": {
+    "times": 17.258409676419436,
+    "currency": "usd",
+    "percentage": 1725.8409676419437
+  },
+  "last_updated": "2024-04-25T09:00:00.923Z",
+  "platforms": {
+    "ethereum": "0x329c6e459ffa7475718838145e5e85802db2a303"
+  }
+}

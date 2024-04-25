@@ -1,0 +1,31 @@
+{
+  "id": "thing",
+  "symbol": "thing",
+  "name": "Thing",
+  "image": "https://assets.coingecko.com/coins/images/31410/large/84df82ca-6235-4b5b-8dc9-966ea6649be1.jpg.0a0f00ac7b9be9f7e502b8d96e9e7c8b.jpg?1696530225",
+  "current_price": 1.25676e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 125724,
+  "total_volume": 315.52,
+  "high_24h": 1.27524e-7,
+  "low_24h": 1.21999e-7,
+  "price_change_24h": -3.43030816e-10,
+  "price_change_percentage_24h": -0.2722,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000,
+  "max_supply": 1000000000000,
+  "ath": 0.00000394,
+  "ath_change_percentage": -96.81803,
+  "ath_date": "2023-08-31T16:51:02.545Z",
+  "atl": 4.0195e-8,
+  "atl_change_percentage": 212.01418,
+  "atl_date": "2023-12-17T15:06:09.531Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:16:57.336Z",
+  "platforms": {
+    "bsc": "0xdc8c498cfc915dba55f0524fa9f5e57288110ab9"
+  }
+}

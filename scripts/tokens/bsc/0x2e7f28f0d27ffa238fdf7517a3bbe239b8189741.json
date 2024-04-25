@@ -1,0 +1,31 @@
+{
+  "id": "hoppyinu",
+  "symbol": "hoppyinu",
+  "name": "HoppyInu",
+  "image": "https://assets.coingecko.com/coins/images/29209/large/HOPPYINU_200x200.png?1696528168",
+  "current_price": 0.00002905,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 29045,
+  "total_volume": 5.86,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00033811,
+  "ath_change_percentage": -91.40956,
+  "ath_date": "2023-02-26T06:43:30.649Z",
+  "atl": 0.00002863,
+  "atl_change_percentage": 1.45725,
+  "atl_date": "2023-05-17T14:11:47.021Z",
+  "roi": null,
+  "last_updated": "2023-05-18T13:00:23.296Z",
+  "platforms": {
+    "bsc": "0x2e7f28f0d27ffa238fdf7517a3bbe239b8189741"
+  }
+}

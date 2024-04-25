@@ -1,0 +1,31 @@
+{
+  "id": "monetha",
+  "symbol": "mth",
+  "name": "Monetha",
+  "image": "https://assets.coingecko.com/coins/images/902/large/LOGO-MTH-200-200.png?1696502024",
+  "current_price": 0.00233636,
+  "market_cap": 813035,
+  "market_cap_rank": 2816,
+  "fully_diluted_valuation": 941364,
+  "total_volume": 80325,
+  "high_24h": 0.0023522,
+  "low_24h": 0.00231818,
+  "price_change_24h": 0.0000087,
+  "price_change_percentage_24h": 0.37394,
+  "market_cap_change_24h": 4121.9,
+  "market_cap_change_percentage_24h": 0.50956,
+  "circulating_supply": 347543900,
+  "total_supply": 402400000,
+  "max_supply": null,
+  "ath": 0.594912,
+  "ath_change_percentage": -99.60747,
+  "ath_date": "2018-01-10T00:00:00.000Z",
+  "atl": 0.00092811,
+  "atl_change_percentage": 151.6061,
+  "atl_date": "2022-03-13T07:51:26.329Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:17.689Z",
+  "platforms": {
+    "ethereum": "0xaf4dce16da2877f8c9e00544c93b62ac40631f16"
+  }
+}

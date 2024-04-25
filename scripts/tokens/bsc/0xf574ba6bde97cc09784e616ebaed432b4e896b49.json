@@ -1,0 +1,31 @@
+{
+  "id": "vlaunch-2",
+  "symbol": "vpad",
+  "name": "VLaunch",
+  "image": "https://assets.coingecko.com/coins/images/34991/large/VPAD.png?1707061585",
+  "current_price": 0.03116724,
+  "market_cap": 13400526,
+  "market_cap_rank": 1300,
+  "fully_diluted_valuation": 15563166,
+  "total_volume": 188354,
+  "high_24h": 0.03287277,
+  "low_24h": 0.03112216,
+  "price_change_24h": -0.001177594351158655,
+  "price_change_percentage_24h": -3.64075,
+  "market_cap_change_24h": -541472.7100837901,
+  "market_cap_change_percentage_24h": -3.88375,
+  "circulating_supply": 430520576.8694759,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 0.068909,
+  "ath_change_percentage": -54.76263,
+  "ath_date": "2024-03-10T04:14:59.167Z",
+  "atl": 0.0311581,
+  "atl_change_percentage": 0.04682,
+  "atl_date": "2024-04-25T08:35:58.169Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:35.085Z",
+  "platforms": {
+    "bsc": "0xf574ba6bde97cc09784e616ebaed432b4e896b49"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "zzz",
+  "symbol": "zzz",
+  "name": "GoSleep ZZZ",
+  "image": "https://assets.coingecko.com/coins/images/29901/large/ZZZ200_200.png?1696528830",
+  "current_price": 0.102839,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 515193,
+  "high_24h": 0.109224,
+  "low_24h": 0.102405,
+  "price_change_24h": -0.006255921843717955,
+  "price_change_percentage_24h": -5.73441,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.695713,
+  "ath_change_percentage": -85.19578,
+  "ath_date": "2023-05-06T12:09:42.837Z",
+  "atl": 0.03314603,
+  "atl_change_percentage": 210.73061,
+  "atl_date": "2023-11-07T16:25:13.656Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:42.927Z",
+  "platforms": {
+    "arbitrum": "0x7a2c1b8e26c48a5b73816b7ec826fd4053f5f34b"
+  }
+}

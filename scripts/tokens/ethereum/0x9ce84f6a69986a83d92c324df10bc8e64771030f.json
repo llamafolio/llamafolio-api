@@ -1,0 +1,31 @@
+{
+  "id": "chex-token",
+  "symbol": "chex",
+  "name": "CHEX Token",
+  "image": "https://assets.coingecko.com/coins/images/10349/large/logo-dark-200.png?1701121978",
+  "current_price": 0.264553,
+  "market_cap": 264301219,
+  "market_cap_rank": 241,
+  "fully_diluted_valuation": 264301219,
+  "total_volume": 1937585,
+  "high_24h": 0.292569,
+  "low_24h": 0.263405,
+  "price_change_24h": -0.028015963398975885,
+  "price_change_percentage_24h": -9.57585,
+  "market_cap_change_24h": -27747440.382015377,
+  "market_cap_change_percentage_24h": -9.50096,
+  "circulating_supply": 998844955.438933,
+  "total_supply": 998844955.438933,
+  "max_supply": 1000000000,
+  "ath": 0.436651,
+  "ath_change_percentage": -39.41318,
+  "ath_date": "2024-04-11T21:41:48.428Z",
+  "atl": 0.0005008,
+  "atl_change_percentage": 52726.62315,
+  "atl_date": "2020-08-09T17:09:30.174Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:13.744Z",
+  "platforms": {
+    "ethereum": "0x9ce84f6a69986a83d92c324df10bc8e64771030f"
+  }
+}

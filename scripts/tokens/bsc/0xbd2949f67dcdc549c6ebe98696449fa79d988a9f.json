@@ -1,0 +1,31 @@
+{
+  "id": "meter",
+  "symbol": "mtrg",
+  "name": "Meter Governance",
+  "image": "https://assets.coingecko.com/coins/images/11848/large/meter.png?1696511719",
+  "current_price": 1.45,
+  "market_cap": 51634875,
+  "market_cap_rank": 679,
+  "fully_diluted_valuation": 66901981,
+  "total_volume": 272521,
+  "high_24h": 1.5,
+  "low_24h": 1.41,
+  "price_change_24h": -0.009158793219621987,
+  "price_change_percentage_24h": -0.62635,
+  "market_cap_change_24h": -900028.1650481448,
+  "market_cap_change_percentage_24h": -1.7132,
+  "circulating_supply": 35923981,
+  "total_supply": 46545779,
+  "max_supply": null,
+  "ath": 16.47,
+  "ath_change_percentage": -91.2989,
+  "ath_date": "2021-11-02T19:05:15.636Z",
+  "atl": 0.212097,
+  "atl_change_percentage": 575.84921,
+  "atl_date": "2021-01-20T11:39:54.775Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:53.581Z",
+  "platforms": {
+    "bsc": "0xbd2949f67dcdc549c6ebe98696449fa79d988a9f"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "football-at-alphaverse",
+  "symbol": "fav",
+  "name": "Football at AlphaVerse",
+  "image": "https://assets.coingecko.com/coins/images/31974/large/fav.png?1704731064",
+  "current_price": 0.02206591,
+  "market_cap": 39770965,
+  "market_cap_rank": 787,
+  "fully_diluted_valuation": 243044787,
+  "total_volume": 48496,
+  "high_24h": 0.02217085,
+  "low_24h": 0.02200674,
+  "price_change_24h": 0.00001878,
+  "price_change_percentage_24h": 0.08518,
+  "market_cap_change_24h": 95218,
+  "market_cap_change_percentage_24h": 0.23999,
+  "circulating_supply": 1800000000,
+  "total_supply": 11000000000,
+  "max_supply": 11000000000,
+  "ath": 0.02503228,
+  "ath_change_percentage": -11.73241,
+  "ath_date": "2024-02-11T00:23:36.698Z",
+  "atl": 0.01135973,
+  "atl_change_percentage": 94.50625,
+  "atl_date": "2023-11-06T05:46:21.711Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:53.052Z",
+  "platforms": {
+    "bsc": "0x1a076e4633fa139d7b908b88326de603fbe8c199"
+  }
+}

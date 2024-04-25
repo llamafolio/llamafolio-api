@@ -1,0 +1,35 @@
+{
+  "id": "naga",
+  "symbol": "ngc",
+  "name": "NAGA",
+  "image": "https://assets.coingecko.com/coins/images/1439/large/naga.jpg?1696502489",
+  "current_price": 0.04071499,
+  "market_cap": 3171642,
+  "market_cap_rank": 2033,
+  "fully_diluted_valuation": 3171642,
+  "total_volume": 275488,
+  "high_24h": 0.040889,
+  "low_24h": 0.04031798,
+  "price_change_24h": 0.00002927,
+  "price_change_percentage_24h": 0.07194,
+  "market_cap_change_24h": -1152.9407964949496,
+  "market_cap_change_percentage_24h": -0.03634,
+  "circulating_supply": 77910266,
+  "total_supply": 77910266,
+  "max_supply": 77910266,
+  "ath": 3.74,
+  "ath_change_percentage": -98.91232,
+  "ath_date": "2017-12-30T00:00:00.000Z",
+  "atl": 0.00760807,
+  "atl_change_percentage": 434.79764,
+  "atl_date": "2020-03-13T02:12:35.954Z",
+  "roi": {
+    "times": -0.9592850109951453,
+    "currency": "usd",
+    "percentage": -95.92850109951453
+  },
+  "last_updated": "2024-04-25T08:59:51.931Z",
+  "platforms": {
+    "ethereum": "0x72dd4b6bd852a3aa172be4d6c5a6dbec588cf131"
+  }
+}

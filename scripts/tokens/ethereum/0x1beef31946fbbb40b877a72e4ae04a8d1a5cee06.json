@@ -1,0 +1,31 @@
+{
+  "id": "parachute",
+  "symbol": "par",
+  "name": "Parachute",
+  "image": "https://assets.coingecko.com/coins/images/7590/large/Parachute_Logo.png?1696507850",
+  "current_price": 0.00028397,
+  "market_cap": 176329,
+  "market_cap_rank": 3554,
+  "fully_diluted_valuation": 283869,
+  "total_volume": 10.01,
+  "high_24h": 0.00029113,
+  "low_24h": 0.00028334,
+  "price_change_24h": -0.000003533172739808,
+  "price_change_percentage_24h": -1.2289,
+  "market_cap_change_24h": -2586.0910632583837,
+  "market_cap_change_percentage_24h": -1.44543,
+  "circulating_supply": 620935071,
+  "total_supply": 999628334,
+  "max_supply": null,
+  "ath": 0.03307398,
+  "ath_change_percentage": -99.1414,
+  "ath_date": "2021-04-10T04:33:54.876Z",
+  "atl": 0.00000158,
+  "atl_change_percentage": 17825.88055,
+  "atl_date": "2022-10-17T13:19:40.116Z",
+  "roi": null,
+  "last_updated": "2024-04-24T15:16:47.988Z",
+  "platforms": {
+    "ethereum": "0x1beef31946fbbb40b877a72e4ae04a8d1a5cee06"
+  }
+}

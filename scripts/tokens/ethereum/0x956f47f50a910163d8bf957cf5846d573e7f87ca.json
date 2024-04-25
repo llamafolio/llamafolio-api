@@ -1,0 +1,31 @@
+{
+  "id": "fei-usd",
+  "symbol": "fei",
+  "name": "Fei USD",
+  "image": "https://assets.coingecko.com/coins/images/14570/large/ZqsF51Re_400x400.png?1696514251",
+  "current_price": 0.961599,
+  "market_cap": 14852260,
+  "market_cap_rank": 1253,
+  "fully_diluted_valuation": 15100517,
+  "total_volume": 19412.32,
+  "high_24h": 0.981277,
+  "low_24h": 0.95632,
+  "price_change_24h": -0.017372916325756327,
+  "price_change_percentage_24h": -1.77461,
+  "market_cap_change_24h": -297506.4936809577,
+  "market_cap_change_percentage_24h": -1.96377,
+  "circulating_supply": 15475091.313140115,
+  "total_supply": 15733758.6959024,
+  "max_supply": 15733758.6959024,
+  "ath": 5.55,
+  "ath_change_percentage": -82.71206,
+  "ath_date": "2024-03-16T13:26:58.463Z",
+  "atl": 0.15544,
+  "atl_change_percentage": 517.43768,
+  "atl_date": "2023-12-30T14:09:50.453Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:12.310Z",
+  "platforms": {
+    "ethereum": "0x956f47f50a910163d8bf957cf5846d573e7f87ca"
+  }
+}

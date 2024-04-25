@@ -1,0 +1,31 @@
+{
+  "id": "srune",
+  "symbol": "srune",
+  "name": "sRUNE",
+  "image": "https://assets.coingecko.com/coins/images/14953/large/sRUNE.png?1696514611",
+  "current_price": 5.35,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 129606,
+  "total_volume": 10532.01,
+  "high_24h": 5.89,
+  "low_24h": 5.3,
+  "price_change_24h": -0.3989005122920144,
+  "price_change_percentage_24h": -6.93748,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 24377.43988,
+  "max_supply": null,
+  "ath": 21.57,
+  "ath_change_percentage": -75.42607,
+  "ath_date": "2021-05-19T00:43:54.287Z",
+  "atl": 0.781938,
+  "atl_change_percentage": 577.78929,
+  "atl_date": "2023-06-15T09:29:33.565Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:50.718Z",
+  "platforms": {
+    "ethereum": "0x0352557b007a4aae1511c114409b932f06f9e2f4"
+  }
+}

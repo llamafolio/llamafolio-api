@@ -1,0 +1,31 @@
+{
+  "id": "collector-coin",
+  "symbol": "ags",
+  "name": "Collector Coin",
+  "image": "https://assets.coingecko.com/coins/images/16918/large/AGS.png?1696516489",
+  "current_price": 0.00768494,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 768494,
+  "total_volume": 21.59,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 0.208347,
+  "ath_change_percentage": -96.31146,
+  "ath_date": "2021-11-07T09:02:45.500Z",
+  "atl": 0.00262355,
+  "atl_change_percentage": 192.9211,
+  "atl_date": "2023-10-13T05:44:43.657Z",
+  "roi": null,
+  "last_updated": "2024-04-23T16:38:47.170Z",
+  "platforms": {
+    "ethereum": "0x667fd83e24ca1d935d36717d305d54fa0cac991c"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "clearpool",
+  "symbol": "cpool",
+  "name": "Clearpool",
+  "image": "https://assets.coingecko.com/coins/images/19252/large/photo_2022-08-31_12.45.02.jpeg?1696518697",
+  "current_price": 0.169292,
+  "market_cap": 75643110,
+  "market_cap_rank": 553,
+  "fully_diluted_valuation": 168941352,
+  "total_volume": 3148631,
+  "high_24h": 0.196868,
+  "low_24h": 0.168766,
+  "price_change_24h": -0.013398854362919488,
+  "price_change_percentage_24h": -7.33419,
+  "market_cap_change_24h": -5833910.806566834,
+  "market_cap_change_percentage_24h": -7.16019,
+  "circulating_supply": 447747749.61564434,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 2.55,
+  "ath_change_percentage": -93.36474,
+  "ath_date": "2021-11-16T18:18:49.737Z",
+  "atl": 0.01599962,
+  "atl_change_percentage": 958.24658,
+  "atl_date": "2023-10-16T19:32:35.253Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:39.397Z",
+  "platforms": {
+    "ethereum": "0x66761fa41377003622aee3c7675fc7b5c1c2fac5"
+  }
+}

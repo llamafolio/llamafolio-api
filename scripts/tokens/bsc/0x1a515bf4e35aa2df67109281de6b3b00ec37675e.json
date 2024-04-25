@@ -1,0 +1,31 @@
+{
+  "id": "2g-carbon-coin",
+  "symbol": "2gcc",
+  "name": "2G Carbon Coin",
+  "image": "https://assets.coingecko.com/coins/images/27514/large/Ojh3Dm3-_400x400.jpeg?1696526553",
+  "current_price": 0.00575563,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 575563176,
+  "total_volume": 4132.25,
+  "high_24h": 0.00577329,
+  "low_24h": 0.00570036,
+  "price_change_24h": 0.00004825,
+  "price_change_percentage_24h": 0.84541,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 4978.17,
+  "ath_change_percentage": -99.99988,
+  "ath_date": "2022-09-28T08:52:46.336Z",
+  "atl": 0.00491714,
+  "atl_change_percentage": 16.93603,
+  "atl_date": "2024-04-17T16:48:00.939Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:07:28.666Z",
+  "platforms": {
+    "bsc": "0x1a515bf4e35aa2df67109281de6b3b00ec37675e"
+  }
+}

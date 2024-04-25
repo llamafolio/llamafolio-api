@@ -1,0 +1,31 @@
+{
+  "id": "veloce-vext",
+  "symbol": "vext",
+  "name": "Veloce",
+  "image": "https://assets.coingecko.com/coins/images/31214/large/VEXT_Logo.jpg?1696530041",
+  "current_price": 0.077065,
+  "market_cap": 9238017,
+  "market_cap_rank": 1471,
+  "fully_diluted_valuation": 11779798,
+  "total_volume": 2035241,
+  "high_24h": 0.084918,
+  "low_24h": 0.069854,
+  "price_change_24h": 0.00720717,
+  "price_change_percentage_24h": 10.31696,
+  "market_cap_change_24h": 1014383,
+  "market_cap_change_percentage_24h": 12.33497,
+  "circulating_supply": 119483574.32,
+  "total_supply": 152358706,
+  "max_supply": 300000000,
+  "ath": 0.706651,
+  "ath_change_percentage": -89.06878,
+  "ath_date": "2023-09-04T10:14:45.725Z",
+  "atl": 0.058971,
+  "atl_change_percentage": 30.99003,
+  "atl_date": "2024-03-22T13:09:54.139Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:31.712Z",
+  "platforms": {
+    "ethereum": "0xb2492e97a68a6e4b9e9a11b99f6c42e5accd38c7"
+  }
+}

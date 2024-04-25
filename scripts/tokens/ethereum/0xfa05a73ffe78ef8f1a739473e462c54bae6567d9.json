@@ -1,0 +1,31 @@
+{
+  "id": "lunyr",
+  "symbol": "lun",
+  "name": "Lunyr",
+  "image": "https://assets.coingecko.com/coins/images/735/large/lunyr.png?1696501891",
+  "current_price": 0.01989273,
+  "market_cap": 53919,
+  "market_cap_rank": 3971,
+  "fully_diluted_valuation": 53919,
+  "total_volume": 0.01385714,
+  "high_24h": 0.02059134,
+  "low_24h": 0.01976427,
+  "price_change_24h": -0.000693525209145618,
+  "price_change_percentage_24h": -3.36887,
+  "market_cap_change_24h": -1378.5088481588173,
+  "market_cap_change_percentage_24h": -2.49291,
+  "circulating_supply": 2703356.07853158,
+  "total_supply": 2703356.07853158,
+  "max_supply": null,
+  "ath": 60.98,
+  "ath_change_percentage": -99.96738,
+  "ath_date": "2018-01-09T00:00:00.000Z",
+  "atl": 0.00104139,
+  "atl_change_percentage": 1810.2126,
+  "atl_date": "2023-08-25T23:20:52.185Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:56:24.785Z",
+  "platforms": {
+    "ethereum": "0xfa05a73ffe78ef8f1a739473e462c54bae6567d9"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "mcontent",
+  "symbol": "mcontent",
+  "name": "MContent",
+  "image": "https://assets.coingecko.com/coins/images/16781/large/Image_mcontent.jpeg?1696516353",
+  "current_price": 1.945e-9,
+  "market_cap": 7153995,
+  "market_cap_rank": 1605,
+  "fully_diluted_valuation": 11699587,
+  "total_volume": 12645.13,
+  "high_24h": 1.978e-9,
+  "low_24h": 1.823e-9,
+  "price_change_24h": 9.1365e-11,
+  "price_change_percentage_24h": 4.9288,
+  "market_cap_change_24h": 319070,
+  "market_cap_change_percentage_24h": 4.66823,
+  "circulating_supply": 3683217892404078.5,
+  "total_supply": 6023505460604170,
+  "max_supply": 10000000000000000,
+  "ath": 2.3042e-8,
+  "ath_change_percentage": -91.56972,
+  "ath_date": "2022-02-15T09:08:40.162Z",
+  "atl": 1.20245e-10,
+  "atl_change_percentage": 1515.44653,
+  "atl_date": "2021-11-11T15:19:55.760Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:35.314Z",
+  "platforms": {
+    "bsc": "0x799e1cf88a236e42b4a87c544a22a94ae95a6910"
+  }
+}

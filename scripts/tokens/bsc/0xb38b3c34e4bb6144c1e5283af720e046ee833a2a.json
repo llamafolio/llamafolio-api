@@ -1,0 +1,31 @@
+{
+  "id": "despace-protocol",
+  "symbol": "des",
+  "name": "DeSpace Protocol",
+  "image": "https://assets.coingecko.com/coins/images/18517/large/NQQu-EsT_400x400.jpg?1696517998",
+  "current_price": 0.00087472,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 87868,
+  "total_volume": 15427.62,
+  "high_24h": 0.00089082,
+  "low_24h": 0.00076427,
+  "price_change_24h": 0.00010551,
+  "price_change_percentage_24h": 13.71722,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 2.58,
+  "ath_change_percentage": -99.96606,
+  "ath_date": "2021-09-23T09:23:00.835Z",
+  "atl": 0.00041772,
+  "atl_change_percentage": 109.43464,
+  "atl_date": "2023-11-22T02:13:39.887Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:55.979Z",
+  "platforms": {
+    "bsc": "0xb38b3c34e4bb6144c1e5283af720e046ee833a2a"
+  }
+}

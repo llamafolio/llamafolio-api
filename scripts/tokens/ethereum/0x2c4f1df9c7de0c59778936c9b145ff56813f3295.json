@@ -1,0 +1,31 @@
+{
+  "id": "assetmantle",
+  "symbol": "mntl",
+  "name": "AssetMantle",
+  "image": "https://assets.coingecko.com/coins/images/25181/large/thumbnail.png?1696524326",
+  "current_price": 0.0017395,
+  "market_cap": 2431851,
+  "market_cap_rank": 2186,
+  "fully_diluted_valuation": 2466559,
+  "total_volume": 137122,
+  "high_24h": 0.00188122,
+  "low_24h": 0.0017274,
+  "price_change_24h": -0.000108462578255023,
+  "price_change_percentage_24h": -5.8693,
+  "market_cap_change_24h": -153784.2190287551,
+  "market_cap_change_percentage_24h": -5.94764,
+  "circulating_supply": 1400418753.82689,
+  "total_supply": 1420405826.33025,
+  "max_supply": 6000000000,
+  "ath": 0.831444,
+  "ath_change_percentage": -99.79089,
+  "ath_date": "2022-05-01T20:48:10.163Z",
+  "atl": 0.00116015,
+  "atl_change_percentage": 49.86162,
+  "atl_date": "2023-09-05T03:49:29.390Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:23.106Z",
+  "platforms": {
+    "ethereum": "0x2c4f1df9c7de0c59778936c9b145ff56813f3295"
+  }
+}

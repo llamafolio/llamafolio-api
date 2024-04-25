@@ -1,0 +1,31 @@
+{
+  "id": "jpy-coin",
+  "symbol": "jpyc",
+  "name": "JPY Coin",
+  "image": "https://assets.coingecko.com/coins/images/25971/large/2023jpyc.png?1696525049",
+  "current_price": 0.00625177,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 625960,
+  "total_volume": 46330,
+  "high_24h": 0.00633991,
+  "low_24h": 0.00620257,
+  "price_change_24h": 0.00000928,
+  "price_change_percentage_24h": 0.1487,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 0.00860846,
+  "ath_change_percentage": -27.23496,
+  "ath_date": "2023-02-04T21:20:17.548Z",
+  "atl": 0.0059508,
+  "atl_change_percentage": 5.26238,
+  "atl_date": "2024-04-13T20:52:20.501Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:39.927Z",
+  "platforms": {
+    "avalanche": "0x431d5dff03120afa4bdf332c61a6e1766ef37bdb"
+  }
+}

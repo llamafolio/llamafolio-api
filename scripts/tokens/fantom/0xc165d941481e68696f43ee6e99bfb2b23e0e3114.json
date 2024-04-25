@@ -1,0 +1,31 @@
+{
+  "id": "0xdao",
+  "symbol": "oxd",
+  "name": "0xDAO",
+  "image": "https://assets.coingecko.com/coins/images/22888/large/rjks-OoT_400x400.jpg?1696522186",
+  "current_price": 0.00008381,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2639.88,
+  "total_volume": 1.18,
+  "high_24h": 0.00008909,
+  "low_24h": 0.00008367,
+  "price_change_24h": -0.000003793419606363,
+  "price_change_percentage_24h": -4.33041,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 31499808.574879,
+  "max_supply": 100000000,
+  "ath": 0.386077,
+  "ath_change_percentage": -99.97833,
+  "ath_date": "2022-01-22T04:59:35.784Z",
+  "atl": 0.00005432,
+  "atl_change_percentage": 54.0221,
+  "atl_date": "2023-10-26T17:01:46.259Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:28.196Z",
+  "platforms": {
+    "fantom": "0xc165d941481e68696f43ee6e99bfb2b23e0e3114"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "magic-yearn-share",
+  "symbol": "mys",
+  "name": "Magic Yearn Share",
+  "image": "https://assets.coingecko.com/coins/images/29343/large/mys.png?1696528292",
+  "current_price": 0.064522,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 129043,
+  "total_volume": 641.41,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 2000000,
+  "max_supply": null,
+  "ath": 0.113944,
+  "ath_change_percentage": -43.37452,
+  "ath_date": "2023-03-07T17:29:38.106Z",
+  "atl": 0.062536,
+  "atl_change_percentage": 3.17451,
+  "atl_date": "2023-05-10T17:23:42.995Z",
+  "roi": null,
+  "last_updated": "2023-05-18T13:00:28.202Z",
+  "platforms": {
+    "bsc": "0x021f48697343a6396bafc01795a4c140b637f4b4"
+  }
+}

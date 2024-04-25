@@ -1,0 +1,31 @@
+{
+  "id": "unitus-2",
+  "symbol": "uts",
+  "name": "Unitus",
+  "image": "https://assets.coingecko.com/coins/images/33178/large/IMG_0051.jpeg?1700924333",
+  "current_price": 0.152537,
+  "market_cap": 9139854,
+  "market_cap_rank": 1478,
+  "fully_diluted_valuation": 152330904,
+  "total_volume": 3562.36,
+  "high_24h": 0.153683,
+  "low_24h": 0.152331,
+  "price_change_24h": -0.000723694082499365,
+  "price_change_percentage_24h": -0.4722,
+  "market_cap_change_24h": 7412805,
+  "market_cap_change_percentage_24h": 429.2179,
+  "circulating_supply": 60000000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.31005,
+  "ath_change_percentage": -50.74125,
+  "ath_date": "2023-12-07T15:34:47.203Z",
+  "atl": 0.02841528,
+  "atl_change_percentage": 437.48028,
+  "atl_date": "2024-04-18T18:18:36.356Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:11.612Z",
+  "platforms": {
+    "ethereum": "0x3b6564b5da73a41d3a66e6558a98fd0e9e1e77ad"
+  }
+}

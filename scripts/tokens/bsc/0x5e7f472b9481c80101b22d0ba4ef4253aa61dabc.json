@@ -1,0 +1,31 @@
+{
+  "id": "hero-blaze-three-kingdoms",
+  "symbol": "mudol2",
+  "name": "Hero Blaze: Three Kingdoms",
+  "image": "https://assets.coingecko.com/coins/images/26432/large/iShot_2022-07-16_09.59.28.png?1696525506",
+  "current_price": 0.00732678,
+  "market_cap": 2037807,
+  "market_cap_rank": 2286,
+  "fully_diluted_valuation": 3594840,
+  "total_volume": 145872,
+  "high_24h": 0.00757658,
+  "low_24h": 0.00718897,
+  "price_change_24h": 0.00002506,
+  "price_change_percentage_24h": 0.34322,
+  "market_cap_change_24h": 10748.04,
+  "market_cap_change_percentage_24h": 0.53023,
+  "circulating_supply": 278122747.892319,
+  "total_supply": 490628650.423521,
+  "max_supply": 500000000,
+  "ath": 0.447575,
+  "ath_change_percentage": -98.35918,
+  "ath_date": "2022-07-23T19:08:13.159Z",
+  "atl": 0.00708542,
+  "atl_change_percentage": 3.64795,
+  "atl_date": "2024-04-21T09:04:16.021Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:18.195Z",
+  "platforms": {
+    "bsc": "0x5e7f472b9481c80101b22d0ba4ef4253aa61dabc"
+  }
+}

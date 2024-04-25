@@ -1,0 +1,31 @@
+{
+  "id": "tao-bot",
+  "symbol": "taobot",
+  "name": "tao.bot",
+  "image": "https://assets.coingecko.com/coins/images/35829/large/taobot200.png?1709887868",
+  "current_price": 0.02638419,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2629760,
+  "total_volume": 9091.86,
+  "high_24h": 0.02906626,
+  "low_24h": 0.02627716,
+  "price_change_24h": -0.001329339722507334,
+  "price_change_percentage_24h": -4.79672,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.161906,
+  "ath_change_percentage": -83.70402,
+  "ath_date": "2024-03-08T14:23:41.251Z",
+  "atl": 0.0220864,
+  "atl_change_percentage": 19.459,
+  "atl_date": "2024-04-18T05:24:07.458Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:15.373Z",
+  "platforms": {
+    "ethereum": "0x49fb8ad7578148e17c3ef0c344ce23a66ed372c4"
+  }
+}

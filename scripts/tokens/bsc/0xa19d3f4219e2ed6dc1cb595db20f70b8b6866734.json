@@ -1,0 +1,31 @@
+{
+  "id": "wirtual",
+  "symbol": "wirtual",
+  "name": "Wirtual",
+  "image": "https://assets.coingecko.com/coins/images/24435/large/jxtu9s6F_400x400_%281%29.jpg?1696523616",
+  "current_price": 0.00290155,
+  "market_cap": 16319.17,
+  "market_cap_rank": 4177,
+  "fully_diluted_valuation": 1569985,
+  "total_volume": 719.23,
+  "high_24h": 0.00293948,
+  "low_24h": 0.00220131,
+  "price_change_24h": 0.00070024,
+  "price_change_percentage_24h": 31.80986,
+  "market_cap_change_24h": 3900.63,
+  "market_cap_change_percentage_24h": 31.40967,
+  "circulating_supply": 5640000,
+  "total_supply": 542595642.571426,
+  "max_supply": 1000000000,
+  "ath": 1.67,
+  "ath_change_percentage": -99.82686,
+  "ath_date": "2022-04-02T02:02:21.696Z",
+  "atl": 0.00098563,
+  "atl_change_percentage": 193.56568,
+  "atl_date": "2024-04-01T08:28:08.937Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:06:10.601Z",
+  "platforms": {
+    "bsc": "0xa19d3f4219e2ed6dc1cb595db20f70b8b6866734"
+  }
+}

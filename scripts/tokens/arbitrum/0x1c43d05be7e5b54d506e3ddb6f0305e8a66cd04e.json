@@ -1,0 +1,31 @@
+{
+  "id": "ztx",
+  "symbol": "ztx",
+  "name": "ZTX",
+  "image": "https://assets.coingecko.com/coins/images/32340/large/CoinGecko_200_x_200.jpg?1697466589",
+  "current_price": 0.01336259,
+  "market_cap": 38387633,
+  "market_cap_rank": 798,
+  "fully_diluted_valuation": 133504362,
+  "total_volume": 749541,
+  "high_24h": 0.01452559,
+  "low_24h": 0.01335407,
+  "price_change_24h": -0.001147413815160096,
+  "price_change_percentage_24h": -7.90774,
+  "market_cap_change_24h": -3403469.9845440984,
+  "market_cap_change_percentage_24h": -8.14401,
+  "circulating_supply": 2875384166,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.03870653,
+  "ath_change_percentage": -65.51485,
+  "ath_date": "2023-12-08T02:29:16.128Z",
+  "atl": 0.01001493,
+  "atl_change_percentage": 33.28105,
+  "atl_date": "2023-10-29T13:44:59.325Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:49.444Z",
+  "platforms": {
+    "arbitrum": "0x1c43d05be7e5b54d506e3ddb6f0305e8a66cd04e"
+  }
+}

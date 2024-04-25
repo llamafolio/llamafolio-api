@@ -1,0 +1,31 @@
+{
+  "id": "bvm",
+  "symbol": "bvm",
+  "name": "BVM",
+  "image": "https://assets.coingecko.com/coins/images/35938/large/twitter-pfp.png?1710232498",
+  "current_price": 3.74,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 373964711,
+  "total_volume": 10817533,
+  "high_24h": 3.99,
+  "low_24h": 3.3,
+  "price_change_24h": 0.180212,
+  "price_change_percentage_24h": 5.06294,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 6.94,
+  "ath_change_percentage": -45.89773,
+  "ath_date": "2024-04-18T17:17:07.584Z",
+  "atl": 1.94,
+  "atl_change_percentage": 93.86118,
+  "atl_date": "2024-03-19T09:21:35.937Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:22.365Z",
+  "platforms": {
+    "ethereum": "0x069d89974f4edabde69450f9cf5cf7d8cbd2568d"
+  }
+}

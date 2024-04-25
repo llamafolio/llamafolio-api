@@ -1,0 +1,31 @@
+{
+  "id": "meeb-master",
+  "symbol": "meeb",
+  "name": "Meeb Master",
+  "image": "https://assets.coingecko.com/coins/images/17312/large/logo_-_2021-07-26T144950.172.png?1696516866",
+  "current_price": 0.00530077,
+  "market_cap": 7426.37,
+  "market_cap_rank": 4233,
+  "fully_diluted_valuation": 41624,
+  "total_volume": 21.71,
+  "high_24h": 0.00544675,
+  "low_24h": 0.0052618,
+  "price_change_24h": -0.000099154409405096,
+  "price_change_percentage_24h": -1.83622,
+  "market_cap_change_24h": -144.3231274366981,
+  "market_cap_change_percentage_24h": -1.90634,
+  "circulating_supply": 1402001.3697134713,
+  "total_supply": 7858112.8780953,
+  "max_supply": 21000000,
+  "ath": 8.17,
+  "ath_change_percentage": -99.9352,
+  "ath_date": "2021-08-08T04:34:21.565Z",
+  "atl": 0.00308938,
+  "atl_change_percentage": 71.45742,
+  "atl_date": "2023-04-25T19:00:36.922Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:43.527Z",
+  "platforms": {
+    "polygon": "0x64afdf9e28946419e325d801fb3053d8b8ffdc23"
+  }
+}

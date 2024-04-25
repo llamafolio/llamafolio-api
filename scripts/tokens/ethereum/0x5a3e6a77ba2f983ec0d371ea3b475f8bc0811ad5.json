@@ -1,0 +1,31 @@
+{
+  "id": "0x0-ai-ai-smart-contract",
+  "symbol": "0x0",
+  "name": "0x0.ai: AI Smart Contract",
+  "image": "https://assets.coingecko.com/coins/images/28880/large/0x0.png?1696527857",
+  "current_price": 0.261756,
+  "market_cap": 232509213,
+  "market_cap_rank": 270,
+  "fully_diluted_valuation": 232509213,
+  "total_volume": 902933,
+  "high_24h": 0.277974,
+  "low_24h": 0.255405,
+  "price_change_24h": -0.015209318812596129,
+  "price_change_percentage_24h": -5.49141,
+  "market_cap_change_24h": -14454340.602383047,
+  "market_cap_change_percentage_24h": -5.85282,
+  "circulating_supply": 891250000,
+  "total_supply": 891250000,
+  "max_supply": 1000000000,
+  "ath": 0.500356,
+  "ath_change_percentage": -47.90345,
+  "ath_date": "2024-03-12T00:45:01.748Z",
+  "atl": 0.0002781,
+  "atl_change_percentage": 93632.13912,
+  "atl_date": "2023-02-01T14:29:44.928Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:53.301Z",
+  "platforms": {
+    "ethereum": "0x5a3e6a77ba2f983ec0d371ea3b475f8bc0811ad5"
+  }
+}

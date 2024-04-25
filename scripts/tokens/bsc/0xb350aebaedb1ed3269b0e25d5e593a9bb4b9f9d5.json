@@ -1,0 +1,31 @@
+{
+  "id": "ryoshi-token",
+  "symbol": "ryoshi",
+  "name": "Ryoshi",
+  "image": "https://assets.coingecko.com/coins/images/16394/large/RyoshiLogo.png.jpg?1696515992",
+  "current_price": 4.80965e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 159785,
+  "total_volume": 18.26,
+  "high_24h": 6.43949e-10,
+  "low_24h": 3.57975e-10,
+  "price_change_24h": -1.62589175e-10,
+  "price_change_percentage_24h": -25.26425,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 332920000000000,
+  "max_supply": 1000000000000000,
+  "ath": 1.28493e-7,
+  "ath_change_percentage": -99.62621,
+  "ath_date": "2021-11-07T01:07:18.291Z",
+  "atl": 9.9842e-11,
+  "atl_change_percentage": 381.04797,
+  "atl_date": "2023-08-25T08:34:28.819Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:32.511Z",
+  "platforms": {
+    "bsc": "0xb350aebaedb1ed3269b0e25d5e593a9bb4b9f9d5"
+  }
+}

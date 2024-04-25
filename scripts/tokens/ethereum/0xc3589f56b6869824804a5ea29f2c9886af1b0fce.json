@@ -1,0 +1,31 @@
+{
+  "id": "honey",
+  "symbol": "hny",
+  "name": "Honey",
+  "image": "https://assets.coingecko.com/coins/images/12895/large/hnys.png?1696512683",
+  "current_price": 8.57,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 313528,
+  "total_volume": 2046.09,
+  "high_24h": 9.12,
+  "low_24h": 8.57,
+  "price_change_24h": -0.36905588519362276,
+  "price_change_percentage_24h": -4.12659,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 36489.9752090467,
+  "max_supply": null,
+  "ath": 2187.59,
+  "ath_change_percentage": -99.60696,
+  "ath_date": "2021-09-06T05:05:04.933Z",
+  "atl": 0.185133,
+  "atl_change_percentage": 4544.27755,
+  "atl_date": "2021-09-13T18:45:06.781Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:16.688Z",
+  "platforms": {
+    "ethereum": "0xc3589f56b6869824804a5ea29f2c9886af1b0fce"
+  }
+}

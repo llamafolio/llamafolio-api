@@ -1,0 +1,35 @@
+{
+  "id": "lto-network",
+  "symbol": "lto",
+  "name": "LTO Network",
+  "image": "https://assets.coingecko.com/coins/images/6068/large/lto.png?1696506473",
+  "current_price": 0.187587,
+  "market_cap": 79534100,
+  "market_cap_rank": 534,
+  "fully_diluted_valuation": 79539042,
+  "total_volume": 6927338,
+  "high_24h": 0.215971,
+  "low_24h": 0.18619,
+  "price_change_24h": -0.025849514709096827,
+  "price_change_percentage_24h": -12.11113,
+  "market_cap_change_24h": -11724730.564891145,
+  "market_cap_change_percentage_24h": -12.84778,
+  "circulating_supply": 427166802.64031,
+  "total_supply": 427193349.213105,
+  "max_supply": 500000000,
+  "ath": 0.901021,
+  "ath_change_percentage": -79.30574,
+  "ath_date": "2021-04-07T02:52:57.824Z",
+  "atl": 0.01589931,
+  "atl_change_percentage": 1072.75297,
+  "atl_date": "2019-01-29T00:00:00.000Z",
+  "roi": {
+    "times": 5.252885408160993,
+    "currency": "usd",
+    "percentage": 525.2885408160994
+  },
+  "last_updated": "2024-04-25T08:59:56.341Z",
+  "platforms": {
+    "bsc": "0x857b222fc79e1cbbf8ca5f78cb133d1b7cf34bbd"
+  }
+}

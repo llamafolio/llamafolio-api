@@ -1,0 +1,31 @@
+{
+  "id": "true-pnl",
+  "symbol": "pnl",
+  "name": "True PNL",
+  "image": "https://assets.coingecko.com/coins/images/15282/large/256x256logo.png?1696514933",
+  "current_price": 0.03391586,
+  "market_cap": 368994,
+  "market_cap_rank": 3214,
+  "fully_diluted_valuation": 1000594,
+  "total_volume": 61654,
+  "high_24h": 0.03413248,
+  "low_24h": 0.03387632,
+  "price_change_24h": -0.000037785278795457,
+  "price_change_percentage_24h": -0.11128,
+  "market_cap_change_24h": -332.5620893276064,
+  "market_cap_change_percentage_24h": -0.09005,
+  "circulating_supply": 10886324.181957819,
+  "total_supply": 29520194.2229799,
+  "max_supply": null,
+  "ath": 0.383927,
+  "ath_change_percentage": -91.15683,
+  "ath_date": "2021-11-23T15:08:12.191Z",
+  "atl": 0.00002737,
+  "atl_change_percentage": 123927.02546,
+  "atl_date": "2021-05-27T14:52:41.960Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:14.148Z",
+  "platforms": {
+    "bsc": "0xb346c52874c7023df183068c39478c3b7b2515bc"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "degis",
+  "symbol": "deg",
+  "name": "Degis",
+  "image": "https://assets.coingecko.com/coins/images/24333/large/DEG_Logo.png?1696523518",
+  "current_price": 0.00340801,
+  "market_cap": 20575,
+  "market_cap_rank": 4145,
+  "fully_diluted_valuation": 146497,
+  "total_volume": 2812.97,
+  "high_24h": 0.00370597,
+  "low_24h": 0.00316477,
+  "price_change_24h": -0.000141731295520574,
+  "price_change_percentage_24h": -3.99272,
+  "market_cap_change_24h": -865.4073000336175,
+  "market_cap_change_percentage_24h": -4.03639,
+  "circulating_supply": 6039132,
+  "total_supply": 43000000,
+  "max_supply": 100000000,
+  "ath": 0.940278,
+  "ath_change_percentage": -99.63741,
+  "ath_date": "2022-03-29T04:49:15.547Z",
+  "atl": 0.00135017,
+  "atl_change_percentage": 152.51421,
+  "atl_date": "2023-07-26T15:12:27.039Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:57.825Z",
+  "platforms": {
+    "avalanche": "0x9f285507ea5b4f33822ca7abb5ec8953ce37a645"
+  }
+}

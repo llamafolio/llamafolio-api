@@ -1,0 +1,31 @@
+{
+  "id": "poison-finance",
+  "symbol": "poi$on",
+  "name": "Poison Finance",
+  "image": "https://assets.coingecko.com/coins/images/28630/large/poisonlogo160x160.png?1696527614",
+  "current_price": 0.125488,
+  "market_cap": 565307,
+  "market_cap_rank": 3008,
+  "fully_diluted_valuation": 448302,
+  "total_volume": 2577.36,
+  "high_24h": 0.130801,
+  "low_24h": 0.123605,
+  "price_change_24h": -0.005227991600488675,
+  "price_change_percentage_24h": -3.99951,
+  "market_cap_change_24h": -24872.98207571509,
+  "market_cap_change_percentage_24h": -4.21447,
+  "circulating_supply": 4517305.0642306,
+  "total_supply": 3582326.607813,
+  "max_supply": null,
+  "ath": 2.58,
+  "ath_change_percentage": -95.15513,
+  "ath_date": "2023-04-19T16:36:16.343Z",
+  "atl": 0.02488838,
+  "atl_change_percentage": 402.66997,
+  "atl_date": "2023-10-22T16:49:58.822Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:18.639Z",
+  "platforms": {
+    "arbitrum": "0x31c91d8fb96bff40955dd2dbc909b36e8b104dde"
+  }
+}

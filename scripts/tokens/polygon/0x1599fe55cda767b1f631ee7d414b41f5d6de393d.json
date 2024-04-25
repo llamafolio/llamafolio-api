@@ -1,0 +1,31 @@
+{
+  "id": "milk",
+  "symbol": "milk",
+  "name": "Cool Cats Milk",
+  "image": "https://assets.coingecko.com/coins/images/23340/large/milk_logo.jpg?1696522556",
+  "current_price": 0.00012938,
+  "market_cap": 317025,
+  "market_cap_rank": 3288,
+  "fully_diluted_valuation": 317025,
+  "total_volume": 121.18,
+  "high_24h": 0.00013537,
+  "low_24h": 0.00012773,
+  "price_change_24h": -0.000004877008153231,
+  "price_change_percentage_24h": -3.6326,
+  "market_cap_change_24h": -12244.35598099837,
+  "market_cap_change_percentage_24h": -3.71864,
+  "circulating_supply": 2452095744.65836,
+  "total_supply": 2452095744.65836,
+  "max_supply": null,
+  "ath": 0.187901,
+  "ath_change_percentage": -99.93114,
+  "ath_date": "2022-02-15T17:32:28.937Z",
+  "atl": 0.00008083,
+  "atl_change_percentage": 60.06566,
+  "atl_date": "2023-10-22T16:06:15.892Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:47.081Z",
+  "platforms": {
+    "polygon": "0x1599fe55cda767b1f631ee7d414b41f5d6de393d"
+  }
+}

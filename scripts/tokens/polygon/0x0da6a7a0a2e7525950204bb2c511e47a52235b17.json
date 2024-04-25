@@ -1,0 +1,31 @@
+{
+  "id": "mt-token",
+  "symbol": "mt",
+  "name": "MT Tower",
+  "image": "https://assets.coingecko.com/coins/images/27457/large/mt_logo_200x200.png?1696526497",
+  "current_price": 0.00007408,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 111124,
+  "total_volume": 25201,
+  "high_24h": 0.00008518,
+  "low_24h": 0.00007377,
+  "price_change_24h": -0.000007583670379702,
+  "price_change_percentage_24h": -9.28615,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1500000000,
+  "max_supply": 1500000000,
+  "ath": 0.02715046,
+  "ath_change_percentage": -99.72713,
+  "ath_date": "2023-10-05T01:17:23.239Z",
+  "atl": 0.00005863,
+  "atl_change_percentage": 26.36589,
+  "atl_date": "2024-04-22T10:31:48.015Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:20.709Z",
+  "platforms": {
+    "polygon": "0x0da6a7a0a2e7525950204bb2c511e47a52235b17"
+  }
+}

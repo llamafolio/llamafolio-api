@@ -1,0 +1,31 @@
+{
+  "id": "rmrk",
+  "symbol": "rmrk",
+  "name": "RMRK",
+  "image": "https://assets.coingecko.com/coins/images/18656/large/download_%281%29_%281%29.png?1696518126",
+  "current_price": 1.55,
+  "market_cap": 14580654,
+  "market_cap_rank": 1262,
+  "fully_diluted_valuation": 15348057,
+  "total_volume": 103387,
+  "high_24h": 1.66,
+  "low_24h": 1.53,
+  "price_change_24h": -0.1159133200113005,
+  "price_change_percentage_24h": -6.97312,
+  "market_cap_change_24h": -1116686.52691482,
+  "market_cap_change_percentage_24h": -7.11386,
+  "circulating_supply": 9500000,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 66.22,
+  "ath_change_percentage": -97.65581,
+  "ath_date": "2021-12-03T12:36:19.488Z",
+  "atl": 1.38,
+  "atl_change_percentage": 12.5357,
+  "atl_date": "2023-09-21T16:26:19.496Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:23.047Z",
+  "platforms": {
+    "polygon": "0x524d524b4c9366be706d3a90dcf70076ca037ae3"
+  }
+}

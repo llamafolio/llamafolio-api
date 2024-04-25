@@ -1,0 +1,31 @@
+{
+  "id": "santos-fc-fan-token",
+  "symbol": "santos",
+  "name": "Santos FC Fan Token",
+  "image": "https://assets.coingecko.com/coins/images/21132/large/santos.png?1696520511",
+  "current_price": 6.55,
+  "market_cap": 36331540,
+  "market_cap_rank": 827,
+  "fully_diluted_valuation": 196526175,
+  "total_volume": 11306640,
+  "high_24h": 6.93,
+  "low_24h": 6.27,
+  "price_change_24h": 0.01972436,
+  "price_change_percentage_24h": 0.302,
+  "market_cap_change_24h": 83846,
+  "market_cap_change_percentage_24h": 0.23131,
+  "circulating_supply": 5546061.291549,
+  "total_supply": 30000000,
+  "max_supply": null,
+  "ath": 22.34,
+  "ath_change_percentage": -70.60741,
+  "ath_date": "2022-09-25T10:20:14.424Z",
+  "atl": 1.3,
+  "atl_change_percentage": 405.77133,
+  "atl_date": "2022-05-12T07:24:30.583Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:56.443Z",
+  "platforms": {
+    "bsc": "0xa64455a4553c9034236734faddaddbb64ace4cc7"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "yield-yak",
+  "symbol": "yak",
+  "name": "Yield Yak",
+  "image": "https://assets.coingecko.com/coins/images/17654/large/yieldyak.png?1696517185",
+  "current_price": 534.57,
+  "market_cap": 5343841,
+  "market_cap_rank": 1761,
+  "fully_diluted_valuation": 5343841,
+  "total_volume": 14064.52,
+  "high_24h": 573.33,
+  "low_24h": 534.27,
+  "price_change_24h": -36.61033865461968,
+  "price_change_percentage_24h": -6.40955,
+  "market_cap_change_24h": -374452.8415362993,
+  "market_cap_change_percentage_24h": -6.54833,
+  "circulating_supply": 10000,
+  "total_supply": 10000,
+  "max_supply": 10000,
+  "ath": 16319.34,
+  "ath_change_percentage": -96.72336,
+  "ath_date": "2021-09-23T05:14:43.476Z",
+  "atl": 185.6,
+  "atl_change_percentage": 188.10442,
+  "atl_date": "2023-10-24T15:36:43.796Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:29.580Z",
+  "platforms": {
+    "avalanche": "0x59414b3089ce2af0010e7523dea7e2b35d776ec7"
+  }
+}

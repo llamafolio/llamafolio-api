@@ -1,0 +1,31 @@
+{
+  "id": "smoothy",
+  "symbol": "smty",
+  "name": "Smoothy",
+  "image": "https://assets.coingecko.com/coins/images/15039/large/dDxKgwPN_400x400.jpg?1696514698",
+  "current_price": 0.00707231,
+  "market_cap": 646821,
+  "market_cap_rank": 2934,
+  "fully_diluted_valuation": 707231,
+  "total_volume": 268273,
+  "high_24h": 0.00719327,
+  "low_24h": 0.00700344,
+  "price_change_24h": -0.000087832433991969,
+  "price_change_percentage_24h": -1.22669,
+  "market_cap_change_24h": -6860.318614659831,
+  "market_cap_change_percentage_24h": -1.04949,
+  "circulating_supply": 91458333,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 3.63,
+  "ath_change_percentage": -99.80536,
+  "ath_date": "2021-04-27T13:43:11.600Z",
+  "atl": 0.001886,
+  "atl_change_percentage": 274.7303,
+  "atl_date": "2023-11-04T14:11:08.133Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:11.311Z",
+  "platforms": {
+    "ethereum": "0xbf776e4fca664d791c4ee3a71e2722990e003283"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "id": "mytoken",
+  "symbol": "mt",
+  "name": "MyToken",
+  "image": "https://assets.coingecko.com/coins/images/4109/large/2712.png?1696504736",
+  "current_price": 0.00022691,
+  "market_cap": 430158,
+  "market_cap_rank": 3146,
+  "fully_diluted_valuation": 907644,
+  "total_volume": 26.73,
+  "high_24h": 0.00022965,
+  "low_24h": 0.00022652,
+  "price_change_24h": -1.70276657701e-7,
+  "price_change_percentage_24h": -0.07498,
+  "market_cap_change_24h": -512.7632820339059,
+  "market_cap_change_percentage_24h": -0.11906,
+  "circulating_supply": 1895712979,
+  "total_supply": 4000000000,
+  "max_supply": null,
+  "ath": 0.03724114,
+  "ath_change_percentage": -99.3907,
+  "ath_date": "2018-05-15T07:50:45.005Z",
+  "atl": 0.00005196,
+  "atl_change_percentage": 336.68732,
+  "atl_date": "2024-02-26T10:43:10.621Z",
+  "roi": {
+    "times": -0.9968599251931927,
+    "currency": "eth",
+    "percentage": -99.68599251931927
+  },
+  "last_updated": "2024-04-24T14:05:11.520Z",
+  "platforms": {
+    "ethereum": "0x9b4e2b4b13d125238aa0480dd42b4f6fc71b37cc"
+  }
+}

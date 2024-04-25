@@ -1,0 +1,31 @@
+{
+  "id": "fringe-finance",
+  "symbol": "frin",
+  "name": "Fringe Finance",
+  "image": "https://assets.coingecko.com/coins/images/13222/large/frin.png?1696513001",
+  "current_price": 0.00161812,
+  "market_cap": 1620127,
+  "market_cap_rank": 2410,
+  "fully_diluted_valuation": 1620127,
+  "total_volume": 150762,
+  "high_24h": 0.0016257,
+  "low_24h": 0.00160865,
+  "price_change_24h": 0.00000658,
+  "price_change_percentage_24h": 0.40847,
+  "market_cap_change_24h": 474.45,
+  "market_cap_change_percentage_24h": 0.02929,
+  "circulating_supply": 1000000000,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.082029,
+  "ath_change_percentage": -98.02433,
+  "ath_date": "2021-03-13T18:24:06.145Z",
+  "atl": 0.00077706,
+  "atl_change_percentage": 108.55569,
+  "atl_date": "2023-09-01T20:50:20.880Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:06.955Z",
+  "platforms": {
+    "ethereum": "0xc9fe6e1c76210be83dc1b5b20ec7fd010b0b1d15"
+  }
+}

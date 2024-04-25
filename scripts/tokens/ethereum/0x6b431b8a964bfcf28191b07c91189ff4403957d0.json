@@ -1,0 +1,31 @@
+{
+  "id": "corgiai",
+  "symbol": "corgiai",
+  "name": "CorgiAI",
+  "image": "https://assets.coingecko.com/coins/images/30933/large/Token.png?1696529775",
+  "current_price": 0.0016717,
+  "market_cap": 574895588,
+  "market_cap_rank": 151,
+  "fully_diluted_valuation": 623376753,
+  "total_volume": 468196,
+  "high_24h": 0.00179769,
+  "low_24h": 0.00165711,
+  "price_change_24h": -0.000097880897327258,
+  "price_change_percentage_24h": -5.53132,
+  "market_cap_change_24h": -33007092.00863254,
+  "market_cap_change_percentage_24h": -5.42967,
+  "circulating_supply": 343529984674.981,
+  "total_supply": 372500000000,
+  "max_supply": 500000000000,
+  "ath": 0.0042301,
+  "ath_change_percentage": -60.56389,
+  "ath_date": "2024-03-02T22:59:31.763Z",
+  "atl": 0.00004414,
+  "atl_change_percentage": 3679.16461,
+  "atl_date": "2023-09-06T20:16:08.253Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:24.889Z",
+  "platforms": {
+    "ethereum": "0x6b431b8a964bfcf28191b07c91189ff4403957d0"
+  }
+}

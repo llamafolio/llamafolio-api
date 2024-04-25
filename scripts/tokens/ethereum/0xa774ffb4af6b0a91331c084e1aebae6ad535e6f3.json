@@ -1,0 +1,31 @@
+{
+  "id": "flex-usd",
+  "symbol": "flexusd",
+  "name": "flexUSD",
+  "image": "https://assets.coingecko.com/coins/images/13323/large/flexUSD_2x.png?1696513092",
+  "current_price": 0.21461,
+  "market_cap": 35678573,
+  "market_cap_rank": 834,
+  "fully_diluted_valuation": 35678573,
+  "total_volume": 18.6,
+  "high_24h": 0.229105,
+  "low_24h": 0.214236,
+  "price_change_24h": -0.011098514446194504,
+  "price_change_percentage_24h": -4.91719,
+  "market_cap_change_24h": -2036097.9111449271,
+  "market_cap_change_percentage_24h": -5.39869,
+  "circulating_supply": 166350245.331748,
+  "total_supply": 166350245.331748,
+  "max_supply": null,
+  "ath": 1.031,
+  "ath_change_percentage": -79.19465,
+  "ath_date": "2022-01-01T00:00:00.000Z",
+  "atl": 0.126996,
+  "atl_change_percentage": 68.88569,
+  "atl_date": "2023-10-15T15:05:13.381Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:30.855Z",
+  "platforms": {
+    "ethereum": "0xa774ffb4af6b0a91331c084e1aebae6ad535e6f3"
+  }
+}

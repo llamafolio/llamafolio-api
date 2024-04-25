@@ -1,0 +1,31 @@
+{
+  "id": "agatech",
+  "symbol": "agata",
+  "name": "Agatech",
+  "image": "https://assets.coingecko.com/coins/images/35835/large/IMG_20240229_111252_206.jpg?1709888815",
+  "current_price": 0.072681,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 56.63,
+  "high_24h": 0.072801,
+  "low_24h": 0.072059,
+  "price_change_24h": 0.00034692,
+  "price_change_percentage_24h": 0.4796,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": null,
+  "ath": 0.072801,
+  "ath_change_percentage": -0.1653,
+  "ath_date": "2024-04-25T03:45:09.693Z",
+  "atl": 0.072059,
+  "atl_change_percentage": 0.86244,
+  "atl_date": "2024-04-25T04:24:09.764Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:37.397Z",
+  "platforms": {
+    "bsc": "0xb427e47e8fdd678278d2a91eeac014ffcddaf029"
+  }
+}

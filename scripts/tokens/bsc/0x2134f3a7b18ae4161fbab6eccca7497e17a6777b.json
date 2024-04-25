@@ -1,0 +1,31 @@
+{
+  "id": "mir-token",
+  "symbol": "mir",
+  "name": "Mir Token",
+  "image": "https://assets.coingecko.com/coins/images/33303/large/MIR.jpg?1701404193",
+  "current_price": 0.00028363,
+  "market_cap": 140047,
+  "market_cap_rank": 3673,
+  "fully_diluted_valuation": 700237,
+  "total_volume": 9858.36,
+  "high_24h": 0.00030109,
+  "low_24h": 0.0002799,
+  "price_change_24h": 0.00000231,
+  "price_change_percentage_24h": 0.82161,
+  "market_cap_change_24h": -862.2386827162118,
+  "market_cap_change_percentage_24h": -0.61191,
+  "circulating_supply": 499999985,
+  "total_supply": 2499999985,
+  "max_supply": 10000000000,
+  "ath": 0.00983008,
+  "ath_change_percentage": -97.13273,
+  "ath_date": "2023-12-15T21:30:19.834Z",
+  "atl": 0.00003733,
+  "atl_change_percentage": 655.03043,
+  "atl_date": "2024-04-19T14:30:43.822Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:04.689Z",
+  "platforms": {
+    "bsc": "0x2134f3a7b18ae4161fbab6eccca7497e17a6777b"
+  }
+}

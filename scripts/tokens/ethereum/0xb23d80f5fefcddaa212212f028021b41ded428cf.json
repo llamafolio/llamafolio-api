@@ -1,0 +1,31 @@
+{
+  "id": "echelon-prime",
+  "symbol": "prime",
+  "name": "Echelon Prime",
+  "image": "https://assets.coingecko.com/coins/images/29053/large/prime-logo-small-border_%282%29.png?1696528020",
+  "current_price": 17.5,
+  "market_cap": 656704372,
+  "market_cap_rank": 131,
+  "fully_diluted_valuation": 1945138996,
+  "total_volume": 15251781,
+  "high_24h": 20.44,
+  "low_24h": 17.5,
+  "price_change_24h": -1.6658224824889238,
+  "price_change_percentage_24h": -8.69382,
+  "market_cap_change_24h": -62692442.98077595,
+  "market_cap_change_percentage_24h": -8.71458,
+  "circulating_supply": 37512564.6901,
+  "total_supply": 111111111,
+  "max_supply": 111111111,
+  "ath": 28,
+  "ath_change_percentage": -37.25575,
+  "ath_date": "2024-03-18T05:26:22.707Z",
+  "atl": 1.19,
+  "atl_change_percentage": 1373.80872,
+  "atl_date": "2023-05-25T01:50:17.283Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:33.765Z",
+  "platforms": {
+    "ethereum": "0xb23d80f5fefcddaa212212f028021b41ded428cf"
+  }
+}

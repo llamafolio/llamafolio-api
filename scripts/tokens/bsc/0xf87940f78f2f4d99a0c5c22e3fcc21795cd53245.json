@@ -1,0 +1,31 @@
+{
+  "id": "kamaleont",
+  "symbol": "klt",
+  "name": "Kamaleont",
+  "image": "https://assets.coingecko.com/coins/images/26386/large/Dise%C3%B1o_sin_t%C3%ADtulo_%288%29.png?1696525463",
+  "current_price": 0.00105248,
+  "market_cap": 8038566,
+  "market_cap_rank": 1548,
+  "fully_diluted_valuation": 10474132,
+  "total_volume": 2419,
+  "high_24h": 0.0010816,
+  "low_24h": 0.00104311,
+  "price_change_24h": -0.000027778333622131,
+  "price_change_percentage_24h": -2.57146,
+  "market_cap_change_24h": -272247.37380112335,
+  "market_cap_change_percentage_24h": -3.27582,
+  "circulating_supply": 7674684388.416309,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.0013482,
+  "ath_change_percentage": -22.18853,
+  "ath_date": "2023-12-28T13:51:07.765Z",
+  "atl": 0.00009325,
+  "atl_change_percentage": 1025.04041,
+  "atl_date": "2023-02-09T23:08:49.985Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:44.713Z",
+  "platforms": {
+    "bsc": "0xf87940f78f2f4d99a0c5c22e3fcc21795cd53245"
+  }
+}

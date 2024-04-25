@@ -1,0 +1,31 @@
+{
+  "id": "unisocks",
+  "symbol": "socks",
+  "name": "Unisocks",
+  "image": "https://assets.coingecko.com/coins/images/10717/large/qFrcoiM.png?1696510685",
+  "current_price": 11179.44,
+  "market_cap": 3329920,
+  "market_cap_rank": 2004,
+  "fully_diluted_valuation": 3329920,
+  "total_volume": 11.89,
+  "high_24h": 26254,
+  "low_24h": 11137.12,
+  "price_change_24h": -15032.694246104638,
+  "price_change_percentage_24h": -57.35015,
+  "market_cap_change_24h": -4507319.810915058,
+  "market_cap_change_percentage_24h": -57.51157,
+  "circulating_supply": 298.992857926618,
+  "total_supply": 298.992857926618,
+  "max_supply": 298.992857926618,
+  "ath": 198759,
+  "ath_change_percentage": -94.40206,
+  "ath_date": "2021-08-09T18:02:29.009Z",
+  "atl": 41.65,
+  "atl_change_percentage": 26613.93919,
+  "atl_date": "2020-03-13T00:55:36.393Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:18.913Z",
+  "platforms": {
+    "ethereum": "0x23b608675a2b2fb1890d3abbd85c5775c51691d5"
+  }
+}

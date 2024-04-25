@@ -1,0 +1,31 @@
+{
+  "id": "chubbyakita",
+  "symbol": "cakita",
+  "name": "ChubbyAkita",
+  "image": "https://assets.coingecko.com/coins/images/15563/large/cakita.jpg?1696515203",
+  "current_price": 3e-18,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 0.287681,
+  "total_volume": 0,
+  "high_24h": 3e-18,
+  "low_24h": 3e-18,
+  "price_change_24h": 0,
+  "price_change_percentage_24h": 0,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000000000000,
+  "max_supply": null,
+  "ath": 8.0402e-11,
+  "ath_change_percentage": -100,
+  "ath_date": "2021-05-17T08:05:46.294Z",
+  "atl": 3e-18,
+  "atl_change_percentage": 0,
+  "atl_date": "2021-10-07T09:29:08.498Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:55.758Z",
+  "platforms": {
+    "bsc": "0xca3c1dc12b0dd0d65964abaa533106cf4f372c78"
+  }
+}

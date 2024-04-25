@@ -1,0 +1,31 @@
+{
+  "id": "bull-btc-club",
+  "symbol": "bbc",
+  "name": "Bull BTC Club",
+  "image": "https://assets.coingecko.com/coins/images/28030/large/bbc.png?1696527045",
+  "current_price": 0.00023093,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 484879,
+  "total_volume": 848980,
+  "high_24h": 0.00024409,
+  "low_24h": 0.0002248,
+  "price_change_24h": -0.000010025840072877,
+  "price_change_percentage_24h": -4.16083,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2100000000,
+  "max_supply": null,
+  "ath": 0.083207,
+  "ath_change_percentage": -99.72252,
+  "ath_date": "2022-10-31T05:08:13.009Z",
+  "atl": 0.00019407,
+  "atl_change_percentage": 18.96837,
+  "atl_date": "2024-04-13T22:40:48.678Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:17.319Z",
+  "platforms": {
+    "bsc": "0x37e5da11b6a4dc6d2f7abe232cdd30b0b8fc63b1"
+  }
+}

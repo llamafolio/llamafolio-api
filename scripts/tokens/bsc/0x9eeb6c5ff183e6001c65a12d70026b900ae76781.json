@@ -1,0 +1,31 @@
+{
+  "id": "irena-green-energy",
+  "symbol": "irena",
+  "name": "Irena Coin Apps",
+  "image": "https://assets.coingecko.com/coins/images/24507/large/Irena_coin_apps.png?1696523687",
+  "current_price": 0.00000396,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 730297,
+  "total_volume": 10835.08,
+  "high_24h": 0.00000432,
+  "low_24h": 0.00000391,
+  "price_change_24h": -9.5212703542e-8,
+  "price_change_percentage_24h": -2.34608,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 184486271710.07196,
+  "max_supply": null,
+  "ath": 0.00025805,
+  "ath_change_percentage": -98.46605,
+  "ath_date": "2022-04-08T10:40:46.837Z",
+  "atl": 1.52309e-7,
+  "atl_change_percentage": 2498.93387,
+  "atl_date": "2022-07-21T13:01:56.845Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:43.763Z",
+  "platforms": {
+    "bsc": "0x9eeb6c5ff183e6001c65a12d70026b900ae76781"
+  }
+}

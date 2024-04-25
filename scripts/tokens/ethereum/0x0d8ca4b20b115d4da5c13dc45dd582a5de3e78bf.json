@@ -1,0 +1,31 @@
+{
+  "id": "generaitiv",
+  "symbol": "gai",
+  "name": "Generaitiv",
+  "image": "https://assets.coingecko.com/coins/images/29158/large/logo-200x200.png?1696528117",
+  "current_price": 0.181715,
+  "market_cap": 1366670,
+  "market_cap_rank": 2499,
+  "fully_diluted_valuation": 1817147,
+  "total_volume": 229.31,
+  "high_24h": 0.190369,
+  "low_24h": 0.180664,
+  "price_change_24h": -0.006548108757601285,
+  "price_change_percentage_24h": -3.47817,
+  "market_cap_change_24h": -49248.08532292256,
+  "market_cap_change_percentage_24h": -3.47817,
+  "circulating_supply": 7520963.25,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.891162,
+  "ath_change_percentage": -79.61996,
+  "ath_date": "2024-03-11T23:20:04.434Z",
+  "atl": 0.060611,
+  "atl_change_percentage": 199.64572,
+  "atl_date": "2023-04-03T21:15:51.001Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:16.776Z",
+  "platforms": {
+    "ethereum": "0x0d8ca4b20b115d4da5c13dc45dd582a5de3e78bf"
+  }
+}

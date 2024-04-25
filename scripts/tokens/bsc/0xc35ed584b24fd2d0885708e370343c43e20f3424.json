@@ -1,0 +1,31 @@
+{
+  "id": "shibaai",
+  "symbol": "shibaai",
+  "name": "SHIBAAI",
+  "image": "https://assets.coingecko.com/coins/images/35485/large/hero-shiba_%281%29.png?1708851072",
+  "current_price": 5.088e-9,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 191911,
+  "high_24h": 5.345e-9,
+  "low_24h": 4.993e-9,
+  "price_change_24h": -6.4184699e-11,
+  "price_change_percentage_24h": -1.24569,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 589534404296603,
+  "max_supply": null,
+  "ath": 4.5052e-8,
+  "ath_change_percentage": -88.70197,
+  "ath_date": "2024-03-06T18:21:07.519Z",
+  "atl": 4.503e-9,
+  "atl_change_percentage": 13.04105,
+  "atl_date": "2024-02-29T06:54:15.792Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:23.792Z",
+  "platforms": {
+    "bsc": "0xc35ed584b24fd2d0885708e370343c43e20f3424"
+  }
+}

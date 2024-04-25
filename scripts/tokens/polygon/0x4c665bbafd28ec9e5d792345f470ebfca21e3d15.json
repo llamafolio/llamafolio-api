@@ -1,0 +1,31 @@
+{
+  "id": "skyplay",
+  "symbol": "skp",
+  "name": "SKYPlay",
+  "image": "https://assets.coingecko.com/coins/images/27129/large/SKP_logo_20x20.png?1696526181",
+  "current_price": 0.00015708,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1570790,
+  "total_volume": 32.78,
+  "high_24h": 0.0001777,
+  "low_24h": 0.00015673,
+  "price_change_24h": -0.000012859374205962,
+  "price_change_percentage_24h": -7.56708,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.064236,
+  "ath_change_percentage": -99.75547,
+  "ath_date": "2022-09-02T19:28:08.653Z",
+  "atl": 0.00014948,
+  "atl_change_percentage": 5.08296,
+  "atl_date": "2024-04-15T19:04:10.390Z",
+  "roi": null,
+  "last_updated": "2024-04-24T23:33:02.150Z",
+  "platforms": {
+    "polygon": "0x4c665bbafd28ec9e5d792345f470ebfca21e3d15"
+  }
+}

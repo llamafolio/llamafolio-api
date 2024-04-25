@@ -1,0 +1,35 @@
+{
+  "id": "kleros",
+  "symbol": "pnk",
+  "name": "Kleros",
+  "image": "https://assets.coingecko.com/coins/images/3833/large/kleros.png?1696504500",
+  "current_price": 0.02876624,
+  "market_cap": 20797711,
+  "market_cap_rank": 1094,
+  "fully_diluted_valuation": 22303632,
+  "total_volume": 93052,
+  "high_24h": 0.02957975,
+  "low_24h": 0.02850768,
+  "price_change_24h": -0.00049587100765907,
+  "price_change_percentage_24h": -1.69458,
+  "market_cap_change_24h": -586146.7729330771,
+  "market_cap_change_percentage_24h": -2.74107,
+  "circulating_supply": 724189581.4548858,
+  "total_supply": 776626704,
+  "max_supply": null,
+  "ath": 0.380218,
+  "ath_change_percentage": -92.4505,
+  "ath_date": "2021-05-10T19:19:13.170Z",
+  "atl": 0.00195902,
+  "atl_change_percentage": 1365.2516,
+  "atl_date": "2018-09-12T00:00:00.000Z",
+  "roi": {
+    "times": 0.6627883861256434,
+    "currency": "usd",
+    "percentage": 66.27883861256433
+  },
+  "last_updated": "2024-04-25T09:00:14.105Z",
+  "platforms": {
+    "gnosis": "0x37b60f4e9a31a64ccc0024dce7d0fd07eaa0f7b3"
+  }
+}

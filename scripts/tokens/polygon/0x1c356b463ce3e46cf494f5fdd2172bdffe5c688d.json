@@ -1,0 +1,31 @@
+{
+  "id": "sailwars",
+  "symbol": "swt",
+  "name": "Sailwars",
+  "image": "https://assets.coingecko.com/coins/images/34055/large/SWT_200*200.png?1703747855",
+  "current_price": 0.00013726,
+  "market_cap": 178251,
+  "market_cap_rank": 3546,
+  "fully_diluted_valuation": 1371165,
+  "total_volume": 13214.2,
+  "high_24h": 0.00014241,
+  "low_24h": 0.00013068,
+  "price_change_24h": 0.0000043,
+  "price_change_percentage_24h": 3.2316,
+  "market_cap_change_24h": 4855.1,
+  "market_cap_change_percentage_24h": 2.8,
+  "circulating_supply": 1300000000,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.0031009,
+  "ath_change_percentage": -95.5739,
+  "ath_date": "2024-02-06T16:54:49.567Z",
+  "atl": 0.00011403,
+  "atl_change_percentage": 20.35859,
+  "atl_date": "2024-04-17T14:49:45.373Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:25.432Z",
+  "platforms": {
+    "polygon": "0x1c356b463ce3e46cf494f5fdd2172bdffe5c688d"
+  }
+}

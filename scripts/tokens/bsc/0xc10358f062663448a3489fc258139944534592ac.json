@@ -1,0 +1,31 @@
+{
+  "id": "blockchain-monster-hunt",
+  "symbol": "bcmc",
+  "name": "Blockchain Monster Hunt",
+  "image": "https://assets.coingecko.com/coins/images/19045/large/bcmc-coin-200x200.png?1696518496",
+  "current_price": 0.00625418,
+  "market_cap": 1477582,
+  "market_cap_rank": 2460,
+  "fully_diluted_valuation": 6257106,
+  "total_volume": 15183.48,
+  "high_24h": 0.00644539,
+  "low_24h": 0.00617398,
+  "price_change_24h": -0.000159215710533529,
+  "price_change_percentage_24h": -2.48255,
+  "market_cap_change_24h": -40541.92973689968,
+  "market_cap_change_percentage_24h": -2.67053,
+  "circulating_supply": 236144679,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 4.22,
+  "ath_change_percentage": -99.85156,
+  "ath_date": "2021-11-03T19:04:46.664Z",
+  "atl": 0.00260648,
+  "atl_change_percentage": 140.55861,
+  "atl_date": "2023-09-07T05:14:25.783Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:44.959Z",
+  "platforms": {
+    "bsc": "0xc10358f062663448a3489fc258139944534592ac"
+  }
+}

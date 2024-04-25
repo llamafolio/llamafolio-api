@@ -1,0 +1,35 @@
+{
+  "id": "dusk-network",
+  "symbol": "dusk",
+  "name": "Dusk",
+  "image": "https://assets.coingecko.com/coins/images/5217/large/image_widget_biddfvxd454b1.png?1696505726",
+  "current_price": 0.349769,
+  "market_cap": 161144443,
+  "market_cap_rank": 344,
+  "fully_diluted_valuation": 174766516,
+  "total_volume": 15117005,
+  "high_24h": 0.387861,
+  "low_24h": 0.347512,
+  "price_change_24h": -0.03187543199160242,
+  "price_change_percentage_24h": -8.35213,
+  "market_cap_change_24h": -15693503.216007024,
+  "market_cap_change_percentage_24h": -8.87451,
+  "circulating_supply": 461027796.316325,
+  "total_supply": 500000000,
+  "max_supply": 1000000000,
+  "ath": 1.09,
+  "ath_change_percentage": -67.85681,
+  "ath_date": "2021-12-29T21:34:22.823Z",
+  "atl": 0.01113274,
+  "atl_change_percentage": 3046.86517,
+  "atl_date": "2020-03-13T02:24:16.885Z",
+  "roi": {
+    "times": 7.657643562821119,
+    "currency": "usd",
+    "percentage": 765.7643562821119
+  },
+  "last_updated": "2024-04-25T08:55:36.796Z",
+  "platforms": {
+    "ethereum": "0x940a2db1b7008b6c776d4faaca729d6d4a4aa551"
+  }
+}

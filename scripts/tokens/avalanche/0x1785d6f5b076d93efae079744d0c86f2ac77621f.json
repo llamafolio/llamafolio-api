@@ -1,0 +1,31 @@
+{
+  "id": "coingrab",
+  "symbol": "grab",
+  "name": "CoinGrab",
+  "image": "https://assets.coingecko.com/coins/images/34287/large/CG_LOGO_200px.png?1704453892",
+  "current_price": 1.28537e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 12853.68,
+  "total_volume": 170.8,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000000000,
+  "max_supply": 100000000000000,
+  "ath": 2.427e-9,
+  "ath_change_percentage": -94.70415,
+  "ath_date": "2024-01-10T01:11:37.184Z",
+  "atl": 1.0486e-10,
+  "atl_change_percentage": 22.57957,
+  "atl_date": "2024-04-18T08:23:31.042Z",
+  "roi": null,
+  "last_updated": "2024-04-20T20:39:41.740Z",
+  "platforms": {
+    "avalanche": "0x1785d6f5b076d93efae079744d0c86f2ac77621f"
+  }
+}

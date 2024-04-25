@@ -1,0 +1,31 @@
+{
+  "id": "sharedstake-governance-token",
+  "symbol": "sgtv2",
+  "name": "SharedStake Governance v2",
+  "image": "https://assets.coingecko.com/coins/images/13948/large/sgt-png.png?1696513686",
+  "current_price": 0.061004,
+  "market_cap": 166195,
+  "market_cap_rank": 3588,
+  "fully_diluted_valuation": 544030,
+  "total_volume": 312.7,
+  "high_24h": 0.064334,
+  "low_24h": 0.061199,
+  "price_change_24h": -0.002637584721206551,
+  "price_change_percentage_24h": -4.14444,
+  "market_cap_change_24h": -6579.0549506524985,
+  "market_cap_change_percentage_24h": -3.80789,
+  "circulating_supply": 2715631,
+  "total_supply": 8889445.74,
+  "max_supply": 8889445.74,
+  "ath": 104.82,
+  "ath_change_percentage": -99.94145,
+  "ath_date": "2021-02-13T16:47:20.939Z",
+  "atl": 0.00650512,
+  "atl_change_percentage": 843.42541,
+  "atl_date": "2022-11-12T06:04:23.356Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:56.235Z",
+  "platforms": {
+    "ethereum": "0x24c19f7101c1731b85f1127eaa0407732e36ecdd"
+  }
+}

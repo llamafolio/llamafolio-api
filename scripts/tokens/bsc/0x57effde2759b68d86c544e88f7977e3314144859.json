@@ -1,0 +1,31 @@
+{
+  "id": "tosdis",
+  "symbol": "dis",
+  "name": "TosDis",
+  "image": "https://assets.coingecko.com/coins/images/13745/large/Tosdis-black.png?1696513488",
+  "current_price": 1.56,
+  "market_cap": 117384,
+  "market_cap_rank": 3728,
+  "fully_diluted_valuation": 156298,
+  "total_volume": 18388.23,
+  "high_24h": 1.75,
+  "low_24h": 1.56,
+  "price_change_24h": -0.18219700133096528,
+  "price_change_percentage_24h": -10.43228,
+  "market_cap_change_24h": -13261.534384447732,
+  "market_cap_change_percentage_24h": -10.15078,
+  "circulating_supply": 74998,
+  "total_supply": 99860.5,
+  "max_supply": null,
+  "ath": 253.52,
+  "ath_change_percentage": -99.37865,
+  "ath_date": "2021-02-06T09:23:47.887Z",
+  "atl": 0.0094393,
+  "atl_change_percentage": 16588.05906,
+  "atl_date": "2023-05-13T15:25:07.432Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:18.341Z",
+  "platforms": {
+    "bsc": "0x57effde2759b68d86c544e88f7977e3314144859"
+  }
+}

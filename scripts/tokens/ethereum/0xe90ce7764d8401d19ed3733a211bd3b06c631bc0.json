@@ -1,0 +1,31 @@
+{
+  "id": "the-other-party",
+  "symbol": "pod",
+  "name": "The Other Party",
+  "image": "https://assets.coingecko.com/coins/images/33478/large/Twitter_header_-_4.png?1702017433",
+  "current_price": 4.0574e-8,
+  "market_cap": 144217,
+  "market_cap_rank": 3653,
+  "fully_diluted_valuation": 144217,
+  "total_volume": 136.92,
+  "high_24h": 4.1019e-8,
+  "low_24h": 4.0565e-8,
+  "price_change_24h": -1.584652e-12,
+  "price_change_percentage_24h": -0.00391,
+  "market_cap_change_24h": -153.7862755266251,
+  "market_cap_change_percentage_24h": -0.10652,
+  "circulating_supply": 3554457000000,
+  "total_supply": 3554457000000,
+  "max_supply": 3554457000000,
+  "ath": 4.74593e-7,
+  "ath_change_percentage": -91.45085,
+  "ath_date": "2023-12-08T09:59:45.025Z",
+  "atl": 3.9877e-8,
+  "atl_change_percentage": 1.7468,
+  "atl_date": "2024-04-19T02:44:24.766Z",
+  "roi": null,
+  "last_updated": "2024-04-24T14:03:44.648Z",
+  "platforms": {
+    "ethereum": "0xe90ce7764d8401d19ed3733a211bd3b06c631bc0"
+  }
+}

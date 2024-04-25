@@ -1,0 +1,35 @@
+{
+  "id": "cosmos",
+  "symbol": "atom",
+  "name": "Cosmos Hub",
+  "image": "https://assets.coingecko.com/coins/images/1481/large/cosmos_hub.png?1696502525",
+  "current_price": 8.4,
+  "market_cap": 3281440446,
+  "market_cap_rank": 34,
+  "fully_diluted_valuation": 3283470223,
+  "total_volume": 178105881,
+  "high_24h": 8.87,
+  "low_24h": 8.33,
+  "price_change_24h": -0.40805686959930476,
+  "price_change_percentage_24h": -4.63463,
+  "market_cap_change_24h": -169684313.28417063,
+  "market_cap_change_percentage_24h": -4.91678,
+  "circulating_supply": 390688369.813272,
+  "total_supply": 390930035.085365,
+  "max_supply": null,
+  "ath": 44.45,
+  "ath_change_percentage": -81.10337,
+  "ath_date": "2022-01-17T00:34:41.497Z",
+  "atl": 1.16,
+  "atl_change_percentage": 624.03058,
+  "atl_date": "2020-03-13T02:27:44.591Z",
+  "roi": {
+    "times": 82.96453613499575,
+    "currency": "usd",
+    "percentage": 8296.453613499576
+  },
+  "last_updated": "2024-04-25T09:01:57.421Z",
+  "platforms": {
+    "bsc": "0x0eb3a705fc54725037cc9e008bdede697f62f335"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "utu-coin",
+  "symbol": "utu",
+  "name": "UTU Coin",
+  "image": "https://assets.coingecko.com/coins/images/12831/large/Aa5nmbkJ_400x400.png?1696512622",
+  "current_price": 0.00104338,
+  "market_cap": 306670,
+  "market_cap_rank": 3309,
+  "fully_diluted_valuation": 1041290,
+  "total_volume": 96.14,
+  "high_24h": 0.00108294,
+  "low_24h": 0.00104241,
+  "price_change_24h": -0.000028521393216777,
+  "price_change_percentage_24h": -2.66083,
+  "market_cap_change_24h": -8383.02569019841,
+  "market_cap_change_percentage_24h": -2.66083,
+  "circulating_supply": 293920623.95,
+  "total_supply": 998000000,
+  "max_supply": null,
+  "ath": 0.221291,
+  "ath_change_percentage": -99.5285,
+  "ath_date": "2021-02-17T12:11:06.494Z",
+  "atl": 0.0006003,
+  "atl_change_percentage": 73.81042,
+  "atl_date": "2021-07-21T20:41:07.690Z",
+  "roi": null,
+  "last_updated": "2024-04-24T18:42:21.780Z",
+  "platforms": {
+    "bsc": "0xed4bb33f20f32e989af975196e86019773a7cff0"
+  }
+}

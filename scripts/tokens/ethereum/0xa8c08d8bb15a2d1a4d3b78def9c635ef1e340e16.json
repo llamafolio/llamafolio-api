@@ -1,0 +1,31 @@
+{
+  "id": "serbian-dancing-lady",
+  "symbol": "сербскаяле",
+  "name": "SERBIAN DANCING LADY",
+  "image": "https://assets.coingecko.com/coins/images/32688/large/IMG_20231101_105021_023.jpg?1698938977",
+  "current_price": 1.3361e-8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 13361.4,
+  "total_volume": 20.84,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000,
+  "max_supply": 1000000000000,
+  "ath": 8.9375e-8,
+  "ath_change_percentage": -85.05016,
+  "ath_date": "2023-11-02T16:04:10.315Z",
+  "atl": 5.709e-9,
+  "atl_change_percentage": 134.03621,
+  "atl_date": "2023-11-29T21:16:48.836Z",
+  "roi": null,
+  "last_updated": "2024-04-20T11:51:02.245Z",
+  "platforms": {
+    "ethereum": "0xa8c08d8bb15a2d1a4d3b78def9c635ef1e340e16"
+  }
+}

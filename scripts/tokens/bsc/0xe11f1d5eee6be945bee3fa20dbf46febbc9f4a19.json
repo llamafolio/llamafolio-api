@@ -1,0 +1,31 @@
+{
+  "id": "nusa-finance",
+  "symbol": "nusa",
+  "name": "NUSA",
+  "image": "https://assets.coingecko.com/coins/images/27967/large/Asset_1_2x.png?1696526986",
+  "current_price": 11.46,
+  "market_cap": 946652,
+  "market_cap_rank": 2721,
+  "fully_diluted_valuation": 1232776,
+  "total_volume": 415.44,
+  "high_24h": 11.64,
+  "low_24h": 10.65,
+  "price_change_24h": 0.203433,
+  "price_change_percentage_24h": 1.8079,
+  "market_cap_change_24h": 16634.29,
+  "market_cap_change_percentage_24h": 1.7886,
+  "circulating_supply": 82684.169153968,
+  "total_supply": 107675.32632274,
+  "max_supply": 200000,
+  "ath": 28.28,
+  "ath_change_percentage": -59.51086,
+  "ath_date": "2022-11-03T07:17:36.513Z",
+  "atl": 5.35,
+  "atl_change_percentage": 113.85675,
+  "atl_date": "2023-10-21T06:59:56.949Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:21.489Z",
+  "platforms": {
+    "bsc": "0xe11f1d5eee6be945bee3fa20dbf46febbc9f4a19"
+  }
+}

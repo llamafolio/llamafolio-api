@@ -1,0 +1,31 @@
+{
+  "id": "pumlx",
+  "symbol": "pumlx",
+  "name": "PUMLx",
+  "image": "https://assets.coingecko.com/coins/images/27253/large/pumlx.png?1696526302",
+  "current_price": 0.01117847,
+  "market_cap": 1384932,
+  "market_cap_rank": 2486,
+  "fully_diluted_valuation": 5534939,
+  "total_volume": 344025,
+  "high_24h": 0.01240366,
+  "low_24h": 0.01049869,
+  "price_change_24h": 0.00044097,
+  "price_change_percentage_24h": 4.10684,
+  "market_cap_change_24h": 50262,
+  "market_cap_change_percentage_24h": 3.76587,
+  "circulating_supply": 123892858,
+  "total_supply": 495142858,
+  "max_supply": 500000000,
+  "ath": 0.076891,
+  "ath_change_percentage": -85.44754,
+  "ath_date": "2022-10-07T13:35:31.404Z",
+  "atl": 0.00788331,
+  "atl_change_percentage": 41.93889,
+  "atl_date": "2023-11-27T20:41:24.253Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:47.522Z",
+  "platforms": {
+    "ethereum": "0x8c088775e4139af116ac1fa6f281bbf71e8c1c73"
+  }
+}

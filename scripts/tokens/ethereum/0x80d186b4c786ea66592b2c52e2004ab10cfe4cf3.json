@@ -1,0 +1,31 @@
+{
+  "id": "lynx-2",
+  "symbol": "lynx",
+  "name": "LYNX",
+  "image": "https://assets.coingecko.com/coins/images/32501/large/3C1E4E5C-4B05-4039-B9DD-1DAB463AB44A.png?1698312161",
+  "current_price": 0.007566,
+  "market_cap": 19618.28,
+  "market_cap_rank": 4149,
+  "fully_diluted_valuation": 37830,
+  "total_volume": 2352.19,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 2592952,
+  "total_supply": 5000000,
+  "max_supply": 5000000,
+  "ath": 0.971316,
+  "ath_change_percentage": -99.22106,
+  "ath_date": "2023-10-28T19:04:46.018Z",
+  "atl": 0.00754919,
+  "atl_change_percentage": 0.22272,
+  "atl_date": "2024-02-23T16:31:12.678Z",
+  "roi": null,
+  "last_updated": "2024-02-23T22:01:06.594Z",
+  "platforms": {
+    "ethereum": "0x80d186b4c786ea66592b2c52e2004ab10cfe4cf3"
+  }
+}

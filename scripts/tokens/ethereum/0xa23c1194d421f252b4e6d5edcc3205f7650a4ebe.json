@@ -1,0 +1,31 @@
+{
+  "id": "launchblock",
+  "symbol": "lbp",
+  "name": "LaunchBlock",
+  "image": "https://assets.coingecko.com/coins/images/24181/large/S6z_-9GB_400x400.jpg?1696523370",
+  "current_price": 0.00062,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 6198498,
+  "total_volume": 99058,
+  "high_24h": 0.00066314,
+  "low_24h": 0.00061631,
+  "price_change_24h": -0.00004313202014344,
+  "price_change_percentage_24h": -6.50425,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.04245623,
+  "ath_change_percentage": -98.53888,
+  "ath_date": "2022-03-18T04:34:05.725Z",
+  "atl": 0.00004389,
+  "atl_change_percentage": 1313.27911,
+  "atl_date": "2023-10-23T08:55:58.202Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:01.992Z",
+  "platforms": {
+    "ethereum": "0xa23c1194d421f252b4e6d5edcc3205f7650a4ebe"
+  }
+}

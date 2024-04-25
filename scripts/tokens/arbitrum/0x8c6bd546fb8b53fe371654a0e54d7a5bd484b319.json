@@ -1,0 +1,31 @@
+{
+  "id": "goat-protocol",
+  "symbol": "goa",
+  "name": "Goat Protocol",
+  "image": "https://assets.coingecko.com/coins/images/35982/large/256x256_Main_Logo_-_Rounded.png?1710338882",
+  "current_price": 1.42,
+  "market_cap": 569139,
+  "market_cap_rank": 3002,
+  "fully_diluted_valuation": 1422848,
+  "total_volume": 180.01,
+  "high_24h": 1.49,
+  "low_24h": 1.41,
+  "price_change_24h": -0.03603614887884832,
+  "price_change_percentage_24h": -2.47012,
+  "market_cap_change_24h": -14414.459551539272,
+  "market_cap_change_percentage_24h": -2.47012,
+  "circulating_supply": 400000,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 1.52,
+  "ath_change_percentage": -6.16819,
+  "ath_date": "2024-03-31T23:37:16.351Z",
+  "atl": 0.560521,
+  "atl_change_percentage": 153.65501,
+  "atl_date": "2024-03-15T20:58:15.037Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:53:35.441Z",
+  "platforms": {
+    "arbitrum": "0x8c6bd546fb8b53fe371654a0e54d7a5bd484b319"
+  }
+}

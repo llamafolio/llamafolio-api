@@ -1,0 +1,31 @@
+{
+  "id": "warena",
+  "symbol": "rena",
+  "name": "Warena",
+  "image": "https://assets.coingecko.com/coins/images/18888/large/RENA_Web_Black_Square.png?1696518347",
+  "current_price": 0.00238006,
+  "market_cap": 225339,
+  "market_cap_rank": 3436,
+  "fully_diluted_valuation": 237216,
+  "total_volume": 14607.33,
+  "high_24h": 0.00244374,
+  "low_24h": 0.00231,
+  "price_change_24h": -0.000034531812908009,
+  "price_change_percentage_24h": -1.43013,
+  "market_cap_change_24h": -4845.265754551656,
+  "market_cap_change_percentage_24h": -2.10496,
+  "circulating_supply": 94993156.345,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 6.71,
+  "ath_change_percentage": -99.96464,
+  "ath_date": "2021-11-25T23:08:26.188Z",
+  "atl": 0.00050052,
+  "atl_change_percentage": 373.93463,
+  "atl_date": "2023-08-19T07:48:05.016Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:36.440Z",
+  "platforms": {
+    "bsc": "0xa9d75cc3405f0450955050c520843f99aff8749d"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "chiba-neko",
+  "symbol": "chiba",
+  "name": "Chiba Neko",
+  "image": "https://assets.coingecko.com/coins/images/32555/large/logo_200x200.png?1698502949",
+  "current_price": 0.04025068,
+  "market_cap": 402507,
+  "market_cap_rank": 3171,
+  "fully_diluted_valuation": 402507,
+  "total_volume": 7554.54,
+  "high_24h": 0.04504244,
+  "low_24h": 0.03987991,
+  "price_change_24h": -0.003176427507353905,
+  "price_change_percentage_24h": -7.31439,
+  "market_cap_change_24h": -31829.374106211006,
+  "market_cap_change_percentage_24h": -7.32828,
+  "circulating_supply": 10000000,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.215945,
+  "ath_change_percentage": -81.33284,
+  "ath_date": "2024-02-25T23:06:39.946Z",
+  "atl": 0.00554623,
+  "atl_change_percentage": 626.81395,
+  "atl_date": "2023-11-18T09:21:33.454Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:50:06.965Z",
+  "platforms": {
+    "ethereum": "0xbe9f4f6c8dadb2ac61f31eb1f5171e27d8552df7"
+  }
+}

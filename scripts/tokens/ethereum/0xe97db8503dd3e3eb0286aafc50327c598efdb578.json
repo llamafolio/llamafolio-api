@@ -1,0 +1,31 @@
+{
+  "id": "jinko-ai",
+  "symbol": "jinko",
+  "name": "Jinko AI",
+  "image": "https://assets.coingecko.com/coins/images/32633/large/Jinko_Logo_BY_Colour.png?1698826087",
+  "current_price": 0.01019634,
+  "market_cap": 2283434,
+  "market_cap_rank": 2221,
+  "fully_diluted_valuation": 5092667,
+  "total_volume": 59457,
+  "high_24h": 0.0105932,
+  "low_24h": 0.0100854,
+  "price_change_24h": -0.000369095600128464,
+  "price_change_percentage_24h": -3.49343,
+  "market_cap_change_24h": -73134.61984158494,
+  "market_cap_change_percentage_24h": -3.10344,
+  "circulating_supply": 224188458,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 0.064051,
+  "ath_change_percentage": -84.10187,
+  "ath_date": "2024-03-07T18:51:29.771Z",
+  "atl": 0.00942346,
+  "atl_change_percentage": 8.06001,
+  "atl_date": "2024-04-19T02:33:20.969Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:56:57.761Z",
+  "platforms": {
+    "ethereum": "0xe97db8503dd3e3eb0286aafc50327c598efdb578"
+  }
+}

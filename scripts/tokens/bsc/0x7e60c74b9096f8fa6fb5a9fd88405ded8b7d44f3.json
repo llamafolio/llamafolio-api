@@ -1,0 +1,31 @@
+{
+  "id": "infiblue-world",
+  "symbol": "monie",
+  "name": "Infiblue World",
+  "image": "https://assets.coingecko.com/coins/images/30236/large/Monie_logo_200.png?1696529146",
+  "current_price": 0.170732,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2841769,
+  "total_volume": 48856,
+  "high_24h": 0.172325,
+  "low_24h": 0.163857,
+  "price_change_24h": 0.00213194,
+  "price_change_percentage_24h": 1.2645,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 16647778,
+  "max_supply": 2000000000,
+  "ath": 0.812038,
+  "ath_change_percentage": -78.99825,
+  "ath_date": "2023-07-16T19:43:53.482Z",
+  "atl": 0.01475948,
+  "atl_change_percentage": 1055.47463,
+  "atl_date": "2023-12-13T15:40:30.870Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:45.663Z",
+  "platforms": {
+    "bsc": "0x7e60c74b9096f8fa6fb5a9fd88405ded8b7d44f3"
+  }
+}

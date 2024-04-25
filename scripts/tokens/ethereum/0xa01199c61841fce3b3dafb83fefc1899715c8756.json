@@ -1,0 +1,31 @@
+{
+  "id": "cirus",
+  "symbol": "cirus",
+  "name": "Cirus",
+  "image": "https://assets.coingecko.com/coins/images/17798/large/8p0Bvi90_400x400.jpg?1696517320",
+  "current_price": 0.02784673,
+  "market_cap": 2863754,
+  "market_cap_rank": 2086,
+  "fully_diluted_valuation": 5963787,
+  "total_volume": 572416,
+  "high_24h": 0.02846112,
+  "low_24h": 0.02718494,
+  "price_change_24h": 0.00001776,
+  "price_change_percentage_24h": 0.06382,
+  "market_cap_change_24h": 20541,
+  "market_cap_change_percentage_24h": 0.72246,
+  "circulating_supply": 103240911.01,
+  "total_supply": 214999900,
+  "max_supply": 250000000,
+  "ath": 1.73,
+  "ath_change_percentage": -98.39916,
+  "ath_date": "2021-08-26T20:04:09.068Z",
+  "atl": 0.01138185,
+  "atl_change_percentage": 142.844,
+  "atl_date": "2023-11-09T20:19:55.804Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:51.340Z",
+  "platforms": {
+    "ethereum": "0xa01199c61841fce3b3dafb83fefc1899715c8756"
+  }
+}

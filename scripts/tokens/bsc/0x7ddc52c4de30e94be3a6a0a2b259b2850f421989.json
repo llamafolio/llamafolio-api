@@ -1,0 +1,31 @@
+{
+  "id": "gmt-token",
+  "symbol": "gmt",
+  "name": "Gomining Token",
+  "image": "https://assets.coingecko.com/coins/images/15662/large/gmt.png?1696515292",
+  "current_price": 0.35187,
+  "market_cap": 149181253,
+  "market_cap_rank": 364,
+  "fully_diluted_valuation": 149181253,
+  "total_volume": 3101584,
+  "high_24h": 0.356315,
+  "low_24h": 0.346887,
+  "price_change_24h": -0.003952682011684195,
+  "price_change_percentage_24h": -1.11086,
+  "market_cap_change_24h": -2278218.4117928445,
+  "market_cap_change_percentage_24h": -1.50418,
+  "circulating_supply": 424098064.143332,
+  "total_supply": 424098064.143332,
+  "max_supply": 436915240,
+  "ath": 0.52718,
+  "ath_change_percentage": -33.28703,
+  "ath_date": "2021-10-16T12:30:04.077Z",
+  "atl": 0.069487,
+  "atl_change_percentage": 406.13555,
+  "atl_date": "2022-11-10T00:18:31.110Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:56:07.244Z",
+  "platforms": {
+    "bsc": "0x7ddc52c4de30e94be3a6a0a2b259b2850f421989"
+  }
+}

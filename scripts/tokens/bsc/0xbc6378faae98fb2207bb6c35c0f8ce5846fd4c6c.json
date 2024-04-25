@@ -1,0 +1,31 @@
+{
+  "id": "8bit-chain",
+  "symbol": "w8bit",
+  "name": "8Bit Chain",
+  "image": "https://assets.coingecko.com/coins/images/35459/large/8BIT-200x200.PNG?1708675050",
+  "current_price": 0.00605851,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 292569,
+  "total_volume": 443.12,
+  "high_24h": 0.00627874,
+  "low_24h": 0.00595691,
+  "price_change_24h": -0.000103918154901172,
+  "price_change_percentage_24h": -1.68632,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 48000000,
+  "max_supply": 140000000,
+  "ath": 0.02437878,
+  "ath_change_percentage": -75.14843,
+  "ath_date": "2024-02-23T11:40:21.285Z",
+  "atl": 0.00488135,
+  "atl_change_percentage": 24.11548,
+  "atl_date": "2024-04-13T21:54:16.311Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:42.173Z",
+  "platforms": {
+    "bsc": "0xbc6378faae98fb2207bb6c35c0f8ce5846fd4c6c"
+  }
+}

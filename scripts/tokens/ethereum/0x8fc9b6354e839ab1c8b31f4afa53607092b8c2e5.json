@@ -1,0 +1,31 @@
+{
+  "id": "ecoscu",
+  "symbol": "ecu",
+  "name": "ECOSC",
+  "image": "https://assets.coingecko.com/coins/images/10989/large/ecosc-logo.png?1696510938",
+  "current_price": 0.00080035,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 800349,
+  "total_volume": 2.05,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 43.32,
+  "ath_change_percentage": -99.99815,
+  "ath_date": "2020-07-23T22:39:03.532Z",
+  "atl": 0.00000998,
+  "atl_change_percentage": 7921.31159,
+  "atl_date": "2023-08-25T08:30:15.521Z",
+  "roi": null,
+  "last_updated": "2024-04-22T17:48:22.504Z",
+  "platforms": {
+    "ethereum": "0x8fc9b6354e839ab1c8b31f4afa53607092b8c2e5"
+  }
+}

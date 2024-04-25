@@ -1,0 +1,31 @@
+{
+  "id": "radio-caca",
+  "symbol": "raca",
+  "name": "Radio Caca",
+  "image": "https://assets.coingecko.com/coins/images/17841/large/ez44_BSs_400x400.jpg?1696517365",
+  "current_price": 0.00024599,
+  "market_cap": 86550537,
+  "market_cap_rank": 509,
+  "fully_diluted_valuation": 103143121,
+  "total_volume": 9110389,
+  "high_24h": 0.00026822,
+  "low_24h": 0.00024369,
+  "price_change_24h": -0.000021801409099543,
+  "price_change_percentage_24h": -8.14109,
+  "market_cap_change_24h": -8031466.645641923,
+  "market_cap_change_percentage_24h": -8.49154,
+  "circulating_supply": 353444937014.302,
+  "total_supply": 421203787004.302,
+  "max_supply": 500000000000,
+  "ath": 0.01191986,
+  "ath_change_percentage": -97.94101,
+  "ath_date": "2021-11-14T09:16:57.279Z",
+  "atl": 0.00008346,
+  "atl_change_percentage": 194.08425,
+  "atl_date": "2023-09-11T10:30:12.705Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:58.656Z",
+  "platforms": {
+    "ethereum": "0x12bb890508c125661e03b09ec06e404bc9289040"
+  }
+}

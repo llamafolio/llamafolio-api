@@ -1,0 +1,31 @@
+{
+  "id": "tarmex",
+  "symbol": "tarm",
+  "name": "Tarmex [OLD]",
+  "image": "https://assets.coingecko.com/coins/images/28935/large/Tarmex_Logo.png?1696527909",
+  "current_price": 0.0007772,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 256477,
+  "total_volume": 145626,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 330000000,
+  "max_supply": 330000000,
+  "ath": 0.00078709,
+  "ath_change_percentage": -1.25653,
+  "ath_date": "2023-10-16T06:24:15.580Z",
+  "atl": 0.00040872,
+  "atl_change_percentage": 90.15557,
+  "atl_date": "2023-02-04T10:14:31.618Z",
+  "roi": null,
+  "last_updated": "2023-10-16T12:32:05.169Z",
+  "platforms": {
+    "bsc": "0xbfff3571f9fd637ae7cfb63ac2112fd18264ce62"
+  }
+}

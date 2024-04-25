@@ -1,0 +1,31 @@
+{
+  "id": "unizen",
+  "symbol": "zcx",
+  "name": "Unizen",
+  "image": "https://assets.coingecko.com/coins/images/14830/large/logo128px.png?1700169101",
+  "current_price": 0.243527,
+  "market_cap": 168834665,
+  "market_cap_rank": 330,
+  "fully_diluted_valuation": 231198136,
+  "total_volume": 1666554,
+  "high_24h": 0.257883,
+  "low_24h": 0.24205,
+  "price_change_24h": -0.01169641537980004,
+  "price_change_percentage_24h": -4.58281,
+  "market_cap_change_24h": -7359028.772747576,
+  "market_cap_change_percentage_24h": -4.17667,
+  "circulating_supply": 692775993.92564,
+  "total_supply": 948670810.782247,
+  "max_supply": 948670810.782247,
+  "ath": 7.03,
+  "ath_change_percentage": -96.53004,
+  "ath_date": "2021-09-14T09:34:46.058Z",
+  "atl": 0.0396437,
+  "atl_change_percentage": 515.01017,
+  "atl_date": "2022-09-23T12:05:25.895Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:31.484Z",
+  "platforms": {
+    "ethereum": "0xc52c326331e9ce41f04484d3b5e5648158028804"
+  }
+}

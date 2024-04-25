@@ -1,0 +1,31 @@
+{
+  "id": "tokamak-network",
+  "symbol": "ton",
+  "name": "Tokamak Network",
+  "image": "https://assets.coingecko.com/coins/images/12260/large/D919x5-s_400x400.png?1696512091",
+  "current_price": 2.2,
+  "market_cap": 102326984,
+  "market_cap_rank": 474,
+  "fully_diluted_valuation": 143025060,
+  "total_volume": 2183826,
+  "high_24h": 2.35,
+  "low_24h": 2.19,
+  "price_change_24h": -0.11607516264463058,
+  "price_change_percentage_24h": -5.0114,
+  "market_cap_change_24h": -5784988.623367459,
+  "market_cap_change_percentage_24h": -5.35092,
+  "circulating_supply": 46602589.2160377,
+  "total_supply": 65137638.8489928,
+  "max_supply": null,
+  "ath": 30.51,
+  "ath_change_percentage": -92.80409,
+  "ath_date": "2021-04-02T17:44:40.065Z",
+  "atl": 0.999246,
+  "atl_change_percentage": 119.7183,
+  "atl_date": "2022-12-29T02:31:58.533Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:43.710Z",
+  "platforms": {
+    "ethereum": "0x2be5e8c109e2197d077d13a82daead6a9b3433c5"
+  }
+}

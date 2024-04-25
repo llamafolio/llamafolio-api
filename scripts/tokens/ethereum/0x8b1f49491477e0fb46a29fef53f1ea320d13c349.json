@@ -1,0 +1,35 @@
+{
+  "id": "micromoney",
+  "symbol": "amm",
+  "name": "MicroMoney",
+  "image": "https://assets.coingecko.com/coins/images/1356/large/micromoney.png?1696502415",
+  "current_price": 0.003954,
+  "market_cap": 69325,
+  "market_cap_rank": 3901,
+  "fully_diluted_valuation": 69325,
+  "total_volume": 0.00263363,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 17532943,
+  "total_supply": 17532943,
+  "max_supply": null,
+  "ath": 2.43,
+  "ath_change_percentage": -99.83722,
+  "ath_date": "2018-01-09T00:00:00.000Z",
+  "atl": 0.00072425,
+  "atl_change_percentage": 445.94233,
+  "atl_date": "2023-07-31T16:25:50.780Z",
+  "roi": {
+    "times": -0.9960459954331425,
+    "currency": "usd",
+    "percentage": -99.60459954331425
+  },
+  "last_updated": "2024-04-19T19:22:48.150Z",
+  "platforms": {
+    "ethereum": "0x8b1f49491477e0fb46a29fef53f1ea320d13c349"
+  }
+}

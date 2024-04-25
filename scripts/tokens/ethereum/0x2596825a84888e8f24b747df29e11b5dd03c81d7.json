@@ -1,0 +1,31 @@
+{
+  "id": "faith-tribe",
+  "symbol": "ftrb",
+  "name": "Faith Tribe",
+  "image": "https://assets.coingecko.com/coins/images/23939/large/ym1Hf4x2_400x400.jpg?1696523135",
+  "current_price": 0.00585158,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 29212835,
+  "total_volume": 324862,
+  "high_24h": 0.00598109,
+  "low_24h": 0.00327085,
+  "price_change_24h": 0.0004084,
+  "price_change_percentage_24h": 7.50287,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 5000000000,
+  "max_supply": 5000000000,
+  "ath": 0.07116,
+  "ath_change_percentage": -91.7996,
+  "ath_date": "2022-02-28T23:08:54.773Z",
+  "atl": 0.00327085,
+  "atl_change_percentage": 78.40511,
+  "atl_date": "2024-04-24T12:01:43.704Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:38.631Z",
+  "platforms": {
+    "ethereum": "0x2596825a84888e8f24b747df29e11b5dd03c81d7"
+  }
+}

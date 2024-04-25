@@ -1,0 +1,31 @@
+{
+  "id": "doge-1",
+  "symbol": "doge1",
+  "name": "DOGE-1",
+  "image": "https://assets.coingecko.com/coins/images/32298/large/200.png?1697185878",
+  "current_price": 0.111334,
+  "market_cap": 111334,
+  "market_cap_rank": 3746,
+  "fully_diluted_valuation": 111334,
+  "total_volume": 805,
+  "high_24h": 0.123414,
+  "low_24h": 0.111292,
+  "price_change_24h": -0.010790366968456188,
+  "price_change_percentage_24h": -8.83557,
+  "market_cap_change_24h": -10784.767563059198,
+  "market_cap_change_percentage_24h": -8.83139,
+  "circulating_supply": 1000000,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 1.61,
+  "ath_change_percentage": -93.08363,
+  "ath_date": "2023-10-16T15:49:57.083Z",
+  "atl": 0.104338,
+  "atl_change_percentage": 6.86752,
+  "atl_date": "2024-03-20T16:36:03.500Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:51:24.481Z",
+  "platforms": {
+    "ethereum": "0xd721706581d97ecd202bbab5c71b5a85f0f78e69"
+  }
+}

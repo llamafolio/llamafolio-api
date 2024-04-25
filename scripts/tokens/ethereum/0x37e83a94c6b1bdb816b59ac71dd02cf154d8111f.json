@@ -1,0 +1,31 @@
+{
+  "id": "photochromic",
+  "symbol": "phcr",
+  "name": "PhotoChromic",
+  "image": "https://assets.coingecko.com/coins/images/23640/large/L7vabJibqXHHmGtsIfIEQRaR3SjaE94QSaKWGlqYU7fpuz--nKsWG4BlB6Ddhn5-tGPWo-MDhfZPVAYG7ZM2vpWrVZlSx1Euw78tZcNey6FvpKX6a8w26qBWYeV7wxFzvW7VKieijrMXQ0BkISpt8d6jrCMBvx2ZFKVxF1x31_2X7WhRyqAgIG3epFPNz7v0j0ECaS7HmE0_sTHM4RS3CW1d0a.jpg?1696522844",
+  "current_price": 0.00000591,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 88617,
+  "total_volume": 29469,
+  "high_24h": 0.00001,
+  "low_24h": 0.0000037,
+  "price_change_24h": 4.39181e-7,
+  "price_change_percentage_24h": 8.03094,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 15000000000,
+  "max_supply": null,
+  "ath": 0.00649643,
+  "ath_change_percentage": -99.909,
+  "ath_date": "2022-02-17T16:25:00.674Z",
+  "atl": 0.00000224,
+  "atl_change_percentage": 163.98024,
+  "atl_date": "2023-09-15T02:58:35.955Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:16.704Z",
+  "platforms": {
+    "ethereum": "0x37e83a94c6b1bdb816b59ac71dd02cf154d8111f"
+  }
+}

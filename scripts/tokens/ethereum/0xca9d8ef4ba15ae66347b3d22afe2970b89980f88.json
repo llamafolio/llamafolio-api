@@ -1,0 +1,31 @@
+{
+  "id": "innova-defi",
+  "symbol": "$innova",
+  "name": "Innova DeFi",
+  "image": "https://assets.coingecko.com/coins/images/34023/large/Innova.png?1703672390",
+  "current_price": 0.00052972,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 84755,
+  "total_volume": 226.03,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 160000000,
+  "max_supply": 160000000,
+  "ath": 0.0205474,
+  "ath_change_percentage": -97.42197,
+  "ath_date": "2024-01-09T12:54:52.569Z",
+  "atl": 0.00041474,
+  "atl_change_percentage": 27.72271,
+  "atl_date": "2024-04-17T04:25:31.566Z",
+  "roi": null,
+  "last_updated": "2024-04-24T02:09:02.874Z",
+  "platforms": {
+    "ethereum": "0xca9d8ef4ba15ae66347b3d22afe2970b89980f88"
+  }
+}

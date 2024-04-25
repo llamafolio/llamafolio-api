@@ -1,0 +1,31 @@
+{
+  "id": "esg-chain",
+  "symbol": "esgc",
+  "name": "ESG Chain",
+  "image": "https://assets.coingecko.com/coins/images/22085/large/logo-01.png?1696521428",
+  "current_price": 0.00334094,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 26309754,
+  "total_volume": 14.78,
+  "high_24h": 0.00334424,
+  "low_24h": 0.00333559,
+  "price_change_24h": 5.35794e-7,
+  "price_change_percentage_24h": 0.01604,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 7874965732,
+  "max_supply": null,
+  "ath": 0.138403,
+  "ath_change_percentage": -97.58608,
+  "ath_date": "2022-01-22T10:51:44.504Z",
+  "atl": 0.00018938,
+  "atl_change_percentage": 1664.18111,
+  "atl_date": "2024-02-28T13:31:24.676Z",
+  "roi": null,
+  "last_updated": "2024-04-24T13:10:28.663Z",
+  "platforms": {
+    "ethereum": "0xe857734840dc188b4283d5af14ab8685467ab87d"
+  }
+}

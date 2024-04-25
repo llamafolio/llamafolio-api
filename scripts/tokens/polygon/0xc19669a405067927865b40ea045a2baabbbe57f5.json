@@ -1,0 +1,31 @@
+{
+  "id": "preon-star",
+  "symbol": "star",
+  "name": "Star",
+  "image": "https://assets.coingecko.com/coins/images/31277/large/STAR.png?1696530101",
+  "current_price": 1.001,
+  "market_cap": 2997341,
+  "market_cap_rank": 2064,
+  "fully_diluted_valuation": 2997341,
+  "total_volume": 22441,
+  "high_24h": 1.007,
+  "low_24h": 0.994187,
+  "price_change_24h": -0.001642625866055791,
+  "price_change_percentage_24h": -0.16381,
+  "market_cap_change_24h": -19779.262419147883,
+  "market_cap_change_percentage_24h": -0.65557,
+  "circulating_supply": 3009494.13131009,
+  "total_supply": 3009494.13131009,
+  "max_supply": null,
+  "ath": 1.069,
+  "ath_change_percentage": -6.85204,
+  "ath_date": "2023-08-18T06:44:59.890Z",
+  "atl": 0.934822,
+  "atl_change_percentage": 6.50575,
+  "atl_date": "2023-10-11T14:07:07.970Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:31.123Z",
+  "platforms": {
+    "polygon": "0xc19669a405067927865b40ea045a2baabbbe57f5"
+  }
+}

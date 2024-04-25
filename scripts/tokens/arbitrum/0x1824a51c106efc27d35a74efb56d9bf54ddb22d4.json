@@ -1,0 +1,31 @@
+{
+  "id": "perpy-finance",
+  "symbol": "pry",
+  "name": "Perpy Finance",
+  "image": "https://assets.coingecko.com/coins/images/29525/large/perpy-icon-dark.png?1696528468",
+  "current_price": 0.00401289,
+  "market_cap": 1897338,
+  "market_cap_rank": 2329,
+  "fully_diluted_valuation": 4001384,
+  "total_volume": 91802,
+  "high_24h": 0.00416316,
+  "low_24h": 0.00399547,
+  "price_change_24h": -0.000131628106010796,
+  "price_change_percentage_24h": -3.17595,
+  "market_cap_change_24h": -62235.139560256386,
+  "market_cap_change_percentage_24h": -3.17595,
+  "circulating_supply": 472810416,
+  "total_supply": 997131446.48,
+  "max_supply": 1000000000,
+  "ath": 0.02774638,
+  "ath_change_percentage": -85.60004,
+  "ath_date": "2023-03-22T14:14:34.945Z",
+  "atl": 0.0025968,
+  "atl_change_percentage": 53.86127,
+  "atl_date": "2023-07-04T16:31:11.759Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:37.019Z",
+  "platforms": {
+    "arbitrum": "0x1824a51c106efc27d35a74efb56d9bf54ddb22d4"
+  }
+}

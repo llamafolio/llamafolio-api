@@ -1,0 +1,31 @@
+{
+  "id": "audius",
+  "symbol": "audio",
+  "name": "Audius",
+  "image": "https://assets.coingecko.com/coins/images/12913/large/AudiusCoinLogo_2x.png?1696512701",
+  "current_price": 0.183036,
+  "market_cap": 221228934,
+  "market_cap_rank": 279,
+  "fully_diluted_valuation": 225071465,
+  "total_volume": 7812185,
+  "high_24h": 0.207338,
+  "low_24h": 0.18256,
+  "price_change_24h": -0.020245210768625233,
+  "price_change_percentage_24h": -9.9592,
+  "market_cap_change_24h": -25099776.743399173,
+  "market_cap_change_percentage_24h": -10.18955,
+  "circulating_supply": 1210174852,
+  "total_supply": 1231194405.59863,
+  "max_supply": 1231194405.59863,
+  "ath": 4.95,
+  "ath_change_percentage": -96.30509,
+  "ath_date": "2021-03-27T15:45:35.137Z",
+  "atl": 0.0437371,
+  "atl_change_percentage": 318.58053,
+  "atl_date": "2020-10-23T14:56:23.999Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:57.689Z",
+  "platforms": {
+    "ethereum": "0x18aaa7115705e8be94bffebde57af9bfc265b998"
+  }
+}

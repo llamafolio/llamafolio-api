@@ -1,0 +1,31 @@
+{
+  "id": "momo-v2",
+  "symbol": "momo v2",
+  "name": "Momo v2",
+  "image": "https://assets.coingecko.com/coins/images/31515/large/momo.jpg?1696530325",
+  "current_price": 8.5658e-8,
+  "market_cap": 60086,
+  "market_cap_rank": 3938,
+  "fully_diluted_valuation": 85658,
+  "total_volume": 766.64,
+  "high_24h": 8.9731e-8,
+  "low_24h": 8.5417e-8,
+  "price_change_24h": -2.373171021e-9,
+  "price_change_percentage_24h": -2.69583,
+  "market_cap_change_24h": -1597.0976460556194,
+  "market_cap_change_percentage_24h": -2.58921,
+  "circulating_supply": 701461299517.154,
+  "total_supply": 1000000000000,
+  "max_supply": 1000000000000,
+  "ath": 0.0000016,
+  "ath_change_percentage": -94.63149,
+  "ath_date": "2023-08-30T20:35:31.052Z",
+  "atl": 2.0545e-8,
+  "atl_change_percentage": 317.43185,
+  "atl_date": "2023-11-28T08:16:49.757Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:49:53.958Z",
+  "platforms": {
+    "ethereum": "0x08d0222a206d1aee59a9b66969c04fd1e8a0f864"
+  }
+}

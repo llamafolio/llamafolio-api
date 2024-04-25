@@ -1,0 +1,31 @@
+{
+  "id": "walk-up",
+  "symbol": "wut",
+  "name": "Walk Up",
+  "image": "https://assets.coingecko.com/coins/images/34713/large/1000005200.jpg?1711535367",
+  "current_price": 0.01943914,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 97195696,
+  "total_volume": 218697,
+  "high_24h": 0.02027299,
+  "low_24h": 0.01931833,
+  "price_change_24h": -0.000754025658035194,
+  "price_change_percentage_24h": -3.73406,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 5000000000,
+  "max_supply": 5000000000,
+  "ath": 0.05499,
+  "ath_change_percentage": -64.63218,
+  "ath_date": "2024-04-03T05:04:21.310Z",
+  "atl": 0.01813181,
+  "atl_change_percentage": 7.2625,
+  "atl_date": "2024-04-19T02:32:14.563Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:01.191Z",
+  "platforms": {
+    "polygon": "0x69166f825ecac553d5cdd85e936191d6191dfd57"
+  }
+}

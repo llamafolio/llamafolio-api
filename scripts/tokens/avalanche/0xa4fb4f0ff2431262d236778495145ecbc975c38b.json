@@ -1,0 +1,31 @@
+{
+  "id": "bware-infra",
+  "symbol": "infra",
+  "name": "Bware",
+  "image": "https://assets.coingecko.com/coins/images/30546/large/infra-token-square.png?1696529418",
+  "current_price": 1.075,
+  "market_cap": 4565511,
+  "market_cap_rank": 1843,
+  "fully_diluted_valuation": 107333576,
+  "total_volume": 172949,
+  "high_24h": 1.1,
+  "low_24h": 1.073,
+  "price_change_24h": -0.020578062652051088,
+  "price_change_percentage_24h": -1.87868,
+  "market_cap_change_24h": -91636.54380629864,
+  "market_cap_change_percentage_24h": -1.96765,
+  "circulating_supply": 4253572,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 2.45,
+  "ath_change_percentage": -56.12212,
+  "ath_date": "2024-01-24T13:05:15.951Z",
+  "atl": 0.508274,
+  "atl_change_percentage": 111.29288,
+  "atl_date": "2023-09-14T04:42:14.641Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:26.929Z",
+  "platforms": {
+    "avalanche": "0xa4fb4f0ff2431262d236778495145ecbc975c38b"
+  }
+}

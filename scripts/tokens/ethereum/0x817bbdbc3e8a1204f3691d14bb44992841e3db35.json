@@ -1,0 +1,31 @@
+{
+  "id": "cudos",
+  "symbol": "cudos",
+  "name": "Cudos",
+  "image": "https://assets.coingecko.com/coins/images/13651/large/CudosIconTransparent.png?1696513400",
+  "current_price": 0.01681119,
+  "market_cap": 117659548,
+  "market_cap_rank": 425,
+  "fully_diluted_valuation": 154494693,
+  "total_volume": 542298,
+  "high_24h": 0.01726847,
+  "low_24h": 0.0163847,
+  "price_change_24h": -0.000431304411720051,
+  "price_change_percentage_24h": -2.5014,
+  "market_cap_change_24h": -3146873.348678097,
+  "market_cap_change_percentage_24h": -2.60489,
+  "circulating_supply": 7001563262,
+  "total_supply": 9193511131,
+  "max_supply": 10000000000,
+  "ath": 0.129565,
+  "ath_change_percentage": -87.02723,
+  "ath_date": "2021-01-17T21:37:35.063Z",
+  "atl": 0.00165966,
+  "atl_change_percentage": 912.74484,
+  "atl_date": "2023-05-15T18:34:40.770Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:59.606Z",
+  "platforms": {
+    "ethereum": "0x817bbdbc3e8a1204f3691d14bb44992841e3db35"
+  }
+}

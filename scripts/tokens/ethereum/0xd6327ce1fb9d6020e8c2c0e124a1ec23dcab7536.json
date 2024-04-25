@@ -1,0 +1,31 @@
+{
+  "id": "cuminu",
+  "symbol": "cuminu",
+  "name": "Cuminu",
+  "image": "https://assets.coingecko.com/coins/images/15832/large/CUMINU.png?1696515450",
+  "current_price": 0.00036152,
+  "market_cap": 3522155,
+  "market_cap_rank": 1970,
+  "fully_diluted_valuation": 3522155,
+  "total_volume": 3420.26,
+  "high_24h": 0.00038678,
+  "low_24h": 0.00036183,
+  "price_change_24h": -0.000020940780198957,
+  "price_change_percentage_24h": -5.47531,
+  "market_cap_change_24h": -204019.4091967619,
+  "market_cap_change_percentage_24h": -5.47531,
+  "circulating_supply": 9742684239.001,
+  "total_supply": 9742684239.001,
+  "max_supply": 10000000000,
+  "ath": 0.00337409,
+  "ath_change_percentage": -89.26669,
+  "ath_date": "2021-07-05T21:42:23.961Z",
+  "atl": 0.00001352,
+  "atl_change_percentage": 2578.98645,
+  "atl_date": "2022-06-22T16:18:03.718Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:48:31.632Z",
+  "platforms": {
+    "ethereum": "0xd6327ce1fb9d6020e8c2c0e124a1ec23dcab7536"
+  }
+}

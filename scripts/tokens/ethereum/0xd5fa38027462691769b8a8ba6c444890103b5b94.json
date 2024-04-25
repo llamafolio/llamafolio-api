@@ -1,0 +1,31 @@
+{
+  "id": "dawg-coin",
+  "symbol": "dawg",
+  "name": "Dawg Coin",
+  "image": "https://assets.coingecko.com/coins/images/33409/large/dawg_%281%29.jpg?1701700702",
+  "current_price": 0.00054058,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 538534,
+  "total_volume": 1116.14,
+  "high_24h": 0.00058234,
+  "low_24h": 0.0005369,
+  "price_change_24h": -0.000035614295355199,
+  "price_change_percentage_24h": -6.18092,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.01373682,
+  "ath_change_percentage": -96.07963,
+  "ath_date": "2023-12-05T03:39:52.043Z",
+  "atl": 0.0003746,
+  "atl_change_percentage": 43.76428,
+  "atl_date": "2024-03-20T22:26:02.695Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:44.227Z",
+  "platforms": {
+    "ethereum": "0xd5fa38027462691769b8a8ba6c444890103b5b94"
+  }
+}

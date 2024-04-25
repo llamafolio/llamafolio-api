@@ -1,0 +1,31 @@
+{
+  "id": "eve-exchange",
+  "symbol": "eve",
+  "name": "EVE",
+  "image": "https://assets.coingecko.com/coins/images/22744/large/eve-exchange-logo-200-200-03.png?1696522049",
+  "current_price": 0.00342294,
+  "market_cap": 136791,
+  "market_cap_rank": 3680,
+  "fully_diluted_valuation": 341978,
+  "total_volume": 30558,
+  "high_24h": 0.00348315,
+  "low_24h": 0.00333703,
+  "price_change_24h": 0.00006152,
+  "price_change_percentage_24h": 1.83023,
+  "market_cap_change_24h": 2316.12,
+  "market_cap_change_percentage_24h": 1.72234,
+  "circulating_supply": 40000000,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.051018,
+  "ath_change_percentage": -93.29383,
+  "ath_date": "2022-04-17T22:40:11.153Z",
+  "atl": 0.00190229,
+  "atl_change_percentage": 79.85566,
+  "atl_date": "2024-02-22T19:33:29.365Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:49.884Z",
+  "platforms": {
+    "polygon": "0xae29ac47a9e3b0a52840e547adf74b912999f7fc"
+  }
+}

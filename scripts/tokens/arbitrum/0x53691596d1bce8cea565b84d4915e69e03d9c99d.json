@@ -1,0 +1,31 @@
+{
+  "id": "across-protocol",
+  "symbol": "acx",
+  "name": "Across Protocol",
+  "image": "https://assets.coingecko.com/coins/images/28161/large/across-200x200.png?1696527165",
+  "current_price": 0.202172,
+  "market_cap": 68417596,
+  "market_cap_rank": 585,
+  "fully_diluted_valuation": 201636457,
+  "total_volume": 375444,
+  "high_24h": 0.213008,
+  "low_24h": 0.196307,
+  "price_change_24h": 0.00029214,
+  "price_change_percentage_24h": 0.14471,
+  "market_cap_change_24h": 184042,
+  "market_cap_change_percentage_24h": 0.26972,
+  "circulating_supply": 339311635.8710793,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.344822,
+  "ath_change_percentage": -41.44729,
+  "ath_date": "2024-03-17T23:20:30.937Z",
+  "atl": 0.03440846,
+  "atl_change_percentage": 486.78123,
+  "atl_date": "2023-06-01T08:30:40.359Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:44.124Z",
+  "platforms": {
+    "arbitrum": "0x53691596d1bce8cea565b84d4915e69e03d9c99d"
+  }
+}

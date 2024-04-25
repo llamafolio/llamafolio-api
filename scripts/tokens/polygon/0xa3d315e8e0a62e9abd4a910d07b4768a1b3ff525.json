@@ -1,0 +1,31 @@
+{
+  "id": "agos",
+  "symbol": "agos",
+  "name": "AGOS",
+  "image": "https://assets.coingecko.com/coins/images/31902/large/GT_200x200.png?1696530712",
+  "current_price": 0.530409,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 53040897,
+  "total_volume": 5.78,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 1.023,
+  "ath_change_percentage": -48.146,
+  "ath_date": "2023-10-17T03:34:28.242Z",
+  "atl": 0.322451,
+  "atl_change_percentage": 64.49306,
+  "atl_date": "2023-11-04T12:16:21.363Z",
+  "roi": null,
+  "last_updated": "2023-11-10T13:00:31.301Z",
+  "platforms": {
+    "polygon": "0xa3d315e8e0a62e9abd4a910d07b4768a1b3ff525"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "cybertruck",
+  "symbol": "truck",
+  "name": "Cybertruck",
+  "image": "https://assets.coingecko.com/coins/images/33168/large/TRUCK.jpg?1700908260",
+  "current_price": 0.00022201,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 221178,
+  "total_volume": 2176.02,
+  "high_24h": 0.00023824,
+  "low_24h": 0.00018905,
+  "price_change_24h": 0.00001004,
+  "price_change_percentage_24h": 4.73502,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.00993632,
+  "ath_change_percentage": -97.77404,
+  "ath_date": "2023-11-29T16:49:38.935Z",
+  "atl": 0.00013636,
+  "atl_change_percentage": 62.20545,
+  "atl_date": "2024-02-27T16:25:59.127Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:42.674Z",
+  "platforms": {
+    "ethereum": "0xab5d6508e4726141d29c6074ab366afa03f4ec8d"
+  }
+}

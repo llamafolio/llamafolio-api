@@ -1,0 +1,31 @@
+{
+  "id": "umee",
+  "symbol": "ux",
+  "name": "UX Chain",
+  "image": "https://assets.coingecko.com/coins/images/20635/large/yArLkbL.png?1696520039",
+  "current_price": 0.00322138,
+  "market_cap": 14249181,
+  "market_cap_rank": 1273,
+  "fully_diluted_valuation": 39508726,
+  "total_volume": 104542,
+  "high_24h": 0.00340351,
+  "low_24h": 0.00320622,
+  "price_change_24h": -0.000157977453688998,
+  "price_change_percentage_24h": -4.67478,
+  "market_cap_change_24h": -732806.6514034048,
+  "market_cap_change_percentage_24h": -4.89125,
+  "circulating_supply": 4432500000,
+  "total_supply": 12290000000,
+  "max_supply": 21000000000,
+  "ath": 0.359554,
+  "ath_change_percentage": -99.10508,
+  "ath_date": "2022-02-16T11:19:44.499Z",
+  "atl": 0.00173853,
+  "atl_change_percentage": 85.0833,
+  "atl_date": "2023-10-21T06:10:21.112Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:26.665Z",
+  "platforms": {
+    "ethereum": "0xc0a4df35568f116c370e6a6a6022ceb908eeddac"
+  }
+}

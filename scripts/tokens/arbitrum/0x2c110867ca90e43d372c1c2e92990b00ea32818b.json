@@ -1,0 +1,31 @@
+{
+  "id": "stabilize",
+  "symbol": "stbz",
+  "name": "Stabilize",
+  "image": "https://assets.coingecko.com/coins/images/12753/large/icon.png?1696512551",
+  "current_price": 0.362852,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 71115,
+  "total_volume": 518.53,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 195989.584417,
+  "max_supply": null,
+  "ath": 30.41,
+  "ath_change_percentage": -98.80687,
+  "ath_date": "2021-02-21T23:07:40.695Z",
+  "atl": 0.04846426,
+  "atl_change_percentage": 648.70079,
+  "atl_date": "2022-11-21T22:02:06.291Z",
+  "roi": null,
+  "last_updated": "2024-04-22T09:19:38.125Z",
+  "platforms": {
+    "arbitrum": "0x2c110867ca90e43d372c1c2e92990b00ea32818b"
+  }
+}

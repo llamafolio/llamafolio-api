@@ -1,0 +1,31 @@
+{
+  "id": "nodeai",
+  "symbol": "gpu",
+  "name": "NodeAI",
+  "image": "https://assets.coingecko.com/coins/images/35432/large/NodeAI.png?1708586757",
+  "current_price": 1.41,
+  "market_cap": 136930572,
+  "market_cap_rank": 388,
+  "fully_diluted_valuation": 140477871,
+  "total_volume": 972894,
+  "high_24h": 1.6,
+  "low_24h": 1.36,
+  "price_change_24h": -0.11682485560592104,
+  "price_change_percentage_24h": -7.64964,
+  "market_cap_change_24h": -11566049.420259327,
+  "market_cap_change_percentage_24h": -7.78876,
+  "circulating_supply": 97153156.22085401,
+  "total_supply": 99669988.5172239,
+  "max_supply": 100000000,
+  "ath": 2.85,
+  "ath_change_percentage": -50.5574,
+  "ath_date": "2024-04-02T17:11:27.962Z",
+  "atl": 0.03722159,
+  "atl_change_percentage": 3684.14917,
+  "atl_date": "2024-02-22T07:44:46.870Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:23.699Z",
+  "platforms": {
+    "ethereum": "0x1258d60b224c0c5cd888d37bbf31aa5fcfb7e870"
+  }
+}

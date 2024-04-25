@@ -1,0 +1,31 @@
+{
+  "id": "0xscans",
+  "symbol": "scan",
+  "name": "0xScans",
+  "image": "https://assets.coingecko.com/coins/images/34983/large/photo_2024-02-01_20-12-00.jpg?1706873450",
+  "current_price": 0.125067,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 12459713,
+  "total_volume": 48951,
+  "high_24h": 0.13204,
+  "low_24h": 0.121383,
+  "price_change_24h": 0.00213425,
+  "price_change_percentage_24h": 1.73611,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.345482,
+  "ath_change_percentage": -63.79915,
+  "ath_date": "2024-02-29T08:10:02.157Z",
+  "atl": 0.03351036,
+  "atl_change_percentage": 273.21988,
+  "atl_date": "2024-02-09T09:45:17.896Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:59.294Z",
+  "platforms": {
+    "ethereum": "0x10703ca5e253306e2ababd68e963198be8887c81"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "kittycake",
+  "symbol": "kcake",
+  "name": "KittyCake",
+  "image": "https://assets.coingecko.com/coins/images/17319/large/logo_-_2021-07-26T173233.519.png?1696516873",
+  "current_price": 0.00000167,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 167483,
+  "total_volume": 17.94,
+  "high_24h": 0.00000169,
+  "low_24h": 0.00000164,
+  "price_change_24h": -7.40873596e-9,
+  "price_change_percentage_24h": -0.44041,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.00013596,
+  "ath_change_percentage": -98.76812,
+  "ath_date": "2021-07-28T11:45:49.496Z",
+  "atl": 5.84868e-7,
+  "atl_change_percentage": 186.36006,
+  "atl_date": "2023-08-22T16:30:59.857Z",
+  "roi": null,
+  "last_updated": "2024-04-24T21:27:30.360Z",
+  "platforms": {
+    "bsc": "0xc22e8114818a918260662375450e19ac73d32852"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "e-money",
+  "symbol": "ngm",
+  "name": "e-Money",
+  "image": "https://assets.coingecko.com/coins/images/13722/large/logo-200x200.jpg?1696513466",
+  "current_price": 0.00809988,
+  "market_cap": 638426,
+  "market_cap_rank": 2938,
+  "fully_diluted_valuation": 1110257,
+  "total_volume": 79.82,
+  "high_24h": 0.00864385,
+  "low_24h": 0.00803385,
+  "price_change_24h": -0.000489542266411304,
+  "price_change_percentage_24h": -5.69936,
+  "market_cap_change_24h": -46082.97020753939,
+  "market_cap_change_percentage_24h": -6.73227,
+  "circulating_supply": 79132585.454344,
+  "total_supply": 137615956.291917,
+  "max_supply": null,
+  "ath": 2.76,
+  "ath_change_percentage": -99.70749,
+  "ath_date": "2021-04-06T20:57:46.205Z",
+  "atl": 0.00455753,
+  "atl_change_percentage": 77.02109,
+  "atl_date": "2023-10-14T03:05:05.985Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:22.859Z",
+  "platforms": {
+    "ethereum": "0xed0d5747a9ab03a75fbfec3228cd55848245b75d"
+  }
+}

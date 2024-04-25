@@ -1,0 +1,31 @@
+{
+  "id": "floyx-new",
+  "symbol": "floyx",
+  "name": "Floyx",
+  "image": "https://assets.coingecko.com/coins/images/29527/large/FloyxLogo_200x200.png?1696528469",
+  "current_price": 0.0001191,
+  "market_cap": 457739,
+  "market_cap_rank": 3108,
+  "fully_diluted_valuation": 5976081,
+  "total_volume": 88956,
+  "high_24h": 0.00012459,
+  "low_24h": 0.00010955,
+  "price_change_24h": -0.00000345204566911,
+  "price_change_percentage_24h": -2.81675,
+  "market_cap_change_24h": -10396.3709791695,
+  "market_cap_change_percentage_24h": -2.2208,
+  "circulating_supply": 3829760213,
+  "total_supply": 50000000000,
+  "max_supply": 50000000000,
+  "ath": 0.00029431,
+  "ath_change_percentage": -59.528,
+  "ath_date": "2023-12-16T22:31:52.895Z",
+  "atl": 0.00002303,
+  "atl_change_percentage": 417.13851,
+  "atl_date": "2023-12-07T15:07:50.690Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:53.898Z",
+  "platforms": {
+    "polygon": "0x7067bebfa1720132dfb9373d65b522afbe3a201e"
+  }
+}

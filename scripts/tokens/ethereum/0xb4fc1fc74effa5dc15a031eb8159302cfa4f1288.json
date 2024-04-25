@@ -1,0 +1,31 @@
+{
+  "id": "ordizk",
+  "symbol": "ozk",
+  "name": "OrdiZK",
+  "image": "https://assets.coingecko.com/coins/images/33619/large/IMG_20231214_094021_481.jpg?1702528631",
+  "current_price": 0.00002896,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 28957,
+  "total_volume": 11.08,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.01112984,
+  "ath_change_percentage": -99.73983,
+  "ath_date": "2023-12-28T04:59:59.986Z",
+  "atl": 0.0000266,
+  "atl_change_percentage": 8.8574,
+  "atl_date": "2024-03-05T20:10:51.496Z",
+  "roi": null,
+  "last_updated": "2024-03-30T22:01:40.634Z",
+  "platforms": {
+    "ethereum": "0xb4fc1fc74effa5dc15a031eb8159302cfa4f1288"
+  }
+}

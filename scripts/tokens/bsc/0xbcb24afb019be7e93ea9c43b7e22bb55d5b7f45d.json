@@ -1,0 +1,31 @@
+{
+  "id": "bsc-station",
+  "symbol": "bscs",
+  "name": "BSCS",
+  "image": "https://assets.coingecko.com/coins/images/14963/large/BSCS_LOGO.png?1696514623",
+  "current_price": 0.00861153,
+  "market_cap": 2137821,
+  "market_cap_rank": 2262,
+  "fully_diluted_valuation": 3442345,
+  "total_volume": 167813,
+  "high_24h": 0.00935458,
+  "low_24h": 0.00859717,
+  "price_change_24h": -0.000699164594905179,
+  "price_change_percentage_24h": -7.50927,
+  "market_cap_change_24h": -170235.11713680625,
+  "market_cap_change_percentage_24h": -7.37569,
+  "circulating_supply": 247727989,
+  "total_supply": 398894655,
+  "max_supply": 500000000,
+  "ath": 1.17,
+  "ath_change_percentage": -99.26569,
+  "ath_date": "2021-05-02T16:24:05.435Z",
+  "atl": 0.00652161,
+  "atl_change_percentage": 32.0461,
+  "atl_date": "2023-09-13T02:00:52.835Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:37.433Z",
+  "platforms": {
+    "bsc": "0xbcb24afb019be7e93ea9c43b7e22bb55d5b7f45d"
+  }
+}

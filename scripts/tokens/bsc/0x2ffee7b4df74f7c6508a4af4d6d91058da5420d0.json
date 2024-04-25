@@ -1,0 +1,31 @@
+{
+  "id": "chaincade",
+  "symbol": "chaincade",
+  "name": "ChainCade",
+  "image": "https://assets.coingecko.com/coins/images/17001/large/chaincade.png?1696516566",
+  "current_price": 1.13e-9,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1129571,
+  "total_volume": 19.62,
+  "high_24h": 1.151e-9,
+  "low_24h": 1.102e-9,
+  "price_change_24h": -4.96297e-13,
+  "price_change_percentage_24h": -0.04392,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": null,
+  "ath": 1.89141e-7,
+  "ath_change_percentage": -99.40279,
+  "ath_date": "2022-02-26T22:16:22.471Z",
+  "atl": 1e-18,
+  "atl_change_percentage": 96200447517.66136,
+  "atl_date": "2021-07-12T20:00:05.695Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:56:54.115Z",
+  "platforms": {
+    "bsc": "0x2ffee7b4df74f7c6508a4af4d6d91058da5420d0"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "evanesco-network",
+  "symbol": "eva",
+  "name": "Evanesco Network",
+  "image": "https://assets.coingecko.com/coins/images/16722/large/evan.PNG?1696516296",
+  "current_price": 0.00096116,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 38671,
+  "total_volume": 76548,
+  "high_24h": 0.00131246,
+  "low_24h": 0.00096552,
+  "price_change_24h": -0.000338315834338836,
+  "price_change_percentage_24h": -26.03477,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 40000000,
+  "max_supply": null,
+  "ath": 0.369513,
+  "ath_change_percentage": -99.73802,
+  "ath_date": "2021-09-25T10:51:47.154Z",
+  "atl": 0.00041353,
+  "atl_change_percentage": 134.09246,
+  "atl_date": "2023-10-25T04:56:32.192Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:55.142Z",
+  "platforms": {
+    "ethereum": "0xd6caf5bd23cf057f5fccce295dcc50c01c198707"
+  }
+}

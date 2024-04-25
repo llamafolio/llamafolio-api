@@ -1,0 +1,31 @@
+{
+  "id": "glitch-protocol",
+  "symbol": "glch",
+  "name": "Glitch Protocol",
+  "image": "https://assets.coingecko.com/coins/images/13712/large/glitch_logo.jpeg?1696513457",
+  "current_price": 0.01115169,
+  "market_cap": 782255,
+  "market_cap_rank": 2827,
+  "fully_diluted_valuation": 991347,
+  "total_volume": 5060.93,
+  "high_24h": 0.01157492,
+  "low_24h": 0.0105928,
+  "price_change_24h": 0.00033336,
+  "price_change_percentage_24h": 3.08147,
+  "market_cap_change_24h": 23496,
+  "market_cap_change_percentage_24h": 3.09658,
+  "circulating_supply": 70140711.61081402,
+  "total_supply": 88888888,
+  "max_supply": 88888888,
+  "ath": 2.99,
+  "ath_change_percentage": -99.62679,
+  "ath_date": "2021-11-14T03:32:28.549Z",
+  "atl": 0.00440959,
+  "atl_change_percentage": 152.91794,
+  "atl_date": "2023-09-29T04:25:25.343Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:30.598Z",
+  "platforms": {
+    "bsc": "0xf0902eb0049a4003793bab33f3566a22d2834442"
+  }
+}

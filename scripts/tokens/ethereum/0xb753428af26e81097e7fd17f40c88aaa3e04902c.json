@@ -1,0 +1,31 @@
+{
+  "id": "saffron-finance",
+  "symbol": "sfi",
+  "name": "saffron.finance",
+  "image": "https://assets.coingecko.com/coins/images/13117/large/sfi_red_250px.png?1696512904",
+  "current_price": 35.82,
+  "market_cap": 2860519,
+  "market_cap_rank": 2088,
+  "fully_diluted_valuation": 3292111,
+  "total_volume": 69797,
+  "high_24h": 39,
+  "low_24h": 31.9,
+  "price_change_24h": 0.186971,
+  "price_change_percentage_24h": 0.52468,
+  "market_cap_change_24h": 1925.96,
+  "market_cap_change_percentage_24h": 0.06737,
+  "circulating_supply": 80045.34257009129,
+  "total_supply": 92122.5018492188,
+  "max_supply": 100000,
+  "ath": 3496.46,
+  "ath_change_percentage": -98.97245,
+  "ath_date": "2021-02-20T06:56:42.568Z",
+  "atl": 19.25,
+  "atl_change_percentage": 86.66031,
+  "atl_date": "2024-02-12T22:47:05.708Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:29.414Z",
+  "platforms": {
+    "ethereum": "0xb753428af26e81097e7fd17f40c88aaa3e04902c"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "klima-dao",
+  "symbol": "klima",
+  "name": "KlimaDAO",
+  "image": "https://assets.coingecko.com/coins/images/19169/large/Klima-Token.png?1696518618",
+  "current_price": 1.85,
+  "market_cap": 16326628,
+  "market_cap_rank": 1207,
+  "fully_diluted_valuation": 16326628,
+  "total_volume": 790859,
+  "high_24h": 2.07,
+  "low_24h": 1.77,
+  "price_change_24h": -0.20353424663205777,
+  "price_change_percentage_24h": -9.89835,
+  "market_cap_change_24h": -1623289.263796663,
+  "market_cap_change_percentage_24h": -9.04344,
+  "circulating_supply": 8816276.39402255,
+  "total_supply": 8816276.39402255,
+  "max_supply": null,
+  "ath": 3777.3,
+  "ath_change_percentage": -99.95093,
+  "ath_date": "2021-10-24T04:15:42.792Z",
+  "atl": 0.593271,
+  "atl_change_percentage": 212.3925,
+  "atl_date": "2024-02-04T16:29:58.573Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:47.188Z",
+  "platforms": {
+    "polygon": "0x4e78011ce80ee02d2c3e649fb657e45898257815"
+  }
+}

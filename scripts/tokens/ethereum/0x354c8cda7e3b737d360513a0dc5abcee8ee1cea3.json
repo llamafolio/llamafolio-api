@@ -1,0 +1,31 @@
+{
+  "id": "babytrump",
+  "symbol": "babytrump",
+  "name": "BABYTRUMP",
+  "image": "https://assets.coingecko.com/coins/images/34750/large/babytrumpNEWlogo200.png?1705954645",
+  "current_price": 0.03323463,
+  "market_cap": 1319235,
+  "market_cap_rank": 2530,
+  "fully_diluted_valuation": 1319235,
+  "total_volume": 12081.65,
+  "high_24h": 0.03384236,
+  "low_24h": 0.0311195,
+  "price_change_24h": 0.00141931,
+  "price_change_percentage_24h": 4.46108,
+  "market_cap_change_24h": 55305,
+  "market_cap_change_percentage_24h": 4.37561,
+  "circulating_supply": 39694577,
+  "total_supply": 39694577,
+  "max_supply": 47000000,
+  "ath": 0.350821,
+  "ath_change_percentage": -90.55218,
+  "ath_date": "2024-02-26T16:04:57.119Z",
+  "atl": 0.01940997,
+  "atl_change_percentage": 70.76227,
+  "atl_date": "2024-02-09T11:14:51.267Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:30.511Z",
+  "platforms": {
+    "ethereum": "0x354c8cda7e3b737d360513a0dc5abcee8ee1cea3"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "bimbo-the-dog",
+  "symbol": "bimbo",
+  "name": "Bimbo The Dog",
+  "image": "https://assets.coingecko.com/coins/images/34551/large/photo_2024-01-12_16.35.16.png?1705368435",
+  "current_price": 0.00001719,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 17192.36,
+  "total_volume": 16.26,
+  "high_24h": 0.00001765,
+  "low_24h": 0.00001703,
+  "price_change_24h": -4.56765463851e-7,
+  "price_change_percentage_24h": -2.58803,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 999999999,
+  "ath": 0.00038903,
+  "ath_change_percentage": -95.58073,
+  "ath_date": "2024-01-16T03:49:27.874Z",
+  "atl": 0.00001665,
+  "atl_change_percentage": 3.24686,
+  "atl_date": "2024-04-16T16:23:40.177Z",
+  "roi": null,
+  "last_updated": "2024-04-25T04:04:51.582Z",
+  "platforms": {
+    "ethereum": "0x0364e6c6f4f9ad90f11a39e681bd6c0156b3efdb"
+  }
+}

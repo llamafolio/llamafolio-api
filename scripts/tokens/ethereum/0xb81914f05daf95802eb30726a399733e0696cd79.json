@@ -1,0 +1,31 @@
+{
+  "id": "hola",
+  "symbol": "hola",
+  "name": "Hola",
+  "image": "https://assets.coingecko.com/coins/images/35050/large/Hola.png?1707210683",
+  "current_price": 0.0000143,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 143008,
+  "total_volume": 160.79,
+  "high_24h": 0.0000151,
+  "low_24h": 0.00001413,
+  "price_change_24h": -6.46690151806e-7,
+  "price_change_percentage_24h": -4.32641,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.00013261,
+  "ath_change_percentage": -89.216,
+  "ath_date": "2024-02-06T12:55:07.340Z",
+  "atl": 0.00001164,
+  "atl_change_percentage": 22.82078,
+  "atl_date": "2024-04-20T03:35:51.424Z",
+  "roi": null,
+  "last_updated": "2024-04-25T03:02:11.408Z",
+  "platforms": {
+    "ethereum": "0xb81914f05daf95802eb30726a399733e0696cd79"
+  }
+}

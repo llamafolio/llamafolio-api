@@ -1,0 +1,31 @@
+{
+  "id": "bull-frog",
+  "symbol": "bull",
+  "name": "Bull Frog",
+  "image": "https://assets.coingecko.com/coins/images/31612/large/Bull200.png?1696530428",
+  "current_price": 4.5836e-11,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 45836,
+  "total_volume": 385.88,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": 1000000000000000,
+  "ath": 6.65372e-10,
+  "ath_change_percentage": -93.11119,
+  "ath_date": "2023-09-13T02:04:43.009Z",
+  "atl": 1.9276e-11,
+  "atl_change_percentage": 137.79355,
+  "atl_date": "2023-12-07T00:24:33.764Z",
+  "roi": null,
+  "last_updated": "2024-04-24T00:30:43.455Z",
+  "platforms": {
+    "ethereum": "0xd1d92f1c5524d93ced7bf6f418c8bf8abf68ac66"
+  }
+}

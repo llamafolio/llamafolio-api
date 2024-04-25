@@ -1,0 +1,31 @@
+{
+  "id": "lmeow-2",
+  "symbol": "lmeow",
+  "name": "lmeow",
+  "image": "https://assets.coingecko.com/coins/images/35794/large/Untitled_design_200%281%29.png?1709801192",
+  "current_price": 0.01917379,
+  "market_cap": 19170080,
+  "market_cap_rank": 1130,
+  "fully_diluted_valuation": 19170080,
+  "total_volume": 982381,
+  "high_24h": 0.03062501,
+  "low_24h": 0.01773349,
+  "price_change_24h": -0.01110210964919816,
+  "price_change_percentage_24h": -36.66979,
+  "market_cap_change_24h": -11353773.979527067,
+  "market_cap_change_percentage_24h": -37.1964,
+  "circulating_supply": 1000000000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.078017,
+  "ath_change_percentage": -75.50369,
+  "ath_date": "2024-03-31T11:59:59.897Z",
+  "atl": 0.00826822,
+  "atl_change_percentage": 131.14095,
+  "atl_date": "2024-04-13T21:08:43.874Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:53.158Z",
+  "platforms": {
+    "ethereum": "0x1ae7e1d0ce06364ced9ad58225a1705b3e5db92b"
+  }
+}

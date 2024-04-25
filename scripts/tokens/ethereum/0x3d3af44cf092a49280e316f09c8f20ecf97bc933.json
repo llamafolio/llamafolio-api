@@ -1,0 +1,31 @@
+{
+  "id": "ucx",
+  "symbol": "ucx",
+  "name": "UCX",
+  "image": "https://assets.coingecko.com/coins/images/10131/large/UCX_200200.png?1696510155",
+  "current_price": 0.04798511,
+  "market_cap": 2145337,
+  "market_cap_rank": 2259,
+  "fully_diluted_valuation": 48029646,
+  "total_volume": 58462,
+  "high_24h": 0.0487894,
+  "low_24h": 0.04775335,
+  "price_change_24h": -0.000576554088293387,
+  "price_change_percentage_24h": -1.18726,
+  "market_cap_change_24h": -26178.63208142249,
+  "market_cap_change_percentage_24h": -1.20555,
+  "circulating_supply": 44666925.619973,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.87223,
+  "ath_change_percentage": -94.50866,
+  "ath_date": "2021-12-24T02:55:08.541Z",
+  "atl": 0.0254856,
+  "atl_change_percentage": 87.93803,
+  "atl_date": "2023-11-28T15:15:58.637Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:42.502Z",
+  "platforms": {
+    "ethereum": "0x3d3af44cf092a49280e316f09c8f20ecf97bc933"
+  }
+}

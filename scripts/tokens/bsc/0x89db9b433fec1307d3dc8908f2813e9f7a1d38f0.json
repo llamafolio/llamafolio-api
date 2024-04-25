@@ -1,0 +1,31 @@
+{
+  "id": "unidef",
+  "symbol": "u",
+  "name": "Unidef",
+  "image": "https://assets.coingecko.com/coins/images/26691/large/Profile_Picture_-_Final.png?1696525764",
+  "current_price": 0.00001529,
+  "market_cap": 2636462,
+  "market_cap_rank": 2139,
+  "fully_diluted_valuation": 12121669,
+  "total_volume": 395.43,
+  "high_24h": 0.00001599,
+  "low_24h": 0.00001521,
+  "price_change_24h": -4.01667924818e-7,
+  "price_change_percentage_24h": -2.55913,
+  "market_cap_change_24h": -71338.06843687873,
+  "market_cap_change_percentage_24h": -2.63454,
+  "circulating_supply": 172259933000,
+  "total_supply": 791999933000,
+  "max_supply": 990000000000,
+  "ath": 0.0002754,
+  "ath_change_percentage": -94.46111,
+  "ath_date": "2022-11-09T06:04:35.455Z",
+  "atl": 0.000011,
+  "atl_change_percentage": 38.62089,
+  "atl_date": "2024-04-18T08:10:03.060Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:43.168Z",
+  "platforms": {
+    "bsc": "0x89db9b433fec1307d3dc8908f2813e9f7a1d38f0"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "gigaswap",
+  "symbol": "giga",
+  "name": "GigaSwap",
+  "image": "https://assets.coingecko.com/coins/images/26919/large/final_62fcaacdbcc9640975d3fb7c_822256.png?1696525976",
+  "current_price": 0.0000076,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 764747,
+  "total_volume": 1761.87,
+  "high_24h": 0.00000801,
+  "low_24h": 0.00000761,
+  "price_change_24h": -3.63243808268e-7,
+  "price_change_percentage_24h": -4.56319,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.00010088,
+  "ath_change_percentage": -92.41902,
+  "ath_date": "2023-02-02T04:40:09.538Z",
+  "atl": 0.0000075,
+  "atl_change_percentage": 2.02076,
+  "atl_date": "2024-04-20T09:53:28.565Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:42.976Z",
+  "platforms": {
+    "ethereum": "0x83249c6794bca5a77eb8c0af9f1a86e055459cea"
+  }
+}

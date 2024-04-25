@@ -1,0 +1,31 @@
+{
+  "id": "france-rev-finance",
+  "symbol": "frf",
+  "name": "FRANCE REV FINANCE",
+  "image": "https://assets.coingecko.com/coins/images/22224/large/LOGO200_FRF.png?1696521567",
+  "current_price": 1.388e-8,
+  "market_cap": 90802,
+  "market_cap_rank": 3813,
+  "fully_diluted_valuation": 100546,
+  "total_volume": 3748.71,
+  "high_24h": 1.3953e-8,
+  "low_24h": 6.572e-9,
+  "price_change_24h": -1.9070763e-11,
+  "price_change_percentage_24h": -0.13721,
+  "market_cap_change_24h": 14.56,
+  "market_cap_change_percentage_24h": 0.01604,
+  "circulating_supply": 6532800814062,
+  "total_supply": 7233800814062,
+  "max_supply": 10000000000000,
+  "ath": 0.00000339,
+  "ath_change_percentage": -99.59112,
+  "ath_date": "2023-10-25T21:27:35.076Z",
+  "atl": 8.20006e-10,
+  "atl_change_percentage": 1590.1652,
+  "atl_date": "2023-10-27T20:49:57.018Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:52.611Z",
+  "platforms": {
+    "avalanche": "0x99083d1b9c6744c71d0cf70b8965faca37684527"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "patriot-pay",
+  "symbol": "ppy",
+  "name": "Patriot Pay",
+  "image": "https://assets.coingecko.com/coins/images/33693/large/patriot.jpg?1706622595",
+  "current_price": 0.00038822,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 15409542,
+  "total_volume": 2996.44,
+  "high_24h": 0.00041682,
+  "low_24h": 0.0003839,
+  "price_change_24h": -0.000022343147137181,
+  "price_change_percentage_24h": -5.44208,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 40000000000,
+  "max_supply": null,
+  "ath": 0.00099339,
+  "ath_change_percentage": -61.21983,
+  "ath_date": "2024-02-18T07:29:54.828Z",
+  "atl": 0.00025379,
+  "atl_change_percentage": 51.79554,
+  "atl_date": "2024-04-13T21:43:31.473Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:36.937Z",
+  "platforms": {
+    "polygon": "0xfd55e4a6767ff7ffc0b8105262a8cdaabe7fbf3f"
+  }
+}

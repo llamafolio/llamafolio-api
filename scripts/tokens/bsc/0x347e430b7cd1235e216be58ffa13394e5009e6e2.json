@@ -1,0 +1,31 @@
+{
+  "id": "gaia-everworld",
+  "symbol": "gaia",
+  "name": "Gaia Everworld",
+  "image": "https://assets.coingecko.com/coins/images/19629/large/gaia.png?1696519058",
+  "current_price": 0.00630588,
+  "market_cap": 2572432,
+  "market_cap_rank": 2156,
+  "fully_diluted_valuation": 3129703,
+  "total_volume": 41335,
+  "high_24h": 0.00643033,
+  "low_24h": 0.00624222,
+  "price_change_24h": -0.000104913348018675,
+  "price_change_percentage_24h": -1.63651,
+  "market_cap_change_24h": -70013.52267428301,
+  "market_cap_change_percentage_24h": -2.64957,
+  "circulating_supply": 410970685.39357674,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 1.37,
+  "ath_change_percentage": -99.54462,
+  "ath_date": "2021-11-23T03:48:19.988Z",
+  "atl": 0.00245044,
+  "atl_change_percentage": 154.83266,
+  "atl_date": "2023-01-05T08:21:47.040Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:09.234Z",
+  "platforms": {
+    "bsc": "0x347e430b7cd1235e216be58ffa13394e5009e6e2"
+  }
+}

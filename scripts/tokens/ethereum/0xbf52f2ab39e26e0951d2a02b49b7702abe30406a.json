@@ -1,0 +1,31 @@
+{
+  "id": "odem",
+  "symbol": "ode",
+  "name": "ODEM",
+  "image": "https://assets.coingecko.com/coins/images/3752/large/odem.png?1696504428",
+  "current_price": 0.00024,
+  "market_cap": 53267,
+  "market_cap_rank": 3976,
+  "fully_diluted_valuation": 95273,
+  "total_volume": 72,
+  "high_24h": 0.00024036,
+  "low_24h": 0.0002395,
+  "price_change_24h": 1.80587e-7,
+  "price_change_percentage_24h": 0.0753,
+  "market_cap_change_24h": 24.86,
+  "market_cap_change_percentage_24h": 0.04669,
+  "circulating_supply": 221946100.9935523,
+  "total_supply": 396969697,
+  "max_supply": null,
+  "ath": 0.550241,
+  "ath_change_percentage": -99.95638,
+  "ath_date": "2018-08-06T20:40:14.609Z",
+  "atl": 0.0000214,
+  "atl_change_percentage": 1021.47486,
+  "atl_date": "2023-07-08T16:37:39.353Z",
+  "roi": null,
+  "last_updated": "2024-04-24T20:57:46.418Z",
+  "platforms": {
+    "ethereum": "0xbf52f2ab39e26e0951d2a02b49b7702abe30406a"
+  }
+}

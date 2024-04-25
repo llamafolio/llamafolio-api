@@ -1,0 +1,31 @@
+{
+  "id": "universal-basic-income",
+  "symbol": "ubi",
+  "name": "Universal Basic Income",
+  "image": "https://assets.coingecko.com/coins/images/15269/large/ubi.png?1696514921",
+  "current_price": 0.00063507,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 6516.5,
+  "total_volume": 1079.76,
+  "high_24h": 0.00066343,
+  "low_24h": 0.00061129,
+  "price_change_24h": -0.000026349707955413,
+  "price_change_percentage_24h": -3.9838,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10261044,
+  "max_supply": null,
+  "ath": 1.39,
+  "ath_change_percentage": -99.95433,
+  "ath_date": "2021-10-19T23:03:10.987Z",
+  "atl": 0.00033759,
+  "atl_change_percentage": 88.11763,
+  "atl_date": "2023-06-07T15:54:50.665Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:20.396Z",
+  "platforms": {
+    "ethereum": "0xdd1ad9a21ce722c151a836373babe42c868ce9a4"
+  }
+}

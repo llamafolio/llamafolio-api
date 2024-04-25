@@ -1,0 +1,31 @@
+{
+  "id": "sesterce",
+  "symbol": "ses",
+  "name": "Sesterce",
+  "image": "https://assets.coingecko.com/coins/images/32327/large/Screenshot_2023-10-13_185155-removebg-preview_%281%29.png?1697451481",
+  "current_price": 0.00000271,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 72.14,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.0016185,
+  "ath_change_percentage": -99.83254,
+  "ath_date": "2023-10-24T12:54:42.174Z",
+  "atl": 0.00000105,
+  "atl_change_percentage": 157.48712,
+  "atl_date": "2023-11-20T17:40:54.387Z",
+  "roi": null,
+  "last_updated": "2024-03-31T11:20:16.688Z",
+  "platforms": {
+    "ethereum": "0xe410fbd0977c8a2f276283425de488129f7faff9"
+  }
+}

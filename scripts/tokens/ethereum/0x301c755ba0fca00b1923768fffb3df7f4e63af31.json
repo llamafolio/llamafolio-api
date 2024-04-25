@@ -1,0 +1,31 @@
+{
+  "id": "global-digital-content",
+  "symbol": "gdc",
+  "name": "Global Digital Content",
+  "image": "https://assets.coingecko.com/coins/images/10122/large/Vp4L1x4Hu4HEuEPUl0gSocDaVifkXlCqSd8A72ml_Q0uwEc9uBWBTwjS43_NP8eiiZVveJDIQXguWUXYk3MLZiFOER-8CGO120I0NGU_L8aTJ8c50a-O_AbkY-4nUkPYhUTNgf3rkcqkXnKecixQwLfkJG2XTCLwNvo_ox05x0_hU1Z__FOT4O7AeU-PC6skc85NCVS68cnZjxcUBOY9K.jpg?1696510147",
+  "current_price": 0.00004718,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 224446,
+  "total_volume": 25476,
+  "high_24h": 0.00004961,
+  "low_24h": 0.00004661,
+  "price_change_24h": -0.000002278170155742,
+  "price_change_percentage_24h": -4.60601,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 4765815835,
+  "max_supply": null,
+  "ath": 0.239971,
+  "ath_change_percentage": -99.98043,
+  "ath_date": "2021-09-02T05:54:24.394Z",
+  "atl": 0.00002185,
+  "atl_change_percentage": 114.97854,
+  "atl_date": "2023-07-18T13:01:00.926Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:14.073Z",
+  "platforms": {
+    "ethereum": "0x301c755ba0fca00b1923768fffb3df7f4e63af31"
+  }
+}

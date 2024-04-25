@@ -1,0 +1,31 @@
+{
+  "id": "leandro-lopes",
+  "symbol": "lopes",
+  "name": "Leandro Lopes",
+  "image": "https://assets.coingecko.com/coins/images/28613/large/lopes.png?1696527598",
+  "current_price": 0.075128,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 50768471,
+  "total_volume": 115906,
+  "high_24h": 0.093684,
+  "low_24h": 0.060169,
+  "price_change_24h": 0.01495882,
+  "price_change_percentage_24h": 24.86124,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 650000000,
+  "max_supply": 650000000,
+  "ath": 1.19,
+  "ath_change_percentage": -94.21131,
+  "ath_date": "2023-06-07T19:22:50.726Z",
+  "atl": 0.04116608,
+  "atl_change_percentage": 66.73417,
+  "atl_date": "2024-04-16T12:21:01.261Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:16:06.786Z",
+  "platforms": {
+    "polygon": "0xcebdc775e9f18156ec2e04fb4150f1bc54de690f"
+  }
+}

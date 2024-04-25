@@ -1,0 +1,31 @@
+{
+  "id": "uplift",
+  "symbol": "lift",
+  "name": "Uplift",
+  "image": "https://assets.coingecko.com/coins/images/20666/large/logo-200x200.png?1696520067",
+  "current_price": 0.01606962,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 965.34,
+  "total_volume": 6683.62,
+  "high_24h": 0.01778496,
+  "low_24h": 0.01566326,
+  "price_change_24h": -0.00140489401594476,
+  "price_change_percentage_24h": -8.03967,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 60000,
+  "max_supply": 1000000000,
+  "ath": 0.962611,
+  "ath_change_percentage": -98.33524,
+  "ath_date": "2021-11-23T17:23:38.884Z",
+  "atl": 0.01117314,
+  "atl_change_percentage": 43.42534,
+  "atl_date": "2023-08-02T20:57:56.434Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:22.017Z",
+  "platforms": {
+    "bsc": "0x513c3200f227ebb62e3b3d00b7a83779643a71cf"
+  }
+}

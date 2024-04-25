@@ -1,0 +1,35 @@
+{
+  "id": "loopring",
+  "symbol": "lrc",
+  "name": "Loopring",
+  "image": "https://assets.coingecko.com/coins/images/913/large/LRC.png?1696502034",
+  "current_price": 0.25936,
+  "market_cap": 322387741,
+  "market_cap_rank": 222,
+  "fully_diluted_valuation": 355475901,
+  "total_volume": 20969546,
+  "high_24h": 0.284049,
+  "low_24h": 0.257777,
+  "price_change_24h": -0.019737883160061143,
+  "price_change_percentage_24h": -7.07204,
+  "market_cap_change_24h": -26881523.77467376,
+  "market_cap_change_percentage_24h": -7.6965,
+  "circulating_supply": 1245991468.94246,
+  "total_supply": 1373873397.44246,
+  "max_supply": 1374513896,
+  "ath": 3.75,
+  "ath_change_percentage": -93.0802,
+  "ath_date": "2021-11-10T14:59:53.164Z",
+  "atl": 0.01963893,
+  "atl_change_percentage": 1221.26185,
+  "atl_date": "2019-12-18T13:14:41.553Z",
+  "roi": {
+    "times": 3.3226623348229984,
+    "currency": "usd",
+    "percentage": 332.2662334822998
+  },
+  "last_updated": "2024-04-25T09:02:49.330Z",
+  "platforms": {
+    "arbitrum": "0x46d0ce7de6247b0a95f67b43b589b4041bae7fbe"
+  }
+}

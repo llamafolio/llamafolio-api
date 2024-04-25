@@ -1,0 +1,31 @@
+{
+  "id": "intrepid-token",
+  "symbol": "int",
+  "name": "Intrepid Token",
+  "image": "https://assets.coingecko.com/coins/images/33229/large/int.png?1701257932",
+  "current_price": 6.5,
+  "market_cap": 929432,
+  "market_cap_rank": 2728,
+  "fully_diluted_valuation": 1164154,
+  "total_volume": 145.16,
+  "high_24h": 6.77,
+  "low_24h": 6.47,
+  "price_change_24h": -0.21099807732888287,
+  "price_change_percentage_24h": -3.14626,
+  "market_cap_change_24h": -32573.968018161366,
+  "market_cap_change_percentage_24h": -3.38605,
+  "circulating_supply": 143092.70210093525,
+  "total_supply": 179229.8645880988,
+  "max_supply": 1000000,
+  "ath": 10.73,
+  "ath_change_percentage": -39.44847,
+  "ath_date": "2023-12-03T03:24:30.761Z",
+  "atl": 4.69,
+  "atl_change_percentage": 38.56244,
+  "atl_date": "2024-01-09T17:00:31.233Z",
+  "roi": null,
+  "last_updated": "2024-04-24T21:01:35.440Z",
+  "platforms": {
+    "ethereum": "0xa2762ba628b962f93498d8893b6e4346140fe96d"
+  }
+}

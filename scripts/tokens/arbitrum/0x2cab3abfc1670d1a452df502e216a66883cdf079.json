@@ -1,0 +1,31 @@
+{
+  "id": "layer2dao",
+  "symbol": "l2dao",
+  "name": "Layer2DAO",
+  "image": "https://assets.coingecko.com/coins/images/23699/large/Khp7Y4Sn.png?1696522900",
+  "current_price": 0.00198494,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1976174,
+  "total_volume": 391.26,
+  "high_24h": 0.00203232,
+  "low_24h": 0.00194289,
+  "price_change_24h": -0.000012022646348355,
+  "price_change_percentage_24h": -0.60205,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.0255731,
+  "ath_change_percentage": -92.27817,
+  "ath_date": "2022-07-29T23:36:34.310Z",
+  "atl": 0.00074507,
+  "atl_change_percentage": 165.03807,
+  "atl_date": "2022-10-22T19:37:04.525Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:53.763Z",
+  "platforms": {
+    "arbitrum": "0x2cab3abfc1670d1a452df502e216a66883cdf079"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "bruh",
+  "symbol": "bruh",
+  "name": "BRUH",
+  "image": "https://assets.coingecko.com/coins/images/32227/large/BRUH.jpg?1696931468",
+  "current_price": 1.517e-9,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 104697,
+  "total_volume": 1.095,
+  "high_24h": 1.591e-9,
+  "low_24h": 1.509e-9,
+  "price_change_24h": -5.2901101e-11,
+  "price_change_percentage_24h": -3.36896,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 69000000000000,
+  "max_supply": null,
+  "ath": 2.194e-9,
+  "ath_change_percentage": -30.82846,
+  "ath_date": "2024-03-08T15:32:34.930Z",
+  "atl": 8.10676e-10,
+  "atl_change_percentage": 87.17089,
+  "atl_date": "2023-10-12T13:37:21.277Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:33.234Z",
+  "platforms": {
+    "arbitrum": "0xb5b5b428e4de365f809ced8271d202449e5c2f72"
+  }
+}

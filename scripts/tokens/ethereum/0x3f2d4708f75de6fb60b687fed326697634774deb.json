@@ -1,0 +1,31 @@
+{
+  "id": "neobot",
+  "symbol": "neobot",
+  "name": "NeoBot",
+  "image": "https://assets.coingecko.com/coins/images/31033/large/20230718_190506_0000.png?1696529869",
+  "current_price": 0.00230519,
+  "market_cap": 20751,
+  "market_cap_rank": 4144,
+  "fully_diluted_valuation": 23052,
+  "total_volume": 68.05,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 9001756.146512795,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.215604,
+  "ath_change_percentage": -98.93082,
+  "ath_date": "2023-07-24T07:51:17.873Z",
+  "atl": 0.0019568,
+  "atl_change_percentage": 17.80431,
+  "atl_date": "2024-01-03T12:34:12.221Z",
+  "roi": null,
+  "last_updated": "2024-04-15T07:14:59.763Z",
+  "platforms": {
+    "ethereum": "0x3f2d4708f75de6fb60b687fed326697634774deb"
+  }
+}

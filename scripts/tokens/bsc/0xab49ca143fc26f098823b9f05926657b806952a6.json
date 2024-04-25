@@ -1,0 +1,31 @@
+{
+  "id": "gainspot",
+  "symbol": "gain$",
+  "name": "GainSpot",
+  "image": "https://assets.coingecko.com/coins/images/32093/large/Logo-200x200-1.png?1696530891",
+  "current_price": 0.00033851,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 338916,
+  "total_volume": 1406.75,
+  "high_24h": 0.00034861,
+  "low_24h": 0.00033511,
+  "price_change_24h": -0.000003700478745458,
+  "price_change_percentage_24h": -1.08135,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00037096,
+  "ath_change_percentage": -9.08107,
+  "ath_date": "2024-03-13T08:21:29.411Z",
+  "atl": 0.00019748,
+  "atl_change_percentage": 70.78793,
+  "atl_date": "2023-12-26T09:49:03.430Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:01.735Z",
+  "platforms": {
+    "bsc": "0xab49ca143fc26f098823b9f05926657b806952a6"
+  }
+}

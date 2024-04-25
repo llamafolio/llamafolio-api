@@ -1,0 +1,31 @@
+{
+  "id": "anon-web3",
+  "symbol": "aw3",
+  "name": "Anon Web3",
+  "image": "https://assets.coingecko.com/coins/images/31814/large/IMG_2336.png?1696530628",
+  "current_price": 0.00007087,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 70874,
+  "total_volume": 181.76,
+  "high_24h": 0.00007152,
+  "low_24h": 0.00007028,
+  "price_change_24h": -6.41814114273e-7,
+  "price_change_percentage_24h": -0.89744,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00059202,
+  "ath_change_percentage": -88.02834,
+  "ath_date": "2023-12-01T02:41:50.215Z",
+  "atl": 0.00005072,
+  "atl_change_percentage": 39.73742,
+  "atl_date": "2023-10-11T03:21:20.088Z",
+  "roi": null,
+  "last_updated": "2024-04-25T02:14:05.218Z",
+  "platforms": {
+    "ethereum": "0xcc09f34accdb36ee3ed98358a3b8a6ae5c29ea07"
+  }
+}

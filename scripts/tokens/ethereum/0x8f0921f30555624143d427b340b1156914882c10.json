@@ -1,0 +1,31 @@
+{
+  "id": "flypme",
+  "symbol": "fyp",
+  "name": "FlypMe",
+  "image": "https://assets.coingecko.com/coins/images/1098/large/flypme.png?1696502196",
+  "current_price": 0.01983723,
+  "market_cap": 335886,
+  "market_cap_rank": 3262,
+  "fully_diluted_valuation": 699805,
+  "total_volume": 228.91,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 16932115.09913687,
+  "total_supply": 35277362,
+  "max_supply": null,
+  "ath": 2.65,
+  "ath_change_percentage": -99.25146,
+  "ath_date": "2018-01-24T00:00:00.000Z",
+  "atl": 8.456e-8,
+  "atl_change_percentage": 23459186.07654,
+  "atl_date": "2018-12-17T00:00:00.000Z",
+  "roi": null,
+  "last_updated": "2024-04-20T20:30:36.854Z",
+  "platforms": {
+    "ethereum": "0x8f0921f30555624143d427b340b1156914882c10"
+  }
+}

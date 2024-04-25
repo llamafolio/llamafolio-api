@@ -1,0 +1,31 @@
+{
+  "id": "shibai-labs",
+  "symbol": "slab",
+  "name": "ShibAI Labs",
+  "image": "https://assets.coingecko.com/coins/images/28947/large/ShibAI-Labs-Logo-PNG.png?1696527921",
+  "current_price": 1.9625e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 19625.02,
+  "total_volume": 1.16,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.00000539,
+  "ath_change_percentage": -96.35675,
+  "ath_date": "2023-02-05T06:33:14.170Z",
+  "atl": 1.35506e-7,
+  "atl_change_percentage": 44.82767,
+  "atl_date": "2023-03-10T11:50:29.214Z",
+  "roi": null,
+  "last_updated": "2023-05-18T13:00:39.496Z",
+  "platforms": {
+    "bsc": "0x4fde90e783abaa07996eff44f10edb132de15dd4"
+  }
+}

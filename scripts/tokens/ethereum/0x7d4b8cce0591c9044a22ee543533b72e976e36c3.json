@@ -1,0 +1,31 @@
+{
+  "id": "change",
+  "symbol": "cag",
+  "name": "Change",
+  "image": "https://assets.coingecko.com/coins/images/1021/large/200x200.png?1696502132",
+  "current_price": 0.00226677,
+  "market_cap": 44596,
+  "market_cap_rank": 4016,
+  "fully_diluted_valuation": 179492,
+  "total_volume": 0.109715,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 19673647.510614466,
+  "total_supply": 79184116,
+  "max_supply": null,
+  "ath": 1.73,
+  "ath_change_percentage": -99.86865,
+  "ath_date": "2018-01-08T00:00:00.000Z",
+  "atl": 0.00112487,
+  "atl_change_percentage": 101.51433,
+  "atl_date": "2024-03-22T15:16:13.702Z",
+  "roi": null,
+  "last_updated": "2024-04-23T10:33:57.695Z",
+  "platforms": {
+    "ethereum": "0x7d4b8cce0591c9044a22ee543533b72e976e36c3"
+  }
+}

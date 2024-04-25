@@ -1,0 +1,31 @@
+{
+  "id": "olyverse",
+  "symbol": "oly",
+  "name": "Olyverse",
+  "image": "https://assets.coingecko.com/coins/images/13983/large/OLY-LOGO.png?1696513715",
+  "current_price": 0.00040204,
+  "market_cap": 862619,
+  "market_cap_rank": 2765,
+  "fully_diluted_valuation": 2008349,
+  "total_volume": 13180.66,
+  "high_24h": 0.00043382,
+  "low_24h": 0.00039999,
+  "price_change_24h": -0.00002007655703964,
+  "price_change_percentage_24h": -4.75613,
+  "market_cap_change_24h": -43443.25343712454,
+  "market_cap_change_percentage_24h": -4.79473,
+  "circulating_supply": 2147581905.9317436,
+  "total_supply": 5000000000,
+  "max_supply": 5000000000,
+  "ath": 2.53,
+  "ath_change_percentage": -99.9841,
+  "ath_date": "2021-02-16T12:42:35.933Z",
+  "atl": 0.00036008,
+  "atl_change_percentage": 11.54978,
+  "atl_date": "2024-04-14T03:55:21.052Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:39.584Z",
+  "platforms": {
+    "ethereum": "0x6595b8fd9c920c81500dca94e53cdc712513fb1f"
+  }
+}

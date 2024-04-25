@@ -1,0 +1,31 @@
+{
+  "id": "lossless",
+  "symbol": "lss",
+  "name": "Lossless",
+  "image": "https://assets.coingecko.com/coins/images/15917/large/Group_57.png?1696515531",
+  "current_price": 0.146377,
+  "market_cap": 9210637,
+  "market_cap_rank": 1475,
+  "fully_diluted_valuation": 14719292,
+  "total_volume": 191783,
+  "high_24h": 0.154025,
+  "low_24h": 0.145578,
+  "price_change_24h": -0.006247608283086349,
+  "price_change_percentage_24h": -4.09344,
+  "market_cap_change_24h": -281181.3755881265,
+  "market_cap_change_percentage_24h": -2.96236,
+  "circulating_supply": 62575269.34,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 2.61,
+  "ath_change_percentage": -94.30896,
+  "ath_date": "2021-10-20T00:09:05.309Z",
+  "atl": 0.08862,
+  "atl_change_percentage": 67.85772,
+  "atl_date": "2023-10-29T09:21:10.101Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:13.855Z",
+  "platforms": {
+    "bsc": "0xf7686f43591302cd9b4b9c4fe1291473fae7d9c9"
+  }
+}

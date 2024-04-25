@@ -1,0 +1,31 @@
+{
+  "id": "nova-2",
+  "symbol": "nova",
+  "name": "Nova",
+  "image": "https://assets.coingecko.com/coins/images/30943/large/IMG_20230709_210803_010.jpg?1696529782",
+  "current_price": 5.56695e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 557240702,
+  "total_volume": 4478793,
+  "high_24h": 6.84382e-7,
+  "low_24h": 1.2206e-7,
+  "price_change_24h": 3.79243e-7,
+  "price_change_percentage_24h": 213.71588,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": 1000000000000000,
+  "ath": 0.00000413,
+  "ath_change_percentage": -86.55251,
+  "ath_date": "2024-03-19T13:45:58.099Z",
+  "atl": 2.96083e-10,
+  "atl_change_percentage": 187680.25971,
+  "atl_date": "2023-09-21T14:04:40.519Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:34.314Z",
+  "platforms": {
+    "ethereum": "0xd0b3a986fff305854a7238a8e099cce1ced01a3d"
+  }
+}

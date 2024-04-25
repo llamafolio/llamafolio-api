@@ -1,0 +1,31 @@
+{
+  "id": "aavegotchi-alpha",
+  "symbol": "alpha",
+  "name": "Aavegotchi ALPHA",
+  "image": "https://assets.coingecko.com/coins/images/24738/large/alpha.png?1696523901",
+  "current_price": 0.00193219,
+  "market_cap": 133849,
+  "market_cap_rank": 3687,
+  "fully_diluted_valuation": 9660945,
+  "total_volume": 797.42,
+  "high_24h": 0.00217906,
+  "low_24h": 0.00192523,
+  "price_change_24h": -0.000185419324456602,
+  "price_change_percentage_24h": -8.75607,
+  "market_cap_change_24h": -12767.749966399424,
+  "market_cap_change_percentage_24h": -8.70826,
+  "circulating_supply": 69273104.5607452,
+  "total_supply": 5000000000,
+  "max_supply": 5000000000,
+  "ath": 0.33097,
+  "ath_change_percentage": -99.4158,
+  "ath_date": "2022-05-23T05:02:37.929Z",
+  "atl": 0.00097963,
+  "atl_change_percentage": 97.37246,
+  "atl_date": "2023-10-20T02:36:25.501Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:41.925Z",
+  "platforms": {
+    "polygon": "0x6a3e7c3c6ef65ee26975b12293ca1aad7e1daed2"
+  }
+}

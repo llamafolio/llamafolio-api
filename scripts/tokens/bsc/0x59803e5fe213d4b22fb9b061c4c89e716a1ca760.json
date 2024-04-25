@@ -1,0 +1,31 @@
+{
+  "id": "operation-phoenix",
+  "symbol": "$ophx",
+  "name": "Operation Phoenix",
+  "image": "https://assets.coingecko.com/coins/images/35122/large/OPHX_200.png?1707411414",
+  "current_price": 0.02470362,
+  "market_cap": 2101396,
+  "market_cap_rank": 2268,
+  "fully_diluted_valuation": 2455784,
+  "total_volume": 200390,
+  "high_24h": 0.02599053,
+  "low_24h": 0.02457239,
+  "price_change_24h": -0.001081531656237086,
+  "price_change_percentage_24h": -4.1944,
+  "market_cap_change_24h": -92481.81478251424,
+  "market_cap_change_percentage_24h": -4.21545,
+  "circulating_supply": 85064283.3001777,
+  "total_supply": 99409844.8786045,
+  "max_supply": 100000000,
+  "ath": 0.103554,
+  "ath_change_percentage": -76.23506,
+  "ath_date": "2024-02-17T01:34:36.443Z",
+  "atl": 0.02430969,
+  "atl_change_percentage": 1.23341,
+  "atl_date": "2024-04-23T13:04:58.721Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:34.356Z",
+  "platforms": {
+    "bsc": "0x59803e5fe213d4b22fb9b061c4c89e716a1ca760"
+  }
+}

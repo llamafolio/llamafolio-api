@@ -1,0 +1,31 @@
+{
+  "id": "hashtagger",
+  "symbol": "mooo",
+  "name": "Hashtagger",
+  "image": "https://assets.coingecko.com/coins/images/21139/large/Hashtagger_Logo_No_text_200_200.png?1696520517",
+  "current_price": 0.04452663,
+  "market_cap": 88369,
+  "market_cap_rank": 3821,
+  "fully_diluted_valuation": 1334647,
+  "total_volume": 11219.15,
+  "high_24h": 0.04591018,
+  "low_24h": 0.04327302,
+  "price_change_24h": 0.0012536,
+  "price_change_percentage_24h": 2.89696,
+  "market_cap_change_24h": 2294.97,
+  "market_cap_change_percentage_24h": 2.66628,
+  "circulating_supply": 1986336.81333333,
+  "total_supply": 30000000,
+  "max_supply": 30000000,
+  "ath": 1.13,
+  "ath_change_percentage": -96.05863,
+  "ath_date": "2021-12-14T04:07:08.142Z",
+  "atl": 0.02990994,
+  "atl_change_percentage": 48.94768,
+  "atl_date": "2022-11-14T07:32:45.543Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:19.532Z",
+  "platforms": {
+    "bsc": "0xa0b9bb05da11e3b19ffd64554400f59d4a378515"
+  }
+}

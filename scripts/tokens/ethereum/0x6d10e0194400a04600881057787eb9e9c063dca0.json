@@ -1,0 +1,31 @@
+{
+  "id": "proton-project",
+  "symbol": "prtn",
+  "name": "Proton Project",
+  "image": "https://assets.coingecko.com/coins/images/14888/large/prtn_200_px_.png?1710000932",
+  "current_price": 0.298099,
+  "market_cap": 199122,
+  "market_cap_rank": 3495,
+  "fully_diluted_valuation": 2084522,
+  "total_volume": 9619.5,
+  "high_24h": 0.341149,
+  "low_24h": 0.294414,
+  "price_change_24h": -0.043049838991972345,
+  "price_change_percentage_24h": -12.61909,
+  "market_cap_change_24h": -29036.666700750677,
+  "market_cap_change_percentage_24h": -12.72655,
+  "circulating_supply": 668667,
+  "total_supply": 7000000,
+  "max_supply": 7000000,
+  "ath": 0.461303,
+  "ath_change_percentage": -35.44611,
+  "ath_date": "2024-03-25T14:24:48.445Z",
+  "atl": 0.00011003,
+  "atl_change_percentage": 270536.97898,
+  "atl_date": "2023-11-06T19:52:19.228Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:57.702Z",
+  "platforms": {
+    "ethereum": "0x6d10e0194400a04600881057787eb9e9c063dca0"
+  }
+}

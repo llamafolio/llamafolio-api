@@ -1,0 +1,31 @@
+{
+  "id": "nano-dogecoin",
+  "symbol": "indc",
+  "name": "Nano Dogecoin",
+  "image": "https://assets.coingecko.com/coins/images/17477/large/Untitled-design-6.png?1696517019",
+  "current_price": 6.84166e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 684166,
+  "total_volume": 0.986087,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": 1000000000000000,
+  "ath": 7.4954e-8,
+  "ath_change_percentage": -99.08722,
+  "ath_date": "2021-11-21T13:07:41.878Z",
+  "atl": 1.02402e-10,
+  "atl_change_percentage": 568.11548,
+  "atl_date": "2022-12-19T22:59:22.831Z",
+  "roi": null,
+  "last_updated": "2023-07-14T03:00:16.334Z",
+  "platforms": {
+    "bsc": "0xd3af8e09894d69e937e37eef46df1cbf82b35c81"
+  }
+}

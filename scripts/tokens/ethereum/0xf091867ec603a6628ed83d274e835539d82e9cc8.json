@@ -1,0 +1,31 @@
+{
+  "id": "zetachain",
+  "symbol": "zeta",
+  "name": "ZetaChain",
+  "image": "https://assets.coingecko.com/coins/images/26718/large/Twitter_icon.png?1696525788",
+  "current_price": 1.19,
+  "market_cap": 280409354,
+  "market_cap_rank": 236,
+  "fully_diluted_valuation": 2490221830,
+  "total_volume": 14425266,
+  "high_24h": 1.35,
+  "low_24h": 1.19,
+  "price_change_24h": -0.1318256673566478,
+  "price_change_percentage_24h": -9.97627,
+  "market_cap_change_24h": -32111926.07896489,
+  "market_cap_change_percentage_24h": -10.27512,
+  "circulating_supply": 236468750,
+  "total_supply": 2100000000,
+  "max_supply": 2100000000,
+  "ath": 2.85,
+  "ath_change_percentage": -58.40896,
+  "ath_date": "2024-02-15T20:45:12.099Z",
+  "atl": 0.660431,
+  "atl_change_percentage": 79.70066,
+  "atl_date": "2024-02-01T05:41:28.321Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:46.089Z",
+  "platforms": {
+    "ethereum": "0xf091867ec603a6628ed83d274e835539d82e9cc8"
+  }
+}

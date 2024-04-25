@@ -1,0 +1,31 @@
+{
+  "id": "golden-tiger-fund",
+  "symbol": "gtf",
+  "name": "Golden Tiger Fund",
+  "image": "https://assets.coingecko.com/coins/images/34976/large/GTF.png?1711045957",
+  "current_price": 0.04156884,
+  "market_cap": 2241772,
+  "market_cap_rank": 2231,
+  "fully_diluted_valuation": 4151429,
+  "total_volume": 15326.77,
+  "high_24h": 0.086708,
+  "low_24h": 0.04141802,
+  "price_change_24h": -0.045075892257433414,
+  "price_change_percentage_24h": -52.02381,
+  "market_cap_change_24h": -2437547.255374225,
+  "market_cap_change_percentage_24h": -52.09192,
+  "circulating_supply": 54000000,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.170589,
+  "ath_change_percentage": -75.65107,
+  "ath_date": "2024-04-05T05:57:18.837Z",
+  "atl": 0.04141802,
+  "atl_change_percentage": 0.2861,
+  "atl_date": "2024-04-25T04:49:30.167Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:45.570Z",
+  "platforms": {
+    "bsc": "0xf2250a2708a6c2cfa74c4a50754a61465484ce4f"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "avocado-bg",
+  "symbol": "avo",
+  "name": "AVOCADO BG",
+  "image": "https://assets.coingecko.com/coins/images/32382/large/IMG_4824.jpeg?1698041919",
+  "current_price": 0.00200552,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2406259,
+  "total_volume": 3917.12,
+  "high_24h": 0.00210893,
+  "low_24h": 0.00200491,
+  "price_change_24h": -0.000101178255694802,
+  "price_change_percentage_24h": -4.80269,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1200000000,
+  "max_supply": 1200000000,
+  "ath": 0.0023534,
+  "ath_change_percentage": -14.73617,
+  "ath_date": "2024-01-16T14:35:39.918Z",
+  "atl": 0.00127897,
+  "atl_change_percentage": 56.89235,
+  "atl_date": "2023-10-23T12:19:20.542Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:36.832Z",
+  "platforms": {
+    "bsc": "0x14ee333538b4621a600f011e508d783ea200d60e"
+  }
+}

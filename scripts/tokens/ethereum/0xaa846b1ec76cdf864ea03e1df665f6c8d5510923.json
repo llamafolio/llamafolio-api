@@ -1,0 +1,31 @@
+{
+  "id": "leaderdao",
+  "symbol": "ldao",
+  "name": "LeaderDAO",
+  "image": "https://assets.coingecko.com/coins/images/32770/large/LeaderDAO_Logo_200.jpg?1699342988",
+  "current_price": 0.00030624,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 306240,
+  "total_volume": 462.14,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.03672772,
+  "ath_change_percentage": -99.16619,
+  "ath_date": "2024-01-01T17:04:55.712Z",
+  "atl": 0.00030598,
+  "atl_change_percentage": 0.08643,
+  "atl_date": "2024-03-31T01:59:11.727Z",
+  "roi": null,
+  "last_updated": "2024-03-31T02:15:26.052Z",
+  "platforms": {
+    "ethereum": "0xaa846b1ec76cdf864ea03e1df665f6c8d5510923"
+  }
+}

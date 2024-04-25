@@ -1,0 +1,31 @@
+{
+  "id": "dark-magic",
+  "symbol": "dmagic",
+  "name": "Dark Magic",
+  "image": "https://assets.coingecko.com/coins/images/15842/large/Dark_Magic.png?1696515459",
+  "current_price": 0.108786,
+  "market_cap": 435146,
+  "market_cap_rank": 3134,
+  "fully_diluted_valuation": 435146,
+  "total_volume": 1.36,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 4000000,
+  "total_supply": 4000000,
+  "max_supply": 4000000,
+  "ath": 1.69,
+  "ath_change_percentage": -93.54603,
+  "ath_date": "2021-05-27T08:55:39.570Z",
+  "atl": 0.06279,
+  "atl_change_percentage": 73.25404,
+  "atl_date": "2022-05-25T09:23:03.759Z",
+  "roi": null,
+  "last_updated": "2024-04-22T01:00:18.550Z",
+  "platforms": {
+    "polygon": "0x61daecab65ee2a1d5b6032df030f3faa3d116aa7"
+  }
+}

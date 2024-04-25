@@ -1,0 +1,31 @@
+{
+  "id": "beauty-bakery-linked-operation-transaction-technology",
+  "symbol": "lott",
+  "name": "Beauty Bakery Linked Operation Transaction Technology",
+  "image": "https://assets.coingecko.com/coins/images/27688/large/LOTT.jpg?1696526716",
+  "current_price": 0.01400085,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 70004263,
+  "total_volume": 6.66,
+  "high_24h": 0.01401504,
+  "low_24h": 0.01399125,
+  "price_change_24h": 6.50048e-7,
+  "price_change_percentage_24h": 0.00464,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 5000000000,
+  "max_supply": 5000000000,
+  "ath": 0.095041,
+  "ath_change_percentage": -85.26909,
+  "ath_date": "2023-01-10T07:58:43.434Z",
+  "atl": 0.00427218,
+  "atl_change_percentage": 227.71004,
+  "atl_date": "2023-05-09T01:08:48.219Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:17.007Z",
+  "platforms": {
+    "ethereum": "0xba93ef534094f8b7001ece2691168140965341ab"
+  }
+}

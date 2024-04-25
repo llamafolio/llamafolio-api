@@ -1,0 +1,31 @@
+{
+  "id": "xodex",
+  "symbol": "xodex",
+  "name": "Xodex",
+  "image": "https://assets.coingecko.com/coins/images/25551/large/XODEX_Avatar_02.png?1711716939",
+  "current_price": 0.00020053,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2002364,
+  "total_volume": 45063,
+  "high_24h": 0.00020252,
+  "low_24h": 0.00018971,
+  "price_change_24h": -0.000001747743531248,
+  "price_change_percentage_24h": -0.86402,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.00159252,
+  "ath_change_percentage": -87.44655,
+  "ath_date": "2023-04-05T18:55:51.349Z",
+  "atl": 0.00006056,
+  "atl_change_percentage": 230.11151,
+  "atl_date": "2023-11-09T22:13:08.844Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:16:09.771Z",
+  "platforms": {
+    "ethereum": "0xb81408a1cc2f4be70a6a3178d351ca95a77c5a06"
+  }
+}

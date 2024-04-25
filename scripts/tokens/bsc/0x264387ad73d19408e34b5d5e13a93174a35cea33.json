@@ -1,0 +1,31 @@
+{
+  "id": "rare-fnd",
+  "symbol": "fnd",
+  "name": "Rare FND",
+  "image": "https://assets.coingecko.com/coins/images/26690/large/fnd.png?1696525764",
+  "current_price": 0.00010084,
+  "market_cap": 22467,
+  "market_cap_rank": 4134,
+  "fully_diluted_valuation": 32773,
+  "total_volume": 3450.13,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 222797090.63692313,
+  "total_supply": 325000000,
+  "max_supply": 325000000,
+  "ath": 0.075669,
+  "ath_change_percentage": -99.86674,
+  "ath_date": "2022-08-16T21:48:25.940Z",
+  "atl": 0.00006496,
+  "atl_change_percentage": 55.226,
+  "atl_date": "2024-01-29T07:13:30.470Z",
+  "roi": null,
+  "last_updated": "2024-01-30T20:31:08.706Z",
+  "platforms": {
+    "bsc": "0x264387ad73d19408e34b5d5e13a93174a35cea33"
+  }
+}

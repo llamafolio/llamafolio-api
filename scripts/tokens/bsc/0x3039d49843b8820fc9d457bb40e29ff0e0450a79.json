@@ -1,0 +1,31 @@
+{
+  "id": "bonk-grok",
+  "symbol": "bonkgrok",
+  "name": "Bonk Grok",
+  "image": "https://assets.coingecko.com/coins/images/34474/large/photo_2024-01-10_21.png?1704998221",
+  "current_price": 0.00017121,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 171211,
+  "total_volume": 105.69,
+  "high_24h": 0.00017246,
+  "low_24h": 0.000167,
+  "price_change_24h": 0.00000163,
+  "price_change_percentage_24h": 0.96072,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00438891,
+  "ath_change_percentage": -96.10252,
+  "ath_date": "2024-01-17T12:11:08.210Z",
+  "atl": 0.00009947,
+  "atl_change_percentage": 71.96758,
+  "atl_date": "2024-02-07T17:51:46.652Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:45.348Z",
+  "platforms": {
+    "bsc": "0x3039d49843b8820fc9d457bb40e29ff0e0450a79"
+  }
+}

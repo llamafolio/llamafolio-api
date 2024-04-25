@@ -1,0 +1,31 @@
+{
+  "id": "alchemix-usd",
+  "symbol": "alusd",
+  "name": "Alchemix USD",
+  "image": "https://assets.coingecko.com/coins/images/14114/large/Alchemix_USD.png?1696513835",
+  "current_price": 0.986314,
+  "market_cap": 164819637,
+  "market_cap_rank": 335,
+  "fully_diluted_valuation": 164819637,
+  "total_volume": 310797,
+  "high_24h": 0.991248,
+  "low_24h": 0.971924,
+  "price_change_24h": -0.000041238248778774,
+  "price_change_percentage_24h": -0.00418,
+  "market_cap_change_24h": -18796.20730856061,
+  "market_cap_change_percentage_24h": -0.0114,
+  "circulating_supply": 167106590.602871,
+  "total_supply": 167106590.602871,
+  "max_supply": null,
+  "ath": 2.13,
+  "ath_change_percentage": -53.66658,
+  "ath_date": "2021-03-21T19:53:32.860Z",
+  "atl": 0.060239,
+  "atl_change_percentage": 1536.2646,
+  "atl_date": "2021-03-19T22:40:28.697Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:50:59.363Z",
+  "platforms": {
+    "ethereum": "0xbc6da0fe9ad5f3b0d58160288917aa56653660e9"
+  }
+}

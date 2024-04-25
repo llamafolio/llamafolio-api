@@ -1,0 +1,31 @@
+{
+  "id": "nitroken",
+  "symbol": "nito",
+  "name": "Nitroken",
+  "image": "https://assets.coingecko.com/coins/images/34566/large/Nitroken200.png?1705405687",
+  "current_price": 0.00611738,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3058688,
+  "total_volume": 19273.72,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 0.778211,
+  "ath_change_percentage": -99.21392,
+  "ath_date": "2024-04-05T21:33:10.088Z",
+  "atl": 0.00379541,
+  "atl_change_percentage": 61.17828,
+  "atl_date": "2024-04-21T03:33:49.148Z",
+  "roi": null,
+  "last_updated": "2024-04-22T17:00:49.745Z",
+  "platforms": {
+    "bsc": "0x472935591f64a09c5622eed08c51707a6640c86a"
+  }
+}

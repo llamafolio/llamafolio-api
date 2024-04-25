@@ -1,0 +1,31 @@
+{
+  "id": "filipcoin",
+  "symbol": "fcp",
+  "name": "Filipcoin",
+  "image": "https://assets.coingecko.com/coins/images/21354/large/filip.PNG?1696520719",
+  "current_price": 0.00006985,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 11735.42,
+  "total_volume": 2098.04,
+  "high_24h": 0.00007072,
+  "low_24h": 0.00006813,
+  "price_change_24h": 3.92876e-7,
+  "price_change_percentage_24h": 0.56561,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 168000000,
+  "max_supply": 168000000,
+  "ath": 0.01856544,
+  "ath_change_percentage": -99.6242,
+  "ath_date": "2021-12-08T22:00:43.779Z",
+  "atl": 0.00002333,
+  "atl_change_percentage": 199.09889,
+  "atl_date": "2023-10-12T10:00:23.359Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:07:24.483Z",
+  "platforms": {
+    "bsc": "0x155e8a74dac3d8560ddabbc26aa064b764535193"
+  }
+}

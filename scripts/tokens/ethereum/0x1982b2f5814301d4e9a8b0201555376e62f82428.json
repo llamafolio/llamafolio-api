@@ -1,0 +1,31 @@
+{
+  "id": "aave-interest-bearing-steth",
+  "symbol": "asteth",
+  "name": "Aave Interest Bearing STETH",
+  "image": "https://assets.coingecko.com/coins/images/24163/large/steth.jpg?1696523352",
+  "current_price": 3138.81,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 605347537,
+  "total_volume": 0,
+  "high_24h": 3283.9,
+  "low_24h": 3111.46,
+  "price_change_24h": -115.68128254010708,
+  "price_change_percentage_24h": -3.56343,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 192858.631564932,
+  "max_supply": null,
+  "ath": 4084.06,
+  "ath_change_percentage": -23.16722,
+  "ath_date": "2024-03-12T00:35:19.827Z",
+  "atl": 838.49,
+  "atl_change_percentage": 274.2317,
+  "atl_date": "2022-06-18T21:00:54.905Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:52.396Z",
+  "platforms": {
+    "ethereum": "0x1982b2f5814301d4e9a8b0201555376e62f82428"
+  }
+}

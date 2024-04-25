@@ -1,0 +1,31 @@
+{
+  "id": "euler",
+  "symbol": "eul",
+  "name": "Euler",
+  "image": "https://assets.coingecko.com/coins/images/26149/large/Coingecko_logo_%281%29.png?1706026067",
+  "current_price": 5.63,
+  "market_cap": 105797005,
+  "market_cap_rank": 465,
+  "fully_diluted_valuation": 153908433,
+  "total_volume": 672664,
+  "high_24h": 6.06,
+  "low_24h": 4.83,
+  "price_change_24h": 0.781478,
+  "price_change_percentage_24h": 16.12057,
+  "market_cap_change_24h": 15393828,
+  "market_cap_change_percentage_24h": 17.02797,
+  "circulating_supply": 18685530.67,
+  "total_supply": 27182818.28459,
+  "max_supply": 27182818,
+  "ath": 12.78,
+  "ath_change_percentage": -55.46827,
+  "ath_date": "2022-09-11T15:09:41.440Z",
+  "atl": 1.44,
+  "atl_change_percentage": 296.27275,
+  "atl_date": "2023-06-15T20:45:08.852Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:52.513Z",
+  "platforms": {
+    "ethereum": "0xd9fcd98c322942075a5c3860693e9f4f03aae07b"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "terareum",
+  "symbol": "tera",
+  "name": "Terareum [OLD]",
+  "image": "https://assets.coingecko.com/coins/images/23880/large/Tera-200x200-1.png?1696523080",
+  "current_price": 1.30103e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 13010329,
+  "total_volume": 96.83,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000000000000,
+  "max_supply": null,
+  "ath": 1.0439e-8,
+  "ath_change_percentage": -98.75365,
+  "ath_date": "2022-03-22T16:03:34.961Z",
+  "atl": 1.4997e-11,
+  "atl_change_percentage": 767.52671,
+  "atl_date": "2023-02-28T03:24:33.133Z",
+  "roi": null,
+  "last_updated": "2024-04-23T15:46:41.517Z",
+  "platforms": {
+    "ethereum": "0x009668a9691e456972c8ec4cc84e99486308b84d"
+  }
+}

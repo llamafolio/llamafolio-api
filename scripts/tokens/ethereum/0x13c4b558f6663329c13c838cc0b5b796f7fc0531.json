@@ -1,0 +1,31 @@
+{
+  "id": "horizon-3",
+  "symbol": "hrzn",
+  "name": "Horizon",
+  "image": "https://assets.coingecko.com/coins/images/33740/large/moon.jpg?1702903432",
+  "current_price": 0.03100028,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 31000,
+  "total_volume": 121.08,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 7.74,
+  "ath_change_percentage": -99.59956,
+  "ath_date": "2023-12-19T01:25:05.422Z",
+  "atl": 0.02455701,
+  "atl_change_percentage": 26.23802,
+  "atl_date": "2024-02-09T02:22:12.937Z",
+  "roi": null,
+  "last_updated": "2024-02-27T06:18:47.303Z",
+  "platforms": {
+    "ethereum": "0x13c4b558f6663329c13c838cc0b5b796f7fc0531"
+  }
+}

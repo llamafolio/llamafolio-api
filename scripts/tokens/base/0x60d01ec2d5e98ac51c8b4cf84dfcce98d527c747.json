@@ -1,0 +1,31 @@
+{
+  "id": "izumi-finance",
+  "symbol": "izi",
+  "name": "iZUMi Finance",
+  "image": "https://assets.coingecko.com/coins/images/21791/large/izumi-logo-symbol.png?1696521144",
+  "current_price": 0.01408725,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 28131866,
+  "total_volume": 511554,
+  "high_24h": 0.01422351,
+  "low_24h": 0.01366696,
+  "price_change_24h": -0.000103515167796438,
+  "price_change_percentage_24h": -0.72945,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2000000000,
+  "max_supply": 2000000000,
+  "ath": 0.220101,
+  "ath_change_percentage": -93.61219,
+  "ath_date": "2021-12-21T06:36:29.541Z",
+  "atl": 0.00740017,
+  "atl_change_percentage": 89.99058,
+  "atl_date": "2023-04-01T00:41:44.247Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:43.734Z",
+  "platforms": {
+    "base": "0x60d01ec2d5e98ac51c8b4cf84dfcce98d527c747"
+  }
+}

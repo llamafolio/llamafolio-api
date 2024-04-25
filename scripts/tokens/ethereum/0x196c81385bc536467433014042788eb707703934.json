@@ -1,0 +1,31 @@
+{
+  "id": "cryptotask-2",
+  "symbol": "ctask",
+  "name": "CryptoTask",
+  "image": "https://assets.coingecko.com/coins/images/13965/large/cryptotask_logo.png?1696513700",
+  "current_price": 0.115189,
+  "market_cap": 150685,
+  "market_cap_rank": 3629,
+  "fully_diluted_valuation": 1773917,
+  "total_volume": 162.65,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 1308146.241424091,
+  "total_supply": 15400000,
+  "max_supply": 15400000,
+  "ath": 3.97,
+  "ath_change_percentage": -97.10026,
+  "ath_date": "2021-04-02T03:32:34.449Z",
+  "atl": 0.03549513,
+  "atl_change_percentage": 224.52186,
+  "atl_date": "2022-12-19T03:09:31.604Z",
+  "roi": null,
+  "last_updated": "2024-04-22T04:19:07.273Z",
+  "platforms": {
+    "ethereum": "0x196c81385bc536467433014042788eb707703934"
+  }
+}

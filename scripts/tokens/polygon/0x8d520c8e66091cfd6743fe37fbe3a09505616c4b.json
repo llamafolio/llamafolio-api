@@ -1,0 +1,31 @@
+{
+  "id": "cosplay-token-2",
+  "symbol": "cot",
+  "name": "Cosplay Token",
+  "image": "https://assets.coingecko.com/coins/images/21294/large/brave_ZxsjzUc8xn.png?1696520664",
+  "current_price": 0.04785446,
+  "market_cap": 44387242,
+  "market_cap_rank": 741,
+  "fully_diluted_valuation": 47340131,
+  "total_volume": 1442640,
+  "high_24h": 0.04818314,
+  "low_24h": 0.04465812,
+  "price_change_24h": 0.00147739,
+  "price_change_percentage_24h": 3.1856,
+  "market_cap_change_24h": 1103952,
+  "market_cap_change_percentage_24h": 2.55053,
+  "circulating_supply": 937623981.323827,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.357248,
+  "ath_change_percentage": -86.97274,
+  "ath_date": "2022-03-23T12:43:38.792Z",
+  "atl": 0.01275604,
+  "atl_change_percentage": 264.84419,
+  "atl_date": "2023-04-26T22:20:27.563Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:40.471Z",
+  "platforms": {
+    "polygon": "0x8d520c8e66091cfd6743fe37fbe3a09505616c4b"
+  }
+}

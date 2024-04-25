@@ -1,0 +1,31 @@
+{
+  "id": "frontfanz-2",
+  "symbol": "fanx",
+  "name": "FrontFanz",
+  "image": "https://assets.coingecko.com/coins/images/33225/large/200x200_ff.png?1701100617",
+  "current_price": 0.00564126,
+  "market_cap": 594993,
+  "market_cap_rank": 2979,
+  "fully_diluted_valuation": 2818159,
+  "total_volume": 38059,
+  "high_24h": 0.00613119,
+  "low_24h": 0.00523788,
+  "price_change_24h": -0.000447055683312133,
+  "price_change_percentage_24h": -7.34284,
+  "market_cap_change_24h": -47971.82883364486,
+  "market_cap_change_percentage_24h": -7.46104,
+  "circulating_supply": 105519973.68049698,
+  "total_supply": 499791038.84,
+  "max_supply": 1000000000,
+  "ath": 0.050385,
+  "ath_change_percentage": -88.81576,
+  "ath_date": "2024-01-01T20:09:34.035Z",
+  "atl": 0.00407231,
+  "atl_change_percentage": 38.37698,
+  "atl_date": "2023-12-04T23:04:48.989Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:25.902Z",
+  "platforms": {
+    "polygon": "0xb58458c52b6511dc723d7d6f3be8c36d7383b4a8"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "the-sandbox",
+  "symbol": "sand",
+  "name": "The Sandbox",
+  "image": "https://assets.coingecko.com/coins/images/12129/large/sandbox_logo.jpg?1696511971",
+  "current_price": 0.45542,
+  "market_cap": 1025993809,
+  "market_cap_rank": 92,
+  "fully_diluted_valuation": 1363306862,
+  "total_volume": 106894361,
+  "high_24h": 0.505797,
+  "low_24h": 0.453502,
+  "price_change_24h": -0.03852481577470346,
+  "price_change_percentage_24h": -7.79942,
+  "market_cap_change_24h": -98343085.38421702,
+  "market_cap_change_percentage_24h": -8.74676,
+  "circulating_supply": 2257731926.2233224,
+  "total_supply": 3000000000,
+  "max_supply": 3000000000,
+  "ath": 8.4,
+  "ath_change_percentage": -94.58079,
+  "ath_date": "2021-11-25T06:04:40.957Z",
+  "atl": 0.02897764,
+  "atl_change_percentage": 1470.31425,
+  "atl_date": "2020-11-04T15:59:14.441Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:44.225Z",
+  "platforms": {
+    "ethereum": "0x3845badade8e6dff049820680d1f14bd3903a5d0"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "artichoke",
+  "symbol": "choke",
+  "name": "Artichoke",
+  "image": "https://assets.coingecko.com/coins/images/30354/large/Choke_icon_-_Small.png?1696529254",
+  "current_price": 0.01888788,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 99.69,
+  "high_24h": 0.01919303,
+  "low_24h": 0.01878165,
+  "price_change_24h": -0.000195098223830098,
+  "price_change_percentage_24h": -1.02237,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": 590000000,
+  "ath": 0.142258,
+  "ath_change_percentage": -86.72276,
+  "ath_date": "2023-12-09T01:02:06.260Z",
+  "atl": 0.01088705,
+  "atl_change_percentage": 73.48934,
+  "atl_date": "2023-05-16T18:47:11.180Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:36.867Z",
+  "platforms": {
+    "arbitrum": "0x6fc2680d8ad8e8312191441b4eca9eff8d06b45a"
+  }
+}

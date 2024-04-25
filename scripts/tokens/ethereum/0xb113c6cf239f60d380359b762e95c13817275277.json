@@ -1,0 +1,31 @@
+{
+  "id": "bitmex-token",
+  "symbol": "bmex",
+  "name": "BitMEX",
+  "image": "https://assets.coingecko.com/coins/images/21831/large/bitmex-token.jpeg?1696521187",
+  "current_price": 0.274868,
+  "market_cap": 27451771,
+  "market_cap_rank": 964,
+  "fully_diluted_valuation": 123842576,
+  "total_volume": 78953,
+  "high_24h": 0.277047,
+  "low_24h": 0.263758,
+  "price_change_24h": 0.00017497,
+  "price_change_percentage_24h": 0.0637,
+  "market_cap_change_24h": 36762,
+  "market_cap_change_percentage_24h": 0.13409,
+  "circulating_supply": 99749999.99974,
+  "total_supply": 450000000,
+  "max_supply": 450000000,
+  "ath": 1.29,
+  "ath_change_percentage": -78.72921,
+  "ath_date": "2022-11-12T18:21:15.957Z",
+  "atl": 0.219675,
+  "atl_change_percentage": 25.21568,
+  "atl_date": "2024-02-25T16:28:55.620Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:32.098Z",
+  "platforms": {
+    "ethereum": "0xb113c6cf239f60d380359b762e95c13817275277"
+  }
+}

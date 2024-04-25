@@ -1,0 +1,31 @@
+{
+  "id": "saba-finance",
+  "symbol": "saba",
+  "name": "Saba Finance",
+  "image": "https://assets.coingecko.com/coins/images/30107/large/saba.png?1696529029",
+  "current_price": 0.00000465,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 465392,
+  "total_volume": 3127.98,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.00001557,
+  "ath_change_percentage": -70.10484,
+  "ath_date": "2023-05-03T14:31:08.505Z",
+  "atl": 0.00000449,
+  "atl_change_percentage": 3.59462,
+  "atl_date": "2023-05-17T15:00:41.715Z",
+  "roi": null,
+  "last_updated": "2023-05-18T12:33:00.517Z",
+  "platforms": {
+    "bsc": "0xff12afb3841b737289d1b02dfedbe4c85a8ec6e6"
+  }
+}

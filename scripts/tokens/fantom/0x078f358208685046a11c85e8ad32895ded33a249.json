@@ -1,0 +1,31 @@
+{
+  "id": "aave-wbtc",
+  "symbol": "awbtc",
+  "name": "Aave WBTC",
+  "image": "https://assets.coingecko.com/coins/images/14244/large/aWBTC.41453c2a.png?1696513959",
+  "current_price": 64498,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 38763190,
+  "total_volume": 0,
+  "high_24h": 68070,
+  "low_24h": 63735,
+  "price_change_24h": -3068.572837358195,
+  "price_change_percentage_24h": -4.57065,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 601,
+  "max_supply": null,
+  "ath": 73393,
+  "ath_change_percentage": -12.70553,
+  "ath_date": "2024-03-13T20:25:34.323Z",
+  "atl": 15543.79,
+  "atl_change_percentage": 312.17657,
+  "atl_date": "2022-11-22T10:00:11.297Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:31.425Z",
+  "platforms": {
+    "fantom": "0x078f358208685046a11c85e8ad32895ded33a249"
+  }
+}

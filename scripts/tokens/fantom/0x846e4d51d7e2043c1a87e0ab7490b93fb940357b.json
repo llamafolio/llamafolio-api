@@ -1,0 +1,31 @@
+{
+  "id": "terrausd-wormhole",
+  "symbol": "ust",
+  "name": "TerraUSD (Wormhole)",
+  "image": "https://assets.coingecko.com/coins/images/21150/large/UST_wh_small.png?1696520528",
+  "current_price": 0.01852541,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 39717,
+  "high_24h": 0.0202387,
+  "low_24h": 0.01836141,
+  "price_change_24h": -0.001515779531664683,
+  "price_change_percentage_24h": -7.56332,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.043,
+  "ath_change_percentage": -98.22677,
+  "ath_date": "2022-02-28T22:44:45.999Z",
+  "atl": 0.00641083,
+  "atl_change_percentage": 188.44371,
+  "atl_date": "2022-06-19T08:16:39.258Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:46.456Z",
+  "platforms": {
+    "fantom": "0x846e4d51d7e2043c1a87e0ab7490b93fb940357b"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "calorie",
+  "symbol": "cal",
+  "name": "FitBurn",
+  "image": "https://assets.coingecko.com/coins/images/29876/large/Logo_%283%29.png?1696528801",
+  "current_price": 0.00026299,
+  "market_cap": 329142,
+  "market_cap_rank": 3269,
+  "fully_diluted_valuation": 523097,
+  "total_volume": 27167,
+  "high_24h": 0.00028152,
+  "low_24h": 0.00026204,
+  "price_change_24h": -0.000017940060611788,
+  "price_change_percentage_24h": -6.38592,
+  "market_cap_change_24h": -22390.326432750095,
+  "market_cap_change_percentage_24h": -6.36935,
+  "circulating_supply": 1251828414.7173684,
+  "total_supply": 1989499999,
+  "max_supply": 1989499999,
+  "ath": 0.070774,
+  "ath_change_percentage": -99.62875,
+  "ath_date": "2023-05-15T20:51:04.851Z",
+  "atl": 0.00025401,
+  "atl_change_percentage": 3.44359,
+  "atl_date": "2024-01-23T09:25:30.082Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:42.797Z",
+  "platforms": {
+    "bsc": "0x859c940f080b197659b3effc804fd622df66f0a1"
+  }
+}

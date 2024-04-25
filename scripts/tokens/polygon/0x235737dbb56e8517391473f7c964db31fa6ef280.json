@@ -1,0 +1,31 @@
+{
+  "id": "kasta",
+  "symbol": "kasta",
+  "name": "Kasta",
+  "image": "https://assets.coingecko.com/coins/images/22293/large/Kasta.png?1696521639",
+  "current_price": 0.03154753,
+  "market_cap": 19095236,
+  "market_cap_rank": 1135,
+  "fully_diluted_valuation": 47304346,
+  "total_volume": 534408,
+  "high_24h": 0.03319728,
+  "low_24h": 0.03145792,
+  "price_change_24h": -0.001596326902423236,
+  "price_change_percentage_24h": -4.81636,
+  "market_cap_change_24h": -956887.6941966191,
+  "market_cap_change_percentage_24h": -4.772,
+  "circulating_supply": 605306468.2312,
+  "total_supply": 1499516764,
+  "max_supply": 1500000000,
+  "ath": 1.13,
+  "ath_change_percentage": -97.20929,
+  "ath_date": "2022-01-05T23:20:15.855Z",
+  "atl": 0.01217138,
+  "atl_change_percentage": 159.90162,
+  "atl_date": "2023-09-13T00:56:38.993Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:21.301Z",
+  "platforms": {
+    "polygon": "0x235737dbb56e8517391473f7c964db31fa6ef280"
+  }
+}

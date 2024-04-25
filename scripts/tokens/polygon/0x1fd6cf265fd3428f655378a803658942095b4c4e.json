@@ -1,0 +1,31 @@
+{
+  "id": "polyyeld-token",
+  "symbol": "yeld",
+  "name": "PolyYeld",
+  "image": "https://assets.coingecko.com/coins/images/16401/large/pxSN2UtB_400x400.jpg?1696515998",
+  "current_price": 0.064948,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1361.11,
+  "total_volume": 22.99,
+  "high_24h": 0.067203,
+  "low_24h": 0.064697,
+  "price_change_24h": -0.002033925644231341,
+  "price_change_percentage_24h": -3.03654,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 20956.996,
+  "max_supply": null,
+  "ath": 1924.08,
+  "ath_change_percentage": -99.99662,
+  "ath_date": "2021-06-20T21:17:15.116Z",
+  "atl": 3.27052e-13,
+  "atl_change_percentage": 19869228525116.938,
+  "atl_date": "2021-07-28T01:38:55.554Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:25.521Z",
+  "platforms": {
+    "polygon": "0x1fd6cf265fd3428f655378a803658942095b4c4e"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "bistroo",
+  "symbol": "bist",
+  "name": "Bistroo",
+  "image": "https://assets.coingecko.com/coins/images/15645/large/bistroo.png?1696515277",
+  "current_price": 0.02626716,
+  "market_cap": 1503826,
+  "market_cap_rank": 2451,
+  "fully_diluted_valuation": 2619805,
+  "total_volume": 60692,
+  "high_24h": 0.02691626,
+  "low_24h": 0.02611782,
+  "price_change_24h": -0.000521602138471484,
+  "price_change_percentage_24h": -1.94709,
+  "market_cap_change_24h": -32620.742612109752,
+  "market_cap_change_percentage_24h": -2.12313,
+  "circulating_supply": 57402224.50708977,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.257443,
+  "ath_change_percentage": -89.79691,
+  "ath_date": "2021-05-19T09:14:26.414Z",
+  "atl": 0.01259953,
+  "atl_change_percentage": 108.47735,
+  "atl_date": "2022-06-18T21:32:08.988Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:42.371Z",
+  "platforms": {
+    "ethereum": "0x6e8908cfa881c9f6f2c64d3436e7b80b1bf0093f"
+  }
+}

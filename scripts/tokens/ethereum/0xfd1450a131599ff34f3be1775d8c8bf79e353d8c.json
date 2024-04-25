@@ -1,0 +1,31 @@
+{
+  "id": "shiba",
+  "symbol": "shiba",
+  "name": "Shiba",
+  "image": "https://assets.coingecko.com/coins/images/32299/large/IMG_20231011_081456_897.jpg?1697186075",
+  "current_price": 3.74605e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 374605,
+  "total_volume": 1567.58,
+  "high_24h": 3.78213e-10,
+  "low_24h": 3.56142e-10,
+  "price_change_24h": 1.3091e-11,
+  "price_change_percentage_24h": 3.62121,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": 1000000000000000,
+  "ath": 3.327e-9,
+  "ath_change_percentage": -88.7389,
+  "ath_date": "2023-10-17T08:04:54.119Z",
+  "atl": 2.68607e-10,
+  "atl_change_percentage": 39.4621,
+  "atl_date": "2024-03-20T05:14:43.990Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:59.517Z",
+  "platforms": {
+    "ethereum": "0xfd1450a131599ff34f3be1775d8c8bf79e353d8c"
+  }
+}

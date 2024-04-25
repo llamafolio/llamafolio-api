@@ -1,0 +1,31 @@
+{
+  "id": "math",
+  "symbol": "math",
+  "name": "MATH",
+  "image": "https://assets.coingecko.com/coins/images/11335/large/2020-05-19-token-200.png?1696511257",
+  "current_price": 0.434379,
+  "market_cap": 75976859,
+  "market_cap_rank": 550,
+  "fully_diluted_valuation": 86834096,
+  "total_volume": 3043431,
+  "high_24h": 0.46777,
+  "low_24h": 0.418547,
+  "price_change_24h": -0.029995796696363375,
+  "price_change_percentage_24h": -6.45939,
+  "market_cap_change_24h": -5058517.56775935,
+  "market_cap_change_percentage_24h": -6.24236,
+  "circulating_supply": 174993148.52,
+  "total_supply": 200000000,
+  "max_supply": 200000000,
+  "ath": 3.15,
+  "ath_change_percentage": -86.23764,
+  "ath_date": "2021-03-20T19:38:09.306Z",
+  "atl": 0.05815,
+  "atl_change_percentage": 645.89845,
+  "atl_date": "2022-11-09T18:25:13.208Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:49.275Z",
+  "platforms": {
+    "ethereum": "0x08d967bb0134f2d07f7cfb6e246680c53927dd30"
+  }
+}

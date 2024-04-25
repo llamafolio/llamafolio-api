@@ -1,0 +1,31 @@
+{
+  "id": "ofcourse-i-still-love-you",
+  "symbol": "ocisly",
+  "name": "Of Course I Still Love You",
+  "image": "https://assets.coingecko.com/coins/images/32035/large/IMG_20230927_151428_156_%281%29.jpg?1696530831",
+  "current_price": 0.00000122,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 51194,
+  "total_volume": 1229.21,
+  "high_24h": 0.00000122,
+  "low_24h": 0.0000012,
+  "price_change_24h": 3.412e-9,
+  "price_change_percentage_24h": 0.28118,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 42069000000,
+  "max_supply": 42069000000,
+  "ath": 0.00001994,
+  "ath_change_percentage": -93.89739,
+  "ath_date": "2023-10-02T09:35:59.121Z",
+  "atl": 4.50073e-7,
+  "atl_change_percentage": 170.38173,
+  "atl_date": "2024-01-07T14:30:57.532Z",
+  "roi": null,
+  "last_updated": "2024-04-25T06:01:16.760Z",
+  "platforms": {
+    "ethereum": "0x356e17967206efb413b60ab0ba44e269063a26c9"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "gelato",
+  "symbol": "gel",
+  "name": "Gelato",
+  "image": "https://assets.coingecko.com/coins/images/15026/large/Gelato_Icon_Logo_1024x1024.png?1696514687",
+  "current_price": 0.386216,
+  "market_cap": 92994302,
+  "market_cap_rank": 493,
+  "fully_diluted_valuation": 162373243,
+  "total_volume": 307775,
+  "high_24h": 0.388434,
+  "low_24h": 0.366843,
+  "price_change_24h": 0.00444726,
+  "price_change_percentage_24h": 1.16491,
+  "market_cap_change_24h": 1110811,
+  "market_cap_change_percentage_24h": 1.20893,
+  "circulating_supply": 240937314.99943173,
+  "total_supply": 420690000,
+  "max_supply": 420690000,
+  "ath": 4.21,
+  "ath_change_percentage": -90.82466,
+  "ath_date": "2021-11-30T04:32:06.012Z",
+  "atl": 0.118108,
+  "atl_change_percentage": 226.67125,
+  "atl_date": "2023-01-07T00:40:50.196Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:04.380Z",
+  "platforms": {
+    "fantom": "0x15b7c0c907e4c6b9adaaaabc300c08991d6cea05"
+  }
+}

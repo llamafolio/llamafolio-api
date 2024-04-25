@@ -1,0 +1,31 @@
+{
+  "id": "shiba-punkz",
+  "symbol": "spunk",
+  "name": "Shiba Punkz",
+  "image": "https://assets.coingecko.com/coins/images/27163/large/shibapunkzlogo.JPG?1696526213",
+  "current_price": 0.01438439,
+  "market_cap": 16654.3,
+  "market_cap_rank": 4174,
+  "fully_diluted_valuation": 14240.54,
+  "total_volume": 23.02,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 930916.958190608,
+  "total_supply": 990000,
+  "max_supply": 1000000,
+  "ath": 0.944422,
+  "ath_change_percentage": -98.47691,
+  "ath_date": "2022-10-06T13:41:59.515Z",
+  "atl": 0.01646981,
+  "atl_change_percentage": -12.66212,
+  "atl_date": "2023-02-12T22:25:07.340Z",
+  "roi": null,
+  "last_updated": "2023-07-23T12:12:56.641Z",
+  "platforms": {
+    "ethereum": "0x8a8116a794744977941c7d3743517410969aacbb"
+  }
+}

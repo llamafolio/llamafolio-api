@@ -1,0 +1,31 @@
+{
+  "id": "journey-ai",
+  "symbol": "jrny",
+  "name": "Journey",
+  "image": "https://assets.coingecko.com/coins/images/33707/large/A541vx-O_400x400.jpg?1702854357",
+  "current_price": 6.74171e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 283152,
+  "total_volume": 1040.58,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 420000000000000,
+  "max_supply": 420000000000000,
+  "ath": 5.723e-9,
+  "ath_change_percentage": -88.22006,
+  "ath_date": "2023-12-23T17:47:57.952Z",
+  "atl": 6.73439e-10,
+  "atl_change_percentage": 0.10865,
+  "atl_date": "2024-04-22T21:18:12.920Z",
+  "roi": null,
+  "last_updated": "2024-04-23T03:44:07.857Z",
+  "platforms": {
+    "ethereum": "0x94dd57da120c7c564d9aa438773068705e828781"
+  }
+}

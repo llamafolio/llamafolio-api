@@ -1,0 +1,31 @@
+{
+  "id": "temple",
+  "symbol": "temple",
+  "name": "TempleDAO",
+  "image": "https://assets.coingecko.com/coins/images/20040/large/LPK15ZOW_400x400.jpg?1696519459",
+  "current_price": 1.16,
+  "market_cap": 42590593,
+  "market_cap_rank": 763,
+  "fully_diluted_valuation": 42645535,
+  "total_volume": 1001.8,
+  "high_24h": 1.17,
+  "low_24h": 1.16,
+  "price_change_24h": -0.002880290187354806,
+  "price_change_percentage_24h": -0.24722,
+  "market_cap_change_24h": -116787.66593211889,
+  "market_cap_change_percentage_24h": -0.27346,
+  "circulating_supply": 36652634.4393726,
+  "total_supply": 36699916.390921,
+  "max_supply": 36699916.390921,
+  "ath": 3.35,
+  "ath_change_percentage": -65.30027,
+  "ath_date": "2021-12-23T00:00:00.000Z",
+  "atl": 0.186329,
+  "atl_change_percentage": 523.63001,
+  "atl_date": "2023-03-19T10:06:55.486Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:56:36.165Z",
+  "platforms": {
+    "ethereum": "0x470ebf5f030ed85fc1ed4c2d36b9dd02e77cf1b7"
+  }
+}

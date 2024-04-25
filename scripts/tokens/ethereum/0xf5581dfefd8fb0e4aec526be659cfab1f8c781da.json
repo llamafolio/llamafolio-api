@@ -1,0 +1,31 @@
+{
+  "id": "hopr",
+  "symbol": "hopr",
+  "name": "HOPR",
+  "image": "https://assets.coingecko.com/coins/images/14061/large/Shared_HOPR_logo_512px.png?1696513786",
+  "current_price": 0.114181,
+  "market_cap": 48666233,
+  "market_cap_rank": 701,
+  "fully_diluted_valuation": 50092484,
+  "total_volume": 746437,
+  "high_24h": 0.124411,
+  "low_24h": 0.113189,
+  "price_change_24h": -0.009060822320165555,
+  "price_change_percentage_24h": -7.35207,
+  "market_cap_change_24h": -4455937.623284526,
+  "market_cap_change_percentage_24h": -8.38809,
+  "circulating_supply": 429012680.064749,
+  "total_supply": 441585667.904749,
+  "max_supply": 1000000000,
+  "ath": 0.951533,
+  "ath_change_percentage": -88.05815,
+  "ath_date": "2021-03-30T00:00:00.000Z",
+  "atl": 0.03361032,
+  "atl_change_percentage": 238.08239,
+  "atl_date": "2023-11-21T19:05:47.498Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:37.758Z",
+  "platforms": {
+    "ethereum": "0xf5581dfefd8fb0e4aec526be659cfab1f8c781da"
+  }
+}

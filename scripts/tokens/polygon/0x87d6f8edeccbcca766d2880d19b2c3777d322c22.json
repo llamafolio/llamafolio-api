@@ -1,0 +1,31 @@
+{
+  "id": "miracle-play",
+  "symbol": "mpt",
+  "name": "Miracle Play",
+  "image": "https://assets.coingecko.com/coins/images/32653/large/MPT.png?1698895300",
+  "current_price": 0.089106,
+  "market_cap": 35798257,
+  "market_cap_rank": 837,
+  "fully_diluted_valuation": 43269837,
+  "total_volume": 428701,
+  "high_24h": 0.092472,
+  "low_24h": 0.087558,
+  "price_change_24h": -0.000784459990479908,
+  "price_change_percentage_24h": -0.87268,
+  "market_cap_change_24h": -298270.15822310746,
+  "market_cap_change_percentage_24h": -0.82631,
+  "circulating_supply": 401747550.876804,
+  "total_supply": 485597687.44704,
+  "max_supply": 3000000000,
+  "ath": 0.136579,
+  "ath_change_percentage": -35.16468,
+  "ath_date": "2024-03-07T22:26:33.105Z",
+  "atl": 0.00798566,
+  "atl_change_percentage": 1008.87753,
+  "atl_date": "2024-02-25T23:21:33.595Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:10.863Z",
+  "platforms": {
+    "polygon": "0x87d6f8edeccbcca766d2880d19b2c3777d322c22"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "id": "dai",
+  "symbol": "dai",
+  "name": "Dai",
+  "image": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+  "current_price": 0.999815,
+  "market_cap": 5214751427,
+  "market_cap_rank": 25,
+  "fully_diluted_valuation": 5214751427,
+  "total_volume": 444420106,
+  "high_24h": 1.003,
+  "low_24h": 0.996154,
+  "price_change_24h": -0.000246490676606426,
+  "price_change_percentage_24h": -0.02465,
+  "market_cap_change_24h": -33943678.35357571,
+  "market_cap_change_percentage_24h": -0.64671,
+  "circulating_supply": 5215714803.61437,
+  "total_supply": 5215714803.61437,
+  "max_supply": null,
+  "ath": 1.22,
+  "ath_change_percentage": -17.97602,
+  "ath_date": "2020-03-13T03:02:50.373Z",
+  "atl": 0.88196,
+  "atl_change_percentage": 13.36291,
+  "atl_date": "2023-03-11T07:50:50.514Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:34.979Z",
+  "platforms": {
+    "ethereum": "0x6b175474e89094c44da98b954eedeac495271d0f"
+  },
+  "mcap": 3807603407.7019277
+}

@@ -1,0 +1,31 @@
+{
+  "id": "fang-token",
+  "symbol": "fang",
+  "name": "FANG",
+  "image": "https://assets.coingecko.com/coins/images/18982/large/-ywrkEbd.png?1696518435",
+  "current_price": 0.00183342,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 17131.38,
+  "total_volume": 3.03,
+  "high_24h": 0.00191127,
+  "low_24h": 0.00180071,
+  "price_change_24h": -0.000077857303657792,
+  "price_change_percentage_24h": -4.07358,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 9343961,
+  "max_supply": 93000000,
+  "ath": 3.99,
+  "ath_change_percentage": -99.95408,
+  "ath_date": "2022-01-13T14:42:32.445Z",
+  "atl": 0.00160459,
+  "atl_change_percentage": 14.26094,
+  "atl_date": "2024-04-19T02:48:50.002Z",
+  "roi": null,
+  "last_updated": "2024-04-25T05:17:14.601Z",
+  "platforms": {
+    "fantom": "0x49894fcc07233957c35462cfc3418ef0cc26129f"
+  }
+}

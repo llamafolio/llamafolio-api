@@ -1,0 +1,31 @@
+{
+  "id": "meeds-dao",
+  "symbol": "meed",
+  "name": "Meeds DAO",
+  "image": "https://assets.coingecko.com/coins/images/24281/large/s-YfFWYu_400x400.png?1696523464",
+  "current_price": 0.273394,
+  "market_cap": 3676362,
+  "market_cap_rank": 1952,
+  "fully_diluted_valuation": 2001653,
+  "total_volume": 18879.56,
+  "high_24h": 0.28541,
+  "low_24h": 0.053204,
+  "price_change_24h": 0.03569482,
+  "price_change_percentage_24h": 15.01681,
+  "market_cap_change_24h": 494447,
+  "market_cap_change_percentage_24h": 15.53929,
+  "circulating_supply": 13447130.0216667,
+  "total_supply": 7321502,
+  "max_supply": 100000000,
+  "ath": 1.56,
+  "ath_change_percentage": -82.43022,
+  "ath_date": "2024-01-12T14:59:56.666Z",
+  "atl": 0.053204,
+  "atl_change_percentage": 414.59666,
+  "atl_date": "2024-04-25T02:19:19.141Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:51:22.704Z",
+  "platforms": {
+    "polygon": "0x6aca77cf3bab0c4e8210a09b57b07854a995289a"
+  }
+}

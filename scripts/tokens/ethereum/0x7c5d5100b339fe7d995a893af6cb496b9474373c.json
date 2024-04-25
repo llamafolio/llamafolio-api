@@ -1,0 +1,31 @@
+{
+  "id": "loon-network",
+  "symbol": "loon",
+  "name": "Loon Network",
+  "image": "https://assets.coingecko.com/coins/images/11673/large/ErUvUA2D4Q8hPWXxZBIuiI8MD0nrU2rDEY56d6EtVzJDTqlflAFXa2bgJ_kFwb8OtotfAvESvm-dik7d_SeJJh23f6RosUJ0AzU64QcKk5H3fu300KOJjFDFsntpRWARFKI5S4Cc8F3pcRPBkFIw6oPF58mKi83sa2DJPl-E5JMqmj6rJh5acb7Fvi80kfziWv3DHhhpg1YJYMP.jpg?1696511563",
+  "current_price": 0.00015139,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 318995,
+  "total_volume": 14146.45,
+  "high_24h": 0.00015251,
+  "low_24h": 0.0001496,
+  "price_change_24h": -3.54162678726e-7,
+  "price_change_percentage_24h": -0.23339,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2100000000,
+  "max_supply": null,
+  "ath": 1.013,
+  "ath_change_percentage": -99.98502,
+  "ath_date": "2020-08-01T14:47:19.063Z",
+  "atl": 0.00011587,
+  "atl_change_percentage": 30.91868,
+  "atl_date": "2024-04-14T08:16:36.201Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:17.586Z",
+  "platforms": {
+    "ethereum": "0x7c5d5100b339fe7d995a893af6cb496b9474373c"
+  }
+}

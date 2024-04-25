@@ -1,0 +1,31 @@
+{
+  "id": "friendspot",
+  "symbol": "spot",
+  "name": "FriendSpot",
+  "image": "https://assets.coingecko.com/coins/images/31734/large/frenspot-logo_%281%29.png?1696530554",
+  "current_price": 0.00519988,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 5199.88,
+  "total_volume": 91.57,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 0.234643,
+  "ath_change_percentage": -97.78392,
+  "ath_date": "2023-09-14T04:31:04.132Z",
+  "atl": 0.00434857,
+  "atl_change_percentage": 19.57678,
+  "atl_date": "2023-10-20T13:55:54.382Z",
+  "roi": null,
+  "last_updated": "2023-11-04T04:00:21.438Z",
+  "platforms": {
+    "ethereum": "0xb4f8ae8d7d29ac74894cd40ecc24e50f6f146ca6"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "revolve-games",
+  "symbol": "rpg",
+  "name": "Revolve Games",
+  "image": "https://assets.coingecko.com/coins/images/18481/large/HQ3.png?1696517966",
+  "current_price": 0.01662386,
+  "market_cap": 1122659,
+  "market_cap_rank": 2625,
+  "fully_diluted_valuation": 1580087,
+  "total_volume": 14492.09,
+  "high_24h": 0.01789411,
+  "low_24h": 0.01639399,
+  "price_change_24h": -0.001270243579530654,
+  "price_change_percentage_24h": -7.09867,
+  "market_cap_change_24h": -90518.38729073433,
+  "market_cap_change_percentage_24h": -7.46126,
+  "circulating_supply": 67497923.8543182,
+  "total_supply": 95000000,
+  "max_supply": 95000000,
+  "ath": 1.91,
+  "ath_change_percentage": -99.13809,
+  "ath_date": "2021-11-05T06:34:28.049Z",
+  "atl": 0.00648402,
+  "atl_change_percentage": 153.23834,
+  "atl_date": "2022-12-20T11:25:41.989Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:58.078Z",
+  "platforms": {
+    "bsc": "0x01e0d17a533e5930a349c2bb71304f04f20ab12b"
+  }
+}

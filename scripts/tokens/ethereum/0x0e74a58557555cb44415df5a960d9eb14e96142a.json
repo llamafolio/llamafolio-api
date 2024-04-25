@@ -1,0 +1,31 @@
+{
+  "id": "vegasbot",
+  "symbol": "vegas",
+  "name": "VegasBot",
+  "image": "https://assets.coingecko.com/coins/images/31983/large/logoblk.jpg?1696530786",
+  "current_price": 0.0004668,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 46680,
+  "total_volume": 723.88,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 0.01594554,
+  "ath_change_percentage": -97.07251,
+  "ath_date": "2023-10-25T15:14:56.424Z",
+  "atl": 0.00045764,
+  "atl_change_percentage": 2.00147,
+  "atl_date": "2024-04-16T16:25:30.954Z",
+  "roi": null,
+  "last_updated": "2024-04-16T20:19:56.877Z",
+  "platforms": {
+    "ethereum": "0x0e74a58557555cb44415df5a960d9eb14e96142a"
+  }
+}

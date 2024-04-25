@@ -1,0 +1,31 @@
+{
+  "id": "fanadise",
+  "symbol": "fan",
+  "name": "Fanadise",
+  "image": "https://assets.coingecko.com/coins/images/17417/large/logo_fanadise_new_200x200.png?1696516964",
+  "current_price": 0.00013834,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 138339,
+  "total_volume": 16397.78,
+  "high_24h": 0.00014855,
+  "low_24h": 0.00013456,
+  "price_change_24h": -0.000007620711034722,
+  "price_change_percentage_24h": -5.2211,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.412448,
+  "ath_change_percentage": -99.96664,
+  "ath_date": "2021-07-29T22:58:22.539Z",
+  "atl": 0.00005606,
+  "atl_change_percentage": 145.45228,
+  "atl_date": "2023-11-30T09:59:48.442Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:54.782Z",
+  "platforms": {
+    "bsc": "0xb6d48fcef36e19681ee29896b19c1b6cbd1eab1b"
+  }
+}

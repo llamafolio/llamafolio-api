@@ -1,0 +1,31 @@
+{
+  "id": "seor-network",
+  "symbol": "seor",
+  "name": "SEOR Network",
+  "image": "https://assets.coingecko.com/coins/images/24397/large/-yycZmh7_400x400.png?1696523580",
+  "current_price": 0.00444701,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 4446338,
+  "total_volume": 105755,
+  "high_24h": 0.00479588,
+  "low_24h": 0.00436002,
+  "price_change_24h": -0.000156707948777954,
+  "price_change_percentage_24h": -3.40394,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.05964,
+  "ath_change_percentage": -92.5411,
+  "ath_date": "2022-07-10T23:25:35.147Z",
+  "atl": 0.00106214,
+  "atl_change_percentage": 318.82295,
+  "atl_date": "2023-11-12T20:32:34.098Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:40.139Z",
+  "platforms": {
+    "bsc": "0x800a25741a414ea6e6e2b382435081a479a8cc3c"
+  }
+}

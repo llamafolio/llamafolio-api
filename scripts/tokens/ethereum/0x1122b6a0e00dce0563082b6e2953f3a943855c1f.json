@@ -1,0 +1,35 @@
+{
+  "id": "centrality",
+  "symbol": "cennz",
+  "name": "CENNZnet",
+  "image": "https://assets.coingecko.com/coins/images/3408/large/CENNZ_ticker.png?1696504105",
+  "current_price": 0.02220084,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 26722846,
+  "total_volume": 39347,
+  "high_24h": 0.02318083,
+  "low_24h": 0.0220088,
+  "price_change_24h": -0.000762901639220447,
+  "price_change_percentage_24h": -3.3222,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1200000000,
+  "max_supply": null,
+  "ath": 0.540194,
+  "ath_change_percentage": -95.88533,
+  "ath_date": "2018-04-24T21:25:24.550Z",
+  "atl": 0.00100893,
+  "atl_change_percentage": 2103.05671,
+  "atl_date": "2023-06-27T07:00:12.508Z",
+  "roi": {
+    "times": 254.29942257815674,
+    "currency": "usd",
+    "percentage": 25429.942257815674
+  },
+  "last_updated": "2024-04-25T09:11:12.986Z",
+  "platforms": {
+    "ethereum": "0x1122b6a0e00dce0563082b6e2953f3a943855c1f"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "gooch",
+  "symbol": "gooch",
+  "name": "Gooch",
+  "image": "https://assets.coingecko.com/coins/images/30290/large/gooch.jpg?1696529195",
+  "current_price": 0.00020566,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1433382,
+  "total_volume": 4299.75,
+  "high_24h": 0.00020717,
+  "low_24h": 0.00020414,
+  "price_change_24h": -0.000001507139021251,
+  "price_change_percentage_24h": -0.7275,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 6969696969,
+  "max_supply": 6969696969,
+  "ath": 0.00127758,
+  "ath_change_percentage": -83.90242,
+  "ath_date": "2023-05-12T05:14:40.922Z",
+  "atl": 0.0001384,
+  "atl_change_percentage": 48.59971,
+  "atl_date": "2023-10-14T01:45:38.323Z",
+  "roi": null,
+  "last_updated": "2024-04-25T04:03:28.865Z",
+  "platforms": {
+    "ethereum": "0x6d3d490964205c8bc8ded39e48e88e8fde45b41f"
+  }
+}

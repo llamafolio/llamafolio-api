@@ -1,0 +1,31 @@
+{
+  "id": "bazed-games",
+  "symbol": "bazed",
+  "name": "Bazed Games",
+  "image": "https://assets.coingecko.com/coins/images/31195/large/IMG_1849.jpeg?1696530023",
+  "current_price": 0.133851,
+  "market_cap": 10238484,
+  "market_cap_rank": 1428,
+  "fully_diluted_valuation": 10238484,
+  "total_volume": 33744,
+  "high_24h": 0.141178,
+  "low_24h": 0.134046,
+  "price_change_24h": -0.005037138236097611,
+  "price_change_percentage_24h": -3.62676,
+  "market_cap_change_24h": -385298.87665245496,
+  "market_cap_change_percentage_24h": -3.62676,
+  "circulating_supply": 76491622.54299277,
+  "total_supply": 76491622.54299277,
+  "max_supply": 77000000,
+  "ath": 0.516385,
+  "ath_change_percentage": -73.99523,
+  "ath_date": "2024-03-16T13:27:00.892Z",
+  "atl": 0.0050751,
+  "atl_change_percentage": 2545.9567,
+  "atl_date": "2023-08-04T18:51:33.427Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:49:53.574Z",
+  "platforms": {
+    "ethereum": "0x3ee4b152824b657644c7a9b50694787e80eb8f4a"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "dos-network",
+  "symbol": "dos",
+  "name": "DOS Network",
+  "image": "https://assets.coingecko.com/coins/images/7991/large/DOS.png?1696508217",
+  "current_price": 0.00120907,
+  "market_cap": 159861,
+  "market_cap_rank": 3600,
+  "fully_diluted_valuation": 1210735,
+  "total_volume": 13673.36,
+  "high_24h": 0.00121272,
+  "low_24h": 0.0011955,
+  "price_change_24h": 0.00000755,
+  "price_change_percentage_24h": 0.62865,
+  "market_cap_change_24h": 789.34,
+  "market_cap_change_percentage_24h": 0.49622,
+  "circulating_supply": 132036278,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.388179,
+  "ath_change_percentage": -99.68778,
+  "ath_date": "2020-08-13T00:41:44.547Z",
+  "atl": 0.00064984,
+  "atl_change_percentage": 86.50096,
+  "atl_date": "2023-07-09T01:40:49.618Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:06.016Z",
+  "platforms": {
+    "ethereum": "0x0a913bead80f321e7ac35285ee10d9d922659cb7"
+  }
+}

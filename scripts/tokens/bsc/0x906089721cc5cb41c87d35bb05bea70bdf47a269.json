@@ -1,0 +1,31 @@
+{
+  "id": "babydogearmy",
+  "symbol": "army",
+  "name": "BabyDogeARMY",
+  "image": "https://assets.coingecko.com/coins/images/29974/large/200x200-transparent.png?1696528899",
+  "current_price": 1.387e-9,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1386964,
+  "total_volume": 32.05,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": 1000000000000000,
+  "ath": 6.223e-9,
+  "ath_change_percentage": -77.71209,
+  "ath_date": "2023-05-03T18:45:34.413Z",
+  "atl": 3.34528e-10,
+  "atl_change_percentage": 314.60368,
+  "atl_date": "2023-04-25T10:09:17.783Z",
+  "roi": null,
+  "last_updated": "2023-05-17T03:41:49.339Z",
+  "platforms": {
+    "bsc": "0x906089721cc5cb41c87d35bb05bea70bdf47a269"
+  }
+}

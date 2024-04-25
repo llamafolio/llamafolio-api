@@ -1,0 +1,31 @@
+{
+  "id": "big-eyes",
+  "symbol": "big",
+  "name": "Big Eyes",
+  "image": "https://assets.coingecko.com/coins/images/30824/large/200-200.jpg?1696529677",
+  "current_price": 6.60511e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 132263,
+  "total_volume": 5145.36,
+  "high_24h": 8.66676e-7,
+  "low_24h": 6.32049e-7,
+  "price_change_24h": -1.96119171349e-7,
+  "price_change_percentage_24h": -22.89425,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 200000000000,
+  "max_supply": 200000000000,
+  "ath": 0.00002525,
+  "ath_change_percentage": -97.39133,
+  "ath_date": "2023-08-14T21:30:49.309Z",
+  "atl": 6.32049e-7,
+  "atl_change_percentage": 4.21799,
+  "atl_date": "2024-04-25T05:29:19.059Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:42.415Z",
+  "platforms": {
+    "ethereum": "0xc8de43bfe33ff496fa14c270d9cb29bda196b9b5"
+  }
+}

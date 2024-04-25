@@ -1,0 +1,31 @@
+{
+  "id": "nuon",
+  "symbol": "nuon",
+  "name": "Nuon",
+  "image": "https://assets.coingecko.com/coins/images/29739/large/Nuon_image.jpg?1696528669",
+  "current_price": 1.028,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 50.59,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 9.26,
+  "ath_change_percentage": -88.8988,
+  "ath_date": "2023-11-02T16:34:44.161Z",
+  "atl": 0.560133,
+  "atl_change_percentage": 83.47539,
+  "atl_date": "2023-11-03T02:35:00.934Z",
+  "roi": null,
+  "last_updated": "2024-04-22T09:05:45.179Z",
+  "platforms": {
+    "arbitrum": "0xfb9fed8cb962548a11fe7f6f282949061395c7f5"
+  }
+}

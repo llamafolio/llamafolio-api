@@ -1,0 +1,31 @@
+{
+  "id": "xana",
+  "symbol": "xeta",
+  "name": "XANA",
+  "image": "https://assets.coingecko.com/coins/images/24379/large/XANA_Logo_neon_pink.png?1696523562",
+  "current_price": 0.01145166,
+  "market_cap": 26790141,
+  "market_cap_rank": 971,
+  "fully_diluted_valuation": 56884099,
+  "total_volume": 2489670,
+  "high_24h": 0.01249696,
+  "low_24h": 0.01132308,
+  "price_change_24h": -0.000806668309831624,
+  "price_change_percentage_24h": -6.58057,
+  "market_cap_change_24h": -1480531.3494829647,
+  "market_cap_change_percentage_24h": -5.23699,
+  "circulating_supply": 2321833333,
+  "total_supply": 4930000000,
+  "max_supply": 5000000000,
+  "ath": 0.153902,
+  "ath_change_percentage": -92.5634,
+  "ath_date": "2022-07-20T17:09:23.341Z",
+  "atl": 0.00598862,
+  "atl_change_percentage": 91.11438,
+  "atl_date": "2023-10-15T06:42:06.792Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:46.124Z",
+  "platforms": {
+    "avalanche": "0x31c994ac062c1970c086260bc61babb708643fac"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "id": "evedo",
+  "symbol": "eved",
+  "name": "Evedo",
+  "image": "https://assets.coingecko.com/coins/images/7721/large/Variations-09.png?1696507968",
+  "current_price": 0.00569949,
+  "market_cap": 85596,
+  "market_cap_rank": 3832,
+  "fully_diluted_valuation": 101204,
+  "total_volume": 100.99,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 15018222.466965761,
+  "total_supply": 17756589.687825,
+  "max_supply": null,
+  "ath": 1.075,
+  "ath_change_percentage": -99.46989,
+  "ath_date": "2021-04-05T17:19:49.405Z",
+  "atl": 0.00000171,
+  "atl_change_percentage": 334110.18089,
+  "atl_date": "2019-10-07T00:00:00.000Z",
+  "roi": {
+    "times": -0.9964775532346116,
+    "currency": "eth",
+    "percentage": -99.64775532346115
+  },
+  "last_updated": "2024-04-24T01:30:36.818Z",
+  "platforms": {
+    "ethereum": "0x5aaefe84e0fb3dd1f0fcff6fa7468124986b91bd"
+  }
+}

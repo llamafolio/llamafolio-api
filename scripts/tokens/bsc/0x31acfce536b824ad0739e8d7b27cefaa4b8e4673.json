@@ -1,0 +1,31 @@
+{
+  "id": "lockness",
+  "symbol": "lkn",
+  "name": "Lockness",
+  "image": "https://assets.coingecko.com/coins/images/20176/large/lockness_bubles.png?1696519588",
+  "current_price": 0.00012563,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 125632,
+  "total_volume": 18.88,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.02920782,
+  "ath_change_percentage": -99.56987,
+  "ath_date": "2022-01-24T22:10:14.492Z",
+  "atl": 0.00012437,
+  "atl_change_percentage": 1.011,
+  "atl_date": "2023-08-02T16:58:33.080Z",
+  "roi": null,
+  "last_updated": "2023-08-03T10:30:18.083Z",
+  "platforms": {
+    "bsc": "0x31acfce536b824ad0739e8d7b27cefaa4b8e4673"
+  }
+}

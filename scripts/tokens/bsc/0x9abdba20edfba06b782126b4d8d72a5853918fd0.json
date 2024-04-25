@@ -1,0 +1,31 @@
+{
+  "id": "taboo-token",
+  "symbol": "taboo",
+  "name": "Taboo",
+  "image": "https://assets.coingecko.com/coins/images/6111/large/taboo.PNG?1696506510",
+  "current_price": 0.00201506,
+  "market_cap": 19663622,
+  "market_cap_rank": 1116,
+  "fully_diluted_valuation": 19663622,
+  "total_volume": 1058870,
+  "high_24h": 0.00212198,
+  "low_24h": 0.00188354,
+  "price_change_24h": -0.000072880645341299,
+  "price_change_percentage_24h": -3.49055,
+  "market_cap_change_24h": -969909.7910355292,
+  "market_cap_change_percentage_24h": -4.70065,
+  "circulating_supply": 9782678080,
+  "total_supply": 9782678080,
+  "max_supply": 9782678080,
+  "ath": 0.063936,
+  "ath_change_percentage": -96.86292,
+  "ath_date": "2021-11-03T10:28:53.592Z",
+  "atl": 0.00018467,
+  "atl_change_percentage": 986.08387,
+  "atl_date": "2021-08-11T17:27:50.361Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:18.260Z",
+  "platforms": {
+    "bsc": "0x9abdba20edfba06b782126b4d8d72a5853918fd0"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "ipulse",
+  "symbol": "pls",
+  "name": "iPulse",
+  "image": "https://assets.coingecko.com/coins/images/21902/large/Ipulse-con.png?1696521254",
+  "current_price": 0.00998918,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 209773,
+  "total_volume": 41.44,
+  "high_24h": 0.01001446,
+  "low_24h": 0.00998551,
+  "price_change_24h": -0.000009254452379932,
+  "price_change_percentage_24h": -0.09256,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 21000000,
+  "max_supply": null,
+  "ath": 0.259634,
+  "ath_change_percentage": -96.15259,
+  "ath_date": "2021-12-23T08:34:07.706Z",
+  "atl": 0.00099843,
+  "atl_change_percentage": 900.48636,
+  "atl_date": "2024-02-08T17:27:13.011Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:53:54.138Z",
+  "platforms": {
+    "bsc": "0x2659cb928f6f705c1e574464361882fd6e92e1f9"
+  }
+}

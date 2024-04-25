@@ -1,0 +1,31 @@
+{
+  "id": "smp-finance",
+  "symbol": "smpf",
+  "name": "SMP Finance",
+  "image": "https://assets.coingecko.com/coins/images/30891/large/20230913_091919.jpg?1696529737",
+  "current_price": 2.88565e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 28857,
+  "total_volume": 7.3,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.00000673,
+  "ath_change_percentage": -95.71477,
+  "ath_date": "2023-07-12T14:34:57.950Z",
+  "atl": 1.81108e-7,
+  "atl_change_percentage": 59.33325,
+  "atl_date": "2024-03-05T20:41:51.394Z",
+  "roi": null,
+  "last_updated": "2024-04-23T01:19:42.267Z",
+  "platforms": {
+    "bsc": "0x515e62a3ac560fd5df08536d08336e63aed3b182"
+  }
+}

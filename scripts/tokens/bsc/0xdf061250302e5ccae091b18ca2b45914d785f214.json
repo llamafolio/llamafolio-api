@@ -1,0 +1,31 @@
+{
+  "id": "pop-token",
+  "symbol": "ppt",
+  "name": "Pop Token",
+  "image": "https://assets.coingecko.com/coins/images/32432/large/PPT_TOKEN.png?1698154771",
+  "current_price": 0.114491,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 22883727,
+  "total_volume": 517991,
+  "high_24h": 0.122397,
+  "low_24h": 0.109483,
+  "price_change_24h": -0.00418277769430929,
+  "price_change_percentage_24h": -3.52461,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 200000000,
+  "max_supply": 200000000,
+  "ath": 0.495311,
+  "ath_change_percentage": -76.91386,
+  "ath_date": "2024-03-16T23:29:47.018Z",
+  "atl": 0.099486,
+  "atl_change_percentage": 14.93914,
+  "atl_date": "2024-04-16T20:36:33.363Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:11.356Z",
+  "platforms": {
+    "bsc": "0xdf061250302e5ccae091b18ca2b45914d785f214"
+  }
+}

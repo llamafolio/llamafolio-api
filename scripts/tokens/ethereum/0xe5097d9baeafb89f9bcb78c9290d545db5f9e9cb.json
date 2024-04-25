@@ -1,0 +1,31 @@
+{
+  "id": "hummingbot",
+  "symbol": "hbot",
+  "name": "Hummingbot",
+  "image": "https://assets.coingecko.com/coins/images/21717/large/PDPuf0tJ_400x400.jpg?1696521072",
+  "current_price": 0.00346669,
+  "market_cap": 1894052,
+  "market_cap_rank": 2328,
+  "fully_diluted_valuation": 3470860,
+  "total_volume": 238.79,
+  "high_24h": 0.00358935,
+  "low_24h": 0.00328392,
+  "price_change_24h": -0.000078345281552988,
+  "price_change_percentage_24h": -2.21,
+  "market_cap_change_24h": -43908.6676459969,
+  "market_cap_change_percentage_24h": -2.26572,
+  "circulating_supply": 545701018.5389144,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.32656,
+  "ath_change_percentage": -98.93885,
+  "ath_date": "2021-12-28T23:53:01.280Z",
+  "atl": 0.00062857,
+  "atl_change_percentage": 451.29516,
+  "atl_date": "2022-08-01T23:59:06.565Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:23.382Z",
+  "platforms": {
+    "ethereum": "0xe5097d9baeafb89f9bcb78c9290d545db5f9e9cb"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "polychain-monsters",
+  "symbol": "pmon",
+  "name": "Polychain Monsters",
+  "image": "https://assets.coingecko.com/coins/images/14604/large/polkamon.png?1696514282",
+  "current_price": 0.413872,
+  "market_cap": 2252196,
+  "market_cap_rank": 2229,
+  "fully_diluted_valuation": 3599502,
+  "total_volume": 43481,
+  "high_24h": 0.423056,
+  "low_24h": 0.405901,
+  "price_change_24h": -0.001926669230618405,
+  "price_change_percentage_24h": -0.46337,
+  "market_cap_change_24h": -15829.664021736477,
+  "market_cap_change_percentage_24h": -0.69795,
+  "circulating_supply": 5433802.681260481,
+  "total_supply": 8684404.66368,
+  "max_supply": 10000000,
+  "ath": 62.1,
+  "ath_change_percentage": -99.33161,
+  "ath_date": "2021-04-02T01:14:31.704Z",
+  "atl": 0.282192,
+  "atl_change_percentage": 47.08802,
+  "atl_date": "2023-10-20T07:46:42.583Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:36.088Z",
+  "platforms": {
+    "bsc": "0x1796ae0b0fa4862485106a0de9b654efe301d0b2"
+  }
+}

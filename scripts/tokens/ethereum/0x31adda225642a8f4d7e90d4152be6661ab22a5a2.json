@@ -1,0 +1,31 @@
+{
+  "id": "hypr-network",
+  "symbol": "hypr",
+  "name": "Hypr Network",
+  "image": "https://assets.coingecko.com/coins/images/33071/large/655412078d33fa9fee8e3a1b_hypr_logo_200.png?1700598490",
+  "current_price": 0.00208034,
+  "market_cap": 207491,
+  "market_cap_rank": 3473,
+  "fully_diluted_valuation": 207491,
+  "total_volume": 2534.25,
+  "high_24h": 0.00237502,
+  "low_24h": 0.00201568,
+  "price_change_24h": -0.000273320899428554,
+  "price_change_percentage_24h": -11.61261,
+  "market_cap_change_24h": -28380.046994074306,
+  "market_cap_change_percentage_24h": -12.03202,
+  "circulating_supply": 100000000,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.288111,
+  "ath_change_percentage": -99.27835,
+  "ath_date": "2023-12-08T07:01:17.095Z",
+  "atl": 0.00201568,
+  "atl_change_percentage": 3.14867,
+  "atl_date": "2024-04-25T00:04:11.439Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:52.200Z",
+  "platforms": {
+    "ethereum": "0x31adda225642a8f4d7e90d4152be6661ab22a5a2"
+  }
+}

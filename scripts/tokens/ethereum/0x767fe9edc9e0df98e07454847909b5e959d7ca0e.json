@@ -1,0 +1,31 @@
+{
+  "id": "illuvium",
+  "symbol": "ilv",
+  "name": "Illuvium",
+  "image": "https://assets.coingecko.com/coins/images/14468/large/logo-200x200.png?1696514154",
+  "current_price": 96.46,
+  "market_cap": 616783394,
+  "market_cap_rank": 138,
+  "fully_diluted_valuation": 926409837,
+  "total_volume": 8727934,
+  "high_24h": 105.79,
+  "low_24h": 96.29,
+  "price_change_24h": -7.191541142117799,
+  "price_change_percentage_24h": -6.93841,
+  "market_cap_change_24h": -46452279.43326616,
+  "market_cap_change_percentage_24h": -7.00389,
+  "circulating_supply": 6394406.64935474,
+  "total_supply": 9604411.00983229,
+  "max_supply": null,
+  "ath": 1911.26,
+  "ath_change_percentage": -94.94391,
+  "ath_date": "2021-11-30T15:18:57.382Z",
+  "atl": 29.23,
+  "atl_change_percentage": 230.64543,
+  "atl_date": "2021-06-22T14:11:59.151Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:06.021Z",
+  "platforms": {
+    "ethereum": "0x767fe9edc9e0df98e07454847909b5e959d7ca0e"
+  }
+}

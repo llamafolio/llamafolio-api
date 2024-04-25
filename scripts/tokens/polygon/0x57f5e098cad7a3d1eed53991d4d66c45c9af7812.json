@@ -1,0 +1,31 @@
+{
+  "id": "wrapped-usdm",
+  "symbol": "wusdm",
+  "name": "Wrapped USDM",
+  "image": "https://assets.coingecko.com/coins/images/33785/large/wUSDM_PNG_240px.png?1702981552",
+  "current_price": null,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 168267,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.12,
+  "ath_change_percentage": 0,
+  "ath_date": "2024-01-11T04:26:51.743Z",
+  "atl": 0.971049,
+  "atl_change_percentage": 0,
+  "atl_date": "2024-01-03T14:34:43.354Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:18.786Z",
+  "platforms": {
+    "polygon": "0x57f5e098cad7a3d1eed53991d4d66c45c9af7812"
+  }
+}

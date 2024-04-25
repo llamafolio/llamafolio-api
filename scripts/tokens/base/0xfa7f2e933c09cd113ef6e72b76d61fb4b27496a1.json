@@ -1,0 +1,31 @@
+{
+  "id": "basetama",
+  "symbol": "btama",
+  "name": "Basetama",
+  "image": "https://assets.coingecko.com/coins/images/35818/large/1000005865.jpg?1709885504",
+  "current_price": 0.0037137,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 37137,
+  "total_volume": 959.4,
+  "high_24h": 0.0036769,
+  "low_24h": 0.00356031,
+  "price_change_24h": 0.00013815,
+  "price_change_percentage_24h": 3.86376,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.0036769,
+  "ath_change_percentage": -0.36642,
+  "ath_date": "2024-04-25T08:21:52.446Z",
+  "atl": 0.00356031,
+  "atl_change_percentage": 2.89645,
+  "atl_date": "2024-04-25T04:14:16.347Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:53.611Z",
+  "platforms": {
+    "base": "0xfa7f2e933c09cd113ef6e72b76d61fb4b27496a1"
+  }
+}

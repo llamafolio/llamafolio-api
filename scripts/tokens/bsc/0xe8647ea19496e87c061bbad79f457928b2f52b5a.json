@@ -1,0 +1,31 @@
+{
+  "id": "popcorn",
+  "symbol": "pop",
+  "name": "Popcorn",
+  "image": "https://assets.coingecko.com/coins/images/21438/large/pop-1_200_x_200.png?1696520801",
+  "current_price": 0.00997344,
+  "market_cap": 236873,
+  "market_cap_rank": 3417,
+  "fully_diluted_valuation": 997341,
+  "total_volume": 21.03,
+  "high_24h": 0.01004996,
+  "low_24h": 0.00986056,
+  "price_change_24h": -0.000013123786176857,
+  "price_change_percentage_24h": -0.13141,
+  "market_cap_change_24h": -264921.6731643025,
+  "market_cap_change_percentage_24h": -52.7948,
+  "circulating_supply": 23750425.7094539,
+  "total_supply": 99999700,
+  "max_supply": 99999700,
+  "ath": 3.01,
+  "ath_change_percentage": -99.66847,
+  "ath_date": "2022-05-05T02:50:55.446Z",
+  "atl": 0.00986056,
+  "atl_change_percentage": 1.14469,
+  "atl_date": "2024-04-24T19:05:52.658Z",
+  "roi": null,
+  "last_updated": "2024-04-25T03:59:44.493Z",
+  "platforms": {
+    "bsc": "0xe8647ea19496e87c061bbad79f457928b2f52b5a"
+  }
+}

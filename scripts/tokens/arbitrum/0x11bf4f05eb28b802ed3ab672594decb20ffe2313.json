@@ -1,0 +1,31 @@
+{
+  "id": "aurory",
+  "symbol": "aury",
+  "name": "Aurory",
+  "image": "https://assets.coingecko.com/coins/images/19324/large/Ico_Blanc_%281%29.png?1713464485",
+  "current_price": 0.542457,
+  "market_cap": 29814305,
+  "market_cap_rank": 918,
+  "fully_diluted_valuation": 54219023,
+  "total_volume": 326273,
+  "high_24h": 0.564355,
+  "low_24h": 0.520289,
+  "price_change_24h": -0.021898127983359883,
+  "price_change_percentage_24h": -3.88021,
+  "market_cap_change_24h": -1211683.9841839112,
+  "market_cap_change_percentage_24h": -3.90538,
+  "circulating_supply": 54988643.2,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 23.29,
+  "ath_change_percentage": -97.69577,
+  "ath_date": "2021-11-08T16:04:04.494Z",
+  "atl": 0.310679,
+  "atl_change_percentage": 72.72411,
+  "atl_date": "2022-11-18T22:18:37.175Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:30.023Z",
+  "platforms": {
+    "arbitrum": "0x11bf4f05eb28b802ed3ab672594decb20ffe2313"
+  }
+}

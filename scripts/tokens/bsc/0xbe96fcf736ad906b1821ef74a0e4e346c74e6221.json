@@ -1,0 +1,31 @@
+{
+  "id": "nix",
+  "symbol": "nix",
+  "name": "NIX",
+  "image": "https://assets.coingecko.com/coins/images/31507/large/1000002051.jpg?1696530317",
+  "current_price": 0.00380361,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 1566.63,
+  "high_24h": 0.00381548,
+  "low_24h": 0.00368949,
+  "price_change_24h": 0.00007504,
+  "price_change_percentage_24h": 2.01264,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 200000000,
+  "max_supply": 200000000,
+  "ath": 0.02033184,
+  "ath_change_percentage": -81.33857,
+  "ath_date": "2023-11-14T11:04:58.584Z",
+  "atl": 0.00079328,
+  "atl_change_percentage": 378.29465,
+  "atl_date": "2023-10-06T15:25:11.628Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:40.500Z",
+  "platforms": {
+    "bsc": "0xbe96fcf736ad906b1821ef74a0e4e346c74e6221"
+  }
+}

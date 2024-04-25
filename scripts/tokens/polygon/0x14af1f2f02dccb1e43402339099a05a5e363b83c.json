@@ -1,0 +1,31 @@
+{
+  "id": "kromatika",
+  "symbol": "krom",
+  "name": "Kromatika",
+  "image": "https://assets.coingecko.com/coins/images/20541/large/KROM_Transparent.png?1696519948",
+  "current_price": 0.02523639,
+  "market_cap": 2077044,
+  "market_cap_rank": 2273,
+  "fully_diluted_valuation": 2523687,
+  "total_volume": 30236,
+  "high_24h": 0.02557749,
+  "low_24h": 0.02437403,
+  "price_change_24h": 0.00029941,
+  "price_change_percentage_24h": 1.20069,
+  "market_cap_change_24h": 27125,
+  "market_cap_change_percentage_24h": 1.32322,
+  "circulating_supply": 82301961.35398406,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.265959,
+  "ath_change_percentage": -90.46168,
+  "ath_date": "2021-11-21T15:24:14.908Z",
+  "atl": 0.00439041,
+  "atl_change_percentage": 477.80426,
+  "atl_date": "2021-11-18T05:31:01.287Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:47.754Z",
+  "platforms": {
+    "polygon": "0x14af1f2f02dccb1e43402339099a05a5e363b83c"
+  }
+}

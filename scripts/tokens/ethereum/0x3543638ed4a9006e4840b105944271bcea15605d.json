@@ -1,0 +1,31 @@
+{
+  "id": "u-network",
+  "symbol": "uuu",
+  "name": "U Network",
+  "image": "https://assets.coingecko.com/coins/images/3877/large/2645.png?1696504538",
+  "current_price": 0.00000256,
+  "market_cap": 17893.36,
+  "market_cap_rank": 4159,
+  "fully_diluted_valuation": 25562,
+  "total_volume": 0.0005112,
+  "high_24h": 0.00000258,
+  "low_24h": 0.00000252,
+  "price_change_24h": -2.0760773277e-8,
+  "price_change_percentage_24h": -0.80563,
+  "market_cap_change_24h": 3040.4,
+  "market_cap_change_percentage_24h": 20.46996,
+  "circulating_supply": 7000000000,
+  "total_supply": 10000000000,
+  "max_supply": null,
+  "ath": 0.0104271,
+  "ath_change_percentage": -99.97549,
+  "ath_date": "2019-07-25T07:09:44.152Z",
+  "atl": 1.68351e-7,
+  "atl_change_percentage": 1418.369,
+  "atl_date": "2023-08-18T10:04:43.306Z",
+  "roi": null,
+  "last_updated": "2024-04-25T01:28:49.132Z",
+  "platforms": {
+    "ethereum": "0x3543638ed4a9006e4840b105944271bcea15605d"
+  }
+}

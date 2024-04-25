@@ -1,0 +1,31 @@
+{
+  "id": "rabbit-wallet",
+  "symbol": "rab",
+  "name": "Rabbit Wallet",
+  "image": "https://assets.coingecko.com/coins/images/29433/large/200x200.png?1696528381",
+  "current_price": 0.00391719,
+  "market_cap": 251638,
+  "market_cap_rank": 3395,
+  "fully_diluted_valuation": 251638,
+  "total_volume": 1045061,
+  "high_24h": 0.00421575,
+  "low_24h": 0.00375489,
+  "price_change_24h": -0.000237973927452747,
+  "price_change_percentage_24h": -5.72718,
+  "market_cap_change_24h": -14154.779875462147,
+  "market_cap_change_percentage_24h": -5.3255,
+  "circulating_supply": 64000000,
+  "total_supply": 64000000,
+  "max_supply": 100000000,
+  "ath": 0.07209,
+  "ath_change_percentage": -94.52834,
+  "ath_date": "2023-03-16T11:44:26.983Z",
+  "atl": 0.00186649,
+  "atl_change_percentage": 111.33428,
+  "atl_date": "2023-10-22T08:00:58.443Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:52.838Z",
+  "platforms": {
+    "bsc": "0x24ef78c7092d255ed14a0281ac1800c359af3afe"
+  }
+}

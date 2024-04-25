@@ -1,0 +1,31 @@
+{
+  "id": "long",
+  "symbol": "long",
+  "name": "LONG",
+  "image": "https://assets.coingecko.com/coins/images/32169/large/IMG_20231005_122433_189.jpg?1696741750",
+  "current_price": 89.99,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 896372,
+  "total_volume": 6031.81,
+  "high_24h": 90.96,
+  "low_24h": 88.01,
+  "price_change_24h": 1.14,
+  "price_change_percentage_24h": 1.27747,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000,
+  "max_supply": 10000,
+  "ath": 2309.02,
+  "ath_change_percentage": -96.11224,
+  "ath_date": "2023-10-17T08:05:13.546Z",
+  "atl": 88.01,
+  "atl_change_percentage": 2.00302,
+  "atl_date": "2024-04-24T19:04:14.252Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:42.881Z",
+  "platforms": {
+    "bsc": "0xfc8774321ee4586af183baca95a8793530056353"
+  }
+}

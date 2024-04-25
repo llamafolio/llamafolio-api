@@ -1,0 +1,31 @@
+{
+  "id": "wagerr",
+  "symbol": "wgr",
+  "name": "Wagerr",
+  "image": "https://assets.coingecko.com/coins/images/759/large/syGKmAT.png?1696501912",
+  "current_price": 0.00328008,
+  "market_cap": 852845,
+  "market_cap_rank": 2769,
+  "fully_diluted_valuation": null,
+  "total_volume": 284.34,
+  "high_24h": 0.00338969,
+  "low_24h": 0.00326451,
+  "price_change_24h": -0.000056583283967629,
+  "price_change_percentage_24h": -1.69581,
+  "market_cap_change_24h": -21004.456538781407,
+  "market_cap_change_percentage_24h": -2.40367,
+  "circulating_supply": 260557449.270504,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.934216,
+  "ath_change_percentage": -99.65014,
+  "ath_date": "2018-01-13T00:00:00.000Z",
+  "atl": 0.00019899,
+  "atl_change_percentage": 1542.55966,
+  "atl_date": "2022-06-20T09:40:55.335Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:31.330Z",
+  "platforms": {
+    "ethereum": "0xc237868a9c5729bdf3173dddacaa336a0a5bb6e0"
+  }
+}

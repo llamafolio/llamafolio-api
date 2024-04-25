@@ -1,0 +1,35 @@
+{
+  "id": "gemini-dollar",
+  "symbol": "gusd",
+  "name": "Gemini Dollar",
+  "image": "https://assets.coingecko.com/coins/images/5992/large/gemini-dollar-gusd.png?1696506408",
+  "current_price": 0.999686,
+  "market_cap": 101103144,
+  "market_cap_rank": 476,
+  "fully_diluted_valuation": 101103144,
+  "total_volume": 1994510,
+  "high_24h": 1.002,
+  "low_24h": 0.992886,
+  "price_change_24h": 0.00076483,
+  "price_change_percentage_24h": 0.07657,
+  "market_cap_change_24h": -4118536.9128827155,
+  "market_cap_change_percentage_24h": -3.91415,
+  "circulating_supply": 101218023.24,
+  "total_supply": 101218023.24,
+  "max_supply": null,
+  "ath": 3.3,
+  "ath_change_percentage": -69.81131,
+  "ath_date": "2018-10-11T17:36:21.529Z",
+  "atl": 0.78261,
+  "atl_change_percentage": 27.44451,
+  "atl_date": "2018-09-29T00:00:00.000Z",
+  "roi": {
+    "times": -0.0003137154302025,
+    "currency": "usd",
+    "percentage": -0.03137154302025
+  },
+  "last_updated": "2024-04-25T08:55:24.358Z",
+  "platforms": {
+    "ethereum": "0x056fd409e1d7a124bd7017459dfea2f387b6d5cd"
+  }
+}

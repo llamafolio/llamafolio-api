@@ -1,0 +1,31 @@
+{
+  "id": "basis-share",
+  "symbol": "bas",
+  "name": "Basis Share",
+  "image": "https://assets.coingecko.com/coins/images/13251/large/BAS.png?1696513026",
+  "current_price": 0.201184,
+  "market_cap": 82308,
+  "market_cap_rank": 3846,
+  "fully_diluted_valuation": 201026,
+  "total_volume": 145.26,
+  "high_24h": 0.201725,
+  "low_24h": 0.176154,
+  "price_change_24h": 0.00888939,
+  "price_change_percentage_24h": 4.62279,
+  "market_cap_change_24h": 3633.66,
+  "market_cap_change_percentage_24h": 4.61864,
+  "circulating_supply": 409438,
+  "total_supply": 1000001,
+  "max_supply": 1000001,
+  "ath": 963.23,
+  "ath_change_percentage": -99.9791,
+  "ath_date": "2020-12-30T23:54:21.944Z",
+  "atl": 0.0824,
+  "atl_change_percentage": 144.35664,
+  "atl_date": "2023-11-06T19:55:23.213Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:16.441Z",
+  "platforms": {
+    "polygon": "0x83a6da342099835bcaa9c219dd76a5033c837de5"
+  }
+}

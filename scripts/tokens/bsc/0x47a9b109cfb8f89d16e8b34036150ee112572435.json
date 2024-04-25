@@ -1,0 +1,31 @@
+{
+  "id": "billicat",
+  "symbol": "bcat",
+  "name": "BilliCat",
+  "image": "https://assets.coingecko.com/coins/images/34226/large/photo_2023-12-09_09-51-03.jpg?1704299304",
+  "current_price": 0.00615669,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 615669,
+  "total_volume": 3286.98,
+  "high_24h": 0.00660846,
+  "low_24h": 0.00610782,
+  "price_change_24h": -0.000321570922267175,
+  "price_change_percentage_24h": -4.96385,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.051281,
+  "ath_change_percentage": -88.00497,
+  "ath_date": "2024-01-15T07:23:33.262Z",
+  "atl": 0.00194709,
+  "atl_change_percentage": 215.91436,
+  "atl_date": "2024-01-04T22:14:11.894Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:46.093Z",
+  "platforms": {
+    "bsc": "0x47a9b109cfb8f89d16e8b34036150ee112572435"
+  }
+}

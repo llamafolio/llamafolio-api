@@ -1,0 +1,31 @@
+{
+  "id": "nftlaunch",
+  "symbol": "nftl",
+  "name": "NFTLaunch",
+  "image": "https://assets.coingecko.com/coins/images/18140/large/nftl.PNG?1696517643",
+  "current_price": 0.00377027,
+  "market_cap": 508769,
+  "market_cap_rank": 3056,
+  "fully_diluted_valuation": 508769,
+  "total_volume": 20105,
+  "high_24h": 0.00423001,
+  "low_24h": 0.00355963,
+  "price_change_24h": -0.000421951589458898,
+  "price_change_percentage_24h": -10.06511,
+  "market_cap_change_24h": -60626.12384988007,
+  "market_cap_change_percentage_24h": -10.64747,
+  "circulating_supply": 135000000,
+  "total_supply": 135000000,
+  "max_supply": 1000000000,
+  "ath": 0.3916,
+  "ath_change_percentage": -99.0343,
+  "ath_date": "2021-11-16T03:13:17.303Z",
+  "atl": 0.00259909,
+  "atl_change_percentage": 45.49994,
+  "atl_date": "2023-09-02T15:43:11.273Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:20.948Z",
+  "platforms": {
+    "ethereum": "0xe7f72bc0252ca7b16dbb72eeee1afcdb2429f2dd"
+  }
+}

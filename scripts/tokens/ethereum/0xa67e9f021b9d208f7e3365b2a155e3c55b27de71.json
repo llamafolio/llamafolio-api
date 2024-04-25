@@ -1,0 +1,31 @@
+{
+  "id": "kleekai",
+  "symbol": "klee",
+  "name": "KleeKai",
+  "image": "https://assets.coingecko.com/coins/images/15548/large/Klee-Kai-Logo.png?1696515189",
+  "current_price": 7.447e-12,
+  "market_cap": 744747,
+  "market_cap_rank": 2856,
+  "fully_diluted_valuation": 744747,
+  "total_volume": 10392.79,
+  "high_24h": 7.735e-12,
+  "low_24h": 7.328e-12,
+  "price_change_24h": -1.92337e-13,
+  "price_change_percentage_24h": -2.51757,
+  "market_cap_change_24h": -18194.607785915723,
+  "market_cap_change_percentage_24h": -2.3848,
+  "circulating_supply": 100000000000000000,
+  "total_supply": 100000000000000000,
+  "max_supply": null,
+  "ath": 1.792e-9,
+  "ath_change_percentage": -99.58439,
+  "ath_date": "2021-10-29T20:20:09.608Z",
+  "atl": 1.023e-12,
+  "atl_change_percentage": 628.22894,
+  "atl_date": "2022-05-01T07:05:05.740Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:48.349Z",
+  "platforms": {
+    "ethereum": "0xa67e9f021b9d208f7e3365b2a155e3c55b27de71"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "floki-ceo",
+  "symbol": "flokiceo",
+  "name": "FLOKI CEO",
+  "image": "https://assets.coingecko.com/coins/images/29199/large/IMG_20230225_005553_020.jpg?1696528159",
+  "current_price": 6.14e-12,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2590301,
+  "total_volume": 23903,
+  "high_24h": 6.864e-12,
+  "low_24h": 6.071e-12,
+  "price_change_24h": -6.22896e-13,
+  "price_change_percentage_24h": -9.2099,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 420000000000000000,
+  "max_supply": 420000000000000000,
+  "ath": 1.97798e-10,
+  "ath_change_percentage": -96.88061,
+  "ath_date": "2023-04-12T11:01:50.553Z",
+  "atl": 2.756e-12,
+  "atl_change_percentage": 123.86675,
+  "atl_date": "2023-09-24T17:09:58.357Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:41.681Z",
+  "platforms": {
+    "bsc": "0x45289007706e7ee7b42b1fa506661d97740edfb4"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "id": "infliv",
+  "symbol": "ifv",
+  "name": "INFLIV",
+  "image": "https://assets.coingecko.com/coins/images/5279/large/INFLIV_LOGO_PNG.png?1696505779",
+  "current_price": 0.00027633,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 19345.05,
+  "total_volume": 230.36,
+  "high_24h": 0.00027753,
+  "low_24h": 0.00027483,
+  "price_change_24h": 4.43687e-7,
+  "price_change_percentage_24h": 0.16082,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 70000000,
+  "max_supply": null,
+  "ath": 1.03,
+  "ath_change_percentage": -99.97323,
+  "ath_date": "2019-02-22T10:25:30.160Z",
+  "atl": 0.00005113,
+  "atl_change_percentage": 439.43603,
+  "atl_date": "2019-06-03T00:00:00.000Z",
+  "roi": {
+    "times": -0.9961727325838865,
+    "currency": "usd",
+    "percentage": -99.61727325838865
+  },
+  "last_updated": "2024-04-25T09:13:54.116Z",
+  "platforms": {
+    "ethereum": "0x3656bd0f3f07623bb7f429b390d208f894e44ece"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "aave-zrx",
+  "symbol": "azrx",
+  "name": "Aave ZRX",
+  "image": "https://assets.coingecko.com/coins/images/14264/large/aZRX.9be555a9.png?1696513965",
+  "current_price": 0.508023,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 20578272,
+  "total_volume": 0,
+  "high_24h": 0.571798,
+  "low_24h": 0.503518,
+  "price_change_24h": -0.06295657074493244,
+  "price_change_percentage_24h": -11.09186,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 40506611.6363514,
+  "max_supply": null,
+  "ath": 2.38,
+  "ath_change_percentage": -78.72816,
+  "ath_date": "2021-04-13T18:01:20.595Z",
+  "atl": 0.147544,
+  "atl_change_percentage": 242.81472,
+  "atl_date": "2023-01-01T05:00:03.182Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:33.205Z",
+  "platforms": {
+    "ethereum": "0xdf7ff54aacacbff42dfe29dd6144a69b629f8c9e"
+  }
+}

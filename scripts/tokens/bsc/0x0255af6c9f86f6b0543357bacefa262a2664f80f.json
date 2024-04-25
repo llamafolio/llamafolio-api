@@ -1,0 +1,31 @@
+{
+  "id": "immutable",
+  "symbol": "dara",
+  "name": "Immutable",
+  "image": "https://assets.coingecko.com/coins/images/17640/large/darav2.png?1696517171",
+  "current_price": 0.00644405,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 270753,
+  "total_volume": 29.3,
+  "high_24h": 0.00649585,
+  "low_24h": 0.00622856,
+  "price_change_24h": -0.000051798884592253,
+  "price_change_percentage_24h": -0.79741,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 42000000,
+  "max_supply": 42000000,
+  "ath": 0.507344,
+  "ath_change_percentage": -98.73348,
+  "ath_date": "2021-08-13T13:25:16.939Z",
+  "atl": 0.00344399,
+  "atl_change_percentage": 86.57421,
+  "atl_date": "2023-12-06T20:50:41.061Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:16:28.577Z",
+  "platforms": {
+    "bsc": "0x0255af6c9f86f6b0543357bacefa262a2664f80f"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "citadel-swap",
+  "symbol": "fort",
+  "name": "Citadel",
+  "image": "https://assets.coingecko.com/coins/images/33151/large/output-onlinepngtools.png?1700825422",
+  "current_price": 0.01206924,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 651739,
+  "total_volume": 247.33,
+  "high_24h": 0.01267499,
+  "low_24h": 0.01202145,
+  "price_change_24h": -0.000466113392831849,
+  "price_change_percentage_24h": -3.71839,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 54000000,
+  "max_supply": 100000000,
+  "ath": 0.03449997,
+  "ath_change_percentage": -65.01667,
+  "ath_date": "2023-11-29T10:06:28.634Z",
+  "atl": 0.01202145,
+  "atl_change_percentage": 0.3975,
+  "atl_date": "2024-04-24T20:31:28.833Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:34.710Z",
+  "platforms": {
+    "base": "0x7233062d88133b5402d39d62bfa23a1b6c8d0898"
+  }
+}

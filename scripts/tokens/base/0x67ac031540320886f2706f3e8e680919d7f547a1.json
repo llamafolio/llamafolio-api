@@ -1,0 +1,31 @@
+{
+  "id": "troves",
+  "symbol": "troves",
+  "name": "Troves",
+  "image": "https://assets.coingecko.com/coins/images/35140/large/troves.jpeg?1707449560",
+  "current_price": 10.61,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 106123,
+  "total_volume": 190.76,
+  "high_24h": 10.97,
+  "low_24h": 10.37,
+  "price_change_24h": -0.22707571559964457,
+  "price_change_percentage_24h": -2.09492,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000,
+  "max_supply": 10000,
+  "ath": 655.76,
+  "ath_change_percentage": -98.385,
+  "ath_date": "2024-02-09T06:22:45.844Z",
+  "atl": 9.81,
+  "atl_change_percentage": 7.96924,
+  "atl_date": "2024-04-13T21:44:35.824Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:53.777Z",
+  "platforms": {
+    "base": "0x67ac031540320886f2706f3e8e680919d7f547a1"
+  }
+}

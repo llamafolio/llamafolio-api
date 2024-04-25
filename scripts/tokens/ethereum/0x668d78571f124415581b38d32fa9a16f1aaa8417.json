@@ -1,0 +1,31 @@
+{
+  "id": "1ex",
+  "symbol": "1ex",
+  "name": "1ex",
+  "image": "https://assets.coingecko.com/coins/images/34927/large/1ex_logo_200%D1%85200.png?1706686304",
+  "current_price": 0.154942,
+  "market_cap": 27094743,
+  "market_cap_rank": 962,
+  "fully_diluted_valuation": 155646534,
+  "total_volume": 328400,
+  "high_24h": 0.172799,
+  "low_24h": 0.149309,
+  "price_change_24h": -0.004896196864810355,
+  "price_change_percentage_24h": -3.06323,
+  "market_cap_change_24h": -306509.98287334666,
+  "market_cap_change_percentage_24h": -1.1186,
+  "circulating_supply": 174078679.793465,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.349013,
+  "ath_change_percentage": -54.65653,
+  "ath_date": "2024-03-28T13:51:57.727Z",
+  "atl": 0.04542695,
+  "atl_change_percentage": 248.37176,
+  "atl_date": "2024-02-09T19:42:24.494Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:50.165Z",
+  "platforms": {
+    "ethereum": "0x668d78571f124415581b38d32fa9a16f1aaa8417"
+  }
+}

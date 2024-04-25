@@ -1,0 +1,31 @@
+{
+  "id": "funfair",
+  "symbol": "fun",
+  "name": "FUNToken",
+  "image": "https://assets.coingecko.com/coins/images/761/large/FUN.png?1696501914",
+  "current_price": 0.00555517,
+  "market_cap": 58808275,
+  "market_cap_rank": 630,
+  "fully_diluted_valuation": 61033207,
+  "total_volume": 2227145,
+  "high_24h": 0.00600004,
+  "low_24h": 0.00554659,
+  "price_change_24h": -0.000397060613245606,
+  "price_change_percentage_24h": -6.67079,
+  "market_cap_change_24h": -4368041.4440974295,
+  "market_cap_change_percentage_24h": -6.91405,
+  "circulating_supply": 10598879189.265394,
+  "total_supply": 10999873621,
+  "max_supply": null,
+  "ath": 0.191066,
+  "ath_change_percentage": -97.09687,
+  "ath_date": "2018-01-08T00:00:00.000Z",
+  "atl": 0.00105506,
+  "atl_change_percentage": 425.74148,
+  "atl_date": "2020-03-13T02:22:42.216Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:55.252Z",
+  "platforms": {
+    "ethereum": "0x419d0d8bdd9af5e606ae2232ed285aff190e711b"
+  }
+}

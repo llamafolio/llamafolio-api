@@ -1,0 +1,31 @@
+{
+  "id": "aave-v3-maticx",
+  "symbol": "amaticx",
+  "name": "Aave v3 MaticX",
+  "image": "https://assets.coingecko.com/coins/images/32920/large/maticx.png?1699825663",
+  "current_price": 0.776674,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 0,
+  "high_24h": 0.8421,
+  "low_24h": 0.774263,
+  "price_change_24h": -0.05571337999999992,
+  "price_change_percentage_24h": -6.6932,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.42,
+  "ath_change_percentage": -45.19504,
+  "ath_date": "2024-03-13T13:15:23.204Z",
+  "atl": 0.654441,
+  "atl_change_percentage": 18.67749,
+  "atl_date": "2024-04-13T21:30:34.152Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:35:35.860Z",
+  "platforms": {
+    "polygon": "0x80ca0d8c38d2e2bcbab66aa1648bd1c7160500fe"
+  }
+}

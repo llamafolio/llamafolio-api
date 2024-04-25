@@ -1,0 +1,31 @@
+{
+  "id": "cyber-tesla-ai",
+  "symbol": "cta",
+  "name": "Cyber Tesla AI",
+  "image": "https://assets.coingecko.com/coins/images/34791/large/ctalogo200.png?1706031061",
+  "current_price": 8.32784e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 10492.64,
+  "total_volume": 0.430345,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 12599480917,
+  "max_supply": 21000000000,
+  "ath": 0.00000571,
+  "ath_change_percentage": -85.40661,
+  "ath_date": "2024-01-23T23:39:18.934Z",
+  "atl": 5.85906e-7,
+  "atl_change_percentage": 42.13617,
+  "atl_date": "2024-03-05T20:51:10.380Z",
+  "roi": null,
+  "last_updated": "2024-04-22T01:20:52.967Z",
+  "platforms": {
+    "bsc": "0x6510ad47900079238da5c95154beff985bf1e659"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "verified-usd-foundation-usdv",
+  "symbol": "usdv",
+  "name": "Verified USD",
+  "image": "https://assets.coingecko.com/coins/images/32948/large/usdv_%281%29.png?1699933314",
+  "current_price": 0.999952,
+  "market_cap": 22375582,
+  "market_cap_rank": 1055,
+  "fully_diluted_valuation": 22375582,
+  "total_volume": 5044244,
+  "high_24h": 1.003,
+  "low_24h": 0.993696,
+  "price_change_24h": 0.00029575,
+  "price_change_percentage_24h": 0.02958,
+  "market_cap_change_24h": -389.18652256578207,
+  "market_cap_change_percentage_24h": -0.00174,
+  "circulating_supply": 22398415.604777,
+  "total_supply": 22398415.604777,
+  "max_supply": null,
+  "ath": 1.034,
+  "ath_change_percentage": -3.57561,
+  "ath_date": "2024-04-13T22:46:11.056Z",
+  "atl": 0.940622,
+  "atl_change_percentage": 5.97886,
+  "atl_date": "2024-04-13T20:11:29.016Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:15.405Z",
+  "platforms": {
+    "avalanche": "0x323665443cef804a3b5206103304bd4872ea4253"
+  }
+}

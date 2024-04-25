@@ -1,0 +1,31 @@
+{
+  "id": "zorro",
+  "symbol": "zorro",
+  "name": "Zorro",
+  "image": "https://assets.coingecko.com/coins/images/34381/large/ZORRO_TP.png?1704777748",
+  "current_price": 0.00105867,
+  "market_cap": 10519347,
+  "market_cap_rank": 1412,
+  "fully_diluted_valuation": 10519347,
+  "total_volume": 273984,
+  "high_24h": 0.00132401,
+  "low_24h": 0.00104611,
+  "price_change_24h": -0.000148583413800645,
+  "price_change_percentage_24h": -12.3076,
+  "market_cap_change_24h": -1552296.0257195905,
+  "market_cap_change_percentage_24h": -12.85903,
+  "circulating_supply": 10000000000,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.00257852,
+  "ath_change_percentage": -59.19729,
+  "ath_date": "2024-04-01T02:05:35.184Z",
+  "atl": 0.00017651,
+  "atl_change_percentage": 496.07369,
+  "atl_date": "2024-02-01T04:43:03.066Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:21.281Z",
+  "platforms": {
+    "zksync-era": "0x244c238325fc1bdf6eded726ee1b47d55895d944"
+  }
+}

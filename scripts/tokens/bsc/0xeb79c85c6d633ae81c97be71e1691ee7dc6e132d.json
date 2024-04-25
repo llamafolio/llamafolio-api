@@ -1,0 +1,31 @@
+{
+  "id": "pixer-eternity",
+  "symbol": "pxt",
+  "name": "Pixer Eternity",
+  "image": "https://assets.coingecko.com/coins/images/31989/large/PXT.png?1696530791",
+  "current_price": 0.01253231,
+  "market_cap": 26961984,
+  "market_cap_rank": 969,
+  "fully_diluted_valuation": 125323083,
+  "total_volume": 161788,
+  "high_24h": 0.01439678,
+  "low_24h": 0.01208891,
+  "price_change_24h": -0.00182537651237363,
+  "price_change_percentage_24h": -12.71359,
+  "market_cap_change_24h": 26565260,
+  "market_cap_change_percentage_24h": 6696.14733,
+  "circulating_supply": 2151398100,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.391028,
+  "ath_change_percentage": -96.79522,
+  "ath_date": "2023-09-28T05:20:43.950Z",
+  "atl": 0.01208891,
+  "atl_change_percentage": 3.66189,
+  "atl_date": "2024-04-25T07:14:47.666Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:38.602Z",
+  "platforms": {
+    "bsc": "0xeb79c85c6d633ae81c97be71e1691ee7dc6e132d"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "crabada",
+  "symbol": "cra",
+  "name": "Crabada",
+  "image": "https://assets.coingecko.com/coins/images/20011/large/crabada_icon_%281%29.png?1696519432",
+  "current_price": 0.00082057,
+  "market_cap": 291311,
+  "market_cap_rank": 3334,
+  "fully_diluted_valuation": 818326,
+  "total_volume": 474.36,
+  "high_24h": 0.00094019,
+  "low_24h": 0.00081727,
+  "price_change_24h": -0.000119616823012401,
+  "price_change_percentage_24h": -12.7226,
+  "market_cap_change_24h": -35478.8324307602,
+  "market_cap_change_percentage_24h": -10.85678,
+  "circulating_supply": 355983565,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 2.96,
+  "ath_change_percentage": -99.97234,
+  "ath_date": "2021-11-22T17:18:31.018Z",
+  "atl": 0.00010053,
+  "atl_change_percentage": 714.00765,
+  "atl_date": "2023-08-25T22:06:26.859Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:26.406Z",
+  "platforms": {
+    "avalanche": "0xa32608e873f9ddef944b24798db69d80bbb4d1ed"
+  }
+}

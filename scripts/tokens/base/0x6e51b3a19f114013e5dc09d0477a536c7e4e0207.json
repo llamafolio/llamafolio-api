@@ -1,0 +1,31 @@
+{
+  "id": "media-network",
+  "symbol": "media",
+  "name": "Media Network",
+  "image": "https://assets.coingecko.com/coins/images/15142/large/media50x50.png?1696514798",
+  "current_price": 21.81,
+  "market_cap": 5447954,
+  "market_cap_rank": 1748,
+  "fully_diluted_valuation": 18944561,
+  "total_volume": 307994,
+  "high_24h": 23.03,
+  "low_24h": 21.57,
+  "price_change_24h": -1.1655337733609947,
+  "price_change_percentage_24h": -5.072,
+  "market_cap_change_24h": -297250.32908531,
+  "market_cap_change_percentage_24h": -5.17389,
+  "circulating_supply": 250000,
+  "total_supply": 869343,
+  "max_supply": 10000000,
+  "ath": 312.25,
+  "ath_change_percentage": -93.01489,
+  "ath_date": "2021-04-30T13:18:25.549Z",
+  "atl": 0.135377,
+  "atl_change_percentage": 16011.47861,
+  "atl_date": "2022-10-01T05:46:32.055Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:35.286Z",
+  "platforms": {
+    "base": "0x6e51b3a19f114013e5dc09d0477a536c7e4e0207"
+  }
+}

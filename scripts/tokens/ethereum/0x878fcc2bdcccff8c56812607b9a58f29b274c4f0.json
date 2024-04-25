@@ -1,0 +1,31 @@
+{
+  "id": "derp-coin",
+  "symbol": "derp",
+  "name": "Derp Coin",
+  "image": "https://assets.coingecko.com/coins/images/30262/large/logo-200x200-transparent.png?1696529170",
+  "current_price": 0.00000328,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2034809,
+  "total_volume": 1942.22,
+  "high_24h": 0.00000347,
+  "low_24h": 0.00000326,
+  "price_change_24h": -1.46403184865e-7,
+  "price_change_percentage_24h": -4.27081,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 621000000000,
+  "max_supply": 690000000000,
+  "ath": 0.00000981,
+  "ath_change_percentage": -66.62944,
+  "ath_date": "2024-03-11T05:06:54.235Z",
+  "atl": 1.54998e-7,
+  "atl_change_percentage": 2011.09623,
+  "atl_date": "2023-09-18T11:20:20.113Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:22.987Z",
+  "platforms": {
+    "ethereum": "0x878fcc2bdcccff8c56812607b9a58f29b274c4f0"
+  }
+}

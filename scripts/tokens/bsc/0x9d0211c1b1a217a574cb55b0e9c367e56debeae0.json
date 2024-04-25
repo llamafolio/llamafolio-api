@@ -1,0 +1,31 @@
+{
+  "id": "turbodex",
+  "symbol": "turbo",
+  "name": "TurboDEX",
+  "image": "https://assets.coingecko.com/coins/images/31317/large/TURBO_TOKEN.png?1696530137",
+  "current_price": 0.264423,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 6615241,
+  "total_volume": 17.44,
+  "high_24h": 0.264649,
+  "low_24h": 0.262836,
+  "price_change_24h": 0.00111453,
+  "price_change_percentage_24h": 0.42328,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 25000000,
+  "max_supply": 25000000,
+  "ath": 1.12,
+  "ath_change_percentage": -76.34917,
+  "ath_date": "2024-01-29T05:49:55.088Z",
+  "atl": 0.172722,
+  "atl_change_percentage": 53.19672,
+  "atl_date": "2024-01-29T04:09:55.501Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:34.972Z",
+  "platforms": {
+    "bsc": "0x9d0211c1b1a217a574cb55b0e9c367e56debeae0"
+  }
+}

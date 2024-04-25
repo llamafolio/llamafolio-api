@@ -1,0 +1,31 @@
+{
+  "id": "crystl-finance",
+  "symbol": "crystl",
+  "name": "Crystl Finance",
+  "image": "https://assets.coingecko.com/coins/images/17023/large/CRYSTL_Rebrand_Logo.png?1696516586",
+  "current_price": 0.00062651,
+  "market_cap": 7808.66,
+  "market_cap_rank": 4231,
+  "fully_diluted_valuation": 7933.45,
+  "total_volume": 2.76,
+  "high_24h": 0.00067521,
+  "low_24h": 0.00062387,
+  "price_change_24h": -0.000038844732785712,
+  "price_change_percentage_24h": -5.83821,
+  "market_cap_change_24h": -516.5712986105846,
+  "market_cap_change_percentage_24h": -6.20489,
+  "circulating_supply": 12499611,
+  "total_supply": 12699356,
+  "max_supply": 12699356,
+  "ath": 1.42,
+  "ath_change_percentage": -99.95604,
+  "ath_date": "2021-09-05T05:31:20.045Z",
+  "atl": 0.00043126,
+  "atl_change_percentage": 44.85755,
+  "atl_date": "2023-06-10T04:30:13.111Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:21.465Z",
+  "platforms": {
+    "polygon": "0x76bf0c28e604cc3fe9967c83b3c3f31c213cfe64"
+  }
+}

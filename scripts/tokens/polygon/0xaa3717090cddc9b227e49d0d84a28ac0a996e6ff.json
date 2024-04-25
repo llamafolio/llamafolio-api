@@ -1,0 +1,31 @@
+{
+  "id": "permission-coin",
+  "symbol": "ask",
+  "name": "Permission Coin",
+  "image": "https://assets.coingecko.com/coins/images/12521/large/rjQjTU3c_400x400.jpg?1696512335",
+  "current_price": 0.0004079,
+  "market_cap": 8628475,
+  "market_cap_rank": 1510,
+  "fully_diluted_valuation": 40815628,
+  "total_volume": 136684,
+  "high_24h": 0.00042641,
+  "low_24h": 0.00040555,
+  "price_change_24h": -0.000014736037478729,
+  "price_change_percentage_24h": -3.48672,
+  "market_cap_change_24h": -310860.4460922405,
+  "market_cap_change_percentage_24h": -3.47744,
+  "circulating_supply": 21140125059.5075,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.02465863,
+  "ath_change_percentage": -98.34113,
+  "ath_date": "2021-09-21T02:08:09.702Z",
+  "atl": 0.00003995,
+  "atl_change_percentage": 923.94942,
+  "atl_date": "2023-05-29T05:00:24.760Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:25.838Z",
+  "platforms": {
+    "polygon": "0xaa3717090cddc9b227e49d0d84a28ac0a996e6ff"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "davos-protocol",
+  "symbol": "dusd",
+  "name": "Davos Protocol",
+  "image": "https://assets.coingecko.com/coins/images/28775/large/dusd_logo_200x200.png?1696527754",
+  "current_price": 1.001,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 6291.63,
+  "high_24h": 1.006,
+  "low_24h": 0.991947,
+  "price_change_24h": 0.000716,
+  "price_change_percentage_24h": 0.07155,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.17,
+  "ath_change_percentage": -14.35847,
+  "ath_date": "2024-02-13T10:01:29.915Z",
+  "atl": 0.755909,
+  "atl_change_percentage": 32.25513,
+  "atl_date": "2024-04-07T19:59:05.702Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:38.010Z",
+  "platforms": {
+    "bsc": "0x8ec1877698acf262fe8ad8a295ad94d6ea258988"
+  }
+}

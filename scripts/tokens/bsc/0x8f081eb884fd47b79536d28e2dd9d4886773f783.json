@@ -1,0 +1,31 @@
+{
+  "id": "bepay",
+  "symbol": "becoin",
+  "name": "bePAY Finance",
+  "image": "https://assets.coingecko.com/coins/images/21275/large/logo-becoin.png?1696520646",
+  "current_price": 0.00204245,
+  "market_cap": 26552,
+  "market_cap_rank": 4110,
+  "fully_diluted_valuation": 26552,
+  "total_volume": 0.283753,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 13000000,
+  "total_supply": 13000000,
+  "max_supply": 1000000000,
+  "ath": 0.248777,
+  "ath_change_percentage": -99.179,
+  "ath_date": "2021-12-07T10:11:03.214Z",
+  "atl": 0.00079919,
+  "atl_change_percentage": 155.56465,
+  "atl_date": "2023-01-14T04:20:00.235Z",
+  "roi": null,
+  "last_updated": "2024-04-23T12:51:09.168Z",
+  "platforms": {
+    "bsc": "0x8f081eb884fd47b79536d28e2dd9d4886773f783"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "squid-game-2",
+  "symbol": "squid",
+  "name": "Squid Game",
+  "image": "https://assets.coingecko.com/coins/images/33074/large/photo_2023-11-17_14.18.23.jpeg?1700542677",
+  "current_price": 0.00000254,
+  "market_cap": 254018,
+  "market_cap_rank": 3389,
+  "fully_diluted_valuation": 254018,
+  "total_volume": 7347,
+  "high_24h": 0.00000279,
+  "low_24h": 0.00000253,
+  "price_change_24h": -7.9451037383e-8,
+  "price_change_percentage_24h": -3.03291,
+  "market_cap_change_24h": -8417.05989942199,
+  "market_cap_change_percentage_24h": -3.2073,
+  "circulating_supply": 100000000000,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.0000237,
+  "ath_change_percentage": -89.2825,
+  "ath_date": "2023-11-21T07:04:46.629Z",
+  "atl": 3.68265e-7,
+  "atl_change_percentage": 589.76906,
+  "atl_date": "2024-01-08T17:31:29.794Z",
+  "roi": null,
+  "last_updated": "2024-04-25T07:41:21.353Z",
+  "platforms": {
+    "ethereum": "0x561cf9121e89926c27fa1cfc78dfcc4c422937a4"
+  }
+}

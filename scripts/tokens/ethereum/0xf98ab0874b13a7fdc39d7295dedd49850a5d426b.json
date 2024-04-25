@@ -1,0 +1,31 @@
+{
+  "id": "kira",
+  "symbol": "kira",
+  "name": "KIRA",
+  "image": "https://assets.coingecko.com/coins/images/28196/large/KIRA_CMC.png?1696527199",
+  "current_price": 0.00103221,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 380885,
+  "total_volume": 1.5,
+  "high_24h": 0.00103221,
+  "low_24h": 0.00102898,
+  "price_change_24h": 0.0000022,
+  "price_change_percentage_24h": 0.21336,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 369000000,
+  "max_supply": 369000000,
+  "ath": 0.00177263,
+  "ath_change_percentage": -41.76975,
+  "ath_date": "2022-11-13T10:21:24.549Z",
+  "atl": 0.00015848,
+  "atl_change_percentage": 551.32293,
+  "atl_date": "2023-12-23T16:45:24.905Z",
+  "roi": null,
+  "last_updated": "2024-04-24T12:00:48.055Z",
+  "platforms": {
+    "ethereum": "0xf98ab0874b13a7fdc39d7295dedd49850a5d426b"
+  }
+}

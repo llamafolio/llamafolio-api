@@ -1,0 +1,31 @@
+{
+  "id": "camly-coin",
+  "symbol": "camly",
+  "name": "CAMLY COIN",
+  "image": "https://assets.coingecko.com/coins/images/34963/large/CAMLY.jpg?1706803734",
+  "current_price": 0.00014125,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 141249038,
+  "total_volume": 5086.91,
+  "high_24h": 0.00017579,
+  "low_24h": 0.00013647,
+  "price_change_24h": 0.00000435,
+  "price_change_percentage_24h": 3.17749,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 999999999999,
+  "max_supply": 999999999999,
+  "ath": 0.0003536,
+  "ath_change_percentage": -60.00817,
+  "ath_date": "2024-02-09T17:16:24.227Z",
+  "atl": 0.00013233,
+  "atl_change_percentage": 6.85926,
+  "atl_date": "2024-04-24T03:49:32.979Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:44.760Z",
+  "platforms": {
+    "bsc": "0x0910320181889fefde0bb1ca63962b0a8882e413"
+  }
+}

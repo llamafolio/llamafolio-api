@@ -1,0 +1,31 @@
+{
+  "id": "ibuffer-token",
+  "symbol": "bfr",
+  "name": "Buffer Token",
+  "image": "https://assets.coingecko.com/coins/images/18540/large/Qk6pjeZ3_400x400.jpg?1696518020",
+  "current_price": 0.02633314,
+  "market_cap": 837636,
+  "market_cap_rank": 2786,
+  "fully_diluted_valuation": 2626396,
+  "total_volume": 434.19,
+  "high_24h": 0.02731591,
+  "low_24h": 0.02584354,
+  "price_change_24h": -0.000772362395646726,
+  "price_change_percentage_24h": -2.84947,
+  "market_cap_change_24h": -28729.166233572178,
+  "market_cap_change_percentage_24h": -3.31606,
+  "circulating_supply": 31892992.648386,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.854131,
+  "ath_change_percentage": -96.91923,
+  "ath_date": "2021-12-04T20:53:16.120Z",
+  "atl": 0.01578315,
+  "atl_change_percentage": 66.72105,
+  "atl_date": "2022-09-07T02:41:32.835Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:41.281Z",
+  "platforms": {
+    "arbitrum": "0x1a5b0aaf478bf1fda7b934c76e7692d722982a6d"
+  }
+}

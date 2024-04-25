@@ -1,0 +1,31 @@
+{
+  "id": "auto",
+  "symbol": "auto",
+  "name": "Auto",
+  "image": "https://assets.coingecko.com/coins/images/13751/large/autofarm_icon_200x200.png?1696513494",
+  "current_price": 18.64,
+  "market_cap": 1405485,
+  "market_cap_rank": 2471,
+  "fully_diluted_valuation": 1481462,
+  "total_volume": 1887.47,
+  "high_24h": 18.89,
+  "low_24h": 18.27,
+  "price_change_24h": 0.057401,
+  "price_change_percentage_24h": 0.30888,
+  "market_cap_change_24h": -18185.776216923725,
+  "market_cap_change_percentage_24h": -1.27739,
+  "circulating_supply": 76502.6790375587,
+  "total_supply": 80638.1893250324,
+  "max_supply": 80638.1893250324,
+  "ath": 13988.94,
+  "ath_change_percentage": -99.86901,
+  "ath_date": "2021-02-20T01:09:50.839Z",
+  "atl": 8.62,
+  "atl_change_percentage": 112.60041,
+  "atl_date": "2023-10-19T22:41:56.730Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:29.021Z",
+  "platforms": {
+    "bsc": "0xa184088a740c695e156f91f5cc086a06bb78b827"
+  }
+}

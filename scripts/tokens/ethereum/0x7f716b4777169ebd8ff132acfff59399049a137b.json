@@ -1,0 +1,31 @@
+{
+  "id": "game-2",
+  "symbol": "game",
+  "name": "Gameluk",
+  "image": "https://assets.coingecko.com/coins/images/35697/large/Gameluk-logo-200*200.png?1709549680",
+  "current_price": 0.00280963,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 35251,
+  "high_24h": 0.00310889,
+  "low_24h": 0.0024212,
+  "price_change_24h": -0.000253986581919823,
+  "price_change_percentage_24h": -8.29043,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.402228,
+  "ath_change_percentage": -99.3011,
+  "ath_date": "2024-03-07T08:05:08.566Z",
+  "atl": 0.00189908,
+  "atl_change_percentage": 48.02726,
+  "atl_date": "2024-04-17T16:03:46.467Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:36.412Z",
+  "platforms": {
+    "ethereum": "0x7f716b4777169ebd8ff132acfff59399049a137b"
+  }
+}

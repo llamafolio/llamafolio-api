@@ -1,0 +1,31 @@
+{
+  "id": "phoenix-global",
+  "symbol": "phb",
+  "name": "Phoenix",
+  "image": "https://assets.coingecko.com/coins/images/20052/large/Phoenix_logo_blue_bird.png?1696519471",
+  "current_price": 1.76,
+  "market_cap": 85961676,
+  "market_cap_rank": 511,
+  "fully_diluted_valuation": 85961676,
+  "total_volume": 9602051,
+  "high_24h": 1.98,
+  "low_24h": 1.73,
+  "price_change_24h": -0.1635356679647595,
+  "price_change_percentage_24h": -8.50194,
+  "market_cap_change_24h": -8525804.446875945,
+  "market_cap_change_percentage_24h": -9.02321,
+  "circulating_supply": 49160340.7534484,
+  "total_supply": 49160340.7534484,
+  "max_supply": 64000000,
+  "ath": 3.98,
+  "ath_change_percentage": -55.96966,
+  "ath_date": "2024-03-09T08:39:48.974Z",
+  "atl": 0.071053,
+  "atl_change_percentage": 2364.90264,
+  "atl_date": "2022-05-12T12:48:18.005Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:42.859Z",
+  "platforms": {
+    "bsc": "0x0409633a72d846fc5bbe2f98d88564d35987904d"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "h-df0f364f-76a6-47fd-9c38-f8a239a4faad",
+  "symbol": "h",
+  "name": "H",
+  "image": "https://assets.coingecko.com/coins/images/28759/large/H.png?1696527738",
+  "current_price": 1.69631e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 107.55,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.00000175,
+  "ath_change_percentage": -90.27949,
+  "ath_date": "2023-01-21T20:14:39.342Z",
+  "atl": 1.68548e-7,
+  "atl_change_percentage": 0.64222,
+  "atl_date": "2023-07-26T17:59:36.705Z",
+  "roi": null,
+  "last_updated": "2023-07-26T22:48:59.532Z",
+  "platforms": {
+    "ethereum": "0xc6956b78e036b87ba2ab9810bf081eb76eedd17a"
+  }
+}

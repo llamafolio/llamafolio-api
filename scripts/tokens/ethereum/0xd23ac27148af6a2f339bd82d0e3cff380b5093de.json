@@ -1,0 +1,31 @@
+{
+  "id": "siren",
+  "symbol": "si",
+  "name": "Siren",
+  "image": "https://assets.coingecko.com/coins/images/13955/large/siren_token_200x200.png?1696513692",
+  "current_price": 0.058586,
+  "market_cap": 1315029,
+  "market_cap_rank": 2533,
+  "fully_diluted_valuation": 5858602,
+  "total_volume": 976.68,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 22446120.38097406,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 4.37,
+  "ath_change_percentage": -98.66008,
+  "ath_date": "2021-03-06T11:47:12.670Z",
+  "atl": 0.03006962,
+  "atl_change_percentage": 94.83461,
+  "atl_date": "2022-06-30T09:22:35.522Z",
+  "roi": null,
+  "last_updated": "2024-04-24T03:47:16.634Z",
+  "platforms": {
+    "ethereum": "0xd23ac27148af6a2f339bd82d0e3cff380b5093de"
+  }
+}

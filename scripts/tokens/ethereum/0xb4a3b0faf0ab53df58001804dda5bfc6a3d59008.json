@@ -1,0 +1,31 @@
+{
+  "id": "sperax",
+  "symbol": "spa",
+  "name": "Sperax",
+  "image": "https://assets.coingecko.com/coins/images/12232/large/sperax_logo.jpg?1696512065",
+  "current_price": 0.0166097,
+  "market_cap": 28101881,
+  "market_cap_rank": 951,
+  "fully_diluted_valuation": 76600314,
+  "total_volume": 1093385,
+  "high_24h": 0.01748001,
+  "low_24h": 0.0164214,
+  "price_change_24h": -0.000708214816875243,
+  "price_change_percentage_24h": -4.08949,
+  "market_cap_change_24h": -1137368.2154610977,
+  "market_cap_change_percentage_24h": -3.88987,
+  "circulating_supply": 1691682260.96,
+  "total_supply": 4611199980.67,
+  "max_supply": 5000000000,
+  "ath": 0.239479,
+  "ath_change_percentage": -93.07144,
+  "ath_date": "2022-03-23T15:20:17.622Z",
+  "atl": 0.00328638,
+  "atl_change_percentage": 404.88415,
+  "atl_date": "2023-09-22T02:35:58.069Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:41.187Z",
+  "platforms": {
+    "ethereum": "0xb4a3b0faf0ab53df58001804dda5bfc6a3d59008"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "avatar404",
+  "symbol": "",
+  "name": "Avatar404",
+  "image": "https://assets.coingecko.com/coins/images/35589/large/avatar404.jpeg?1709204091",
+  "current_price": 0.02054363,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 82996,
+  "total_volume": 9.77,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 4040000,
+  "max_supply": 4040000,
+  "ath": null,
+  "ath_change_percentage": 0,
+  "ath_date": null,
+  "atl": null,
+  "atl_change_percentage": 0,
+  "atl_date": null,
+  "roi": null,
+  "last_updated": "2024-04-24T06:59:24.270Z",
+  "platforms": {
+    "ethereum": "0x559cc0850361afe1973c0ba5d0a3446c8a5ad678"
+  }
+}

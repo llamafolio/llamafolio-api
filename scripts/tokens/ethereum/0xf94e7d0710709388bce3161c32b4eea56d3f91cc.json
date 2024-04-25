@@ -1,0 +1,31 @@
+{
+  "id": "destra-network",
+  "symbol": "dsync",
+  "name": "Destra Network",
+  "image": "https://assets.coingecko.com/coins/images/35996/large/Destra_Network.png?1710316001",
+  "current_price": 0.248784,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 248783582,
+  "total_volume": 1273311,
+  "high_24h": 0.284115,
+  "low_24h": 0.23967,
+  "price_change_24h": -0.02868432281236366,
+  "price_change_percentage_24h": -10.33789,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.508066,
+  "ath_change_percentage": -51.37512,
+  "ath_date": "2024-04-03T02:26:45.970Z",
+  "atl": 0.01124424,
+  "atl_change_percentage": 2097.09254,
+  "atl_date": "2024-03-15T11:49:35.042Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:22.971Z",
+  "platforms": {
+    "ethereum": "0xf94e7d0710709388bce3161c32b4eea56d3f91cc"
+  }
+}

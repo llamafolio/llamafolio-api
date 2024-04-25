@@ -1,0 +1,31 @@
+{
+  "id": "oobit",
+  "symbol": "obt",
+  "name": "Oobit",
+  "image": "https://assets.coingecko.com/coins/images/19855/large/obt.png?1696519278",
+  "current_price": 0.04531811,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 45318112,
+  "total_volume": 302951,
+  "high_24h": 0.050931,
+  "low_24h": 0.04485393,
+  "price_change_24h": -0.005526501724345053,
+  "price_change_percentage_24h": -10.86939,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.434378,
+  "ath_change_percentage": -89.57931,
+  "ath_date": "2022-05-31T14:23:39.031Z",
+  "atl": 0.00765076,
+  "atl_change_percentage": 491.64224,
+  "atl_date": "2023-03-23T09:56:32.683Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:26.168Z",
+  "platforms": {
+    "bsc": "0x07f9702ce093db82dfdc92c2c6e578d6ea8d5e22"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "the-debt-box",
+  "symbol": "debt",
+  "name": "The Debt Box",
+  "image": "https://assets.coingecko.com/coins/images/26349/large/imgonline-com-ua-Resize-FsfTbGcy5U.png?1696525426",
+  "current_price": 16.11,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 803683096,
+  "total_volume": 156043,
+  "high_24h": 16.43,
+  "low_24h": 15.95,
+  "price_change_24h": 0.01310989,
+  "price_change_percentage_24h": 0.08145,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 50000000,
+  "max_supply": 499999750,
+  "ath": 40.19,
+  "ath_change_percentage": -59.97166,
+  "ath_date": "2023-01-20T20:41:21.011Z",
+  "atl": 2.88,
+  "atl_change_percentage": 459.44091,
+  "atl_date": "2023-08-25T17:50:31.411Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:45.491Z",
+  "platforms": {
+    "bsc": "0xc632f90affec7121120275610bf17df9963f181c"
+  }
+}

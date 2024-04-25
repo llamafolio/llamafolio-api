@@ -1,0 +1,31 @@
+{
+  "id": "altbase",
+  "symbol": "altb",
+  "name": "Altbase",
+  "image": "https://assets.coingecko.com/coins/images/19550/large/615635338527975b0314223a_Altbase_app_icon.png?1696518983",
+  "current_price": 0.00010512,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 98275,
+  "total_volume": 9758,
+  "high_24h": 0.00010782,
+  "low_24h": 0.00010283,
+  "price_change_24h": 0.00000103,
+  "price_change_percentage_24h": 0.99259,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 935312500,
+  "max_supply": 935312500,
+  "ath": 0.02325362,
+  "ath_change_percentage": -99.54829,
+  "ath_date": "2021-10-29T08:04:36.513Z",
+  "atl": 0.00005633,
+  "atl_change_percentage": 86.4811,
+  "atl_date": "2023-10-03T13:13:35.949Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:18.949Z",
+  "platforms": {
+    "bsc": "0x9b3a01f8b4abd2e2a74597b21b7c269abf4e9f41"
+  }
+}

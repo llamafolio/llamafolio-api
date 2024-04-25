@@ -1,0 +1,31 @@
+{
+  "id": "aave-amm-usdc",
+  "symbol": "aammusdc",
+  "name": "Aave AMM USDC",
+  "image": "https://assets.coingecko.com/coins/images/17226/large/aAMMUSDC_2x.png?1696516780",
+  "current_price": 1.002,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 34524,
+  "total_volume": 0,
+  "high_24h": 1.005,
+  "low_24h": 0.99406,
+  "price_change_24h": 0.00033392,
+  "price_change_percentage_24h": 0.03345,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 34466.07253,
+  "max_supply": null,
+  "ath": 1.04,
+  "ath_change_percentage": -3.60911,
+  "ath_date": "2022-05-12T07:01:59.485Z",
+  "atl": 0.877481,
+  "atl_change_percentage": 14.24142,
+  "atl_date": "2023-03-11T08:00:09.767Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:36.015Z",
+  "platforms": {
+    "ethereum": "0xd24946147829deaa935be2ad85a3291dbf109c80"
+  }
+}

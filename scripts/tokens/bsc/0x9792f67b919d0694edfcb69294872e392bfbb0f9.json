@@ -1,0 +1,31 @@
+{
+  "id": "botccoin-chain",
+  "symbol": "botc",
+  "name": "Botccoin Chain",
+  "image": "https://assets.coingecko.com/coins/images/32004/large/botc_%281%29.png?1696530803",
+  "current_price": 5.87,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1203285,
+  "total_volume": 219262,
+  "high_24h": 9.24,
+  "low_24h": 4.63,
+  "price_change_24h": 0.980028,
+  "price_change_percentage_24h": 20.04289,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 205000,
+  "max_supply": null,
+  "ath": 50.05,
+  "ath_change_percentage": -88.13923,
+  "ath_date": "2024-01-07T12:05:45.137Z",
+  "atl": 2.9,
+  "atl_change_percentage": 104.66982,
+  "atl_date": "2024-04-17T15:54:02.084Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:03.822Z",
+  "platforms": {
+    "bsc": "0x9792f67b919d0694edfcb69294872e392bfbb0f9"
+  }
+}

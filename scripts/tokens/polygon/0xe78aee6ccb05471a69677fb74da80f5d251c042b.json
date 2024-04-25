@@ -1,0 +1,31 @@
+{
+  "id": "taki",
+  "symbol": "taki",
+  "name": "Taki Games",
+  "image": "https://assets.coingecko.com/coins/images/25271/large/Social_Icon_1_200x200.png?1707905836",
+  "current_price": 0.02063177,
+  "market_cap": 24122765,
+  "market_cap_rank": 1021,
+  "fully_diluted_valuation": 61807354,
+  "total_volume": 282074,
+  "high_24h": 0.02213865,
+  "low_24h": 0.0205409,
+  "price_change_24h": -0.000611074679824675,
+  "price_change_percentage_24h": -2.87661,
+  "market_cap_change_24h": -746667.2616275847,
+  "market_cap_change_percentage_24h": -3.00235,
+  "circulating_supply": 1170868697.16643,
+  "total_supply": 3000000000,
+  "max_supply": null,
+  "ath": 0.294838,
+  "ath_change_percentage": -93.02594,
+  "ath_date": "2022-04-28T12:30:27.731Z",
+  "atl": 0.00461292,
+  "atl_change_percentage": 345.75227,
+  "atl_date": "2022-11-21T20:44:01.179Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:45.184Z",
+  "platforms": {
+    "polygon": "0xe78aee6ccb05471a69677fb74da80f5d251c042b"
+  }
+}

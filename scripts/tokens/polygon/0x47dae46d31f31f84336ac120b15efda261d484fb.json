@@ -1,0 +1,31 @@
+{
+  "id": "bundles",
+  "symbol": "bund",
+  "name": "Bund V2",
+  "image": "https://assets.coingecko.com/coins/images/13219/large/IMG_20230201_114958_189.png?1696512998",
+  "current_price": 8.99,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 4458682,
+  "total_volume": 21.57,
+  "high_24h": 9.71,
+  "low_24h": 8.89,
+  "price_change_24h": -0.5934941163144405,
+  "price_change_percentage_24h": -6.19522,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 500000,
+  "max_supply": null,
+  "ath": 98.55,
+  "ath_change_percentage": -90.95154,
+  "ath_date": "2022-01-05T16:36:46.247Z",
+  "atl": 0.04267296,
+  "atl_change_percentage": 20796.98836,
+  "atl_date": "2022-12-30T17:55:24.789Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:36.800Z",
+  "platforms": {
+    "polygon": "0x47dae46d31f31f84336ac120b15efda261d484fb"
+  }
+}

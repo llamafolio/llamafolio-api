@@ -1,0 +1,31 @@
+{
+  "id": "silver",
+  "symbol": "silver",
+  "name": "SILVER",
+  "image": "https://assets.coingecko.com/coins/images/32273/large/LOGO1.png?1697179980",
+  "current_price": 6.9545e-14,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 29257,
+  "total_volume": 4.98,
+  "high_24h": 6.9903e-14,
+  "low_24h": 6.9181e-14,
+  "price_change_24h": 3.33e-16,
+  "price_change_percentage_24h": 0.48127,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 420690000000000000,
+  "max_supply": 420690000000000000,
+  "ath": 6.31962e-13,
+  "ath_change_percentage": -89.05255,
+  "ath_date": "2023-10-13T11:24:34.099Z",
+  "atl": 2.1997e-14,
+  "atl_change_percentage": 214.51518,
+  "atl_date": "2024-02-16T06:24:43.944Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:11.627Z",
+  "platforms": {
+    "ethereum": "0x60a26c05c5372dcded66940d2b56076bce925152"
+  }
+}

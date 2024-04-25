@@ -1,0 +1,35 @@
+{
+  "id": "gowithmi",
+  "symbol": "gmat",
+  "name": "GoWithMi",
+  "image": "https://assets.coingecko.com/coins/images/7162/large/qXNbxVny_400x400.png?1696507459",
+  "current_price": 0.00006277,
+  "market_cap": 157363,
+  "market_cap_rank": 3606,
+  "fully_diluted_valuation": 934127,
+  "total_volume": 23472,
+  "high_24h": 0.00006788,
+  "low_24h": 0.00006251,
+  "price_change_24h": -0.00000298594994408,
+  "price_change_percentage_24h": -4.54112,
+  "market_cap_change_24h": -7830.954701866256,
+  "market_cap_change_percentage_24h": -4.74045,
+  "circulating_supply": 2510060000,
+  "total_supply": 14900000000,
+  "max_supply": null,
+  "ath": 0.01915193,
+  "ath_change_percentage": -99.67252,
+  "ath_date": "2019-07-10T10:03:04.416Z",
+  "atl": 0.00004137,
+  "atl_change_percentage": 51.58856,
+  "atl_date": "2022-05-12T08:45:43.719Z",
+  "roi": {
+    "times": -0.9376500297850099,
+    "currency": "usd",
+    "percentage": -93.76500297850099
+  },
+  "last_updated": "2024-04-25T09:01:14.268Z",
+  "platforms": {
+    "ethereum": "0xb13de094cc5cee6c4cc0a3737bf0290166d9ca5d"
+  }
+}

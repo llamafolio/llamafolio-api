@@ -1,0 +1,31 @@
+{
+  "id": "blaze-network",
+  "symbol": "blzn",
+  "name": "Blaze Network",
+  "image": "https://assets.coingecko.com/coins/images/12248/large/A8JOuPSJ_400x400.jpg?1696512079",
+  "current_price": 0.471231,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 81650,
+  "total_volume": 1.88,
+  "high_24h": 0.493139,
+  "low_24h": 0.468808,
+  "price_change_24h": -0.016680627824078587,
+  "price_change_percentage_24h": -3.41878,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 173270.147614966,
+  "max_supply": null,
+  "ath": 16.63,
+  "ath_change_percentage": -97.17732,
+  "ath_date": "2020-09-02T05:23:06.422Z",
+  "atl": 0.03255283,
+  "atl_change_percentage": 1342.10614,
+  "atl_date": "2022-11-22T08:21:37.969Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:07.699Z",
+  "platforms": {
+    "ethereum": "0x70efdc485a10210b056ef8e0a32993bc6529995e"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "id": "quadrant-protocol",
+  "symbol": "equad",
+  "name": "Quadrant Protocol",
+  "image": "https://assets.coingecko.com/coins/images/4462/large/equad.png?1696505053",
+  "current_price": 0.00610256,
+  "market_cap": 3314806,
+  "market_cap_rank": 2006,
+  "fully_diluted_valuation": 6102559,
+  "total_volume": 782.17,
+  "high_24h": 0.00636707,
+  "low_24h": 0.00610451,
+  "price_change_24h": -0.000203805992665796,
+  "price_change_percentage_24h": -3.23175,
+  "market_cap_change_24h": -110703.93489449844,
+  "market_cap_change_percentage_24h": -3.23175,
+  "circulating_supply": 543182923.3600229,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.059844,
+  "ath_change_percentage": -89.78467,
+  "ath_date": "2022-12-28T05:25:52.298Z",
+  "atl": 0.00014214,
+  "atl_change_percentage": 4200.72142,
+  "atl_date": "2019-11-26T11:25:25.795Z",
+  "roi": {
+    "times": -0.9789737354137763,
+    "currency": "eth",
+    "percentage": -97.89737354137763
+  },
+  "last_updated": "2024-04-25T08:48:28.403Z",
+  "platforms": {
+    "ethereum": "0xc28e931814725bbeb9e670676fabbcb694fe7df2"
+  }
+}

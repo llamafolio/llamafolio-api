@@ -1,0 +1,35 @@
+{
+  "id": "tokenomy",
+  "symbol": "ten",
+  "name": "Tokenomy",
+  "image": "https://assets.coingecko.com/coins/images/2286/large/logo_%281%29.png?1696503190",
+  "current_price": 0.01127037,
+  "market_cap": 1300916,
+  "market_cap_rank": 2542,
+  "fully_diluted_valuation": 2252719,
+  "total_volume": 1786.14,
+  "high_24h": 0.0118239,
+  "low_24h": 0.01110299,
+  "price_change_24h": -0.000474341439278297,
+  "price_change_percentage_24h": -4.03877,
+  "market_cap_change_24h": -56161.459369889926,
+  "market_cap_change_percentage_24h": -4.13841,
+  "circulating_supply": 115497435,
+  "total_supply": 200000000,
+  "max_supply": null,
+  "ath": 0.545269,
+  "ath_change_percentage": -97.93306,
+  "ath_date": "2018-03-05T07:52:41.957Z",
+  "atl": 0.00141995,
+  "atl_change_percentage": 693.71537,
+  "atl_date": "2019-10-25T15:49:55.517Z",
+  "roi": {
+    "times": -0.9929361439312343,
+    "currency": "btc",
+    "percentage": -99.29361439312343
+  },
+  "last_updated": "2024-04-25T08:57:16.623Z",
+  "platforms": {
+    "ethereum": "0xdd16ec0f66e54d453e6756713e533355989040e4"
+  }
+}

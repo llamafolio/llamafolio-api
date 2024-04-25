@@ -1,0 +1,35 @@
+{
+  "id": "friendz",
+  "symbol": "fdz",
+  "name": "Friendz",
+  "image": "https://assets.coingecko.com/coins/images/3685/large/download_%2812%29.png?1696504361",
+  "current_price": 0.00007716,
+  "market_cap": 45790,
+  "market_cap_rank": 4006,
+  "fully_diluted_valuation": 87179,
+  "total_volume": 2.04,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 593439473,
+  "total_supply": 1129842156.38066,
+  "max_supply": null,
+  "ath": 0.03731684,
+  "ath_change_percentage": -99.79323,
+  "ath_date": "2018-05-17T13:04:13.597Z",
+  "atl": 0.00001609,
+  "atl_change_percentage": 379.6794,
+  "atl_date": "2023-02-24T15:44:53.045Z",
+  "roi": {
+    "times": -0.9988483578458763,
+    "currency": "usd",
+    "percentage": -99.88483578458764
+  },
+  "last_updated": "2024-04-19T22:31:38.210Z",
+  "platforms": {
+    "ethereum": "0x23352036e911a22cfc692b5e2e196692658aded9"
+  }
+}

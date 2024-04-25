@@ -1,0 +1,35 @@
+{
+  "id": "openanx",
+  "symbol": "oax",
+  "name": "OAX",
+  "image": "https://assets.coingecko.com/coins/images/853/large/OAXlogo.png?1696501987",
+  "current_price": 0.215591,
+  "market_cap": 12051321,
+  "market_cap_rank": 1341,
+  "fully_diluted_valuation": 21599662,
+  "total_volume": 1884774,
+  "high_24h": 0.238976,
+  "low_24h": 0.210012,
+  "price_change_24h": -0.0196973214623542,
+  "price_change_percentage_24h": -8.37156,
+  "market_cap_change_24h": -1120060.2073931787,
+  "market_cap_change_percentage_24h": -8.50374,
+  "circulating_supply": 55794024.48617065,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 2.34,
+  "ath_change_percentage": -90.78355,
+  "ath_date": "2018-01-07T00:00:00.000Z",
+  "atl": 0.01710268,
+  "atl_change_percentage": 1160.56977,
+  "atl_date": "2020-03-13T02:24:32.988Z",
+  "roi": {
+    "times": -0.5209083623611516,
+    "currency": "usd",
+    "percentage": -52.09083623611516
+  },
+  "last_updated": "2024-04-25T09:00:32.950Z",
+  "platforms": {
+    "ethereum": "0x701c244b988a513c945973defa05de933b23fe1d"
+  }
+}

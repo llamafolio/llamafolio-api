@@ -1,0 +1,31 @@
+{
+  "id": "inception-restaked-sweth",
+  "symbol": "insweth",
+  "name": "Inception swETH",
+  "image": "https://assets.coingecko.com/coins/images/34943/large/swETH.png?1706757072",
+  "current_price": 3300.63,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 31.36,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 3337.98,
+  "ath_change_percentage": -1.11901,
+  "ath_date": "2024-04-22T06:12:17.519Z",
+  "atl": 3085.58,
+  "atl_change_percentage": 6.9693,
+  "atl_date": "2024-04-18T12:39:06.514Z",
+  "roi": null,
+  "last_updated": "2024-04-22T12:48:07.432Z",
+  "platforms": {
+    "ethereum": "0xc3ade5ace1bbb033ccae8177c12ecbfa16bd6a9d"
+  }
+}

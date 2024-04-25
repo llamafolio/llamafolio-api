@@ -1,0 +1,31 @@
+{
+  "id": "floki",
+  "symbol": "floki",
+  "name": "FLOKI",
+  "image": "https://assets.coingecko.com/coins/images/16746/large/PNG_image.png?1696516318",
+  "current_price": 0.00018232,
+  "market_cap": 1771175303,
+  "market_cap_rank": 63,
+  "fully_diluted_valuation": 1823836047,
+  "total_volume": 272346589,
+  "high_24h": 0.00020282,
+  "low_24h": 0.00018042,
+  "price_change_24h": -0.000014390483503577,
+  "price_change_percentage_24h": -7.31543,
+  "market_cap_change_24h": -140427435.55351353,
+  "market_cap_change_percentage_24h": -7.34606,
+  "circulating_supply": 9711263822818,
+  "total_supply": 10000000000000,
+  "max_supply": 10000000000000,
+  "ath": 0.00033651,
+  "ath_change_percentage": -45.62291,
+  "ath_date": "2021-11-04T06:58:35.285Z",
+  "atl": 8.428e-8,
+  "atl_change_percentage": 217013.00747,
+  "atl_date": "2021-07-06T01:11:20.438Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:43.203Z",
+  "platforms": {
+    "ethereum": "0xcf0c122c6b73ff809c693db761e7baebe62b6a2e"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "prema",
+  "symbol": "prmx",
+  "name": "PREMA",
+  "image": "https://assets.coingecko.com/coins/images/27600/large/prmx.png?1696526631",
+  "current_price": 0.00000137,
+  "market_cap": 3458.83,
+  "market_cap_rank": 4262,
+  "fully_diluted_valuation": 137145,
+  "total_volume": 10022.8,
+  "high_24h": 0.00000143,
+  "low_24h": 0.00000132,
+  "price_change_24h": -1.2669949389e-8,
+  "price_change_percentage_24h": -0.91535,
+  "market_cap_change_24h": -30.61979178244701,
+  "market_cap_change_percentage_24h": -0.8775,
+  "circulating_supply": 2522030502.3079,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.123998,
+  "ath_change_percentage": -99.99889,
+  "ath_date": "2022-10-03T17:19:52.885Z",
+  "atl": 0.00000107,
+  "atl_change_percentage": 28.18755,
+  "atl_date": "2023-10-02T02:54:05.959Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:45.351Z",
+  "platforms": {
+    "ethereum": "0xe4dae00bc1c46ea2f44ae71b1beb8b171c15d812"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "shirtum",
+  "symbol": "shi",
+  "name": "Shirtum",
+  "image": "https://assets.coingecko.com/coins/images/16955/large/4fWlpC0.png?1696516523",
+  "current_price": 0.00224122,
+  "market_cap": 443431,
+  "market_cap_rank": 3123,
+  "fully_diluted_valuation": 1679994,
+  "total_volume": 39620,
+  "high_24h": 0.00231401,
+  "low_24h": 0.00221705,
+  "price_change_24h": -0.00007279154103588,
+  "price_change_percentage_24h": -3.14568,
+  "market_cap_change_24h": -12463.656397435814,
+  "market_cap_change_percentage_24h": -2.73389,
+  "circulating_supply": 197775815.252471,
+  "total_supply": 749297787,
+  "max_supply": 749297787,
+  "ath": 0.924503,
+  "ath_change_percentage": -99.75743,
+  "ath_date": "2021-09-19T15:43:30.523Z",
+  "atl": 4.96188e-7,
+  "atl_change_percentage": 451851.92827,
+  "atl_date": "2023-10-04T05:10:52.803Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:16.332Z",
+  "platforms": {
+    "bsc": "0x7269d98af4aa705e0b1a5d8512fadb4d45817d5a"
+  }
+}

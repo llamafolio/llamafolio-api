@@ -1,0 +1,31 @@
+{
+  "id": "crypto-ai-robo",
+  "symbol": "cair",
+  "name": "Crypto-AI-Robo",
+  "image": "https://assets.coingecko.com/coins/images/33410/large/2000px-Atheismsymbol_endorsed_by_AAI.svg.png?1701701207",
+  "current_price": 0.00014511,
+  "market_cap": 124253,
+  "market_cap_rank": 3713,
+  "fully_diluted_valuation": 128970,
+  "total_volume": 19827.09,
+  "high_24h": 0.00020578,
+  "low_24h": 0.00014457,
+  "price_change_24h": -0.000045958736860643,
+  "price_change_percentage_24h": -24.05382,
+  "market_cap_change_24h": -39335.68506176505,
+  "market_cap_change_percentage_24h": -24.04555,
+  "circulating_supply": 855517010.9343705,
+  "total_supply": 888000000,
+  "max_supply": 888000000,
+  "ath": 0.294135,
+  "ath_change_percentage": -99.95083,
+  "ath_date": "2023-12-12T10:07:09.113Z",
+  "atl": 0.00000634,
+  "atl_change_percentage": 2180.05198,
+  "atl_date": "2024-01-23T15:44:36.623Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:36.673Z",
+  "platforms": {
+    "bsc": "0x48a8ba1754fe84e2f9dfa97982e524f18e5b4bd3"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "dragons-quick",
+  "symbol": "dquick",
+  "name": "Dragon's Quick",
+  "image": "https://assets.coingecko.com/coins/images/15185/large/quick.png?1696514843",
+  "current_price": 0.070222,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 0,
+  "high_24h": 0.070222,
+  "low_24h": 0.070222,
+  "price_change_24h": 0,
+  "price_change_percentage_24h": 0,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1336.81,
+  "ath_change_percentage": -99.99475,
+  "ath_date": "2021-05-03T13:08:10.447Z",
+  "atl": 0.070185,
+  "atl_change_percentage": 0.05288,
+  "atl_date": "2023-08-20T06:00:01.296Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:50.094Z",
+  "platforms": {
+    "polygon": "0xf28164a485b0b2c90639e47b0f377b4a438a16b1"
+  }
+}

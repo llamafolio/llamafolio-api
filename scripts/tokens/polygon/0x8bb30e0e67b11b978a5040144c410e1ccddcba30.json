@@ -1,0 +1,31 @@
+{
+  "id": "0chain",
+  "symbol": "zcn",
+  "name": "Zus",
+  "image": "https://assets.coingecko.com/coins/images/4934/large/200x200_transparent.png?1696505474",
+  "current_price": 0.135011,
+  "market_cap": 6521723,
+  "market_cap_rank": 1662,
+  "fully_diluted_valuation": 53897442,
+  "total_volume": 14612.17,
+  "high_24h": 0.148251,
+  "low_24h": 0.132088,
+  "price_change_24h": -0.011800803055265765,
+  "price_change_percentage_24h": -8.03805,
+  "market_cap_change_24h": -592363.4855544707,
+  "market_cap_change_percentage_24h": -8.32663,
+  "circulating_supply": 48400982,
+  "total_supply": 400000000,
+  "max_supply": null,
+  "ath": 5.16,
+  "ath_change_percentage": -97.38866,
+  "ath_date": "2021-11-10T12:21:06.184Z",
+  "atl": 2.65e-9,
+  "atl_change_percentage": 5080454742.13016,
+  "atl_date": "2021-12-14T21:31:35.868Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:01.389Z",
+  "platforms": {
+    "polygon": "0x8bb30e0e67b11b978a5040144c410e1ccddcba30"
+  }
+}

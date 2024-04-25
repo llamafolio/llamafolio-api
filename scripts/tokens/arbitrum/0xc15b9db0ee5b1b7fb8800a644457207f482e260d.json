@@ -1,0 +1,31 @@
+{
+  "id": "dopex-receipt-token-eth",
+  "symbol": "rteth",
+  "name": "Dopex Receipt Token ETH",
+  "image": "https://assets.coingecko.com/coins/images/34513/large/rteth.png?1705288675",
+  "current_price": 3607.03,
+  "market_cap": 403741,
+  "market_cap_rank": 3169,
+  "fully_diluted_valuation": 91074,
+  "total_volume": 1142.61,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 21.7490272865927,
+  "total_supply": 25.2490244038605,
+  "max_supply": null,
+  "ath": 3694.33,
+  "ath_change_percentage": -2.36288,
+  "ath_date": "2024-03-06T12:05:01.907Z",
+  "atl": 2102.27,
+  "atl_change_percentage": 71.57781,
+  "atl_date": "2024-01-23T20:32:30.453Z",
+  "roi": null,
+  "last_updated": "2024-03-06T13:09:17.757Z",
+  "platforms": {
+    "arbitrum": "0xc15b9db0ee5b1b7fb8800a644457207f482e260d"
+  }
+}

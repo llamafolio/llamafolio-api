@@ -1,0 +1,31 @@
+{
+  "id": "figments-club",
+  "symbol": "figma",
+  "name": "Figments Club",
+  "image": "https://assets.coingecko.com/coins/images/30476/large/IMG-20230519-WA0005.jpg?1696529362",
+  "current_price": 0.00003158,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 251.78,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.0007858,
+  "ath_change_percentage": -95.9812,
+  "ath_date": "2023-05-21T14:31:55.302Z",
+  "atl": 0.00003134,
+  "atl_change_percentage": 0.78053,
+  "atl_date": "2023-07-20T14:54:50.874Z",
+  "roi": null,
+  "last_updated": "2023-07-21T08:00:09.588Z",
+  "platforms": {
+    "bsc": "0xe5bc80382f1ebad820167714118201ae468a9929"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "kaby-arena",
+  "symbol": "kaby",
+  "name": "Kaby Arena",
+  "image": "https://assets.coingecko.com/coins/images/18090/large/URPKhnop_400x400.jpg?1696517595",
+  "current_price": 0.00043784,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 115169,
+  "total_volume": 13386.4,
+  "high_24h": 0.00044064,
+  "low_24h": 0.00043697,
+  "price_change_24h": -1.57044159908e-7,
+  "price_change_percentage_24h": -0.03586,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 263037653.785894,
+  "max_supply": null,
+  "ath": 0.178272,
+  "ath_change_percentage": -99.75417,
+  "ath_date": "2021-09-04T14:17:28.515Z",
+  "atl": 0.00037035,
+  "atl_change_percentage": 18.33401,
+  "atl_date": "2023-06-26T01:31:35.973Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:31.842Z",
+  "platforms": {
+    "polygon": "0x5198e7cc1640049de37d1bd10b03fa5a3afda120"
+  }
+}

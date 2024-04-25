@@ -1,0 +1,31 @@
+{
+  "id": "hairyplotterftx",
+  "symbol": "ftx",
+  "name": "HairyPlotterFTX",
+  "image": "https://assets.coingecko.com/coins/images/32116/large/HairyPlotterFTX.png?1696585812",
+  "current_price": 0.0000132,
+  "market_cap": 67657,
+  "market_cap_rank": 3908,
+  "fully_diluted_valuation": 120554,
+  "total_volume": 4362.85,
+  "high_24h": 0.00001383,
+  "low_24h": 0.00001309,
+  "price_change_24h": 8.7387e-8,
+  "price_change_percentage_24h": 0.66657,
+  "market_cap_change_24h": 444.42,
+  "market_cap_change_percentage_24h": 0.66121,
+  "circulating_supply": 5126627500.8075,
+  "total_supply": 9134796726.7185,
+  "max_supply": 9800000000,
+  "ath": 0.00033307,
+  "ath_change_percentage": -96.03774,
+  "ath_date": "2023-10-06T10:30:11.311Z",
+  "atl": 0.00001122,
+  "atl_change_percentage": 17.5796,
+  "atl_date": "2023-10-25T09:04:35.548Z",
+  "roi": null,
+  "last_updated": "2024-04-25T07:41:23.179Z",
+  "platforms": {
+    "ethereum": "0xb1a822ce8c799b0777ed1f260113819247e1bf26"
+  }
+}

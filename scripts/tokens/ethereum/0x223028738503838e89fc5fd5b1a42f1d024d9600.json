@@ -1,0 +1,31 @@
+{
+  "id": "degeninsure",
+  "symbol": "dgns",
+  "name": "DegenInsure",
+  "image": "https://assets.coingecko.com/coins/images/32185/large/Frame_12_%282%29.png?1696756306",
+  "current_price": 0.00030159,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 30046,
+  "total_volume": 793.5,
+  "high_24h": 0.00032178,
+  "low_24h": 0.00029962,
+  "price_change_24h": -0.000020193328640373,
+  "price_change_percentage_24h": -6.27541,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.0066021,
+  "ath_change_percentage": -95.44906,
+  "ath_date": "2023-11-01T07:40:38.388Z",
+  "atl": 0.00029962,
+  "atl_change_percentage": 0.27925,
+  "atl_date": "2024-04-25T08:49:54.793Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:47.114Z",
+  "platforms": {
+    "ethereum": "0x223028738503838e89fc5fd5b1a42f1d024d9600"
+  }
+}

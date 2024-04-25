@@ -1,0 +1,31 @@
+{
+  "id": "navy-seal",
+  "symbol": "navyseal",
+  "name": "Navy seal",
+  "image": "https://assets.coingecko.com/coins/images/31406/large/Navyseal.jpg?1696530222",
+  "current_price": 0.00000452,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 63.68,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.00003924,
+  "ath_change_percentage": -88.47957,
+  "ath_date": "2023-10-02T13:34:39.193Z",
+  "atl": 0.00000151,
+  "atl_change_percentage": 200.27174,
+  "atl_date": "2024-01-04T01:20:14.169Z",
+  "roi": null,
+  "last_updated": "2024-04-22T22:30:33.208Z",
+  "platforms": {
+    "ethereum": "0x34df29dd880e9fe2cec0f85f7658b75606fb2870"
+  }
+}

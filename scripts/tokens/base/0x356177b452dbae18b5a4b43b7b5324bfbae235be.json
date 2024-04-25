@@ -1,0 +1,31 @@
+{
+  "id": "defido-2",
+  "symbol": "dfd",
+  "name": "DeFido",
+  "image": "https://assets.coingecko.com/coins/images/35776/large/logo-defido-200.png?1709794647",
+  "current_price": 0.00133332,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 119999,
+  "total_volume": 495.76,
+  "high_24h": 0.00144621,
+  "low_24h": 0.00133059,
+  "price_change_24h": -0.000098715685271515,
+  "price_change_percentage_24h": -6.89337,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 90000000,
+  "max_supply": 100000000,
+  "ath": 0.03676683,
+  "ath_change_percentage": -96.37149,
+  "ath_date": "2024-03-07T19:12:40.977Z",
+  "atl": 0.00096969,
+  "atl_change_percentage": 37.57925,
+  "atl_date": "2024-03-12T16:09:08.897Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:44.010Z",
+  "platforms": {
+    "base": "0x356177b452dbae18b5a4b43b7b5324bfbae235be"
+  }
+}

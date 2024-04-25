@@ -1,0 +1,31 @@
+{
+  "id": "hashpower-ai",
+  "symbol": "hash",
+  "name": "HashPower AI",
+  "image": "https://assets.coingecko.com/coins/images/36055/large/photo_2024-03-10_19-30-59_%282%29.jpg?1710403993",
+  "current_price": 0.00924286,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 91959,
+  "total_volume": 377.39,
+  "high_24h": 0.00954556,
+  "low_24h": 0.00909517,
+  "price_change_24h": -0.000201170170221549,
+  "price_change_percentage_24h": -2.13013,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.128811,
+  "ath_change_percentage": -92.82937,
+  "ath_date": "2024-04-04T06:27:01.434Z",
+  "atl": 0.00433381,
+  "atl_change_percentage": 113.12831,
+  "atl_date": "2024-03-29T21:40:36.035Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:49.046Z",
+  "platforms": {
+    "ethereum": "0x0c79e09497c9862479c9e6499c61342b5fe3e6b2"
+  }
+}

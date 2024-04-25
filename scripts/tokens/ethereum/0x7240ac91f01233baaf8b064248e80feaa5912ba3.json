@@ -1,0 +1,31 @@
+{
+  "id": "octofi",
+  "symbol": "octo",
+  "name": "OctoFi",
+  "image": "https://assets.coingecko.com/coins/images/12594/large/octofi-256x256-radius-22percent.png?1696512403",
+  "current_price": 0.325231,
+  "market_cap": 114694,
+  "market_cap_rank": 3735,
+  "fully_diluted_valuation": 260028,
+  "total_volume": 4707.8,
+  "high_24h": 0.352403,
+  "low_24h": 0.324441,
+  "price_change_24h": -0.027110665392016953,
+  "price_change_percentage_24h": -7.69443,
+  "market_cap_change_24h": -9744.802973878526,
+  "market_cap_change_percentage_24h": -7.831,
+  "circulating_supply": 352866.3299723429,
+  "total_supply": 800000,
+  "max_supply": 800000,
+  "ath": 127.81,
+  "ath_change_percentage": -99.73676,
+  "ath_date": "2021-02-15T21:34:24.398Z",
+  "atl": 0.307628,
+  "atl_change_percentage": 9.37085,
+  "atl_date": "2024-04-19T05:54:05.460Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:18.121Z",
+  "platforms": {
+    "ethereum": "0x7240ac91f01233baaf8b064248e80feaa5912ba3"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "frog-chain",
+  "symbol": "leap",
+  "name": "Frog Chain LEAP",
+  "image": "https://assets.coingecko.com/coins/images/32435/large/LEAP_200x200.png?1698217414",
+  "current_price": 0.00000318,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3182.69,
+  "total_volume": 26.03,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00012959,
+  "ath_change_percentage": -97.544,
+  "ath_date": "2023-12-19T13:15:02.604Z",
+  "atl": 0.00000131,
+  "atl_change_percentage": 142.03211,
+  "atl_date": "2024-02-15T06:28:32.273Z",
+  "roi": null,
+  "last_updated": "2024-04-23T15:30:50.266Z",
+  "platforms": {
+    "bsc": "0x2c9a336c9c0c0ff42e1e2a346db5787303655680"
+  }
+}

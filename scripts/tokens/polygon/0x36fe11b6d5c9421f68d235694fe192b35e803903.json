@@ -1,0 +1,31 @@
+{
+  "id": "xend-finance",
+  "symbol": "rwa",
+  "name": "Xend Finance",
+  "image": "https://assets.coingecko.com/coins/images/14496/large/WeChat_Image_20210325163206.png?1696514181",
+  "current_price": 0.178825,
+  "market_cap": 21404896,
+  "market_cap_rank": 1079,
+  "fully_diluted_valuation": 36622506,
+  "total_volume": 181566,
+  "high_24h": 0.223685,
+  "low_24h": 0.178625,
+  "price_change_24h": -0.024409783429589965,
+  "price_change_percentage_24h": -12.01065,
+  "market_cap_change_24h": -2110735.923776228,
+  "market_cap_change_percentage_24h": -8.97588,
+  "circulating_supply": 116894762,
+  "total_supply": 200000000,
+  "max_supply": null,
+  "ath": 3,
+  "ath_change_percentage": -93.89074,
+  "ath_date": "2021-03-28T07:16:54.324Z",
+  "atl": 0.00055582,
+  "atl_change_percentage": 32879.97785,
+  "atl_date": "2024-02-07T19:55:49.145Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:15.350Z",
+  "platforms": {
+    "polygon": "0x36fe11b6d5c9421f68d235694fe192b35e803903"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "saxumdao",
+  "symbol": "sxm",
+  "name": "SaxumDAO",
+  "image": "https://assets.coingecko.com/coins/images/33012/large/WhatsApp_Image_2023-11-14_at_12.37.55.jpeg?1700124487",
+  "current_price": 0.00000934,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 9339.53,
+  "total_volume": 1152.41,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.0068124,
+  "ath_change_percentage": -99.8629,
+  "ath_date": "2023-11-16T09:52:11.726Z",
+  "atl": 0.00000508,
+  "atl_change_percentage": 83.98035,
+  "atl_date": "2024-03-23T14:03:49.999Z",
+  "roi": null,
+  "last_updated": "2024-03-25T20:31:14.952Z",
+  "platforms": {
+    "bsc": "0x424b5fb011f6fc0ab7d6c8914ba2bd3f0d3ce1e2"
+  }
+}

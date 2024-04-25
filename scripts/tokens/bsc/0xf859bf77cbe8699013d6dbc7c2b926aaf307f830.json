@@ -1,0 +1,31 @@
+{
+  "id": "berry-data",
+  "symbol": "bry",
+  "name": "Berry Data",
+  "image": "https://assets.coingecko.com/coins/images/13987/large/berry.jpg?1696513719",
+  "current_price": 0.03260715,
+  "market_cap": 209108,
+  "market_cap_rank": 3468,
+  "fully_diluted_valuation": 327627,
+  "total_volume": 14098.56,
+  "high_24h": 0.03477783,
+  "low_24h": 0.03198408,
+  "price_change_24h": -0.00212229693909221,
+  "price_change_percentage_24h": -6.11094,
+  "market_cap_change_24h": -13789.068366770138,
+  "market_cap_change_percentage_24h": -6.18631,
+  "circulating_supply": 6412985.022030054,
+  "total_supply": 10047791.2808642,
+  "max_supply": 12500000,
+  "ath": 40,
+  "ath_change_percentage": -99.91853,
+  "ath_date": "2021-02-20T00:09:33.693Z",
+  "atl": 0.01319025,
+  "atl_change_percentage": 147.04216,
+  "atl_date": "2023-05-22T04:34:37.164Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:25.364Z",
+  "platforms": {
+    "bsc": "0xf859bf77cbe8699013d6dbc7c2b926aaf307f830"
+  }
+}

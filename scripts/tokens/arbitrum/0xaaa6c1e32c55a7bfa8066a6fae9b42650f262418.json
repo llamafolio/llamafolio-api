@@ -1,0 +1,31 @@
+{
+  "id": "ramses-exchange",
+  "symbol": "ram",
+  "name": "Ramses Exchange",
+  "image": "https://assets.coingecko.com/coins/images/29420/large/newram.png?1708427055",
+  "current_price": 0.067678,
+  "market_cap": 3773801,
+  "market_cap_rank": 1935,
+  "fully_diluted_valuation": 32112788,
+  "total_volume": 154729,
+  "high_24h": 0.079208,
+  "low_24h": 0.06694,
+  "price_change_24h": -0.009857373800239724,
+  "price_change_percentage_24h": -12.71346,
+  "market_cap_change_24h": -596789.9182113665,
+  "market_cap_change_percentage_24h": -13.65467,
+  "circulating_supply": 56335301.8072485,
+  "total_supply": 479379758.713333,
+  "max_supply": null,
+  "ath": 0.259019,
+  "ath_change_percentage": -74.15619,
+  "ath_date": "2023-03-18T05:49:48.953Z",
+  "atl": 0.00490056,
+  "atl_change_percentage": 1265.97362,
+  "atl_date": "2023-07-11T16:24:55.030Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:54:48.232Z",
+  "platforms": {
+    "arbitrum": "0xaaa6c1e32c55a7bfa8066a6fae9b42650f262418"
+  }
+}

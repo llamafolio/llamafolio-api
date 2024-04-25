@@ -1,0 +1,31 @@
+{
+  "id": "binance-peg-avalanche",
+  "symbol": "avax",
+  "name": "Binance-Peg Avalanche",
+  "image": "https://assets.coingecko.com/coins/images/18674/large/avax_logo_1.png?1696518143",
+  "current_price": 35.44,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 231762,
+  "high_24h": 39.38,
+  "low_24h": 35.12,
+  "price_change_24h": -3.5488358325592273,
+  "price_change_percentage_24h": -9.10139,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 145.44,
+  "ath_change_percentage": -75.71727,
+  "ath_date": "2021-11-23T12:43:20.649Z",
+  "atl": 8.71,
+  "atl_change_percentage": 305.33652,
+  "atl_date": "2023-09-25T00:26:00.478Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:04.008Z",
+  "platforms": {
+    "bsc": "0x1ce0c2827e2ef14d5c4f29a091d735a204794041"
+  }
+}

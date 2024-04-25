@@ -1,0 +1,31 @@
+{
+  "id": "metastrike",
+  "symbol": "mts",
+  "name": "Metastrike",
+  "image": "https://assets.coingecko.com/coins/images/22892/large/weD5ZQkc_400x400.jpg?1696522189",
+  "current_price": 0.0089934,
+  "market_cap": 1962432,
+  "market_cap_rank": 2308,
+  "fully_diluted_valuation": 5037329,
+  "total_volume": 67802,
+  "high_24h": 0.00934738,
+  "low_24h": 0.00877925,
+  "price_change_24h": -0.000078215202244152,
+  "price_change_percentage_24h": -0.8622,
+  "market_cap_change_24h": -40856.71763878036,
+  "market_cap_change_percentage_24h": -2.03948,
+  "circulating_supply": 220111458.811483,
+  "total_supply": 565000000,
+  "max_supply": 565000000,
+  "ath": 0.773422,
+  "ath_change_percentage": -98.84774,
+  "ath_date": "2022-01-26T17:35:03.557Z",
+  "atl": 0.00180515,
+  "atl_change_percentage": 393.68749,
+  "atl_date": "2023-10-07T22:10:56.677Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:46.790Z",
+  "platforms": {
+    "bsc": "0x496cc0b4ee12aa2ac4c42e93067484e7ff50294b"
+  }
+}

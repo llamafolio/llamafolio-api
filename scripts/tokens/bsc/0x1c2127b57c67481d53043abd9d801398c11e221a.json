@@ -1,0 +1,31 @@
+{
+  "id": "talki",
+  "symbol": "tal",
+  "name": "TALKI",
+  "image": "https://assets.coingecko.com/coins/images/31787/large/20003OrPYBw_400x400_%281%29.jpg?1696530604",
+  "current_price": 0.0000019,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3783.72,
+  "total_volume": 2257.36,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1993552847,
+  "max_supply": 1993552847,
+  "ath": 0.000014,
+  "ath_change_percentage": -86.43963,
+  "ath_date": "2023-09-30T16:10:34.053Z",
+  "atl": 0.0000018,
+  "atl_change_percentage": 5.66931,
+  "atl_date": "2023-10-11T18:15:14.026Z",
+  "roi": null,
+  "last_updated": "2023-10-12T21:00:21.461Z",
+  "platforms": {
+    "bsc": "0x1c2127b57c67481d53043abd9d801398c11e221a"
+  }
+}

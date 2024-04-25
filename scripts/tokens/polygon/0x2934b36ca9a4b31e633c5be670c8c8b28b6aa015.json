@@ -1,0 +1,31 @@
+{
+  "id": "thx-network",
+  "symbol": "thx",
+  "name": "THX Network",
+  "image": "https://assets.coingecko.com/coins/images/21323/large/logo-thx-resized-200-200.png?1696520690",
+  "current_price": 0.02373797,
+  "market_cap": 974787,
+  "market_cap_rank": 2699,
+  "fully_diluted_valuation": 2364677,
+  "total_volume": 5758.89,
+  "high_24h": 0.02433589,
+  "low_24h": 0.02362921,
+  "price_change_24h": -0.000389610651930546,
+  "price_change_percentage_24h": -1.61479,
+  "market_cap_change_24h": -21367.863391444087,
+  "market_cap_change_percentage_24h": -2.14504,
+  "circulating_supply": 41222819,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.095246,
+  "ath_change_percentage": -75.09884,
+  "ath_date": "2021-12-08T00:00:00.000Z",
+  "atl": 0.02362921,
+  "atl_change_percentage": 0.37301,
+  "atl_date": "2024-04-25T04:15:35.601Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:16.671Z",
+  "platforms": {
+    "polygon": "0x2934b36ca9a4b31e633c5be670c8c8b28b6aa015"
+  }
+}

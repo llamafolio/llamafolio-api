@@ -1,0 +1,31 @@
+{
+  "id": "quantland",
+  "symbol": "qlt",
+  "name": "Quantland",
+  "image": "https://assets.coingecko.com/coins/images/24536/large/8jYfKBTk_400x400.jpg?1696523713",
+  "current_price": 26.04,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1659439,
+  "total_volume": 1899.75,
+  "high_24h": 26.08,
+  "low_24h": 26.03,
+  "price_change_24h": -0.009931154505689932,
+  "price_change_percentage_24h": -0.03812,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 63724.407306191,
+  "max_supply": null,
+  "ath": 82.28,
+  "ath_change_percentage": -68.34961,
+  "ath_date": "2022-04-17T09:39:53.840Z",
+  "atl": 17.11,
+  "atl_change_percentage": 52.23759,
+  "atl_date": "2023-11-11T09:25:27.746Z",
+  "roi": null,
+  "last_updated": "2024-04-24T13:08:21.354Z",
+  "platforms": {
+    "ethereum": "0x0173661769325565d4f011b2e5cda688689cc87c"
+  }
+}

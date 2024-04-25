@@ -1,0 +1,31 @@
+{
+  "id": "polkarare",
+  "symbol": "prare",
+  "name": "Polkarare",
+  "image": "https://assets.coingecko.com/coins/images/15388/large/Image_from_iOS.png?1696515035",
+  "current_price": 0.00260816,
+  "market_cap": 132969,
+  "market_cap_rank": 3690,
+  "fully_diluted_valuation": 260474,
+  "total_volume": 17979.21,
+  "high_24h": 0.0027494,
+  "low_24h": 0.00260235,
+  "price_change_24h": -0.000129650347522899,
+  "price_change_percentage_24h": -4.73555,
+  "market_cap_change_24h": -6770.234076815861,
+  "market_cap_change_percentage_24h": -4.8449,
+  "circulating_supply": 51048817.0422869,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 1.35,
+  "ath_change_percentage": -99.80686,
+  "ath_date": "2021-05-11T18:38:49.585Z",
+  "atl": 0.00218614,
+  "atl_change_percentage": 19.3477,
+  "atl_date": "2023-10-21T07:29:46.249Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:12.145Z",
+  "platforms": {
+    "ethereum": "0x2c2f7e7c5604d162d75641256b80f1bf6f4dc796"
+  }
+}

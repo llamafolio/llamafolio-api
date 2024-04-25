@@ -1,0 +1,31 @@
+{
+  "id": "lif3-lshare",
+  "symbol": "lshare",
+  "name": "LIF3 LSHARE (OLD)",
+  "image": "https://assets.coingecko.com/coins/images/26038/large/LSHARE.png?1696525119",
+  "current_price": 103.72,
+  "market_cap": 3037159,
+  "market_cap_rank": 2060,
+  "fully_diluted_valuation": 7271080,
+  "total_volume": 4897.09,
+  "high_24h": 111.81,
+  "low_24h": 103.61,
+  "price_change_24h": -6.389450462431853,
+  "price_change_percentage_24h": -5.80294,
+  "market_cap_change_24h": -184348.67532711895,
+  "market_cap_change_percentage_24h": -5.72243,
+  "circulating_supply": 29239.28,
+  "total_supply": 70000,
+  "max_supply": 70000,
+  "ath": 2051.88,
+  "ath_change_percentage": -94.93769,
+  "ath_date": "2022-06-16T08:48:20.812Z",
+  "atl": 37.66,
+  "atl_change_percentage": 175.82364,
+  "atl_date": "2023-09-11T19:40:48.144Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:32.775Z",
+  "platforms": {
+    "bsc": "0xf70b6d6acd652612f24f7dd2ca2f1727eb20793a"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "signed",
+  "symbol": "sign",
+  "name": "Signed",
+  "image": "https://assets.coingecko.com/coins/images/24030/large/wjnKYes.png?1696523222",
+  "current_price": 0.090245,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 90245,
+  "total_volume": 3185.64,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000,
+  "max_supply": null,
+  "ath": 0.569864,
+  "ath_change_percentage": -84.16381,
+  "ath_date": "2022-03-06T15:07:00.020Z",
+  "atl": 0.050521,
+  "atl_change_percentage": 78.62957,
+  "atl_date": "2023-09-12T05:15:35.770Z",
+  "roi": null,
+  "last_updated": "2024-03-30T12:00:30.173Z",
+  "platforms": {
+    "polygon": "0xacbdc2b7a577299718309ed5c4b703fb5ed7af90"
+  }
+}

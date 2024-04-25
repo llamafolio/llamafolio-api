@@ -1,0 +1,31 @@
+{
+  "id": "hilo",
+  "symbol": "hilo",
+  "name": "HILO",
+  "image": "https://assets.coingecko.com/coins/images/28661/large/cmchiloo.png?1696527646",
+  "current_price": 0.0435585,
+  "market_cap": 3631253,
+  "market_cap_rank": 1958,
+  "fully_diluted_valuation": 4214343,
+  "total_volume": 5256.14,
+  "high_24h": 0.04433985,
+  "low_24h": 0.04328643,
+  "price_change_24h": -0.000660589410768839,
+  "price_change_percentage_24h": -1.4939,
+  "market_cap_change_24h": -56304.45140978927,
+  "market_cap_change_percentage_24h": -1.52688,
+  "circulating_supply": 83389534.18139662,
+  "total_supply": 96779838.07147281,
+  "max_supply": 100000000,
+  "ath": 3.97,
+  "ath_change_percentage": -98.90576,
+  "ath_date": "2023-08-29T00:51:33.819Z",
+  "atl": 0.00140114,
+  "atl_change_percentage": 3003.57223,
+  "atl_date": "2023-01-14T18:39:49.556Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:44.495Z",
+  "platforms": {
+    "ethereum": "0xbb9fd9fa4863c03c574007ff3370787b9ce65ff6"
+  }
+}

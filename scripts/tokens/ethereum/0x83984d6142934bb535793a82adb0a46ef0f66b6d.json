@@ -1,0 +1,35 @@
+{
+  "id": "remme",
+  "symbol": "rem",
+  "name": "Remme",
+  "image": "https://assets.coingecko.com/coins/images/2152/large/semme.png?1696503115",
+  "current_price": 0.00009755,
+  "market_cap": 92519,
+  "market_cap_rank": 3806,
+  "fully_diluted_valuation": 97995,
+  "total_volume": 44423,
+  "high_24h": 0.00015446,
+  "low_24h": 0.00007862,
+  "price_change_24h": 0.00000293,
+  "price_change_percentage_24h": 3.09419,
+  "market_cap_change_24h": -11.43229126870574,
+  "market_cap_change_percentage_24h": -0.01236,
+  "circulating_supply": 944115826.2438,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.03305779,
+  "ath_change_percentage": -99.70515,
+  "ath_date": "2018-05-04T02:14:43.121Z",
+  "atl": 0.00005789,
+  "atl_change_percentage": 68.3826,
+  "atl_date": "2023-08-18T00:14:46.993Z",
+  "roi": {
+    "times": -0.9975613033804345,
+    "currency": "usd",
+    "percentage": -99.75613033804345
+  },
+  "last_updated": "2024-04-25T09:01:02.944Z",
+  "platforms": {
+    "ethereum": "0x83984d6142934bb535793a82adb0a46ef0f66b6d"
+  }
+}

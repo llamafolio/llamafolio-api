@@ -1,0 +1,31 @@
+{
+  "id": "aicore",
+  "symbol": "aicore",
+  "name": "AICORE",
+  "image": "missing_large.png",
+  "current_price": 1.56,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 311351,
+  "total_volume": 665.06,
+  "high_24h": 1.61,
+  "low_24h": 1.3,
+  "price_change_24h": 0.241505,
+  "price_change_percentage_24h": 18.33994,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 199798,
+  "max_supply": null,
+  "ath": 5.71,
+  "ath_change_percentage": -72.69868,
+  "ath_date": "2024-03-09T13:25:52.245Z",
+  "atl": 0.484462,
+  "atl_change_percentage": 221.97505,
+  "atl_date": "2023-10-22T15:48:07.536Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:26.454Z",
+  "platforms": {
+    "arbitrum": "0x1aae7de64d9ae1487e95858bbf98185f21e926fd"
+  }
+}

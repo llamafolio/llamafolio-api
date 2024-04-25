@@ -1,0 +1,31 @@
+{
+  "id": "autonolas",
+  "symbol": "olas",
+  "name": "Autonolas",
+  "image": "https://assets.coingecko.com/coins/images/31099/large/OLAS-token.png?1696529930",
+  "current_price": 2.96,
+  "market_cap": 129468721,
+  "market_cap_rank": 399,
+  "fully_diluted_valuation": 1590822413,
+  "total_volume": 4268358,
+  "high_24h": 3.14,
+  "low_24h": 2.81,
+  "price_change_24h": -0.1791671309527474,
+  "price_change_percentage_24h": -5.70518,
+  "market_cap_change_24h": -8006569.685177341,
+  "market_cap_change_percentage_24h": -5.82401,
+  "circulating_supply": 43721076.606606364,
+  "total_supply": 537214457.924841,
+  "max_supply": null,
+  "ath": 8.47,
+  "ath_change_percentage": -64.76875,
+  "ath_date": "2024-01-03T06:34:54.006Z",
+  "atl": 0.08371,
+  "atl_change_percentage": 3464.61135,
+  "atl_date": "2023-08-02T19:06:23.313Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:49.995Z",
+  "platforms": {
+    "ethereum": "0x0001a500a6b18995b03f44bb040a5ffc28e45cb0"
+  }
+}

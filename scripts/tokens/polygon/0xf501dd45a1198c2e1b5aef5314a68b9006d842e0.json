@@ -1,0 +1,31 @@
+{
+  "id": "meta",
+  "symbol": "mta",
+  "name": "mStable Governance: Meta",
+  "image": "https://assets.coingecko.com/coins/images/11846/large/mStable.png?1696511717",
+  "current_price": 0.03404117,
+  "market_cap": 1700519,
+  "market_cap_rank": 2387,
+  "fully_diluted_valuation": 3167610,
+  "total_volume": 14931.91,
+  "high_24h": 0.03499871,
+  "low_24h": 0.03218802,
+  "price_change_24h": 0.00001113,
+  "price_change_percentage_24h": 0.03271,
+  "market_cap_change_24h": -12601.803693848895,
+  "market_cap_change_percentage_24h": -0.73561,
+  "circulating_supply": 49953228.94014872,
+  "total_supply": 93049458.0224077,
+  "max_supply": 100000000,
+  "ath": 11.03,
+  "ath_change_percentage": -99.69135,
+  "ath_date": "2020-08-31T16:08:57.817Z",
+  "atl": 0.02405003,
+  "atl_change_percentage": 41.5475,
+  "atl_date": "2023-03-30T03:31:36.813Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:29.358Z",
+  "platforms": {
+    "polygon": "0xf501dd45a1198c2e1b5aef5314a68b9006d842e0"
+  }
+}

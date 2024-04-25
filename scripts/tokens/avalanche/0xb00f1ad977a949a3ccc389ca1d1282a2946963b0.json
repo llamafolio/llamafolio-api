@@ -1,0 +1,31 @@
+{
+  "id": "boo-finance",
+  "symbol": "boofi",
+  "name": "Boo Finance",
+  "image": "https://assets.coingecko.com/coins/images/18727/large/xrbdgaJc_400x400.jpg?1696518194",
+  "current_price": 0.00196031,
+  "market_cap": 19690.78,
+  "market_cap_rank": 4147,
+  "fully_diluted_valuation": 19690.78,
+  "total_volume": 44.09,
+  "high_24h": 0.00207724,
+  "low_24h": 0.00193927,
+  "price_change_24h": -0.000099026669589645,
+  "price_change_percentage_24h": -4.80868,
+  "market_cap_change_24h": -956.624888545768,
+  "market_cap_change_percentage_24h": -4.63315,
+  "circulating_supply": 10044748.9572586,
+  "total_supply": 10044748.9572586,
+  "max_supply": null,
+  "ath": 8.13,
+  "ath_change_percentage": -99.97589,
+  "ath_date": "2022-01-02T19:58:52.399Z",
+  "atl": 0.00080379,
+  "atl_change_percentage": 143.88252,
+  "atl_date": "2023-10-11T16:58:04.988Z",
+  "roi": null,
+  "last_updated": "2024-04-25T02:58:35.023Z",
+  "platforms": {
+    "avalanche": "0xb00f1ad977a949a3ccc389ca1d1282a2946963b0"
+  }
+}

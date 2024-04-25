@@ -1,0 +1,31 @@
+{
+  "id": "orbler",
+  "symbol": "orbr",
+  "name": "Orbler",
+  "image": "https://assets.coingecko.com/coins/images/24056/large/orbr200.png?1696523246",
+  "current_price": 0.351795,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 704091908,
+  "total_volume": 258423,
+  "high_24h": 0.391456,
+  "low_24h": 0.342005,
+  "price_change_24h": -0.027779073909628083,
+  "price_change_percentage_24h": -7.31848,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2000000000,
+  "max_supply": null,
+  "ath": 44.91,
+  "ath_change_percentage": -99.16171,
+  "ath_date": "2022-04-09T17:04:02.282Z",
+  "atl": 0.219519,
+  "atl_change_percentage": 71.50441,
+  "atl_date": "2023-10-23T15:49:12.937Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:19.535Z",
+  "platforms": {
+    "ethereum": "0xda30f261a962d5aae94c9ecd170544600d193766"
+  }
+}

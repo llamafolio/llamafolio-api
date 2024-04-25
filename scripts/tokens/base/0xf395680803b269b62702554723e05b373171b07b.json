@@ -1,0 +1,31 @@
+{
+  "id": "son-of-brett",
+  "symbol": "bratt",
+  "name": "Son of Brett",
+  "image": "https://assets.coingecko.com/coins/images/36078/large/1000005936.jpg?1710414421",
+  "current_price": 0.01517149,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 151488,
+  "total_volume": 4964.35,
+  "high_24h": 0.02087692,
+  "low_24h": 0.01488161,
+  "price_change_24h": -0.004234008056063208,
+  "price_change_percentage_24h": -21.8186,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.115824,
+  "ath_change_percentage": -86.92088,
+  "ath_date": "2024-03-18T11:18:41.399Z",
+  "atl": 0.01030512,
+  "atl_change_percentage": 47.0025,
+  "atl_date": "2024-04-01T14:35:48.087Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:57.716Z",
+  "platforms": {
+    "base": "0xf395680803b269b62702554723e05b373171b07b"
+  }
+}

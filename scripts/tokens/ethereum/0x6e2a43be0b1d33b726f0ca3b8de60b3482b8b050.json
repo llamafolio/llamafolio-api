@@ -1,0 +1,31 @@
+{
+  "id": "arkham",
+  "symbol": "arkm",
+  "name": "Arkham",
+  "image": "https://assets.coingecko.com/coins/images/30929/large/Arkham_Logo_CG.png?1696529771",
+  "current_price": 2.02,
+  "market_cap": 428248003,
+  "market_cap_rank": 186,
+  "fully_diluted_valuation": 2025771064,
+  "total_volume": 100516816,
+  "high_24h": 2.26,
+  "low_24h": 2.01,
+  "price_change_24h": -0.15088042761257547,
+  "price_change_percentage_24h": -6.93464,
+  "market_cap_change_24h": -32898294.007485688,
+  "market_cap_change_percentage_24h": -7.13403,
+  "circulating_supply": 211400000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 3.98,
+  "ath_change_percentage": -49.0309,
+  "ath_date": "2024-03-10T00:04:54.733Z",
+  "atl": 0.287824,
+  "atl_change_percentage": 604.09896,
+  "atl_date": "2023-10-19T02:00:13.308Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:42.166Z",
+  "platforms": {
+    "ethereum": "0x6e2a43be0b1d33b726f0ca3b8de60b3482b8b050"
+  }
+}

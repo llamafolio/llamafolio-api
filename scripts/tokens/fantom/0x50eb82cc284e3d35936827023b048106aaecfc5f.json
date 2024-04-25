@@ -1,0 +1,35 @@
+{
+  "id": "fsn",
+  "symbol": "fsn",
+  "name": "FUSION",
+  "image": "https://assets.coingecko.com/coins/images/2515/large/Fusion_200x200.png?1696503329",
+  "current_price": 0.167633,
+  "market_cap": 12765002,
+  "market_cap_rank": 1314,
+  "fully_diluted_valuation": 12853738,
+  "total_volume": 83958,
+  "high_24h": 0.17283,
+  "low_24h": 0.163603,
+  "price_change_24h": 0.00171907,
+  "price_change_percentage_24h": 1.03612,
+  "market_cap_change_24h": 129816,
+  "market_cap_change_percentage_24h": 1.02742,
+  "circulating_supply": 76363165.6237257,
+  "total_supply": 76894008.125,
+  "max_supply": 81920000,
+  "ath": 9.76,
+  "ath_change_percentage": -98.27192,
+  "ath_date": "2018-05-14T16:30:25.238Z",
+  "atl": 0.086027,
+  "atl_change_percentage": 95.97183,
+  "atl_date": "2020-03-15T16:19:11.310Z",
+  "roi": {
+    "times": -0.97863167222574,
+    "currency": "eth",
+    "percentage": -97.86316722257399
+  },
+  "last_updated": "2024-04-25T09:00:15.204Z",
+  "platforms": {
+    "fantom": "0x50eb82cc284e3d35936827023b048106aaecfc5f"
+  }
+}

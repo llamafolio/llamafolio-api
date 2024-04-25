@@ -1,0 +1,31 @@
+{
+  "id": "gamyfi-token",
+  "symbol": "gfx",
+  "name": "GamyFi",
+  "image": "https://assets.coingecko.com/coins/images/14559/large/circle-cropped_%281%29.png?1696514241",
+  "current_price": 0.062168,
+  "market_cap": 198939,
+  "market_cap_rank": 3496,
+  "fully_diluted_valuation": 621683,
+  "total_volume": 18.39,
+  "high_24h": 0.062771,
+  "low_24h": 0.062017,
+  "price_change_24h": 0.00010874,
+  "price_change_percentage_24h": 0.17523,
+  "market_cap_change_24h": 347.98,
+  "market_cap_change_percentage_24h": 0.17523,
+  "circulating_supply": 3200000,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 10.42,
+  "ath_change_percentage": -99.40339,
+  "ath_date": "2021-03-30T07:05:38.313Z",
+  "atl": 0.01819942,
+  "atl_change_percentage": 241.59498,
+  "atl_date": "2023-10-11T05:39:55.072Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:02:29.801Z",
+  "platforms": {
+    "polygon": "0x65ad6a2288b2dd23e466226397c8f5d1794e58fc"
+  }
+}

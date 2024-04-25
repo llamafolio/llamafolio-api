@@ -1,0 +1,31 @@
+{
+  "id": "senso",
+  "symbol": "senso",
+  "name": "SENSO",
+  "image": "https://assets.coingecko.com/coins/images/11064/large/senso.png?1696511006",
+  "current_price": 0.075529,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 54029943,
+  "total_volume": 193925,
+  "high_24h": 0.079095,
+  "low_24h": 0.07365,
+  "price_change_24h": -0.000493715834837427,
+  "price_change_percentage_24h": -0.64944,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 715280000,
+  "max_supply": 5915280000,
+  "ath": 3.28,
+  "ath_change_percentage": -97.70075,
+  "ath_date": "2021-11-21T15:33:13.593Z",
+  "atl": 0.051683,
+  "atl_change_percentage": 45.70925,
+  "atl_date": "2023-09-12T13:54:58.959Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:19.434Z",
+  "platforms": {
+    "ethereum": "0xc19b6a4ac7c7cc24459f08984bbd09664af17bd1"
+  }
+}

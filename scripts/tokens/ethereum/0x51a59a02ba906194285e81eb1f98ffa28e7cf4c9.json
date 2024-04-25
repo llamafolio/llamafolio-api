@@ -1,0 +1,31 @@
+{
+  "id": "pepe-king-prawn",
+  "symbol": "pepe",
+  "name": "Pepe King Prawn",
+  "image": "https://assets.coingecko.com/coins/images/31942/large/Pepe_King_Prawn.png?1696530749",
+  "current_price": 0.00153155,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 153155,
+  "total_volume": 12877.84,
+  "high_24h": 0.00216116,
+  "low_24h": 0.00152729,
+  "price_change_24h": -0.000591189386994323,
+  "price_change_percentage_24h": -27.85024,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.00645568,
+  "ath_change_percentage": -76.27585,
+  "ath_date": "2024-04-23T04:21:00.355Z",
+  "atl": 0.00020013,
+  "atl_change_percentage": 665.28099,
+  "atl_date": "2023-09-30T04:44:44.204Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:59.587Z",
+  "platforms": {
+    "ethereum": "0x51a59a02ba906194285e81eb1f98ffa28e7cf4c9"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "babybnbtiger",
+  "symbol": "babybnbtig",
+  "name": "BabyBNBTiger",
+  "image": "https://assets.coingecko.com/coins/images/29709/large/IMG_20230405_051743_609.png?1696528641",
+  "current_price": 2e-18,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 23562912,
+  "total_volume": 51184,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1e+25,
+  "max_supply": 1e+25,
+  "ath": 9e-18,
+  "ath_change_percentage": -74.41292,
+  "ath_date": "2023-04-15T19:31:05.315Z",
+  "atl": 1e-18,
+  "atl_change_percentage": 104.61404,
+  "atl_date": "2023-05-09T16:05:42.760Z",
+  "roi": null,
+  "last_updated": "2023-05-18T20:30:04.909Z",
+  "platforms": {
+    "bsc": "0x5a04565ee1c90c84061ad357ae9e2f1c32d57dc6"
+  }
+}

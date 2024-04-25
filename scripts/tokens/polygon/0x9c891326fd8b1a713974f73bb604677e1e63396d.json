@@ -1,0 +1,31 @@
+{
+  "id": "islamicoin",
+  "symbol": "islami",
+  "name": "ISLAMICOIN",
+  "image": "https://assets.coingecko.com/coins/images/24749/large/3100-x-3100-px-e1632233028219.png?1696523911",
+  "current_price": 0.00024608,
+  "market_cap": 709221,
+  "market_cap_rank": 2878,
+  "fully_diluted_valuation": 2302668,
+  "total_volume": 1509.54,
+  "high_24h": 0.00024642,
+  "low_24h": 0.00024276,
+  "price_change_24h": 0.000003,
+  "price_change_percentage_24h": 1.2361,
+  "market_cap_change_24h": 8409.88,
+  "market_cap_change_percentage_24h": 1.20002,
+  "circulating_supply": 2884071821.88849,
+  "total_supply": 9363873859.71089,
+  "max_supply": 20000000000,
+  "ath": 0.00697067,
+  "ath_change_percentage": -96.4706,
+  "ath_date": "2022-05-05T03:32:07.244Z",
+  "atl": 0.00012004,
+  "atl_change_percentage": 104.94672,
+  "atl_date": "2023-07-16T17:15:02.190Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:42.265Z",
+  "platforms": {
+    "polygon": "0x9c891326fd8b1a713974f73bb604677e1e63396d"
+  }
+}

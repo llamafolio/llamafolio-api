@@ -1,0 +1,31 @@
+{
+  "id": "shiba-ceo",
+  "symbol": "shibceo",
+  "name": "Shiba CEO",
+  "image": "https://assets.coingecko.com/coins/images/29376/large/A0D7C0ED-60CE-4B76-B279-E6901F2A4449.jpeg?1696528323",
+  "current_price": 9.51423e-13,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 399598,
+  "total_volume": 11981.27,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 420000000000000000,
+  "max_supply": 420000000000000000,
+  "ath": 2.108e-12,
+  "ath_change_percentage": -54.86982,
+  "ath_date": "2023-04-15T16:08:26.264Z",
+  "atl": 2.12357e-13,
+  "atl_change_percentage": 348.02921,
+  "atl_date": "2023-03-24T21:38:33.733Z",
+  "roi": null,
+  "last_updated": "2023-05-18T20:00:14.918Z",
+  "platforms": {
+    "bsc": "0xbef05cf52d8b244eeca6033fb8b9b69e1974f681"
+  }
+}

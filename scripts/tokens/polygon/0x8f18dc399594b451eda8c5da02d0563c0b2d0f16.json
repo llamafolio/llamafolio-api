@@ -1,0 +1,31 @@
+{
+  "id": "moonwolf-io",
+  "symbol": "wolf",
+  "name": "moonwolf.io",
+  "image": "https://assets.coingecko.com/coins/images/14698/large/oC37AkkD_400x400.jpg?1696514370",
+  "current_price": 3.14022e-7,
+  "market_cap": 92670,
+  "market_cap_rank": 3804,
+  "fully_diluted_valuation": 313752,
+  "total_volume": 137.46,
+  "high_24h": 0.00002318,
+  "low_24h": 3.08866e-7,
+  "price_change_24h": -1.1730687646e-8,
+  "price_change_percentage_24h": -3.60111,
+  "market_cap_change_24h": -1692.3350838845654,
+  "market_cap_change_percentage_24h": -1.79345,
+  "circulating_supply": 295359058466.4201,
+  "total_supply": 1000000000000,
+  "max_supply": null,
+  "ath": 0.00006104,
+  "ath_change_percentage": -99.48621,
+  "ath_date": "2024-03-19T00:20:09.197Z",
+  "atl": 4.9234e-8,
+  "atl_change_percentage": 537.04495,
+  "atl_date": "2023-09-16T13:05:16.596Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:35.297Z",
+  "platforms": {
+    "polygon": "0x8f18dc399594b451eda8c5da02d0563c0b2d0f16"
+  }
+}

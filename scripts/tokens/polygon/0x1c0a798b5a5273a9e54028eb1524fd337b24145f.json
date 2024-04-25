@@ -1,0 +1,31 @@
+{
+  "id": "loser-coin",
+  "symbol": "lowb",
+  "name": "Loser Coin",
+  "image": "https://assets.coingecko.com/coins/images/15378/large/loser.PNG?1696515025",
+  "current_price": 0.00000864,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 521690,
+  "total_volume": 17872.55,
+  "high_24h": 0.00000924,
+  "low_24h": 0.00000845,
+  "price_change_24h": -6.06279316692e-7,
+  "price_change_percentage_24h": -6.55923,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 60282814718,
+  "max_supply": null,
+  "ath": 0.00270218,
+  "ath_change_percentage": -99.68095,
+  "ath_date": "2021-05-11T04:12:44.786Z",
+  "atl": 0.00000804,
+  "atl_change_percentage": 7.23463,
+  "atl_date": "2024-01-24T07:40:34.067Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:39.977Z",
+  "platforms": {
+    "polygon": "0x1c0a798b5a5273a9e54028eb1524fd337b24145f"
+  }
+}

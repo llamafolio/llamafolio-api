@@ -1,0 +1,31 @@
+{
+  "id": "gyoshi",
+  "symbol": "gyoshi",
+  "name": "GYOSHI",
+  "image": "https://assets.coingecko.com/coins/images/30002/large/99245ad73184347ee7c93bfc4f8ca2c2.png?1696528927",
+  "current_price": 2.32261e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 232261,
+  "total_volume": 164.01,
+  "high_24h": 2.33705e-7,
+  "low_24h": 2.30374e-7,
+  "price_change_24h": 1.083e-9,
+  "price_change_percentage_24h": 0.46866,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000,
+  "max_supply": 1000000000000,
+  "ath": 0.00000384,
+  "ath_change_percentage": -93.98172,
+  "ath_date": "2023-05-09T00:40:57.170Z",
+  "atl": 1.14697e-7,
+  "atl_change_percentage": 101.39533,
+  "atl_date": "2023-10-11T05:45:36.277Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:44.205Z",
+  "platforms": {
+    "ethereum": "0x1f17d72cbe65df609315df5c4f5f729efbd00ade"
+  }
+}

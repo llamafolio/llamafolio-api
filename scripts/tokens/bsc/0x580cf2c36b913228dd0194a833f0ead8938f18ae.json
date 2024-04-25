@@ -1,0 +1,31 @@
+{
+  "id": "kitty",
+  "symbol": "kit",
+  "name": "Kitty",
+  "image": "https://assets.coingecko.com/coins/images/19378/large/13019.png?1696518818",
+  "current_price": 4.48209e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 44821,
+  "total_volume": 0.448209,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000000000,
+  "max_supply": null,
+  "ath": 0.00000114,
+  "ath_change_percentage": -99.96073,
+  "ath_date": "2021-11-05T13:32:58.581Z",
+  "atl": 4.35282e-10,
+  "atl_change_percentage": 2.96987,
+  "atl_date": "2023-05-06T15:30:08.916Z",
+  "roi": null,
+  "last_updated": "2023-07-26T00:48:32.935Z",
+  "platforms": {
+    "bsc": "0x580cf2c36b913228dd0194a833f0ead8938f18ae"
+  }
+}

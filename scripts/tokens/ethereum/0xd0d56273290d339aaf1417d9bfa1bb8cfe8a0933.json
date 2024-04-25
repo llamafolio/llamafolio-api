@@ -1,0 +1,31 @@
+{
+  "id": "foom",
+  "symbol": "foom",
+  "name": "Foom",
+  "image": "https://assets.coingecko.com/coins/images/31308/large/f.png?1696530127",
+  "current_price": 5.9559e-8,
+  "market_cap": 10397062,
+  "market_cap_rank": 1420,
+  "fully_diluted_valuation": 10397062,
+  "total_volume": 18183.63,
+  "high_24h": 6.2154e-8,
+  "low_24h": 5.3625e-8,
+  "price_change_24h": 3.846e-9,
+  "price_change_percentage_24h": 6.90346,
+  "market_cap_change_24h": 645971,
+  "market_cap_change_percentage_24h": 6.6246,
+  "circulating_supply": 175000000000000,
+  "total_supply": 175000000000000,
+  "max_supply": 175000000000000,
+  "ath": 7.1008e-8,
+  "ath_change_percentage": -16.41843,
+  "ath_date": "2024-04-16T07:43:31.225Z",
+  "atl": 1.4545e-8,
+  "atl_change_percentage": 308.0271,
+  "atl_date": "2024-01-23T20:45:04.575Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:01.607Z",
+  "platforms": {
+    "ethereum": "0xd0d56273290d339aaf1417d9bfa1bb8cfe8a0933"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "id": "edgeless",
+  "symbol": "edg",
+  "name": "Edgeless",
+  "image": "https://assets.coingecko.com/coins/images/635/large/Edgeless-Token.jpg?1696501830",
+  "current_price": 0.00399297,
+  "market_cap": 459779,
+  "market_cap_rank": 3106,
+  "fully_diluted_valuation": 527260,
+  "total_volume": 0.0318979,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 115146962,
+  "total_supply": 132046997,
+  "max_supply": null,
+  "ath": 3.01,
+  "ath_change_percentage": -99.86752,
+  "ath_date": "2018-01-02T00:00:00.000Z",
+  "atl": 0.00027398,
+  "atl_change_percentage": 1357.39463,
+  "atl_date": "2024-01-12T09:25:51.834Z",
+  "roi": {
+    "times": -0.9001756302358003,
+    "currency": "usd",
+    "percentage": -90.01756302358004
+  },
+  "last_updated": "2024-04-23T15:30:46.789Z",
+  "platforms": {
+    "ethereum": "0x08711d3b02c8758f2fb3ab4e80228418a7f8e39c"
+  }
+}

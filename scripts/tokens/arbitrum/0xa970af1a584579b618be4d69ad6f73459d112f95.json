@@ -1,0 +1,31 @@
+{
+  "id": "nusd",
+  "symbol": "susd",
+  "name": "sUSD",
+  "image": "https://assets.coingecko.com/coins/images/5013/large/sUSD.png?1696505546",
+  "current_price": 0.997136,
+  "market_cap": 49440223,
+  "market_cap_rank": 691,
+  "fully_diluted_valuation": 49440223,
+  "total_volume": 3863232,
+  "high_24h": 1,
+  "low_24h": 0.988273,
+  "price_change_24h": 0.00084327,
+  "price_change_percentage_24h": 0.08464,
+  "market_cap_change_24h": 1466325,
+  "market_cap_change_percentage_24h": 3.05651,
+  "circulating_supply": 49746991.8212601,
+  "total_supply": 49746991.8212601,
+  "max_supply": 49746991.8212601,
+  "ath": 2.45,
+  "ath_change_percentage": -59.50474,
+  "ath_date": "2020-02-18T03:23:56.261Z",
+  "atl": 0.429697,
+  "atl_change_percentage": 131.30504,
+  "atl_date": "2020-03-18T08:09:20.698Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:06.338Z",
+  "platforms": {
+    "arbitrum": "0xa970af1a584579b618be4d69ad6f73459d112f95"
+  }
+}

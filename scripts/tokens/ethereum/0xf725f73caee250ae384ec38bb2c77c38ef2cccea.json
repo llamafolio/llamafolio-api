@@ -1,0 +1,31 @@
+{
+  "id": "ape_in_records",
+  "symbol": "air",
+  "name": "Ape In Records",
+  "image": "https://assets.coingecko.com/coins/images/24194/large/gCZZdeR.jpeg?1696523382",
+  "current_price": 0.00023109,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 231086,
+  "total_volume": 693.26,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.00423784,
+  "ath_change_percentage": -94.54708,
+  "ath_date": "2022-03-28T23:19:35.820Z",
+  "atl": 0.00018413,
+  "atl_change_percentage": 25.50499,
+  "atl_date": "2022-09-28T02:56:39.938Z",
+  "roi": null,
+  "last_updated": "2024-04-22T10:20:10.922Z",
+  "platforms": {
+    "ethereum": "0xf725f73caee250ae384ec38bb2c77c38ef2cccea"
+  }
+}

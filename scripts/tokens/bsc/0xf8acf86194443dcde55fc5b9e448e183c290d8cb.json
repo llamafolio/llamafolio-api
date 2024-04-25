@@ -1,0 +1,31 @@
+{
+  "id": "colossuscoinxt",
+  "symbol": "colx",
+  "name": "ColossusXT",
+  "image": "https://assets.coingecko.com/coins/images/966/large/colossusxt.png?1696502082",
+  "current_price": 0.0000316,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 3.7,
+  "high_24h": 0.00003204,
+  "low_24h": 0.00002083,
+  "price_change_24h": 0.00001011,
+  "price_change_percentage_24h": 47.03138,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.01366715,
+  "ath_change_percentage": -99.76841,
+  "ath_date": "2018-01-13T00:00:00.000Z",
+  "atl": 6.73913e-7,
+  "atl_change_percentage": 4596.61342,
+  "atl_date": "2023-01-27T04:19:33.258Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:41.001Z",
+  "platforms": {
+    "bsc": "0xf8acf86194443dcde55fc5b9e448e183c290d8cb"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "ethereum-meta",
+  "symbol": "ethm",
+  "name": "Ethereum Meta",
+  "image": "https://assets.coingecko.com/coins/images/6586/large/ethereum-meta.png?1696506937",
+  "current_price": 1.7361e-11,
+  "market_cap": 17378399,
+  "market_cap_rank": 1171,
+  "fully_diluted_valuation": 17378399,
+  "total_volume": 0,
+  "high_24h": 1.7361e-11,
+  "low_24h": 1.7361e-11,
+  "price_change_24h": 0,
+  "price_change_percentage_24h": 0,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 1000991099000000000,
+  "total_supply": 1000991099000000000,
+  "max_supply": null,
+  "ath": 0.04141247,
+  "ath_change_percentage": -100,
+  "ath_date": "2019-03-06T17:09:48.984Z",
+  "atl": 0,
+  "atl_change_percentage": 1.968838702734594e+26,
+  "atl_date": "2022-01-10T17:39:59.547Z",
+  "roi": null,
+  "last_updated": "2024-04-25T03:30:47.093Z",
+  "platforms": {
+    "ethereum": "0xfd957f21bd95e723645c07c48a2d8acb8ffb3794"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "hot-doge",
+  "symbol": "hotdoge",
+  "name": "HotDoge [OLD]",
+  "image": "https://assets.coingecko.com/coins/images/15404/large/525ea2_88a58501323f44c7a806c008ae2b4858_mv2.png?1696515050",
+  "current_price": 5.003e-12,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 500255,
+  "total_volume": 5.11,
+  "high_24h": 5.179e-12,
+  "low_24h": 4.191e-12,
+  "price_change_24h": -8.1297e-14,
+  "price_change_percentage_24h": -1.59913,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000000000000,
+  "max_supply": null,
+  "ath": 1.31047e-10,
+  "ath_change_percentage": -96.18263,
+  "ath_date": "2021-05-11T14:02:51.869Z",
+  "atl": 5.90161e-13,
+  "atl_change_percentage": 747.65763,
+  "atl_date": "2023-11-03T23:40:26.387Z",
+  "roi": null,
+  "last_updated": "2024-04-25T00:11:44.398Z",
+  "platforms": {
+    "bsc": "0x1991501f1398663f69dd7391c055bb0df6514f76"
+  }
+}

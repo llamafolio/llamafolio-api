@@ -1,0 +1,31 @@
+{
+  "id": "gameswap-org",
+  "symbol": "gswap",
+  "name": "Gameswap",
+  "image": "https://assets.coingecko.com/coins/images/13026/large/gameswap.jpg?1696512814",
+  "current_price": 0.748809,
+  "market_cap": 6550592,
+  "market_cap_rank": 1660,
+  "fully_diluted_valuation": 14954759,
+  "total_volume": 48082,
+  "high_24h": 0.772366,
+  "low_24h": 0.736832,
+  "price_change_24h": -0.001026827199660185,
+  "price_change_percentage_24h": -0.13694,
+  "market_cap_change_24h": -14928.448280604556,
+  "market_cap_change_percentage_24h": -0.22738,
+  "circulating_supply": 8760545.457221467,
+  "total_supply": 20000000,
+  "max_supply": 20000000,
+  "ath": 8.44,
+  "ath_change_percentage": -91.14324,
+  "ath_date": "2021-11-27T21:27:33.723Z",
+  "atl": 0.152585,
+  "atl_change_percentage": 390.04767,
+  "atl_date": "2023-10-19T14:21:38.856Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:54:49.104Z",
+  "platforms": {
+    "ethereum": "0xaac41ec512808d64625576eddd580e7ea40ef8b2"
+  }
+}

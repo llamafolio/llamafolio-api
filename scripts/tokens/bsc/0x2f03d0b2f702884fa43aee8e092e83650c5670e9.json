@@ -1,0 +1,31 @@
+{
+  "id": "the-great-void-token",
+  "symbol": "void",
+  "name": "The Great Void Token",
+  "image": "https://assets.coingecko.com/coins/images/34264/large/V_token_200.png?1704388584",
+  "current_price": 0.00102055,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 3756.02,
+  "high_24h": 0.00107874,
+  "low_24h": 0.0009628,
+  "price_change_24h": -0.000033539947050273,
+  "price_change_percentage_24h": -3.18189,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.00157281,
+  "ath_change_percentage": -35.2505,
+  "ath_date": "2024-01-27T17:45:04.040Z",
+  "atl": 0.00018693,
+  "atl_change_percentage": 444.78956,
+  "atl_date": "2024-01-06T13:39:54.261Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:58.956Z",
+  "platforms": {
+    "bsc": "0x2f03d0b2f702884fa43aee8e092e83650c5670e9"
+  }
+}

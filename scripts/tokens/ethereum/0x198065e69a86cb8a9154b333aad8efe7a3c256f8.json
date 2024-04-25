@@ -1,0 +1,31 @@
+{
+  "id": "koyo-6e93c7c7-03a3-4475-86a1-f0bc80ee09d6",
+  "symbol": "koy",
+  "name": "Koyo",
+  "image": "https://assets.coingecko.com/coins/images/29484/large/koyo200x200.png?1696528428",
+  "current_price": 0.00128079,
+  "market_cap": 686154,
+  "market_cap_rank": 2902,
+  "fully_diluted_valuation": 731236,
+  "total_volume": 1404.9,
+  "high_24h": 0.00139748,
+  "low_24h": 0.00126237,
+  "price_change_24h": -0.000022421660062284,
+  "price_change_percentage_24h": -1.72049,
+  "market_cap_change_24h": -17536.57469051727,
+  "market_cap_change_percentage_24h": -2.49209,
+  "circulating_supply": 539285738.43365,
+  "total_supply": 574718652.43365,
+  "max_supply": 1000000000,
+  "ath": 0.02352792,
+  "ath_change_percentage": -94.59298,
+  "ath_date": "2023-04-12T01:29:03.712Z",
+  "atl": 0.00081349,
+  "atl_change_percentage": 56.38328,
+  "atl_date": "2024-04-13T21:08:37.352Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:50.731Z",
+  "platforms": {
+    "ethereum": "0x198065e69a86cb8a9154b333aad8efe7a3c256f8"
+  }
+}

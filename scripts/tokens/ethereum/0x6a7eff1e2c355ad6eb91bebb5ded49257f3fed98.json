@@ -1,0 +1,31 @@
+{
+  "id": "opsec",
+  "symbol": "opsec",
+  "name": "OpSec",
+  "image": "https://assets.coingecko.com/coins/images/34284/large/IMG_8108.jpeg?1704453267",
+  "current_price": 1.18,
+  "market_cap": 112032594,
+  "market_cap_rank": 439,
+  "fully_diluted_valuation": 116901101,
+  "total_volume": 1228080,
+  "high_24h": 1.26,
+  "low_24h": 1.15,
+  "price_change_24h": -0.048474107448665205,
+  "price_change_percentage_24h": -3.9405,
+  "market_cap_change_24h": -4609153.986355007,
+  "market_cap_change_percentage_24h": -3.95155,
+  "circulating_supply": 94877008.158,
+  "total_supply": 99000000,
+  "max_supply": 100000000,
+  "ath": 3.11,
+  "ath_change_percentage": -61.97138,
+  "ath_date": "2024-04-01T11:15:59.300Z",
+  "atl": 0.03193963,
+  "atl_change_percentage": 3607.98349,
+  "atl_date": "2024-01-05T18:04:54.790Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:22.917Z",
+  "platforms": {
+    "ethereum": "0x6a7eff1e2c355ad6eb91bebb5ded49257f3fed98"
+  }
+}

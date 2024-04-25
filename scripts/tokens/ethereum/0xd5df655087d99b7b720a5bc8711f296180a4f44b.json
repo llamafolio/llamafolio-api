@@ -1,0 +1,31 @@
+{
+  "id": "catgirl-optimus",
+  "symbol": "optig",
+  "name": "Catgirl Optimus",
+  "image": "https://assets.coingecko.com/coins/images/29669/large/Optigpng.png?1696528604",
+  "current_price": 0.00010917,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 108758,
+  "total_volume": 148.88,
+  "high_24h": 0.00011104,
+  "low_24h": 0.0001085,
+  "price_change_24h": -4.76117967842e-7,
+  "price_change_percentage_24h": -0.43424,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00175518,
+  "ath_change_percentage": -93.80361,
+  "ath_date": "2023-04-04T10:44:36.383Z",
+  "atl": 0.00002234,
+  "atl_change_percentage": 386.72595,
+  "atl_date": "2023-05-25T01:34:14.117Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:06.662Z",
+  "platforms": {
+    "ethereum": "0xd5df655087d99b7b720a5bc8711f296180a4f44b"
+  }
+}

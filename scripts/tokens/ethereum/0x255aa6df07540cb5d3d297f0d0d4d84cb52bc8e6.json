@@ -1,0 +1,31 @@
+{
+  "id": "raiden-network",
+  "symbol": "rdn",
+  "name": "Raiden Network",
+  "image": "https://assets.coingecko.com/coins/images/1132/large/raiden-logo.jpg?1696502225",
+  "current_price": 0.01666388,
+  "market_cap": 850661,
+  "market_cap_rank": 2770,
+  "fully_diluted_valuation": 1663481,
+  "total_volume": 5237.01,
+  "high_24h": 0.01920177,
+  "low_24h": 0.01655077,
+  "price_change_24h": -0.001318258827670206,
+  "price_change_percentage_24h": -7.33093,
+  "market_cap_change_24h": -69745.59560771508,
+  "market_cap_change_percentage_24h": -7.5777,
+  "circulating_supply": 51137365.57,
+  "total_supply": 99999999,
+  "max_supply": null,
+  "ath": 8.65,
+  "ath_change_percentage": -99.80758,
+  "ath_date": "2018-01-09T00:00:00.000Z",
+  "atl": 0.00515011,
+  "atl_change_percentage": 223.21681,
+  "atl_date": "2023-08-30T22:31:07.085Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:39.134Z",
+  "platforms": {
+    "ethereum": "0x255aa6df07540cb5d3d297f0d0d4d84cb52bc8e6"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "billionhappiness",
+  "symbol": "bhc",
+  "name": "BillionHappiness",
+  "image": "https://assets.coingecko.com/coins/images/12803/large/BHC_BLACK_TRANSPARENT.png?1696512596",
+  "current_price": 0.729709,
+  "market_cap": 36536,
+  "market_cap_rank": 4058,
+  "fully_diluted_valuation": 36536,
+  "total_volume": 22.8,
+  "high_24h": 0.911155,
+  "low_24h": 0.729703,
+  "price_change_24h": -0.17035180234284808,
+  "price_change_percentage_24h": -18.92669,
+  "market_cap_change_24h": -8440.108535732623,
+  "market_cap_change_percentage_24h": -18.76581,
+  "circulating_supply": 50000,
+  "total_supply": 50000,
+  "max_supply": null,
+  "ath": 436.97,
+  "ath_change_percentage": -99.83278,
+  "ath_date": "2021-04-06T22:50:44.245Z",
+  "atl": 0.389153,
+  "atl_change_percentage": 87.77133,
+  "atl_date": "2024-04-19T03:53:40.059Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:57.066Z",
+  "platforms": {
+    "bsc": "0x6fd7c98458a943f469e1cf4ea85b173f5cd342f4"
+  }
+}

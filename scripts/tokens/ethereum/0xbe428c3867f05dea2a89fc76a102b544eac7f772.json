@@ -1,0 +1,31 @@
+{
+  "id": "cybervein",
+  "symbol": "cvt",
+  "name": "CyberVein",
+  "image": "https://assets.coingecko.com/coins/images/3886/large/CyberVein_LOGO.png?1696504547",
+  "current_price": 0.00033048,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 711297,
+  "total_volume": 25428,
+  "high_24h": 0.00035369,
+  "low_24h": 0.00033087,
+  "price_change_24h": -0.000017431683571964,
+  "price_change_percentage_24h": -5.01038,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2147483648,
+  "max_supply": null,
+  "ath": 0.370232,
+  "ath_change_percentage": -99.91063,
+  "ath_date": "2021-04-09T15:03:59.649Z",
+  "atl": 0.0000936,
+  "atl_change_percentage": 253.50785,
+  "atl_date": "2023-06-20T08:54:21.032Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:39.619Z",
+  "platforms": {
+    "ethereum": "0xbe428c3867f05dea2a89fc76a102b544eac7f772"
+  }
+}

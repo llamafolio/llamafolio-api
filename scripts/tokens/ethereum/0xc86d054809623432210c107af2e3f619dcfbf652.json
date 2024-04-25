@@ -1,0 +1,35 @@
+{
+  "id": "sentinel-protocol",
+  "symbol": "upp",
+  "name": "Sentinel Protocol",
+  "image": "https://assets.coingecko.com/coins/images/3369/large/Sentinel_Protocol.jpg?1696504069",
+  "current_price": 0.086675,
+  "market_cap": 43155955,
+  "market_cap_rank": 756,
+  "fully_diluted_valuation": 43352244,
+  "total_volume": 2766729,
+  "high_24h": 0.0932,
+  "low_24h": 0.086188,
+  "price_change_24h": -0.005900433061581403,
+  "price_change_percentage_24h": -6.37365,
+  "market_cap_change_24h": -3061759.806328848,
+  "market_cap_change_percentage_24h": -6.62465,
+  "circulating_supply": 497736119.9639197,
+  "total_supply": 500000000,
+  "max_supply": null,
+  "ath": 0.414779,
+  "ath_change_percentage": -79.08638,
+  "ath_date": "2021-04-03T00:50:47.099Z",
+  "atl": 0.0071109,
+  "atl_change_percentage": 1119.89238,
+  "atl_date": "2019-12-17T20:14:01.179Z",
+  "roi": {
+    "times": -0.8618554645741139,
+    "currency": "eth",
+    "percentage": -86.18554645741139
+  },
+  "last_updated": "2024-04-25T09:03:42.728Z",
+  "platforms": {
+    "ethereum": "0xc86d054809623432210c107af2e3f619dcfbf652"
+  }
+}

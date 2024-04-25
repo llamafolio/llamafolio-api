@@ -1,0 +1,31 @@
+{
+  "id": "multichain-bridged-usdc-fantom",
+  "symbol": "usdc",
+  "name": "Multichain Bridged USDC (Fantom)",
+  "image": "https://assets.coingecko.com/coins/images/35222/large/USDC.jpg?1707919936",
+  "current_price": 0.121661,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 61440,
+  "high_24h": 0.129306,
+  "low_24h": 0.120894,
+  "price_change_24h": -0.005091645950149201,
+  "price_change_percentage_24h": -4.017,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.197192,
+  "ath_change_percentage": -38.40186,
+  "ath_date": "2024-03-07T20:25:31.794Z",
+  "atl": 0.087802,
+  "atl_change_percentage": 38.34108,
+  "atl_date": "2024-04-13T20:59:28.241Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:45.690Z",
+  "platforms": {
+    "fantom": "0x04068da6c83afcfa0e13ba15a6696662335d5b75"
+  }
+}

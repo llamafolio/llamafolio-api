@@ -1,0 +1,31 @@
+{
+  "id": "pepexl",
+  "symbol": "pepexl",
+  "name": "PepeXL",
+  "image": "https://assets.coingecko.com/coins/images/30343/large/plogo200.png?1696529243",
+  "current_price": 1.50066e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 10417.55,
+  "total_volume": 137.36,
+  "high_24h": 1.51951e-10,
+  "low_24h": 1.50036e-10,
+  "price_change_24h": -1.089487e-12,
+  "price_change_percentage_24h": -0.72077,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 69420000000000,
+  "max_supply": 69420000000000,
+  "ath": 0.00000239,
+  "ath_change_percentage": -99.99371,
+  "ath_date": "2023-05-19T18:22:35.296Z",
+  "atl": 9.0586e-11,
+  "atl_change_percentage": 65.66168,
+  "atl_date": "2024-01-24T18:35:21.077Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:47:51.514Z",
+  "platforms": {
+    "ethereum": "0xddd5592cf4759313c649eb4e624a79541ed222ed"
+  }
+}

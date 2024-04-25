@@ -1,0 +1,31 @@
+{
+  "id": "vyvo-smart-chain",
+  "symbol": "vsc",
+  "name": "Vyvo Smart Chain",
+  "image": "https://assets.coingecko.com/coins/images/32105/large/Vyvo.png?1696530902",
+  "current_price": 0.02259117,
+  "market_cap": 54778827,
+  "market_cap_rank": 658,
+  "fully_diluted_valuation": 451469993,
+  "total_volume": 1177763,
+  "high_24h": 0.0242042,
+  "low_24h": 0.02241627,
+  "price_change_24h": 0.00001493,
+  "price_change_percentage_24h": 0.06614,
+  "market_cap_change_24h": -643332.8830503076,
+  "market_cap_change_percentage_24h": -1.16079,
+  "circulating_supply": 2428406179,
+  "total_supply": 20014165805,
+  "max_supply": 20014165805,
+  "ath": 0.075584,
+  "ath_change_percentage": -70.15274,
+  "ath_date": "2023-12-30T14:43:59.452Z",
+  "atl": 0.01096275,
+  "atl_change_percentage": 105.78648,
+  "atl_date": "2023-11-11T13:25:07.036Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:21.837Z",
+  "platforms": {
+    "polygon": "0xcdf937995a55a9ab551d81b463ac0f7f02795368"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "mai-bsc",
+  "symbol": "mimatic",
+  "name": "MAI (BSC)",
+  "image": "https://assets.coingecko.com/coins/images/35568/large/mimatic-red.png?1709190468",
+  "current_price": 0.633501,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3240486,
+  "total_volume": 14.89,
+  "high_24h": 0.636971,
+  "low_24h": 0.631254,
+  "price_change_24h": -0.002302558437405567,
+  "price_change_percentage_24h": -0.36215,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 5119420,
+  "max_supply": null,
+  "ath": 1.69,
+  "ath_change_percentage": -62.58559,
+  "ath_date": "2024-04-02T08:03:18.437Z",
+  "atl": 0.482878,
+  "atl_change_percentage": 31.19276,
+  "atl_date": "2024-03-16T19:17:18.931Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:40.936Z",
+  "platforms": {
+    "bsc": "0x3f56e0c36d275367b8c502090edf38289b3dea0d"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "cockapoo",
+  "symbol": "cpoo",
+  "name": "Cockapoo",
+  "image": "https://assets.coingecko.com/coins/images/16852/large/cpoo.png?1696516420",
+  "current_price": 1.15993e-7,
+  "market_cap": 1515.99,
+  "market_cap_rank": 4274,
+  "fully_diluted_valuation": 11599.26,
+  "total_volume": 2527.67,
+  "high_24h": 2.50489e-7,
+  "low_24h": 1.15721e-7,
+  "price_change_24h": -6.733955023e-9,
+  "price_change_percentage_24h": -5.48696,
+  "market_cap_change_24h": -88.01082536709987,
+  "market_cap_change_percentage_24h": -5.48696,
+  "circulating_supply": 13069707930.744,
+  "total_supply": 100000000000,
+  "max_supply": null,
+  "ath": 0.00009137,
+  "ath_change_percentage": -99.87323,
+  "ath_date": "2022-02-14T20:46:50.485Z",
+  "atl": 2.6544e-8,
+  "atl_change_percentage": 336.37078,
+  "atl_date": "2023-11-23T03:49:43.584Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:06:22.063Z",
+  "platforms": {
+    "bsc": "0x71809c4ff017ceade03038a8b597ecabb6519918"
+  }
+}

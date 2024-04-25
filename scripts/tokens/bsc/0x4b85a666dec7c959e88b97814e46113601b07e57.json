@@ -1,0 +1,35 @@
+{
+  "id": "eligma",
+  "symbol": "goc",
+  "name": "GoCrypto",
+  "image": "https://assets.coingecko.com/coins/images/3181/large/gocrypto.png?1696503902",
+  "current_price": 0.00781274,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2559557,
+  "total_volume": 327437,
+  "high_24h": 0.00805861,
+  "low_24h": 0.00749951,
+  "price_change_24h": -0.000133238511574702,
+  "price_change_percentage_24h": -1.6768,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 327902034,
+  "max_supply": null,
+  "ath": 0.227067,
+  "ath_change_percentage": -96.56832,
+  "ath_date": "2021-11-11T12:14:43.543Z",
+  "atl": 0.00003001,
+  "atl_change_percentage": 25869.36032,
+  "atl_date": "2020-08-14T15:09:55.472Z",
+  "roi": {
+    "times": -0.921872606616195,
+    "currency": "usd",
+    "percentage": -92.18726066161949
+  },
+  "last_updated": "2024-04-25T09:12:05.560Z",
+  "platforms": {
+    "bsc": "0x4b85a666dec7c959e88b97814e46113601b07e57"
+  }
+}

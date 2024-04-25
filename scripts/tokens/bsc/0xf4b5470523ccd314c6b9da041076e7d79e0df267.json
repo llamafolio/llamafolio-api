@@ -1,0 +1,31 @@
+{
+  "id": "blockbank",
+  "symbol": "bbank",
+  "name": "blockbank",
+  "image": "https://assets.coingecko.com/coins/images/15081/large/blockbank.jpg.png?1696514740",
+  "current_price": 0.00085403,
+  "market_cap": 335391,
+  "market_cap_rank": 3263,
+  "fully_diluted_valuation": 340659,
+  "total_volume": 37.63,
+  "high_24h": 0.00088382,
+  "low_24h": 0.00084459,
+  "price_change_24h": -0.000019114940132522,
+  "price_change_percentage_24h": -2.18922,
+  "market_cap_change_24h": -8464.312134971085,
+  "market_cap_change_percentage_24h": -2.46159,
+  "circulating_supply": 393814409.6854076,
+  "total_supply": 400000000,
+  "max_supply": null,
+  "ath": 0.647433,
+  "ath_change_percentage": -99.86809,
+  "ath_date": "2021-05-03T15:21:37.737Z",
+  "atl": 0.00022521,
+  "atl_change_percentage": 279.21971,
+  "atl_date": "2024-04-21T18:12:11.599Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:57.759Z",
+  "platforms": {
+    "bsc": "0xf4b5470523ccd314c6b9da041076e7d79e0df267"
+  }
+}

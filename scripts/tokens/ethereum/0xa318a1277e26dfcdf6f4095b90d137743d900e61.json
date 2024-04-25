@@ -1,0 +1,31 @@
+{
+  "id": "smartaudit-ai",
+  "symbol": "audit",
+  "name": "SmartAudit AI",
+  "image": "https://assets.coingecko.com/coins/images/35567/large/SmartAudit_AI.png?1709183104",
+  "current_price": 0.00227453,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 22745,
+  "total_volume": 3.09,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.254189,
+  "ath_change_percentage": -99.10518,
+  "ath_date": "2024-02-29T15:20:26.872Z",
+  "atl": 0.00225025,
+  "atl_change_percentage": 1.07917,
+  "atl_date": "2024-04-20T14:37:16.444Z",
+  "roi": null,
+  "last_updated": "2024-04-23T11:00:45.438Z",
+  "platforms": {
+    "ethereum": "0xa318a1277e26dfcdf6f4095b90d137743d900e61"
+  }
+}

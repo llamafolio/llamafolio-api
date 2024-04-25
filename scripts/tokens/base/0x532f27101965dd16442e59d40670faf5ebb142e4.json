@@ -1,0 +1,31 @@
+{
+  "id": "based-brett",
+  "symbol": "brett",
+  "name": "Based Brett",
+  "image": "https://assets.coingecko.com/coins/images/35529/large/1000050750.png?1709031995",
+  "current_price": 0.057636,
+  "market_cap": 490085227,
+  "market_cap_rank": 165,
+  "fully_diluted_valuation": 576570866,
+  "total_volume": 20842104,
+  "high_24h": 0.064561,
+  "low_24h": 0.057239,
+  "price_change_24h": -0.004619952716203559,
+  "price_change_percentage_24h": -7.42087,
+  "market_cap_change_24h": -38512546.89018655,
+  "market_cap_change_percentage_24h": -7.28579,
+  "circulating_supply": 8499998906.046966,
+  "total_supply": 9999998909.506966,
+  "max_supply": 9999998909.506966,
+  "ath": 0.086174,
+  "ath_change_percentage": -32.70866,
+  "ath_date": "2024-04-08T23:29:59.555Z",
+  "atl": 0.00084753,
+  "atl_change_percentage": 6742.00595,
+  "atl_date": "2024-02-29T08:40:24.951Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:58.847Z",
+  "platforms": {
+    "base": "0x532f27101965dd16442e59d40670faf5ebb142e4"
+  }
+}

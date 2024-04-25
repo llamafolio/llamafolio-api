@@ -1,0 +1,31 @@
+{
+  "id": "balancer-80-rdnt-20-weth",
+  "symbol": "dlp",
+  "name": "Balancer 80 RDNT 20 WETH",
+  "image": "missing_large.png",
+  "current_price": 1.24,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 1306.63,
+  "high_24h": 1.25,
+  "low_24h": 1.23,
+  "price_change_24h": -0.002533347904874139,
+  "price_change_percentage_24h": -0.20399,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.25,
+  "ath_change_percentage": -0.79219,
+  "ath_date": "2024-04-25T02:28:47.115Z",
+  "atl": 1.23,
+  "atl_change_percentage": 0.38052,
+  "atl_date": "2024-04-25T08:51:59.358Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:33.011Z",
+  "platforms": {
+    "arbitrum": "0x32df62dc3aed2cd6224193052ce665dc18165841"
+  }
+}

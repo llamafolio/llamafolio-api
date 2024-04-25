@@ -1,0 +1,31 @@
+{
+  "id": "dave-coin",
+  "symbol": "$dave",
+  "name": "Dave Coin",
+  "image": "https://assets.coingecko.com/coins/images/30703/large/davelogo_transparent200x200.png?1696529575",
+  "current_price": 9.62464e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 404899,
+  "total_volume": 36.83,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 420690000000000,
+  "max_supply": 420690000000000,
+  "ath": 1.3996e-8,
+  "ath_change_percentage": -93.1234,
+  "ath_date": "2023-07-17T05:10:14.836Z",
+  "atl": 6.99084e-10,
+  "atl_change_percentage": 37.67498,
+  "atl_date": "2024-02-26T13:10:59.306Z",
+  "roi": null,
+  "last_updated": "2024-04-03T10:30:10.779Z",
+  "platforms": {
+    "ethereum": "0x7f4c5447af6a96d8eeaee1d932338cfc57890dbd"
+  }
+}

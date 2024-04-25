@@ -1,0 +1,31 @@
+{
+  "id": "rbx-token",
+  "symbol": "rbx",
+  "name": "RBX",
+  "image": "https://assets.coingecko.com/coins/images/19253/large/output-onlinepngtools-9.png?1696518698",
+  "current_price": 0.0033857,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 338366,
+  "total_volume": 1036.95,
+  "high_24h": 0.00340265,
+  "low_24h": 0.00238483,
+  "price_change_24h": 0.00057296,
+  "price_change_percentage_24h": 20.37005,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.405445,
+  "ath_change_percentage": -99.16876,
+  "ath_date": "2021-10-21T10:24:37.769Z",
+  "atl": 0.00216103,
+  "atl_change_percentage": 55.95349,
+  "atl_date": "2024-04-22T12:55:33.297Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:42.243Z",
+  "platforms": {
+    "bsc": "0xace3574b8b054e074473a9bd002e5dc6dd3dff1b"
+  }
+}

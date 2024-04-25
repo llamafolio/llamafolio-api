@@ -1,0 +1,31 @@
+{
+  "id": "trillioner",
+  "symbol": "tlc",
+  "name": "Trillioner",
+  "image": "https://assets.coingecko.com/coins/images/30314/large/4_%286%29_%281%29.jpg?1696529215",
+  "current_price": 51.58,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 51552975078,
+  "total_volume": 963638,
+  "high_24h": 51.8,
+  "low_24h": 51.28,
+  "price_change_24h": -0.12311415051085106,
+  "price_change_percentage_24h": -0.23811,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 51.94,
+  "ath_change_percentage": -0.66124,
+  "ath_date": "2024-03-25T14:24:04.369Z",
+  "atl": 14,
+  "atl_change_percentage": 268.48335,
+  "atl_date": "2023-05-13T15:24:55.964Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:16:14.170Z",
+  "platforms": {
+    "bsc": "0x29a5daf6e3fdf964def07706ea1abee7ec03d021"
+  }
+}

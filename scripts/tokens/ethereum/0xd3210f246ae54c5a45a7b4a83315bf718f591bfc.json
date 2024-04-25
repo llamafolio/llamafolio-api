@@ -1,0 +1,31 @@
+{
+  "id": "arkitech",
+  "symbol": "arki",
+  "name": "ArkiTech",
+  "image": "https://assets.coingecko.com/coins/images/33426/large/200.png?1711371418",
+  "current_price": 0.140531,
+  "market_cap": 9062209,
+  "market_cap_rank": 1486,
+  "fully_diluted_valuation": 9837183,
+  "total_volume": 26175,
+  "high_24h": 0.151263,
+  "low_24h": 0.137462,
+  "price_change_24h": -0.004738762909155425,
+  "price_change_percentage_24h": -3.26204,
+  "market_cap_change_24h": -305581.00349134766,
+  "market_cap_change_percentage_24h": -3.26204,
+  "circulating_supply": 64485396.1570769,
+  "total_supply": 70000000,
+  "max_supply": 70000000,
+  "ath": 0.350797,
+  "ath_change_percentage": -59.97226,
+  "ath_date": "2024-04-04T15:10:35.776Z",
+  "atl": 0.01518484,
+  "atl_change_percentage": 824.71249,
+  "atl_date": "2023-12-26T08:15:12.928Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:44.730Z",
+  "platforms": {
+    "ethereum": "0xd3210f246ae54c5a45a7b4a83315bf718f591bfc"
+  }
+}

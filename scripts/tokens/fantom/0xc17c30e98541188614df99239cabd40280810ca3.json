@@ -1,0 +1,31 @@
+{
+  "id": "everrise",
+  "symbol": "rise",
+  "name": "EverRise",
+  "image": "https://assets.coingecko.com/coins/images/16367/large/Logo_EverRise_Icon_logo.png?1696515966",
+  "current_price": 0.00010205,
+  "market_cap": 7292528,
+  "market_cap_rank": 1594,
+  "fully_diluted_valuation": 7301310,
+  "total_volume": 120.81,
+  "high_24h": 0.00010703,
+  "low_24h": 0.00009877,
+  "price_change_24h": -0.000004622415435779,
+  "price_change_percentage_24h": -4.33321,
+  "market_cap_change_24h": -342336.13794168364,
+  "market_cap_change_percentage_24h": -4.48385,
+  "circulating_supply": 71531888417,
+  "total_supply": 71618033988,
+  "max_supply": 71618033988,
+  "ath": 0.00189735,
+  "ath_change_percentage": -94.62633,
+  "ath_date": "2021-12-03T01:12:36.731Z",
+  "atl": 2.758e-9,
+  "atl_change_percentage": 3696342.4481,
+  "atl_date": "2021-11-27T07:41:46.391Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:32.949Z",
+  "platforms": {
+    "fantom": "0xc17c30e98541188614df99239cabd40280810ca3"
+  }
+}

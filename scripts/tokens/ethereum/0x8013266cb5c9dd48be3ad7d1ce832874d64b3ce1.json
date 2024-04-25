@@ -1,0 +1,31 @@
+{
+  "id": "boop",
+  "symbol": "boop",
+  "name": "Boop",
+  "image": "https://assets.coingecko.com/coins/images/27918/large/boop.png?1696526938",
+  "current_price": 0.052368,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 91.38,
+  "high_24h": 0.054598,
+  "low_24h": 0.052,
+  "price_change_24h": -0.00148083374009992,
+  "price_change_percentage_24h": -2.74998,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.631798,
+  "ath_change_percentage": -91.75646,
+  "ath_date": "2023-03-31T23:51:39.904Z",
+  "atl": 0.042116,
+  "atl_change_percentage": 23.66445,
+  "atl_date": "2022-12-22T05:40:58.345Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:42.722Z",
+  "platforms": {
+    "ethereum": "0x8013266cb5c9dd48be3ad7d1ce832874d64b3ce1"
+  }
+}

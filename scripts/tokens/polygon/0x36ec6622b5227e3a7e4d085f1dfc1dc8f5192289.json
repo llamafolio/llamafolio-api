@@ -1,0 +1,31 @@
+{
+  "id": "greenercoin",
+  "symbol": "gnc",
+  "name": "Greenercoin",
+  "image": "https://assets.coingecko.com/coins/images/33977/large/200_X_200_GNC_LOGO.jpg?1703578885",
+  "current_price": 4.02,
+  "market_cap": 4004566,
+  "market_cap_rank": 1904,
+  "fully_diluted_valuation": 200228295,
+  "total_volume": 1137675,
+  "high_24h": 4.04,
+  "low_24h": 4,
+  "price_change_24h": 0.0041032,
+  "price_change_percentage_24h": 0.10208,
+  "market_cap_change_24h": -28779.96335778199,
+  "market_cap_change_percentage_24h": -0.71355,
+  "circulating_supply": 1000000,
+  "total_supply": 50000000,
+  "max_supply": 50000000,
+  "ath": 4.66,
+  "ath_change_percentage": -13.31844,
+  "ath_date": "2024-04-23T03:43:42.540Z",
+  "atl": 0.837067,
+  "atl_change_percentage": 382.27983,
+  "atl_date": "2024-03-24T13:17:16.806Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:12.491Z",
+  "platforms": {
+    "polygon": "0x36ec6622b5227e3a7e4d085f1dfc1dc8f5192289"
+  }
+}

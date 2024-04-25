@@ -1,0 +1,31 @@
+{
+  "id": "dejitaru-tsuka",
+  "symbol": "tsuka",
+  "name": "Dejitaru Tsuka",
+  "image": "https://assets.coingecko.com/coins/images/26405/large/Dejitaru_Tsuka_Logo.jpg?1696525481",
+  "current_price": 0.01915656,
+  "market_cap": 19151852,
+  "market_cap_rank": 1132,
+  "fully_diluted_valuation": 19151852,
+  "total_volume": 368738,
+  "high_24h": 0.0199223,
+  "low_24h": 0.01885757,
+  "price_change_24h": 0.00026136,
+  "price_change_percentage_24h": 1.38321,
+  "market_cap_change_24h": 258132,
+  "market_cap_change_percentage_24h": 1.36623,
+  "circulating_supply": 1000000000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.15717,
+  "ath_change_percentage": -87.66179,
+  "ath_date": "2023-02-15T22:35:25.938Z",
+  "atl": 0.01255154,
+  "atl_change_percentage": 54.49915,
+  "atl_date": "2022-07-29T01:15:11.255Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:14.464Z",
+  "platforms": {
+    "ethereum": "0xc5fb36dd2fb59d3b98deff88425a3f425ee469ed"
+  }
+}

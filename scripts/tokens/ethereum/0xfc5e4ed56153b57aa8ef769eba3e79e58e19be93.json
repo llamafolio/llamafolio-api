@@ -1,0 +1,31 @@
+{
+  "id": "solav",
+  "symbol": "solav",
+  "name": "SOLAV",
+  "image": "https://assets.coingecko.com/coins/images/34483/large/White_Background.png?1705042967",
+  "current_price": 0.00091266,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 895671,
+  "total_volume": 147050,
+  "high_24h": 0.00134716,
+  "low_24h": 0.00064089,
+  "price_change_24h": -0.000434496828291432,
+  "price_change_percentage_24h": -32.25277,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00899074,
+  "ath_change_percentage": -87.8134,
+  "ath_date": "2024-01-20T18:23:54.213Z",
+  "atl": 0.00064089,
+  "atl_change_percentage": 70.95941,
+  "atl_date": "2024-04-25T06:38:37.460Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:27.642Z",
+  "platforms": {
+    "ethereum": "0xfc5e4ed56153b57aa8ef769eba3e79e58e19be93"
+  }
+}

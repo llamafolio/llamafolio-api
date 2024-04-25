@@ -1,0 +1,31 @@
+{
+  "id": "gourmetgalaxy",
+  "symbol": "gum",
+  "name": "Gourmet Galaxy",
+  "image": "https://assets.coingecko.com/coins/images/13846/large/gum.png?1696513592",
+  "current_price": 0.00929694,
+  "market_cap": 30864,
+  "market_cap_rank": 4093,
+  "fully_diluted_valuation": 185805,
+  "total_volume": 11560.69,
+  "high_24h": 0.00943888,
+  "low_24h": 0.00927748,
+  "price_change_24h": -0.000022572100725033,
+  "price_change_percentage_24h": -0.2422,
+  "market_cap_change_24h": -102.93977692209228,
+  "market_cap_change_percentage_24h": -0.33242,
+  "circulating_supply": 3322141.4784610313,
+  "total_supply": 20000000,
+  "max_supply": 20000000,
+  "ath": 3.82,
+  "ath_change_percentage": -99.75691,
+  "ath_date": "2021-03-31T14:28:19.961Z",
+  "atl": 0.00699733,
+  "atl_change_percentage": 32.77335,
+  "atl_date": "2023-08-24T14:40:59.358Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:06:11.749Z",
+  "platforms": {
+    "bsc": "0xc53708664b99df348dd27c3ac0759d2da9c40462"
+  }
+}

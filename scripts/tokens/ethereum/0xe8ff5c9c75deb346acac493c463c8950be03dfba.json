@@ -1,0 +1,31 @@
+{
+  "id": "vibe",
+  "symbol": "vibe",
+  "name": "VIBE",
+  "image": "https://assets.coingecko.com/coins/images/948/large/vibe.png?1696502064",
+  "current_price": 0.0000014,
+  "market_cap": 262.11,
+  "market_cap_rank": 4292,
+  "fully_diluted_valuation": 373.98,
+  "total_volume": 0,
+  "high_24h": 0.0000014,
+  "low_24h": 0.0000014,
+  "price_change_24h": 0,
+  "price_change_percentage_24h": 0,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 187131712,
+  "total_supply": 267000000,
+  "max_supply": null,
+  "ath": 2.25,
+  "ath_change_percentage": -99.99994,
+  "ath_date": "2018-01-10T00:00:00.000Z",
+  "atl": 2.29956e-7,
+  "atl_change_percentage": 509.10702,
+  "atl_date": "2023-12-01T06:30:52.988Z",
+  "roi": null,
+  "last_updated": "2024-04-24T22:56:51.073Z",
+  "platforms": {
+    "ethereum": "0xe8ff5c9c75deb346acac493c463c8950be03dfba"
+  }
+}

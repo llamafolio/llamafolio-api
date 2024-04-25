@@ -1,0 +1,31 @@
+{
+  "id": "fitmint",
+  "symbol": "fitt",
+  "name": "Fitmint",
+  "image": "https://assets.coingecko.com/coins/images/27021/large/logo_black.png?1696526073",
+  "current_price": 0.00105786,
+  "market_cap": 191830,
+  "market_cap_rank": 3517,
+  "fully_diluted_valuation": 10581613,
+  "total_volume": 114.83,
+  "high_24h": 0.00107267,
+  "low_24h": 0.0010579,
+  "price_change_24h": -0.000002907373314394,
+  "price_change_percentage_24h": -0.27408,
+  "market_cap_change_24h": -443.1050256896415,
+  "market_cap_change_percentage_24h": -0.23046,
+  "circulating_supply": 181286580.9240937,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.0058737,
+  "ath_change_percentage": -81.98553,
+  "ath_date": "2022-10-15T09:01:26.389Z",
+  "atl": 0.00085326,
+  "atl_change_percentage": 24.00841,
+  "atl_date": "2023-03-11T08:21:39.025Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:18.823Z",
+  "platforms": {
+    "polygon": "0x656bf6767fa8863ac0dd0b7d2a26602b838a2e70"
+  }
+}

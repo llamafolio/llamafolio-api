@@ -1,0 +1,31 @@
+{
+  "id": "sideshift-token",
+  "symbol": "xai",
+  "name": "SideShift",
+  "image": "https://assets.coingecko.com/coins/images/15719/large/sideshift-icon_3x.png?1696515346",
+  "current_price": 0.18436,
+  "market_cap": 24588640,
+  "market_cap_rank": 1013,
+  "fully_diluted_valuation": 38613236,
+  "total_volume": 11829.16,
+  "high_24h": 0.185469,
+  "low_24h": 0.182869,
+  "price_change_24h": 0.00007381,
+  "price_change_percentage_24h": 0.04005,
+  "market_cap_change_24h": 11253.86,
+  "market_cap_change_percentage_24h": 0.04579,
+  "circulating_supply": 133726505.55,
+  "total_supply": 209999943.997149,
+  "max_supply": null,
+  "ath": 1.13,
+  "ath_change_percentage": -83.67236,
+  "ath_date": "2024-01-15T16:40:14.437Z",
+  "atl": 0.054188,
+  "atl_change_percentage": 239.32294,
+  "atl_date": "2023-06-01T17:15:01.010Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:49.172Z",
+  "platforms": {
+    "ethereum": "0x35e78b3982e87ecfd5b3f3265b601c046cdbe232"
+  }
+}

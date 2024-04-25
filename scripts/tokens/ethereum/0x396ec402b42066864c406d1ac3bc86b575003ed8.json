@@ -1,0 +1,31 @@
+{
+  "id": "buying",
+  "symbol": "buy",
+  "name": "Buying.com",
+  "image": "https://assets.coingecko.com/coins/images/5290/large/buying_200x200.png?1696505788",
+  "current_price": 0.02358353,
+  "market_cap": 14464815,
+  "market_cap_rank": 1266,
+  "fully_diluted_valuation": 23235630,
+  "total_volume": 225920,
+  "high_24h": 0.02545196,
+  "low_24h": 0.02347999,
+  "price_change_24h": -0.001868430813088139,
+  "price_change_percentage_24h": -7.34101,
+  "market_cap_change_24h": -1157644.7022281457,
+  "market_cap_change_percentage_24h": -7.41013,
+  "circulating_supply": 614310003.59,
+  "total_supply": 986800000,
+  "max_supply": 1000000000,
+  "ath": 0.106518,
+  "ath_change_percentage": -77.91342,
+  "ath_date": "2021-08-14T05:39:12.233Z",
+  "atl": 1.42752e-10,
+  "atl_change_percentage": 16480464001.8348,
+  "atl_date": "2023-11-02T05:40:51.828Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:04.004Z",
+  "platforms": {
+    "ethereum": "0x396ec402b42066864c406d1ac3bc86b575003ed8"
+  }
+}

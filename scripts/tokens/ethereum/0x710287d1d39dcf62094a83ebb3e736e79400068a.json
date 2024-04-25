@@ -1,0 +1,31 @@
+{
+  "id": "noisegpt",
+  "symbol": "enqai",
+  "name": "enqAI",
+  "image": "https://assets.coingecko.com/coins/images/29908/large/icon.png?1702507913",
+  "current_price": 0.03461205,
+  "market_cap": 33677055,
+  "market_cap_rank": 854,
+  "fully_diluted_valuation": 34608881,
+  "total_volume": 267642,
+  "high_24h": 0.04254134,
+  "low_24h": 0.03460888,
+  "price_change_24h": -0.007151294659668559,
+  "price_change_percentage_24h": -17.12337,
+  "market_cap_change_24h": -6972440.608187504,
+  "market_cap_change_percentage_24h": -17.15259,
+  "circulating_supply": 973075517.8171129,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.141666,
+  "ath_change_percentage": -74.96073,
+  "ath_date": "2024-03-09T03:54:37.822Z",
+  "atl": 0.00032669,
+  "atl_change_percentage": 10758.09039,
+  "atl_date": "2023-05-03T02:21:02.079Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:35.580Z",
+  "platforms": {
+    "ethereum": "0x710287d1d39dcf62094a83ebb3e736e79400068a"
+  }
+}

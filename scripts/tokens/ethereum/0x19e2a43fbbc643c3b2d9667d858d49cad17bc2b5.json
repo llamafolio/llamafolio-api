@@ -1,0 +1,31 @@
+{
+  "id": "bns-token",
+  "symbol": "bns",
+  "name": "BNS",
+  "image": "https://assets.coingecko.com/coins/images/25150/large/bitbns_logo.png?1696524299",
+  "current_price": 0.00023996,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 59989733,
+  "total_volume": 87.7,
+  "high_24h": 0.00024036,
+  "low_24h": 0.00023716,
+  "price_change_24h": 9.77925e-7,
+  "price_change_percentage_24h": 0.40921,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 250000000000,
+  "max_supply": 250000000000,
+  "ath": 0.03702476,
+  "ath_change_percentage": -99.35147,
+  "ath_date": "2022-12-20T06:54:44.879Z",
+  "atl": 0.00000129,
+  "atl_change_percentage": 18580.85971,
+  "atl_date": "2022-05-16T06:59:51.757Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:50.496Z",
+  "platforms": {
+    "ethereum": "0x19e2a43fbbc643c3b2d9667d858d49cad17bc2b5"
+  }
+}

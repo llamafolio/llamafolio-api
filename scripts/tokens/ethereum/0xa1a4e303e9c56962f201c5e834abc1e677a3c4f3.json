@@ -1,0 +1,31 @@
+{
+  "id": "cvnx",
+  "symbol": "cvnx",
+  "name": "CVNX",
+  "image": "https://assets.coingecko.com/coins/images/862/large/CVNX-logo.png?1696501996",
+  "current_price": 0.00668125,
+  "market_cap": 82720,
+  "market_cap_rank": 3844,
+  "fully_diluted_valuation": 100219,
+  "total_volume": 349.51,
+  "high_24h": 0.00670841,
+  "low_24h": 0.00667233,
+  "price_change_24h": -0.000007230519405074,
+  "price_change_percentage_24h": -0.1081,
+  "market_cap_change_24h": -14675.659126050567,
+  "market_cap_change_percentage_24h": -15.06811,
+  "circulating_supply": 12380890,
+  "total_supply": 15000000,
+  "max_supply": null,
+  "ath": 14.19,
+  "ath_change_percentage": -99.95291,
+  "ath_date": "2021-09-16T07:54:04.272Z",
+  "atl": 0.00058849,
+  "atl_change_percentage": 1035.32358,
+  "atl_date": "2023-05-13T07:35:02.058Z",
+  "roi": null,
+  "last_updated": "2024-04-24T20:04:09.353Z",
+  "platforms": {
+    "ethereum": "0xa1a4e303e9c56962f201c5e834abc1e677a3c4f3"
+  }
+}

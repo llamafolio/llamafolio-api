@@ -1,0 +1,31 @@
+{
+  "id": "50cent",
+  "symbol": "50c",
+  "name": "50Cent",
+  "image": "https://assets.coingecko.com/coins/images/16431/large/50cents.png?1696516026",
+  "current_price": 0.04949042,
+  "market_cap": 18520.26,
+  "market_cap_rank": 4156,
+  "fully_diluted_valuation": 18520.26,
+  "total_volume": 2.61,
+  "high_24h": 0.053166,
+  "low_24h": 0.04940674,
+  "price_change_24h": -0.003089335736779796,
+  "price_change_percentage_24h": -5.87552,
+  "market_cap_change_24h": -1218.122489616395,
+  "market_cap_change_percentage_24h": -6.17134,
+  "circulating_supply": 374219,
+  "total_supply": 374219,
+  "max_supply": null,
+  "ath": 96.73,
+  "ath_change_percentage": -99.94884,
+  "ath_date": "2021-06-19T08:26:27.715Z",
+  "atl": 0.02929201,
+  "atl_change_percentage": 68.95535,
+  "atl_date": "2022-11-10T00:41:59.568Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:52:40.656Z",
+  "platforms": {
+    "polygon": "0x0102bbfddffbd8d28d3a1b9c47017f62f42768f2"
+  }
+}

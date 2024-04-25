@@ -1,0 +1,31 @@
+{
+  "id": "houdini-swap",
+  "symbol": "lock",
+  "name": "Houdini Swap",
+  "image": "https://assets.coingecko.com/coins/images/35132/large/LOCK_Logo.png?1707443455",
+  "current_price": 0.68228,
+  "market_cap": 21607224,
+  "market_cap_rank": 1073,
+  "fully_diluted_valuation": 66924405,
+  "total_volume": 462491,
+  "high_24h": 0.734797,
+  "low_24h": 0.680482,
+  "price_change_24h": -0.039869862462435075,
+  "price_change_percentage_24h": -5.521,
+  "market_cap_change_24h": -1326170.8819908947,
+  "market_cap_change_percentage_24h": -5.78271,
+  "circulating_supply": 31746809.190003052,
+  "total_supply": 98329906.70145051,
+  "max_supply": 100000000,
+  "ath": 1.3,
+  "ath_change_percentage": -47.66395,
+  "ath_date": "2024-03-05T14:19:30.135Z",
+  "atl": 0.507455,
+  "atl_change_percentage": 34.35688,
+  "atl_date": "2024-04-13T20:24:00.905Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:51.843Z",
+  "platforms": {
+    "ethereum": "0x922d8563631b03c2c4cf817f4d18f6883aba0109"
+  }
+}

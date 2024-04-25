@@ -1,0 +1,31 @@
+{
+  "id": "aave-polygon-aave",
+  "symbol": "amaave",
+  "name": "Aave Polygon AAVE",
+  "image": "https://assets.coingecko.com/coins/images/17239/large/amAAVE_2x.png?1696516796",
+  "current_price": 89.47,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 0,
+  "high_24h": 97.06,
+  "low_24h": 88.57,
+  "price_change_24h": -6.260651042299003,
+  "price_change_percentage_24h": -6.54001,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 470.81,
+  "ath_change_percentage": -80.99699,
+  "ath_date": "2021-09-03T16:00:33.816Z",
+  "atl": 46.05,
+  "atl_change_percentage": 94.30219,
+  "atl_date": "2022-06-18T21:00:55.939Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:33.486Z",
+  "platforms": {
+    "polygon": "0x1d2a0e5ec8e5bbdca5cb219e649b565d8e5c3360"
+  }
+}

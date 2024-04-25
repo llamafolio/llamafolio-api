@@ -1,0 +1,31 @@
+{
+  "id": "floki-santa",
+  "symbol": "flokisanta",
+  "name": "Floki Santa",
+  "image": "https://assets.coingecko.com/coins/images/28535/large/XHR83fw.png?1696527528",
+  "current_price": 1.5735e-8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 15735.47,
+  "total_volume": 83.22,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000,
+  "max_supply": 1000000000000,
+  "ath": 3.43029e-7,
+  "ath_change_percentage": -95.41279,
+  "ath_date": "2022-12-20T19:03:07.481Z",
+  "atl": 1.3627e-8,
+  "atl_change_percentage": 15.473,
+  "atl_date": "2023-01-25T01:23:15.834Z",
+  "roi": null,
+  "last_updated": "2023-05-07T14:44:50.937Z",
+  "platforms": {
+    "bsc": "0xf9db7dbad683dc7868be8b03ff0f4aa25f5cc6f6"
+  }
+}

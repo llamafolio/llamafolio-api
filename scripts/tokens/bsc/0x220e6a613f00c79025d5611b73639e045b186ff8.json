@@ -1,0 +1,31 @@
+{
+  "id": "dhabicoin",
+  "symbol": "dbc",
+  "name": "Dhabicoin",
+  "image": "https://assets.coingecko.com/coins/images/22803/large/Ia0yVef.png?1696522106",
+  "current_price": 0.0000114,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 34201,
+  "total_volume": 3.53,
+  "high_24h": 0.00001153,
+  "low_24h": 0.00001136,
+  "price_change_24h": -9.8466134117e-8,
+  "price_change_percentage_24h": -0.85633,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 3000000000,
+  "max_supply": null,
+  "ath": 0.089871,
+  "ath_change_percentage": -99.98731,
+  "ath_date": "2022-01-19T11:41:17.731Z",
+  "atl": 0.00000699,
+  "atl_change_percentage": 63.07811,
+  "atl_date": "2024-01-23T15:15:59.800Z",
+  "roi": null,
+  "last_updated": "2024-04-25T00:24:27.073Z",
+  "platforms": {
+    "bsc": "0x220e6a613f00c79025d5611b73639e045b186ff8"
+  }
+}

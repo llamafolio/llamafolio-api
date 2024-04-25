@@ -1,0 +1,31 @@
+{
+  "id": "kanga-exchange",
+  "symbol": "kng",
+  "name": "Kanga Exchange",
+  "image": "https://assets.coingecko.com/coins/images/21188/large/KNG_logo-200.png?1696520564",
+  "current_price": 1.94,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 41113230,
+  "total_volume": 139569,
+  "high_24h": 1.97,
+  "low_24h": 1.93,
+  "price_change_24h": 0.00698497,
+  "price_change_percentage_24h": 0.36063,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 21000000,
+  "max_supply": 21000000,
+  "ath": 10.32,
+  "ath_change_percentage": -81.02378,
+  "ath_date": "2021-12-11T00:38:45.865Z",
+  "atl": 0.936766,
+  "atl_change_percentage": 109.08358,
+  "atl_date": "2022-07-06T14:39:22.919Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:33.973Z",
+  "platforms": {
+    "polygon": "0x17d342b29f054030a455b4191f977c3b0aa62fd9"
+  }
+}

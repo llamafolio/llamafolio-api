@@ -1,0 +1,31 @@
+{
+  "id": "42-coin",
+  "symbol": "42",
+  "name": "42-coin",
+  "image": "https://assets.coingecko.com/coins/images/1283/large/42-coin.png?1696502355",
+  "current_price": 45098,
+  "market_cap": 1892761,
+  "market_cap_rank": 2330,
+  "fully_diluted_valuation": 1892764,
+  "total_volume": 263.78,
+  "high_24h": 45584,
+  "low_24h": 43294,
+  "price_change_24h": -96.85159439637937,
+  "price_change_percentage_24h": -0.2143,
+  "market_cap_change_24h": -7663.906332704937,
+  "market_cap_change_percentage_24h": -0.40327,
+  "circulating_supply": 41.99995097,
+  "total_supply": 42,
+  "max_supply": null,
+  "ath": 805023,
+  "ath_change_percentage": -94.39849,
+  "ath_date": "2020-12-24T15:28:21.542Z",
+  "atl": 1071.62,
+  "atl_change_percentage": 4107.96422,
+  "atl_date": "2021-04-27T03:54:41.837Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:12.352Z",
+  "platforms": {
+    "bsc": "0x73cf73c2503154de4dc12067546aa9357dadaff2"
+  }
+}

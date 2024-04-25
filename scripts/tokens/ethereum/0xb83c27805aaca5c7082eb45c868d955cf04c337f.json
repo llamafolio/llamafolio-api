@@ -1,0 +1,31 @@
+{
+  "id": "jungleking-tigercoin",
+  "symbol": "tiger",
+  "name": "JungleKing TigerCoin",
+  "image": "https://assets.coingecko.com/coins/images/26494/large/jungleparty.png?1696525568",
+  "current_price": 1.53526e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 15352.57,
+  "total_volume": 24.5,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000000000,
+  "max_supply": 100000000000000,
+  "ath": 4.9912e-8,
+  "ath_change_percentage": -99.69241,
+  "ath_date": "2022-09-11T06:32:40.127Z",
+  "atl": 8.9299e-11,
+  "atl_change_percentage": 71.9238,
+  "atl_date": "2024-03-28T02:49:37.220Z",
+  "roi": null,
+  "last_updated": "2024-04-01T12:02:22.308Z",
+  "platforms": {
+    "ethereum": "0xb83c27805aaca5c7082eb45c868d955cf04c337f"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "walletnow",
+  "symbol": "wnow",
+  "name": "WalletNow",
+  "image": "https://assets.coingecko.com/coins/images/20149/large/walletnow.PNG?1696519563",
+  "current_price": 0.01058947,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 106022,
+  "total_volume": 0.02672382,
+  "high_24h": 0.01071588,
+  "low_24h": 0.0103102,
+  "price_change_24h": 0.00006989,
+  "price_change_percentage_24h": 0.66434,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.282355,
+  "ath_change_percentage": -96.25725,
+  "ath_date": "2021-11-10T22:47:52.825Z",
+  "atl": 0.00523321,
+  "atl_change_percentage": 101.93792,
+  "atl_date": "2023-12-11T02:18:40.163Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:48.296Z",
+  "platforms": {
+    "polygon": "0x5d5530eb3147152fe78d5c4bfeede054c8d1442a"
+  }
+}

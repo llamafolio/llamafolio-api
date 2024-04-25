@@ -1,0 +1,31 @@
+{
+  "id": "lndry",
+  "symbol": "lndry",
+  "name": "LNDRY",
+  "image": "https://assets.coingecko.com/coins/images/33357/large/lndry.jpeg?1701602475",
+  "current_price": 0.234935,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2340443,
+  "total_volume": 1368.39,
+  "high_24h": 0.24938,
+  "low_24h": 0.234044,
+  "price_change_24h": -0.012901938717402972,
+  "price_change_percentage_24h": -5.20582,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.415104,
+  "ath_change_percentage": -43.40332,
+  "ath_date": "2024-03-25T20:54:59.291Z",
+  "atl": 0.01949789,
+  "atl_change_percentage": 1104.92466,
+  "atl_date": "2023-12-03T17:24:52.679Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:13.243Z",
+  "platforms": {
+    "ethereum": "0x613577bfea8ba6571f6b7a86716d04c80a3fbeb4"
+  }
+}

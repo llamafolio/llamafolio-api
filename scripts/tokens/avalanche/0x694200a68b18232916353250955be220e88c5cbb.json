@@ -1,0 +1,31 @@
+{
+  "id": "kovin-segnocchi",
+  "symbol": "kovin",
+  "name": "Kovin Segnocchi",
+  "image": "https://assets.coingecko.com/coins/images/35978/large/image_%282%29.png?1710306425",
+  "current_price": 0.00001787,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1237599,
+  "total_volume": 70082,
+  "high_24h": 0.00002008,
+  "low_24h": 0.00001691,
+  "price_change_24h": -0.000002206955416456,
+  "price_change_percentage_24h": -10.99163,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 69420000000,
+  "max_supply": 69420000000,
+  "ath": 0.00006507,
+  "ath_change_percentage": -72.60265,
+  "ath_date": "2024-03-14T03:55:53.345Z",
+  "atl": 0.00001097,
+  "atl_change_percentage": 62.54422,
+  "atl_date": "2024-03-27T19:22:58.459Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:55.929Z",
+  "platforms": {
+    "avalanche": "0x694200a68b18232916353250955be220e88c5cbb"
+  }
+}

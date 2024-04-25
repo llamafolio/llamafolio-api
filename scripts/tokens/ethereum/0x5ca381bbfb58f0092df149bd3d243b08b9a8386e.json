@@ -1,0 +1,35 @@
+{
+  "id": "mxc",
+  "symbol": "mxc",
+  "name": "MXC",
+  "image": "https://assets.coingecko.com/coins/images/4604/large/M_1-modified.png?1712206949",
+  "current_price": 0.01328279,
+  "market_cap": 32381610,
+  "market_cap_rank": 879,
+  "fully_diluted_valuation": 35407746,
+  "total_volume": 2410482,
+  "high_24h": 0.0147289,
+  "low_24h": 0.01326394,
+  "price_change_24h": -0.001445578795591908,
+  "price_change_percentage_24h": -9.81493,
+  "market_cap_change_24h": -3521485.933823906,
+  "market_cap_change_percentage_24h": -9.80831,
+  "circulating_supply": 2437203515.4925466,
+  "total_supply": 2664965801,
+  "max_supply": null,
+  "ath": 0.133537,
+  "ath_change_percentage": -90.05295,
+  "ath_date": "2022-01-19T12:50:35.384Z",
+  "atl": 0.001109,
+  "atl_change_percentage": 1097.74722,
+  "atl_date": "2019-11-25T05:42:37.653Z",
+  "roi": {
+    "times": -0.114480847273136,
+    "currency": "usd",
+    "percentage": -11.4480847273136
+  },
+  "last_updated": "2024-04-25T09:03:55.271Z",
+  "platforms": {
+    "ethereum": "0x5ca381bbfb58f0092df149bd3d243b08b9a8386e"
+  }
+}

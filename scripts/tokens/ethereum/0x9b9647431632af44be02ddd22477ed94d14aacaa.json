@@ -1,0 +1,31 @@
+{
+  "id": "kok",
+  "symbol": "kok",
+  "name": "KOK",
+  "image": "https://assets.coingecko.com/coins/images/10502/large/logo_navy.png?1696510490",
+  "current_price": 0.00396399,
+  "market_cap": 422620,
+  "market_cap_rank": 3152,
+  "fully_diluted_valuation": 19687256,
+  "total_volume": 108434,
+  "high_24h": 0.00478165,
+  "low_24h": 0.00386748,
+  "price_change_24h": -0.000178375614280557,
+  "price_change_percentage_24h": -4.30613,
+  "market_cap_change_24h": -20837.988219431893,
+  "market_cap_change_percentage_24h": -4.69898,
+  "circulating_supply": 107333422,
+  "total_supply": 5000000000,
+  "max_supply": 5000000000,
+  "ath": 6.83,
+  "ath_change_percentage": -99.94171,
+  "ath_date": "2022-02-26T09:10:21.746Z",
+  "atl": 0.00276882,
+  "atl_change_percentage": 43.81169,
+  "atl_date": "2024-04-13T20:30:31.058Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:24.122Z",
+  "platforms": {
+    "ethereum": "0x9b9647431632af44be02ddd22477ed94d14aacaa"
+  }
+}

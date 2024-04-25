@@ -1,0 +1,31 @@
+{
+  "id": "leash",
+  "symbol": "leash",
+  "name": "Doge Killer",
+  "image": "https://assets.coingecko.com/coins/images/15802/large/Leash.png?1696515425",
+  "current_price": 402.14,
+  "market_cap": 43244251,
+  "market_cap_rank": 754,
+  "fully_diluted_valuation": 43254972,
+  "total_volume": 2075762,
+  "high_24h": 431.44,
+  "low_24h": 397.39,
+  "price_change_24h": -28.78071485793231,
+  "price_change_percentage_24h": -6.6789,
+  "market_cap_change_24h": -3088940.5748486444,
+  "market_cap_change_percentage_24h": -6.6668,
+  "circulating_supply": 107526.34318670128,
+  "total_supply": 107553,
+  "max_supply": 107647,
+  "ath": 4528.43,
+  "ath_change_percentage": -91.12617,
+  "ath_date": "2021-06-28T21:16:01.787Z",
+  "atl": 246.37,
+  "atl_change_percentage": 63.10922,
+  "atl_date": "2024-02-01T03:12:05.196Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:06.755Z",
+  "platforms": {
+    "ethereum": "0x27c70cd1946795b66be9d954418546998b546634"
+  }
+}

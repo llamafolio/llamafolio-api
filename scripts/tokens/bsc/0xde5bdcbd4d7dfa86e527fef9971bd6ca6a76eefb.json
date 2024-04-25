@@ -1,0 +1,31 @@
+{
+  "id": "ivendpay",
+  "symbol": "ivpay",
+  "name": "ivendPay",
+  "image": "https://assets.coingecko.com/coins/images/33261/large/11fv0cal_400x400.jpg?1701618204",
+  "current_price": 0.04710182,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 46944,
+  "total_volume": 736686,
+  "high_24h": 0.04975542,
+  "low_24h": 0.04667824,
+  "price_change_24h": -0.002407832851090426,
+  "price_change_percentage_24h": -4.86336,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000,
+  "max_supply": 800000,
+  "ath": 0.094142,
+  "ath_change_percentage": -50.14616,
+  "ath_date": "2024-04-03T13:36:00.154Z",
+  "atl": 0.0423906,
+  "atl_change_percentage": 10.71666,
+  "atl_date": "2024-04-18T08:11:38.215Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:42.369Z",
+  "platforms": {
+    "bsc": "0xde5bdcbd4d7dfa86e527fef9971bd6ca6a76eefb"
+  }
+}

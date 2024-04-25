@@ -1,0 +1,31 @@
+{
+  "id": "pokedx",
+  "symbol": "pdx",
+  "name": "PokeDX",
+  "image": "https://assets.coingecko.com/coins/images/19075/large/200x200_%2834%29.png?1696518524",
+  "current_price": 0.00594576,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 178373,
+  "total_volume": 2.08,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 30000000,
+  "max_supply": 30000000,
+  "ath": 0.312338,
+  "ath_change_percentage": -98.09637,
+  "ath_date": "2021-11-02T22:36:16.210Z",
+  "atl": 0.00371759,
+  "atl_change_percentage": 59.9358,
+  "atl_date": "2023-06-14T21:03:04.990Z",
+  "roi": null,
+  "last_updated": "2024-04-19T06:50:07.510Z",
+  "platforms": {
+    "bsc": "0x43a0c5eb1763a211aa3c05849a617f2ee0452767"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "the-three-kingdoms",
+  "symbol": "ttk",
+  "name": "The Three Kingdoms",
+  "image": "https://assets.coingecko.com/coins/images/18948/large/TTK_-_Square_Icon_01.png?1696518404",
+  "current_price": 0.00266494,
+  "market_cap": 2158127,
+  "market_cap_rank": 2252,
+  "fully_diluted_valuation": 2685686,
+  "total_volume": 10813.71,
+  "high_24h": 0.00279596,
+  "low_24h": 0.00224439,
+  "price_change_24h": 0.00038508,
+  "price_change_percentage_24h": 16.89071,
+  "market_cap_change_24h": 326942,
+  "market_cap_change_percentage_24h": 17.85409,
+  "circulating_supply": 803566437.874027,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.601969,
+  "ath_change_percentage": -99.55552,
+  "ath_date": "2021-10-13T12:08:47.548Z",
+  "atl": 0.00021908,
+  "atl_change_percentage": 1121.29872,
+  "atl_date": "2023-06-25T04:08:36.459Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:44.147Z",
+  "platforms": {
+    "bsc": "0x39703a67bac0e39f9244d97f4c842d15fbad9c1f"
+  }
+}

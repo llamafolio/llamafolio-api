@@ -1,0 +1,35 @@
+{
+  "id": "telcoin",
+  "symbol": "tel",
+  "name": "Telcoin",
+  "image": "https://assets.coingecko.com/coins/images/1899/large/tel.png?1696502892",
+  "current_price": 0.00293268,
+  "market_cap": 228164599,
+  "market_cap_rank": 274,
+  "fully_diluted_valuation": 293237788,
+  "total_volume": 1045886,
+  "high_24h": 0.0031781,
+  "low_24h": 0.00291828,
+  "price_change_24h": -0.000221384023220296,
+  "price_change_percentage_24h": -7.019,
+  "market_cap_change_24h": -17264914.72795376,
+  "market_cap_change_percentage_24h": -7.03457,
+  "circulating_supply": 77808730200.74,
+  "total_supply": 100000000000,
+  "max_supply": null,
+  "ath": 0.064483,
+  "ath_change_percentage": -95.45083,
+  "ath_date": "2021-05-11T00:32:24.043Z",
+  "atl": 0.00006474,
+  "atl_change_percentage": 4431.34869,
+  "atl_date": "2020-03-13T02:24:47.992Z",
+  "roi": {
+    "times": 1.932684227463715,
+    "currency": "usd",
+    "percentage": 193.2684227463715
+  },
+  "last_updated": "2024-04-25T08:55:53.587Z",
+  "platforms": {
+    "ethereum": "0x467bccd9d29f223bce8043b84e8c8b282827790f"
+  }
+}

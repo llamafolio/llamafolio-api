@@ -1,0 +1,31 @@
+{
+  "id": "contentbox",
+  "symbol": "box",
+  "name": "ContentBox",
+  "image": "https://assets.coingecko.com/coins/images/4929/large/contentbox.png?1696505470",
+  "current_price": 0.00018228,
+  "market_cap": 169022,
+  "market_cap_rank": 3575,
+  "fully_diluted_valuation": 546095,
+  "total_volume": 102662,
+  "high_24h": 0.00019819,
+  "low_24h": 0.00018197,
+  "price_change_24h": -0.000011754028259503,
+  "price_change_percentage_24h": -6.05764,
+  "market_cap_change_24h": -11332.418771727913,
+  "market_cap_change_percentage_24h": -6.28341,
+  "circulating_supply": 928531445.34,
+  "total_supply": 3000000000,
+  "max_supply": null,
+  "ath": 0.03951655,
+  "ath_change_percentage": -99.53926,
+  "ath_date": "2019-07-13T16:30:30.484Z",
+  "atl": 0.00011103,
+  "atl_change_percentage": 63.97464,
+  "atl_date": "2023-08-28T23:14:12.721Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:32.211Z",
+  "platforms": {
+    "ethereum": "0x63f584fa56e60e4d0fe8802b27c7e6e3b33e007f"
+  }
+}

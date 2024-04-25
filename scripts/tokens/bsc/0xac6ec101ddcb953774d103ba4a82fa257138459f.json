@@ -1,0 +1,31 @@
+{
+  "id": "metarun",
+  "symbol": "mrun",
+  "name": "Metarun",
+  "image": "https://assets.coingecko.com/coins/images/24219/large/GDgQSjgZ_400x400.jpg?1696523405",
+  "current_price": 0.00134829,
+  "market_cap": 475246,
+  "market_cap_rank": 3088,
+  "fully_diluted_valuation": 1348288,
+  "total_volume": 656.74,
+  "high_24h": 0.00138348,
+  "low_24h": 0.00132328,
+  "price_change_24h": -0.000010939714979379,
+  "price_change_percentage_24h": -0.80485,
+  "market_cap_change_24h": -4965.167309647542,
+  "market_cap_change_percentage_24h": -1.03396,
+  "circulating_supply": 352480897.5733,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.03280047,
+  "ath_change_percentage": -95.88943,
+  "ath_date": "2022-03-10T22:50:12.737Z",
+  "atl": 0.00002199,
+  "atl_change_percentage": 6032.50813,
+  "atl_date": "2024-02-29T14:45:25.513Z",
+  "roi": null,
+  "last_updated": "2024-04-25T07:31:43.811Z",
+  "platforms": {
+    "bsc": "0xac6ec101ddcb953774d103ba4a82fa257138459f"
+  }
+}

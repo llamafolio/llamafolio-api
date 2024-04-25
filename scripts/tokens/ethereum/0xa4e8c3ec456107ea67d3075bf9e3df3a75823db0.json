@@ -1,0 +1,35 @@
+{
+  "id": "loom-network",
+  "symbol": "loomold",
+  "name": "Loom Network (OLD)",
+  "image": "https://assets.coingecko.com/coins/images/3387/large/1_K76UVoLq-FOL7l-_Fag-Qw_2x.png?1696504085",
+  "current_price": 0.080347,
+  "market_cap": 66843023,
+  "market_cap_rank": 596,
+  "fully_diluted_valuation": 80155722,
+  "total_volume": 457187,
+  "high_24h": 0.088239,
+  "low_24h": 0.080156,
+  "price_change_24h": -0.007134965379040389,
+  "price_change_percentage_24h": -8.15589,
+  "market_cap_change_24h": -6222942.4434814155,
+  "market_cap_change_percentage_24h": -8.51688,
+  "circulating_supply": 833914552,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.772485,
+  "ath_change_percentage": -89.59479,
+  "ath_date": "2018-05-04T02:54:44.763Z",
+  "atl": 0.00786348,
+  "atl_change_percentage": 922.17677,
+  "atl_date": "2020-03-13T02:29:21.252Z",
+  "roi": {
+    "times": 0.057202203511886054,
+    "currency": "usd",
+    "percentage": 5.720220351188606
+  },
+  "last_updated": "2024-04-25T08:58:55.747Z",
+  "platforms": {
+    "ethereum": "0xa4e8c3ec456107ea67d3075bf9e3df3a75823db0"
+  }
+}

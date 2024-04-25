@@ -1,0 +1,31 @@
+{
+  "id": "ptokens-btc",
+  "symbol": "pbtc",
+  "name": "pTokens BTC [OLD]",
+  "image": "https://assets.coingecko.com/coins/images/10805/large/J51iIea.png?1696510764",
+  "current_price": 2863.35,
+  "market_cap": 37888,
+  "market_cap_rank": 4050,
+  "fully_diluted_valuation": 37888,
+  "total_volume": 769.23,
+  "high_24h": 65403,
+  "low_24h": 2833.07,
+  "price_change_24h": -62469.376256828575,
+  "price_change_percentage_24h": -95.61728,
+  "market_cap_change_24h": -824821.3304577857,
+  "market_cap_change_percentage_24h": -95.6083,
+  "circulating_supply": 13.2416153633295,
+  "total_supply": 13.2416153633295,
+  "max_supply": 13.2416153633295,
+  "ath": 5384182,
+  "ath_change_percentage": -99.94686,
+  "ath_date": "2020-04-21T00:47:07.250Z",
+  "atl": 2833.07,
+  "atl_change_percentage": 0.99786,
+  "atl_date": "2024-04-25T02:05:14.311Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:26.317Z",
+  "platforms": {
+    "ethereum": "0x5228a22e72ccc52d415ecfd199f99d0665e7733b"
+  }
+}

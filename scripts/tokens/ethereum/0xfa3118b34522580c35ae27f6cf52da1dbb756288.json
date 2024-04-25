@@ -1,0 +1,31 @@
+{
+  "id": "linkeye",
+  "symbol": "let",
+  "name": "Linkeye",
+  "image": "https://assets.coingecko.com/coins/images/1814/large/linkeye.png?1696502815",
+  "current_price": 0.00191438,
+  "market_cap": 1192902,
+  "market_cap_rank": 2583,
+  "fully_diluted_valuation": 1911564,
+  "total_volume": 556721,
+  "high_24h": 0.00200089,
+  "low_24h": 0.00190693,
+  "price_change_24h": -0.00008047559558659,
+  "price_change_percentage_24h": -4.03416,
+  "market_cap_change_24h": -52295.34976259945,
+  "market_cap_change_percentage_24h": -4.19977,
+  "circulating_supply": 624044958.49031,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.103824,
+  "ath_change_percentage": -98.15613,
+  "ath_date": "2018-02-03T00:05:29.660Z",
+  "atl": 0.00053385,
+  "atl_change_percentage": 258.59845,
+  "atl_date": "2022-11-25T19:21:17.032Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:39.131Z",
+  "platforms": {
+    "ethereum": "0xfa3118b34522580c35ae27f6cf52da1dbb756288"
+  }
+}

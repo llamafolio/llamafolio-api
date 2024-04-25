@@ -1,0 +1,31 @@
+{
+  "id": "gas-dao",
+  "symbol": "gas",
+  "name": "Gas DAO",
+  "image": "https://assets.coingecko.com/coins/images/22086/large/SjrgK6sf_400x400.jpg?1696521429",
+  "current_price": 6.68338e-7,
+  "market_cap": 190190,
+  "market_cap_rank": 3523,
+  "fully_diluted_valuation": 663810,
+  "total_volume": 32037,
+  "high_24h": 6.88346e-7,
+  "low_24h": 6.46457e-7,
+  "price_change_24h": 3.667e-9,
+  "price_change_percentage_24h": 0.55174,
+  "market_cap_change_24h": 1834.06,
+  "market_cap_change_percentage_24h": 0.97372,
+  "circulating_supply": 286513093451.82007,
+  "total_supply": 1000000000000,
+  "max_supply": 1000000000000,
+  "ath": 0.0005498,
+  "ath_change_percentage": -99.87829,
+  "ath_date": "2021-12-29T08:25:32.034Z",
+  "atl": 4.86617e-7,
+  "atl_change_percentage": 37.51355,
+  "atl_date": "2023-09-20T09:20:19.295Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:20.316Z",
+  "platforms": {
+    "ethereum": "0x6bba316c48b49bd1eac44573c5c871ff02958469"
+  }
+}

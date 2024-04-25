@@ -1,0 +1,35 @@
+{
+  "id": "chromaway",
+  "symbol": "chr",
+  "name": "Chromia",
+  "image": "https://assets.coingecko.com/coins/images/5000/large/Chromia.png?1696505533",
+  "current_price": 0.307407,
+  "market_cap": 249733197,
+  "market_cap_rank": 256,
+  "fully_diluted_valuation": 249733197,
+  "total_volume": 13117157,
+  "high_24h": 0.33665,
+  "low_24h": 0.306019,
+  "price_change_24h": -0.026482232618259216,
+  "price_change_percentage_24h": -7.93144,
+  "market_cap_change_24h": -21236286.40233597,
+  "market_cap_change_percentage_24h": -7.83715,
+  "circulating_supply": 812434439.326204,
+  "total_supply": 812434439.326204,
+  "max_supply": 978064789,
+  "ath": 1.49,
+  "ath_change_percentage": -79.39451,
+  "ath_date": "2021-11-20T09:59:59.379Z",
+  "atl": 0.00874003,
+  "atl_change_percentage": 3414.16948,
+  "atl_date": "2020-03-13T02:25:03.256Z",
+  "roi": {
+    "times": 5.148145478390618,
+    "currency": "usd",
+    "percentage": 514.8145478390618
+  },
+  "last_updated": "2024-04-25T08:55:34.365Z",
+  "platforms": {
+    "ethereum": "0x8a2279d4a90b6fe1c4b30fa660cc9f926797baa2"
+  }
+}

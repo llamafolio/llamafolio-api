@@ -1,0 +1,31 @@
+{
+  "id": "jasmycoin",
+  "symbol": "jasmy",
+  "name": "JasmyCoin",
+  "image": "https://assets.coingecko.com/coins/images/13876/large/JASMY200x200.jpg?1696513620",
+  "current_price": 0.01874376,
+  "market_cap": 907572864,
+  "market_cap_rank": 106,
+  "fully_diluted_valuation": 937188005,
+  "total_volume": 56788747,
+  "high_24h": 0.02085231,
+  "low_24h": 0.01862736,
+  "price_change_24h": -0.001650465340480058,
+  "price_change_percentage_24h": -8.09281,
+  "market_cap_change_24h": -81570356.30196416,
+  "market_cap_change_percentage_24h": -8.24657,
+  "circulating_supply": 48419999999.3058,
+  "total_supply": 50000000000,
+  "max_supply": 50000000000,
+  "ath": 4.79,
+  "ath_change_percentage": -99.60841,
+  "ath_date": "2021-02-16T03:53:32.207Z",
+  "atl": 0.00275026,
+  "atl_change_percentage": 582.02079,
+  "atl_date": "2022-12-29T20:41:09.113Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:46.804Z",
+  "platforms": {
+    "ethereum": "0x7420b4b9a0110cdc71fb720908340c03f9bc03ec"
+  }
+}

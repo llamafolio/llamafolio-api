@@ -1,0 +1,31 @@
+{
+  "id": "rainbow-token-2",
+  "symbol": "rbw",
+  "name": "Rainbow Token",
+  "image": "https://assets.coingecko.com/coins/images/24498/large/icon_rbw.png?1696523678",
+  "current_price": 0.0443907,
+  "market_cap": 10887962,
+  "market_cap_rank": 1391,
+  "fully_diluted_valuation": 44365917,
+  "total_volume": 184452,
+  "high_24h": 0.04833641,
+  "low_24h": 0.04430498,
+  "price_change_24h": -0.003456087918251055,
+  "price_change_percentage_24h": -7.22324,
+  "market_cap_change_24h": -863680.2340788692,
+  "market_cap_change_percentage_24h": -7.34944,
+  "circulating_supply": 245412749.83053246,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 3.12,
+  "ath_change_percentage": -98.5772,
+  "ath_date": "2022-04-02T12:43:17.241Z",
+  "atl": 0.0102991,
+  "atl_change_percentage": 330.46352,
+  "atl_date": "2023-11-19T15:10:24.847Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:06.662Z",
+  "platforms": {
+    "polygon": "0x431cd3c9ac9fc73644bf68bf5691f4b83f9e104f"
+  }
+}

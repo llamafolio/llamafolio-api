@@ -1,0 +1,31 @@
+{
+  "id": "nifty-league",
+  "symbol": "nftl",
+  "name": "Nifty League",
+  "image": "https://assets.coingecko.com/coins/images/19224/large/NFTL-256x256.png?1696518671",
+  "current_price": 0.00147268,
+  "market_cap": 993370,
+  "market_cap_rank": 2688,
+  "fully_diluted_valuation": 1187861,
+  "total_volume": 69.02,
+  "high_24h": 0.00153812,
+  "low_24h": 0.00146357,
+  "price_change_24h": -0.000048239917992917,
+  "price_change_percentage_24h": -3.17175,
+  "market_cap_change_24h": -34683.44370651501,
+  "market_cap_change_percentage_24h": -3.3737,
+  "circulating_supply": 675641824.945835,
+  "total_supply": 807925191.273549,
+  "max_supply": 1000000000,
+  "ath": 0.072468,
+  "ath_change_percentage": -97.9687,
+  "ath_date": "2022-01-16T02:54:29.942Z",
+  "atl": 0.00050077,
+  "atl_change_percentage": 193.95497,
+  "atl_date": "2023-10-19T09:21:36.393Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:03.610Z",
+  "platforms": {
+    "ethereum": "0x3c8d2fce49906e11e71cb16fa0ffeb2b16c29638"
+  }
+}

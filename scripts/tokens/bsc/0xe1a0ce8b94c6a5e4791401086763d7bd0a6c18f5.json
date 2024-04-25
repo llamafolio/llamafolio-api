@@ -1,0 +1,31 @@
+{
+  "id": "defiai",
+  "symbol": "dfai",
+  "name": "DeFiAI",
+  "image": "https://assets.coingecko.com/coins/images/23345/large/dfai.png?1696522561",
+  "current_price": 0.00012737,
+  "market_cap": 250020,
+  "market_cap_rank": 3398,
+  "fully_diluted_valuation": 254737,
+  "total_volume": 677.94,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 1962965250.1895707,
+  "total_supply": 2000000000,
+  "max_supply": 2000000000,
+  "ath": 0.03980127,
+  "ath_change_percentage": -99.67999,
+  "ath_date": "2022-02-23T10:49:43.132Z",
+  "atl": 0.00012328,
+  "atl_change_percentage": 3.31639,
+  "atl_date": "2023-07-29T10:23:08.953Z",
+  "roi": null,
+  "last_updated": "2023-07-31T15:19:43.746Z",
+  "platforms": {
+    "bsc": "0xe1a0ce8b94c6a5e4791401086763d7bd0a6c18f5"
+  }
+}

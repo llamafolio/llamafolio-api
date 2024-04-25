@@ -1,0 +1,31 @@
+{
+  "id": "ara-token",
+  "symbol": "ara",
+  "name": "Ara",
+  "image": "https://assets.coingecko.com/coins/images/13877/large/ara-icon-200.png?1696513621",
+  "current_price": 0.00024382,
+  "market_cap": 179566,
+  "market_cap_rank": 3540,
+  "fully_diluted_valuation": 243816,
+  "total_volume": 238.95,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 736482152.3647218,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.096114,
+  "ath_change_percentage": -99.74633,
+  "ath_date": "2021-03-29T12:37:35.434Z",
+  "atl": 0,
+  "atl_change_percentage": 2.731560464219513e+33,
+  "atl_date": "2021-08-08T19:26:16.329Z",
+  "roi": null,
+  "last_updated": "2024-04-22T06:39:17.693Z",
+  "platforms": {
+    "ethereum": "0xa92e7c82b11d10716ab534051b271d2f6aef7df5"
+  }
+}

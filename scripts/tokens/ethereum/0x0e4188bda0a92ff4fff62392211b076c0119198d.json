@@ -1,0 +1,31 @@
+{
+  "id": "0xsnipeproai",
+  "symbol": "0xspai",
+  "name": "0xSnipeProAi",
+  "image": "https://assets.coingecko.com/coins/images/34331/large/0XSPAI.jpg?1704668642",
+  "current_price": 0.00010816,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 10815.91,
+  "total_volume": 41.8,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.00267205,
+  "ath_change_percentage": -95.9522,
+  "ath_date": "2024-01-08T01:28:53.393Z",
+  "atl": 0.00009609,
+  "atl_change_percentage": 12.56422,
+  "atl_date": "2024-02-05T01:15:54.495Z",
+  "roi": null,
+  "last_updated": "2024-02-24T03:05:10.091Z",
+  "platforms": {
+    "ethereum": "0x0e4188bda0a92ff4fff62392211b076c0119198d"
+  }
+}

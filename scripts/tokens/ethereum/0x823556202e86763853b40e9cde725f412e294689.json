@@ -1,0 +1,31 @@
+{
+  "id": "altered-state-token",
+  "symbol": "asto",
+  "name": "Altered State Machine",
+  "image": "https://assets.coingecko.com/coins/images/24893/large/ASTO.png?1696524051",
+  "current_price": 0.03293495,
+  "market_cap": 25802487,
+  "market_cap_rank": 990,
+  "fully_diluted_valuation": 78519836,
+  "total_volume": 5181819,
+  "high_24h": 0.03532789,
+  "low_24h": 0.03271039,
+  "price_change_24h": -0.001289796775584593,
+  "price_change_percentage_24h": -3.76861,
+  "market_cap_change_24h": -1057002.2353378981,
+  "market_cap_change_percentage_24h": -3.9353,
+  "circulating_supply": 783408782.1376687,
+  "total_supply": 2384000000,
+  "max_supply": 2384000000,
+  "ath": 0.890471,
+  "ath_change_percentage": -96.28158,
+  "ath_date": "2022-04-07T04:39:54.098Z",
+  "atl": 0.01302945,
+  "atl_change_percentage": 154.1281,
+  "atl_date": "2023-10-20T11:50:24.917Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:45.608Z",
+  "platforms": {
+    "ethereum": "0x823556202e86763853b40e9cde725f412e294689"
+  }
+}

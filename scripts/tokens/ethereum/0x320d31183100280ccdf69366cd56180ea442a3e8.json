@@ -1,0 +1,31 @@
+{
+  "id": "lightcoin",
+  "symbol": "lhc",
+  "name": "Lightcoin",
+  "image": "https://assets.coingecko.com/coins/images/16381/large/lhc.PNG?1696515979",
+  "current_price": 0.00044729,
+  "market_cap": 35262,
+  "market_cap_rank": 4062,
+  "fully_diluted_valuation": 35262,
+  "total_volume": 55.88,
+  "high_24h": 0.00053202,
+  "low_24h": 0.0004456,
+  "price_change_24h": -0.000017493283139098,
+  "price_change_percentage_24h": -3.76378,
+  "market_cap_change_24h": -1490.1692847925005,
+  "market_cap_change_percentage_24h": -4.05465,
+  "circulating_supply": 78914622.3852897,
+  "total_supply": 78914622.3852897,
+  "max_supply": 2147483647,
+  "ath": 2.72,
+  "ath_change_percentage": -99.98358,
+  "ath_date": "2021-06-24T02:27:03.358Z",
+  "atl": 0.00028363,
+  "atl_change_percentage": 57.70127,
+  "atl_date": "2023-05-01T05:45:51.050Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:20.005Z",
+  "platforms": {
+    "ethereum": "0x320d31183100280ccdf69366cd56180ea442a3e8"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "edgeware",
+  "symbol": "edg",
+  "name": "Edgeware",
+  "image": "https://assets.coingecko.com/coins/images/8452/large/logo-edgeware.png?1696508638",
+  "current_price": 0.0004419,
+  "market_cap": 3074395,
+  "market_cap_rank": 2053,
+  "fully_diluted_valuation": 3277591,
+  "total_volume": 437427,
+  "high_24h": 0.00044356,
+  "low_24h": 0.00038388,
+  "price_change_24h": 0.0000429,
+  "price_change_percentage_24h": 10.75207,
+  "market_cap_change_24h": 301791,
+  "market_cap_change_percentage_24h": 10.88473,
+  "circulating_supply": 6952648194,
+  "total_supply": 7412168327,
+  "max_supply": 7412168327,
+  "ath": 0.056346,
+  "ath_change_percentage": -99.22774,
+  "ath_date": "2021-03-30T00:42:18.947Z",
+  "atl": 0.00010118,
+  "atl_change_percentage": 330.07548,
+  "atl_date": "2023-08-04T11:18:49.006Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:46.352Z",
+  "platforms": {
+    "arbitrum": "0x4e0da40b9063dc48364c1c0ffb4ae9d091fc2270"
+  }
+}

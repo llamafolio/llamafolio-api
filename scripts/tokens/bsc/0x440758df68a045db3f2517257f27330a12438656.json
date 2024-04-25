@@ -1,0 +1,31 @@
+{
+  "id": "froggies-token-2",
+  "symbol": "frgst",
+  "name": "Froggies",
+  "image": "https://assets.coingecko.com/coins/images/30575/large/bAwE66My_400x400.jpg?1696529440",
+  "current_price": 6.996e-9,
+  "market_cap": 223244,
+  "market_cap_rank": 3444,
+  "fully_diluted_valuation": 699586,
+  "total_volume": 10474.61,
+  "high_24h": 7.02e-9,
+  "low_24h": 5.967e-9,
+  "price_change_24h": 9.39399e-10,
+  "price_change_percentage_24h": 15.50993,
+  "market_cap_change_24h": 29355,
+  "market_cap_change_percentage_24h": 15.14008,
+  "circulating_supply": 31910898293247,
+  "total_supply": 100000000000000,
+  "max_supply": 100000000000000,
+  "ath": 8.2825e-8,
+  "ath_change_percentage": -91.55888,
+  "ath_date": "2023-05-30T13:00:18.875Z",
+  "atl": 5.214e-9,
+  "atl_change_percentage": 34.10045,
+  "atl_date": "2023-11-26T00:54:51.772Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:01.941Z",
+  "platforms": {
+    "bsc": "0x440758df68a045db3f2517257f27330a12438656"
+  }
+}

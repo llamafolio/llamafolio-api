@@ -1,0 +1,31 @@
+{
+  "id": "eloin",
+  "symbol": "eloin",
+  "name": "Eloin",
+  "image": "https://assets.coingecko.com/coins/images/17656/large/Pics-Art-08-01-02-43-25.png?1696517187",
+  "current_price": 4.71648e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 47164770,
+  "total_volume": 1.035,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000000000,
+  "max_supply": 100000000000000,
+  "ath": 6.93644e-7,
+  "ath_change_percentage": -32.0044,
+  "ath_date": "2024-03-22T09:46:08.374Z",
+  "atl": 5.5895e-11,
+  "atl_change_percentage": 843710.95376,
+  "atl_date": "2024-01-28T20:30:30.940Z",
+  "roi": null,
+  "last_updated": "2024-04-23T19:25:51.938Z",
+  "platforms": {
+    "bsc": "0x9d4282b4b6dc457f44f15e39ebffd4621c6df246"
+  }
+}

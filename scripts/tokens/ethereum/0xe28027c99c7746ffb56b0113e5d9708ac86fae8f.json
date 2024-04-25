@@ -1,0 +1,31 @@
+{
+  "id": "king-2",
+  "symbol": "king",
+  "name": "KING Coin",
+  "image": "https://assets.coingecko.com/coins/images/30183/large/king.png?1696529102",
+  "current_price": 0.00006318,
+  "market_cap": 631841,
+  "market_cap_rank": 2942,
+  "fully_diluted_valuation": 631841,
+  "total_volume": 153763,
+  "high_24h": 0.00006798,
+  "low_24h": 0.0000612,
+  "price_change_24h": 2.50979e-7,
+  "price_change_percentage_24h": 0.3988,
+  "market_cap_change_24h": 3616.77,
+  "market_cap_change_percentage_24h": 0.57571,
+  "circulating_supply": 10000000000,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.00068362,
+  "ath_change_percentage": -90.71623,
+  "ath_date": "2023-05-10T08:24:53.705Z",
+  "atl": 0.00002466,
+  "atl_change_percentage": 157.366,
+  "atl_date": "2024-02-17T14:51:55.653Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:40.524Z",
+  "platforms": {
+    "ethereum": "0xe28027c99c7746ffb56b0113e5d9708ac86fae8f"
+  }
+}

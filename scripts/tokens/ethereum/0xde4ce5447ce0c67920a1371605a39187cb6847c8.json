@@ -1,0 +1,31 @@
+{
+  "id": "deesse",
+  "symbol": "love",
+  "name": "Deesse",
+  "image": "https://assets.coingecko.com/coins/images/22524/large/GaqpKHEP_400x400.jpg?1696521847",
+  "current_price": 0.00033454,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 6707319,
+  "total_volume": 134884,
+  "high_24h": 0.00036848,
+  "low_24h": 0.00031756,
+  "price_change_24h": -0.000033878310569967,
+  "price_change_percentage_24h": -9.19571,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 20000000000,
+  "max_supply": 20000000000,
+  "ath": 0.01438575,
+  "ath_change_percentage": -97.66899,
+  "ath_date": "2022-08-14T19:29:05.016Z",
+  "atl": 0.00020157,
+  "atl_change_percentage": 66.36225,
+  "atl_date": "2023-08-18T17:39:02.661Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:40.042Z",
+  "platforms": {
+    "ethereum": "0xde4ce5447ce0c67920a1371605a39187cb6847c8"
+  }
+}

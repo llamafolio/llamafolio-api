@@ -1,0 +1,31 @@
+{
+  "id": "palmpay",
+  "symbol": "palm",
+  "name": "PalmPay",
+  "image": "https://assets.coingecko.com/coins/images/28216/large/logoGreen_%282%29.png?1696527218",
+  "current_price": 0.447934,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 9406646,
+  "total_volume": 7171.6,
+  "high_24h": 0.455749,
+  "low_24h": 0.442431,
+  "price_change_24h": 0.00175283,
+  "price_change_percentage_24h": 0.39285,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 21000000,
+  "max_supply": 21000000,
+  "ath": 9.56,
+  "ath_change_percentage": -95.3012,
+  "ath_date": "2023-05-12T16:00:55.067Z",
+  "atl": 0.0111845,
+  "atl_change_percentage": 3917.75622,
+  "atl_date": "2022-12-11T02:21:10.267Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:39.975Z",
+  "platforms": {
+    "bsc": "0xf85be0902a16fb87d447021d6e4517b38a15087d"
+  }
+}

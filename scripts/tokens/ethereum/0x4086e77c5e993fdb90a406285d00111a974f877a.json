@@ -1,0 +1,31 @@
+{
+  "id": "blockchain-brawlers",
+  "symbol": "brwl",
+  "name": "Blockchain Brawlers",
+  "image": "https://assets.coingecko.com/coins/images/24701/large/fuDdvI8Y_400x400.png?1696523867",
+  "current_price": 0.00934798,
+  "market_cap": 9283498,
+  "market_cap_rank": 1470,
+  "fully_diluted_valuation": 9283498,
+  "total_volume": 1926390,
+  "high_24h": 0.01117003,
+  "low_24h": 0.00910983,
+  "price_change_24h": -0.000291545039801566,
+  "price_change_percentage_24h": -3.02448,
+  "market_cap_change_24h": -337213.6677645594,
+  "market_cap_change_percentage_24h": -3.50508,
+  "circulating_supply": 1000000000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.750138,
+  "ath_change_percentage": -98.75783,
+  "ath_date": "2022-04-01T17:57:03.333Z",
+  "atl": 0.00159279,
+  "atl_change_percentage": 485.01184,
+  "atl_date": "2023-06-15T20:25:11.288Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:09.935Z",
+  "platforms": {
+    "ethereum": "0x4086e77c5e993fdb90a406285d00111a974f877a"
+  }
+}

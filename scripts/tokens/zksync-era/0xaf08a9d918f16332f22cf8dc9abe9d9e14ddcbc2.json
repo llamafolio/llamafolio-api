@@ -1,0 +1,31 @@
+{
+  "id": "holdstation-usd-coin",
+  "symbol": "hsusdc",
+  "name": "Holdstation USDC",
+  "image": "https://assets.coingecko.com/coins/images/32646/large/hsUSDC.png?1698893340",
+  "current_price": 1.12,
+  "market_cap": 3464884,
+  "market_cap_rank": 1978,
+  "fully_diluted_valuation": null,
+  "total_volume": 2095.31,
+  "high_24h": 1.13,
+  "low_24h": 1.11,
+  "price_change_24h": 0.00043807,
+  "price_change_percentage_24h": 0.03898,
+  "market_cap_change_24h": 291.46,
+  "market_cap_change_percentage_24h": 0.00841,
+  "circulating_supply": 3081527.230636,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.16,
+  "ath_change_percentage": -2.86676,
+  "ath_date": "2024-03-18T01:32:29.495Z",
+  "atl": 0.920573,
+  "atl_change_percentage": 22.17882,
+  "atl_date": "2024-02-29T00:27:55.670Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:47:35.186Z",
+  "platforms": {
+    "zksync-era": "0xaf08a9d918f16332f22cf8dc9abe9d9e14ddcbc2"
+  }
+}

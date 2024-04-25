@@ -1,0 +1,31 @@
+{
+  "id": "luckyinu",
+  "symbol": "lucky",
+  "name": "Luckyinu",
+  "image": "https://assets.coingecko.com/coins/images/34998/large/Luckyinu_%281%29.png?1706955605",
+  "current_price": 4.175e-12,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 189706,
+  "total_volume": 880.33,
+  "high_24h": 4.352e-12,
+  "low_24h": 4.115e-12,
+  "price_change_24h": -9.9528e-14,
+  "price_change_percentage_24h": -2.32822,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 45435199882738120,
+  "max_supply": 100000000000000000,
+  "ath": 7.6605e-11,
+  "ath_change_percentage": -94.54957,
+  "ath_date": "2024-03-07T02:51:50.828Z",
+  "atl": 1.225e-12,
+  "atl_change_percentage": 240.88499,
+  "atl_date": "2024-02-26T13:05:19.570Z",
+  "roi": null,
+  "last_updated": "2024-04-25T06:33:29.156Z",
+  "platforms": {
+    "ethereum": "0xd1c8fa30fded3e0031dc24c1646d74108b096cc2"
+  }
+}

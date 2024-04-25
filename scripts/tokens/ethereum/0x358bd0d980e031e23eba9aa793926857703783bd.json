@@ -1,0 +1,31 @@
+{
+  "id": "aave-amm-bptwbtcweth",
+  "symbol": "aammbptwbtcweth",
+  "name": "Aave AMM BptWBTCWETH",
+  "image": "https://assets.coingecko.com/coins/images/17260/large/aAmmBptWBTCWETH.png?1696516815",
+  "current_price": 222385,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 11072.93,
+  "total_volume": 0,
+  "high_24h": 233427,
+  "low_24h": 219756,
+  "price_change_24h": -9318.396621991327,
+  "price_change_percentage_24h": -4.04758,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 0.0497916746673185,
+  "max_supply": null,
+  "ath": 280261,
+  "ath_change_percentage": -20.99764,
+  "ath_date": "2021-11-10T15:08:42.571Z",
+  "atl": 61211,
+  "atl_change_percentage": 261.72258,
+  "atl_date": "2022-06-18T21:00:55.052Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:32.328Z",
+  "platforms": {
+    "ethereum": "0x358bd0d980e031e23eba9aa793926857703783bd"
+  }
+}

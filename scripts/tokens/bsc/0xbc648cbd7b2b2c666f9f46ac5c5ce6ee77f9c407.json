@@ -1,0 +1,31 @@
+{
+  "id": "work-quest-2",
+  "symbol": "wqt",
+  "name": "Work Quest",
+  "image": "https://assets.coingecko.com/coins/images/30040/large/WQT-1_%281%29.png?1696528963",
+  "current_price": 0.00041157,
+  "market_cap": 49681,
+  "market_cap_rank": 3992,
+  "fully_diluted_valuation": 205538,
+  "total_volume": 96407,
+  "high_24h": 0.0004339,
+  "low_24h": 0.00035159,
+  "price_change_24h": -0.000013085343407142,
+  "price_change_percentage_24h": -3.08143,
+  "market_cap_change_24h": -1486.7272011977693,
+  "market_cap_change_percentage_24h": -2.90559,
+  "circulating_supply": 120856334.2814852,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 0.00389978,
+  "ath_change_percentage": -89.45313,
+  "ath_date": "2023-04-28T12:34:20.872Z",
+  "atl": 0.00017274,
+  "atl_change_percentage": 138.10177,
+  "atl_date": "2024-04-17T18:09:55.001Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:06.376Z",
+  "platforms": {
+    "bsc": "0xbc648cbd7b2b2c666f9f46ac5c5ce6ee77f9c407"
+  }
+}

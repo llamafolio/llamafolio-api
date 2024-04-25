@@ -1,0 +1,31 @@
+{
+  "id": "catheon-gaming",
+  "symbol": "catheon",
+  "name": "Catheon Gaming",
+  "image": "https://assets.coingecko.com/coins/images/28052/large/catheon.jpeg?1706068372",
+  "current_price": 0.00083089,
+  "market_cap": 1336524,
+  "market_cap_rank": 2516,
+  "fully_diluted_valuation": 8308107,
+  "total_volume": 18589.99,
+  "high_24h": 0.0008843,
+  "low_24h": 0.00081642,
+  "price_change_24h": 0.00001345,
+  "price_change_percentage_24h": 1.64528,
+  "market_cap_change_24h": 19427.34,
+  "market_cap_change_percentage_24h": 1.47501,
+  "circulating_supply": 1608698608.73715,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.0200027,
+  "ath_change_percentage": -95.8449,
+  "ath_date": "2023-07-13T01:35:16.577Z",
+  "atl": 0.00024308,
+  "atl_change_percentage": 241.91032,
+  "atl_date": "2023-10-25T15:26:21.551Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:27.248Z",
+  "platforms": {
+    "polygon": "0x7e7737c40878e720b32e7bc9cd096259f876d69f"
+  }
+}

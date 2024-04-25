@@ -1,0 +1,31 @@
+{
+  "id": "mumu",
+  "symbol": "mumu",
+  "name": "Mumu",
+  "image": "https://assets.coingecko.com/coins/images/29921/large/mumuGreen.jpg?1712079227",
+  "current_price": 1.1058e-8,
+  "market_cap": 7560053,
+  "market_cap_rank": 1569,
+  "fully_diluted_valuation": 7560053,
+  "total_volume": 128699,
+  "high_24h": 1.3437e-8,
+  "low_24h": 1.0618e-8,
+  "price_change_24h": -1.345642934e-9,
+  "price_change_percentage_24h": -10.84865,
+  "market_cap_change_24h": -1045667.8793863682,
+  "market_cap_change_percentage_24h": -12.15085,
+  "circulating_supply": 693340050735035,
+  "total_supply": 693340050735035,
+  "max_supply": 1000000000000000,
+  "ath": 4.8798e-8,
+  "ath_change_percentage": -77.65515,
+  "ath_date": "2024-04-01T22:36:43.542Z",
+  "atl": 5.9609e-11,
+  "atl_change_percentage": 18192.17428,
+  "atl_date": "2023-04-28T20:54:32.470Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:54.705Z",
+  "platforms": {
+    "ethereum": "0x2f573070e6090b3264fe707e2c9f201716f123c7"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "poopsicle",
+  "symbol": "poop",
+  "name": "Poopsicle",
+  "image": "https://assets.coingecko.com/coins/images/21826/large/poopsicle-200x200.png?1696521177",
+  "current_price": 0.00019128,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 19127.73,
+  "total_volume": 1.88,
+  "high_24h": 0.00020227,
+  "low_24h": 0.00018959,
+  "price_change_24h": -0.00000766870154527,
+  "price_change_percentage_24h": -3.85466,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.04112344,
+  "ath_change_percentage": -99.53595,
+  "ath_date": "2021-12-24T19:12:11.839Z",
+  "atl": 0.00017182,
+  "atl_change_percentage": 11.06444,
+  "atl_date": "2024-04-13T20:57:33.636Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:07:47.937Z",
+  "platforms": {
+    "fantom": "0x070eb1a48725622de867a7e3d1dd4f0108966ed1"
+  }
+}

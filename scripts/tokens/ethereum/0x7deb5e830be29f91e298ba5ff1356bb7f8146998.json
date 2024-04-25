@@ -1,0 +1,31 @@
+{
+  "id": "aave-mkr-v1",
+  "symbol": "amkr",
+  "name": "Aave MKR v1",
+  "image": "https://assets.coingecko.com/coins/images/11731/large/aMKR.png?1696511612",
+  "current_price": 2830.3,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 268658,
+  "total_volume": 0,
+  "high_24h": 3014.51,
+  "low_24h": 2807.93,
+  "price_change_24h": -161.72924948839227,
+  "price_change_percentage_24h": -5.43965,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 94.9222159951355,
+  "max_supply": null,
+  "ath": 6315.26,
+  "ath_change_percentage": -55.37916,
+  "ath_date": "2021-05-03T22:02:14.216Z",
+  "atl": 432.39,
+  "atl_change_percentage": 551.70265,
+  "atl_date": "2020-09-23T20:53:21.497Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:33.066Z",
+  "platforms": {
+    "ethereum": "0x7deb5e830be29f91e298ba5ff1356bb7f8146998"
+  }
+}

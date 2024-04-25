@@ -1,0 +1,31 @@
+{
+  "id": "pooh",
+  "symbol": "pooh",
+  "name": "POOH",
+  "image": "https://assets.coingecko.com/coins/images/30091/large/Pooh-icon.png?1696529015",
+  "current_price": 2.3413e-8,
+  "market_cap": 9808331,
+  "market_cap_rank": 1449,
+  "fully_diluted_valuation": 9808331,
+  "total_volume": 1681266,
+  "high_24h": 2.6351e-8,
+  "low_24h": 2.3237e-8,
+  "price_change_24h": -2.378693098e-9,
+  "price_change_percentage_24h": -9.22283,
+  "market_cap_change_24h": -1063878.6162890904,
+  "market_cap_change_percentage_24h": -9.7853,
+  "circulating_supply": 420690000000000,
+  "total_supply": 420690000000000,
+  "max_supply": 420690000000000,
+  "ath": 1.95748e-7,
+  "ath_change_percentage": -88.08722,
+  "ath_date": "2023-05-06T20:29:52.263Z",
+  "atl": 1.562e-9,
+  "atl_change_percentage": 1392.52816,
+  "atl_date": "2023-09-21T17:46:27.425Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:17.341Z",
+  "platforms": {
+    "ethereum": "0xb69753c06bb5c366be51e73bfc0cc2e3dc07e371"
+  }
+}

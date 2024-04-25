@@ -1,0 +1,31 @@
+{
+  "id": "pancake-bunny",
+  "symbol": "bunny",
+  "name": "Pancake Bunny",
+  "image": "https://assets.coingecko.com/coins/images/13148/large/wallet-logo-bunny.png?1696512933",
+  "current_price": 0.131986,
+  "market_cap": 67610,
+  "market_cap_rank": 3909,
+  "fully_diluted_valuation": 2023970,
+  "total_volume": 28349,
+  "high_24h": 0.1361,
+  "low_24h": 0.128771,
+  "price_change_24h": -0.000176354329301492,
+  "price_change_percentage_24h": -0.13344,
+  "market_cap_change_24h": -354.119542366956,
+  "market_cap_change_percentage_24h": -0.52104,
+  "circulating_supply": 510232.0791391204,
+  "total_supply": 15274247.5145407,
+  "max_supply": null,
+  "ath": 512.75,
+  "ath_change_percentage": -99.97415,
+  "ath_date": "2021-04-27T10:33:24.434Z",
+  "atl": 0.056462,
+  "atl_change_percentage": 134.76023,
+  "atl_date": "2022-12-17T02:33:10.980Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:18.381Z",
+  "platforms": {
+    "bsc": "0xc9849e6fdb743d08faee3e34dd2d1bc69ea11a51"
+  }
+}

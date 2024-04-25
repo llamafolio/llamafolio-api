@@ -1,0 +1,31 @@
+{
+  "id": "burners",
+  "symbol": "brnr",
+  "name": "Burners",
+  "image": "https://assets.coingecko.com/coins/images/33911/large/Burners.jpeg?1703310206",
+  "current_price": 0.00001163,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 11632.18,
+  "total_volume": 105.79,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 999999997,
+  "ath": 0.00012495,
+  "ath_change_percentage": -90.69026,
+  "ath_date": "2023-12-23T07:10:04.787Z",
+  "atl": 0.00000866,
+  "atl_change_percentage": 34.25638,
+  "atl_date": "2024-01-25T17:23:38.974Z",
+  "roi": null,
+  "last_updated": "2024-04-13T06:34:33.454Z",
+  "platforms": {
+    "ethereum": "0x8ce55da273fb5cf4b1ffc5d4066bd62445a43543"
+  }
+}

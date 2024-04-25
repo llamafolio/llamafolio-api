@@ -1,0 +1,31 @@
+{
+  "id": "yoshi-exchange",
+  "symbol": "yoshi",
+  "name": "Yoshi.exchange",
+  "image": "https://assets.coingecko.com/coins/images/19355/large/YOSHI_200.png?1696518795",
+  "current_price": 0.03552805,
+  "market_cap": 5472510,
+  "market_cap_rank": 1744,
+  "fully_diluted_valuation": 5427171,
+  "total_volume": 822.45,
+  "high_24h": 0.03989643,
+  "low_24h": 0.03495239,
+  "price_change_24h": -0.004030689098643292,
+  "price_change_percentage_24h": -10.18913,
+  "market_cap_change_24h": -640286.2895591911,
+  "market_cap_change_percentage_24h": -10.47452,
+  "circulating_supply": 154278173.953388,
+  "total_supply": 153000000,
+  "max_supply": 1000000000,
+  "ath": 2.19,
+  "ath_change_percentage": -98.37507,
+  "ath_date": "2022-01-17T00:24:24.345Z",
+  "atl": 0.01018954,
+  "atl_change_percentage": 249.44915,
+  "atl_date": "2024-01-22T14:28:46.677Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:13.548Z",
+  "platforms": {
+    "bsc": "0x4374f26f0148a6331905edf4cd33b89d8eed78d1"
+  }
+}

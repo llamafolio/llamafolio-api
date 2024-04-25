@@ -1,0 +1,31 @@
+{
+  "id": "hemule",
+  "symbol": "hemule",
+  "name": "Hemule",
+  "image": "https://assets.coingecko.com/coins/images/33798/large/photo_2023-12-18_04-47-31.jpg?1702990624",
+  "current_price": 0.02004092,
+  "market_cap": 19864020,
+  "market_cap_rank": 1115,
+  "fully_diluted_valuation": 19864020,
+  "total_volume": 2174820,
+  "high_24h": 0.02668426,
+  "low_24h": 0.01972173,
+  "price_change_24h": -0.000102415695065472,
+  "price_change_percentage_24h": -0.50843,
+  "market_cap_change_24h": -386138.4503837675,
+  "market_cap_change_percentage_24h": -1.90684,
+  "circulating_supply": 979998587.911129,
+  "total_supply": 979998587.911129,
+  "max_supply": 979998587.911129,
+  "ath": 0.08436,
+  "ath_change_percentage": -76.25431,
+  "ath_date": "2024-03-11T13:35:21.701Z",
+  "atl": 0.00039126,
+  "atl_change_percentage": 5019.82768,
+  "atl_date": "2024-01-05T06:46:28.654Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:22.584Z",
+  "platforms": {
+    "ethereum": "0xeaa63125dd63f10874f99cdbbb18410e7fc79dd3"
+  }
+}

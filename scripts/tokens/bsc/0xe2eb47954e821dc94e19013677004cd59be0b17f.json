@@ -1,0 +1,31 @@
+{
+  "id": "triall",
+  "symbol": "trl",
+  "name": "Triall",
+  "image": "https://assets.coingecko.com/coins/images/18679/large/-B7ftfN8_400x400.png?1696518148",
+  "current_price": 0.00445423,
+  "market_cap": 188843,
+  "market_cap_rank": 3525,
+  "fully_diluted_valuation": 767213,
+  "total_volume": 5.77,
+  "high_24h": 0.0045216,
+  "low_24h": 0.00434825,
+  "price_change_24h": 0.00000535,
+  "price_change_percentage_24h": 0.12028,
+  "market_cap_change_24h": 416,
+  "market_cap_change_percentage_24h": 0.22077,
+  "circulating_supply": 42365415.4441385,
+  "total_supply": 172117836.227398,
+  "max_supply": null,
+  "ath": 0.975557,
+  "ath_change_percentage": -99.54466,
+  "ath_date": "2021-11-04T18:48:22.405Z",
+  "atl": 0.00340782,
+  "atl_change_percentage": 30.34894,
+  "atl_date": "2024-03-02T18:15:39.674Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:54.542Z",
+  "platforms": {
+    "bsc": "0xe2eb47954e821dc94e19013677004cd59be0b17f"
+  }
+}

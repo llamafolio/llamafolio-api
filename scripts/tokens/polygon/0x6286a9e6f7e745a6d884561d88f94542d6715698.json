@@ -1,0 +1,31 @@
+{
+  "id": "cryptomeda",
+  "symbol": "tech",
+  "name": "Cryptomeda",
+  "image": "https://assets.coingecko.com/coins/images/17983/large/tech.png?1696517501",
+  "current_price": 0.00065163,
+  "market_cap": 217264,
+  "market_cap_rank": 3452,
+  "fully_diluted_valuation": 649701,
+  "total_volume": 1160.28,
+  "high_24h": 0.00065267,
+  "low_24h": 0.00061269,
+  "price_change_24h": 0.00002047,
+  "price_change_percentage_24h": 3.24277,
+  "market_cap_change_24h": 6127.97,
+  "market_cap_change_percentage_24h": 2.90238,
+  "circulating_supply": 333840644.5613,
+  "total_supply": 998311335.750006,
+  "max_supply": 1000000000,
+  "ath": 0.186001,
+  "ath_change_percentage": -99.64967,
+  "ath_date": "2021-08-28T21:05:08.107Z",
+  "atl": 0.00018427,
+  "atl_change_percentage": 253.62772,
+  "atl_date": "2024-03-28T05:56:03.296Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:48.019Z",
+  "platforms": {
+    "polygon": "0x6286a9e6f7e745a6d884561d88f94542d6715698"
+  }
+}

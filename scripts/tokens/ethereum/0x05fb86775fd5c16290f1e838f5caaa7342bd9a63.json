@@ -1,0 +1,31 @@
+{
+  "id": "hackenai",
+  "symbol": "hai",
+  "name": "Hacken",
+  "image": "https://assets.coingecko.com/coins/images/11081/large/hacken-symbol-with-bg.png?1696511022",
+  "current_price": 0.054347,
+  "market_cap": 35079830,
+  "market_cap_rank": 844,
+  "fully_diluted_valuation": 54377004,
+  "total_volume": 288690,
+  "high_24h": 0.057987,
+  "low_24h": 0.053353,
+  "price_change_24h": -0.00185516854527884,
+  "price_change_percentage_24h": -3.30089,
+  "market_cap_change_24h": -1235590.6315742657,
+  "market_cap_change_percentage_24h": -3.40239,
+  "circulating_supply": 645122516,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.465884,
+  "ath_change_percentage": -88.32822,
+  "ath_date": "2021-04-12T04:01:27.258Z",
+  "atl": 0.00234226,
+  "atl_change_percentage": 2221.55947,
+  "atl_date": "2020-05-21T20:08:53.670Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:01.868Z",
+  "platforms": {
+    "ethereum": "0x05fb86775fd5c16290f1e838f5caaa7342bd9a63"
+  }
+}

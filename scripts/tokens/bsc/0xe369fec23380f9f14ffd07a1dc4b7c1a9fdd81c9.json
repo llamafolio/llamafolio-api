@@ -1,0 +1,31 @@
+{
+  "id": "froyo-games",
+  "symbol": "froyo",
+  "name": "Froyo Games",
+  "image": "https://assets.coingecko.com/coins/images/22386/large/95039059.png?1696521730",
+  "current_price": 0.0004181,
+  "market_cap": 251050,
+  "market_cap_rank": 3396,
+  "fully_diluted_valuation": 416074,
+  "total_volume": 2846.76,
+  "high_24h": 0.0004591,
+  "low_24h": 0.00041607,
+  "price_change_24h": -0.000030440607333093,
+  "price_change_percentage_24h": -6.7866,
+  "market_cap_change_24h": -20233.800084342976,
+  "market_cap_change_percentage_24h": -7.45854,
+  "circulating_supply": 603378141.2,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.108955,
+  "ath_change_percentage": -99.61626,
+  "ath_date": "2022-02-16T13:33:17.087Z",
+  "atl": 0.00006989,
+  "atl_change_percentage": 498.26057,
+  "atl_date": "2023-06-15T19:20:19.823Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:32.499Z",
+  "platforms": {
+    "bsc": "0xe369fec23380f9f14ffd07a1dc4b7c1a9fdd81c9"
+  }
+}

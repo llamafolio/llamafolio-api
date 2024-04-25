@@ -1,0 +1,31 @@
+{
+  "id": "pintu-token",
+  "symbol": "ptu",
+  "name": "Pintu",
+  "image": "https://assets.coingecko.com/coins/images/20281/large/image_1_8dd79a68aa.png?1696519686",
+  "current_price": 0.331526,
+  "market_cap": 24397822,
+  "market_cap_rank": 1015,
+  "fully_diluted_valuation": 99241627,
+  "total_volume": 6498.57,
+  "high_24h": 0.337477,
+  "low_24h": 0.329631,
+  "price_change_24h": 0.00187876,
+  "price_change_percentage_24h": 0.56993,
+  "market_cap_change_24h": 114778,
+  "market_cap_change_percentage_24h": 0.47267,
+  "circulating_supply": 73700973.17456,
+  "total_supply": 299789243.17456,
+  "max_supply": 299789243.17456,
+  "ath": 2.98,
+  "ath_change_percentage": -88.90366,
+  "ath_date": "2021-11-25T20:27:54.704Z",
+  "atl": 0.189084,
+  "atl_change_percentage": 75.16074,
+  "atl_date": "2023-08-22T02:02:48.809Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:38.223Z",
+  "platforms": {
+    "ethereum": "0xc229c69eb3bb51828d0caa3509a05a51083898dd"
+  }
+}

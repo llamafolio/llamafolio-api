@@ -1,0 +1,31 @@
+{
+  "id": "nile",
+  "symbol": "nile",
+  "name": "Nile",
+  "image": "https://assets.coingecko.com/coins/images/34828/large/nile.png?1709111719",
+  "current_price": 1.14,
+  "market_cap": 1734080,
+  "market_cap_rank": 2379,
+  "fully_diluted_valuation": 8064639,
+  "total_volume": 72837,
+  "high_24h": 1.44,
+  "low_24h": 1.14,
+  "price_change_24h": -0.25062338717393673,
+  "price_change_percentage_24h": -18.06886,
+  "market_cap_change_24h": -382428.9766850122,
+  "market_cap_change_percentage_24h": -18.06886,
+  "circulating_supply": 1525910.97342245,
+  "total_supply": 7096513.23342245,
+  "max_supply": null,
+  "ath": 2.19,
+  "ath_change_percentage": -48.11413,
+  "ath_date": "2024-04-08T22:10:35.104Z",
+  "atl": 0.098307,
+  "atl_change_percentage": 1055.42406,
+  "atl_date": "2024-03-21T08:02:51.942Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:30.020Z",
+  "platforms": {
+    "linea": "0xaaaac83751090c6ea42379626435f805ddf54dc8"
+  }
+}

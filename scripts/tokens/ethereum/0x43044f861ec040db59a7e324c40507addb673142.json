@@ -1,0 +1,31 @@
+{
+  "id": "cap",
+  "symbol": "cap",
+  "name": "Cap",
+  "image": "https://assets.coingecko.com/coins/images/11775/large/cap.png?1696511654",
+  "current_price": 11.14,
+  "market_cap": 1112952,
+  "market_cap_rank": 2630,
+  "fully_diluted_valuation": 1112952,
+  "total_volume": 1676.03,
+  "high_24h": 11.86,
+  "low_24h": 11.11,
+  "price_change_24h": -0.5919168595797988,
+  "price_change_percentage_24h": -5.046,
+  "market_cap_change_24h": -59821.074760192074,
+  "market_cap_change_percentage_24h": -5.10082,
+  "circulating_supply": 100000,
+  "total_supply": 100000,
+  "max_supply": 120000,
+  "ath": 844.64,
+  "ath_change_percentage": -98.68234,
+  "ath_date": "2021-11-26T00:28:25.538Z",
+  "atl": 0,
+  "atl_change_percentage": 1.5469559209182253e+38,
+  "atl_date": "2022-01-26T07:16:50.514Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:53:37.758Z",
+  "platforms": {
+    "ethereum": "0x43044f861ec040db59a7e324c40507addb673142"
+  }
+}

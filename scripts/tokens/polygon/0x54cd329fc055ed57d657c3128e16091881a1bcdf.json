@@ -1,0 +1,31 @@
+{
+  "id": "onmax",
+  "symbol": "omp",
+  "name": "Onmax (OLD)",
+  "image": "https://assets.coingecko.com/coins/images/34897/large/Onmx-200-200.png?1706582677",
+  "current_price": 0.00000895,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 4475.07,
+  "total_volume": 1.23,
+  "high_24h": 0.00000896,
+  "low_24h": 0.00000889,
+  "price_change_24h": 4.036e-8,
+  "price_change_percentage_24h": 0.45299,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 0.02615994,
+  "ath_change_percentage": -99.96579,
+  "ath_date": "2024-02-01T23:03:02.848Z",
+  "atl": 0.00000889,
+  "atl_change_percentage": 0.6564,
+  "atl_date": "2024-04-24T17:48:04.055Z",
+  "roi": null,
+  "last_updated": "2024-04-25T03:54:41.828Z",
+  "platforms": {
+    "polygon": "0x54cd329fc055ed57d657c3128e16091881a1bcdf"
+  }
+}

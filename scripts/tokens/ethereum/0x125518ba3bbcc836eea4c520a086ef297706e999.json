@@ -1,0 +1,31 @@
+{
+  "id": "x0",
+  "symbol": "x0",
+  "name": "X0",
+  "image": "https://assets.coingecko.com/coins/images/31494/large/x0.png?1696530305",
+  "current_price": 0,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1.267626594843092e+47,
+  "total_volume": 22.63,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1e+76,
+  "max_supply": 1e+76,
+  "ath": 0,
+  "ath_change_percentage": -78.36393,
+  "ath_date": "2023-08-31T06:29:30.427Z",
+  "atl": 0,
+  "atl_change_percentage": 223.41851,
+  "atl_date": "2024-01-07T21:36:05.815Z",
+  "roi": null,
+  "last_updated": "2024-04-19T11:03:56.947Z",
+  "platforms": {
+    "ethereum": "0x125518ba3bbcc836eea4c520a086ef297706e999"
+  }
+}

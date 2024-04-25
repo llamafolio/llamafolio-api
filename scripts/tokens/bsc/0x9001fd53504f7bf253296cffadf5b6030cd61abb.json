@@ -1,0 +1,31 @@
+{
+  "id": "cyberfm",
+  "symbol": "cyfm",
+  "name": "CyberFM",
+  "image": "https://assets.coingecko.com/coins/images/5476/large/cyberfm.png?1696505952",
+  "current_price": 2e-17,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 0.00000332,
+  "total_volume": 0.744065,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 163567947135.334,
+  "max_supply": null,
+  "ath": 24.68,
+  "ath_change_percentage": -100,
+  "ath_date": "2021-10-28T20:00:27.570Z",
+  "atl": 1e-17,
+  "atl_change_percentage": 110.20907,
+  "atl_date": "2023-07-14T20:30:10.121Z",
+  "roi": null,
+  "last_updated": "2024-04-22T04:00:35.753Z",
+  "platforms": {
+    "bsc": "0x9001fd53504f7bf253296cffadf5b6030cd61abb"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "infrax",
+  "symbol": "infra",
+  "name": "infraX",
+  "image": "https://assets.coingecko.com/coins/images/36063/large/RENDR.png?1710405370",
+  "current_price": 10.58,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 10582948,
+  "total_volume": 181881,
+  "high_24h": 12.07,
+  "low_24h": 10.07,
+  "price_change_24h": -1.1741404797722161,
+  "price_change_percentage_24h": -9.98666,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 45.71,
+  "ath_change_percentage": -76.84637,
+  "ath_date": "2024-04-03T02:03:41.284Z",
+  "atl": 0.895494,
+  "atl_change_percentage": 1081.80043,
+  "atl_date": "2024-03-14T08:56:12.463Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:30.072Z",
+  "platforms": {
+    "ethereum": "0xe9eccde9d26fcbb5e93f536cfc4510a7f46274f8"
+  }
+}

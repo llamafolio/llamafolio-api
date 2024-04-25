@@ -1,0 +1,31 @@
+{
+  "id": "aurora-near",
+  "symbol": "aurora",
+  "name": "Aurora",
+  "image": "https://assets.coingecko.com/coins/images/20582/large/aurora.jpeg?1696519989",
+  "current_price": 0.243949,
+  "market_cap": 109702163,
+  "market_cap_rank": 450,
+  "fully_diluted_valuation": 243901422,
+  "total_volume": 1168372,
+  "high_24h": 0.268163,
+  "low_24h": 0.243743,
+  "price_change_24h": -0.02314650016160777,
+  "price_change_percentage_24h": -8.66599,
+  "market_cap_change_24h": -10380028.849775434,
+  "market_cap_change_percentage_24h": -8.6441,
+  "circulating_supply": 449755403,
+  "total_supply": 999943657,
+  "max_supply": 1000000000,
+  "ath": 35.4,
+  "ath_change_percentage": -99.31205,
+  "ath_date": "2022-01-16T22:13:43.382Z",
+  "atl": 0.04736812,
+  "atl_change_percentage": 414.11176,
+  "atl_date": "2023-10-19T15:59:56.174Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:48.457Z",
+  "platforms": {
+    "ethereum": "0xaaaaaa20d9e0e2461697782ef11675f668207961"
+  }
+}

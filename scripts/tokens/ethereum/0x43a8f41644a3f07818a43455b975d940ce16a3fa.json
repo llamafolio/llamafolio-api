@@ -1,0 +1,31 @@
+{
+  "id": "fren-nation",
+  "symbol": "fren",
+  "name": "Fren Nation",
+  "image": "https://assets.coingecko.com/coins/images/30551/large/frennation.png?1696529423",
+  "current_price": 0.00003568,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 35681,
+  "total_volume": 501.43,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.0037679,
+  "ath_change_percentage": -99.05304,
+  "ath_date": "2023-05-26T07:44:50.584Z",
+  "atl": 0.00001473,
+  "atl_change_percentage": 142.20629,
+  "atl_date": "2023-10-04T16:06:00.054Z",
+  "roi": null,
+  "last_updated": "2024-03-26T21:01:29.698Z",
+  "platforms": {
+    "ethereum": "0x43a8f41644a3f07818a43455b975d940ce16a3fa"
+  }
+}

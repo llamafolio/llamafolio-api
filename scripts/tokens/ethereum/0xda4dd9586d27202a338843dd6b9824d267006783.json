@@ -1,0 +1,31 @@
+{
+  "id": "echain-network",
+  "symbol": "ect",
+  "name": "Echain Network",
+  "image": "https://assets.coingecko.com/coins/images/28133/large/1666808362379-8226c3c3451e049842cfe21d65cb91ad.png?1696527140",
+  "current_price": 0.00034514,
+  "market_cap": 36954,
+  "market_cap_rank": 4055,
+  "fully_diluted_valuation": 103542,
+  "total_volume": 2771.77,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 107069832.08032528,
+  "total_supply": 300000000,
+  "max_supply": 300000000,
+  "ath": 0.01810989,
+  "ath_change_percentage": -98.09419,
+  "ath_date": "2023-03-31T08:51:39.978Z",
+  "atl": 0.00022269,
+  "atl_change_percentage": 54.98485,
+  "atl_date": "2024-01-08T03:01:27.106Z",
+  "roi": null,
+  "last_updated": "2024-04-23T05:57:06.840Z",
+  "platforms": {
+    "ethereum": "0xda4dd9586d27202a338843dd6b9824d267006783"
+  }
+}

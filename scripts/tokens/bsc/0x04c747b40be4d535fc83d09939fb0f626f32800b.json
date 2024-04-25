@@ -1,0 +1,31 @@
+{
+  "id": "itam-games",
+  "symbol": "itam",
+  "name": "ITAM Games",
+  "image": "https://assets.coingecko.com/coins/images/11063/large/ITAMGames.png?1696511005",
+  "current_price": 0.02693974,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 13456947,
+  "total_volume": 242.35,
+  "high_24h": 0.02744139,
+  "low_24h": 0.02622689,
+  "price_change_24h": -0.000021720531325879,
+  "price_change_percentage_24h": -0.08056,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 501430609.471913,
+  "max_supply": null,
+  "ath": 0.784934,
+  "ath_change_percentage": -96.58097,
+  "ath_date": "2022-02-11T17:24:20.750Z",
+  "atl": 0.00068852,
+  "atl_change_percentage": 3797.81943,
+  "atl_date": "2021-06-28T03:34:38.542Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:09.634Z",
+  "platforms": {
+    "bsc": "0x04c747b40be4d535fc83d09939fb0f626f32800b"
+  }
+}

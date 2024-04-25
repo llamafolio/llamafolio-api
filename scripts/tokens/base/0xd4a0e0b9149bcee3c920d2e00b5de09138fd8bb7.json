@@ -1,0 +1,31 @@
+{
+  "id": "aave-v3-weth",
+  "symbol": "aweth",
+  "name": "Aave v3 WETH",
+  "image": "https://assets.coingecko.com/coins/images/32882/large/WETH_%281%29.png?1699716492",
+  "current_price": 3146.6,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 0,
+  "high_24h": 3282.27,
+  "low_24h": 3112.64,
+  "price_change_24h": -116.49850718000016,
+  "price_change_percentage_24h": -3.58281,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 4088.76,
+  "ath_change_percentage": -23.43718,
+  "ath_date": "2024-03-12T00:25:18.653Z",
+  "atl": 1914.49,
+  "atl_change_percentage": 63.51452,
+  "atl_date": "2023-11-17T16:07:05.733Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:32.651Z",
+  "platforms": {
+    "base": "0xd4a0e0b9149bcee3c920d2e00b5de09138fd8bb7"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "tarot",
+  "symbol": "tarot",
+  "name": "Tarot V1",
+  "image": "https://assets.coingecko.com/coins/images/17881/large/tarot-200px.png?1696517403",
+  "current_price": 0.0227879,
+  "market_cap": 1401492,
+  "market_cap_rank": 2478,
+  "fully_diluted_valuation": 2277191,
+  "total_volume": 1239.05,
+  "high_24h": 0.02432731,
+  "low_24h": 0.02271809,
+  "price_change_24h": -0.001071349308573767,
+  "price_change_percentage_24h": -4.49029,
+  "market_cap_change_24h": -73204.2098645966,
+  "market_cap_change_percentage_24h": -4.96402,
+  "circulating_supply": 61544779.146755,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 4.1,
+  "ath_change_percentage": -99.44072,
+  "ath_date": "2021-09-07T08:15:54.599Z",
+  "atl": 0.01221205,
+  "atl_change_percentage": 87.99466,
+  "atl_date": "2023-11-22T16:45:24.194Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:35.178Z",
+  "platforms": {
+    "fantom": "0xc5e2b037d30a390e62180970b3aa4e91868764cd"
+  }
+}

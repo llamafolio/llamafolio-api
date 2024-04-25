@@ -1,0 +1,31 @@
+{
+  "id": "dexcheck",
+  "symbol": "dck",
+  "name": "DexCheck",
+  "image": "https://assets.coingecko.com/coins/images/26412/large/DexCheck_logo_%282%29.png?1696525488",
+  "current_price": 0.060441,
+  "market_cap": 22902134,
+  "market_cap_rank": 1039,
+  "fully_diluted_valuation": 59142786,
+  "total_volume": 920138,
+  "high_24h": 0.065816,
+  "low_24h": 0.060311,
+  "price_change_24h": -0.004936532197650015,
+  "price_change_percentage_24h": -7.55082,
+  "market_cap_change_24h": -1896440.515707858,
+  "market_cap_change_percentage_24h": -7.64738,
+  "circulating_supply": 379556711.09135014,
+  "total_supply": 980172456,
+  "max_supply": 1000000000,
+  "ath": 0.182736,
+  "ath_change_percentage": -66.95337,
+  "ath_date": "2024-03-11T07:54:52.266Z",
+  "atl": 0.01701538,
+  "atl_change_percentage": 254.90369,
+  "atl_date": "2023-09-27T19:41:45.906Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:59.053Z",
+  "platforms": {
+    "ethereum": "0x672f4fa517894496b8a958b4b3fca068ce513a39"
+  }
+}

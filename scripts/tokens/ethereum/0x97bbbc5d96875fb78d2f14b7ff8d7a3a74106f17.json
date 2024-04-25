@@ -1,0 +1,31 @@
+{
+  "id": "astrafer",
+  "symbol": "astrafer",
+  "name": "Astrafer",
+  "image": "https://assets.coingecko.com/coins/images/26246/large/ATSRA_Token.png?1696525331",
+  "current_price": 0.386761,
+  "market_cap": 60829356,
+  "market_cap_rank": 621,
+  "fully_diluted_valuation": 344503332,
+  "total_volume": 54385,
+  "high_24h": 0.38929,
+  "low_24h": 0.381775,
+  "price_change_24h": -0.000511524766483085,
+  "price_change_percentage_24h": -0.13208,
+  "market_cap_change_24h": 110777,
+  "market_cap_change_percentage_24h": 0.18244,
+  "circulating_supply": 156808950.9,
+  "total_supply": 888077888,
+  "max_supply": 888077888,
+  "ath": 4.88,
+  "ath_change_percentage": -92.02983,
+  "ath_date": "2022-09-11T19:47:43.631Z",
+  "atl": 0.099184,
+  "atl_change_percentage": 291.96388,
+  "atl_date": "2024-03-15T02:29:16.988Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:56:24.762Z",
+  "platforms": {
+    "ethereum": "0x97bbbc5d96875fb78d2f14b7ff8d7a3a74106f17"
+  }
+}

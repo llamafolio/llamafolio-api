@@ -1,0 +1,31 @@
+{
+  "id": "cyberfi",
+  "symbol": "cfi",
+  "name": "CyberFi",
+  "image": "https://assets.coingecko.com/coins/images/13112/large/cyberfi_logo.jpeg?1696512897",
+  "current_price": 0.199923,
+  "market_cap": 324643,
+  "market_cap_rank": 3279,
+  "fully_diluted_valuation": 478692,
+  "total_volume": 46021,
+  "high_24h": 0.227022,
+  "low_24h": 0.198519,
+  "price_change_24h": -0.006602875357838823,
+  "price_change_percentage_24h": -3.19712,
+  "market_cap_change_24h": -13004.619654290786,
+  "market_cap_change_percentage_24h": -3.85154,
+  "circulating_supply": 1627650,
+  "total_supply": 2400000,
+  "max_supply": 2400000,
+  "ath": 76.41,
+  "ath_change_percentage": -99.73894,
+  "ath_date": "2021-04-02T12:29:51.610Z",
+  "atl": 0.092877,
+  "atl_change_percentage": 114.77419,
+  "atl_date": "2023-08-26T09:30:56.796Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:28.792Z",
+  "platforms": {
+    "polygon": "0xecf8f2fa183b1c4d2a269bf98a54fce86c812d3e"
+  }
+}

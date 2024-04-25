@@ -1,0 +1,31 @@
+{
+  "id": "aegis",
+  "symbol": "ags",
+  "name": "Aegis",
+  "image": "https://assets.coingecko.com/coins/images/12391/large/logo-3.png?1696512214",
+  "current_price": 0.00230797,
+  "market_cap": 9598.47,
+  "market_cap_rank": 4218,
+  "fully_diluted_valuation": 69152,
+  "total_volume": 14077.13,
+  "high_24h": 0.00235725,
+  "low_24h": 0.00230105,
+  "price_change_24h": -0.000043285731464601,
+  "price_change_percentage_24h": -1.84096,
+  "market_cap_change_24h": -195.80512606593038,
+  "market_cap_change_percentage_24h": -1.99918,
+  "circulating_supply": 4164069.74372621,
+  "total_supply": 30000000,
+  "max_supply": null,
+  "ath": 1.48,
+  "ath_change_percentage": -99.8436,
+  "ath_date": "2020-09-08T07:09:27.706Z",
+  "atl": 0.00123252,
+  "atl_change_percentage": 87.27873,
+  "atl_date": "2023-11-23T09:54:56.938Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:43.036Z",
+  "platforms": {
+    "ethereum": "0xdb2f2bcce3efa95eda95a233af45f3e0d4f00e2a"
+  }
+}

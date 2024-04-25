@@ -1,0 +1,31 @@
+{
+  "id": "iotexpad",
+  "symbol": "tex",
+  "name": "IoTeXPad",
+  "image": "https://assets.coingecko.com/coins/images/20964/large/7gyi5TV8_400x400.jpg?1696520351",
+  "current_price": 0.00204036,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 204036,
+  "total_volume": 31.53,
+  "high_24h": 0.00207818,
+  "low_24h": 0.002021,
+  "price_change_24h": -0.000037821474375907,
+  "price_change_percentage_24h": -1.81993,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.273205,
+  "ath_change_percentage": -99.25318,
+  "ath_date": "2022-04-04T13:07:15.720Z",
+  "atl": 0.00145843,
+  "atl_change_percentage": 39.9011,
+  "atl_date": "2023-10-30T22:40:07.263Z",
+  "roi": null,
+  "last_updated": "2024-04-24T23:01:26.422Z",
+  "platforms": {
+    "bsc": "0x049dd7532148826cde956c7b45fec8c30b514052"
+  }
+}

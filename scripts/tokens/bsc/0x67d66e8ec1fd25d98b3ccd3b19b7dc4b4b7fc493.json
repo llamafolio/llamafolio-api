@@ -1,0 +1,31 @@
+{
+  "id": "feeder-finance",
+  "symbol": "feed",
+  "name": "Feeder Finance",
+  "image": "https://assets.coingecko.com/coins/images/15151/large/feeder_finance_logo.png?1696514806",
+  "current_price": 0.00072323,
+  "market_cap": 72323,
+  "market_cap_rank": 3887,
+  "fully_diluted_valuation": 72323,
+  "total_volume": 9.59,
+  "high_24h": 0.00074355,
+  "low_24h": 0.000719,
+  "price_change_24h": -0.000009101298458175,
+  "price_change_percentage_24h": -1.24278,
+  "market_cap_change_24h": -587.7239852450293,
+  "market_cap_change_percentage_24h": -0.80608,
+  "circulating_supply": 100000000,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 0.552431,
+  "ath_change_percentage": -99.86908,
+  "ath_date": "2021-09-04T14:54:59.178Z",
+  "atl": 0.00024016,
+  "atl_change_percentage": 201.14048,
+  "atl_date": "2023-06-12T08:04:42.061Z",
+  "roi": null,
+  "last_updated": "2024-04-24T16:44:06.913Z",
+  "platforms": {
+    "bsc": "0x67d66e8ec1fd25d98b3ccd3b19b7dc4b4b7fc493"
+  }
+}

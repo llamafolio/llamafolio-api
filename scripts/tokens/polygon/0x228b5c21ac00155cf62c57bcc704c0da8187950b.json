@@ -1,0 +1,31 @@
+{
+  "id": "nexus-dubai",
+  "symbol": "nxd",
+  "name": "Nexus Dubai",
+  "image": "https://assets.coingecko.com/coins/images/23414/large/nexus.PNG?1696522627",
+  "current_price": 0.00007514,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3757099,
+  "total_volume": 1240.25,
+  "high_24h": 0.00007731,
+  "low_24h": 0.00005988,
+  "price_change_24h": 0.00001316,
+  "price_change_percentage_24h": 21.22677,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 50000000000,
+  "max_supply": 50000000000,
+  "ath": 4.42,
+  "ath_change_percentage": -99.9983,
+  "ath_date": "2022-03-07T19:42:47.103Z",
+  "atl": 0.00004563,
+  "atl_change_percentage": 64.66647,
+  "atl_date": "2023-11-16T10:04:42.636Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:36.899Z",
+  "platforms": {
+    "polygon": "0x228b5c21ac00155cf62c57bcc704c0da8187950b"
+  }
+}

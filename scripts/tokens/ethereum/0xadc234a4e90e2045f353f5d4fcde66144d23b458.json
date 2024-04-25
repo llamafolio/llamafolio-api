@@ -1,0 +1,31 @@
+{
+  "id": "fluid-usdt",
+  "symbol": "fusdt",
+  "name": "Fluid USDT",
+  "image": "https://assets.coingecko.com/coins/images/28472/large/fUSDT-200x200.png?1696527466",
+  "current_price": 1.042,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 22.03,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.055,
+  "ath_change_percentage": -1.24956,
+  "ath_date": "2023-03-05T09:34:48.837Z",
+  "atl": 0.975921,
+  "atl_change_percentage": 6.75011,
+  "atl_date": "2023-02-19T19:50:16.898Z",
+  "roi": null,
+  "last_updated": "2023-03-12T11:51:07.700Z",
+  "platforms": {
+    "ethereum": "0xadc234a4e90e2045f353f5d4fcde66144d23b458"
+  }
+}

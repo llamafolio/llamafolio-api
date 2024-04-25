@@ -1,0 +1,31 @@
+{
+  "id": "unit-protocol-duck",
+  "symbol": "duck",
+  "name": "Unit Protocol",
+  "image": "https://assets.coingecko.com/coins/images/13359/large/6f38719f-fe83-44ff-af30-7965fd23ac06.png?1696513124",
+  "current_price": 0.00094542,
+  "market_cap": 386544,
+  "market_cap_rank": 3197,
+  "fully_diluted_valuation": 963129,
+  "total_volume": 13610.88,
+  "high_24h": 0.0011626,
+  "low_24h": 0.00093575,
+  "price_change_24h": -0.000106684592176335,
+  "price_change_percentage_24h": -10.14013,
+  "market_cap_change_24h": -41752.908125649265,
+  "market_cap_change_percentage_24h": -9.74858,
+  "circulating_supply": 408924714.9516145,
+  "total_supply": 1018892666.32779,
+  "max_supply": 1018892666.32779,
+  "ath": 0.657155,
+  "ath_change_percentage": -99.85603,
+  "ath_date": "2021-05-20T13:29:25.826Z",
+  "atl": 0.00081476,
+  "atl_change_percentage": 16.12356,
+  "atl_date": "2024-04-13T22:39:27.992Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:15.465Z",
+  "platforms": {
+    "fantom": "0x602a3ad311e66b6f5e567a13016b712aba0625c6"
+  }
+}

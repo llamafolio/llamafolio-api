@@ -1,0 +1,31 @@
+{
+  "id": "belt",
+  "symbol": "belt",
+  "name": "Belt",
+  "image": "https://assets.coingecko.com/coins/images/14319/large/belt_logo.jpg?1696514007",
+  "current_price": 0.109853,
+  "market_cap": 1921672,
+  "market_cap_rank": 2316,
+  "fully_diluted_valuation": 4200475,
+  "total_volume": 466.75,
+  "high_24h": 0.121796,
+  "low_24h": 0.108956,
+  "price_change_24h": -0.010812746869137108,
+  "price_change_percentage_24h": -8.9609,
+  "market_cap_change_24h": -191056.6901535273,
+  "market_cap_change_percentage_24h": -9.04313,
+  "circulating_supply": 17494432.365663733,
+  "total_supply": 38240102.9095317,
+  "max_supply": null,
+  "ath": 203.87,
+  "ath_change_percentage": -99.94612,
+  "ath_date": "2021-03-11T06:37:09.872Z",
+  "atl": 0.065518,
+  "atl_change_percentage": 67.66956,
+  "atl_date": "2023-10-10T00:45:23.438Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:09.121Z",
+  "platforms": {
+    "bsc": "0xe0e514c71282b6f4e823703a39374cf58dc3ea4f"
+  }
+}

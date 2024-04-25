@@ -1,0 +1,31 @@
+{
+  "id": "exosama-network",
+  "symbol": "sama",
+  "name": "Moonsama",
+  "image": "https://assets.coingecko.com/coins/images/28308/large/Small.png?1696527312",
+  "current_price": 0.01395172,
+  "market_cap": 7504850,
+  "market_cap_rank": 1576,
+  "fully_diluted_valuation": 13892126,
+  "total_volume": 113479,
+  "high_24h": 0.01574876,
+  "low_24h": 0.01381137,
+  "price_change_24h": -0.001500212744096043,
+  "price_change_percentage_24h": -9.7089,
+  "market_cap_change_24h": -787960.4607345695,
+  "market_cap_change_percentage_24h": -9.50173,
+  "circulating_supply": 540223310.167948,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.072871,
+  "ath_change_percentage": -80.91803,
+  "ath_date": "2022-12-10T12:02:58.959Z",
+  "atl": 0.00406689,
+  "atl_change_percentage": 241.91503,
+  "atl_date": "2023-09-29T03:46:31.832Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:51.277Z",
+  "platforms": {
+    "ethereum": "0xe04f47ff45576249bc5083dfdf987e03d0550113"
+  }
+}

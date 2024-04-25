@@ -1,0 +1,31 @@
+{
+  "id": "darwinia-commitment-token",
+  "symbol": "kton",
+  "name": "Darwinia Commitment",
+  "image": "https://assets.coingecko.com/coins/images/11895/large/KTON.png?1696511761",
+  "current_price": 4.76,
+  "market_cap": 612581,
+  "market_cap_rank": 2962,
+  "fully_diluted_valuation": 612581,
+  "total_volume": 18624.5,
+  "high_24h": 4.91,
+  "low_24h": 4.74,
+  "price_change_24h": -0.09730206919453988,
+  "price_change_percentage_24h": -2.00298,
+  "market_cap_change_24h": -15648.492888244917,
+  "market_cap_change_percentage_24h": -2.49089,
+  "circulating_supply": 128830,
+  "total_supply": 128830,
+  "max_supply": 128830,
+  "ath": 416.09,
+  "ath_change_percentage": -98.8567,
+  "ath_date": "2020-09-01T09:49:13.510Z",
+  "atl": 2.01,
+  "atl_change_percentage": 136.92818,
+  "atl_date": "2023-11-21T02:20:30.886Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:41.471Z",
+  "platforms": {
+    "ethereum": "0x9f284e1337a815fe77d2ff4ae46544645b20c5ff"
+  }
+}

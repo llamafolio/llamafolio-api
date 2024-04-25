@@ -1,0 +1,31 @@
+{
+  "id": "gensokishis-metaverse",
+  "symbol": "mv",
+  "name": "GensoKishi Metaverse",
+  "image": "https://assets.coingecko.com/coins/images/23143/large/geno.png?1696522435",
+  "current_price": 0.03236253,
+  "market_cap": 7554851,
+  "market_cap_rank": 1570,
+  "fully_diluted_valuation": 12918306,
+  "total_volume": 2628682,
+  "high_24h": 0.03275996,
+  "low_24h": 0.0312038,
+  "price_change_24h": 0.00115873,
+  "price_change_percentage_24h": 3.71342,
+  "market_cap_change_24h": 219817,
+  "market_cap_change_percentage_24h": 2.9968,
+  "circulating_supply": 233926992.957408,
+  "total_supply": 400000000,
+  "max_supply": 2000000000,
+  "ath": 1.66,
+  "ath_change_percentage": -98.05466,
+  "ath_date": "2022-02-08T23:43:48.940Z",
+  "atl": 0.02980494,
+  "atl_change_percentage": 8.37512,
+  "atl_date": "2023-10-19T10:30:50.263Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:40.091Z",
+  "platforms": {
+    "polygon": "0xa3c322ad15218fbfaed26ba7f616249f7705d945"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "florence-finance-medici",
+  "symbol": "ffm",
+  "name": "Florence Finance Medici",
+  "image": "https://assets.coingecko.com/coins/images/34382/large/M_PNG_200x200_copy.png?1704779326",
+  "current_price": 0.056856,
+  "market_cap": 4583267,
+  "market_cap_rank": 1840,
+  "fully_diluted_valuation": 56794903,
+  "total_volume": 63783,
+  "high_24h": 0.063152,
+  "low_24h": 0.055841,
+  "price_change_24h": -0.004867653548403559,
+  "price_change_percentage_24h": -7.88615,
+  "market_cap_change_24h": -396952.1835241094,
+  "market_cap_change_percentage_24h": -7.97058,
+  "circulating_supply": 80698558.8978857,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.130709,
+  "ath_change_percentage": -56.52006,
+  "ath_date": "2024-03-30T05:06:48.749Z",
+  "atl": 0.01518873,
+  "atl_change_percentage": 274.1737,
+  "atl_date": "2024-02-12T09:38:49.617Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:19.860Z",
+  "platforms": {
+    "arbitrum": "0x3269a3c00ab86c753856fd135d97b87facb0d848"
+  }
+}

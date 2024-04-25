@@ -1,0 +1,31 @@
+{
+  "id": "dextools",
+  "symbol": "dext",
+  "name": "DexTools",
+  "image": "https://assets.coingecko.com/coins/images/11603/large/dext.png?1696511498",
+  "current_price": 0.852269,
+  "market_cap": 72772039,
+  "market_cap_rank": 564,
+  "fully_diluted_valuation": 108593138,
+  "total_volume": 84303,
+  "high_24h": 0.890184,
+  "low_24h": 0.833436,
+  "price_change_24h": -0.023943792751811906,
+  "price_change_percentage_24h": -2.73265,
+  "market_cap_change_24h": -2164879.2895683646,
+  "market_cap_change_percentage_24h": -2.88894,
+  "circulating_supply": 85476532.40209083,
+  "total_supply": 127551255,
+  "max_supply": 127551255,
+  "ath": 1.067,
+  "ath_change_percentage": -20.20594,
+  "ath_date": "2024-03-08T21:05:37.138Z",
+  "atl": 0.00001117,
+  "atl_change_percentage": 7621318.91819,
+  "atl_date": "2020-06-19T22:59:18.232Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:45.652Z",
+  "platforms": {
+    "bsc": "0xe91a8d2c584ca93c7405f15c22cdfe53c29896e3"
+  }
+}

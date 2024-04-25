@@ -1,0 +1,31 @@
+{
+  "id": "mane",
+  "symbol": "mane",
+  "name": "MANE",
+  "image": "https://assets.coingecko.com/coins/images/31938/large/logo200.png?1696530745",
+  "current_price": 0.01395454,
+  "market_cap": 771412,
+  "market_cap_rank": 2831,
+  "fully_diluted_valuation": 911083,
+  "total_volume": 30629,
+  "high_24h": 0.01403849,
+  "low_24h": 0.01233257,
+  "price_change_24h": 0.00093284,
+  "price_change_percentage_24h": 7.16375,
+  "market_cap_change_24h": 49556,
+  "market_cap_change_percentage_24h": 6.86505,
+  "circulating_supply": 55278660.7093687,
+  "total_supply": 65287350.6317041,
+  "max_supply": 100000000,
+  "ath": 0.02285069,
+  "ath_change_percentage": -39.14469,
+  "ath_date": "2023-12-17T22:09:52.480Z",
+  "atl": 0.0006146,
+  "atl_change_percentage": 2162.57596,
+  "atl_date": "2024-03-20T05:28:43.983Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:39.894Z",
+  "platforms": {
+    "bsc": "0x12e114ef949177ddb37716bc6eefb9c5bc25de12"
+  }
+}

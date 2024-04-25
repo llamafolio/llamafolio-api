@@ -1,0 +1,31 @@
+{
+  "id": "pokegrok",
+  "symbol": "pokegrok",
+  "name": "PokeGROK",
+  "image": "https://assets.coingecko.com/coins/images/34607/large/Group_1261156081.png?1705493193",
+  "current_price": 4.1001e-11,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 17220.25,
+  "total_volume": 1.82,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 420000000000000,
+  "max_supply": 420000000000000,
+  "ath": 1.354e-9,
+  "ath_change_percentage": -96.97181,
+  "ath_date": "2024-01-18T09:43:51.736Z",
+  "atl": 2.692e-11,
+  "atl_change_percentage": 52.30545,
+  "atl_date": "2024-02-02T22:02:07.640Z",
+  "roi": null,
+  "last_updated": "2024-04-24T07:30:06.479Z",
+  "platforms": {
+    "bsc": "0xefd8bb69ab5c0b022b1d33120ddd1dac3a83877e"
+  }
+}

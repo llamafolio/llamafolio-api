@@ -1,0 +1,31 @@
+{
+  "id": "shezmu",
+  "symbol": "shezmu",
+  "name": "Shezmu",
+  "image": "https://assets.coingecko.com/coins/images/31772/large/ShezmuPlainblk.png?1696530590",
+  "current_price": 4.09,
+  "market_cap": 1084914,
+  "market_cap_rank": 2640,
+  "fully_diluted_valuation": 1953845,
+  "total_volume": 37623,
+  "high_24h": 4.8,
+  "low_24h": 4.05,
+  "price_change_24h": -0.70905864310852,
+  "price_change_percentage_24h": -14.76867,
+  "market_cap_change_24h": -176589.55168880476,
+  "market_cap_change_percentage_24h": -13.99834,
+  "circulating_supply": 265127.676522935,
+  "total_supply": 477474.330390479,
+  "max_supply": null,
+  "ath": 45.17,
+  "ath_change_percentage": -90.92957,
+  "ath_date": "2024-01-16T21:04:19.489Z",
+  "atl": 3.79,
+  "atl_change_percentage": 8.14266,
+  "atl_date": "2023-09-16T11:49:33.373Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:49:53.500Z",
+  "platforms": {
+    "ethereum": "0x5fe72ed557d8a02fff49b3b826792c765d5ce162"
+  }
+}

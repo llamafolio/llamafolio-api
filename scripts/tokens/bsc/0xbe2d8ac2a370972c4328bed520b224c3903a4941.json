@@ -1,0 +1,31 @@
+{
+  "id": "novem-pro",
+  "symbol": "nvm",
+  "name": "Novem Pro",
+  "image": "https://assets.coingecko.com/coins/images/24804/large/photo_5972293329968282493_x.jpg?1696523963",
+  "current_price": 0.253737,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 38106813,
+  "total_volume": 8961.72,
+  "high_24h": 0.260868,
+  "low_24h": 0.252072,
+  "price_change_24h": -0.006088615741892623,
+  "price_change_percentage_24h": -2.34335,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 150000000,
+  "max_supply": 300000000,
+  "ath": 0.973843,
+  "ath_change_percentage": -73.99768,
+  "ath_date": "2023-08-08T08:40:32.416Z",
+  "atl": 0.01890379,
+  "atl_change_percentage": 1239.52896,
+  "atl_date": "2023-11-16T20:19:02.735Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:35.725Z",
+  "platforms": {
+    "bsc": "0xbe2d8ac2a370972c4328bed520b224c3903a4941"
+  }
+}

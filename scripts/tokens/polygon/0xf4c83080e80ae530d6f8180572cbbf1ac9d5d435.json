@@ -1,0 +1,31 @@
+{
+  "id": "blank",
+  "symbol": "blank",
+  "name": "BlockWallet",
+  "image": "https://assets.coingecko.com/coins/images/14209/large/Group_121417608.png?1696513925",
+  "current_price": 0.02763319,
+  "market_cap": 1148831,
+  "market_cap_rank": 2608,
+  "fully_diluted_valuation": 3453075,
+  "total_volume": 46881,
+  "high_24h": 0.02997305,
+  "low_24h": 0.02687392,
+  "price_change_24h": -0.002334083448322738,
+  "price_change_percentage_24h": -7.78878,
+  "market_cap_change_24h": -97037.92328941426,
+  "market_cap_change_percentage_24h": -7.78878,
+  "circulating_supply": 41574316.187857464,
+  "total_supply": 124961166,
+  "max_supply": null,
+  "ath": 5.5,
+  "ath_change_percentage": -99.5001,
+  "ath_date": "2021-04-01T23:43:07.269Z",
+  "atl": 0.01006784,
+  "atl_change_percentage": 173.33857,
+  "atl_date": "2021-07-20T14:12:03.744Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:15.727Z",
+  "platforms": {
+    "polygon": "0xf4c83080e80ae530d6f8180572cbbf1ac9d5d435"
+  }
+}

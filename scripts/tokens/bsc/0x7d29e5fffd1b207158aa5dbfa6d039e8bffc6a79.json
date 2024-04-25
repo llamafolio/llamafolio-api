@@ -1,0 +1,31 @@
+{
+  "id": "assaplay",
+  "symbol": "assa",
+  "name": "AssaPlay",
+  "image": "https://assets.coingecko.com/coins/images/25575/large/assa_coin_logo-02.png?1696524708",
+  "current_price": 0.00522713,
+  "market_cap": 6408714,
+  "market_cap_rank": 1671,
+  "fully_diluted_valuation": 52316035,
+  "total_volume": 1070.24,
+  "high_24h": 0.0089947,
+  "low_24h": 0.00411687,
+  "price_change_24h": 0.0011026,
+  "price_change_percentage_24h": 26.73269,
+  "market_cap_change_24h": 3955682,
+  "market_cap_change_percentage_24h": 161.25679,
+  "circulating_supply": 1225000000,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.04156775,
+  "ath_change_percentage": -88.16867,
+  "ath_date": "2022-05-16T06:27:53.328Z",
+  "atl": 0.00020304,
+  "atl_change_percentage": 2322.14235,
+  "atl_date": "2023-11-04T07:23:38.751Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:53.269Z",
+  "platforms": {
+    "bsc": "0x7d29e5fffd1b207158aa5dbfa6d039e8bffc6a79"
+  }
+}

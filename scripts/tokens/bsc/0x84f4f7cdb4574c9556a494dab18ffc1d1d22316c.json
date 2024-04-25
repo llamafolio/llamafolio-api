@@ -1,0 +1,31 @@
+{
+  "id": "king-shiba",
+  "symbol": "kingshib",
+  "name": "King Shiba",
+  "image": "https://assets.coingecko.com/coins/images/19215/large/kingshib.png?1696518662",
+  "current_price": 0.00415734,
+  "market_cap": 1646865,
+  "market_cap_rank": 2406,
+  "fully_diluted_valuation": 4155329,
+  "total_volume": 11735.13,
+  "high_24h": 0.00448009,
+  "low_24h": 0.00359816,
+  "price_change_24h": 0.0005548,
+  "price_change_percentage_24h": 15.40038,
+  "market_cap_change_24h": 217448,
+  "market_cap_change_percentage_24h": 15.21234,
+  "circulating_supply": 396326127.744771,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.191508,
+  "ath_change_percentage": -97.83664,
+  "ath_date": "2021-11-04T06:39:03.070Z",
+  "atl": 0.00000716,
+  "atl_change_percentage": 57791.33737,
+  "atl_date": "2021-10-22T02:37:15.060Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:41.847Z",
+  "platforms": {
+    "bsc": "0x84f4f7cdb4574c9556a494dab18ffc1d1d22316c"
+  }
+}

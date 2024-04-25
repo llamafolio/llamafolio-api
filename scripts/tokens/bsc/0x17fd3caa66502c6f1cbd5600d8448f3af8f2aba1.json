@@ -1,0 +1,31 @@
+{
+  "id": "smarty-pay",
+  "symbol": "spy",
+  "name": "Smarty Pay",
+  "image": "https://assets.coingecko.com/coins/images/18813/large/logo_smarty-pay.png?1696518275",
+  "current_price": 0.00069125,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 69068,
+  "total_volume": 338.69,
+  "high_24h": 0.00073891,
+  "low_24h": 0.00067986,
+  "price_change_24h": -0.000040419868902939,
+  "price_change_percentage_24h": -5.52437,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.405062,
+  "ath_change_percentage": -99.82987,
+  "ath_date": "2021-10-06T06:12:09.420Z",
+  "atl": 0.00056834,
+  "atl_change_percentage": 21.25627,
+  "atl_date": "2023-10-23T00:45:50.259Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:47.510Z",
+  "platforms": {
+    "bsc": "0x17fd3caa66502c6f1cbd5600d8448f3af8f2aba1"
+  }
+}

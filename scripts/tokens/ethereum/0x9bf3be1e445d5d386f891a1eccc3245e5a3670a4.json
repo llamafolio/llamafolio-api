@@ -1,0 +1,31 @@
+{
+  "id": "facet",
+  "symbol": "facet",
+  "name": "FACET",
+  "image": "https://assets.coingecko.com/coins/images/34825/large/FACET.jpg?1706191458",
+  "current_price": 3.5287e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2434.8,
+  "total_volume": 490.67,
+  "high_24h": 9.01099e-7,
+  "low_24h": 3.09326e-7,
+  "price_change_24h": 4.2833e-8,
+  "price_change_percentage_24h": 13.81558,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 6900000000,
+  "max_supply": null,
+  "ath": 0.00002348,
+  "ath_change_percentage": -98.49565,
+  "ath_date": "2024-01-25T14:07:17.845Z",
+  "atl": 1.37101e-7,
+  "atl_change_percentage": 157.63101,
+  "atl_date": "2024-04-17T11:18:19.937Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:29.345Z",
+  "platforms": {
+    "ethereum": "0x9bf3be1e445d5d386f891a1eccc3245e5a3670a4"
+  }
+}

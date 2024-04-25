@@ -1,0 +1,31 @@
+{
+  "id": "azur-token",
+  "symbol": "azur",
+  "name": "AZUR Token",
+  "image": "https://assets.coingecko.com/coins/images/35384/large/azur_logo_200_%284%29.png?1708446037",
+  "current_price": 0.00254645,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 163.8,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 200000000,
+  "max_supply": null,
+  "ath": 0.00784943,
+  "ath_change_percentage": -67.55881,
+  "ath_date": "2024-02-20T23:24:24.523Z",
+  "atl": 0.00249041,
+  "atl_change_percentage": 2.25019,
+  "atl_date": "2024-03-19T02:00:32.693Z",
+  "roi": null,
+  "last_updated": "2024-03-21T11:36:47.517Z",
+  "platforms": {
+    "ethereum": "0xf161cdb9aa33b2f48be273dae3f3bbb2330ad3e5"
+  }
+}

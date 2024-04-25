@@ -1,0 +1,31 @@
+{
+  "id": "tinhatcat",
+  "symbol": "thc",
+  "name": "TinHatCat",
+  "image": "https://assets.coingecko.com/coins/images/35911/large/photo_2024-01-16_17-31-36-removebg-preview.png?1710180825",
+  "current_price": 0.089562,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2974043,
+  "total_volume": 60570,
+  "high_24h": 0.10962,
+  "low_24h": 0.08674,
+  "price_change_24h": -0.02005732474360042,
+  "price_change_percentage_24h": -18.29721,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 33333333,
+  "max_supply": 33333333,
+  "ath": 0.447297,
+  "ath_change_percentage": -80.01852,
+  "ath_date": "2024-03-19T16:16:50.722Z",
+  "atl": 0.0478373,
+  "atl_change_percentage": 86.83427,
+  "atl_date": "2024-03-11T20:04:55.773Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:46.327Z",
+  "platforms": {
+    "fantom": "0x479673391b3818f5e3ed2fa69a58e13d685becf6"
+  }
+}

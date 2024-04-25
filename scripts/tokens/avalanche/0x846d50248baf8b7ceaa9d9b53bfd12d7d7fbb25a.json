@@ -1,0 +1,31 @@
+{
+  "id": "verso",
+  "symbol": "vso",
+  "name": "Verso",
+  "image": "https://assets.coingecko.com/coins/images/15169/large/versa.PNG?1696514824",
+  "current_price": 0.00074129,
+  "market_cap": 70253,
+  "market_cap_rank": 3897,
+  "fully_diluted_valuation": 74146,
+  "total_volume": 22314,
+  "high_24h": 0.0007638,
+  "low_24h": 0.00071782,
+  "price_change_24h": -0.000012479191767507,
+  "price_change_percentage_24h": -1.65557,
+  "market_cap_change_24h": -1507.0783483748091,
+  "market_cap_change_percentage_24h": -2.10015,
+  "circulating_supply": 94750011,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 0.290171,
+  "ath_change_percentage": -99.74434,
+  "ath_date": "2021-05-05T11:47:36.215Z",
+  "atl": 0.00031535,
+  "atl_change_percentage": 135.25071,
+  "atl_date": "2023-10-24T11:28:04.115Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:11.917Z",
+  "platforms": {
+    "avalanche": "0x846d50248baf8b7ceaa9d9b53bfd12d7d7fbb25a"
+  }
+}

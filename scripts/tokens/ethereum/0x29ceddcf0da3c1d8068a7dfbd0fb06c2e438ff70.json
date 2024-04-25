@@ -1,0 +1,31 @@
+{
+  "id": "freela",
+  "symbol": "frel",
+  "name": "Freela",
+  "image": "https://assets.coingecko.com/coins/images/15856/large/freela.PNG?1696515472",
+  "current_price": 0.00022007,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 219969,
+  "total_volume": 292407,
+  "high_24h": 0.00022081,
+  "low_24h": 0.00021911,
+  "price_change_24h": -6.959292954e-8,
+  "price_change_percentage_24h": -0.03161,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.03648575,
+  "ath_change_percentage": -99.39663,
+  "ath_date": "2021-05-28T03:09:43.777Z",
+  "atl": 0.00007399,
+  "atl_change_percentage": 197.54657,
+  "atl_date": "2023-09-13T02:05:17.356Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:17.881Z",
+  "platforms": {
+    "ethereum": "0x29ceddcf0da3c1d8068a7dfbd0fb06c2e438ff70"
+  }
+}

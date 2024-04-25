@@ -1,0 +1,31 @@
+{
+  "id": "efun",
+  "symbol": "efun",
+  "name": "EFUN",
+  "image": "https://assets.coingecko.com/coins/images/21882/large/6GyaKgva_400x400.jpg?1696521234",
+  "current_price": 0.00002689,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 268900,
+  "total_volume": 0.00176857,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.00729,
+  "ath_change_percentage": -99.63114,
+  "ath_date": "2021-12-23T00:10:37.477Z",
+  "atl": 0.00002555,
+  "atl_change_percentage": 5.24781,
+  "atl_date": "2023-07-25T05:13:09.272Z",
+  "roi": null,
+  "last_updated": "2023-08-02T03:00:19.140Z",
+  "platforms": {
+    "bsc": "0x6746e37a756da9e34f0bbf1c0495784ba33b79b4"
+  }
+}

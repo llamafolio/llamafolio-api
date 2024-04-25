@@ -1,0 +1,31 @@
+{
+  "id": "donut",
+  "symbol": "donut",
+  "name": "Donut",
+  "image": "https://assets.coingecko.com/coins/images/7538/large/Donut.png?1696507804",
+  "current_price": 0.01277823,
+  "market_cap": 2817378,
+  "market_cap_rank": 2097,
+  "fully_diluted_valuation": 2817378,
+  "total_volume": 49584,
+  "high_24h": 0.01513592,
+  "low_24h": 0.01266187,
+  "price_change_24h": -0.002138832445783938,
+  "price_change_percentage_24h": -14.33816,
+  "market_cap_change_24h": -473273.1493210294,
+  "market_cap_change_percentage_24h": -14.38235,
+  "circulating_supply": 220452014.555374,
+  "total_supply": 220452014.555374,
+  "max_supply": null,
+  "ath": 0.093022,
+  "ath_change_percentage": -86.24905,
+  "ath_date": "2021-01-29T21:03:33.774Z",
+  "atl": 0.00002839,
+  "atl_change_percentage": 44957.28702,
+  "atl_date": "2021-01-26T22:35:39.188Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:52:51.679Z",
+  "platforms": {
+    "ethereum": "0xc0f9bd5fa5698b6505f643900ffa515ea5df54a9"
+  }
+}

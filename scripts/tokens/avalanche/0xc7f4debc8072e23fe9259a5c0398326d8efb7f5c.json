@@ -1,0 +1,31 @@
+{
+  "id": "heroeschained",
+  "symbol": "hec",
+  "name": "HeroesChained",
+  "image": "https://assets.coingecko.com/coins/images/22813/large/logo_-_2022-01-20T140628.062.png?1696522115",
+  "current_price": 0.0408252,
+  "market_cap": 2033340,
+  "market_cap_rank": 2288,
+  "fully_diluted_valuation": 4079878,
+  "total_volume": 296672,
+  "high_24h": 0.04555449,
+  "low_24h": 0.04062743,
+  "price_change_24h": -0.004499332096660709,
+  "price_change_percentage_24h": -9.92692,
+  "market_cap_change_24h": -226041.06041134964,
+  "market_cap_change_percentage_24h": -10.00456,
+  "circulating_supply": 49838256.0496,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 3.3,
+  "ath_change_percentage": -98.76422,
+  "ath_date": "2022-02-10T17:44:59.017Z",
+  "atl": 0.01994197,
+  "atl_change_percentage": 104.66495,
+  "atl_date": "2023-01-01T08:01:35.786Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:19.981Z",
+  "platforms": {
+    "avalanche": "0xc7f4debc8072e23fe9259a5c0398326d8efb7f5c"
+  }
+}

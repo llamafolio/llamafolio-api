@@ -1,0 +1,35 @@
+{
+  "id": "tap",
+  "symbol": "xtp",
+  "name": "Tap",
+  "image": "https://assets.coingecko.com/coins/images/10291/large/0_3SJYkk_400x400.jpg?1696510296",
+  "current_price": 0.00136664,
+  "market_cap": 5138477,
+  "market_cap_rank": 1780,
+  "fully_diluted_valuation": 13602916,
+  "total_volume": 20269,
+  "high_24h": 0.00143796,
+  "low_24h": 0.00131716,
+  "price_change_24h": -0.000035763256944455,
+  "price_change_percentage_24h": -2.55015,
+  "market_cap_change_24h": -46902.76884421706,
+  "market_cap_change_percentage_24h": -0.90452,
+  "circulating_supply": 3777481820.34,
+  "total_supply": 10000000000,
+  "max_supply": null,
+  "ath": 0.402555,
+  "ath_change_percentage": -99.67226,
+  "ath_date": "2021-03-01T17:28:58.437Z",
+  "atl": 0.000159,
+  "atl_change_percentage": 729.78518,
+  "atl_date": "2022-11-14T06:05:43.357Z",
+  "roi": {
+    "times": -0.8633362346584253,
+    "currency": "usd",
+    "percentage": -86.33362346584254
+  },
+  "last_updated": "2024-04-25T08:58:32.046Z",
+  "platforms": {
+    "ethereum": "0x6368e1e18c4c419ddfc608a0bed1ccb87b9250fc"
+  }
+}

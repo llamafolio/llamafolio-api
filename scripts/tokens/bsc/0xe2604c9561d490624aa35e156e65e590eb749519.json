@@ -1,0 +1,31 @@
+{
+  "id": "goldminer",
+  "symbol": "gm",
+  "name": "GoldMiner",
+  "image": "https://assets.coingecko.com/coins/images/20416/large/LWzVDEkR_400x400.jpg?1696519824",
+  "current_price": 0.00000166,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 165489,
+  "total_volume": 11668.23,
+  "high_24h": 0.00000166,
+  "low_24h": 0.00000152,
+  "price_change_24h": -1.423342446e-9,
+  "price_change_percentage_24h": -0.08592,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.00084845,
+  "ath_change_percentage": -99.82005,
+  "ath_date": "2021-11-15T23:57:34.921Z",
+  "atl": 0.00000106,
+  "atl_change_percentage": 43.888,
+  "atl_date": "2023-10-19T02:03:34.356Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:58.534Z",
+  "platforms": {
+    "bsc": "0xe2604c9561d490624aa35e156e65e590eb749519"
+  }
+}

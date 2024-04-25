@@ -1,0 +1,31 @@
+{
+  "id": "la-peseta-2",
+  "symbol": "ptas",
+  "name": "La Peseta",
+  "image": "https://assets.coingecko.com/coins/images/30631/large/ptas.jpg?1696529504",
+  "current_price": 0.00569898,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 53.18,
+  "high_24h": 0.00581663,
+  "low_24h": 0.00190082,
+  "price_change_24h": -0.000099800745754733,
+  "price_change_percentage_24h": -1.72107,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.01939071,
+  "ath_change_percentage": -70.62139,
+  "ath_date": "2023-06-06T09:23:38.026Z",
+  "atl": 0.00027207,
+  "atl_change_percentage": 1993.81235,
+  "atl_date": "2023-09-20T04:33:58.589Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:48.159Z",
+  "platforms": {
+    "bsc": "0x991bb6093fa735d27cd1444b2ad8fdd95876fed5"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "lords",
+  "symbol": "lords",
+  "name": "LORDS",
+  "image": "https://assets.coingecko.com/coins/images/22171/large/Frame_1.png?1696521515",
+  "current_price": 0.145069,
+  "market_cap": 18263342,
+  "market_cap_rank": 1154,
+  "fully_diluted_valuation": 72431839,
+  "total_volume": 167101,
+  "high_24h": 0.148484,
+  "low_24h": 0.139365,
+  "price_change_24h": -0.001304827882796678,
+  "price_change_percentage_24h": -0.89143,
+  "market_cap_change_24h": -268280.3902391754,
+  "market_cap_change_percentage_24h": -1.44769,
+  "circulating_supply": 126072611.56808275,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 1.094,
+  "ath_change_percentage": -86.74177,
+  "ath_date": "2022-01-05T19:03:33.337Z",
+  "atl": 0.01317816,
+  "atl_change_percentage": 1000.17789,
+  "atl_date": "2022-11-10T00:28:12.709Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:46.545Z",
+  "platforms": {
+    "ethereum": "0x686f2404e77ab0d9070a46cdfb0b7fecdd2318b0"
+  }
+}

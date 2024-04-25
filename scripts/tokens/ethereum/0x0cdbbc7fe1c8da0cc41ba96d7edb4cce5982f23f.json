@@ -1,0 +1,31 @@
+{
+  "id": "units-limited-supply",
+  "symbol": "uls",
+  "name": "UNITS LIMITED SUPPLY",
+  "image": "https://assets.coingecko.com/coins/images/33560/large/dark_token.png?1702429859",
+  "current_price": 0.01401839,
+  "market_cap": 63166,
+  "market_cap_rank": 3924,
+  "fully_diluted_valuation": 140184,
+  "total_volume": 46.7,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 4544527.961964911,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.04962818,
+  "ath_change_percentage": -71.75316,
+  "ath_date": "2023-12-18T19:44:54.667Z",
+  "atl": 0.00441512,
+  "atl_change_percentage": 217.50858,
+  "atl_date": "2024-01-09T14:24:35.982Z",
+  "roi": null,
+  "last_updated": "2024-04-16T10:54:20.381Z",
+  "platforms": {
+    "ethereum": "0x0cdbbc7fe1c8da0cc41ba96d7edb4cce5982f23f"
+  }
+}

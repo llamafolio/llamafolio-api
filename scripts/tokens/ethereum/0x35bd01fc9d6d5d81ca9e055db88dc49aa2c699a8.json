@@ -1,0 +1,31 @@
+{
+  "id": "friends-with-benefits-pro",
+  "symbol": "fwb",
+  "name": "Friends With Benefits Pro",
+  "image": "https://assets.coingecko.com/coins/images/14391/large/xRGEXmQN_400x400.png?1696514082",
+  "current_price": 5.3,
+  "market_cap": 3164497,
+  "market_cap_rank": 2034,
+  "fully_diluted_valuation": 5296551,
+  "total_volume": 10906.5,
+  "high_24h": 5.68,
+  "low_24h": 5.26,
+  "price_change_24h": -0.09866322315273823,
+  "price_change_percentage_24h": -1.8284,
+  "market_cap_change_24h": -60142.29308291711,
+  "market_cap_change_percentage_24h": -1.86509,
+  "circulating_supply": 597463.7112890496,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 196.19,
+  "ath_change_percentage": -97.30411,
+  "ath_date": "2021-08-28T22:21:59.239Z",
+  "atl": 1.063,
+  "atl_change_percentage": 397.73221,
+  "atl_date": "2024-01-22T04:55:32.904Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:44.900Z",
+  "platforms": {
+    "ethereum": "0x35bd01fc9d6d5d81ca9e055db88dc49aa2c699a8"
+  }
+}

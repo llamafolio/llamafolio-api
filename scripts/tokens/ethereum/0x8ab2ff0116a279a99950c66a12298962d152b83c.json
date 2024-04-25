@@ -1,0 +1,31 @@
+{
+  "id": "ordiswap-token",
+  "symbol": "ords",
+  "name": "Ordiswap",
+  "image": "https://assets.coingecko.com/coins/images/33910/large/IMG-20240113-WA0018.jpg.jpg?1705169306",
+  "current_price": 0.100878,
+  "market_cap": 60537636,
+  "market_cap_rank": 624,
+  "fully_diluted_valuation": 100815553,
+  "total_volume": 7394890,
+  "high_24h": 0.108197,
+  "low_24h": 0.098471,
+  "price_change_24h": -0.006288288776720011,
+  "price_change_percentage_24h": -5.8678,
+  "market_cap_change_24h": -4009085.9553438053,
+  "market_cap_change_percentage_24h": -6.21114,
+  "circulating_supply": 600479129.4616876,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.277433,
+  "ath_change_percentage": -63.57811,
+  "ath_date": "2024-03-05T01:05:27.759Z",
+  "atl": 0.03674003,
+  "atl_change_percentage": 175.03107,
+  "atl_date": "2023-12-30T21:35:31.707Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:45.106Z",
+  "platforms": {
+    "ethereum": "0x8ab2ff0116a279a99950c66a12298962d152b83c"
+  }
+}

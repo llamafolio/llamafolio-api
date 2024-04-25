@@ -1,0 +1,31 @@
+{
+  "id": "blockasset",
+  "symbol": "block",
+  "name": "Blockasset",
+  "image": "https://assets.coingecko.com/coins/images/21332/large/Blockasset_Square.png?1712955829",
+  "current_price": 0.100584,
+  "market_cap": 24394356,
+  "market_cap_rank": 1016,
+  "fully_diluted_valuation": 32165020,
+  "total_volume": 160013,
+  "high_24h": 0.118762,
+  "low_24h": 0.100516,
+  "price_change_24h": -0.01628096453465311,
+  "price_change_percentage_24h": -13.93149,
+  "market_cap_change_24h": -4057551.5732244663,
+  "market_cap_change_percentage_24h": -14.26109,
+  "circulating_supply": 242692031,
+  "total_supply": 320000000,
+  "max_supply": null,
+  "ath": 0.949403,
+  "ath_change_percentage": -89.39463,
+  "ath_date": "2021-12-09T14:20:49.867Z",
+  "atl": 0.01546995,
+  "atl_change_percentage": 550.85975,
+  "atl_date": "2022-12-19T11:15:58.514Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:54.783Z",
+  "platforms": {
+    "bsc": "0xbc7a566b85ef73f935e640a06b5a8b031cd975df"
+  }
+}

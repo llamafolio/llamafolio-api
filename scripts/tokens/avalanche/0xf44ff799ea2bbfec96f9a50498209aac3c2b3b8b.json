@@ -1,0 +1,31 @@
+{
+  "id": "route",
+  "symbol": "route",
+  "name": "Router Protocol",
+  "image": "https://assets.coingecko.com/coins/images/13709/large/route_token_200x200-19.png?1696513454",
+  "current_price": 3.1,
+  "market_cap": 47026517,
+  "market_cap_rank": 718,
+  "fully_diluted_valuation": 62011566,
+  "total_volume": 1207336,
+  "high_24h": 3.49,
+  "low_24h": 3.1,
+  "price_change_24h": -0.3384959496387898,
+  "price_change_percentage_24h": -9.83314,
+  "market_cap_change_24h": -5189480.732768744,
+  "market_cap_change_percentage_24h": -9.93849,
+  "circulating_supply": 15167014.7469,
+  "total_supply": 20000000,
+  "max_supply": null,
+  "ath": 19.08,
+  "ath_change_percentage": -83.71836,
+  "ath_date": "2021-05-16T15:44:05.672Z",
+  "atl": 0.947866,
+  "atl_change_percentage": 227.73678,
+  "atl_date": "2022-05-12T07:30:03.074Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:40.837Z",
+  "platforms": {
+    "avalanche": "0xf44ff799ea2bbfec96f9a50498209aac3c2b3b8b"
+  }
+}

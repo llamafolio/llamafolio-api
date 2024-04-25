@@ -1,0 +1,31 @@
+{
+  "id": "orion-protocol",
+  "symbol": "orn",
+  "name": "Orion",
+  "image": "https://assets.coingecko.com/coins/images/11841/large/new_logo.jpeg?1696511712",
+  "current_price": 1.47,
+  "market_cap": 50409737,
+  "market_cap_rank": 684,
+  "fully_diluted_valuation": 146399176,
+  "total_volume": 5768779,
+  "high_24h": 1.67,
+  "low_24h": 1.44,
+  "price_change_24h": -0.1764338762937927,
+  "price_change_percentage_24h": -10.72044,
+  "market_cap_change_24h": -6179436.808910973,
+  "market_cap_change_percentage_24h": -10.91982,
+  "circulating_supply": 34433074.41431038,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 29.25,
+  "ath_change_percentage": -94.99175,
+  "ath_date": "2021-03-22T14:45:01.502Z",
+  "atl": 0.46415,
+  "atl_change_percentage": 215.59513,
+  "atl_date": "2023-10-12T21:00:03.477Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:47.386Z",
+  "platforms": {
+    "ethereum": "0x0258f474786ddfd37abce6df6bbb1dd5dfc4434a"
+  }
+}

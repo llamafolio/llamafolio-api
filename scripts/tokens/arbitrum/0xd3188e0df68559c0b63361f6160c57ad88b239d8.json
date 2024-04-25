@@ -1,0 +1,31 @@
+{
+  "id": "astra-dao-2",
+  "symbol": "astradao",
+  "name": "Astra DAO",
+  "image": "https://assets.coingecko.com/coins/images/32870/large/ASTRADAO.jpg?1699673097",
+  "current_price": 4.2286e-8,
+  "market_cap": 3762251,
+  "market_cap_rank": 1937,
+  "fully_diluted_valuation": 5505294,
+  "total_volume": 61691,
+  "high_24h": 4.3964e-8,
+  "low_24h": 4.2058e-8,
+  "price_change_24h": -1.194896251e-9,
+  "price_change_percentage_24h": -2.74807,
+  "market_cap_change_24h": -97886.49757197825,
+  "market_cap_change_percentage_24h": -2.53583,
+  "circulating_supply": 88840419580442,
+  "total_supply": 130000000000000,
+  "max_supply": 130000000000000,
+  "ath": 2.10437e-7,
+  "ath_change_percentage": -79.98902,
+  "ath_date": "2023-12-17T02:38:29.488Z",
+  "atl": 3.938e-8,
+  "atl_change_percentage": 6.93317,
+  "atl_date": "2024-04-13T20:22:48.074Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:56:55.246Z",
+  "platforms": {
+    "arbitrum": "0xd3188e0df68559c0b63361f6160c57ad88b239d8"
+  }
+}

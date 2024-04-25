@@ -1,0 +1,31 @@
+{
+  "id": "cyop-2",
+  "symbol": "cyop",
+  "name": "CyOp",
+  "image": "https://assets.coingecko.com/coins/images/33598/large/CYOP.jpg?1702477495",
+  "current_price": 0.00267969,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 267969,
+  "total_volume": 28.9,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 0.00347039,
+  "ath_change_percentage": -22.78422,
+  "ath_date": "2023-12-17T23:19:57.795Z",
+  "atl": 0.00206383,
+  "atl_change_percentage": 29.84068,
+  "atl_date": "2024-01-25T17:23:35.109Z",
+  "roi": null,
+  "last_updated": "2024-02-20T17:30:24.847Z",
+  "platforms": {
+    "ethereum": "0x553531c45eabc2f3343d19885262ac784046fd5f"
+  }
+}

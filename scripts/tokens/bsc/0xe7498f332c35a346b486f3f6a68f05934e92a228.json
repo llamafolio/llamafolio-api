@@ -1,0 +1,31 @@
+{
+  "id": "nevacoin",
+  "symbol": "neva",
+  "name": "NevaCoin",
+  "image": "https://assets.coingecko.com/coins/images/1421/large/Neva_logo_600_600.png?1696502473",
+  "current_price": 1.002,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 5445784,
+  "total_volume": 218316,
+  "high_24h": 1.01,
+  "low_24h": 0.974705,
+  "price_change_24h": 0.00169363,
+  "price_change_percentage_24h": 0.16938,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 5431630,
+  "max_supply": null,
+  "ath": 73.36,
+  "ath_change_percentage": -98.63734,
+  "ath_date": "2024-01-09T21:15:24.963Z",
+  "atl": 0.00002003,
+  "atl_change_percentage": 4990033.93734,
+  "atl_date": "2020-11-26T20:59:01.251Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:22.361Z",
+  "platforms": {
+    "bsc": "0xe7498f332c35a346b486f3f6a68f05934e92a228"
+  }
+}

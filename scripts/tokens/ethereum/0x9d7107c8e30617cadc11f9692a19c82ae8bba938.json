@@ -1,0 +1,31 @@
+{
+  "id": "lucky-roo",
+  "symbol": "roo",
+  "name": "Lucky Roo",
+  "image": "https://assets.coingecko.com/coins/images/27943/large/lucky200.png?1696526962",
+  "current_price": 4.2518e-8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 425184,
+  "total_volume": 1710.85,
+  "high_24h": 4.2904e-8,
+  "low_24h": 4.2518e-8,
+  "price_change_24h": -2.50440633e-10,
+  "price_change_percentage_24h": -0.58557,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000000000,
+  "max_supply": 10000000000000,
+  "ath": 9.99795e-7,
+  "ath_change_percentage": -95.74729,
+  "ath_date": "2023-05-23T11:55:39.023Z",
+  "atl": 2.1321e-8,
+  "atl_change_percentage": 99.41857,
+  "atl_date": "2023-05-24T18:03:09.095Z",
+  "roi": null,
+  "last_updated": "2024-04-24T13:30:32.417Z",
+  "platforms": {
+    "ethereum": "0x9d7107c8e30617cadc11f9692a19c82ae8bba938"
+  }
+}

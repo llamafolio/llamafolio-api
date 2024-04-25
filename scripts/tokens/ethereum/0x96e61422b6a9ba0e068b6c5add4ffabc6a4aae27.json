@@ -1,0 +1,31 @@
+{
+  "id": "iron-bank-euro",
+  "symbol": "ibeur",
+  "name": "Iron Bank EUR",
+  "image": "https://assets.coingecko.com/coins/images/17285/large/Iron_Bank_Euro.png?1696516839",
+  "current_price": 1.046,
+  "market_cap": 5742672,
+  "market_cap_rank": 1724,
+  "fully_diluted_valuation": 5742672,
+  "total_volume": 30946,
+  "high_24h": 1.076,
+  "low_24h": 1.025,
+  "price_change_24h": -0.022697332806662866,
+  "price_change_percentage_24h": -2.12455,
+  "market_cap_change_24h": -151891.7318916358,
+  "market_cap_change_percentage_24h": -2.57681,
+  "circulating_supply": 5500000,
+  "total_supply": 5500000,
+  "max_supply": 5500000,
+  "ath": 1.77,
+  "ath_change_percentage": -41.06074,
+  "ath_date": "2021-07-24T17:31:43.456Z",
+  "atl": 0.00993562,
+  "atl_change_percentage": 10415.67253,
+  "atl_date": "2022-05-12T11:06:09.074Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:27.458Z",
+  "platforms": {
+    "ethereum": "0x96e61422b6a9ba0e068b6c5add4ffabc6a4aae27"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "id": "waltonchain",
+  "symbol": "wtc",
+  "name": "Waltonchain",
+  "image": "https://assets.coingecko.com/coins/images/1093/large/ggx6nnW.png?1696502192",
+  "current_price": 0.01137532,
+  "market_cap": 332795,
+  "market_cap_rank": 3266,
+  "fully_diluted_valuation": 798268,
+  "total_volume": 43906,
+  "high_24h": 0.01190918,
+  "low_24h": 0.01090704,
+  "price_change_24h": -0.000530004448437278,
+  "price_change_percentage_24h": -4.45183,
+  "market_cap_change_24h": -14165.391764684871,
+  "market_cap_change_percentage_24h": -4.08271,
+  "circulating_supply": 29182764.810668297,
+  "total_supply": 70000000,
+  "max_supply": null,
+  "ath": 41.15,
+  "ath_change_percentage": -99.97227,
+  "ath_date": "2018-01-27T00:00:00.000Z",
+  "atl": 0.00084342,
+  "atl_change_percentage": 1252.9614,
+  "atl_date": "2024-03-19T09:15:19.020Z",
+  "roi": {
+    "times": -0.9824995072376068,
+    "currency": "usd",
+    "percentage": -98.24995072376068
+  },
+  "last_updated": "2024-04-25T09:09:55.515Z",
+  "platforms": {
+    "ethereum": "0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74"
+  }
+}

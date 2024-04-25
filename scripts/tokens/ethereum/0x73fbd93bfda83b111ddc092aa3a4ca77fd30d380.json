@@ -1,0 +1,31 @@
+{
+  "id": "sophiaverse",
+  "symbol": "soph",
+  "name": "SophiaVerse",
+  "image": "https://assets.coingecko.com/coins/images/30050/large/Icon_200x200.png?1696528972",
+  "current_price": 0.069773,
+  "market_cap": 15812139,
+  "market_cap_rank": 1225,
+  "fully_diluted_valuation": 69699467,
+  "total_volume": 157339,
+  "high_24h": 0.0736,
+  "low_24h": 0.068922,
+  "price_change_24h": -0.001361027872661833,
+  "price_change_percentage_24h": -1.91332,
+  "market_cap_change_24h": -297419.4269341957,
+  "market_cap_change_percentage_24h": -1.84623,
+  "circulating_supply": 226861697,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.26665,
+  "ath_change_percentage": -73.76683,
+  "ath_date": "2023-07-29T00:09:11.836Z",
+  "atl": 0.051882,
+  "atl_change_percentage": 34.82714,
+  "atl_date": "2024-02-12T13:54:52.454Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:18.684Z",
+  "platforms": {
+    "ethereum": "0x73fbd93bfda83b111ddc092aa3a4ca77fd30d380"
+  }
+}

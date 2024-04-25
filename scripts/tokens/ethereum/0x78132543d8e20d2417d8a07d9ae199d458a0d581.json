@@ -1,0 +1,31 @@
+{
+  "id": "luna-inu",
+  "symbol": "linu",
+  "name": "Luna Inu",
+  "image": "https://assets.coingecko.com/coins/images/25623/large/output-onlinepngtools.png?1696524757",
+  "current_price": 6.239e-9,
+  "market_cap": 4671886,
+  "market_cap_rank": 1832,
+  "fully_diluted_valuation": 6236105,
+  "total_volume": 234958,
+  "high_24h": 6.968e-9,
+  "low_24h": 6.151e-9,
+  "price_change_24h": -6.6708531e-10,
+  "price_change_percentage_24h": -9.65892,
+  "market_cap_change_24h": -510871.0551260449,
+  "market_cap_change_percentage_24h": -9.85713,
+  "circulating_supply": 749167374404513,
+  "total_supply": 1000000000000000,
+  "max_supply": null,
+  "ath": 3.9529e-8,
+  "ath_change_percentage": -84.20184,
+  "ath_date": "2024-03-13T10:18:54.248Z",
+  "atl": 6.2895e-11,
+  "atl_change_percentage": 9829.15874,
+  "atl_date": "2022-05-26T09:15:32.485Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:04.481Z",
+  "platforms": {
+    "ethereum": "0x78132543d8e20d2417d8a07d9ae199d458a0d581"
+  }
+}

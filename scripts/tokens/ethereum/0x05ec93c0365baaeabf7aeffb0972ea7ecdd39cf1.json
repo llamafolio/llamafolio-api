@@ -1,0 +1,31 @@
+{
+  "id": "aave-bat",
+  "symbol": "abat",
+  "name": "Aave BAT",
+  "image": "https://assets.coingecko.com/coins/images/14246/large/aBAT.1fe436f7_-_Copy.png?1696513961",
+  "current_price": 0.261295,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 173093,
+  "total_volume": 0,
+  "high_24h": 0.284425,
+  "low_24h": 0.258978,
+  "price_change_24h": -0.020969645301369962,
+  "price_change_percentage_24h": -7.47519,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 662441.111186988,
+  "max_supply": null,
+  "ath": 1.86,
+  "ath_change_percentage": -86.03221,
+  "ath_date": "2021-11-28T01:02:09.902Z",
+  "atl": 0.159433,
+  "atl_change_percentage": 63.17404,
+  "atl_date": "2023-09-11T21:00:06.635Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:33.478Z",
+  "platforms": {
+    "ethereum": "0x05ec93c0365baaeabf7aeffb0972ea7ecdd39cf1"
+  }
+}

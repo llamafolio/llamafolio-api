@@ -1,0 +1,31 @@
+{
+  "id": "frogswap",
+  "symbol": "frog",
+  "name": "FrogSwap",
+  "image": "https://assets.coingecko.com/coins/images/21449/large/logo.54d7099f.png?1696520811",
+  "current_price": 0.077826,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 25515,
+  "high_24h": 0.093483,
+  "low_24h": 0.073995,
+  "price_change_24h": -0.002736029142474381,
+  "price_change_percentage_24h": -3.39617,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 3.31,
+  "ath_change_percentage": -97.65169,
+  "ath_date": "2021-12-11T04:12:11.752Z",
+  "atl": 0.02350802,
+  "atl_change_percentage": 230.82418,
+  "atl_date": "2023-08-28T12:14:51.179Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:28.155Z",
+  "platforms": {
+    "ethereum": "0x4fee21439f2b95b72da2f9f901b3956f27fe91d5"
+  }
+}

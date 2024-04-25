@@ -1,0 +1,31 @@
+{
+  "id": "soroosh-smart-ecosystem",
+  "symbol": "sse",
+  "name": "Soroosh Smart Ecosystem",
+  "image": "https://assets.coingecko.com/coins/images/30049/large/SSEToken-200x200.png?1696528971",
+  "current_price": 0.00404631,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 24277886,
+  "total_volume": 97902,
+  "high_24h": 0.00421181,
+  "low_24h": 0.00382767,
+  "price_change_24h": -0.000141369489148521,
+  "price_change_percentage_24h": -3.37584,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 6000000000,
+  "max_supply": 6000000000,
+  "ath": 0.067269,
+  "ath_change_percentage": -93.96587,
+  "ath_date": "2024-01-18T05:47:58.474Z",
+  "atl": 0.00311241,
+  "atl_change_percentage": 30.41567,
+  "atl_date": "2024-04-15T02:40:21.526Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:15.989Z",
+  "platforms": {
+    "bsc": "0x6a1225c87f15da91e2fa5ee7b2075e2e3a9dbc39"
+  }
+}

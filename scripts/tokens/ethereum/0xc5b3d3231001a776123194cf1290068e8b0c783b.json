@@ -1,0 +1,31 @@
+{
+  "id": "lit",
+  "symbol": "lit",
+  "name": "LIT",
+  "image": "https://assets.coingecko.com/coins/images/21344/large/LitLogo_CG.png?1696520710",
+  "current_price": 0.00003899,
+  "market_cap": 1992611,
+  "market_cap_rank": 2293,
+  "fully_diluted_valuation": 3899434,
+  "total_volume": 1180.56,
+  "high_24h": 0.00004099,
+  "low_24h": 0.00003903,
+  "price_change_24h": -0.000001779193534566,
+  "price_change_percentage_24h": -4.3636,
+  "market_cap_change_24h": -90916.78961631958,
+  "market_cap_change_percentage_24h": -4.3636,
+  "circulating_supply": 51100000000,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.00533113,
+  "ath_change_percentage": -99.26783,
+  "ath_date": "2022-01-02T23:56:24.167Z",
+  "atl": 0.00002201,
+  "atl_change_percentage": 77.36881,
+  "atl_date": "2023-01-03T18:41:44.831Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:52:44.684Z",
+  "platforms": {
+    "ethereum": "0xc5b3d3231001a776123194cf1290068e8b0c783b"
+  }
+}

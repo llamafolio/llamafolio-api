@@ -1,0 +1,31 @@
+{
+  "id": "bigfoot-monster",
+  "symbol": "bigf",
+  "name": "Bigfoot Monster",
+  "image": "https://assets.coingecko.com/coins/images/32795/large/Safeimagekit-resized-img_%284%29.png?1699445622",
+  "current_price": 0.00006022,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 60222,
+  "total_volume": 983.72,
+  "high_24h": 0.00006294,
+  "low_24h": 0.00005786,
+  "price_change_24h": 0.00000236,
+  "price_change_percentage_24h": 4.07763,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.0010417,
+  "ath_change_percentage": -94.2189,
+  "ath_date": "2023-11-12T21:39:43.358Z",
+  "atl": 0.0000497,
+  "atl_change_percentage": 21.17372,
+  "atl_date": "2024-04-18T12:38:32.518Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:06.472Z",
+  "platforms": {
+    "ethereum": "0xe785ec36356b973d8c0a071d478940d6f42c0178"
+  }
+}

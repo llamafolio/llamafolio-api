@@ -1,0 +1,31 @@
+{
+  "id": "super-trump",
+  "symbol": "strump",
+  "name": "Super Trump",
+  "image": "https://assets.coingecko.com/coins/images/36083/large/Super_Trump.png?1710418492",
+  "current_price": 0.00288549,
+  "market_cap": 5278841,
+  "market_cap_rank": 1772,
+  "fully_diluted_valuation": 6732716,
+  "total_volume": 725205,
+  "high_24h": 0.00318455,
+  "low_24h": 0.00284473,
+  "price_change_24h": -0.000226017216358956,
+  "price_change_percentage_24h": -7.26392,
+  "market_cap_change_24h": -439917.72152899206,
+  "market_cap_change_percentage_24h": -7.69254,
+  "circulating_supply": 1834382587.6330369,
+  "total_supply": 2339600235.633037,
+  "max_supply": 2600000000,
+  "ath": 0.01547517,
+  "ath_change_percentage": -81.3695,
+  "ath_date": "2024-03-14T16:25:51.425Z",
+  "atl": 0.00218434,
+  "atl_change_percentage": 31.98956,
+  "atl_date": "2024-04-16T23:21:51.085Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:32.062Z",
+  "platforms": {
+    "ethereum": "0x7039cd6d7966672f194e8139074c3d5c4e6dcf65"
+  }
+}

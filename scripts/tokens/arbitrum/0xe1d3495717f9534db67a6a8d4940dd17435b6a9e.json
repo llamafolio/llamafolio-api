@@ -1,0 +1,31 @@
+{
+  "id": "locus-finance",
+  "symbol": "locus",
+  "name": "Locus Finance",
+  "image": "https://assets.coingecko.com/coins/images/33441/large/locus_finance_logo.jpeg?1701854209",
+  "current_price": 0.63606,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2214118,
+  "total_volume": 27142,
+  "high_24h": 0.675695,
+  "low_24h": 0.633565,
+  "price_change_24h": -0.0236015088066186,
+  "price_change_percentage_24h": -3.57782,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 3458029.96,
+  "max_supply": 15000000,
+  "ath": 3.4,
+  "ath_change_percentage": -81.30692,
+  "ath_date": "2024-01-03T12:24:42.740Z",
+  "atl": 0.421049,
+  "atl_change_percentage": 51.06565,
+  "atl_date": "2024-03-08T00:38:31.465Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:36.523Z",
+  "platforms": {
+    "arbitrum": "0xe1d3495717f9534db67a6a8d4940dd17435b6a9e"
+  }
+}

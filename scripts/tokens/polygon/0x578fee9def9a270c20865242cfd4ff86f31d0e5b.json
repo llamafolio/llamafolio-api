@@ -1,0 +1,31 @@
+{
+  "id": "runy",
+  "symbol": "runy",
+  "name": "Runy",
+  "image": "https://assets.coingecko.com/coins/images/29125/large/Coin_Runy_200_200.png?1696528086",
+  "current_price": 0.00030357,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 459778,
+  "total_volume": 1.67,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1514559722,
+  "max_supply": 16200000000,
+  "ath": 0.215002,
+  "ath_change_percentage": -99.85881,
+  "ath_date": "2023-08-22T12:34:32.768Z",
+  "atl": 0.00026217,
+  "atl_change_percentage": 15.79328,
+  "atl_date": "2024-04-19T02:52:22.866Z",
+  "roi": null,
+  "last_updated": "2024-04-24T01:01:47.902Z",
+  "platforms": {
+    "polygon": "0x578fee9def9a270c20865242cfd4ff86f31d0e5b"
+  }
+}

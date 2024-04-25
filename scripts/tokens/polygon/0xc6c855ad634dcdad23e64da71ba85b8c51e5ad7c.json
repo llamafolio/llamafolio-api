@@ -1,0 +1,31 @@
+{
+  "id": "decentral-games-ice",
+  "symbol": "ice",
+  "name": "Decentral Games ICE",
+  "image": "https://assets.coingecko.com/coins/images/18110/large/ice-poker.png?1696517614",
+  "current_price": 0.00177177,
+  "market_cap": 398928,
+  "market_cap_rank": 3176,
+  "fully_diluted_valuation": 401817,
+  "total_volume": 1132.6,
+  "high_24h": 0.00180917,
+  "low_24h": 0.0016016,
+  "price_change_24h": 0.00015874,
+  "price_change_percentage_24h": 9.8412,
+  "market_cap_change_24h": 35733,
+  "market_cap_change_percentage_24h": 9.83845,
+  "circulating_supply": 225157403.609213,
+  "total_supply": 226788290.889,
+  "max_supply": null,
+  "ath": 0.301699,
+  "ath_change_percentage": -99.41294,
+  "ath_date": "2021-11-03T18:01:42.421Z",
+  "atl": 0.0016016,
+  "atl_change_percentage": 10.58631,
+  "atl_date": "2024-04-24T13:47:53.526Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:49:19.307Z",
+  "platforms": {
+    "polygon": "0xc6c855ad634dcdad23e64da71ba85b8c51e5ad7c"
+  }
+}

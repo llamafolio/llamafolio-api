@@ -1,0 +1,31 @@
+{
+  "id": "hivewater",
+  "symbol": "hivewater",
+  "name": "hiveWater",
+  "image": "https://assets.coingecko.com/coins/images/30424/large/hivewater_transparent.png?1696529312",
+  "current_price": 0.03828586,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 757.55,
+  "high_24h": 0.04024121,
+  "low_24h": 0.03826167,
+  "price_change_24h": -0.001423793505030711,
+  "price_change_percentage_24h": -3.58551,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 4000000,
+  "max_supply": null,
+  "ath": 0.050793,
+  "ath_change_percentage": -24.33371,
+  "ath_date": "2024-03-12T01:10:35.344Z",
+  "atl": 0.01082292,
+  "atl_change_percentage": 255.10645,
+  "atl_date": "2023-05-18T20:10:49.975Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:17.271Z",
+  "platforms": {
+    "gnosis": "0x3a3e9715018d80916740e8ac300713fdf6614d19"
+  }
+}

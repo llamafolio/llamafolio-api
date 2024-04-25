@@ -1,0 +1,31 @@
+{
+  "id": "taoplay",
+  "symbol": "taop",
+  "name": "TAOPlay",
+  "image": "https://assets.coingecko.com/coins/images/35899/large/photo_2024-03-08_00-54-55.jpg?1710164992",
+  "current_price": 0.0024121,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 48242,
+  "total_volume": 245.34,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 20000000,
+  "max_supply": 20000000,
+  "ath": 0.02177094,
+  "ath_change_percentage": -88.92055,
+  "ath_date": "2024-03-11T17:54:40.491Z",
+  "atl": 0.00229976,
+  "atl_change_percentage": 4.88479,
+  "atl_date": "2024-04-14T14:14:51.135Z",
+  "roi": null,
+  "last_updated": "2024-04-23T19:44:44.870Z",
+  "platforms": {
+    "ethereum": "0x72cdb56e9d96c64fb52e8cdeda7475f3aa843f59"
+  }
+}

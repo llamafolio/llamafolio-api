@@ -1,0 +1,31 @@
+{
+  "id": "dungeon-token",
+  "symbol": "grow",
+  "name": "Triathon",
+  "image": "missing_large.png",
+  "current_price": 0.410703,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 4116258845,
+  "total_volume": 289350,
+  "high_24h": 0.482275,
+  "low_24h": 0.411575,
+  "price_change_24h": -0.046627972104029525,
+  "price_change_percentage_24h": -10.19568,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.896441,
+  "ath_change_percentage": -53.96565,
+  "ath_date": "2024-03-09T19:12:54.152Z",
+  "atl": 0.00057839,
+  "atl_change_percentage": 71248.59006,
+  "atl_date": "2023-03-12T15:35:28.361Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:47.899Z",
+  "platforms": {
+    "bsc": "0x167fcfed3aad2d11052fcde0cbf704d879939473"
+  }
+}

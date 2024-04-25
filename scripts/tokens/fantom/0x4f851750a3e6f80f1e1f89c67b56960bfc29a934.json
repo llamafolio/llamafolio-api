@@ -1,0 +1,31 @@
+{
+  "id": "kalmar",
+  "symbol": "kalm",
+  "name": "KALM",
+  "image": "https://assets.coingecko.com/coins/images/15849/large/kalmar.png?1696515466",
+  "current_price": 0.123614,
+  "market_cap": 1054282,
+  "market_cap_rank": 2657,
+  "fully_diluted_valuation": 1234229,
+  "total_volume": 9612.71,
+  "high_24h": 0.124704,
+  "low_24h": 0.119909,
+  "price_change_24h": 0.00306539,
+  "price_change_percentage_24h": 2.54286,
+  "market_cap_change_24h": 24050,
+  "market_cap_change_percentage_24h": 2.33446,
+  "circulating_supply": 8542030.099041097,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 4.52,
+  "ath_change_percentage": -97.26978,
+  "ath_date": "2021-06-03T00:00:00.000Z",
+  "atl": 0.119009,
+  "atl_change_percentage": 3.78316,
+  "atl_date": "2024-04-23T18:16:18.646Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:48.354Z",
+  "platforms": {
+    "fantom": "0x4f851750a3e6f80f1e1f89c67b56960bfc29a934"
+  }
+}

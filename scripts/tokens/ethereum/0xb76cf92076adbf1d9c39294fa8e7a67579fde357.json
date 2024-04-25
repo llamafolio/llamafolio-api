@@ -1,0 +1,31 @@
+{
+  "id": "aave-v3-rpl",
+  "symbol": "arpl",
+  "name": "Aave v3 RPL",
+  "image": "https://assets.coingecko.com/coins/images/32909/large/RPL.png?1699817497",
+  "current_price": 22.13,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 0,
+  "high_24h": 24.24,
+  "low_24h": 22.13,
+  "price_change_24h": -2.10372791,
+  "price_change_percentage_24h": -8.68037,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 38.8,
+  "ath_change_percentage": -42.9575,
+  "ath_date": "2024-03-13T08:40:34.499Z",
+  "atl": 18.26,
+  "atl_change_percentage": 21.19683,
+  "atl_date": "2024-04-13T21:45:25.737Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:33.723Z",
+  "platforms": {
+    "ethereum": "0xb76cf92076adbf1d9c39294fa8e7a67579fde357"
+  }
+}

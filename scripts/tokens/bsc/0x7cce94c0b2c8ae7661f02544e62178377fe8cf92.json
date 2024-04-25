@@ -1,0 +1,31 @@
+{
+  "id": "daddy-doge",
+  "symbol": "daddydoge",
+  "name": "Daddy Doge",
+  "image": "https://assets.coingecko.com/coins/images/16931/large/icon-200x200_%281%29.png?1696516502",
+  "current_price": 5.037e-9,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 5036581,
+  "total_volume": 4.29,
+  "high_24h": 5.093e-9,
+  "low_24h": 4.922e-9,
+  "price_change_24h": 3.6798e-11,
+  "price_change_percentage_24h": 0.736,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": null,
+  "ath": 8.3022e-8,
+  "ath_change_percentage": -93.95751,
+  "ath_date": "2021-07-15T09:30:13.960Z",
+  "atl": 1.714e-9,
+  "atl_change_percentage": 192.70107,
+  "atl_date": "2023-10-09T16:49:35.883Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:18.462Z",
+  "platforms": {
+    "bsc": "0x7cce94c0b2c8ae7661f02544e62178377fe8cf92"
+  }
+}

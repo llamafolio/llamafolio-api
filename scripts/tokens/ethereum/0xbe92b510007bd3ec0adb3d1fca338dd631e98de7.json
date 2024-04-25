@@ -1,0 +1,31 @@
+{
+  "id": "degenstogether",
+  "symbol": "degen",
+  "name": "DegensTogether",
+  "image": "https://assets.coingecko.com/coins/images/30487/large/degen_logo_twit.png?1696529373",
+  "current_price": 0.00000319,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 476679,
+  "total_volume": 15.13,
+  "high_24h": 0.00000332,
+  "low_24h": 0.00000315,
+  "price_change_24h": -9.8893316843e-8,
+  "price_change_percentage_24h": -3.00843,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 149508162286,
+  "max_supply": 149508162286,
+  "ath": 0.00001102,
+  "ath_change_percentage": -71.06331,
+  "ath_date": "2023-05-22T00:44:54.427Z",
+  "atl": 0.00000138,
+  "atl_change_percentage": 130.3608,
+  "atl_date": "2023-10-19T22:05:44.168Z",
+  "roi": null,
+  "last_updated": "2024-04-25T02:45:49.451Z",
+  "platforms": {
+    "ethereum": "0xbe92b510007bd3ec0adb3d1fca338dd631e98de7"
+  }
+}

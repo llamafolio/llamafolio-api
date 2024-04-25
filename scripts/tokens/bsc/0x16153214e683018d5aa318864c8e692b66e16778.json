@@ -1,0 +1,31 @@
+{
+  "id": "polkawar",
+  "symbol": "pwar",
+  "name": "PolkaWar",
+  "image": "https://assets.coingecko.com/coins/images/16776/large/polkawar.PNG?1696516348",
+  "current_price": 0.00288435,
+  "market_cap": 206370,
+  "market_cap_rank": 3478,
+  "fully_diluted_valuation": 256092,
+  "total_volume": 19468.07,
+  "high_24h": 0.00299277,
+  "low_24h": 0.00287774,
+  "price_change_24h": -0.000089055820238248,
+  "price_change_percentage_24h": -2.99508,
+  "market_cap_change_24h": -6508.719441319263,
+  "market_cap_change_percentage_24h": -3.05747,
+  "circulating_supply": 71595848,
+  "total_supply": 88845848,
+  "max_supply": 100000000,
+  "ath": 1.17,
+  "ath_change_percentage": -99.75284,
+  "ath_date": "2021-11-30T01:13:52.091Z",
+  "atl": 0.00141349,
+  "atl_change_percentage": 103.92326,
+  "atl_date": "2023-10-11T09:46:37.101Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:33.833Z",
+  "platforms": {
+    "bsc": "0x16153214e683018d5aa318864c8e692b66e16778"
+  }
+}

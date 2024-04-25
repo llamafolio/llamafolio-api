@@ -1,0 +1,31 @@
+{
+  "id": "fnkcom",
+  "symbol": "fnk",
+  "name": "Fnk.com",
+  "image": "https://assets.coingecko.com/coins/images/13483/large/fnk.png?1696513243",
+  "current_price": 0.0081522,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 815220,
+  "total_volume": 98.1,
+  "high_24h": 0.00816219,
+  "low_24h": 0.00813878,
+  "price_change_24h": 0.00000177,
+  "price_change_percentage_24h": 0.02171,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 234.02,
+  "ath_change_percentage": -99.99652,
+  "ath_date": "2021-06-17T18:46:12.981Z",
+  "atl": 0.0039996,
+  "atl_change_percentage": 103.82531,
+  "atl_date": "2023-04-17T19:28:46.392Z",
+  "roi": null,
+  "last_updated": "2024-04-25T01:46:42.401Z",
+  "platforms": {
+    "ethereum": "0xb5fe099475d3030dde498c3bb6f3854f762a48ad"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "aladdin-dao",
+  "symbol": "ald",
+  "name": "Aladdin DAO",
+  "image": "https://assets.coingecko.com/coins/images/18277/large/78200839.png?1696517771",
+  "current_price": 0.054171,
+  "market_cap": 8098476,
+  "market_cap_rank": 1544,
+  "fully_diluted_valuation": 8107117,
+  "total_volume": 18159.43,
+  "high_24h": 0.058109,
+  "low_24h": 0.05378,
+  "price_change_24h": -0.003616799652881135,
+  "price_change_percentage_24h": -6.25871,
+  "market_cap_change_24h": -571771.1403003158,
+  "market_cap_change_percentage_24h": -6.59463,
+  "circulating_supply": 149831946.77943766,
+  "total_supply": 149991806.391093,
+  "max_supply": 150000000,
+  "ath": 1.37,
+  "ath_change_percentage": -96.05059,
+  "ath_date": "2021-09-11T09:21:28.464Z",
+  "atl": 0.02677604,
+  "atl_change_percentage": 102.11885,
+  "atl_date": "2023-09-18T01:40:45.724Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:15.665Z",
+  "platforms": {
+    "ethereum": "0xb26c4b3ca601136daf98593feaeff9e0ca702a8d"
+  }
+}

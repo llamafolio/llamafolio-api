@@ -1,0 +1,31 @@
+{
+  "id": "dexkit",
+  "symbol": "kit",
+  "name": "DexKit",
+  "image": "https://assets.coingecko.com/coins/images/13187/large/7739.png?1696512969",
+  "current_price": 0.344929,
+  "market_cap": 1025881,
+  "market_cap_rank": 2671,
+  "fully_diluted_valuation": 3419604,
+  "total_volume": 34350,
+  "high_24h": 0.409232,
+  "low_24h": 0.340429,
+  "price_change_24h": -0.056862940429265985,
+  "price_change_percentage_24h": -14.15232,
+  "market_cap_change_24h": -188700.67192783265,
+  "market_cap_change_percentage_24h": -15.53626,
+  "circulating_supply": 3000000,
+  "total_supply": 10000000,
+  "max_supply": null,
+  "ath": 9.79,
+  "ath_change_percentage": -96.50784,
+  "ath_date": "2021-03-18T12:44:28.221Z",
+  "atl": 0.153656,
+  "atl_change_percentage": 122.4447,
+  "atl_date": "2022-07-13T16:53:36.697Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:21.212Z",
+  "platforms": {
+    "polygon": "0x4d0def42cf57d6f27cd4983042a55dce1c9f853c"
+  }
+}

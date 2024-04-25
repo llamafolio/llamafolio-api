@@ -1,0 +1,31 @@
+{
+  "id": "nitro-cartel",
+  "symbol": "trove",
+  "name": "Arbitrove Governance Token",
+  "image": "https://assets.coingecko.com/coins/images/29017/large/trove.png?1696527988",
+  "current_price": 0.00462551,
+  "market_cap": 1387694,
+  "market_cap_rank": 2488,
+  "fully_diluted_valuation": 4625646,
+  "total_volume": 109685,
+  "high_24h": 0.00467217,
+  "low_24h": 0.00455269,
+  "price_change_24h": -0.000030584928012725,
+  "price_change_percentage_24h": -0.65688,
+  "market_cap_change_24h": -9644.480447468348,
+  "market_cap_change_percentage_24h": -0.6902,
+  "circulating_supply": 300000000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.052484,
+  "ath_change_percentage": -91.19218,
+  "ath_date": "2023-02-23T04:26:30.934Z",
+  "atl": 0.00429974,
+  "atl_change_percentage": 7.51139,
+  "atl_date": "2024-04-19T04:01:09.945Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:34.528Z",
+  "platforms": {
+    "arbitrum": "0x982239d38af50b0168da33346d85fb12929c4c07"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "jennyco",
+  "symbol": "jco",
+  "name": "JennyCo",
+  "image": "https://assets.coingecko.com/coins/images/32006/large/jenny.jpg?1696530804",
+  "current_price": 0.0140045,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3502714,
+  "total_volume": 38944,
+  "high_24h": 0.01418355,
+  "low_24h": 0.01395531,
+  "price_change_24h": -0.000150825954870523,
+  "price_change_percentage_24h": -1.06551,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 250000000,
+  "max_supply": 250000000,
+  "ath": 0.04302785,
+  "ath_change_percentage": -67.45247,
+  "ath_date": "2024-03-12T14:14:08.814Z",
+  "atl": 0.012107,
+  "atl_change_percentage": 15.6728,
+  "atl_date": "2024-04-17T18:20:32.258Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:07:14.405Z",
+  "platforms": {
+    "polygon": "0x8105f88e77a5d102099bf73db4469d3f1e3b0cd6"
+  }
+}

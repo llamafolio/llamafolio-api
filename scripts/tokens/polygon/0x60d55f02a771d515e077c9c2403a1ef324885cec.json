@@ -1,0 +1,31 @@
+{
+  "id": "aave-polygon-usdt",
+  "symbol": "amusdt",
+  "name": "Aave Polygon USDT",
+  "image": "https://assets.coingecko.com/coins/images/17264/large/amUSDT_2x.png?1696516819",
+  "current_price": 1.001,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 0.00605076,
+  "high_24h": 1.002,
+  "low_24h": 0.997228,
+  "price_change_24h": 0.00060021,
+  "price_change_percentage_24h": 0.06008,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.29,
+  "ath_change_percentage": -22.60356,
+  "ath_date": "2024-02-19T22:55:20.150Z",
+  "atl": 0.42083,
+  "atl_change_percentage": 137.51795,
+  "atl_date": "2023-11-08T14:35:04.882Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:32.404Z",
+  "platforms": {
+    "polygon": "0x60d55f02a771d515e077c9c2403a1ef324885cec"
+  }
+}

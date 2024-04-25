@@ -1,0 +1,31 @@
+{
+  "id": "kryptonite",
+  "symbol": "seilor",
+  "name": "Kryptonite",
+  "image": "https://assets.coingecko.com/coins/images/31252/large/Kryptonite_PFP-03.png?1696530076",
+  "current_price": 0.03228132,
+  "market_cap": 10903038,
+  "market_cap_rank": 1390,
+  "fully_diluted_valuation": 32257508,
+  "total_volume": 76540,
+  "high_24h": 0.03606578,
+  "low_24h": 0.03210128,
+  "price_change_24h": -0.002994688160856116,
+  "price_change_percentage_24h": -8.4893,
+  "market_cap_change_24h": -957537.6111720819,
+  "market_cap_change_percentage_24h": -8.07328,
+  "circulating_supply": 338000000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.168526,
+  "ath_change_percentage": -80.83662,
+  "ath_date": "2024-01-04T17:34:17.870Z",
+  "atl": 0.00248084,
+  "atl_change_percentage": 1201.78723,
+  "atl_date": "2023-11-01T13:10:44.621Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:41.935Z",
+  "platforms": {
+    "bsc": "0xe29142e14e52bdfbb8108076f66f49661f10ec10"
+  }
+}

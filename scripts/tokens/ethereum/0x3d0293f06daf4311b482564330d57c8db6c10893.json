@@ -1,0 +1,31 @@
+{
+  "id": "y-coin",
+  "symbol": "yco",
+  "name": "Y Coin",
+  "image": "https://assets.coingecko.com/coins/images/14128/large/BIG-POTAT-200x200-removebg-preview.png?1696513849",
+  "current_price": 0.00445651,
+  "market_cap": 62829,
+  "market_cap_rank": 3926,
+  "fully_diluted_valuation": 66848,
+  "total_volume": 12.01,
+  "high_24h": 0.00448731,
+  "low_24h": 0.0044453,
+  "price_change_24h": -0.000001326915775192,
+  "price_change_percentage_24h": -0.02977,
+  "market_cap_change_24h": -13.37004890976823,
+  "market_cap_change_percentage_24h": -0.02128,
+  "circulating_supply": 14098140.54035045,
+  "total_supply": 15000000,
+  "max_supply": null,
+  "ath": 0.060866,
+  "ath_change_percentage": -92.67817,
+  "ath_date": "2021-11-10T14:07:45.545Z",
+  "atl": 0,
+  "atl_change_percentage": 5.469016366985179e+44,
+  "atl_date": "2021-08-05T16:07:34.693Z",
+  "roi": null,
+  "last_updated": "2024-04-24T19:49:49.922Z",
+  "platforms": {
+    "ethereum": "0x3d0293f06daf4311b482564330d57c8db6c10893"
+  }
+}

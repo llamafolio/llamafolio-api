@@ -1,0 +1,31 @@
+{
+  "id": "fight-of-the-ages",
+  "symbol": "fota",
+  "name": "Fight Of The Ages",
+  "image": "https://assets.coingecko.com/coins/images/26023/large/logo_thunder.jpg?1696525100",
+  "current_price": 0.00032688,
+  "market_cap": 2283,
+  "market_cap_rank": 4267,
+  "fully_diluted_valuation": 4582.5,
+  "total_volume": 8596.89,
+  "high_24h": 0.00034611,
+  "low_24h": 0.00031238,
+  "price_change_24h": -0.000019056709481002,
+  "price_change_percentage_24h": -5.50874,
+  "market_cap_change_24h": -130.49168728448376,
+  "market_cap_change_percentage_24h": -5.40675,
+  "circulating_supply": 6974804.4,
+  "total_supply": 14000000,
+  "max_supply": 14000000,
+  "ath": 0.790258,
+  "ath_change_percentage": -99.95864,
+  "ath_date": "2022-06-17T03:55:02.027Z",
+  "atl": 0.00014001,
+  "atl_change_percentage": 133.46607,
+  "atl_date": "2024-02-12T18:59:14.947Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:54.174Z",
+  "platforms": {
+    "bsc": "0x0a4e1bdfa75292a98c15870aef24bd94bffe0bd4"
+  }
+}

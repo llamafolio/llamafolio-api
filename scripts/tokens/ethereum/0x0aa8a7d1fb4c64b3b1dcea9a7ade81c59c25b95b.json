@@ -1,0 +1,31 @@
+{
+  "id": "astraai",
+  "symbol": "astra",
+  "name": "AstraAI",
+  "image": "https://assets.coingecko.com/coins/images/33138/large/CG_200x200.png?1700810557",
+  "current_price": 1.93,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 19268351,
+  "total_volume": 19780.74,
+  "high_24h": 2.15,
+  "low_24h": 1.92,
+  "price_change_24h": -0.17467883975852616,
+  "price_change_percentage_24h": -8.31205,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 5.25,
+  "ath_change_percentage": -63.27414,
+  "ath_date": "2024-03-13T17:41:54.936Z",
+  "atl": 0.25197,
+  "atl_change_percentage": 664.70728,
+  "atl_date": "2023-11-24T07:34:54.328Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:17.660Z",
+  "platforms": {
+    "ethereum": "0x0aa8a7d1fb4c64b3b1dcea9a7ade81c59c25b95b"
+  }
+}

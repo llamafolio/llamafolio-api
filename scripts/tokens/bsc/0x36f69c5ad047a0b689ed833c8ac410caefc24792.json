@@ -1,0 +1,31 @@
+{
+  "id": "layergpt",
+  "symbol": "lgpt",
+  "name": "LayerGPT",
+  "image": "https://assets.coingecko.com/coins/images/32649/large/Frame_6_%281%29.png?1698895015",
+  "current_price": 0.00007014,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 70142,
+  "total_volume": 302.22,
+  "high_24h": 0.0000721,
+  "low_24h": 0.00006973,
+  "price_change_24h": -8.31377951505e-7,
+  "price_change_percentage_24h": -1.1714,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00007801,
+  "ath_change_percentage": -10.08706,
+  "ath_date": "2024-03-16T08:00:32.282Z",
+  "atl": 0.00002915,
+  "atl_change_percentage": 140.66376,
+  "atl_date": "2023-12-11T02:50:16.913Z",
+  "roi": null,
+  "last_updated": "2024-04-24T15:34:52.245Z",
+  "platforms": {
+    "bsc": "0x36f69c5ad047a0b689ed833c8ac410caefc24792"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "floki-cash",
+  "symbol": "flokicash",
+  "name": "Floki Cash",
+  "image": "https://assets.coingecko.com/coins/images/29865/large/E68106E0-F8A1-406A-9C25-3B22644936A9.jpeg?1696528790",
+  "current_price": 3.456e-9,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 17280.3,
+  "total_volume": 2.62,
+  "high_24h": 3.451e-9,
+  "low_24h": 3.425e-9,
+  "price_change_24h": 3.0574e-11,
+  "price_change_percentage_24h": 0.89253,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 5000000000000,
+  "max_supply": 10000000000000,
+  "ath": 7.02034e-7,
+  "ath_change_percentage": -99.50902,
+  "ath_date": "2023-05-02T01:54:27.481Z",
+  "atl": 3.425e-9,
+  "atl_change_percentage": 0.62345,
+  "atl_date": "2024-04-25T02:17:37.625Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:27.100Z",
+  "platforms": {
+    "bsc": "0xa11ff9976018fda2a8c4ccfa6ffbe8423c5ab668"
+  }
+}

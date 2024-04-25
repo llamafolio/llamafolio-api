@@ -1,0 +1,31 @@
+{
+  "id": "cratos",
+  "symbol": "crts",
+  "name": "Cratos",
+  "image": "https://assets.coingecko.com/coins/images/17322/large/cratos.png?1696516876",
+  "current_price": 0.00079045,
+  "market_cap": 46374439,
+  "market_cap_rank": 723,
+  "fully_diluted_valuation": 79010299,
+  "total_volume": 226437,
+  "high_24h": 0.0008285,
+  "low_24h": 0.00077763,
+  "price_change_24h": -0.000030210059475263,
+  "price_change_percentage_24h": -3.68119,
+  "market_cap_change_24h": -1837709.9082538486,
+  "market_cap_change_percentage_24h": -3.81172,
+  "circulating_supply": 58694170040,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.00747511,
+  "ath_change_percentage": -89.43324,
+  "ath_date": "2021-12-24T09:42:23.529Z",
+  "atl": 0.00013742,
+  "atl_change_percentage": 474.78989,
+  "atl_date": "2022-12-02T16:56:02.566Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:21.809Z",
+  "platforms": {
+    "ethereum": "0x678e840c640f619e17848045d23072844224dd37"
+  }
+}

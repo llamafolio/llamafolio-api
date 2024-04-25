@@ -1,0 +1,31 @@
+{
+  "id": "hooked-protocol",
+  "symbol": "hook",
+  "name": "Hooked Protocol",
+  "image": "https://assets.coingecko.com/coins/images/28288/large/hooked2.png?1696527288",
+  "current_price": 0.921857,
+  "market_cap": 133815889,
+  "market_cap_rank": 392,
+  "fully_diluted_valuation": 461434098,
+  "total_volume": 6246504,
+  "high_24h": 1.029,
+  "low_24h": 0.917004,
+  "price_change_24h": -0.0791645759745988,
+  "price_change_percentage_24h": -7.90838,
+  "market_cap_change_24h": -11504254.029999226,
+  "market_cap_change_percentage_24h": -7.91649,
+  "circulating_supply": 145000000,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 4.07,
+  "ath_change_percentage": -77.35207,
+  "ath_date": "2023-02-06T03:50:40.349Z",
+  "atl": 0.69924,
+  "atl_change_percentage": 31.87896,
+  "atl_date": "2023-08-17T21:45:24.822Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:30.613Z",
+  "platforms": {
+    "bsc": "0xa260e12d2b924cb899ae80bb58123ac3fee1e2f0"
+  }
+}

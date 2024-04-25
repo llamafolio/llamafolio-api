@@ -1,0 +1,31 @@
+{
+  "id": "magic-bot",
+  "symbol": "magic",
+  "name": "Magic-BOT",
+  "image": "https://assets.coingecko.com/coins/images/32898/large/magic_bot_logo.jpg?1699792367",
+  "current_price": 0.02875273,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 28753,
+  "total_volume": 28.75,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 1.06,
+  "ath_change_percentage": -97.28827,
+  "ath_date": "2023-11-12T13:04:40.332Z",
+  "atl": 0.01938641,
+  "atl_change_percentage": 48.31385,
+  "atl_date": "2023-12-18T12:01:13.934Z",
+  "roi": null,
+  "last_updated": "2024-04-06T14:10:36.455Z",
+  "platforms": {
+    "ethereum": "0x861950d091704c80b2a0f69d4b3431f0aed7dc7a"
+  }
+}

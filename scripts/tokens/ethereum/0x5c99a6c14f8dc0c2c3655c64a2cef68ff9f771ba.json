@@ -1,0 +1,31 @@
+{
+  "id": "larry-the-llama",
+  "symbol": "larry",
+  "name": "Larry the Llama",
+  "image": "https://assets.coingecko.com/coins/images/32791/large/Larry_the_Llama_Logo_200x200.png?1699427698",
+  "current_price": 3.476e-9,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1457845,
+  "total_volume": 25479,
+  "high_24h": 4.109e-9,
+  "low_24h": 2.965e-9,
+  "price_change_24h": -6.00077594e-10,
+  "price_change_percentage_24h": -14.72233,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 420690000000000,
+  "max_supply": 420690000000000,
+  "ath": 1.878e-8,
+  "ath_change_percentage": -81.49176,
+  "ath_date": "2024-01-17T05:36:05.694Z",
+  "atl": 5.76005e-10,
+  "atl_change_percentage": 503.44821,
+  "atl_date": "2023-12-19T15:35:46.495Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:06.701Z",
+  "platforms": {
+    "ethereum": "0x5c99a6c14f8dc0c2c3655c64a2cef68ff9f771ba"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "million",
+  "symbol": "mm",
+  "name": "Million",
+  "image": "https://assets.coingecko.com/coins/images/16825/large/logo200x200.png?1696516393",
+  "current_price": 1.49,
+  "market_cap": 1491996,
+  "market_cap_rank": 2456,
+  "fully_diluted_valuation": 1491996,
+  "total_volume": 25482,
+  "high_24h": 1.56,
+  "low_24h": 1.43,
+  "price_change_24h": 0.02363954,
+  "price_change_percentage_24h": 1.60868,
+  "market_cap_change_24h": -12281.157930304063,
+  "market_cap_change_percentage_24h": -0.81642,
+  "circulating_supply": 1000000,
+  "total_supply": 1000000,
+  "max_supply": null,
+  "ath": 223.17,
+  "ath_change_percentage": -99.33094,
+  "ath_date": "2021-07-14T03:47:04.643Z",
+  "atl": 1.27,
+  "atl_change_percentage": 17.40382,
+  "atl_date": "2023-09-03T22:49:49.574Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:39.774Z",
+  "platforms": {
+    "bsc": "0xbf05279f9bf1ce69bbfed670813b7e431142afa4"
+  }
+}

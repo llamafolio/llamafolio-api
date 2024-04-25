@@ -1,0 +1,31 @@
+{
+  "id": "moonft",
+  "symbol": "mtc",
+  "name": "Moonft",
+  "image": "https://assets.coingecko.com/coins/images/32383/large/MTC-cg.png?1698042095",
+  "current_price": 0.897342,
+  "market_cap": 295176,
+  "market_cap_rank": 3328,
+  "fully_diluted_valuation": 89447559,
+  "total_volume": 211494,
+  "high_24h": 0.933111,
+  "low_24h": 0.889829,
+  "price_change_24h": -0.032239316552906794,
+  "price_change_percentage_24h": -3.46815,
+  "market_cap_change_24h": -12146.982715601393,
+  "market_cap_change_percentage_24h": -3.95251,
+  "circulating_supply": 329999,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 1.037,
+  "ath_change_percentage": -13.52149,
+  "ath_date": "2024-03-11T21:31:20.172Z",
+  "atl": 0.00669325,
+  "atl_change_percentage": 13297.57081,
+  "atl_date": "2024-01-19T20:03:08.991Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:08.160Z",
+  "platforms": {
+    "bsc": "0x4e1a724b0588fa971263c8ac5f78ca215c7d09dd"
+  }
+}

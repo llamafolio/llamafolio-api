@@ -1,0 +1,31 @@
+{
+  "id": "dark-frontiers",
+  "symbol": "dark",
+  "name": "Dark Frontiers",
+  "image": "https://assets.coingecko.com/coins/images/18856/large/Twitter_post_-_121.png?1700880077",
+  "current_price": 0.02510634,
+  "market_cap": 4947559,
+  "market_cap_rank": 1802,
+  "fully_diluted_valuation": 6271174,
+  "total_volume": 145438,
+  "high_24h": 0.02569788,
+  "low_24h": 0.02500429,
+  "price_change_24h": -0.000534015275375586,
+  "price_change_percentage_24h": -2.08271,
+  "market_cap_change_24h": -113658.03069449309,
+  "market_cap_change_percentage_24h": -2.24567,
+  "circulating_supply": 197174900,
+  "total_supply": 249924900,
+  "max_supply": 250000000,
+  "ath": 1.82,
+  "ath_change_percentage": -98.6152,
+  "ath_date": "2021-11-29T20:24:24.652Z",
+  "atl": 0.01447822,
+  "atl_change_percentage": 73.60545,
+  "atl_date": "2024-03-04T01:57:20.320Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:19.769Z",
+  "platforms": {
+    "bsc": "0x12fc07081fab7de60987cad8e8dc407b606fb2f8"
+  }
+}

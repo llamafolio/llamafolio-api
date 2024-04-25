@@ -1,0 +1,35 @@
+{
+  "id": "prometeus",
+  "symbol": "prom",
+  "name": "Prom",
+  "image": "https://assets.coingecko.com/coins/images/8825/large/Ticker.png?1696508978",
+  "current_price": 10.33,
+  "market_cap": 188897575,
+  "market_cap_rank": 310,
+  "fully_diluted_valuation": 199248127,
+  "total_volume": 4176936,
+  "high_24h": 11.55,
+  "low_24h": 10.26,
+  "price_change_24h": -1.1396778074009646,
+  "price_change_percentage_24h": -9.93309,
+  "market_cap_change_24h": -19460061.92521739,
+  "market_cap_change_percentage_24h": -9.33974,
+  "circulating_supply": 18250000,
+  "total_supply": 19250000,
+  "max_supply": 19250000,
+  "ath": 105.94,
+  "ath_change_percentage": -90.23406,
+  "ath_date": "2021-04-30T01:09:49.503Z",
+  "atl": 0.088747,
+  "atl_change_percentage": 11557.54293,
+  "atl_date": "2019-11-08T13:37:42.508Z",
+  "roi": {
+    "times": 9.33386920493319,
+    "currency": "usd",
+    "percentage": 933.386920493319
+  },
+  "last_updated": "2024-04-25T08:55:46.091Z",
+  "platforms": {
+    "bsc": "0xaf53d56ff99f1322515e54fdde93ff8b3b7dafd5"
+  }
+}

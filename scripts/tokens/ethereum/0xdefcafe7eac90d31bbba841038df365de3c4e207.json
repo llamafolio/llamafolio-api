@@ -1,0 +1,31 @@
+{
+  "id": "0xdefcafe",
+  "symbol": "cafe",
+  "name": "0xDEFCAFE",
+  "image": "https://assets.coingecko.com/coins/images/31738/large/200x200.png?1696530557",
+  "current_price": 0.01159788,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 115979,
+  "total_volume": 1195.72,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.02960699,
+  "ath_change_percentage": -60.82724,
+  "ath_date": "2023-10-31T16:50:59.461Z",
+  "atl": 0.01036232,
+  "atl_change_percentage": 11.92356,
+  "atl_date": "2024-04-14T03:15:56.230Z",
+  "roi": null,
+  "last_updated": "2024-04-23T03:44:02.160Z",
+  "platforms": {
+    "ethereum": "0xdefcafe7eac90d31bbba841038df365de3c4e207"
+  }
+}

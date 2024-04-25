@@ -1,0 +1,31 @@
+{
+  "id": "sparkpoint-fuel",
+  "symbol": "sfuel",
+  "name": "SparkPoint Fuel",
+  "image": "https://assets.coingecko.com/coins/images/13564/large/SFUEL.png?1696513318",
+  "current_price": 0.00133424,
+  "market_cap": 45071,
+  "market_cap_rank": 4009,
+  "fully_diluted_valuation": 199946,
+  "total_volume": 1172.53,
+  "high_24h": 0.00135461,
+  "low_24h": 0.00130057,
+  "price_change_24h": -0.000006896720885004,
+  "price_change_percentage_24h": -0.51425,
+  "market_cap_change_24h": -391.68135863800853,
+  "market_cap_change_percentage_24h": -0.86155,
+  "circulating_supply": 33812136.209108,
+  "total_supply": 150000000,
+  "max_supply": null,
+  "ath": 0.440419,
+  "ath_change_percentage": -99.69734,
+  "ath_date": "2021-04-15T21:10:47.371Z",
+  "atl": 0.00028942,
+  "atl_change_percentage": 360.56117,
+  "atl_date": "2023-06-20T16:19:42.165Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:54.496Z",
+  "platforms": {
+    "bsc": "0x37ac4d6140e54304d77437a5c11924f61a2d976f"
+  }
+}

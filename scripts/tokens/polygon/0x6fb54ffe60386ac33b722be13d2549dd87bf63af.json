@@ -1,0 +1,31 @@
+{
+  "id": "polinate",
+  "symbol": "poli",
+  "name": "Polinate",
+  "image": "https://assets.coingecko.com/coins/images/18096/large/Polinate_Games___Guilds_Elements-05.png?1696517601",
+  "current_price": 0.00078109,
+  "market_cap": 182099,
+  "market_cap_rank": 3538,
+  "fully_diluted_valuation": 391259,
+  "total_volume": 4074.2,
+  "high_24h": 0.00078759,
+  "low_24h": 0.00077224,
+  "price_change_24h": 0.00000233,
+  "price_change_percentage_24h": 0.2993,
+  "market_cap_change_24h": 1542.72,
+  "market_cap_change_percentage_24h": 0.85443,
+  "circulating_supply": 232709253.0508559,
+  "total_supply": 500000000,
+  "max_supply": 1000000000,
+  "ath": 0.04661549,
+  "ath_change_percentage": -98.32137,
+  "ath_date": "2021-09-01T19:12:55.806Z",
+  "atl": 0.00040097,
+  "atl_change_percentage": 95.15155,
+  "atl_date": "2023-09-08T10:31:20.489Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:20.612Z",
+  "platforms": {
+    "polygon": "0x6fb54ffe60386ac33b722be13d2549dd87bf63af"
+  }
+}

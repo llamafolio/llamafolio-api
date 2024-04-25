@@ -1,0 +1,31 @@
+{
+  "id": "dastra-network",
+  "symbol": "dan",
+  "name": "Dastra Network",
+  "image": "https://assets.coingecko.com/coins/images/33812/large/Frame_8.png?1703017772",
+  "current_price": 0.00745902,
+  "market_cap": 941010,
+  "market_cap_rank": 2723,
+  "fully_diluted_valuation": 3912229,
+  "total_volume": 30313,
+  "high_24h": 0.00853605,
+  "low_24h": 0.0065367,
+  "price_change_24h": -0.001064472795590591,
+  "price_change_percentage_24h": -12.48869,
+  "market_cap_change_24h": -120849.58742883429,
+  "market_cap_change_percentage_24h": -11.38094,
+  "circulating_supply": 125075791.738,
+  "total_supply": 520000000,
+  "max_supply": 1000000000,
+  "ath": 0.02999587,
+  "ath_change_percentage": -73.32585,
+  "ath_date": "2023-12-20T12:41:41.792Z",
+  "atl": 0.00103258,
+  "atl_change_percentage": 674.86648,
+  "atl_date": "2024-01-01T10:13:58.649Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:30.705Z",
+  "platforms": {
+    "bsc": "0x09531ece451453d68f8c6399120f67f19fee4489"
+  }
+}

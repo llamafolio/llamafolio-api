@@ -1,0 +1,31 @@
+{
+  "id": "plant-vs-undead-token",
+  "symbol": "pvu",
+  "name": "Plant vs Undead",
+  "image": "https://assets.coingecko.com/coins/images/17461/large/token-200x200.png?1696517004",
+  "current_price": 0.00267318,
+  "market_cap": 761298,
+  "market_cap_rank": 2843,
+  "fully_diluted_valuation": 801366,
+  "total_volume": 24690,
+  "high_24h": 0.00274771,
+  "low_24h": 0.00265662,
+  "price_change_24h": -0.000069496592570344,
+  "price_change_percentage_24h": -2.5339,
+  "market_cap_change_24h": -18948.774513211567,
+  "market_cap_change_percentage_24h": -2.42856,
+  "circulating_supply": 285000000,
+  "total_supply": 300000000,
+  "max_supply": 300000000,
+  "ath": 24.73,
+  "ath_change_percentage": -99.98919,
+  "ath_date": "2021-08-25T22:53:46.465Z",
+  "atl": 0.00103994,
+  "atl_change_percentage": 157.05078,
+  "atl_date": "2023-12-06T15:02:25.400Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:12.324Z",
+  "platforms": {
+    "bsc": "0x31471e0791fcdbe82fbf4c44943255e923f1b794"
+  }
+}

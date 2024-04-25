@@ -1,0 +1,31 @@
+{
+  "id": "dumbmoney-2",
+  "symbol": "gme",
+  "name": "DumbMoney",
+  "image": "https://assets.coingecko.com/coins/images/34929/large/DUMBMONEYICON.jpg?1706687792",
+  "current_price": 0.00062,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 615864,
+  "total_volume": 3282.21,
+  "high_24h": 0.00071199,
+  "low_24h": 0.0006118,
+  "price_change_24h": -0.000084482055619493,
+  "price_change_percentage_24h": -11.9921,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 993330000,
+  "max_supply": 1000000000,
+  "ath": 0.00354689,
+  "ath_change_percentage": -82.61524,
+  "ath_date": "2024-02-02T03:24:24.705Z",
+  "atl": 0.0006118,
+  "atl_change_percentage": 0.78682,
+  "atl_date": "2024-04-24T23:59:15.446Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:57.414Z",
+  "platforms": {
+    "ethereum": "0x8e3fa615392688ddd9bf8f25d1f8dc744ac1a12c"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "earthbyt",
+  "symbol": "ebyt",
+  "name": "EarthByt",
+  "image": "https://assets.coingecko.com/coins/images/23491/large/Untitled-design-17.png?1696522701",
+  "current_price": 1.928e-9,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 192790,
+  "total_volume": 4345.24,
+  "high_24h": 1.933e-9,
+  "low_24h": 1.922e-9,
+  "price_change_24h": 3.601e-12,
+  "price_change_percentage_24h": 0.18715,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000000000,
+  "max_supply": null,
+  "ath": 7.3064e-8,
+  "ath_change_percentage": -97.36134,
+  "ath_date": "2023-05-05T10:30:50.970Z",
+  "atl": 6.26293e-13,
+  "atl_change_percentage": 307727.22713,
+  "atl_date": "2022-06-24T14:20:25.605Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:22.220Z",
+  "platforms": {
+    "bsc": "0x0d1afece252ff513c5d210aeae88f6c7d37e6ab2"
+  }
+}

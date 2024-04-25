@@ -1,0 +1,31 @@
+{
+  "id": "constitutiondao",
+  "symbol": "people",
+  "name": "ConstitutionDAO",
+  "image": "https://assets.coingecko.com/coins/images/20612/large/GN_UVm3d_400x400.jpg?1696520017",
+  "current_price": 0.02577921,
+  "market_cap": 130498578,
+  "market_cap_rank": 395,
+  "fully_diluted_valuation": 130498578,
+  "total_volume": 39129497,
+  "high_24h": 0.02945593,
+  "low_24h": 0.02570581,
+  "price_change_24h": -0.002993673638942877,
+  "price_change_percentage_24h": -10.4045,
+  "market_cap_change_24h": -15634039.350242823,
+  "market_cap_change_percentage_24h": -10.69853,
+  "circulating_supply": 5066639005.45718,
+  "total_supply": 5066639005.45718,
+  "max_supply": 5066639005.45718,
+  "ath": 0.185022,
+  "ath_change_percentage": -86.03333,
+  "ath_date": "2021-12-23T05:59:19.861Z",
+  "atl": 0.0009194,
+  "atl_change_percentage": 2710.68387,
+  "atl_date": "2021-11-21T11:33:21.508Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:56:03.191Z",
+  "platforms": {
+    "ethereum": "0x7a58c0be72be218b41c608b7fe7c5bb630736c71"
+  }
+}

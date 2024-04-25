@@ -1,0 +1,31 @@
+{
+  "id": "tor",
+  "symbol": "tor",
+  "name": "TOR",
+  "image": "https://assets.coingecko.com/coins/images/23609/large/tor.png?1696522816",
+  "current_price": 2.39,
+  "market_cap": 40811167,
+  "market_cap_rank": 777,
+  "fully_diluted_valuation": 40811167,
+  "total_volume": 0,
+  "high_24h": 2.39,
+  "low_24h": 2.39,
+  "price_change_24h": 0,
+  "price_change_percentage_24h": 0,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 17070481.49033,
+  "total_supply": 17070481.49033,
+  "max_supply": null,
+  "ath": 20.14,
+  "ath_change_percentage": -88.13165,
+  "ath_date": "2024-02-27T10:24:31.893Z",
+  "atl": 0.00099689,
+  "atl_change_percentage": 239720.43735,
+  "atl_date": "2023-11-24T04:10:55.233Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:56:33.555Z",
+  "platforms": {
+    "bsc": "0x1d6cbdc6b29c6afbae65444a1f65ba9252b8ca83"
+  }
+}

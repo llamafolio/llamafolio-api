@@ -1,0 +1,31 @@
+{
+  "id": "bitscrunch-token",
+  "symbol": "bcut",
+  "name": "bitsCrunch Token",
+  "image": "https://assets.coingecko.com/coins/images/34832/large/logo-256_%281%29.png?1710244462",
+  "current_price": 0.125562,
+  "market_cap": 22895096,
+  "market_cap_rank": 1040,
+  "fully_diluted_valuation": 126068935,
+  "total_volume": 1155849,
+  "high_24h": 0.138278,
+  "low_24h": 0.121536,
+  "price_change_24h": -0.00357104408754419,
+  "price_change_percentage_24h": -2.7654,
+  "market_cap_change_24h": -742422.1587412171,
+  "market_cap_change_percentage_24h": -3.14086,
+  "circulating_supply": 181607749.56231084,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.535915,
+  "ath_change_percentage": -76.44619,
+  "ath_date": "2024-03-14T08:59:44.703Z",
+  "atl": 0.121536,
+  "atl_change_percentage": 3.86074,
+  "atl_date": "2024-04-24T09:45:57.004Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:12.152Z",
+  "platforms": {
+    "ethereum": "0xbef26bd568e421d6708cca55ad6e35f8bfa0c406"
+  }
+}

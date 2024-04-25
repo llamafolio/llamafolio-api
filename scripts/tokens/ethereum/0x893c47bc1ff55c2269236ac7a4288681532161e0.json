@@ -1,0 +1,31 @@
+{
+  "id": "error-404",
+  "symbol": "$err",
+  "name": "Error 404",
+  "image": "https://assets.coingecko.com/coins/images/35174/large/TOKEN-404---SYMBOL-_-TYPO---PURPLE.jpg?1707749033",
+  "current_price": 0.20264,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 162112,
+  "total_volume": 499.12,
+  "high_24h": 0.20264,
+  "low_24h": 0.202374,
+  "price_change_24h": 0.00026677,
+  "price_change_percentage_24h": 0.13182,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 800000,
+  "max_supply": null,
+  "ath": 2.1,
+  "ath_change_percentage": -90.36582,
+  "ath_date": "2024-02-17T00:33:31.000Z",
+  "atl": 0.177574,
+  "atl_change_percentage": 14.11594,
+  "atl_date": "2024-04-20T09:54:10.491Z",
+  "roi": null,
+  "last_updated": "2024-04-24T09:17:54.393Z",
+  "platforms": {
+    "ethereum": "0x893c47bc1ff55c2269236ac7a4288681532161e0"
+  }
+}

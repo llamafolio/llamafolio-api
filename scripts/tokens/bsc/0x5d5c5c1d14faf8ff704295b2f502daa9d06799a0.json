@@ -1,0 +1,31 @@
+{
+  "id": "novem-gold",
+  "symbol": "nnn",
+  "name": "Novem Gold",
+  "image": "https://assets.coingecko.com/coins/images/11852/large/nnn.png?1696511722",
+  "current_price": 94.83,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3797851,
+  "total_volume": 447222,
+  "high_24h": 95.71,
+  "low_24h": 92.14,
+  "price_change_24h": 0.52037,
+  "price_change_percentage_24h": 0.55176,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 40000,
+  "max_supply": null,
+  "ath": 669.65,
+  "ath_change_percentage": -85.87915,
+  "ath_date": "2023-11-25T02:29:51.991Z",
+  "atl": 0.00129991,
+  "atl_change_percentage": 7274295.64318,
+  "atl_date": "2022-04-03T12:19:59.799Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:37.564Z",
+  "platforms": {
+    "bsc": "0x5d5c5c1d14faf8ff704295b2f502daa9d06799a0"
+  }
+}

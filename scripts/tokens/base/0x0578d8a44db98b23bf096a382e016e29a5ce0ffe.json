@@ -1,0 +1,31 @@
+{
+  "id": "higher",
+  "symbol": "higher",
+  "name": "higher",
+  "image": "https://assets.coingecko.com/coins/images/36084/large/200x200logo.png?1710427814",
+  "current_price": 0.03630503,
+  "market_cap": 36290461,
+  "market_cap_rank": 828,
+  "fully_diluted_valuation": 36290461,
+  "total_volume": 1333100,
+  "high_24h": 0.04483375,
+  "low_24h": 0.0323385,
+  "price_change_24h": -0.000921229011417404,
+  "price_change_percentage_24h": -2.47468,
+  "market_cap_change_24h": -877632.0411745086,
+  "market_cap_change_percentage_24h": -2.36125,
+  "circulating_supply": 1000000000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.114177,
+  "ath_change_percentage": -68.25752,
+  "ath_date": "2024-04-04T03:24:05.700Z",
+  "atl": 0.00086388,
+  "atl_change_percentage": 4095.34657,
+  "atl_date": "2024-03-19T11:32:59.611Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:49.736Z",
+  "platforms": {
+    "base": "0x0578d8a44db98b23bf096a382e016e29a5ce0ffe"
+  }
+}

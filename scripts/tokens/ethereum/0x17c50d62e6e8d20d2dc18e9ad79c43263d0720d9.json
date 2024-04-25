@@ -1,0 +1,31 @@
+{
+  "id": "not-financial-advice",
+  "symbol": "nfai",
+  "name": "Not Financial Advice",
+  "image": "https://assets.coingecko.com/coins/images/28758/large/NFA_Labs_Logo_%281%29.png?1710245293",
+  "current_price": 0.01778975,
+  "market_cap": 1507687,
+  "market_cap_rank": 2454,
+  "fully_diluted_valuation": 1710533,
+  "total_volume": 573843,
+  "high_24h": 0.02340816,
+  "low_24h": 0.01743345,
+  "price_change_24h": -0.002888765592989388,
+  "price_change_percentage_24h": -13.96989,
+  "market_cap_change_24h": -244908.51472298615,
+  "market_cap_change_percentage_24h": -13.97405,
+  "circulating_supply": 84750280.89238042,
+  "total_supply": 96152690,
+  "max_supply": 100000000,
+  "ath": 0.291385,
+  "ath_change_percentage": -93.89969,
+  "ath_date": "2023-04-28T12:15:42.242Z",
+  "atl": 0.00029784,
+  "atl_change_percentage": 5868.1412,
+  "atl_date": "2024-01-15T00:35:04.948Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:41.755Z",
+  "platforms": {
+    "ethereum": "0x17c50d62e6e8d20d2dc18e9ad79c43263d0720d9"
+  }
+}

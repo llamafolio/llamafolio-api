@@ -1,0 +1,31 @@
+{
+  "id": "aura-finance",
+  "symbol": "aura",
+  "name": "Aura Finance",
+  "image": "https://assets.coingecko.com/coins/images/25942/large/logo.png?1696525021",
+  "current_price": 0.662594,
+  "market_cap": 30739055,
+  "market_cap_rank": 903,
+  "fully_diluted_valuation": 47417819,
+  "total_volume": 48864,
+  "high_24h": 0.690097,
+  "low_24h": 0.657933,
+  "price_change_24h": -0.02344527056521728,
+  "price_change_percentage_24h": -3.41748,
+  "market_cap_change_24h": -1153401.6529605947,
+  "market_cap_change_percentage_24h": -3.61653,
+  "circulating_supply": 46376904.201892905,
+  "total_supply": 71540639.7181561,
+  "max_supply": 100000000,
+  "ath": 4.05,
+  "ath_change_percentage": -83.61223,
+  "ath_date": "2023-03-14T13:19:41.812Z",
+  "atl": 0.445907,
+  "atl_change_percentage": 48.70183,
+  "atl_date": "2022-06-17T07:20:33.005Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:22.576Z",
+  "platforms": {
+    "gnosis": "0x1509706a6c66ca549ff0cb464de88231ddbe213b"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "topgoal",
+  "symbol": "goal",
+  "name": "TopGoal",
+  "image": "https://assets.coingecko.com/coins/images/29229/large/YRDnlXib_400x400.jpg?1696528186",
+  "current_price": 0.059846,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 98763,
+  "high_24h": 0.065184,
+  "low_24h": 0.059621,
+  "price_change_24h": -0.004062404116806286,
+  "price_change_percentage_24h": -6.3566,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.749061,
+  "ath_change_percentage": -92.01546,
+  "ath_date": "2023-02-27T11:18:49.908Z",
+  "atl": 0.04980212,
+  "atl_change_percentage": 20.0934,
+  "atl_date": "2024-02-24T05:32:16.067Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:16:55.036Z",
+  "platforms": {
+    "bsc": "0xc4736f2611a62d545dc2d0d8f0766283617e6fcb"
+  }
+}

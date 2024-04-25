@@ -1,0 +1,31 @@
+{
+  "id": "talecraft",
+  "symbol": "craft",
+  "name": "TaleCraft",
+  "image": "https://assets.coingecko.com/coins/images/20934/large/3mrl6Lfw_400x400.jpg?1696520323",
+  "current_price": 0.00363958,
+  "market_cap": 25502,
+  "market_cap_rank": 4120,
+  "fully_diluted_valuation": 109189,
+  "total_volume": 4724.23,
+  "high_24h": 0.00369185,
+  "low_24h": 0.00315858,
+  "price_change_24h": 0.00048101,
+  "price_change_percentage_24h": 15.2286,
+  "market_cap_change_24h": 3350.52,
+  "market_cap_change_percentage_24h": 15.12519,
+  "circulating_supply": 7006896,
+  "total_supply": 30000000,
+  "max_supply": 30000000,
+  "ath": 16.6,
+  "ath_change_percentage": -99.97807,
+  "ath_date": "2021-11-28T06:37:29.013Z",
+  "atl": 0.0011786,
+  "atl_change_percentage": 208.80788,
+  "atl_date": "2023-10-23T05:26:34.789Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:13.116Z",
+  "platforms": {
+    "avalanche": "0x8ae8be25c23833e0a01aa200403e826f611f9cd2"
+  }
+}

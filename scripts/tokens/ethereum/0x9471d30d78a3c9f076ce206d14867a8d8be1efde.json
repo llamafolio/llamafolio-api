@@ -1,0 +1,31 @@
+{
+  "id": "zenex",
+  "symbol": "znx",
+  "name": "ZENEX",
+  "image": "https://assets.coingecko.com/coins/images/29638/large/znx-logo.png?1696528575",
+  "current_price": 0.093379,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 141997,
+  "total_volume": 5435.23,
+  "high_24h": 0.097509,
+  "low_24h": 0.091074,
+  "price_change_24h": 0.00037085,
+  "price_change_percentage_24h": 0.39873,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1500000,
+  "max_supply": 120300000,
+  "ath": 0.779117,
+  "ath_change_percentage": -87.84137,
+  "ath_date": "2023-05-12T11:44:19.945Z",
+  "atl": 0.01629927,
+  "atl_change_percentage": 481.19118,
+  "atl_date": "2024-01-28T19:50:23.774Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:52.582Z",
+  "platforms": {
+    "ethereum": "0x9471d30d78a3c9f076ce206d14867a8d8be1efde"
+  }
+}

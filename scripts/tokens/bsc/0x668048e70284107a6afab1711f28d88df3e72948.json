@@ -1,0 +1,31 @@
+{
+  "id": "coldstack",
+  "symbol": "cls",
+  "name": "Coldstack",
+  "image": "https://assets.coingecko.com/coins/images/15499/large/logo_200x200.png?1696515143",
+  "current_price": 0.21873,
+  "market_cap": 3973794,
+  "market_cap_rank": 1910,
+  "fully_diluted_valuation": 10876595,
+  "total_volume": 84251,
+  "high_24h": 0.229991,
+  "low_24h": 0.218557,
+  "price_change_24h": -0.009344311510452811,
+  "price_change_percentage_24h": -4.09705,
+  "market_cap_change_24h": -161212.7211174597,
+  "market_cap_change_percentage_24h": -3.89873,
+  "circulating_supply": 18181241.12184165,
+  "total_supply": 49763520,
+  "max_supply": 50000000,
+  "ath": 6.46,
+  "ath_change_percentage": -96.61192,
+  "ath_date": "2021-05-15T09:54:29.088Z",
+  "atl": 0.03684638,
+  "atl_change_percentage": 493.86036,
+  "atl_date": "2023-10-08T07:45:27.572Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:39.547Z",
+  "platforms": {
+    "bsc": "0x668048e70284107a6afab1711f28d88df3e72948"
+  }
+}

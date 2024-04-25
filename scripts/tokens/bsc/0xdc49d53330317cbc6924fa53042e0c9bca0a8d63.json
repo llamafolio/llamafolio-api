@@ -1,0 +1,31 @@
+{
+  "id": "dogedi",
+  "symbol": "dogedi",
+  "name": "DOGEDI",
+  "image": "https://assets.coingecko.com/coins/images/21334/large/dogedi.png?1696520701",
+  "current_price": 4.3838e-11,
+  "market_cap": 25460,
+  "market_cap_rank": 4122,
+  "fully_diluted_valuation": 39016,
+  "total_volume": 108.47,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 580779553457727.2,
+  "total_supply": 890000000000000,
+  "max_supply": 1000000000000000,
+  "ath": 1.5074e-8,
+  "ath_change_percentage": -99.70918,
+  "ath_date": "2021-12-13T02:33:04.813Z",
+  "atl": 4.3439e-11,
+  "atl_change_percentage": 0.91838,
+  "atl_date": "2023-08-01T15:24:00.683Z",
+  "roi": null,
+  "last_updated": "2023-08-01T23:14:12.773Z",
+  "platforms": {
+    "bsc": "0xdc49d53330317cbc6924fa53042e0c9bca0a8d63"
+  }
+}

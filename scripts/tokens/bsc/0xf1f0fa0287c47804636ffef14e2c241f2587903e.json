@@ -1,0 +1,31 @@
+{
+  "id": "aarma",
+  "symbol": "arma",
+  "name": "Aarma",
+  "image": "https://assets.coingecko.com/coins/images/25330/large/aarma-200x200.png?1696524465",
+  "current_price": 0.01481575,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1629491,
+  "total_volume": 1638.15,
+  "high_24h": 0.01529649,
+  "low_24h": 0.01447302,
+  "price_change_24h": 0.00033891,
+  "price_change_percentage_24h": 2.34108,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 110000000,
+  "max_supply": null,
+  "ath": 0.2001,
+  "ath_change_percentage": -92.62658,
+  "ath_date": "2022-05-30T12:44:53.795Z",
+  "atl": 0.00277171,
+  "atl_change_percentage": 432.31388,
+  "atl_date": "2024-03-03T01:00:00.833Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:47.198Z",
+  "platforms": {
+    "bsc": "0xf1f0fa0287c47804636ffef14e2c241f2587903e"
+  }
+}

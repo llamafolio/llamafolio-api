@@ -1,0 +1,31 @@
+{
+  "id": "flare-token",
+  "symbol": "1flr",
+  "name": "Flare Token",
+  "image": "https://assets.coingecko.com/coins/images/19114/large/flr.png?1696518566",
+  "current_price": 0.00010821,
+  "market_cap": 432304,
+  "market_cap_rank": 3141,
+  "fully_diluted_valuation": 432304,
+  "total_volume": 554.57,
+  "high_24h": 0.00011459,
+  "low_24h": 0.00010758,
+  "price_change_24h": -0.000003060811756325,
+  "price_change_percentage_24h": -2.75083,
+  "market_cap_change_24h": -14793.051198344852,
+  "market_cap_change_percentage_24h": -3.30869,
+  "circulating_supply": 4000000000,
+  "total_supply": 4000000000,
+  "max_supply": 4000000000,
+  "ath": 0.00261622,
+  "ath_change_percentage": -95.87159,
+  "ath_date": "2021-10-23T17:36:06.639Z",
+  "atl": 0.00006429,
+  "atl_change_percentage": 67.99694,
+  "atl_date": "2023-09-16T13:05:16.776Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:24.633Z",
+  "platforms": {
+    "polygon": "0x5f0197ba06860dac7e31258bdf749f92b6a636d4"
+  }
+}

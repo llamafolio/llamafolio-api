@@ -1,0 +1,31 @@
+{
+  "id": "ethermon",
+  "symbol": "emon",
+  "name": "Ethermon",
+  "image": "https://assets.coingecko.com/coins/images/15889/large/LtET0reH_400x400.jpg?1696515504",
+  "current_price": 0.00133072,
+  "market_cap": 195740,
+  "market_cap_rank": 3511,
+  "fully_diluted_valuation": 532528,
+  "total_volume": 21542,
+  "high_24h": 0.00136961,
+  "low_24h": 0.00132905,
+  "price_change_24h": -0.000007496437689016,
+  "price_change_percentage_24h": -0.56018,
+  "market_cap_change_24h": -561.3604389525426,
+  "market_cap_change_percentage_24h": -0.28597,
+  "circulating_supply": 147026673,
+  "total_supply": 400000000,
+  "max_supply": null,
+  "ath": 2.01,
+  "ath_change_percentage": -99.93371,
+  "ath_date": "2021-08-28T21:55:36.957Z",
+  "atl": 0.00033576,
+  "atl_change_percentage": 296.53472,
+  "atl_date": "2023-02-02T04:49:41.520Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:24.964Z",
+  "platforms": {
+    "ethereum": "0xd6a5ab46ead26f49b03bbb1f9eb1ad5c1767974a"
+  }
+}

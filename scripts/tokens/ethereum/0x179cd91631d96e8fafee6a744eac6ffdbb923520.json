@@ -1,0 +1,31 @@
+{
+  "id": "ixicash",
+  "symbol": "ixi",
+  "name": "IXI",
+  "image": "https://assets.coingecko.com/coins/images/8368/large/Ixian_Logo_1.png?1707305074",
+  "current_price": 0.00007305,
+  "market_cap": 595860,
+  "market_cap_rank": 2978,
+  "fully_diluted_valuation": 1531595,
+  "total_volume": 390.34,
+  "high_24h": 0.00007452,
+  "low_24h": 0.0000691,
+  "price_change_24h": 0.00000235,
+  "price_change_percentage_24h": 3.32947,
+  "market_cap_change_24h": 18377.74,
+  "market_cap_change_percentage_24h": 3.18239,
+  "circulating_supply": 8169946205.869396,
+  "total_supply": 21000000000,
+  "max_supply": null,
+  "ath": 0.0054149,
+  "ath_change_percentage": -98.6531,
+  "ath_date": "2021-03-22T23:14:48.699Z",
+  "atl": 7.5895e-8,
+  "atl_change_percentage": 95997.49961,
+  "atl_date": "2020-06-19T03:19:38.705Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:50.173Z",
+  "platforms": {
+    "ethereum": "0x179cd91631d96e8fafee6a744eac6ffdbb923520"
+  }
+}

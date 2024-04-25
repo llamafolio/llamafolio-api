@@ -1,0 +1,31 @@
+{
+  "id": "giddy",
+  "symbol": "giddy",
+  "name": "Giddy",
+  "image": "https://assets.coingecko.com/coins/images/24960/large/gddy.png?1696524114",
+  "current_price": 0.00488162,
+  "market_cap": 4879748,
+  "market_cap_rank": 1808,
+  "fully_diluted_valuation": 4879748,
+  "total_volume": 36828,
+  "high_24h": 0.00525491,
+  "low_24h": 0.00486828,
+  "price_change_24h": -0.00033658783569713,
+  "price_change_percentage_24h": -6.45026,
+  "market_cap_change_24h": -351565.9898842778,
+  "market_cap_change_percentage_24h": -6.72041,
+  "circulating_supply": 1000000000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.346671,
+  "ath_change_percentage": -98.59169,
+  "ath_date": "2022-05-09T21:39:48.282Z",
+  "atl": 0.00232808,
+  "atl_change_percentage": 109.70968,
+  "atl_date": "2024-01-11T21:01:43.972Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:17.737Z",
+  "platforms": {
+    "polygon": "0x67eb41a14c0fe5cd701fc9d5a3d6597a72f641a6"
+  }
+}

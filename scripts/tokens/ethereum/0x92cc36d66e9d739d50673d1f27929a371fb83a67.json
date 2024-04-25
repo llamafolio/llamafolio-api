@@ -1,0 +1,31 @@
+{
+  "id": "wagmi-2",
+  "symbol": "wagmi",
+  "name": "Wagmi",
+  "image": "https://assets.coingecko.com/coins/images/31887/large/wagmi_token_logo.png?1696530698",
+  "current_price": 0.01041784,
+  "market_cap": 15791897,
+  "market_cap_rank": 1226,
+  "fully_diluted_valuation": null,
+  "total_volume": 195948,
+  "high_24h": 0.01079907,
+  "low_24h": 0.01040736,
+  "price_change_24h": -0.000373949930190966,
+  "price_change_percentage_24h": -3.46513,
+  "market_cap_change_24h": -588378.9807410631,
+  "market_cap_change_percentage_24h": -3.592,
+  "circulating_supply": 1517049677.30785,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.03723342,
+  "ath_change_percentage": -71.91003,
+  "ath_date": "2024-01-03T04:35:32.083Z",
+  "atl": 0.00768698,
+  "atl_change_percentage": 36.05939,
+  "atl_date": "2023-10-18T23:04:43.040Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:19.960Z",
+  "platforms": {
+    "ethereum": "0x92cc36d66e9d739d50673d1f27929a371fb83a67"
+  }
+}

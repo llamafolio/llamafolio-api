@@ -1,0 +1,31 @@
+{
+  "id": "threshold-network-token",
+  "symbol": "t",
+  "name": "Threshold Network",
+  "image": "https://assets.coingecko.com/coins/images/22228/large/nFPNiSbL_400x400.jpg?1696521570",
+  "current_price": 0.03414539,
+  "market_cap": 328742742,
+  "market_cap_rank": 219,
+  "fully_diluted_valuation": 376012110,
+  "total_volume": 13459493,
+  "high_24h": 0.03783373,
+  "low_24h": 0.03373334,
+  "price_change_24h": -0.00341868778417944,
+  "price_change_percentage_24h": -9.10095,
+  "market_cap_change_24h": -34527118.66266525,
+  "market_cap_change_percentage_24h": -9.50454,
+  "circulating_supply": 9647764144.42009,
+  "total_supply": 11035000000,
+  "max_supply": null,
+  "ath": 0.226934,
+  "ath_change_percentage": -84.97019,
+  "ath_date": "2022-03-02T08:36:02.983Z",
+  "atl": 0.01473348,
+  "atl_change_percentage": 131.49779,
+  "atl_date": "2022-12-29T02:35:00.231Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:24.928Z",
+  "platforms": {
+    "ethereum": "0xcdf7028ceab81fa0c6971208e83fa7872994bee5"
+  }
+}

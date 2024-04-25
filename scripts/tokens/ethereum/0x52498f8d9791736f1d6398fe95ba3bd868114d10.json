@@ -1,0 +1,31 @@
+{
+  "id": "netvrk",
+  "symbol": "netvr",
+  "name": "Netvrk",
+  "image": "https://assets.coingecko.com/coins/images/15721/large/netvrk_icon.png?1696515348",
+  "current_price": 0.114126,
+  "market_cap": 7505599,
+  "market_cap_rank": 1575,
+  "fully_diluted_valuation": 11405144,
+  "total_volume": 51832,
+  "high_24h": 0.126024,
+  "low_24h": 0.113183,
+  "price_change_24h": -0.01169245054552974,
+  "price_change_percentage_24h": -9.29309,
+  "market_cap_change_24h": -866269.3345233258,
+  "market_cap_change_percentage_24h": -10.34738,
+  "circulating_supply": 65808896.89426,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 7.33,
+  "ath_change_percentage": -98.44578,
+  "ath_date": "2021-11-25T15:29:36.310Z",
+  "atl": 0.01627825,
+  "atl_change_percentage": 600.14281,
+  "atl_date": "2024-01-31T08:51:03.197Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:52.495Z",
+  "platforms": {
+    "ethereum": "0x52498f8d9791736f1d6398fe95ba3bd868114d10"
+  }
+}

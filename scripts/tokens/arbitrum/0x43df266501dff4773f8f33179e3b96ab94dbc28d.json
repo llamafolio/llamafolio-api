@@ -1,0 +1,31 @@
+{
+  "id": "glend",
+  "symbol": "glend",
+  "name": "GLend",
+  "image": "https://assets.coingecko.com/coins/images/34850/large/GLend_Logo.png?1706261233",
+  "current_price": 0.241845,
+  "market_cap": 305613,
+  "market_cap_rank": 3310,
+  "fully_diluted_valuation": 604613,
+  "total_volume": 20.48,
+  "high_24h": 0.252434,
+  "low_24h": 0.239467,
+  "price_change_24h": -0.007842903136706547,
+  "price_change_percentage_24h": -3.14108,
+  "market_cap_change_24h": -9804.424604049942,
+  "market_cap_change_percentage_24h": -3.1084,
+  "circulating_supply": 1263671,
+  "total_supply": 2500000,
+  "max_supply": 2500000,
+  "ath": 0.687071,
+  "ath_change_percentage": -64.80053,
+  "ath_date": "2024-03-27T13:33:08.158Z",
+  "atl": 0.191415,
+  "atl_change_percentage": 26.34583,
+  "atl_date": "2024-03-20T05:28:35.385Z",
+  "roi": null,
+  "last_updated": "2024-04-25T03:21:48.501Z",
+  "platforms": {
+    "arbitrum": "0x43df266501dff4773f8f33179e3b96ab94dbc28d"
+  }
+}

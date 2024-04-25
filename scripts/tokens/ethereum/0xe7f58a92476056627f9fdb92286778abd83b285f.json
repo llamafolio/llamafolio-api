@@ -1,0 +1,31 @@
+{
+  "id": "decentraweb",
+  "symbol": "dweb",
+  "name": "DecentraWeb",
+  "image": "https://assets.coingecko.com/coins/images/18971/large/dweb-logo-transparent.png?1696518425",
+  "current_price": 0.059054,
+  "market_cap": 2871213,
+  "market_cap_rank": 2082,
+  "fully_diluted_valuation": 5893617,
+  "total_volume": 9845.51,
+  "high_24h": 0.065687,
+  "low_24h": 0.058614,
+  "price_change_24h": -0.005756972440701337,
+  "price_change_percentage_24h": -8.88273,
+  "market_cap_change_24h": -280766.1434795656,
+  "market_cap_change_percentage_24h": -8.90761,
+  "circulating_supply": 48588990.221513234,
+  "total_supply": 99736549.5333881,
+  "max_supply": 100000000,
+  "ath": 3.56,
+  "ath_change_percentage": -98.33153,
+  "ath_date": "2021-10-14T03:46:01.191Z",
+  "atl": 0.04201341,
+  "atl_change_percentage": 41.21807,
+  "atl_date": "2023-10-17T07:20:49.558Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:52:09.207Z",
+  "platforms": {
+    "ethereum": "0xe7f58a92476056627f9fdb92286778abd83b285f"
+  }
+}

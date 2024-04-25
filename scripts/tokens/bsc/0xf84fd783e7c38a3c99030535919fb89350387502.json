@@ -1,0 +1,31 @@
+{
+  "id": "upfront-protocol",
+  "symbol": "up",
+  "name": "Upfront Protocol",
+  "image": "https://assets.coingecko.com/coins/images/30559/large/IMG_20230524_134842_946.jpg?1696529430",
+  "current_price": 0.00003086,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 30859,
+  "total_volume": 10,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00023802,
+  "ath_change_percentage": -87.0351,
+  "ath_date": "2023-05-26T01:46:05.782Z",
+  "atl": 0.00003073,
+  "atl_change_percentage": 0.40487,
+  "atl_date": "2023-08-03T08:30:25.196Z",
+  "roi": null,
+  "last_updated": "2023-08-03T10:00:35.531Z",
+  "platforms": {
+    "bsc": "0xf84fd783e7c38a3c99030535919fb89350387502"
+  }
+}

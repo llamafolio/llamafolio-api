@@ -1,0 +1,35 @@
+{
+  "id": "aventus",
+  "symbol": "avt",
+  "name": "Aventus",
+  "image": "https://assets.coingecko.com/coins/images/901/large/1673958879448.jpeg?1696502024",
+  "current_price": 3.62,
+  "market_cap": 33467660,
+  "market_cap_rank": 868,
+  "fully_diluted_valuation": 38286907,
+  "total_volume": 376836,
+  "high_24h": 3.96,
+  "low_24h": 3.56,
+  "price_change_24h": -0.2886060297449138,
+  "price_change_percentage_24h": -7.38391,
+  "market_cap_change_24h": -2757248.343559373,
+  "market_cap_change_percentage_24h": -7.61147,
+  "circulating_supply": 9265757.58704024,
+  "total_supply": 10600000,
+  "max_supply": null,
+  "ath": 10.25,
+  "ath_change_percentage": -64.76043,
+  "ath_date": "2024-03-10T01:26:45.467Z",
+  "atl": 0,
+  "atl_change_percentage": 3.9504092438425756e+37,
+  "atl_date": "2021-08-27T07:37:51.359Z",
+  "roi": {
+    "times": -0.010936692686311748,
+    "currency": "usd",
+    "percentage": -1.0936692686311749
+  },
+  "last_updated": "2024-04-25T09:03:40.684Z",
+  "platforms": {
+    "ethereum": "0x0d88ed6e74bbfd96b831231638b66c05571e824f"
+  }
+}

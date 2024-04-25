@@ -1,0 +1,31 @@
+{
+  "id": "fourcoin",
+  "symbol": "four",
+  "name": "FourCoin",
+  "image": "https://assets.coingecko.com/coins/images/30167/large/fourcoin.jpeg?1696529087",
+  "current_price": 0.0000024,
+  "market_cap": 1061964,
+  "market_cap_rank": 2653,
+  "fully_diluted_valuation": 1061964,
+  "total_volume": 282919,
+  "high_24h": 0.00000255,
+  "low_24h": 0.00000238,
+  "price_change_24h": -1.31767763497e-7,
+  "price_change_percentage_24h": -5.19838,
+  "market_cap_change_24h": -60954.07491917256,
+  "market_cap_change_percentage_24h": -5.42819,
+  "circulating_supply": 444000000000,
+  "total_supply": 444000000000,
+  "max_supply": 444000000000,
+  "ath": 0.00009646,
+  "ath_change_percentage": -97.52,
+  "ath_date": "2023-05-09T12:20:54.558Z",
+  "atl": 0.00000133,
+  "atl_change_percentage": 79.90565,
+  "atl_date": "2023-10-19T09:00:56.133Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:19.740Z",
+  "platforms": {
+    "ethereum": "0x244b797d622d4dee8b188b03546acaabd0cf91a0"
+  }
+}

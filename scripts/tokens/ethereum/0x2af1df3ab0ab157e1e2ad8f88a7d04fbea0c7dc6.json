@@ -1,0 +1,31 @@
+{
+  "id": "bankless-bed-index",
+  "symbol": "bed",
+  "name": "Bankless BED Index",
+  "image": "https://assets.coingecko.com/coins/images/17175/large/BED_Logo_-_No_border.png?1696516734",
+  "current_price": 112.27,
+  "market_cap": 812172,
+  "market_cap_rank": 2815,
+  "fully_diluted_valuation": 812172,
+  "total_volume": 2582.41,
+  "high_24h": 113.94,
+  "low_24h": 112.09,
+  "price_change_24h": -1.2822411228003148,
+  "price_change_percentage_24h": -1.12921,
+  "market_cap_change_24h": -2879.9156170297647,
+  "market_cap_change_percentage_24h": -0.35334,
+  "circulating_supply": 7234.09717816667,
+  "total_supply": 7234.09717816667,
+  "max_supply": null,
+  "ath": 198.73,
+  "ath_change_percentage": -43.50512,
+  "ath_date": "2021-11-10T14:23:50.390Z",
+  "atl": 36.64,
+  "atl_change_percentage": 206.42168,
+  "atl_date": "2022-06-18T20:57:24.718Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:56.024Z",
+  "platforms": {
+    "ethereum": "0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6"
+  }
+}

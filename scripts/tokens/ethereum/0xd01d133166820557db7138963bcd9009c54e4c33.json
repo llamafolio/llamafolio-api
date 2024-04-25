@@ -1,0 +1,31 @@
+{
+  "id": "chainex",
+  "symbol": "cex",
+  "name": "ChainEx",
+  "image": "https://assets.coingecko.com/coins/images/33477/large/ChainEx-2.png?1702013835",
+  "current_price": 0.03060722,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 306072,
+  "total_volume": 471.71,
+  "high_24h": 0.03179128,
+  "low_24h": 0.03018982,
+  "price_change_24h": -0.000911225735287898,
+  "price_change_percentage_24h": -2.89109,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.337846,
+  "ath_change_percentage": -90.94048,
+  "ath_date": "2023-12-11T09:39:55.575Z",
+  "atl": 0.02718829,
+  "atl_change_percentage": 12.57502,
+  "atl_date": "2024-04-21T16:44:09.593Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:08.589Z",
+  "platforms": {
+    "ethereum": "0xd01d133166820557db7138963bcd9009c54e4c33"
+  }
+}

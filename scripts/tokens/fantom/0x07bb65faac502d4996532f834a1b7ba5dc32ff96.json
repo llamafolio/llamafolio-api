@@ -1,0 +1,31 @@
+{
+  "id": "fantom-velocimeter",
+  "symbol": "fvm",
+  "name": "Fantom Velocimeter",
+  "image": "https://assets.coingecko.com/coins/images/30916/large/fvm-3_%281%29.png?1696529761",
+  "current_price": 0.125248,
+  "market_cap": 350778,
+  "market_cap_rank": 3245,
+  "fully_diluted_valuation": 1929090,
+  "total_volume": 2172.32,
+  "high_24h": 0.129085,
+  "low_24h": 0.121595,
+  "price_change_24h": -0.002693179083172959,
+  "price_change_percentage_24h": -2.10502,
+  "market_cap_change_24h": -6665.264122230932,
+  "market_cap_change_percentage_24h": -1.86471,
+  "circulating_supply": 2800672.81937416,
+  "total_supply": 15402188.008777,
+  "max_supply": null,
+  "ath": 0.321697,
+  "ath_change_percentage": -60.69376,
+  "ath_date": "2023-08-25T22:29:21.872Z",
+  "atl": 0.086432,
+  "atl_change_percentage": 46.29659,
+  "atl_date": "2023-11-21T23:09:18.822Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:51:55.131Z",
+  "platforms": {
+    "fantom": "0x07bb65faac502d4996532f834a1b7ba5dc32ff96"
+  }
+}

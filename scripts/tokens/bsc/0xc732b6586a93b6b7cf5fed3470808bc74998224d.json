@@ -1,0 +1,31 @@
+{
+  "id": "kryptomon",
+  "symbol": "kmon",
+  "name": "Kryptomon",
+  "image": "https://assets.coingecko.com/coins/images/17886/large/kryptomon.png?1696517407",
+  "current_price": 0.00871316,
+  "market_cap": 6599931,
+  "market_cap_rank": 1654,
+  "fully_diluted_valuation": 8696923,
+  "total_volume": 213960,
+  "high_24h": 0.01026947,
+  "low_24h": 0.00851106,
+  "price_change_24h": -0.001556315187623463,
+  "price_change_percentage_24h": -15.15477,
+  "market_cap_change_24h": -1188661.549271158,
+  "market_cap_change_percentage_24h": -15.26157,
+  "circulating_supply": 758881131,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.227716,
+  "ath_change_percentage": -96.17424,
+  "ath_date": "2021-11-17T22:23:37.667Z",
+  "atl": 0.00494341,
+  "atl_change_percentage": 76.23221,
+  "atl_date": "2024-02-24T13:56:07.123Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:15.614Z",
+  "platforms": {
+    "bsc": "0xc732b6586a93b6b7cf5fed3470808bc74998224d"
+  }
+}

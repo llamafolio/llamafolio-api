@@ -1,0 +1,31 @@
+{
+  "id": "amateras",
+  "symbol": "amt",
+  "name": "Amateras",
+  "image": "https://assets.coingecko.com/coins/images/21759/large/logo.png?1696521114",
+  "current_price": 0.00801573,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 801108,
+  "total_volume": 64.09,
+  "high_24h": 0.00811191,
+  "low_24h": 0.00784714,
+  "price_change_24h": 0.000044,
+  "price_change_percentage_24h": 0.55193,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 0.084599,
+  "ath_change_percentage": -90.54425,
+  "ath_date": "2021-12-21T14:39:07.388Z",
+  "atl": 0.00014132,
+  "atl_change_percentage": 5560.56697,
+  "atl_date": "2023-04-28T17:51:24.656Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:09.535Z",
+  "platforms": {
+    "bsc": "0x4ce5f6bf8e996ae54709c75865709aca5127dd54"
+  }
+}

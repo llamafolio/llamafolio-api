@@ -1,0 +1,31 @@
+{
+  "id": "pinkmoon",
+  "symbol": "pinkm",
+  "name": "PinkMoon",
+  "image": "https://assets.coingecko.com/coins/images/15018/large/pink-logo-200.png?1696514680",
+  "current_price": 1.214e-9,
+  "market_cap": 457000,
+  "market_cap_rank": 3109,
+  "fully_diluted_valuation": 1214935,
+  "total_volume": 20.59,
+  "high_24h": 1.233e-9,
+  "low_24h": 1.186e-9,
+  "price_change_24h": 4.09324e-13,
+  "price_change_percentage_24h": 0.03373,
+  "market_cap_change_24h": 343.89,
+  "market_cap_change_percentage_24h": 0.07531,
+  "circulating_supply": 376151683519280.44,
+  "total_supply": 1000000000000000,
+  "max_supply": null,
+  "ath": 2.9694e-8,
+  "ath_change_percentage": -95.92707,
+  "ath_date": "2021-04-27T03:16:23.283Z",
+  "atl": 3.9922e-11,
+  "atl_change_percentage": 2929.47206,
+  "atl_date": "2021-05-14T21:03:49.203Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:50.198Z",
+  "platforms": {
+    "bsc": "0xb6090a50f66046e3c6afb9311846a6432e45060a"
+  }
+}

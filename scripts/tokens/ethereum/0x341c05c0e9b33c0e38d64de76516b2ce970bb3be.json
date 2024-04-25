@@ -1,0 +1,31 @@
+{
+  "id": "diversified-staked-eth",
+  "symbol": "dseth",
+  "name": "Diversified Staked ETH",
+  "image": "https://assets.coingecko.com/coins/images/28751/large/dsETH-logo.png?1696527731",
+  "current_price": 3272.05,
+  "market_cap": 2150013,
+  "market_cap_rank": 2255,
+  "fully_diluted_valuation": 2150013,
+  "total_volume": 6944.38,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 657.084015807196,
+  "total_supply": 657.084015807196,
+  "max_supply": null,
+  "ath": 3842.37,
+  "ath_change_percentage": -14.84294,
+  "ath_date": "2024-04-08T13:31:32.447Z",
+  "atl": 1393.4,
+  "atl_change_percentage": 134.82575,
+  "atl_date": "2023-03-10T11:26:03.021Z",
+  "roi": null,
+  "last_updated": "2024-04-22T02:09:54.276Z",
+  "platforms": {
+    "ethereum": "0x341c05c0e9b33c0e38d64de76516b2ce970bb3be"
+  }
+}

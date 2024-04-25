@@ -1,0 +1,31 @@
+{
+  "id": "unitedcrowd",
+  "symbol": "uct",
+  "name": "UnitedCrowd",
+  "image": "https://assets.coingecko.com/coins/images/14956/large/eUvRU9wm.png?1696514614",
+  "current_price": 0.002771,
+  "market_cap": 126697,
+  "market_cap_rank": 3707,
+  "fully_diluted_valuation": 1624079,
+  "total_volume": 0.228965,
+  "high_24h": 0.0028273,
+  "low_24h": 0.00272089,
+  "price_change_24h": -0.000005956926150613,
+  "price_change_percentage_24h": -0.21451,
+  "market_cap_change_24h": -457.5319787834742,
+  "market_cap_change_percentage_24h": -0.35982,
+  "circulating_supply": 45689056.864901066,
+  "total_supply": 585670354,
+  "max_supply": 585670354,
+  "ath": 0.503577,
+  "ath_change_percentage": -99.4517,
+  "ath_date": "2021-04-25T03:34:10.985Z",
+  "atl": 0.00081894,
+  "atl_change_percentage": 237.15599,
+  "atl_date": "2023-09-16T19:54:28.111Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:53.489Z",
+  "platforms": {
+    "bsc": "0x6d1dc3928604b00180bb570bdae94b9698d33b79"
+  }
+}

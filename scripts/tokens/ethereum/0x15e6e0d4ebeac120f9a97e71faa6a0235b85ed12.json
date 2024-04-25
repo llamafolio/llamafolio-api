@@ -1,0 +1,31 @@
+{
+  "id": "satoshivm",
+  "symbol": "savm",
+  "name": "SatoshiVM",
+  "image": "https://assets.coingecko.com/coins/images/34659/large/SatoshiVM.jpeg?1705635248",
+  "current_price": 4.02,
+  "market_cap": 29534938,
+  "market_cap_rank": 922,
+  "fully_diluted_valuation": 84347989,
+  "total_volume": 3942248,
+  "high_24h": 4.79,
+  "low_24h": 3.96,
+  "price_change_24h": -0.6496030662804353,
+  "price_change_percentage_24h": -13.92154,
+  "market_cap_change_24h": -4774574.627905346,
+  "market_cap_change_percentage_24h": -13.91618,
+  "circulating_supply": 7353272,
+  "total_supply": 21000000,
+  "max_supply": 21000000,
+  "ath": 14.77,
+  "ath_change_percentage": -72.83327,
+  "ath_date": "2024-01-19T13:30:00.372Z",
+  "atl": 2.13,
+  "atl_change_percentage": 88.70158,
+  "atl_date": "2024-01-31T15:30:00.505Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:32.576Z",
+  "platforms": {
+    "ethereum": "0x15e6e0d4ebeac120f9a97e71faa6a0235b85ed12"
+  }
+}

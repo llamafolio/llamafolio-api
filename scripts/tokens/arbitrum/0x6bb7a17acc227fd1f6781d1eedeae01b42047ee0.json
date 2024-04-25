@@ -1,0 +1,31 @@
+{
+  "id": "lexer-markets",
+  "symbol": "lex",
+  "name": "LEXER Markets",
+  "image": "https://assets.coingecko.com/coins/images/29888/large/LEX.png?1696528812",
+  "current_price": 0.00299633,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 200146,
+  "total_volume": 2.24,
+  "high_24h": 0.0031422,
+  "low_24h": 0.00297967,
+  "price_change_24h": -0.000107832467199724,
+  "price_change_percentage_24h": -3.4738,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 67000000,
+  "max_supply": 1000000000,
+  "ath": 0.03645507,
+  "ath_change_percentage": -91.78076,
+  "ath_date": "2023-04-20T10:21:12.880Z",
+  "atl": 0.00276645,
+  "atl_change_percentage": 8.30947,
+  "atl_date": "2024-04-19T02:33:10.417Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:34.550Z",
+  "platforms": {
+    "arbitrum": "0x6bb7a17acc227fd1f6781d1eedeae01b42047ee0"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "osean",
+  "symbol": "osean",
+  "name": "Osean",
+  "image": "https://assets.coingecko.com/coins/images/30968/large/oceana.png?1696529808",
+  "current_price": 0.00143848,
+  "market_cap": 1221904,
+  "market_cap_rank": 2573,
+  "fully_diluted_valuation": 1409036,
+  "total_volume": 10366.69,
+  "high_24h": 0.00149583,
+  "low_24h": 0.00140555,
+  "price_change_24h": -0.000051208608032857,
+  "price_change_percentage_24h": -3.43753,
+  "market_cap_change_24h": -44890.81053889124,
+  "market_cap_change_percentage_24h": -3.54365,
+  "circulating_supply": 849848136.7760828,
+  "total_supply": 980000000,
+  "max_supply": 1000000000,
+  "ath": 0.00365894,
+  "ath_change_percentage": -60.50017,
+  "ath_date": "2024-03-27T01:14:58.978Z",
+  "atl": 0.00008454,
+  "atl_change_percentage": 1609.60343,
+  "atl_date": "2023-12-04T16:05:31.891Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:03.488Z",
+  "platforms": {
+    "ethereum": "0x50d5118fb90d572b9d42ba65e0addc4900867809"
+  }
+}

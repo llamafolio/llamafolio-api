@@ -1,0 +1,31 @@
+{
+  "id": "crust-storage-market",
+  "symbol": "csm",
+  "name": "Crust Shadow",
+  "image": "https://assets.coingecko.com/coins/images/16037/large/2_mnCYZfHmLg2bFrjM3vKtPw.png?1696515647",
+  "current_price": 0.01270715,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2543754,
+  "total_volume": 9494,
+  "high_24h": 0.0159524,
+  "low_24h": 0.012135,
+  "price_change_24h": -0.002630648071978693,
+  "price_change_percentage_24h": -17.1514,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 200000000,
+  "max_supply": null,
+  "ath": 0.166,
+  "ath_change_percentage": -92.34598,
+  "ath_date": "2021-06-11T20:44:21.855Z",
+  "atl": 0.00339249,
+  "atl_change_percentage": 274.52459,
+  "atl_date": "2022-11-17T12:03:31.140Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:43.617Z",
+  "platforms": {
+    "ethereum": "0x2620638eda99f9e7e902ea24a285456ee9438861"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "metagamehub-dao",
+  "symbol": "mgh",
+  "name": "MetaGameHub DAO",
+  "image": "https://assets.coingecko.com/coins/images/20625/large/mgh.PNG?1696520029",
+  "current_price": 0.00118268,
+  "market_cap": 361941,
+  "market_cap_rank": 3223,
+  "fully_diluted_valuation": 591341,
+  "total_volume": 4.76,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 306034092.709607,
+  "total_supply": 500000000,
+  "max_supply": 1000000000,
+  "ath": 0.311853,
+  "ath_change_percentage": -99.62076,
+  "ath_date": "2021-11-20T13:21:05.582Z",
+  "atl": 0.00110183,
+  "atl_change_percentage": 7.33781,
+  "atl_date": "2024-04-17T15:32:26.047Z",
+  "roi": null,
+  "last_updated": "2024-04-21T12:22:10.862Z",
+  "platforms": {
+    "ethereum": "0x8765b1a0eb57ca49be7eacd35b24a574d0203656"
+  }
+}

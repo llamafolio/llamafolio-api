@@ -1,0 +1,31 @@
+{
+  "id": "aave-v3-stg",
+  "symbol": "astg",
+  "name": "Aave v3 STG",
+  "image": "https://assets.coingecko.com/coins/images/32905/large/ST.png?1699803503",
+  "current_price": 0.526612,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 0,
+  "high_24h": 0.559837,
+  "low_24h": 0.526612,
+  "price_change_24h": -0.03322451999999998,
+  "price_change_percentage_24h": -5.93468,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.889953,
+  "ath_change_percentage": -40.82695,
+  "ath_date": "2024-03-13T09:05:24.820Z",
+  "atl": 0.474224,
+  "atl_change_percentage": 11.04705,
+  "atl_date": "2024-04-14T03:25:24.819Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:31.377Z",
+  "platforms": {
+    "ethereum": "0x1ba9843bd4327c6c77011406de5fa8749f7e3479"
+  }
+}

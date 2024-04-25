@@ -1,0 +1,31 @@
+{
+  "id": "neurashi",
+  "symbol": "nei",
+  "name": "Neurashi",
+  "image": "https://assets.coingecko.com/coins/images/34104/large/Black_Square.png?1703959966",
+  "current_price": 0.00306482,
+  "market_cap": 192804,
+  "market_cap_rank": 3516,
+  "fully_diluted_valuation": 137577320,
+  "total_volume": 224179,
+  "high_24h": 0.0033188,
+  "low_24h": 0.00290258,
+  "price_change_24h": 0.00013579,
+  "price_change_percentage_24h": 4.63618,
+  "market_cap_change_24h": 7290.35,
+  "market_cap_change_percentage_24h": 3.92983,
+  "circulating_supply": 63063906.08493454,
+  "total_supply": 45000000000,
+  "max_supply": 45000000000,
+  "ath": 0.028705,
+  "ath_change_percentage": -89.31434,
+  "ath_date": "2024-03-10T11:02:35.081Z",
+  "atl": 0.00241266,
+  "atl_change_percentage": 27.13403,
+  "atl_date": "2024-04-21T00:16:56.145Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:20.821Z",
+  "platforms": {
+    "bsc": "0x6cda2862fd4b88ccfa522ffed66bc4277e7d9cc9"
+  }
+}

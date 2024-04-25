@@ -1,0 +1,31 @@
+{
+  "id": "wrapped-ampleforth",
+  "symbol": "wampl",
+  "name": "Wrapped Ampleforth",
+  "image": "https://assets.coingecko.com/coins/images/20825/large/photo_2021-11-25_02-05-11.jpg?1696520218",
+  "current_price": 23.87,
+  "market_cap": 14825148,
+  "market_cap_rank": 1254,
+  "fully_diluted_valuation": 14825148,
+  "total_volume": 223026,
+  "high_24h": 26.16,
+  "low_24h": 23.82,
+  "price_change_24h": -1.9500022850801848,
+  "price_change_percentage_24h": -7.5509,
+  "market_cap_change_24h": -1339212.7824115586,
+  "market_cap_change_percentage_24h": -8.28497,
+  "circulating_supply": 622188.433605711,
+  "total_supply": 622188.433605711,
+  "max_supply": 10000000,
+  "ath": 54.43,
+  "ath_change_percentage": -56.18157,
+  "ath_date": "2021-11-26T12:44:56.223Z",
+  "atl": 2.01,
+  "atl_change_percentage": 1089.1951,
+  "atl_date": "2023-09-06T04:01:27.594Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:09.409Z",
+  "platforms": {
+    "base": "0x489fe42c267fe0366b16b0c39e7aeef977e841ef"
+  }
+}

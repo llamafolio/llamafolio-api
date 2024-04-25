@@ -1,0 +1,31 @@
+{
+  "id": "cryptopawcoin",
+  "symbol": "cprc",
+  "name": "CryptoPawCoin",
+  "image": "https://assets.coingecko.com/coins/images/32162/large/20231001_232853.png?1696722479",
+  "current_price": 1.00249e-7,
+  "market_cap": 31351,
+  "market_cap_rank": 4089,
+  "fully_diluted_valuation": 31351,
+  "total_volume": 108.16,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 312733489531,
+  "total_supply": 312733489531,
+  "max_supply": 312733489531,
+  "ath": 0.00240007,
+  "ath_change_percentage": -99.99582,
+  "ath_date": "2023-10-19T14:54:37.038Z",
+  "atl": 9.984e-8,
+  "atl_change_percentage": 0.41004,
+  "atl_date": "2024-01-27T06:00:17.397Z",
+  "roi": null,
+  "last_updated": "2024-04-07T11:02:06.645Z",
+  "platforms": {
+    "ethereum": "0x3ef3b555842cdaff0f4f0b79c9dd65096d60ba63"
+  }
+}

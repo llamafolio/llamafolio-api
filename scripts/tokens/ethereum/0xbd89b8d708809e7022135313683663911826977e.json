@@ -1,0 +1,31 @@
+{
+  "id": "0-mee",
+  "symbol": "ome",
+  "name": "O-MEE",
+  "image": "https://assets.coingecko.com/coins/images/25099/large/logo-mark-full-colour-cmyk-693px_300ppi.jpg?1696524249",
+  "current_price": 0.00007307,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 58506,
+  "total_volume": 6318.39,
+  "high_24h": 0.00007883,
+  "low_24h": 0.00007006,
+  "price_change_24h": -3.67553284846e-7,
+  "price_change_percentage_24h": -0.50047,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 800000000,
+  "max_supply": null,
+  "ath": 0.00309228,
+  "ath_change_percentage": -97.6383,
+  "ath_date": "2023-09-26T19:05:27.965Z",
+  "atl": 0.00005701,
+  "atl_change_percentage": 28.10692,
+  "atl_date": "2023-10-30T04:53:25.858Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:26.631Z",
+  "platforms": {
+    "ethereum": "0xbd89b8d708809e7022135313683663911826977e"
+  }
+}

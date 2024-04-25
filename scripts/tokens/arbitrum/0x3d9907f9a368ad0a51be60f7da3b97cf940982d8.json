@@ -1,0 +1,31 @@
+{
+  "id": "camelot-token",
+  "symbol": "grail",
+  "name": "Camelot Token",
+  "image": "https://assets.coingecko.com/coins/images/28416/large/vj5DIMhP_400x400.jpeg?1696527414",
+  "current_price": 1417.02,
+  "market_cap": 26533068,
+  "market_cap_rank": 980,
+  "fully_diluted_valuation": 106106352,
+  "total_volume": 1594050,
+  "high_24h": 1435.18,
+  "low_24h": 1376.72,
+  "price_change_24h": -3.472513666390796,
+  "price_change_percentage_24h": -0.24446,
+  "market_cap_change_24h": -25405.38998501748,
+  "market_cap_change_percentage_24h": -0.09566,
+  "circulating_supply": 18696.8767197457,
+  "total_supply": 74769.2435144446,
+  "max_supply": 100000,
+  "ath": 4643.22,
+  "ath_change_percentage": -69.4382,
+  "ath_date": "2023-03-19T20:44:56.174Z",
+  "atl": 149.96,
+  "atl_change_percentage": 846.27215,
+  "atl_date": "2022-12-28T23:59:47.721Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:35.122Z",
+  "platforms": {
+    "arbitrum": "0x3d9907f9a368ad0a51be60f7da3b97cf940982d8"
+  }
+}

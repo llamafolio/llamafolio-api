@@ -1,0 +1,31 @@
+{
+  "id": "blend-protocol",
+  "symbol": "blend",
+  "name": "Blend Protocol",
+  "image": "https://assets.coingecko.com/coins/images/33766/large/Blend_Protocol_Logo_tsp.png?1702967995",
+  "current_price": 0.00006841,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 68410,
+  "total_volume": 57134,
+  "high_24h": 0.00007155,
+  "low_24h": 0.00005945,
+  "price_change_24h": 0.00000629,
+  "price_change_percentage_24h": 10.12012,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00178081,
+  "ath_change_percentage": -96.1526,
+  "ath_date": "2023-12-19T16:35:05.349Z",
+  "atl": 0.00005644,
+  "atl_change_percentage": 21.40023,
+  "atl_date": "2024-04-13T21:29:58.662Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:14.448Z",
+  "platforms": {
+    "ethereum": "0xd23b160e4a0db09ca35a79948e04cf6eafb5283a"
+  }
+}

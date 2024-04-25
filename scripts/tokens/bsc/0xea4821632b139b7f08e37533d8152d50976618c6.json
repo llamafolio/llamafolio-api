@@ -1,0 +1,31 @@
+{
+  "id": "rug-rugged-art",
+  "symbol": "rug",
+  "name": "Rug",
+  "image": "https://assets.coingecko.com/coins/images/35096/large/photo_2024-02-06_19-27-44.jpg?1707372728",
+  "current_price": 16.68,
+  "market_cap": 166455,
+  "market_cap_rank": 3585,
+  "fully_diluted_valuation": 166455,
+  "total_volume": 6526.48,
+  "high_24h": 21.31,
+  "low_24h": 15.94,
+  "price_change_24h": -2.7403521527932178,
+  "price_change_percentage_24h": -14.1138,
+  "market_cap_change_24h": -27303.278980642004,
+  "market_cap_change_percentage_24h": -14.09142,
+  "circulating_supply": 10000,
+  "total_supply": 10000,
+  "max_supply": 10000,
+  "ath": 1516.76,
+  "ath_change_percentage": -98.90174,
+  "ath_date": "2024-02-08T10:19:58.758Z",
+  "atl": 15.94,
+  "atl_change_percentage": 4.52294,
+  "atl_date": "2024-04-24T19:05:53.833Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:47.939Z",
+  "platforms": {
+    "bsc": "0xea4821632b139b7f08e37533d8152d50976618c6"
+  }
+}

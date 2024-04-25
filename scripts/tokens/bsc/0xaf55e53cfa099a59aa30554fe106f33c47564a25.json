@@ -1,0 +1,31 @@
+{
+  "id": "elvishmagic",
+  "symbol": "emagic",
+  "name": "ElvishMagic",
+  "image": "https://assets.coingecko.com/coins/images/29198/large/bunny.png?1700348862",
+  "current_price": 0.002351,
+  "market_cap": 2018916,
+  "market_cap_rank": 2291,
+  "fully_diluted_valuation": 2350788,
+  "total_volume": 165511,
+  "high_24h": 0.00236268,
+  "low_24h": 0.00227225,
+  "price_change_24h": 0.00004202,
+  "price_change_percentage_24h": 1.81985,
+  "market_cap_change_24h": 30516,
+  "market_cap_change_percentage_24h": 1.5347,
+  "circulating_supply": 858825317.2188431,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00420219,
+  "ath_change_percentage": -44.23675,
+  "ath_date": "2023-05-17T01:55:33.421Z",
+  "atl": 0.0004749,
+  "atl_change_percentage": 393.42943,
+  "atl_date": "2023-02-28T18:21:31.117Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:20.651Z",
+  "platforms": {
+    "bsc": "0xaf55e53cfa099a59aa30554fe106f33c47564a25"
+  }
+}

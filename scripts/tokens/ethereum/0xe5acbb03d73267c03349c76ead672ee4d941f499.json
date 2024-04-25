@@ -1,0 +1,31 @@
+{
+  "id": "beam",
+  "symbol": "beam",
+  "name": "BEAM",
+  "image": "https://assets.coingecko.com/coins/images/7339/large/BEAM.png?1696507623",
+  "current_price": 0.075923,
+  "market_cap": 11248132,
+  "market_cap_rank": 1380,
+  "fully_diluted_valuation": 19952472,
+  "total_volume": 470449,
+  "high_24h": 0.084873,
+  "low_24h": 0.075089,
+  "price_change_24h": -0.008788951025260852,
+  "price_change_percentage_24h": -10.37514,
+  "market_cap_change_24h": -1302015.0126926508,
+  "market_cap_change_percentage_24h": -10.3745,
+  "circulating_supply": 148152520,
+  "total_supply": 262800000,
+  "max_supply": null,
+  "ath": 10.03,
+  "ath_change_percentage": -99.2467,
+  "ath_date": "2019-01-04T14:43:42.084Z",
+  "atl": 0.02481724,
+  "atl_change_percentage": 204.5399,
+  "atl_date": "2023-09-11T20:11:13.305Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:01.793Z",
+  "platforms": {
+    "ethereum": "0xe5acbb03d73267c03349c76ead672ee4d941f499"
+  }
+}

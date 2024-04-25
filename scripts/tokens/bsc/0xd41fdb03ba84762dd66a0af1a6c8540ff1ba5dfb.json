@@ -1,0 +1,31 @@
+{
+  "id": "safepal",
+  "symbol": "sfp",
+  "name": "SafePal",
+  "image": "https://assets.coingecko.com/coins/images/13905/large/sfp.png?1696513647",
+  "current_price": 0.832063,
+  "market_cap": 382215703,
+  "market_cap_rank": 199,
+  "fully_diluted_valuation": 413206165,
+  "total_volume": 6976914,
+  "high_24h": 0.852288,
+  "low_24h": 0.811796,
+  "price_change_24h": -0.009447341267083464,
+  "price_change_percentage_24h": -1.12266,
+  "market_cap_change_24h": -7819081.220642984,
+  "market_cap_change_percentage_24h": -2.00471,
+  "circulating_supply": 462500000,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 4.19,
+  "ath_change_percentage": -80.26505,
+  "ath_date": "2021-02-09T18:30:34.250Z",
+  "atl": 0.269235,
+  "atl_change_percentage": 206.94336,
+  "atl_date": "2022-06-14T02:06:50.102Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:52.647Z",
+  "platforms": {
+    "bsc": "0xd41fdb03ba84762dd66a0af1a6c8540ff1ba5dfb"
+  }
+}

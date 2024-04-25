@@ -1,0 +1,31 @@
+{
+  "id": "aave-v3-crv",
+  "symbol": "acrv",
+  "name": "Aave v3 CRV",
+  "image": "https://assets.coingecko.com/coins/images/32901/large/CRV.png?1699802172",
+  "current_price": 0.429686,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 0,
+  "high_24h": 0.475716,
+  "low_24h": 0.429501,
+  "price_change_24h": -0.041113569999999995,
+  "price_change_percentage_24h": -8.7327,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.875092,
+  "ath_change_percentage": -50.89813,
+  "ath_date": "2024-03-14T01:25:22.389Z",
+  "atl": 0.366952,
+  "atl_change_percentage": 17.09611,
+  "atl_date": "2024-04-13T21:30:32.303Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:53.236Z",
+  "platforms": {
+    "ethereum": "0x7b95ec873268a6bfc6427e7a28e396db9d0ebc65"
+  }
+}

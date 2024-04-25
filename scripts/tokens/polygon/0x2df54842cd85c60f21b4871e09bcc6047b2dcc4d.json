@@ -1,0 +1,31 @@
+{
+  "id": "immortl",
+  "symbol": "imrtl",
+  "name": "Immortl (OLD)",
+  "image": "https://assets.coingecko.com/coins/images/21983/large/ONE.png?1696521331",
+  "current_price": 0.00001308,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 130816,
+  "total_volume": 0.687951,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.00090691,
+  "ath_change_percentage": -98.55757,
+  "ath_date": "2021-12-27T14:58:51.110Z",
+  "atl": 0.0000043,
+  "atl_change_percentage": 203.96063,
+  "atl_date": "2023-10-12T17:00:00.801Z",
+  "roi": null,
+  "last_updated": "2024-04-03T06:45:55.731Z",
+  "platforms": {
+    "polygon": "0x2df54842cd85c60f21b4871e09bcc6047b2dcc4d"
+  }
+}

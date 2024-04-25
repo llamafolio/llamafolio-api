@@ -1,0 +1,31 @@
+{
+  "id": "squadswap",
+  "symbol": "squad",
+  "name": "SquadSwap",
+  "image": "https://assets.coingecko.com/coins/images/34653/large/SquadSwap_Logo_-_main.png?1705599291",
+  "current_price": 0.139318,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 11831356,
+  "total_volume": 2030.6,
+  "high_24h": 0.143271,
+  "low_24h": 0.13767,
+  "price_change_24h": -0.001948121822199112,
+  "price_change_percentage_24h": -1.37905,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 85000000,
+  "max_supply": null,
+  "ath": 2.65,
+  "ath_change_percentage": -94.75133,
+  "ath_date": "2024-03-30T23:10:45.368Z",
+  "atl": 0.03245299,
+  "atl_change_percentage": 329.29024,
+  "atl_date": "2024-01-26T19:36:56.655Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:48.423Z",
+  "platforms": {
+    "bsc": "0x2d2567dec25c9795117228adc7fd58116d2e310c"
+  }
+}

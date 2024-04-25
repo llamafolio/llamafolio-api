@@ -1,0 +1,31 @@
+{
+  "id": "0xcoco",
+  "symbol": "coco",
+  "name": "0xCoco",
+  "image": "https://assets.coingecko.com/coins/images/31102/large/FL1-g3Ns_400x400.jpg?1696529933",
+  "current_price": 0.00103025,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 103025,
+  "total_volume": 49.06,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 0.139651,
+  "ath_change_percentage": -99.26227,
+  "ath_date": "2023-07-29T13:42:16.289Z",
+  "atl": 0.00101446,
+  "atl_change_percentage": 1.55667,
+  "atl_date": "2024-04-19T02:51:36.341Z",
+  "roi": null,
+  "last_updated": "2024-04-23T15:57:34.253Z",
+  "platforms": {
+    "ethereum": "0xcb50350ab555ed5d56265e096288536e8cac41eb"
+  }
+}

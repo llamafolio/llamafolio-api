@@ -1,0 +1,31 @@
+{
+  "id": "spores-network",
+  "symbol": "spo",
+  "name": "Spores Network",
+  "image": "https://assets.coingecko.com/coins/images/17431/large/SPO_token.png?1696516978",
+  "current_price": 0.00146337,
+  "market_cap": 1547843,
+  "market_cap_rank": 2435,
+  "fully_diluted_valuation": 7312858,
+  "total_volume": 40074,
+  "high_24h": 0.00149941,
+  "low_24h": 0.00145671,
+  "price_change_24h": -0.000033404182720165,
+  "price_change_percentage_24h": -2.23175,
+  "market_cap_change_24h": -37207.93370925565,
+  "market_cap_change_percentage_24h": -2.34743,
+  "circulating_supply": 1058302432,
+  "total_supply": 5000000000,
+  "max_supply": 5000000000,
+  "ath": 0.109768,
+  "ath_change_percentage": -98.6686,
+  "ath_date": "2021-08-20T02:48:46.417Z",
+  "atl": 0.00011801,
+  "atl_change_percentage": 1138.43683,
+  "atl_date": "2022-12-21T06:06:00.940Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:44.668Z",
+  "platforms": {
+    "bsc": "0x8357c604c5533fa0053beaaa1494da552cea38f7"
+  }
+}

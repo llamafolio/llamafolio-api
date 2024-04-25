@@ -1,0 +1,31 @@
+{
+  "id": "skey-network",
+  "symbol": "skey",
+  "name": "Skey Network",
+  "image": "https://assets.coingecko.com/coins/images/13425/large/SKEY_Network_logo_black.png?1696513185",
+  "current_price": 0.04315418,
+  "market_cap": 12261475,
+  "market_cap_rank": 1331,
+  "fully_diluted_valuation": 43108099,
+  "total_volume": 378708,
+  "high_24h": 0.04771497,
+  "low_24h": 0.04294229,
+  "price_change_24h": -0.004442173252956948,
+  "price_change_percentage_24h": -9.33301,
+  "market_cap_change_24h": -1285859.4665992558,
+  "market_cap_change_percentage_24h": -9.4916,
+  "circulating_supply": 284435537.1028689,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.55817,
+  "ath_change_percentage": -92.26673,
+  "ath_date": "2021-03-19T04:55:05.811Z",
+  "atl": 0.00802851,
+  "atl_change_percentage": 437.64478,
+  "atl_date": "2022-05-17T18:33:56.259Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:24.308Z",
+  "platforms": {
+    "ethereum": "0x06a01a4d579479dd5d884ebf61a31727a3d8d442"
+  }
+}

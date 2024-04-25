@@ -1,0 +1,31 @@
+{
+  "id": "ageofgods",
+  "symbol": "aog",
+  "name": "AgeOfGods",
+  "image": "https://assets.coingecko.com/coins/images/22133/large/aog.PNG?1696521479",
+  "current_price": 0.00837692,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2262386,
+  "total_volume": 558182,
+  "high_24h": 0.00912321,
+  "low_24h": 0.00837273,
+  "price_change_24h": -0.000704702383705309,
+  "price_change_percentage_24h": -7.75965,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 270000000,
+  "max_supply": 270000000,
+  "ath": 1.12,
+  "ath_change_percentage": -99.25027,
+  "ath_date": "2022-01-05T18:10:31.864Z",
+  "atl": 0.00531965,
+  "atl_change_percentage": 57.63712,
+  "atl_date": "2023-08-19T02:05:17.748Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:37.791Z",
+  "platforms": {
+    "bsc": "0x40c8225329bd3e28a043b029e0d07a5344d2c27c"
+  }
+}

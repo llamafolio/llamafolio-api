@@ -1,0 +1,31 @@
+{
+  "id": "trufin-staked-matic",
+  "symbol": "trumatic",
+  "name": "TruFin Staked MATIC",
+  "image": "https://assets.coingecko.com/coins/images/32416/large/TruMATIC_logo_250px_%281%29.png?1698114190",
+  "current_price": 0.729832,
+  "market_cap": 43106054,
+  "market_cap_rank": 757,
+  "fully_diluted_valuation": 43106054,
+  "total_volume": 2653.83,
+  "high_24h": 0.789132,
+  "low_24h": 0.726678,
+  "price_change_24h": -0.04909529913082522,
+  "price_change_percentage_24h": -6.30293,
+  "market_cap_change_24h": -3039685.6019008085,
+  "market_cap_change_percentage_24h": -6.58714,
+  "circulating_supply": 59186533.1504089,
+  "total_supply": 59186533.1504089,
+  "max_supply": null,
+  "ath": 1.33,
+  "ath_change_percentage": -45.17476,
+  "ath_date": "2024-03-13T14:26:37.007Z",
+  "atl": 0.627782,
+  "atl_change_percentage": 16.28571,
+  "atl_date": "2024-04-13T21:30:16.205Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:00.196Z",
+  "platforms": {
+    "polygon": "0xf33687811f3ad0cd6b48dd4b39f9f977bd7165a2"
+  }
+}

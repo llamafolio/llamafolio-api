@@ -1,0 +1,31 @@
+{
+  "id": "insure",
+  "symbol": "sure",
+  "name": "inSure DeFi",
+  "image": "https://assets.coingecko.com/coins/images/10354/large/logo-grey-circle.png?1696510355",
+  "current_price": 0.00537751,
+  "market_cap": 142226030,
+  "market_cap_rank": 378,
+  "fully_diluted_valuation": 472617298,
+  "total_volume": 434036,
+  "high_24h": 0.00593855,
+  "low_24h": 0.00423596,
+  "price_change_24h": 0.00106737,
+  "price_change_percentage_24h": 24.76426,
+  "market_cap_change_24h": 29466206,
+  "market_cap_change_percentage_24h": 26.13183,
+  "circulating_supply": 26482083217.416843,
+  "total_supply": 88000000000,
+  "max_supply": 88000000000,
+  "ath": 0.11397,
+  "ath_change_percentage": -95.34682,
+  "ath_date": "2021-01-06T21:22:32.766Z",
+  "atl": 0.00015606,
+  "atl_change_percentage": 3298.19114,
+  "atl_date": "2021-06-28T04:52:56.935Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:10.918Z",
+  "platforms": {
+    "ethereum": "0xcb86c6a22cb56b6cf40cafedb06ba0df188a416e"
+  }
+}

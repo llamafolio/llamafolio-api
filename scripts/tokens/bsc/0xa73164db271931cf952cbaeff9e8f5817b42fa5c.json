@@ -1,0 +1,31 @@
+{
+  "id": "landshare",
+  "symbol": "land",
+  "name": "Landshare",
+  "image": "https://assets.coingecko.com/coins/images/17507/large/Landshare.png?1696517046",
+  "current_price": 3.62,
+  "market_cap": 13898241,
+  "market_cap_rank": 1285,
+  "fully_diluted_valuation": 13898241,
+  "total_volume": 224860,
+  "high_24h": 3.81,
+  "low_24h": 3.61,
+  "price_change_24h": -0.16734944657721984,
+  "price_change_percentage_24h": -4.41771,
+  "market_cap_change_24h": -701184.0778801218,
+  "market_cap_change_percentage_24h": -4.80282,
+  "circulating_supply": 3850743,
+  "total_supply": 3850743,
+  "max_supply": 10000000,
+  "ath": 12.19,
+  "ath_change_percentage": -69.97176,
+  "ath_date": "2021-11-11T13:36:04.206Z",
+  "atl": 0.419953,
+  "atl_change_percentage": 771.45322,
+  "atl_date": "2023-10-14T22:01:05.912Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:28.821Z",
+  "platforms": {
+    "bsc": "0xa73164db271931cf952cbaeff9e8f5817b42fa5c"
+  }
+}

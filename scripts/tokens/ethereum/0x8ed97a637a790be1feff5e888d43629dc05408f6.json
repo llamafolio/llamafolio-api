@@ -1,0 +1,31 @@
+{
+  "id": "non-playable-coin",
+  "symbol": "npc",
+  "name": "Non-Playable Coin",
+  "image": "https://assets.coingecko.com/coins/images/31193/large/NPC_200x200.png?1696530021",
+  "current_price": 0.00425427,
+  "market_cap": 34247389,
+  "market_cap_rank": 857,
+  "fully_diluted_valuation": 34247389,
+  "total_volume": 267404,
+  "high_24h": 0.00478333,
+  "low_24h": 0.00414301,
+  "price_change_24h": -0.000366958867224579,
+  "price_change_percentage_24h": -7.94073,
+  "market_cap_change_24h": -2954065.3087937385,
+  "market_cap_change_percentage_24h": -7.94073,
+  "circulating_supply": 8050126520,
+  "total_supply": 8050126520,
+  "max_supply": 8050126520,
+  "ath": 0.00583813,
+  "ath_change_percentage": -27.11015,
+  "ath_date": "2024-04-10T11:35:10.321Z",
+  "atl": 0.00004561,
+  "atl_change_percentage": 9229.51825,
+  "atl_date": "2023-08-13T12:00:49.550Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:12.902Z",
+  "platforms": {
+    "ethereum": "0x8ed97a637a790be1feff5e888d43629dc05408f6"
+  }
+}

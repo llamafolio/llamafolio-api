@@ -1,0 +1,31 @@
+{
+  "id": "kitty-inu",
+  "symbol": "kitty",
+  "name": "Kitty Inu",
+  "image": "https://assets.coingecko.com/coins/images/19385/large/KITTY.png?1696518825",
+  "current_price": 0.00000379,
+  "market_cap": 2772036,
+  "market_cap_rank": 2108,
+  "fully_diluted_valuation": 2772036,
+  "total_volume": 303.87,
+  "high_24h": 0.00000453,
+  "low_24h": 0.00000375,
+  "price_change_24h": -1.04931661602e-7,
+  "price_change_percentage_24h": -2.69605,
+  "market_cap_change_24h": -76843.8929786277,
+  "market_cap_change_percentage_24h": -2.69734,
+  "circulating_supply": 731738978480,
+  "total_supply": 731738978480,
+  "max_supply": 731738978480,
+  "ath": 0.00020605,
+  "ath_change_percentage": -97.80687,
+  "ath_date": "2021-11-08T18:07:19.000Z",
+  "atl": 8.7822e-8,
+  "atl_change_percentage": 5045.46581,
+  "atl_date": "2023-05-21T06:19:30.577Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:06.098Z",
+  "platforms": {
+    "ethereum": "0x61a35258107563f6b6f102ae25490901c8760b12"
+  }
+}

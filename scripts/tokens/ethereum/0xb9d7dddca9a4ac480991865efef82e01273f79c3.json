@@ -1,0 +1,31 @@
+{
+  "id": "boosted-lusd",
+  "symbol": "blusd",
+  "name": "Boosted LUSD",
+  "image": "https://assets.coingecko.com/coins/images/27681/large/bLUSD_logo.png?1696526709",
+  "current_price": 1.21,
+  "market_cap": 4578859,
+  "market_cap_rank": 1841,
+  "fully_diluted_valuation": 4578859,
+  "total_volume": 12979.59,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 3776867.09878601,
+  "total_supply": 3776867.09878601,
+  "max_supply": null,
+  "ath": 2.05,
+  "ath_change_percentage": -40.92443,
+  "ath_date": "2023-07-27T06:14:48.909Z",
+  "atl": 0.984927,
+  "atl_change_percentage": 23.08967,
+  "atl_date": "2023-03-10T11:28:27.846Z",
+  "roi": null,
+  "last_updated": "2024-04-22T20:22:46.809Z",
+  "platforms": {
+    "ethereum": "0xb9d7dddca9a4ac480991865efef82e01273f79c3"
+  }
+}

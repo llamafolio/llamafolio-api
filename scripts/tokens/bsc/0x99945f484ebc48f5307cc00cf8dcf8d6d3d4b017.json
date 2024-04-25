@@ -1,0 +1,31 @@
+{
+  "id": "swiftcash",
+  "symbol": "swift",
+  "name": "SwiftCash",
+  "image": "https://assets.coingecko.com/coins/images/7030/large/swiftcash.png?1696507336",
+  "current_price": 0.00048558,
+  "market_cap": 122782,
+  "market_cap_rank": 3717,
+  "fully_diluted_valuation": 2405223,
+  "total_volume": 355.83,
+  "high_24h": 0.00050565,
+  "low_24h": 0.0004814,
+  "price_change_24h": -0.000012015537784555,
+  "price_change_percentage_24h": -2.41472,
+  "market_cap_change_24h": -4362.008329797565,
+  "market_cap_change_percentage_24h": -3.43077,
+  "circulating_supply": 255239781.620697,
+  "total_supply": 5000000000,
+  "max_supply": null,
+  "ath": 0.03944878,
+  "ath_change_percentage": -98.76905,
+  "ath_date": "2020-08-03T18:59:52.743Z",
+  "atl": 0.00001567,
+  "atl_change_percentage": 2998.48339,
+  "atl_date": "2023-05-01T02:04:45.502Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:42.324Z",
+  "platforms": {
+    "bsc": "0x99945f484ebc48f5307cc00cf8dcf8d6d3d4b017"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "beefy-escrowed-fantom",
+  "symbol": "beftm",
+  "name": "Beefy Escrowed Fantom",
+  "image": "https://assets.coingecko.com/coins/images/24283/large/beefyescrowedftm_32_%281%29.png?1696523466",
+  "current_price": 0.719107,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 9124037,
+  "total_volume": 10725.75,
+  "high_24h": 0.760027,
+  "low_24h": 0.713936,
+  "price_change_24h": -0.028981058534216397,
+  "price_change_percentage_24h": -3.87402,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 12720005.015613,
+  "max_supply": null,
+  "ath": 1.62,
+  "ath_change_percentage": -55.67515,
+  "ath_date": "2022-04-03T22:43:58.745Z",
+  "atl": 0.118147,
+  "atl_change_percentage": 507.39871,
+  "atl_date": "2023-09-18T17:15:21.250Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:25.415Z",
+  "platforms": {
+    "fantom": "0x7381ed41f6de418dde5e84b55590422a57917886"
+  }
+}

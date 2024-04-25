@@ -1,0 +1,31 @@
+{
+  "id": "stats",
+  "symbol": "stats",
+  "name": "STATS",
+  "image": "https://assets.coingecko.com/coins/images/28853/large/stats.png?1696527827",
+  "current_price": 0.244443,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 6659.52,
+  "high_24h": 0.26464,
+  "low_24h": 0.236684,
+  "price_change_24h": -0.01891505461923526,
+  "price_change_percentage_24h": -7.18226,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.680161,
+  "ath_change_percentage": -64.22882,
+  "ath_date": "2024-04-01T04:01:53.132Z",
+  "atl": 0.01138013,
+  "atl_change_percentage": 2037.9505,
+  "atl_date": "2023-04-02T00:54:40.938Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:43.014Z",
+  "platforms": {
+    "ethereum": "0x39142c18b6db2a8a41b7018f49e1478837560cad"
+  }
+}

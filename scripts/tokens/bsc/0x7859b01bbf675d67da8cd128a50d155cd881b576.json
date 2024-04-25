@@ -1,0 +1,31 @@
+{
+  "id": "mars-ecosystem-token",
+  "symbol": "xms",
+  "name": "Mars Ecosystem",
+  "image": "https://assets.coingecko.com/coins/images/16349/large/MARS.png?1696515949",
+  "current_price": 0.00083333,
+  "market_cap": 552009,
+  "market_cap_rank": 3014,
+  "fully_diluted_valuation": 828925,
+  "total_volume": 217.55,
+  "high_24h": 0.00084622,
+  "low_24h": 0.00081354,
+  "price_change_24h": -1.35901399215e-7,
+  "price_change_percentage_24h": -0.01631,
+  "market_cap_change_24h": -3900.9361493790057,
+  "market_cap_change_percentage_24h": -0.70172,
+  "circulating_supply": 665934236.559119,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 1.45,
+  "ath_change_percentage": -99.94269,
+  "ath_date": "2021-11-07T21:10:40.645Z",
+  "atl": 0.00057639,
+  "atl_change_percentage": 43.90994,
+  "atl_date": "2023-09-21T14:04:42.754Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:29.324Z",
+  "platforms": {
+    "bsc": "0x7859b01bbf675d67da8cd128a50d155cd881b576"
+  }
+}

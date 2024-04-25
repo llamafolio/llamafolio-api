@@ -1,0 +1,31 @@
+{
+  "id": "open-exchange-token",
+  "symbol": "ox",
+  "name": "Open Exchange Token",
+  "image": "https://assets.coingecko.com/coins/images/30604/large/Logo2.png?1696529473",
+  "current_price": 0.00606938,
+  "market_cap": 36614747,
+  "market_cap_rank": 825,
+  "fully_diluted_valuation": 36614747,
+  "total_volume": 11198.65,
+  "high_24h": 0.00713465,
+  "low_24h": 0.0054547,
+  "price_change_24h": -0.001012536119697398,
+  "price_change_percentage_24h": -14.2975,
+  "market_cap_change_24h": -6158670.181568921,
+  "market_cap_change_percentage_24h": -14.39836,
+  "circulating_supply": 6032704537,
+  "total_supply": 6032704537.88527,
+  "max_supply": 9860000000,
+  "ath": 0.081313,
+  "ath_change_percentage": -92.54466,
+  "ath_date": "2023-08-09T21:09:50.806Z",
+  "atl": 0.00142545,
+  "atl_change_percentage": 325.28215,
+  "atl_date": "2024-04-01T17:40:11.501Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:04.121Z",
+  "platforms": {
+    "ethereum": "0x78a0a62fba6fb21a83fe8a3433d44c73a4017a6f"
+  }
+}

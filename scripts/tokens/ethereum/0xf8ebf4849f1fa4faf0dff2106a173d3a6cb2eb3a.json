@@ -1,0 +1,31 @@
+{
+  "id": "troll",
+  "symbol": "troll",
+  "name": "Troll",
+  "image": "https://assets.coingecko.com/coins/images/29897/large/TROLL.jpeg?1696528821",
+  "current_price": 2.3833e-8,
+  "market_cap": 22854640,
+  "market_cap_rank": 1041,
+  "fully_diluted_valuation": 22864142,
+  "total_volume": 18217315,
+  "high_24h": 2.8491e-8,
+  "low_24h": 2.3806e-8,
+  "price_change_24h": -4.58348729e-9,
+  "price_change_percentage_24h": -16.12955,
+  "market_cap_change_24h": -4460525.435186379,
+  "market_cap_change_percentage_24h": -16.32985,
+  "circulating_supply": 960019838392123,
+  "total_supply": 960418978392123,
+  "max_supply": 960420000000000,
+  "ath": 1.34019e-7,
+  "ath_change_percentage": -82.2136,
+  "ath_date": "2024-01-17T06:21:30.445Z",
+  "atl": 8.8799e-11,
+  "atl_change_percentage": 26743.91555,
+  "atl_date": "2023-10-12T17:36:46.128Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:44.974Z",
+  "platforms": {
+    "ethereum": "0xf8ebf4849f1fa4faf0dff2106a173d3a6cb2eb3a"
+  }
+}

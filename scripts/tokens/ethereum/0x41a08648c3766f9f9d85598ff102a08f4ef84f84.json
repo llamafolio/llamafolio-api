@@ -1,0 +1,31 @@
+{
+  "id": "aave-balancer-pool-token",
+  "symbol": "abpt",
+  "name": "Aave Balancer Pool Token",
+  "image": "https://assets.coingecko.com/coins/images/16788/large/ABPT_2x.png?1696516360",
+  "current_price": 0.139823,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 0,
+  "high_24h": 0.150138,
+  "low_24h": 0.138583,
+  "price_change_24h": -0.009360848030859185,
+  "price_change_percentage_24h": -6.32153,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.488268,
+  "ath_change_percentage": -71.4887,
+  "ath_date": "2021-09-05T21:07:18.735Z",
+  "atl": 0.062614,
+  "atl_change_percentage": 122.3329,
+  "atl_date": "2022-06-18T21:00:55.668Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:31.010Z",
+  "platforms": {
+    "ethereum": "0x41a08648c3766f9f9d85598ff102a08f4ef84f84"
+  }
+}

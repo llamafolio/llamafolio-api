@@ -1,0 +1,31 @@
+{
+  "id": "multi-ai",
+  "symbol": "mai",
+  "name": "Multi AI",
+  "image": "https://assets.coingecko.com/coins/images/31423/large/logo_black_back-round_200_200.png?1696530238",
+  "current_price": 0.010472,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1026897,
+  "total_volume": 198009,
+  "high_24h": 0.01210807,
+  "low_24h": 0.01021718,
+  "price_change_24h": -0.001240354011311902,
+  "price_change_percentage_24h": -10.59014,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.02127818,
+  "ath_change_percentage": -51.66679,
+  "ath_date": "2024-03-14T07:11:13.755Z",
+  "atl": 0.00151262,
+  "atl_change_percentage": 579.90714,
+  "atl_date": "2023-11-05T14:15:04.600Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:40.619Z",
+  "platforms": {
+    "bsc": "0x1591e923e0836a3949b59637fbe8959f000894b9"
+  }
+}

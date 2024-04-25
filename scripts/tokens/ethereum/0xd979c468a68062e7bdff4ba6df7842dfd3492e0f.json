@@ -1,0 +1,31 @@
+{
+  "id": "beoble",
+  "symbol": "bbl",
+  "name": "Beoble",
+  "image": "https://assets.coingecko.com/coins/images/35011/large/beoble_200px.png?1707102471",
+  "current_price": 0.065192,
+  "market_cap": 10335713,
+  "market_cap_rank": 1423,
+  "fully_diluted_valuation": 65191829,
+  "total_volume": 5784933,
+  "high_24h": 0.075709,
+  "low_24h": 0.06297,
+  "price_change_24h": -0.01051674273795876,
+  "price_change_percentage_24h": -13.89109,
+  "market_cap_change_24h": -1669352.1894382052,
+  "market_cap_change_percentage_24h": -13.9054,
+  "circulating_supply": 158543077.94573763,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.326072,
+  "ath_change_percentage": -79.98022,
+  "ath_date": "2024-02-28T16:03:41.768Z",
+  "atl": 0.051144,
+  "atl_change_percentage": 27.63811,
+  "atl_date": "2024-04-19T05:51:51.063Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:06.953Z",
+  "platforms": {
+    "ethereum": "0xd979c468a68062e7bdff4ba6df7842dfd3492e0f"
+  }
+}

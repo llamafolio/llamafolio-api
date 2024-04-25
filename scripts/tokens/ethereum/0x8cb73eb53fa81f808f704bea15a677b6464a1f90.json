@@ -1,0 +1,31 @@
+{
+  "id": "gauro",
+  "symbol": "gauro",
+  "name": "Gauro",
+  "image": "https://assets.coingecko.com/coins/images/31783/large/200_png.png?1696530600",
+  "current_price": 0.00158008,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 15800.76,
+  "total_volume": 3.17,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.085382,
+  "ath_change_percentage": -98.1494,
+  "ath_date": "2023-09-15T17:01:08.350Z",
+  "atl": 0.00157007,
+  "atl_change_percentage": 0.63728,
+  "atl_date": "2023-09-21T13:44:41.182Z",
+  "roi": null,
+  "last_updated": "2023-09-21T19:22:03.052Z",
+  "platforms": {
+    "ethereum": "0x8cb73eb53fa81f808f704bea15a677b6464a1f90"
+  }
+}

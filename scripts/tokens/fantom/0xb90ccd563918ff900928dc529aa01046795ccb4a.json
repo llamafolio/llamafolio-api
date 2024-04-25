@@ -1,0 +1,31 @@
+{
+  "id": "staked-frax-ether",
+  "symbol": "sfrxeth",
+  "name": "Staked Frax Ether",
+  "image": "https://assets.coingecko.com/coins/images/28285/large/sfrxETH_icon.png?1696527285",
+  "current_price": 3394.02,
+  "market_cap": 508111032,
+  "market_cap_rank": 161,
+  "fully_diluted_valuation": 508111032,
+  "total_volume": 1122991,
+  "high_24h": 3558.71,
+  "low_24h": 3370.55,
+  "price_change_24h": -119.96313500169254,
+  "price_change_percentage_24h": -3.41388,
+  "market_cap_change_24h": -20971862.12785381,
+  "market_cap_change_percentage_24h": -3.96381,
+  "circulating_supply": 150126.56662736,
+  "total_supply": 150126.56662736,
+  "max_supply": null,
+  "ath": 7545.09,
+  "ath_change_percentage": -55.08046,
+  "ath_date": "2023-02-16T07:51:36.849Z",
+  "atl": 1147.58,
+  "atl_change_percentage": 195.33533,
+  "atl_date": "2022-12-23T11:50:57.675Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:58.494Z",
+  "platforms": {
+    "fantom": "0xb90ccd563918ff900928dc529aa01046795ccb4a"
+  }
+}

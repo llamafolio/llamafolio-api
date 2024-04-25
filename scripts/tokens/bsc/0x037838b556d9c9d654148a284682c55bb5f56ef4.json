@@ -1,0 +1,31 @@
+{
+  "id": "lightning-protocol",
+  "symbol": "light",
+  "name": "Lightning Protocol",
+  "image": "https://assets.coingecko.com/coins/images/14357/large/ClPrk1N.png?1696514043",
+  "current_price": 0.02947391,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2942091,
+  "total_volume": 632.97,
+  "high_24h": 0.02991621,
+  "low_24h": 0.02882592,
+  "price_change_24h": 0.00000156,
+  "price_change_percentage_24h": 0.00531,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 1.048,
+  "ath_change_percentage": -97.19761,
+  "ath_date": "2021-10-13T05:37:24.764Z",
+  "atl": 0.00206319,
+  "atl_change_percentage": 1322.92232,
+  "atl_date": "2023-07-07T00:04:57.949Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:34.720Z",
+  "platforms": {
+    "bsc": "0x037838b556d9c9d654148a284682c55bb5f56ef4"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "shiba-predator",
+  "symbol": "qom",
+  "name": "Shiba Predator",
+  "image": "https://assets.coingecko.com/coins/images/24430/large/l1KzMcL.png?1696523611",
+  "current_price": 4.4359e-8,
+  "market_cap": 26554614,
+  "market_cap_rank": 978,
+  "fully_diluted_valuation": 26554614,
+  "total_volume": 58170,
+  "high_24h": 4.7091e-8,
+  "low_24h": 4.4258e-8,
+  "price_change_24h": -1.618886842e-9,
+  "price_change_percentage_24h": -3.52105,
+  "market_cap_change_24h": -954474.5936362669,
+  "market_cap_change_percentage_24h": -3.46967,
+  "circulating_supply": 599999999999999,
+  "total_supply": 599999999999999,
+  "max_supply": 999999999999999,
+  "ath": 3.80671e-7,
+  "ath_change_percentage": -88.35339,
+  "ath_date": "2022-04-03T14:54:51.356Z",
+  "atl": 1.5521e-8,
+  "atl_change_percentage": 185.64749,
+  "atl_date": "2022-12-17T00:25:42.692Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:18.923Z",
+  "platforms": {
+    "ethereum": "0xa71d0588eaf47f12b13cf8ec750430d21df04974"
+  }
+}

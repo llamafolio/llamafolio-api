@@ -1,0 +1,31 @@
+{
+  "id": "alongside-crypto-market-index",
+  "symbol": "amkt",
+  "name": "Alongside Crypto Market Index",
+  "image": "https://assets.coingecko.com/coins/images/28496/large/22999.png?1696527488",
+  "current_price": 195.11,
+  "market_cap": 3858765,
+  "market_cap_rank": 1926,
+  "fully_diluted_valuation": 3858765,
+  "total_volume": 89453,
+  "high_24h": 205.86,
+  "low_24h": 192.61,
+  "price_change_24h": -8.298391618162128,
+  "price_change_percentage_24h": -4.07965,
+  "market_cap_change_24h": -178068.25757912546,
+  "market_cap_change_percentage_24h": -4.41109,
+  "circulating_supply": 19824.2990423181,
+  "total_supply": 19824.2990423181,
+  "max_supply": null,
+  "ath": 277.88,
+  "ath_change_percentage": -29.73443,
+  "ath_date": "2024-04-08T19:26:51.282Z",
+  "atl": 66.74,
+  "atl_change_percentage": 192.54726,
+  "atl_date": "2023-01-13T08:09:49.461Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:19.434Z",
+  "platforms": {
+    "ethereum": "0xf17a3fe536f8f7847f1385ec1bc967b2ca9cae8d"
+  }
+}

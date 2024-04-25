@@ -1,0 +1,31 @@
+{
+  "id": "malgo-finance",
+  "symbol": "mgxg",
+  "name": "Malgo Finance",
+  "image": "https://assets.coingecko.com/coins/images/29315/large/CMC_Logo_Round__%286%29.png?1696528266",
+  "current_price": 0.00338254,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 101814,
+  "total_volume": 20.34,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 30099992,
+  "max_supply": 35000000,
+  "ath": 0.100141,
+  "ath_change_percentage": -96.62224,
+  "ath_date": "2023-03-07T07:31:28.010Z",
+  "atl": 0.00309753,
+  "atl_change_percentage": 9.20111,
+  "atl_date": "2024-01-04T03:16:47.545Z",
+  "roi": null,
+  "last_updated": "2024-04-08T10:43:54.399Z",
+  "platforms": {
+    "bsc": "0xd21a1f1fcec9479d38b570a2eca3277b1b2a959a"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "meme-etf",
+  "symbol": "memeetf",
+  "name": "Meme ETF",
+  "image": "https://assets.coingecko.com/coins/images/33509/large/IMG_20231207_231243_560.jpg?1702040149",
+  "current_price": 5.598e-9,
+  "market_cap": 38567,
+  "market_cap_rank": 4045,
+  "fully_diluted_valuation": 72768,
+  "total_volume": 7,
+  "high_24h": 5.614e-9,
+  "low_24h": 5.592e-9,
+  "price_change_24h": -1.225078e-12,
+  "price_change_percentage_24h": -0.02188,
+  "market_cap_change_24h": -6133.560000848069,
+  "market_cap_change_percentage_24h": -13.72151,
+  "circulating_supply": 6890000000000,
+  "total_supply": 13000000000000,
+  "max_supply": 13000000000000,
+  "ath": 3.34209e-7,
+  "ath_change_percentage": -98.32515,
+  "ath_date": "2024-01-05T23:44:50.779Z",
+  "atl": 5.55e-9,
+  "atl_change_percentage": 0.85623,
+  "atl_date": "2024-04-13T20:51:24.378Z",
+  "roi": null,
+  "last_updated": "2024-04-24T17:12:58.324Z",
+  "platforms": {
+    "bsc": "0x5f330ab43c0b477ac55858e0c9c97c4896099300"
+  }
+}

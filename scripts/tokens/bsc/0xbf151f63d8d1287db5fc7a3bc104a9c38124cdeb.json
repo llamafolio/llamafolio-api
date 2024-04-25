@@ -1,0 +1,31 @@
+{
+  "id": "avnrich",
+  "symbol": "avn",
+  "name": "AVNRich",
+  "image": "https://assets.coingecko.com/coins/images/14819/large/avn.png?1696514487",
+  "current_price": 0.00057897,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 157401,
+  "total_volume": 10.22,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 271864000,
+  "max_supply": 300000000,
+  "ath": 0.281972,
+  "ath_change_percentage": -99.79467,
+  "ath_date": "2021-11-25T10:18:18.614Z",
+  "atl": 0.00010013,
+  "atl_change_percentage": 478.24533,
+  "atl_date": "2022-12-20T07:01:57.356Z",
+  "roi": null,
+  "last_updated": "2023-08-01T23:30:07.451Z",
+  "platforms": {
+    "bsc": "0xbf151f63d8d1287db5fc7a3bc104a9c38124cdeb"
+  }
+}

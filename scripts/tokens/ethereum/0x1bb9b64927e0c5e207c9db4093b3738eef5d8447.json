@@ -1,0 +1,31 @@
+{
+  "id": "vector-reserve",
+  "symbol": "vec",
+  "name": "Vector Reserve",
+  "image": "https://assets.coingecko.com/coins/images/34876/large/vec200.png?1709644054",
+  "current_price": 12,
+  "market_cap": 16335852,
+  "market_cap_rank": 1206,
+  "fully_diluted_valuation": 48130438,
+  "total_volume": 407077,
+  "high_24h": 13.63,
+  "low_24h": 11.98,
+  "price_change_24h": -1.489584141362272,
+  "price_change_percentage_24h": -11.03997,
+  "market_cap_change_24h": -2003416.5844804645,
+  "market_cap_change_percentage_24h": -10.92419,
+  "circulating_supply": 1362873.78831163,
+  "total_supply": 4015444.93193487,
+  "max_supply": null,
+  "ath": 58.06,
+  "ath_change_percentage": -79.36558,
+  "ath_date": "2024-02-05T20:04:43.769Z",
+  "atl": 11.99,
+  "atl_change_percentage": -0.06699,
+  "atl_date": "2024-04-25T08:43:47.596Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:52.889Z",
+  "platforms": {
+    "ethereum": "0x1bb9b64927e0c5e207c9db4093b3738eef5d8447"
+  }
+}

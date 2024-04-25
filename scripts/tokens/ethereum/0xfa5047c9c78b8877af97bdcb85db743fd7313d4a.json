@@ -1,0 +1,31 @@
+{
+  "id": "rook",
+  "symbol": "rook",
+  "name": "Rook",
+  "image": "https://assets.coingecko.com/coins/images/13005/large/keeper_dao_logo.jpg?1696512794",
+  "current_price": 1.65,
+  "market_cap": 1253132,
+  "market_cap_rank": 2560,
+  "fully_diluted_valuation": 2087828,
+  "total_volume": 7893.94,
+  "high_24h": 1.71,
+  "low_24h": 1.64,
+  "price_change_24h": -0.061878525194099865,
+  "price_change_percentage_24h": -3.6211,
+  "market_cap_change_24h": -58248.417707734276,
+  "market_cap_change_percentage_24h": -4.44176,
+  "circulating_supply": 761211.2689174691,
+  "total_supply": 1268245.04078443,
+  "max_supply": 1268245.04078443,
+  "ath": 838.98,
+  "ath_change_percentage": -99.8037,
+  "ath_date": "2021-02-14T23:36:56.918Z",
+  "atl": 0.346466,
+  "atl_change_percentage": 375.33477,
+  "atl_date": "2023-08-16T19:01:00.881Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:28.356Z",
+  "platforms": {
+    "ethereum": "0xfa5047c9c78b8877af97bdcb85db743fd7313d4a"
+  }
+}

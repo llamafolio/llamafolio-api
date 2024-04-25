@@ -1,0 +1,31 @@
+{
+  "id": "galaxy-fox",
+  "symbol": "gfox",
+  "name": "Galaxy Fox",
+  "image": "https://assets.coingecko.com/coins/images/34882/large/GFOX_LOGO.png?1706499381",
+  "current_price": 0.00147189,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 7331813,
+  "total_volume": 4196.78,
+  "high_24h": 0.00147097,
+  "low_24h": 0.00146285,
+  "price_change_24h": 0.00000117,
+  "price_change_percentage_24h": 0.07956,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 5000000000,
+  "max_supply": 5000000000,
+  "ath": 0.00147097,
+  "ath_change_percentage": -0.31352,
+  "ath_date": "2024-04-25T08:22:59.643Z",
+  "atl": 0.00146285,
+  "atl_change_percentage": 0.24022,
+  "atl_date": "2024-04-25T08:48:52.951Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:16.215Z",
+  "platforms": {
+    "ethereum": "0x8f1cece048cade6b8a05dfa2f90ee4025f4f2662"
+  }
+}

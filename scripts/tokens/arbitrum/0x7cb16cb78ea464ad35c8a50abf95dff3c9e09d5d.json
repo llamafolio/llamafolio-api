@@ -1,0 +1,31 @@
+{
+  "id": "oxbitcoin",
+  "symbol": "0xbtc",
+  "name": "0xBitcoin",
+  "image": "https://assets.coingecko.com/coins/images/4454/large/0xbtc.png?1696505045",
+  "current_price": 0.099996,
+  "market_cap": 1082847,
+  "market_cap_rank": 2642,
+  "fully_diluted_valuation": 2098446,
+  "total_volume": 332.62,
+  "high_24h": 0.10811,
+  "low_24h": 0.098002,
+  "price_change_24h": -0.00811410436583651,
+  "price_change_percentage_24h": -7.50541,
+  "market_cap_change_24h": -89214.52457442763,
+  "market_cap_change_percentage_24h": -7.61176,
+  "circulating_supply": 10835900,
+  "total_supply": 20998852.0490684,
+  "max_supply": null,
+  "ath": 4.66,
+  "ath_change_percentage": -97.85794,
+  "ath_date": "2018-06-06T12:16:09.809Z",
+  "atl": 0.04647402,
+  "atl_change_percentage": 114.92255,
+  "atl_date": "2019-12-27T12:47:29.190Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:42.646Z",
+  "platforms": {
+    "arbitrum": "0x7cb16cb78ea464ad35c8a50abf95dff3c9e09d5d"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "grok-inu",
+  "symbol": "grokinu",
+  "name": "Grok Inu",
+  "image": "https://assets.coingecko.com/coins/images/33728/large/Grok_Inu_logo_200x200.png?1702888468",
+  "current_price": 3.14048e-13,
+  "market_cap": 130856,
+  "market_cap_rank": 3694,
+  "fully_diluted_valuation": 130856,
+  "total_volume": 94.49,
+  "high_24h": 3.18259e-13,
+  "low_24h": 3.06979e-13,
+  "price_change_24h": 1.2e-15,
+  "price_change_percentage_24h": 0.3835,
+  "market_cap_change_24h": 430.44,
+  "market_cap_change_percentage_24h": 0.33003,
+  "circulating_supply": 416684543143363000,
+  "total_supply": 416684543143363000,
+  "max_supply": 420000690000000000,
+  "ath": 4.37e-12,
+  "ath_change_percentage": -92.83865,
+  "ath_date": "2024-01-01T20:58:25.706Z",
+  "atl": 2.30574e-13,
+  "atl_change_percentage": 35.74025,
+  "atl_date": "2024-02-14T06:34:34.608Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:07.987Z",
+  "platforms": {
+    "bsc": "0xd08b9e557d1f64c8dd50a168453ea302a83e47fc"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "lifti",
+  "symbol": "lft",
+  "name": "Lifti",
+  "image": "https://assets.coingecko.com/coins/images/33982/large/Group_364.jpg?1703582512",
+  "current_price": 0.00105081,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 210163,
+  "total_volume": 15.76,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 200000000,
+  "max_supply": 200000000,
+  "ath": 0.00129354,
+  "ath_change_percentage": -18.76432,
+  "ath_date": "2024-01-03T12:19:21.161Z",
+  "atl": 0.00102422,
+  "atl_change_percentage": 2.59625,
+  "atl_date": "2024-01-09T21:12:55.915Z",
+  "roi": null,
+  "last_updated": "2024-03-12T23:42:16.998Z",
+  "platforms": {
+    "polygon": "0x7fb09e55d55ccd89929e31ba77f64931087c09cb"
+  }
+}

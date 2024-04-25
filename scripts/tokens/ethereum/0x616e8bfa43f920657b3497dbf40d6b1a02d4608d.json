@@ -1,0 +1,31 @@
+{
+  "id": "aura-bal",
+  "symbol": "aurabal",
+  "name": "Aura BAL",
+  "image": "https://assets.coingecko.com/coins/images/26538/large/auraBAL.png?1696525612",
+  "current_price": 12.47,
+  "market_cap": 45450754,
+  "market_cap_rank": 734,
+  "fully_diluted_valuation": 45450754,
+  "total_volume": 333963,
+  "high_24h": 13.04,
+  "low_24h": 12.47,
+  "price_change_24h": -0.5417029684654366,
+  "price_change_percentage_24h": -4.16353,
+  "market_cap_change_24h": -1983339.737959683,
+  "market_cap_change_percentage_24h": -4.18125,
+  "circulating_supply": 3644628.01881534,
+  "total_supply": 3644628.01881534,
+  "max_supply": null,
+  "ath": 21.61,
+  "ath_change_percentage": -42.3031,
+  "ath_date": "2023-01-31T20:55:03.507Z",
+  "atl": 7.72,
+  "atl_change_percentage": 61.47024,
+  "atl_date": "2023-10-06T03:28:22.644Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:52:39.984Z",
+  "platforms": {
+    "ethereum": "0x616e8bfa43f920657b3497dbf40d6b1a02d4608d"
+  }
+}

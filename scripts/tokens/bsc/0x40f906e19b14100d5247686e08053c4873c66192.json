@@ -1,0 +1,31 @@
+{
+  "id": "sugarbounce",
+  "symbol": "tip",
+  "name": "SugarBounce",
+  "image": "https://assets.coingecko.com/coins/images/21487/large/sugarbounce.PNG?1696520847",
+  "current_price": 0.00432073,
+  "market_cap": 60614,
+  "market_cap_rank": 3935,
+  "fully_diluted_valuation": 858557,
+  "total_volume": 25923,
+  "high_24h": 0.00449895,
+  "low_24h": 0.0039095,
+  "price_change_24h": 0.00040636,
+  "price_change_percentage_24h": 10.38132,
+  "market_cap_change_24h": 5650.75,
+  "market_cap_change_percentage_24h": 10.28096,
+  "circulating_supply": 14028150,
+  "total_supply": 198699248,
+  "max_supply": 199000000,
+  "ath": 2.4,
+  "ath_change_percentage": -99.81982,
+  "ath_date": "2021-12-13T03:30:51.135Z",
+  "atl": 0.00055142,
+  "atl_change_percentage": 683.97725,
+  "atl_date": "2023-09-20T16:41:27.548Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:35.517Z",
+  "platforms": {
+    "bsc": "0x40f906e19b14100d5247686e08053c4873c66192"
+  }
+}

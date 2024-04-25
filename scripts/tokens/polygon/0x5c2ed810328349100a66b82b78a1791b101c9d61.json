@@ -1,0 +1,31 @@
+{
+  "id": "aave-polygon-wbtc",
+  "symbol": "amwbtc",
+  "name": "Aave Polygon WBTC",
+  "image": "https://assets.coingecko.com/coins/images/17265/large/amWBTC_2x.png?1696516820",
+  "current_price": 64325,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 0,
+  "high_24h": 67151,
+  "low_24h": 63755,
+  "price_change_24h": -3023.8393797091485,
+  "price_change_percentage_24h": -4.51856,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 73422,
+  "ath_change_percentage": -12.77257,
+  "ath_date": "2024-03-13T18:55:17.894Z",
+  "atl": 15513.13,
+  "atl_change_percentage": 312.83859,
+  "atl_date": "2022-11-22T07:00:01.351Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:31.745Z",
+  "platforms": {
+    "polygon": "0x5c2ed810328349100a66b82b78a1791b101c9d61"
+  }
+}

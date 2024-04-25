@@ -1,0 +1,31 @@
+{
+  "id": "ten",
+  "symbol": "tenfi",
+  "name": "TEN",
+  "image": "https://assets.coingecko.com/coins/images/15631/large/TEN-Square200.png?1696515264",
+  "current_price": 0.00218685,
+  "market_cap": 148757,
+  "market_cap_rank": 3635,
+  "fully_diluted_valuation": 354648,
+  "total_volume": 1165.64,
+  "high_24h": 0.00221668,
+  "low_24h": 0.00215277,
+  "price_change_24h": -0.000002552822327273,
+  "price_change_percentage_24h": -0.1166,
+  "market_cap_change_24h": -617.6045135761669,
+  "market_cap_change_percentage_24h": -0.41346,
+  "circulating_supply": 68343405.0643212,
+  "total_supply": 162935532.267721,
+  "max_supply": null,
+  "ath": 0.552685,
+  "ath_change_percentage": -99.60591,
+  "ath_date": "2021-08-29T14:47:03.507Z",
+  "atl": 0.00181815,
+  "atl_change_percentage": 19.79588,
+  "atl_date": "2023-09-21T13:46:29.837Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:43.098Z",
+  "platforms": {
+    "bsc": "0xd15c444f1199ae72795eba15e8c1db44e47abf62"
+  }
+}

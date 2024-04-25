@@ -1,0 +1,31 @@
+{
+  "id": "harrypotterobamasonic10inu",
+  "symbol": "bitcoin",
+  "name": "HarryPotterObamaSonic10Inu",
+  "image": "https://assets.coingecko.com/coins/images/21453/large/PYNP2xv.jpeg?1696520815",
+  "current_price": 2.998e-9,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2991853,
+  "total_volume": 20.29,
+  "high_24h": 3.043e-9,
+  "low_24h": 2.919e-9,
+  "price_change_24h": 4.521e-12,
+  "price_change_percentage_24h": 0.15102,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": null,
+  "ath": 1.607e-8,
+  "ath_change_percentage": -81.36948,
+  "ath_date": "2021-12-12T00:41:39.925Z",
+  "atl": 6.03853e-10,
+  "atl_change_percentage": 395.80902,
+  "atl_date": "2023-07-10T08:37:30.023Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:24.119Z",
+  "platforms": {
+    "bsc": "0x4c769928971548eb71a3392eaf66bedc8bef4b80"
+  }
+}

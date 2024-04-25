@@ -1,0 +1,31 @@
+{
+  "id": "snake-city",
+  "symbol": "snct",
+  "name": "Snake City",
+  "image": "https://assets.coingecko.com/coins/images/27331/large/02-38-02-LogoFooter_%281%29.png?1696526379",
+  "current_price": 0.00052509,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 511953,
+  "total_volume": 2,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 974981821.397484,
+  "max_supply": 974981821.397484,
+  "ath": 0.00684774,
+  "ath_change_percentage": -92.33192,
+  "ath_date": "2022-09-18T01:42:18.103Z",
+  "atl": 0.00051408,
+  "atl_change_percentage": 2.14073,
+  "atl_date": "2024-04-23T11:45:07.781Z",
+  "roi": null,
+  "last_updated": "2024-04-23T19:08:28.997Z",
+  "platforms": {
+    "avalanche": "0x2905d6d6957983d9ed73bc019ff2782c39dd7a49"
+  }
+}

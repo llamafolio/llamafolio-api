@@ -1,0 +1,31 @@
+{
+  "id": "piratecash",
+  "symbol": "pirate",
+  "name": "PirateCash",
+  "image": "https://assets.coingecko.com/coins/images/7155/large/logo_%281%29.png?1696507453",
+  "current_price": 0.02280098,
+  "market_cap": 1306571,
+  "market_cap_rank": 2537,
+  "fully_diluted_valuation": 2382673,
+  "total_volume": 4466.46,
+  "high_24h": 0.02277661,
+  "low_24h": 0.02153362,
+  "price_change_24h": 0.00045459,
+  "price_change_percentage_24h": 2.03427,
+  "market_cap_change_24h": 33187,
+  "market_cap_change_percentage_24h": 2.60617,
+  "circulating_supply": 57578195.0059985,
+  "total_supply": 105000000,
+  "max_supply": null,
+  "ath": 0.242252,
+  "ath_change_percentage": -90.67409,
+  "ath_date": "2021-04-25T01:09:01.454Z",
+  "atl": 0.00072262,
+  "atl_change_percentage": 3026.44146,
+  "atl_date": "2019-12-02T09:05:00.028Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:15.839Z",
+  "platforms": {
+    "bsc": "0xafcc12e4040615e7afe9fb4330eb3d9120acac05"
+  }
+}

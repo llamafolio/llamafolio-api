@@ -1,0 +1,31 @@
+{
+  "id": "biaocoin",
+  "symbol": "biao",
+  "name": "Biaocoin",
+  "image": "https://assets.coingecko.com/coins/images/30602/large/biao_cmc.png?1696529472",
+  "current_price": 4.70622e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 7969.78,
+  "high_24h": 5.16012e-7,
+  "low_24h": 4.6437e-7,
+  "price_change_24h": -4.4361463133e-8,
+  "price_change_percentage_24h": -8.61415,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.00001574,
+  "ath_change_percentage": -97.02128,
+  "ath_date": "2023-05-31T08:24:22.054Z",
+  "atl": 1.20409e-7,
+  "atl_change_percentage": 289.38482,
+  "atl_date": "2023-10-14T12:46:38.152Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:05.917Z",
+  "platforms": {
+    "ethereum": "0x00282fd551d03dc033256c4bf119532e8c735d8a"
+  }
+}

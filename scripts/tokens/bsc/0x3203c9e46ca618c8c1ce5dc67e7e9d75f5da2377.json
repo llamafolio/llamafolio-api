@@ -1,0 +1,31 @@
+{
+  "id": "mobox",
+  "symbol": "mbox",
+  "name": "Mobox",
+  "image": "https://assets.coingecko.com/coins/images/14751/large/mobox.PNG?1696514420",
+  "current_price": 0.350913,
+  "market_cap": 97382377,
+  "market_cap_rank": 482,
+  "fully_diluted_valuation": 166422821,
+  "total_volume": 12727179,
+  "high_24h": 0.373092,
+  "low_24h": 0.344292,
+  "price_change_24h": -0.02217955466100019,
+  "price_change_percentage_24h": -5.94479,
+  "market_cap_change_24h": -6660418.546058267,
+  "market_cap_change_percentage_24h": -6.40161,
+  "circulating_supply": 278104971,
+  "total_supply": 475270938.808789,
+  "max_supply": 1000000000,
+  "ath": 15.44,
+  "ath_change_percentage": -97.73473,
+  "ath_date": "2021-12-01T05:07:30.486Z",
+  "atl": 0.201969,
+  "atl_change_percentage": 73.21418,
+  "atl_date": "2023-10-19T07:25:41.642Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:56:04.309Z",
+  "platforms": {
+    "bsc": "0x3203c9e46ca618c8c1ce5dc67e7e9d75f5da2377"
+  }
+}

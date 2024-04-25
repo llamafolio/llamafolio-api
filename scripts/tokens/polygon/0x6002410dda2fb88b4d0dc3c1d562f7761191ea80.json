@@ -1,0 +1,31 @@
+{
+  "id": "the-employment-commons-work-token",
+  "symbol": "work",
+  "name": "The Employment Commons Work",
+  "image": "https://assets.coingecko.com/coins/images/18546/large/mXSw8Qw.png?1696518025",
+  "current_price": 0.00764294,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2265776,
+  "total_volume": 74.16,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 296453217,
+  "max_supply": 340000000,
+  "ath": 0.307989,
+  "ath_change_percentage": -97.51843,
+  "ath_date": "2021-09-25T14:34:13.082Z",
+  "atl": 0.0012719,
+  "atl_change_percentage": 500.90862,
+  "atl_date": "2023-09-16T03:15:18.589Z",
+  "roi": null,
+  "last_updated": "2024-04-16T11:30:45.913Z",
+  "platforms": {
+    "polygon": "0x6002410dda2fb88b4d0dc3c1d562f7761191ea80"
+  }
+}

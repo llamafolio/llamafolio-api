@@ -1,0 +1,31 @@
+{
+  "id": "gains",
+  "symbol": "gains",
+  "name": "Gains",
+  "image": "https://assets.coingecko.com/coins/images/14681/large/200x200.png?1696514354",
+  "current_price": 0.199122,
+  "market_cap": 10638910,
+  "market_cap_rank": 1405,
+  "fully_diluted_valuation": 19855218,
+  "total_volume": 118146,
+  "high_24h": 0.205592,
+  "low_24h": 0.193903,
+  "price_change_24h": -0.003238067090748198,
+  "price_change_percentage_24h": -1.60015,
+  "market_cap_change_24h": -187660.76476653852,
+  "market_cap_change_percentage_24h": -1.73334,
+  "circulating_supply": 53582438.23914735,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 1.86,
+  "ath_change_percentage": -89.3218,
+  "ath_date": "2021-04-11T12:47:10.214Z",
+  "atl": 0.054153,
+  "atl_change_percentage": 266.81425,
+  "atl_date": "2023-10-26T15:50:19.559Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:59.439Z",
+  "platforms": {
+    "bsc": "0xf1c3e69494e27bf067c4076a6f244a46446719d6"
+  }
+}

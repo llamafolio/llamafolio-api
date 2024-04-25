@@ -1,0 +1,31 @@
+{
+  "id": "the-balkan-dwarf",
+  "symbol": "$kekec",
+  "name": "The Balkan Dwarf",
+  "image": "https://assets.coingecko.com/coins/images/32563/large/download-compresskaru.com.png?1698546378",
+  "current_price": 0.00015269,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 6084660,
+  "total_volume": 58234,
+  "high_24h": 0.00017321,
+  "low_24h": 0.00014792,
+  "price_change_24h": -0.00001970976694002,
+  "price_change_percentage_24h": -11.43231,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 40000000000,
+  "max_supply": 40000000000,
+  "ath": 0.00032572,
+  "ath_change_percentage": -53.2983,
+  "ath_date": "2024-03-14T10:31:29.003Z",
+  "atl": 0.00008751,
+  "atl_change_percentage": 73.81929,
+  "atl_date": "2024-03-19T11:30:40.619Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:55.354Z",
+  "platforms": {
+    "ethereum": "0x8c7ac134ed985367eadc6f727d79e8295e11435c"
+  }
+}

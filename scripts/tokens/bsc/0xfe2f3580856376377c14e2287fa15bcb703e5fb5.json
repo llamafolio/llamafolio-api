@@ -1,0 +1,31 @@
+{
+  "id": "alphabet",
+  "symbol": "alt",
+  "name": "Alphabet",
+  "image": "https://assets.coingecko.com/coins/images/29810/large/logo.png?1696528739",
+  "current_price": 0.00012505,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 125046,
+  "total_volume": 0,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00553139,
+  "ath_change_percentage": -97.73934,
+  "ath_date": "2023-04-23T21:49:15.328Z",
+  "atl": 0.00011901,
+  "atl_change_percentage": 5.0727,
+  "atl_date": "2023-06-04T10:15:25.142Z",
+  "roi": null,
+  "last_updated": "2024-01-25T16:21:57.521Z",
+  "platforms": {
+    "bsc": "0xfe2f3580856376377c14e2287fa15bcb703e5fb5"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "vertex-protocol",
+  "symbol": "vrtx",
+  "name": "Vertex Protocol",
+  "image": "https://assets.coingecko.com/coins/images/27927/large/vrtx.png?1696526947",
+  "current_price": 0.168632,
+  "market_cap": 37672180,
+  "market_cap_rank": 808,
+  "fully_diluted_valuation": 168888941,
+  "total_volume": 2936198,
+  "high_24h": 0.180824,
+  "low_24h": 0.168626,
+  "price_change_24h": -0.010434574140151448,
+  "price_change_percentage_24h": -5.82721,
+  "market_cap_change_24h": -23226396.790833555,
+  "market_cap_change_percentage_24h": -38.13947,
+  "circulating_supply": 223058892.82585,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.520089,
+  "ath_change_percentage": -67.52017,
+  "ath_date": "2023-11-28T10:04:12.565Z",
+  "atl": 0.169031,
+  "atl_change_percentage": -0.06341,
+  "atl_date": "2024-04-25T08:40:57.840Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:46.513Z",
+  "platforms": {
+    "arbitrum": "0x95146881b86b3ee99e63705ec87afe29fcc044d9"
+  }
+}

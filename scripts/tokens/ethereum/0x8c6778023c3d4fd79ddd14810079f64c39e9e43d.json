@@ -1,0 +1,31 @@
+{
+  "id": "0xaiswap",
+  "symbol": "0xaiswap",
+  "name": "0xAISwap",
+  "image": "https://assets.coingecko.com/coins/images/32739/large/0x-AISwap-logo.png?1699236607",
+  "current_price": 0.583581,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 583581,
+  "total_volume": 6462.67,
+  "high_24h": 0.707689,
+  "low_24h": 0.578301,
+  "price_change_24h": -0.11759197097856089,
+  "price_change_percentage_24h": -16.77075,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 2.44,
+  "ath_change_percentage": -76.11702,
+  "ath_date": "2024-03-11T18:24:28.105Z",
+  "atl": 0.226777,
+  "atl_change_percentage": 157.337,
+  "atl_date": "2023-11-07T20:00:00.782Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:58.664Z",
+  "platforms": {
+    "ethereum": "0x8c6778023c3d4fd79ddd14810079f64c39e9e43d"
+  }
+}

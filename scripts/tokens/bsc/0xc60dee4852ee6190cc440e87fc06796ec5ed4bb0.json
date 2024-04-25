@@ -1,0 +1,31 @@
+{
+  "id": "lionceo",
+  "symbol": "lceo",
+  "name": "LionCEO",
+  "image": "https://assets.coingecko.com/coins/images/29738/large/IMG_20230406_222831_168.png?1696528668",
+  "current_price": 0.00001898,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 37964,
+  "total_volume": 74.67,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 2000000000,
+  "max_supply": 2000000000,
+  "ath": 0.00028652,
+  "ath_change_percentage": -93.3751,
+  "ath_date": "2023-04-11T07:45:34.800Z",
+  "atl": 0.00001837,
+  "atl_change_percentage": 3.35594,
+  "atl_date": "2023-05-16T14:39:38.125Z",
+  "roi": null,
+  "last_updated": "2023-05-18T12:31:56.426Z",
+  "platforms": {
+    "bsc": "0xc60dee4852ee6190cc440e87fc06796ec5ed4bb0"
+  }
+}

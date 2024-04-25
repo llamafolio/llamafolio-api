@@ -1,0 +1,31 @@
+{
+  "id": "pine",
+  "symbol": "pine",
+  "name": "Pine",
+  "image": "https://assets.coingecko.com/coins/images/25660/large/Logomark-Colour.png?1696524788",
+  "current_price": 0.00890923,
+  "market_cap": 146442,
+  "market_cap_rank": 3643,
+  "fully_diluted_valuation": 1768461,
+  "total_volume": 21281,
+  "high_24h": 0.00935194,
+  "low_24h": 0.00890908,
+  "price_change_24h": -0.000422162217840284,
+  "price_change_percentage_24h": -4.52411,
+  "market_cap_change_24h": -6521.48700057072,
+  "market_cap_change_percentage_24h": -4.26342,
+  "circulating_supply": 16430711,
+  "total_supply": 198419830,
+  "max_supply": 198419830,
+  "ath": 0.738236,
+  "ath_change_percentage": -98.79216,
+  "ath_date": "2023-02-14T11:45:56.911Z",
+  "atl": 0.00434967,
+  "atl_change_percentage": 104.99718,
+  "atl_date": "2023-11-02T07:46:24.815Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:28.018Z",
+  "platforms": {
+    "polygon": "0x612d833c0c7a54cdfbe9a4328b6d658020563ec0"
+  }
+}

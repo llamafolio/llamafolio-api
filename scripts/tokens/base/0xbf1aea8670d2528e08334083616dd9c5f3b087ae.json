@@ -1,0 +1,31 @@
+{
+  "id": "mai-base",
+  "symbol": "mimatic",
+  "name": "MAI (Base)",
+  "image": "https://assets.coingecko.com/coins/images/35466/large/mimatic-red.png?1708687857",
+  "current_price": 1.004,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2564515,
+  "total_volume": 126303,
+  "high_24h": 1.01,
+  "low_24h": 0.991042,
+  "price_change_24h": 0.00121329,
+  "price_change_percentage_24h": 0.12098,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2550002,
+  "max_supply": null,
+  "ath": 1.031,
+  "ath_change_percentage": -2.58272,
+  "ath_date": "2024-04-14T22:10:22.370Z",
+  "atl": 0.961609,
+  "atl_change_percentage": 4.41804,
+  "atl_date": "2024-03-05T20:00:07.999Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:07:07.583Z",
+  "platforms": {
+    "base": "0xbf1aea8670d2528e08334083616dd9c5f3b087ae"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "sonorus",
+  "symbol": "sns",
+  "name": "Sonorus",
+  "image": "https://assets.coingecko.com/coins/images/33591/large/SNS.jpg?1702468928",
+  "current_price": 0.084403,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 393003,
+  "high_24h": 0.093438,
+  "low_24h": 0.084181,
+  "price_change_24h": -0.008767119048771617,
+  "price_change_percentage_24h": -9.40979,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.33077,
+  "ath_change_percentage": -74.50567,
+  "ath_date": "2024-03-17T12:32:44.493Z",
+  "atl": 0.03187867,
+  "atl_change_percentage": 164.5269,
+  "atl_date": "2024-02-02T08:23:55.128Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:08.905Z",
+  "platforms": {
+    "bsc": "0xf3a587d1ac967b40db59223434baf0c6e11588ea"
+  }
+}

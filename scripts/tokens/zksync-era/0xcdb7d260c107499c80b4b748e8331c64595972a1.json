@@ -1,0 +1,31 @@
+{
+  "id": "karat",
+  "symbol": "kat",
+  "name": "Karat",
+  "image": "https://assets.coingecko.com/coins/images/31834/large/coin1.png?1696530647",
+  "current_price": 0.00283679,
+  "market_cap": 1307632,
+  "market_cap_rank": 2536,
+  "fully_diluted_valuation": 5580901,
+  "total_volume": 26681,
+  "high_24h": 0.00302907,
+  "low_24h": 0.00282738,
+  "price_change_24h": -0.000145357872526783,
+  "price_change_percentage_24h": -4.87427,
+  "market_cap_change_24h": -67500.1822416624,
+  "market_cap_change_percentage_24h": -4.90863,
+  "circulating_supply": 461000001,
+  "total_supply": 1967522372.69356,
+  "max_supply": 2000000000,
+  "ath": 0.01685455,
+  "ath_change_percentage": -83.1956,
+  "ath_date": "2024-02-18T14:16:26.082Z",
+  "atl": 0.00282738,
+  "atl_change_percentage": 0.17426,
+  "atl_date": "2024-04-25T08:40:05.356Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:31.628Z",
+  "platforms": {
+    "zksync-era": "0xcdb7d260c107499c80b4b748e8331c64595972a1"
+  }
+}

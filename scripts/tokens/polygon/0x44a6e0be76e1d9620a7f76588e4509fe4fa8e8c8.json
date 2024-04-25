@@ -1,0 +1,31 @@
+{
+  "id": "aavegotchi-fomo",
+  "symbol": "fomo",
+  "name": "Aavegotchi FOMO",
+  "image": "https://assets.coingecko.com/coins/images/24737/large/fomo.png?1696523900",
+  "current_price": 0.00127562,
+  "market_cap": 128919,
+  "market_cap_rank": 3700,
+  "fully_diluted_valuation": 13242091,
+  "total_volume": 222.5,
+  "high_24h": 0.00143964,
+  "low_24h": 0.00127103,
+  "price_change_24h": -0.00012285529872832,
+  "price_change_percentage_24h": -8.78495,
+  "market_cap_change_24h": -12377.109262644051,
+  "market_cap_change_percentage_24h": -8.75967,
+  "circulating_supply": 101064184.946798,
+  "total_supply": 10380907662.79,
+  "max_supply": 50000000000,
+  "ath": 0.058677,
+  "ath_change_percentage": -97.82453,
+  "ath_date": "2022-05-08T19:28:38.610Z",
+  "atl": 0.00084086,
+  "atl_change_percentage": 51.80889,
+  "atl_date": "2024-02-04T00:26:58.020Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:46.331Z",
+  "platforms": {
+    "polygon": "0x44a6e0be76e1d9620a7f76588e4509fe4fa8e8c8"
+  }
+}

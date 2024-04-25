@@ -1,0 +1,31 @@
+{
+  "id": "playa3ull-games-2",
+  "symbol": "3ull",
+  "name": "PLAYA3ULL GAMES",
+  "image": "https://assets.coingecko.com/coins/images/30695/large/App_Icon_Round.png?1696529564",
+  "current_price": 0.0023343,
+  "market_cap": 22602281,
+  "market_cap_rank": 1047,
+  "fully_diluted_valuation": 22905175,
+  "total_volume": 754744,
+  "high_24h": 0.00264092,
+  "low_24h": 0.00233819,
+  "price_change_24h": -0.000284185799205278,
+  "price_change_percentage_24h": -10.85305,
+  "market_cap_change_24h": -2301840.13405516,
+  "market_cap_change_percentage_24h": -9.24281,
+  "circulating_supply": 9501869268.2781,
+  "total_supply": 9629204305.48261,
+  "max_supply": 50000000000,
+  "ath": 0.01058112,
+  "ath_change_percentage": -77.29189,
+  "ath_date": "2023-12-16T12:09:45.581Z",
+  "atl": 0.00027142,
+  "atl_change_percentage": 785.2503,
+  "atl_date": "2023-06-28T13:04:40.387Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:48.804Z",
+  "platforms": {
+    "avalanche": "0xa77e70d0af1ac7ff86726740db1bd065c3566937"
+  }
+}

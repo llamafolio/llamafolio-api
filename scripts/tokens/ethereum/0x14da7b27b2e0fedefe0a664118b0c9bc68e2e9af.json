@@ -1,0 +1,31 @@
+{
+  "id": "blockchain-cuties-universe-governance",
+  "symbol": "bcug",
+  "name": "Blockchain Cuties Universe Governance",
+  "image": "https://assets.coingecko.com/coins/images/14425/large/bcug_logo.png?1696514115",
+  "current_price": 0.06013,
+  "market_cap": 41598,
+  "market_cap_rank": 4034,
+  "fully_diluted_valuation": 232911,
+  "total_volume": 12024.01,
+  "high_24h": 0.070634,
+  "low_24h": 0.058019,
+  "price_change_24h": -0.001992961356449497,
+  "price_change_percentage_24h": -3.20809,
+  "market_cap_change_24h": -1677.2513726229663,
+  "market_cap_change_percentage_24h": -3.87579,
+  "circulating_supply": 691063,
+  "total_supply": 3869350.11473684,
+  "max_supply": 10000000,
+  "ath": 19.51,
+  "ath_change_percentage": -99.69154,
+  "ath_date": "2021-03-18T00:08:18.641Z",
+  "atl": 0.02399399,
+  "atl_change_percentage": 150.844,
+  "atl_date": "2023-03-09T10:54:32.283Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:06.634Z",
+  "platforms": {
+    "ethereum": "0x14da7b27b2e0fedefe0a664118b0c9bc68e2e9af"
+  }
+}

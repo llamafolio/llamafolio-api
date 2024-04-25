@@ -1,0 +1,31 @@
+{
+  "id": "polymath",
+  "symbol": "poly",
+  "name": "Polymath",
+  "image": "https://assets.coingecko.com/coins/images/2784/large/inKkF01.png?1696503553",
+  "current_price": 0.084383,
+  "market_cap": 75690311,
+  "market_cap_rank": 552,
+  "fully_diluted_valuation": 84235981,
+  "total_volume": 29587,
+  "high_24h": 0.085731,
+  "low_24h": 0.071153,
+  "price_change_24h": 0.0096303,
+  "price_change_percentage_24h": 12.88288,
+  "market_cap_change_24h": 8537789,
+  "market_cap_change_percentage_24h": 12.71403,
+  "circulating_supply": 898550829.6745886,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 1.59,
+  "ath_change_percentage": -94.70506,
+  "ath_date": "2018-02-20T00:00:00.000Z",
+  "atl": 0.01100606,
+  "atl_change_percentage": 665.80853,
+  "atl_date": "2020-03-13T02:22:30.088Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:09.275Z",
+  "platforms": {
+    "ethereum": "0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec"
+  }
+}

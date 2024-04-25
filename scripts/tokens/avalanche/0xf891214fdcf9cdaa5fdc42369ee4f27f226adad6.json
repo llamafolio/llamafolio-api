@@ -1,0 +1,31 @@
+{
+  "id": "imperium-empires",
+  "symbol": "ime",
+  "name": "Imperium Empires",
+  "image": "https://assets.coingecko.com/coins/images/21933/large/X6_UI3rs_400x400.jpg?1696521282",
+  "current_price": 0.0000069,
+  "market_cap": 9124.94,
+  "market_cap_rank": 4220,
+  "fully_diluted_valuation": 69047,
+  "total_volume": 3043.71,
+  "high_24h": 0.00000849,
+  "low_24h": 0.00000664,
+  "price_change_24h": -0.000001542986255249,
+  "price_change_percentage_24h": -18.26523,
+  "market_cap_change_24h": -2059.625139004671,
+  "market_cap_change_percentage_24h": -18.4149,
+  "circulating_supply": 1321557548,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.065415,
+  "ath_change_percentage": -99.98944,
+  "ath_date": "2022-01-20T16:03:06.986Z",
+  "atl": 0.00000296,
+  "atl_change_percentage": 133.35824,
+  "atl_date": "2023-10-01T10:56:16.279Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:16.973Z",
+  "platforms": {
+    "avalanche": "0xf891214fdcf9cdaa5fdc42369ee4f27f226adad6"
+  }
+}

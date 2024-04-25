@@ -1,0 +1,31 @@
+{
+  "id": "baanx",
+  "symbol": "bxx",
+  "name": "Baanx",
+  "image": "https://assets.coingecko.com/coins/images/17108/large/BXX_Token_logo.png?1696516669",
+  "current_price": 0.100374,
+  "market_cap": 3622369,
+  "market_cap_rank": 1959,
+  "fully_diluted_valuation": 25077549,
+  "total_volume": 153428,
+  "high_24h": 0.104365,
+  "low_24h": 0.098736,
+  "price_change_24h": -0.000793204179941623,
+  "price_change_percentage_24h": -0.78406,
+  "market_cap_change_24h": 30258,
+  "market_cap_change_percentage_24h": 0.84233,
+  "circulating_supply": 36111670.81688749,
+  "total_supply": 250000000,
+  "max_supply": null,
+  "ath": 0.400603,
+  "ath_change_percentage": -74.92759,
+  "ath_date": "2021-10-04T01:13:37.289Z",
+  "atl": 0.00643044,
+  "atl_change_percentage": 1461.96052,
+  "atl_date": "2022-08-29T07:48:33.929Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:46.551Z",
+  "platforms": {
+    "ethereum": "0x6b1a8f210ec6b7b6643cea3583fb0c079f367898"
+  }
+}

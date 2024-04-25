@@ -1,0 +1,31 @@
+{
+  "id": "pokerfi",
+  "symbol": "pokerfi",
+  "name": "PokerFi",
+  "image": "https://assets.coingecko.com/coins/images/18907/large/oy6nhrI0_400x400.jpg?1696518365",
+  "current_price": 0.00124803,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 12190123,
+  "total_volume": 17574.63,
+  "high_24h": 0.00131457,
+  "low_24h": 0.00123207,
+  "price_change_24h": -0.000020575206908392,
+  "price_change_percentage_24h": -1.62187,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 9767403373,
+  "max_supply": null,
+  "ath": 0.00812198,
+  "ath_change_percentage": -84.69487,
+  "ath_date": "2021-10-11T19:37:44.755Z",
+  "atl": 0.00005311,
+  "atl_change_percentage": 2240.71928,
+  "atl_date": "2022-12-17T02:29:00.310Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:46.501Z",
+  "platforms": {
+    "bsc": "0x6bd30f2d5849a3c24042a5f012af753486ac8054"
+  }
+}

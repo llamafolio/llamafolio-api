@@ -1,0 +1,31 @@
+{
+  "id": "orbit-chain",
+  "symbol": "orc",
+  "name": "Orbit Chain",
+  "image": "https://assets.coingecko.com/coins/images/9782/large/-p1Br7oh_400x400.png?1696509841",
+  "current_price": 0.00903582,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 9034607,
+  "total_volume": 60272,
+  "high_24h": 0.01017981,
+  "low_24h": 0.00893434,
+  "price_change_24h": -0.00097371124572326,
+  "price_change_percentage_24h": -9.72784,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 9.51,
+  "ath_change_percentage": -99.90495,
+  "ath_date": "2021-04-05T03:17:32.343Z",
+  "atl": 0.00053994,
+  "atl_change_percentage": 1574.11464,
+  "atl_date": "2020-05-21T19:23:52.824Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:29.532Z",
+  "platforms": {
+    "ethereum": "0x662b67d00a13faf93254714dd601f5ed49ef2f51"
+  }
+}

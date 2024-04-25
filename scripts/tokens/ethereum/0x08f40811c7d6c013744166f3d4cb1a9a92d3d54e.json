@@ -1,0 +1,31 @@
+{
+  "id": "nightverse-game",
+  "symbol": "nvg",
+  "name": "NightVerse Game",
+  "image": "https://assets.coingecko.com/coins/images/29059/large/nvg.png?1696528026",
+  "current_price": 0.00436937,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 4369.37,
+  "total_volume": 29561,
+  "high_24h": 0.0050552,
+  "low_24h": 0.00417993,
+  "price_change_24h": -0.000377201545222809,
+  "price_change_percentage_24h": -7.94683,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 0.684619,
+  "ath_change_percentage": -99.35786,
+  "ath_date": "2023-02-16T13:59:50.122Z",
+  "atl": 0.00417993,
+  "atl_change_percentage": 5.17427,
+  "atl_date": "2024-04-25T04:20:23.465Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:37.701Z",
+  "platforms": {
+    "ethereum": "0x08f40811c7d6c013744166f3d4cb1a9a92d3d54e"
+  }
+}

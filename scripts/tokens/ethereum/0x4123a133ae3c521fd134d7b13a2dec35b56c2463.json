@@ -1,0 +1,31 @@
+{
+  "id": "qredo",
+  "symbol": "qrdo",
+  "name": "Qredo",
+  "image": "https://assets.coingecko.com/coins/images/17541/large/OPEN-Token-Black.png?1712837762",
+  "current_price": 0.04005669,
+  "market_cap": 28174454,
+  "market_cap_rank": 956,
+  "fully_diluted_valuation": 51827499,
+  "total_volume": 714138,
+  "high_24h": 0.04526101,
+  "low_24h": 0.03632006,
+  "price_change_24h": -0.004774853930036857,
+  "price_change_percentage_24h": -10.65066,
+  "market_cap_change_24h": -3346359.283370327,
+  "market_cap_change_percentage_24h": -10.61635,
+  "circulating_supply": 703364449.711335,
+  "total_supply": 1293853674.01,
+  "max_supply": 2000000000,
+  "ath": 9.81,
+  "ath_change_percentage": -99.6175,
+  "ath_date": "2021-11-18T08:49:24.695Z",
+  "atl": 0.02535531,
+  "atl_change_percentage": 48.03423,
+  "atl_date": "2023-10-13T21:20:24.516Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:50.707Z",
+  "platforms": {
+    "ethereum": "0x4123a133ae3c521fd134d7b13a2dec35b56c2463"
+  }
+}

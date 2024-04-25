@@ -1,0 +1,31 @@
+{
+  "id": "polkafoundry",
+  "symbol": "pkf",
+  "name": "Red Kite",
+  "image": "https://assets.coingecko.com/coins/images/14422/large/red_kite.png?1696514112",
+  "current_price": 0.077978,
+  "market_cap": 11118386,
+  "market_cap_rank": 1383,
+  "fully_diluted_valuation": 15614379,
+  "total_volume": 182258,
+  "high_24h": 0.081302,
+  "low_24h": 0.077071,
+  "price_change_24h": -0.003051422062372772,
+  "price_change_percentage_24h": -3.76584,
+  "market_cap_change_24h": -405306.87319767475,
+  "market_cap_change_percentage_24h": -3.51716,
+  "circulating_supply": 142412137.6777362,
+  "total_supply": 200000000,
+  "max_supply": 200000000,
+  "ath": 2.91,
+  "ath_change_percentage": -97.30831,
+  "ath_date": "2021-03-18T06:56:02.084Z",
+  "atl": 0.04789062,
+  "atl_change_percentage": 63.58896,
+  "atl_date": "2023-09-05T05:54:07.807Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:11.308Z",
+  "platforms": {
+    "ethereum": "0x8b39b70e39aa811b69365398e0aace9bee238aeb"
+  }
+}

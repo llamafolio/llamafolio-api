@@ -1,0 +1,31 @@
+{
+  "id": "agii",
+  "symbol": "agii",
+  "name": "AGII",
+  "image": "https://assets.coingecko.com/coins/images/32371/large/AGII.png?1699534856",
+  "current_price": 0.00038363,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 380254,
+  "total_volume": 138335,
+  "high_24h": 0.00041357,
+  "low_24h": 0.00036758,
+  "price_change_24h": -0.00001448137791311,
+  "price_change_percentage_24h": -3.63753,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 990000000,
+  "max_supply": 5000000000,
+  "ath": 0.01199288,
+  "ath_change_percentage": -96.81496,
+  "ath_date": "2023-10-24T07:53:39.258Z",
+  "atl": 0.000085,
+  "atl_change_percentage": 349.36121,
+  "atl_date": "2023-11-29T22:05:19.974Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:48.534Z",
+  "platforms": {
+    "ethereum": "0x75d86078625d1e2f612de2627d34c7bc411c18b8"
+  }
+}

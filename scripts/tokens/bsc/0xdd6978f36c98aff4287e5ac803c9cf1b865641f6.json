@@ -1,0 +1,31 @@
+{
+  "id": "jerry-inu",
+  "symbol": "jerry",
+  "name": "Jerry Inu",
+  "image": "https://assets.coingecko.com/coins/images/30067/large/photo_6174436240632428438_y_%281%29.png?1696528989",
+  "current_price": 5.383e-12,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2261030,
+  "total_volume": 78369,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 420000000000000000,
+  "max_supply": 420000000000000000,
+  "ath": 1.968e-11,
+  "ath_change_percentage": -72.64474,
+  "ath_date": "2023-05-03T20:13:06.146Z",
+  "atl": 3.607e-12,
+  "atl_change_percentage": 49.26829,
+  "atl_date": "2023-05-17T16:58:37.190Z",
+  "roi": null,
+  "last_updated": "2023-05-18T20:32:42.949Z",
+  "platforms": {
+    "bsc": "0xdd6978f36c98aff4287e5ac803c9cf1b865641f6"
+  }
+}

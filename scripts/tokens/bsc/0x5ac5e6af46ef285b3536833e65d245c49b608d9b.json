@@ -1,0 +1,31 @@
+{
+  "id": "niob",
+  "symbol": "niob",
+  "name": "NIOB",
+  "image": "https://assets.coingecko.com/coins/images/24141/large/niob.png?1696523332",
+  "current_price": 0.00103998,
+  "market_cap": 501039,
+  "market_cap_rank": 3062,
+  "fully_diluted_valuation": 623986,
+  "total_volume": 25.33,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 481778585.51,
+  "total_supply": 599999162.351146,
+  "max_supply": 600000000,
+  "ath": 0.02637813,
+  "ath_change_percentage": -96.05743,
+  "ath_date": "2022-03-09T17:58:29.385Z",
+  "atl": 0.00065605,
+  "atl_change_percentage": 58.52167,
+  "atl_date": "2023-06-25T11:01:53.123Z",
+  "roi": null,
+  "last_updated": "2023-08-02T02:22:46.984Z",
+  "platforms": {
+    "bsc": "0x5ac5e6af46ef285b3536833e65d245c49b608d9b"
+  }
+}

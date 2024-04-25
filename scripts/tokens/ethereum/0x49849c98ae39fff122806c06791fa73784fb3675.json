@@ -1,0 +1,31 @@
+{
+  "id": "lp-renbtc-curve",
+  "symbol": "renbtccurve",
+  "name": "LP renBTC Curve",
+  "image": "https://assets.coingecko.com/coins/images/11957/large/Curvefi_renCrv_32.png?1696511817",
+  "current_price": 65750,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 7526411,
+  "total_volume": 0,
+  "high_24h": 68330,
+  "low_24h": 65207,
+  "price_change_24h": -2673.6725896937787,
+  "price_change_percentage_24h": -3.92789,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 114.470749399383,
+  "max_supply": null,
+  "ath": 75573,
+  "ath_change_percentage": -13.34204,
+  "ath_date": "2024-03-14T07:10:26.787Z",
+  "atl": 10032.15,
+  "atl_change_percentage": 552.80573,
+  "atl_date": "2020-09-07T13:08:55.417Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:34.596Z",
+  "platforms": {
+    "ethereum": "0x49849c98ae39fff122806c06791fa73784fb3675"
+  }
+}

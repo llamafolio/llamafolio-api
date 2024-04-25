@@ -1,0 +1,31 @@
+{
+  "id": "nuk-em-loans",
+  "symbol": "nukem",
+  "name": "Nuk'em Loans",
+  "image": "https://assets.coingecko.com/coins/images/35239/large/it-s-a-blank-te_62950976_%282%29.png?1707936386",
+  "current_price": 0.0000777,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 6906612,
+  "total_volume": 338.96,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 88888888888,
+  "max_supply": null,
+  "ath": 0.00014511,
+  "ath_change_percentage": -46.45364,
+  "ath_date": "2024-02-29T12:35:01.390Z",
+  "atl": 0.00007729,
+  "atl_change_percentage": 0.52883,
+  "atl_date": "2024-04-23T20:30:46.760Z",
+  "roi": null,
+  "last_updated": "2024-04-24T00:31:10.238Z",
+  "platforms": {
+    "ethereum": "0x51015f4fefe3366c6f62539140149f8088888888"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "fufu-token",
+  "symbol": "fufu",
+  "name": "Fufu Token",
+  "image": "https://assets.coingecko.com/coins/images/32225/large/6522723afff7e2e198ce38c6_FufuTokenIcon_250x250.png?1696931163",
+  "current_price": 0.00004227,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 376203,
+  "total_volume": 1263.82,
+  "high_24h": 0.00004231,
+  "low_24h": 0.00003971,
+  "price_change_24h": 2.95557e-7,
+  "price_change_percentage_24h": 0.7041,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 8888888888,
+  "max_supply": 8888888888,
+  "ath": 0.00139187,
+  "ath_change_percentage": -96.9599,
+  "ath_date": "2023-12-20T12:39:41.887Z",
+  "atl": 0.00001022,
+  "atl_change_percentage": 314.19734,
+  "atl_date": "2023-10-27T11:24:26.782Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:45.801Z",
+  "platforms": {
+    "ethereum": "0x7b37a55ffb30c11d95f943672ae98f28cfb7b087"
+  }
+}

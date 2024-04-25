@@ -1,0 +1,31 @@
+{
+  "id": "ariva",
+  "symbol": "arv",
+  "name": "Ariva",
+  "image": "https://assets.coingecko.com/coins/images/18103/large/logo-200.png?1696517607",
+  "current_price": 0.00003402,
+  "market_cap": 2471348,
+  "market_cap_rank": 2179,
+  "fully_diluted_valuation": 3189619,
+  "total_volume": 713294,
+  "high_24h": 0.00003573,
+  "low_24h": 0.00003397,
+  "price_change_24h": -7.53844467501e-7,
+  "price_change_percentage_24h": -2.16766,
+  "market_cap_change_24h": -72616.07815248333,
+  "market_cap_change_percentage_24h": -2.85445,
+  "circulating_supply": 72553169190,
+  "total_supply": 93639999939.04,
+  "max_supply": 100000000000,
+  "ath": 0.00141842,
+  "ath_change_percentage": -97.59461,
+  "ath_date": "2021-10-11T15:34:08.772Z",
+  "atl": 0.00002103,
+  "atl_change_percentage": 62.23152,
+  "atl_date": "2023-09-13T15:00:06.010Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:41.194Z",
+  "platforms": {
+    "bsc": "0x6679eb24f59dfe111864aec72b443d1da666b360"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "wonderman-nation",
+  "symbol": "wndr",
+  "name": "Wonderman Nation",
+  "image": "https://assets.coingecko.com/coins/images/25461/large/Wonderman_Logo_Menu.png?1696524592",
+  "current_price": 0.03144724,
+  "market_cap": 1237049,
+  "market_cap_rank": 2566,
+  "fully_diluted_valuation": 15723931,
+  "total_volume": 1121.42,
+  "high_24h": 0.03213116,
+  "low_24h": 0.03113975,
+  "price_change_24h": -0.000164917529327166,
+  "price_change_percentage_24h": -0.52169,
+  "market_cap_change_24h": -8098.934858614113,
+  "market_cap_change_percentage_24h": -0.65044,
+  "circulating_supply": 39336505.8,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 0.327695,
+  "ath_change_percentage": -90.40376,
+  "ath_date": "2022-05-09T12:20:47.357Z",
+  "atl": 0.00779408,
+  "atl_change_percentage": 303.46593,
+  "atl_date": "2023-10-20T23:03:12.762Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:24.686Z",
+  "platforms": {
+    "bsc": "0xdfd7b0dd7bf1012dfdf3307a964c36b972300ac8"
+  }
+}

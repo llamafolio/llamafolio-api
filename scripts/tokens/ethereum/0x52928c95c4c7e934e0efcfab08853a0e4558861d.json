@@ -1,0 +1,35 @@
+{
+  "id": "hara-token",
+  "symbol": "hart",
+  "name": "Hara",
+  "image": "https://assets.coingecko.com/coins/images/5138/large/hara.jpg?1696505657",
+  "current_price": 0.00148616,
+  "market_cap": 1782972,
+  "market_cap_rank": 2366,
+  "fully_diluted_valuation": 1783389,
+  "total_volume": 109.09,
+  "high_24h": 0.00154749,
+  "low_24h": 0.0014778,
+  "price_change_24h": -0.000059808821287004,
+  "price_change_percentage_24h": -3.8687,
+  "market_cap_change_24h": -71753.80917003378,
+  "market_cap_change_percentage_24h": -3.8687,
+  "circulating_supply": 1199719500,
+  "total_supply": 1200000000,
+  "max_supply": null,
+  "ath": 0.03292409,
+  "ath_change_percentage": -95.48597,
+  "ath_date": "2021-06-27T15:08:39.282Z",
+  "atl": 0.0000176,
+  "atl_change_percentage": 8343.68762,
+  "atl_date": "2020-03-26T06:35:15.057Z",
+  "roi": {
+    "times": -0.9564176754220163,
+    "currency": "usd",
+    "percentage": -95.64176754220163
+  },
+  "last_updated": "2024-04-25T09:02:24.106Z",
+  "platforms": {
+    "ethereum": "0x52928c95c4c7e934e0efcfab08853a0e4558861d"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "jiyuu",
+  "symbol": "jiyuu",
+  "name": "Jiyuu",
+  "image": "https://assets.coingecko.com/coins/images/28907/large/logo_200.png?1696527883",
+  "current_price": 0.01227204,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 10431.24,
+  "total_volume": 66.7,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 850000,
+  "max_supply": 1000000,
+  "ath": 0.518484,
+  "ath_change_percentage": -97.63309,
+  "ath_date": "2023-02-02T03:54:47.869Z",
+  "atl": 0.01227099,
+  "atl_change_percentage": 0.00858,
+  "atl_date": "2023-03-10T07:15:51.363Z",
+  "roi": null,
+  "last_updated": "2023-03-10T07:21:50.102Z",
+  "platforms": {
+    "ethereum": "0x77d9046ee15faaceb89439ffdde4be071c2f07bd"
+  }
+}

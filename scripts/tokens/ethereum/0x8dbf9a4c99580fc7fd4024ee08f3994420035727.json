@@ -1,0 +1,31 @@
+{
+  "id": "eco",
+  "symbol": "eco",
+  "name": "ECO",
+  "image": "https://assets.coingecko.com/coins/images/27961/large/_ECO.png?1696526980",
+  "current_price": 0.01517969,
+  "market_cap": 3574529,
+  "market_cap_rank": 1963,
+  "fully_diluted_valuation": 139224960,
+  "total_volume": 134.35,
+  "high_24h": 0.01520083,
+  "low_24h": 0.01516351,
+  "price_change_24h": -2.4295001948e-8,
+  "price_change_percentage_24h": -0.00016,
+  "market_cap_change_24h": 768.41,
+  "market_cap_change_percentage_24h": 0.0215,
+  "circulating_supply": 235481103.309304,
+  "total_supply": 9171794212.621,
+  "max_supply": 10000000000,
+  "ath": 0.0488725,
+  "ath_change_percentage": -68.93857,
+  "ath_date": "2022-11-07T15:39:16.817Z",
+  "atl": 0.0142923,
+  "atl_change_percentage": 6.21448,
+  "atl_date": "2024-03-23T11:29:34.074Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:49:47.764Z",
+  "platforms": {
+    "ethereum": "0x8dbf9a4c99580fc7fd4024ee08f3994420035727"
+  }
+}

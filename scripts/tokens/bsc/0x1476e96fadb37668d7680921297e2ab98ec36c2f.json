@@ -1,0 +1,31 @@
+{
+  "id": "floki-rocket",
+  "symbol": "rloki",
+  "name": "Floki Rocket",
+  "image": "https://assets.coingecko.com/coins/images/20299/large/200-x-200.png?1696519703",
+  "current_price": 1.9854e-8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 19854.39,
+  "total_volume": 2.58,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000,
+  "max_supply": 1000000000000,
+  "ath": 0.00001345,
+  "ath_change_percentage": -99.85234,
+  "ath_date": "2021-11-14T16:39:18.489Z",
+  "atl": 1.6291e-8,
+  "atl_change_percentage": 21.875,
+  "atl_date": "2022-12-17T02:30:07.413Z",
+  "roi": null,
+  "last_updated": "2023-08-01T09:13:18.101Z",
+  "platforms": {
+    "bsc": "0x1476e96fadb37668d7680921297e2ab98ec36c2f"
+  }
+}

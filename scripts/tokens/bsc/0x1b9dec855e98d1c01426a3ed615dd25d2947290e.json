@@ -1,0 +1,31 @@
+{
+  "id": "pepe-ai-token",
+  "symbol": "pepeai",
+  "name": "Pepe AI Token",
+  "image": "https://assets.coingecko.com/coins/images/30293/large/our_logo.png?1696529198",
+  "current_price": 4.906e-9,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2064014,
+  "total_volume": 571503,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 420690000000000,
+  "max_supply": 420690000000000,
+  "ath": 8.075e-9,
+  "ath_change_percentage": -39.23957,
+  "ath_date": "2023-05-12T08:19:36.026Z",
+  "atl": 4.66e-9,
+  "atl_change_percentage": 5.28146,
+  "atl_date": "2023-05-17T15:26:43.846Z",
+  "roi": null,
+  "last_updated": "2023-05-18T20:30:21.573Z",
+  "platforms": {
+    "bsc": "0x1b9dec855e98d1c01426a3ed615dd25d2947290e"
+  }
+}

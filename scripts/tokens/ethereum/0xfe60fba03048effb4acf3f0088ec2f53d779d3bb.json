@@ -1,0 +1,31 @@
+{
+  "id": "3d3d",
+  "symbol": "3d3d",
+  "name": "3d3d",
+  "image": "https://assets.coingecko.com/coins/images/30232/large/200x200_2.PNG?1696529142",
+  "current_price": 9.5283e-11,
+  "market_cap": 34347,
+  "market_cap_rank": 4071,
+  "fully_diluted_valuation": 34347,
+  "total_volume": 119.32,
+  "high_24h": 9.6068e-11,
+  "low_24h": 9.4906e-11,
+  "price_change_24h": 3.00715e-13,
+  "price_change_percentage_24h": 0.3166,
+  "market_cap_change_24h": 70.88,
+  "market_cap_change_percentage_24h": 0.2068,
+  "circulating_supply": 360468841425725,
+  "total_supply": 360468841425725,
+  "max_supply": 420690000000000,
+  "ath": 1.5864e-8,
+  "ath_change_percentage": -99.39939,
+  "ath_date": "2023-05-18T14:38:59.171Z",
+  "atl": 3.9467e-11,
+  "atl_change_percentage": 141.4277,
+  "atl_date": "2024-01-23T20:42:09.438Z",
+  "roi": null,
+  "last_updated": "2024-04-24T13:18:36.855Z",
+  "platforms": {
+    "ethereum": "0xfe60fba03048effb4acf3f0088ec2f53d779d3bb"
+  }
+}

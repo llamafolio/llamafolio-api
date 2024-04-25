@@ -1,0 +1,31 @@
+{
+  "id": "rari-governance-token",
+  "symbol": "rgt",
+  "name": "Rari Governance",
+  "image": "https://assets.coingecko.com/coins/images/12900/large/Rari_Logo_Transparent.png?1696512688",
+  "current_price": 0.373666,
+  "market_cap": 4205798,
+  "market_cap_rank": 1878,
+  "fully_diluted_valuation": 4665240,
+  "total_volume": 7383.57,
+  "high_24h": 0.410047,
+  "low_24h": 0.331767,
+  "price_change_24h": -0.03409360378410209,
+  "price_change_percentage_24h": -8.3612,
+  "market_cap_change_24h": -383740.4289638391,
+  "market_cap_change_percentage_24h": -8.3612,
+  "circulating_supply": 11255496.233072856,
+  "total_supply": 12485047.9944349,
+  "max_supply": 12485047.9944349,
+  "ath": 64.62,
+  "ath_change_percentage": -99.42054,
+  "ath_date": "2021-11-05T02:35:18.635Z",
+  "atl": 0.066586,
+  "atl_change_percentage": 462.31717,
+  "atl_date": "2023-03-20T21:01:03.313Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:46:59.365Z",
+  "platforms": {
+    "polygon": "0xf4bb0ed25ac7bcc9c327b88bac5ca288a08ec41e"
+  }
+}

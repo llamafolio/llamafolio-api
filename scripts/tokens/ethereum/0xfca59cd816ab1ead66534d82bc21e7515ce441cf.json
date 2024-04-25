@@ -1,0 +1,31 @@
+{
+  "id": "rarible",
+  "symbol": "rari",
+  "name": "Rarible",
+  "image": "https://assets.coingecko.com/coins/images/11845/large/rf_logo_%281%29.jpeg?1711076091",
+  "current_price": 3.75,
+  "market_cap": 43502137,
+  "market_cap_rank": 749,
+  "fully_diluted_valuation": 93925698,
+  "total_volume": 903178,
+  "high_24h": 3.95,
+  "low_24h": 3.74,
+  "price_change_24h": -0.18283181722279052,
+  "price_change_percentage_24h": -4.646,
+  "market_cap_change_24h": -1869844.129932344,
+  "market_cap_change_percentage_24h": -4.12114,
+  "circulating_supply": 11578869.797242802,
+  "total_supply": 25000000,
+  "max_supply": 25000000,
+  "ath": 46.7,
+  "ath_change_percentage": -91.95449,
+  "ath_date": "2021-03-29T23:49:36.707Z",
+  "atl": 0.264878,
+  "atl_change_percentage": 1318.41736,
+  "atl_date": "2020-07-22T01:54:13.846Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:58.693Z",
+  "platforms": {
+    "ethereum": "0xfca59cd816ab1ead66534d82bc21e7515ce441cf"
+  }
+}

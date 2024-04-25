@@ -1,0 +1,31 @@
+{
+  "id": "kenshi-2",
+  "symbol": "kns",
+  "name": "Kenshi",
+  "image": "https://assets.coingecko.com/coins/images/30759/large/kenshi.jpg?1696529628",
+  "current_price": 0.02487956,
+  "market_cap": 21398170,
+  "market_cap_rank": 1080,
+  "fully_diluted_valuation": 24881593,
+  "total_volume": 19382.3,
+  "high_24h": 0.0261652,
+  "low_24h": 0.02475886,
+  "price_change_24h": -0.00093544307114889,
+  "price_change_percentage_24h": -3.62364,
+  "market_cap_change_24h": -801710.6759488583,
+  "market_cap_change_percentage_24h": -3.61133,
+  "circulating_supply": 860000000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.04120035,
+  "ath_change_percentage": -39.59637,
+  "ath_date": "2024-04-01T03:03:48.256Z",
+  "atl": 0.00102435,
+  "atl_change_percentage": 2329.50314,
+  "atl_date": "2023-10-19T09:11:15.005Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:53:36.177Z",
+  "platforms": {
+    "arbitrum": "0xf1264873436a0771e440e2b28072fafcc5eebd01"
+  }
+}

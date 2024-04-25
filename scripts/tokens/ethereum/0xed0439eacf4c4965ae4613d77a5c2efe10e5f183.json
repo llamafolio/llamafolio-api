@@ -1,0 +1,31 @@
+{
+  "id": "shroom-finance",
+  "symbol": "shroom",
+  "name": "Niftyx Protocol",
+  "image": "https://assets.coingecko.com/coins/images/12341/large/niftyx_logo.jpg?1696512168",
+  "current_price": 0.04890862,
+  "market_cap": 2511792,
+  "market_cap_rank": 2169,
+  "fully_diluted_valuation": 3204500,
+  "total_volume": 34362,
+  "high_24h": 0.058465,
+  "low_24h": 0.04848088,
+  "price_change_24h": -0.001943909827389546,
+  "price_change_percentage_24h": -3.82264,
+  "market_cap_change_24h": -84668.38666322501,
+  "market_cap_change_percentage_24h": -3.26092,
+  "circulating_supply": 51386058.26854872,
+  "total_supply": 65557424.1071429,
+  "max_supply": 65557424.1071429,
+  "ath": 1.29,
+  "ath_change_percentage": -96.21988,
+  "ath_date": "2021-03-30T19:01:40.276Z",
+  "atl": 0.00362545,
+  "atl_change_percentage": 1247.2231,
+  "atl_date": "2020-09-07T16:40:48.992Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:32.798Z",
+  "platforms": {
+    "ethereum": "0xed0439eacf4c4965ae4613d77a5c2efe10e5f183"
+  }
+}

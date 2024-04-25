@@ -1,0 +1,31 @@
+{
+  "id": "bancor",
+  "symbol": "bnt",
+  "name": "Bancor Network",
+  "image": "https://assets.coingecko.com/coins/images/736/large/Bancor_Token.png?1710479159",
+  "current_price": 0.708896,
+  "market_cap": 91863603,
+  "market_cap_rank": 498,
+  "fully_diluted_valuation": 91863603,
+  "total_volume": 1144583,
+  "high_24h": 0.763236,
+  "low_24h": 0.708428,
+  "price_change_24h": -0.04674701680657756,
+  "price_change_percentage_24h": -6.18639,
+  "market_cap_change_24h": -6577939.719266146,
+  "market_cap_change_percentage_24h": -6.68208,
+  "circulating_supply": 129663137.739649,
+  "total_supply": 129663137.739649,
+  "max_supply": 129663137.739649,
+  "ath": 10.72,
+  "ath_change_percentage": -93.38031,
+  "ath_date": "2018-01-09T00:00:00.000Z",
+  "atl": 0.120935,
+  "atl_change_percentage": 486.53575,
+  "atl_date": "2020-03-13T02:29:21.245Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:42.312Z",
+  "platforms": {
+    "ethereum": "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c"
+  }
+}

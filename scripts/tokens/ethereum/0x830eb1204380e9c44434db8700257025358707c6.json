@@ -1,0 +1,31 @@
+{
+  "id": "goons-of-balatroon",
+  "symbol": "gob",
+  "name": "Goons of Balatroon",
+  "image": "https://assets.coingecko.com/coins/images/27104/large/TokenLogo200x200.png?1702250134",
+  "current_price": 0.00267002,
+  "market_cap": 1.077,
+  "market_cap_rank": 4304,
+  "fully_diluted_valuation": 1542842,
+  "total_volume": 2098.63,
+  "high_24h": 0.00283455,
+  "low_24h": 0.00260927,
+  "price_change_24h": -0.000133158961094288,
+  "price_change_percentage_24h": -4.75029,
+  "market_cap_change_24h": -0.08090894168974616,
+  "market_cap_change_percentage_24h": -6.98508,
+  "circulating_supply": 404,
+  "total_supply": 578529069,
+  "max_supply": 750000000,
+  "ath": 0.053852,
+  "ath_change_percentage": -95.04198,
+  "ath_date": "2022-09-01T12:50:56.119Z",
+  "atl": 0.00040133,
+  "atl_change_percentage": 565.28565,
+  "atl_date": "2023-07-06T06:49:12.920Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:36.373Z",
+  "platforms": {
+    "ethereum": "0x830eb1204380e9c44434db8700257025358707c6"
+  }
+}

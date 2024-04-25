@@ -1,0 +1,31 @@
+{
+  "id": "sway-social",
+  "symbol": "sway",
+  "name": "Sway Social",
+  "image": "https://assets.coingecko.com/coins/images/18915/large/sway.png?1696518372",
+  "current_price": 0.00366238,
+  "market_cap": 165094,
+  "market_cap_rank": 3590,
+  "fully_diluted_valuation": 365771,
+  "total_volume": 13927.36,
+  "high_24h": 0.00367412,
+  "low_24h": 0.00363343,
+  "price_change_24h": 0.00000912,
+  "price_change_percentage_24h": 0.24954,
+  "market_cap_change_24h": 262.35,
+  "market_cap_change_percentage_24h": 0.15916,
+  "circulating_supply": 45135987.57354507,
+  "total_supply": 100000000,
+  "max_supply": 200000000,
+  "ath": 0.258453,
+  "ath_change_percentage": -98.58906,
+  "ath_date": "2021-10-20T20:53:39.854Z",
+  "atl": 0.00131594,
+  "atl_change_percentage": 177.11132,
+  "atl_date": "2023-07-08T16:29:10.605Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:24.450Z",
+  "platforms": {
+    "polygon": "0x262b8aa7542004f023b0eb02bc6b96350a02b728"
+  }
+}

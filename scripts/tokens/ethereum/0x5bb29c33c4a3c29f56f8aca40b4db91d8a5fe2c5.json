@@ -1,0 +1,31 @@
+{
+  "id": "one-share",
+  "symbol": "ons",
+  "name": "One Share",
+  "image": "https://assets.coingecko.com/coins/images/13531/large/bss.a1671c75.png?1696513292",
+  "current_price": 1.3015e-8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 0.00129919,
+  "total_volume": 1174.86,
+  "high_24h": 1.3133e-8,
+  "low_24h": 1.0009e-8,
+  "price_change_24h": 1.384e-9,
+  "price_change_percentage_24h": 11.89662,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100001,
+  "max_supply": null,
+  "ath": 3815.79,
+  "ath_change_percentage": -100,
+  "ath_date": "2021-01-01T14:19:33.025Z",
+  "atl": 8.231e-9,
+  "atl_change_percentage": 58.11768,
+  "atl_date": "2024-04-10T19:36:02.641Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:28.673Z",
+  "platforms": {
+    "ethereum": "0x5bb29c33c4a3c29f56f8aca40b4db91d8a5fe2c5"
+  }
+}

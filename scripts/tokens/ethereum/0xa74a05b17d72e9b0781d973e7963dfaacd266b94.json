@@ -1,0 +1,31 @@
+{
+  "id": "oasis-3",
+  "symbol": "oasis",
+  "name": "Oasis",
+  "image": "https://assets.coingecko.com/coins/images/35546/large/IMG_20240224_152139_778.png?1709094500",
+  "current_price": 0.00031411,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 313078,
+  "total_volume": 12276.43,
+  "high_24h": 0.00043566,
+  "low_24h": 0.00030624,
+  "price_change_24h": -0.000120101640347787,
+  "price_change_percentage_24h": -27.65975,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00299568,
+  "ath_change_percentage": -89.5146,
+  "ath_date": "2024-03-06T17:16:45.320Z",
+  "atl": 0.00024162,
+  "atl_change_percentage": 30.00034,
+  "atl_date": "2024-04-13T20:11:50.474Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:17.778Z",
+  "platforms": {
+    "ethereum": "0xa74a05b17d72e9b0781d973e7963dfaacd266b94"
+  }
+}

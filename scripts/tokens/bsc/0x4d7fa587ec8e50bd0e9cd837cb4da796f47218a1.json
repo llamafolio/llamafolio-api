@@ -1,0 +1,31 @@
+{
+  "id": "safe-anwang",
+  "symbol": "safe",
+  "name": "SAFE(AnWang)",
+  "image": "https://assets.coingecko.com/coins/images/26604/large/logo.png?1696525678",
+  "current_price": 2.29,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 36806,
+  "high_24h": 2.65,
+  "low_24h": 2.22,
+  "price_change_24h": -0.1170225691718696,
+  "price_change_percentage_24h": -4.86396,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 19.56,
+  "ath_change_percentage": -88.30313,
+  "ath_date": "2022-08-08T10:34:53.418Z",
+  "atl": 2.07,
+  "atl_change_percentage": 10.39381,
+  "atl_date": "2023-12-01T13:40:09.655Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:52.247Z",
+  "platforms": {
+    "bsc": "0x4d7fa587ec8e50bd0e9cd837cb4da796f47218a1"
+  }
+}

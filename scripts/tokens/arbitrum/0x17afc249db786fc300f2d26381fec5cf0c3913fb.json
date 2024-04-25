@@ -1,0 +1,31 @@
+{
+  "id": "shiba-cartel",
+  "symbol": "pesos",
+  "name": "Shiba Cartel",
+  "image": "https://assets.coingecko.com/coins/images/29512/large/Shiba_cartel.jpeg?1696528456",
+  "current_price": 2.1309e-8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 21309,
+  "total_volume": 4.02,
+  "high_24h": 2.2416e-8,
+  "low_24h": 2.1209e-8,
+  "price_change_24h": -8.62750949e-10,
+  "price_change_percentage_24h": -3.89116,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000,
+  "max_supply": 1000000000000,
+  "ath": 0.00000116,
+  "ath_change_percentage": -98.16796,
+  "ath_date": "2023-03-21T21:46:19.903Z",
+  "atl": 1.358e-8,
+  "atl_change_percentage": 56.91881,
+  "atl_date": "2023-10-13T07:01:04.168Z",
+  "roi": null,
+  "last_updated": "2024-04-24T20:19:31.121Z",
+  "platforms": {
+    "arbitrum": "0x17afc249db786fc300f2d26381fec5cf0c3913fb"
+  }
+}

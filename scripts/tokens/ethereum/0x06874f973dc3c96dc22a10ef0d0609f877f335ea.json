@@ -1,0 +1,31 @@
+{
+  "id": "defi-stoa",
+  "symbol": "sta",
+  "name": "STOA Network",
+  "image": "https://assets.coingecko.com/coins/images/16710/large/RSloE6X1_400x400.jpeg?1696516284",
+  "current_price": 0.00552997,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 17695894,
+  "total_volume": 4167.2,
+  "high_24h": 0.00580582,
+  "low_24h": 0.0051937,
+  "price_change_24h": 0.00033093,
+  "price_change_percentage_24h": 6.36525,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 3200000000,
+  "max_supply": null,
+  "ath": 0.905323,
+  "ath_change_percentage": -99.38919,
+  "ath_date": "2022-04-16T03:15:08.797Z",
+  "atl": 0.0025012,
+  "atl_change_percentage": 121.08504,
+  "atl_date": "2023-10-26T07:42:42.072Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:16.946Z",
+  "platforms": {
+    "ethereum": "0x06874f973dc3c96dc22a10ef0d0609f877f335ea"
+  }
+}

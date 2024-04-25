@@ -1,0 +1,31 @@
+{
+  "id": "credefi",
+  "symbol": "credi",
+  "name": "Credefi",
+  "image": "https://assets.coingecko.com/coins/images/21396/large/e1QbZ4qQ_400x400.jpg?1696520760",
+  "current_price": 0.03017476,
+  "market_cap": 22501933,
+  "market_cap_rank": 1048,
+  "fully_diluted_valuation": 28513880,
+  "total_volume": 3382167,
+  "high_24h": 0.03195302,
+  "low_24h": 0.02806668,
+  "price_change_24h": -0.000046745460325109,
+  "price_change_percentage_24h": -0.15468,
+  "market_cap_change_24h": -96056.9180691205,
+  "market_cap_change_percentage_24h": -0.42507,
+  "circulating_supply": 748573880,
+  "total_supply": 948573880,
+  "max_supply": 948573880,
+  "ath": 0.317732,
+  "ath_change_percentage": -90.53372,
+  "ath_date": "2021-12-09T10:09:31.116Z",
+  "atl": 0.00083536,
+  "atl_change_percentage": 3500.52138,
+  "atl_date": "2023-01-07T20:52:24.409Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:26.043Z",
+  "platforms": {
+    "ethereum": "0xae6e307c3fe9e922e5674dbd7f830ed49c014c6b"
+  }
+}

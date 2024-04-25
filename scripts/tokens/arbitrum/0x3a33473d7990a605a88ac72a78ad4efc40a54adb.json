@@ -1,0 +1,31 @@
+{
+  "id": "tigris",
+  "symbol": "tig",
+  "name": "Tigris",
+  "image": "https://assets.coingecko.com/coins/images/30641/large/logo.png?1696529513",
+  "current_price": 0.764008,
+  "market_cap": 1133202,
+  "market_cap_rank": 2619,
+  "fully_diluted_valuation": 1528016,
+  "total_volume": 5.72,
+  "high_24h": 0.807997,
+  "low_24h": 0.758079,
+  "price_change_24h": -0.03495756965917329,
+  "price_change_percentage_24h": -4.37535,
+  "market_cap_change_24h": -51850.212074520765,
+  "market_cap_change_percentage_24h": -4.37535,
+  "circulating_supply": 1483232.74701434,
+  "total_supply": 2000000,
+  "max_supply": 2000000,
+  "ath": 12.48,
+  "ath_change_percentage": -93.88031,
+  "ath_date": "2023-07-14T01:47:12.009Z",
+  "atl": 0.735897,
+  "atl_change_percentage": 3.81993,
+  "atl_date": "2024-02-24T06:36:55.073Z",
+  "roi": null,
+  "last_updated": "2024-04-25T03:01:17.325Z",
+  "platforms": {
+    "arbitrum": "0x3a33473d7990a605a88ac72a78ad4efc40a54adb"
+  }
+}

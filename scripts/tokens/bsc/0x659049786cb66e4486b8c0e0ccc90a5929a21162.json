@@ -1,0 +1,31 @@
+{
+  "id": "ttcoin",
+  "symbol": "tc",
+  "name": "TTcoin",
+  "image": "https://assets.coingecko.com/coins/images/18887/large/200px.png?1696518346",
+  "current_price": 0.00013449,
+  "market_cap": 304533,
+  "market_cap_rank": 3312,
+  "fully_diluted_valuation": 805479,
+  "total_volume": 856.84,
+  "high_24h": 0.00013644,
+  "low_24h": 0.0000442,
+  "price_change_24h": 0.00007788,
+  "price_change_percentage_24h": 137.58044,
+  "market_cap_change_24h": 175858,
+  "market_cap_change_percentage_24h": 136.66768,
+  "circulating_supply": 2268464523,
+  "total_supply": 6000000000,
+  "max_supply": 6000000000,
+  "ath": 0.0020445,
+  "ath_change_percentage": -93.43377,
+  "ath_date": "2021-11-14T03:15:27.867Z",
+  "atl": 0.00000314,
+  "atl_change_percentage": 4176.14483,
+  "atl_date": "2023-01-21T07:04:48.553Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:42.804Z",
+  "platforms": {
+    "bsc": "0x659049786cb66e4486b8c0e0ccc90a5929a21162"
+  }
+}

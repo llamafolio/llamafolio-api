@@ -1,0 +1,31 @@
+{
+  "id": "aave-tusd",
+  "symbol": "atusd",
+  "name": "Aave TUSD",
+  "image": "https://assets.coingecko.com/coins/images/14317/large/aTUSD.08592b49.png?1696514005",
+  "current_price": 1.003,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 547330,
+  "total_volume": 0,
+  "high_24h": 1.008,
+  "low_24h": 0.996702,
+  "price_change_24h": -0.000506798595163227,
+  "price_change_percentage_24h": -0.05065,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 545588.69279565,
+  "max_supply": null,
+  "ath": 1.12,
+  "ath_change_percentage": -10.5168,
+  "ath_date": "2021-05-19T13:01:20.808Z",
+  "atl": 0.948301,
+  "atl_change_percentage": 5.46854,
+  "atl_date": "2024-02-28T20:30:28.205Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:33.368Z",
+  "platforms": {
+    "ethereum": "0x101cc05f4a51c0319f570d5e146a8c625198e636"
+  }
+}

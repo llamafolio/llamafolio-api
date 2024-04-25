@@ -1,0 +1,31 @@
+{
+  "id": "delta-exchange-token",
+  "symbol": "deto",
+  "name": "Delta Exchange",
+  "image": "https://assets.coingecko.com/coins/images/14610/large/deto-logo.png?1696514288",
+  "current_price": 0.02137215,
+  "market_cap": 1977719,
+  "market_cap_rank": 2301,
+  "fully_diluted_valuation": 10699188,
+  "total_volume": 110.83,
+  "high_24h": 0.0231823,
+  "low_24h": 0.0213623,
+  "price_change_24h": -0.001717236510814031,
+  "price_change_percentage_24h": -7.43734,
+  "market_cap_change_24h": -155551.26023820415,
+  "market_cap_change_percentage_24h": -7.29168,
+  "circulating_supply": 92423793.64346012,
+  "total_supply": 500000000,
+  "max_supply": null,
+  "ath": 0.629138,
+  "ath_change_percentage": -96.60295,
+  "ath_date": "2021-04-02T10:59:35.120Z",
+  "atl": 0.01647693,
+  "atl_change_percentage": 29.70954,
+  "atl_date": "2024-03-19T09:23:03.876Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:55.932Z",
+  "platforms": {
+    "ethereum": "0xab93df617f51e1e415b5b4f8111f122d6b48e55c"
+  }
+}

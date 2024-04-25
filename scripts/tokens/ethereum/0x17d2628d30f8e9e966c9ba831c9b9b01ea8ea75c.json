@@ -1,0 +1,31 @@
+{
+  "id": "iskra-token",
+  "symbol": "isk",
+  "name": "ISKRA Token",
+  "image": "https://assets.coingecko.com/coins/images/27428/large/ISKRA_logo.png?1696526469",
+  "current_price": 0.20033,
+  "market_cap": 30413705,
+  "market_cap_rank": 908,
+  "fully_diluted_valuation": 199948003,
+  "total_volume": 113989,
+  "high_24h": 0.202199,
+  "low_24h": 0.198595,
+  "price_change_24h": -0.000982019984923949,
+  "price_change_percentage_24h": -0.48781,
+  "market_cap_change_24h": -122096.29832780361,
+  "market_cap_change_percentage_24h": -0.39985,
+  "circulating_supply": 151697344.15,
+  "total_supply": 997299762.5,
+  "max_supply": 1000000000,
+  "ath": 0.619073,
+  "ath_change_percentage": -67.60217,
+  "ath_date": "2022-09-29T09:03:28.041Z",
+  "atl": 0.127461,
+  "atl_change_percentage": 57.35494,
+  "atl_date": "2024-02-01T01:21:51.302Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:55.516Z",
+  "platforms": {
+    "ethereum": "0x17d2628d30f8e9e966c9ba831c9b9b01ea8ea75c"
+  }
+}

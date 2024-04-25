@@ -1,0 +1,31 @@
+{
+  "id": "next-earth",
+  "symbol": "nxtt",
+  "name": "Next Earth",
+  "image": "https://assets.coingecko.com/coins/images/23264/large/kG1zm83.png?1696522484",
+  "current_price": 0.00014612,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 8767137,
+  "total_volume": 2154.84,
+  "high_24h": 0.0001575,
+  "low_24h": 0.0001451,
+  "price_change_24h": -0.000011031727042191,
+  "price_change_percentage_24h": -7.01984,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 60000000000,
+  "max_supply": null,
+  "ath": 0.02037412,
+  "ath_change_percentage": -99.28612,
+  "ath_date": "2022-04-11T05:03:52.997Z",
+  "atl": 0.00012615,
+  "atl_change_percentage": 15.29476,
+  "atl_date": "2024-03-29T14:06:10.070Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:01.886Z",
+  "platforms": {
+    "polygon": "0x0d0b8488222f7f83b23e365320a4021b12ead608"
+  }
+}

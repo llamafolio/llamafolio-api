@@ -1,0 +1,31 @@
+{
+  "id": "civilization",
+  "symbol": "civ",
+  "name": "Civilization",
+  "image": "https://assets.coingecko.com/coins/images/17626/large/civ-200x200.png?1696517157",
+  "current_price": 0.00858471,
+  "market_cap": 2501372,
+  "market_cap_rank": 2171,
+  "fully_diluted_valuation": 2572815,
+  "total_volume": 568.45,
+  "high_24h": 0.0091709,
+  "low_24h": 0.00854197,
+  "price_change_24h": -0.000470065560732369,
+  "price_change_percentage_24h": -5.19136,
+  "market_cap_change_24h": -140213.47818136262,
+  "market_cap_change_percentage_24h": -5.30793,
+  "circulating_supply": 291669428,
+  "total_supply": 300000000,
+  "max_supply": 300000000,
+  "ath": 0.253367,
+  "ath_change_percentage": -96.61312,
+  "ath_date": "2022-01-12T18:27:56.979Z",
+  "atl": 0.00159644,
+  "atl_change_percentage": 437.5222,
+  "atl_date": "2023-08-25T08:30:25.125Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:40.576Z",
+  "platforms": {
+    "polygon": "0x42f6bdcfd82547e89f1069bf375aa60e6c6c063d"
+  }
+}

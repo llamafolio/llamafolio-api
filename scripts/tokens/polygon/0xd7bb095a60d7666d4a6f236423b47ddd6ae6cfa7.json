@@ -1,0 +1,31 @@
+{
+  "id": "bridged-wrapped-steth-axelar",
+  "symbol": "axl-wsteth",
+  "name": "Bridged Wrapped stETH (Axelar)",
+  "image": "https://assets.coingecko.com/coins/images/32223/large/steth-wei_D_3x.png?1696926841",
+  "current_price": 3644.91,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 7292.29,
+  "high_24h": 3803.82,
+  "low_24h": 3570.41,
+  "price_change_24h": -120.66073378161673,
+  "price_change_percentage_24h": -3.20431,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 4767.08,
+  "ath_change_percentage": -23.53993,
+  "ath_date": "2024-03-13T19:01:42.132Z",
+  "atl": 1740.08,
+  "atl_change_percentage": 109.46767,
+  "atl_date": "2023-10-12T17:37:29.218Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:06:30.800Z",
+  "platforms": {
+    "polygon": "0xd7bb095a60d7666d4a6f236423b47ddd6ae6cfa7"
+  }
+}

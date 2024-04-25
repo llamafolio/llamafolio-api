@@ -1,0 +1,31 @@
+{
+  "id": "atc-launchpad",
+  "symbol": "atcp",
+  "name": "ATC Launchpad",
+  "image": "https://assets.coingecko.com/coins/images/36085/large/ATCP.jpg?1710428259",
+  "current_price": 0.000802,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 561400,
+  "total_volume": 523705,
+  "high_24h": 0.00083769,
+  "low_24h": 0.00079334,
+  "price_change_24h": -0.000026429631807389,
+  "price_change_percentage_24h": -3.19033,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 700000000,
+  "max_supply": 1,
+  "ath": 0.00150732,
+  "ath_change_percentage": -46.85647,
+  "ath_date": "2024-04-04T18:33:25.251Z",
+  "atl": 0.00061347,
+  "atl_change_percentage": 30.57525,
+  "atl_date": "2024-04-03T18:19:35.260Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:59.974Z",
+  "platforms": {
+    "bsc": "0xa83595c57bd9eaa1ecf858161ee71acc6555692e"
+  }
+}

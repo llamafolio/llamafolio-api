@@ -1,0 +1,31 @@
+{
+  "id": "btc-proxy",
+  "symbol": "btcpx",
+  "name": "BTC Proxy",
+  "image": "https://assets.coingecko.com/coins/images/22630/large/MB1aYO7T_400x400.jpg?1696521945",
+  "current_price": 64107,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 10477.21,
+  "high_24h": 66698,
+  "low_24h": 63653,
+  "price_change_24h": -2167.169009072735,
+  "price_change_percentage_24h": -3.26999,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 83980,
+  "ath_change_percentage": -23.75833,
+  "ath_date": "2023-03-26T10:18:56.906Z",
+  "atl": 2237.63,
+  "atl_change_percentage": 2761.39911,
+  "atl_date": "2024-01-05T17:07:55.776Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:18.329Z",
+  "platforms": {
+    "polygon": "0x9c32185b81766a051e08de671207b34466dd1021"
+  }
+}

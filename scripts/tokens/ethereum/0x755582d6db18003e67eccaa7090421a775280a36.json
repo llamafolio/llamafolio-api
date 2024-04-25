@@ -1,0 +1,31 @@
+{
+  "id": "flooring-protocol-microjeergirl",
+  "symbol": "μjeergirl",
+  "name": "FP μJeerGirl",
+  "image": "https://assets.coingecko.com/coins/images/34108/large/JEERGIRL.jpg?1703988353",
+  "current_price": 0.00018679,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 98438,
+  "total_volume": 188.66,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 527000000,
+  "max_supply": null,
+  "ath": 0.00067704,
+  "ath_change_percentage": -72.41074,
+  "ath_date": "2024-01-02T19:35:17.856Z",
+  "atl": 0.00017124,
+  "atl_change_percentage": 9.07868,
+  "atl_date": "2024-03-20T18:34:48.396Z",
+  "roi": null,
+  "last_updated": "2024-03-28T14:52:09.338Z",
+  "platforms": {
+    "ethereum": "0x755582d6db18003e67eccaa7090421a775280a36"
+  }
+}

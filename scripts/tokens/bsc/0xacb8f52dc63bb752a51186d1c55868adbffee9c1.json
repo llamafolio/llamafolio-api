@@ -1,0 +1,31 @@
+{
+  "id": "bunnypark",
+  "symbol": "bp",
+  "name": "BunnyPark",
+  "image": "https://assets.coingecko.com/coins/images/15382/large/8zt0tjy.jpg?1696515029",
+  "current_price": 0.00268584,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 5321.97,
+  "total_volume": 16213.21,
+  "high_24h": 0.00274266,
+  "low_24h": 0.00261456,
+  "price_change_24h": -0.000014881147850367,
+  "price_change_percentage_24h": -0.55101,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1981386,
+  "max_supply": null,
+  "ath": 6.71,
+  "ath_change_percentage": -99.96008,
+  "ath_date": "2021-05-15T03:51:34.480Z",
+  "atl": 0.00204068,
+  "atl_change_percentage": 31.3308,
+  "atl_date": "2023-11-24T05:06:36.220Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:48.946Z",
+  "platforms": {
+    "bsc": "0xacb8f52dc63bb752a51186d1c55868adbffee9c1"
+  }
+}

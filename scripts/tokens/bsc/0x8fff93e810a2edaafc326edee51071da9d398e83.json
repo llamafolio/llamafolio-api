@@ -1,0 +1,31 @@
+{
+  "id": "bitrise-token",
+  "symbol": "brise",
+  "name": "Bitgert",
+  "image": "https://assets.coingecko.com/coins/images/17388/large/200x200.png?1696516937",
+  "current_price": 1.69965e-7,
+  "market_cap": 67154861,
+  "market_cap_rank": 592,
+  "fully_diluted_valuation": 72479776,
+  "total_volume": 2131438,
+  "high_24h": 1.81114e-7,
+  "low_24h": 1.69518e-7,
+  "price_change_24h": -9.617683858e-9,
+  "price_change_percentage_24h": -5.35558,
+  "market_cap_change_24h": -4128475.668314174,
+  "market_cap_change_percentage_24h": -5.79164,
+  "circulating_supply": 395688215721653.25,
+  "total_supply": 427063549263988,
+  "max_supply": 1000000000000000,
+  "ath": 0.00000184,
+  "ath_change_percentage": -90.78187,
+  "ath_date": "2022-03-07T08:25:04.177Z",
+  "atl": 6.16584e-10,
+  "atl_change_percentage": 27441.12031,
+  "atl_date": "2021-09-09T21:36:32.800Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:53.388Z",
+  "platforms": {
+    "bsc": "0x8fff93e810a2edaafc326edee51071da9d398e83"
+  }
+}

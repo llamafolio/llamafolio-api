@@ -1,0 +1,31 @@
+{
+  "id": "aave-mana",
+  "symbol": "amana",
+  "name": "Aave MANA",
+  "image": "https://assets.coingecko.com/coins/images/14267/large/aMANA.f89a1098.png?1696513968",
+  "current_price": 0.453431,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 465239,
+  "total_volume": 0,
+  "high_24h": 0.503521,
+  "low_24h": 0.449411,
+  "price_change_24h": -0.04620519503587477,
+  "price_change_percentage_24h": -9.30405,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1026041.61909277,
+  "max_supply": null,
+  "ath": 5.86,
+  "ath_change_percentage": -92.30149,
+  "ath_date": "2021-11-25T10:02:10.941Z",
+  "atl": 0.267726,
+  "atl_change_percentage": 68.62317,
+  "atl_date": "2023-09-11T21:00:10.651Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:33.085Z",
+  "platforms": {
+    "ethereum": "0xa685a61171bb30d4072b338c80cb7b2c865c873e"
+  }
+}

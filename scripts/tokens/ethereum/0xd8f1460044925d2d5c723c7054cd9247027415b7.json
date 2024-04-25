@@ -1,0 +1,31 @@
+{
+  "id": "sail-2",
+  "symbol": "sail",
+  "name": "Clipper SAIL",
+  "image": "https://assets.coingecko.com/coins/images/31380/large/SAIL-Logo.png?1696530197",
+  "current_price": 0.01554159,
+  "market_cap": 5969284,
+  "market_cap_rank": 1705,
+  "fully_diluted_valuation": 15516764,
+  "total_volume": 38105,
+  "high_24h": 0.01614377,
+  "low_24h": 0.01497277,
+  "price_change_24h": -0.000438527454835727,
+  "price_change_percentage_24h": -2.74421,
+  "market_cap_change_24h": -175468.8566164719,
+  "market_cap_change_percentage_24h": -2.85559,
+  "circulating_supply": 384699023.538705,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.051566,
+  "ath_change_percentage": -69.89949,
+  "ath_date": "2024-03-05T09:30:35.302Z",
+  "atl": 0.0030505,
+  "atl_change_percentage": 408.81823,
+  "atl_date": "2023-10-25T00:11:32.840Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:39.960Z",
+  "platforms": {
+    "ethereum": "0xd8f1460044925d2d5c723c7054cd9247027415b7"
+  }
+}

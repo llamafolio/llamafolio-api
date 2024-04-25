@@ -1,0 +1,31 @@
+{
+  "id": "facedao",
+  "symbol": "face",
+  "name": "FaceDAO",
+  "image": "https://assets.coingecko.com/coins/images/24309/large/1I7nII0c_400x400.jpg?1696523490",
+  "current_price": 2.439e-9,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2439098,
+  "total_volume": 132917,
+  "high_24h": 3.101e-9,
+  "low_24h": 2.198e-9,
+  "price_change_24h": 2.39281e-10,
+  "price_change_percentage_24h": 10.8754,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": 1000000000000000,
+  "ath": 0.00001106,
+  "ath_change_percentage": -99.97831,
+  "ath_date": "2022-04-16T09:39:30.726Z",
+  "atl": 1.019e-9,
+  "atl_change_percentage": 135.51179,
+  "atl_date": "2022-04-23T05:40:39.260Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:07.736Z",
+  "platforms": {
+    "bsc": "0xb700597d8425ced17677bc68042d7d92764acf59"
+  }
+}

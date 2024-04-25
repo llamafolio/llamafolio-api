@@ -1,0 +1,31 @@
+{
+  "id": "wins",
+  "symbol": "wins",
+  "name": "Trophy",
+  "image": "https://assets.coingecko.com/coins/images/31007/large/icon_wins.png?1696529844",
+  "current_price": 0.02997221,
+  "market_cap": 4600270,
+  "market_cap_rank": 1839,
+  "fully_diluted_valuation": 29983009,
+  "total_volume": 52.74,
+  "high_24h": 0.03005542,
+  "low_24h": 0.02990229,
+  "price_change_24h": 0.0000362,
+  "price_change_percentage_24h": 0.12094,
+  "market_cap_change_24h": 7211.43,
+  "market_cap_change_percentage_24h": 0.15701,
+  "circulating_supply": 153429230,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.03110482,
+  "ath_change_percentage": -3.60656,
+  "ath_date": "2024-03-02T05:18:08.070Z",
+  "atl": 0.00883755,
+  "atl_change_percentage": 239.26835,
+  "atl_date": "2023-08-22T04:20:19.261Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:54:40.761Z",
+  "platforms": {
+    "ethereum": "0x5f48d1fd6814cd1cd38aeb895755e57d519196d1"
+  }
+}

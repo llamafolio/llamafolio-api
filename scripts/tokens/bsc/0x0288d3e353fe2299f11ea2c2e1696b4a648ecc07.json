@@ -1,0 +1,31 @@
+{
+  "id": "zcore-finance",
+  "symbol": "zefi",
+  "name": "ZCore Finance",
+  "image": "https://assets.coingecko.com/coins/images/15346/large/icone_marca.png?1696514995",
+  "current_price": 0.00413144,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 8653.78,
+  "total_volume": 122.17,
+  "high_24h": 0.00417415,
+  "low_24h": 0.00406688,
+  "price_change_24h": 0.00003003,
+  "price_change_percentage_24h": 0.73222,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2087413,
+  "max_supply": null,
+  "ath": 1.91,
+  "ath_change_percentage": -99.78394,
+  "ath_date": "2021-05-10T14:24:41.501Z",
+  "atl": 0.00288861,
+  "atl_change_percentage": 42.85401,
+  "atl_date": "2023-03-10T11:49:51.931Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:16:31.107Z",
+  "platforms": {
+    "bsc": "0x0288d3e353fe2299f11ea2c2e1696b4a648ecc07"
+  }
+}

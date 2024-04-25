@@ -1,0 +1,31 @@
+{
+  "id": "flux",
+  "symbol": "flux",
+  "name": "Datamine FLUX",
+  "image": "https://assets.coingecko.com/coins/images/11756/large/fluxres.png?1696511637",
+  "current_price": 0.088267,
+  "market_cap": 243862,
+  "market_cap_rank": 3404,
+  "fully_diluted_valuation": 243862,
+  "total_volume": 9.51,
+  "high_24h": 0.092235,
+  "low_24h": 0.087455,
+  "price_change_24h": -0.002879348406403526,
+  "price_change_percentage_24h": -3.15904,
+  "market_cap_change_24h": -9271.466009989119,
+  "market_cap_change_percentage_24h": -3.66268,
+  "circulating_supply": 2772196.26653007,
+  "total_supply": 2772196.26653007,
+  "max_supply": null,
+  "ath": 456.44,
+  "ath_change_percentage": -99.98073,
+  "ath_date": "2020-07-03T12:23:19.296Z",
+  "atl": 0.02894014,
+  "atl_change_percentage": 203.96174,
+  "atl_date": "2022-11-09T19:04:12.904Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:31.213Z",
+  "platforms": {
+    "ethereum": "0x469eda64aed3a3ad6f868c44564291aa415cb1d9"
+  }
+}

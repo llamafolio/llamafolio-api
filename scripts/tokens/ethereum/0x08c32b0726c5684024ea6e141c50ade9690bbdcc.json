@@ -1,0 +1,31 @@
+{
+  "id": "stratos",
+  "symbol": "stos",
+  "name": "Stratos",
+  "image": "https://assets.coingecko.com/coins/images/16213/large/token_512x512.png?1696515814",
+  "current_price": 0.91008,
+  "market_cap": 56773941,
+  "market_cap_rank": 646,
+  "fully_diluted_valuation": 91309550,
+  "total_volume": 314210,
+  "high_24h": 0.967519,
+  "low_24h": 0.872583,
+  "price_change_24h": -0.03894765536731837,
+  "price_change_percentage_24h": -4.10395,
+  "market_cap_change_24h": -2290445.8614009917,
+  "market_cap_change_percentage_24h": -3.87788,
+  "circulating_supply": 62177440,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 5.18,
+  "ath_change_percentage": -82.36385,
+  "ath_date": "2021-11-26T00:00:00.000Z",
+  "atl": 0.15498,
+  "atl_change_percentage": 489.30371,
+  "atl_date": "2022-06-17T00:00:00.000Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:39.718Z",
+  "platforms": {
+    "ethereum": "0x08c32b0726c5684024ea6e141c50ade9690bbdcc"
+  }
+}

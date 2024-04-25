@@ -1,0 +1,31 @@
+{
+  "id": "neocortexai-2",
+  "symbol": "ncorai",
+  "name": "NeoCortexAI",
+  "image": "https://assets.coingecko.com/coins/images/31111/large/NCORAI.jpg?1696529941",
+  "current_price": 0.0013498,
+  "market_cap": 256751,
+  "market_cap_rank": 3381,
+  "fully_diluted_valuation": 1349263,
+  "total_volume": 2389.22,
+  "high_24h": 0.00174195,
+  "low_24h": 0.00134925,
+  "price_change_24h": -0.000355904309689491,
+  "price_change_percentage_24h": -20.86557,
+  "market_cap_change_24h": -67581.3459203227,
+  "market_cap_change_percentage_24h": -20.83705,
+  "circulating_supply": 190290066.21682402,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00446738,
+  "ath_change_percentage": -69.79771,
+  "ath_date": "2024-02-19T14:11:47.145Z",
+  "atl": 0.0003574,
+  "atl_change_percentage": 277.51683,
+  "atl_date": "2023-10-19T13:10:03.861Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:57.550Z",
+  "platforms": {
+    "bsc": "0x1ebc21f65ffed4836e51b9c5d680b28c01ed0e8d"
+  }
+}

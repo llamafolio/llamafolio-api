@@ -1,0 +1,31 @@
+{
+  "id": "adapad",
+  "symbol": "adapad",
+  "name": "ADAPad",
+  "image": "https://assets.coingecko.com/coins/images/18273/large/EhSqPTtG_400x400.jpg?1696517767",
+  "current_price": 0.00760913,
+  "market_cap": 2819167,
+  "market_cap_rank": 2095,
+  "fully_diluted_valuation": 2819167,
+  "total_volume": 15544.98,
+  "high_24h": 0.0077165,
+  "low_24h": 0.0072999,
+  "price_change_24h": 0.00004649,
+  "price_change_percentage_24h": 0.61475,
+  "market_cap_change_24h": -651.8503696229309,
+  "market_cap_change_percentage_24h": -0.02312,
+  "circulating_supply": 373691032.38099,
+  "total_supply": 373691032.38099,
+  "max_supply": 1000000000,
+  "ath": 1.28,
+  "ath_change_percentage": -99.41138,
+  "ath_date": "2021-10-06T21:50:04.424Z",
+  "atl": 0.00428772,
+  "atl_change_percentage": 75.72206,
+  "atl_date": "2023-09-12T10:11:28.778Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:08.139Z",
+  "platforms": {
+    "bsc": "0xdb0170e2d0c1cc1b2e7a90313d9b9afa4f250289"
+  }
+}

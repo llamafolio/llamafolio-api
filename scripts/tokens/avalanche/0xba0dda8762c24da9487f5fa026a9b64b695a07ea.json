@@ -1,0 +1,31 @@
+{
+  "id": "ox-fun",
+  "symbol": "ox",
+  "name": "OX Coin",
+  "image": "https://assets.coingecko.com/coins/images/35365/large/logo.png?1708395976",
+  "current_price": 0.01463004,
+  "market_cap": 55738329,
+  "market_cap_rank": 651,
+  "fully_diluted_valuation": 55738329,
+  "total_volume": 217157,
+  "high_24h": 0.01563457,
+  "low_24h": 0.01459738,
+  "price_change_24h": -0.000933833428689237,
+  "price_change_percentage_24h": -6.00001,
+  "market_cap_change_24h": -3669787.7717897967,
+  "market_cap_change_percentage_24h": -6.17725,
+  "circulating_supply": 3816494644.11473,
+  "total_supply": 3816494644.11473,
+  "max_supply": 9857348536,
+  "ath": 0.01989747,
+  "ath_change_percentage": -26.52684,
+  "ath_date": "2024-03-02T04:50:28.307Z",
+  "atl": 0.00938824,
+  "atl_change_percentage": 55.71924,
+  "atl_date": "2024-02-29T01:34:55.722Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:44.584Z",
+  "platforms": {
+    "avalanche": "0xba0dda8762c24da9487f5fa026a9b64b695a07ea"
+  }
+}

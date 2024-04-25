@@ -1,0 +1,31 @@
+{
+  "id": "kizuna",
+  "symbol": "kizuna",
+  "name": "Kizuna",
+  "image": "https://assets.coingecko.com/coins/images/32113/large/IMG_9968.png?1696585475",
+  "current_price": 1.1317e-8,
+  "market_cap": 10957918,
+  "market_cap_rank": 1387,
+  "fully_diluted_valuation": 10957918,
+  "total_volume": 162793,
+  "high_24h": 1.399e-8,
+  "low_24h": 1.0751e-8,
+  "price_change_24h": -2.474089888e-9,
+  "price_change_percentage_24h": -17.94037,
+  "market_cap_change_24h": -2431988.54263583,
+  "market_cap_change_percentage_24h": -18.16285,
+  "circulating_supply": 966231259137998,
+  "total_supply": 966231259137998,
+  "max_supply": 1000000000000000,
+  "ath": 5.8164e-8,
+  "ath_change_percentage": -80.47193,
+  "ath_date": "2024-02-20T23:04:17.383Z",
+  "atl": 3.14674e-10,
+  "atl_change_percentage": 3509.53756,
+  "atl_date": "2023-10-22T20:49:32.947Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:01.470Z",
+  "platforms": {
+    "ethereum": "0x470c8950c0c3aa4b09654bc73b004615119a44b5"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "unium",
+  "symbol": "unm",
+  "name": "UNIUM",
+  "image": "https://assets.coingecko.com/coins/images/24567/large/Unium_logo.png?1696523743",
+  "current_price": 13.27,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1327442148,
+  "total_volume": 44.2,
+  "high_24h": 15.21,
+  "low_24h": 12.03,
+  "price_change_24h": -1.9148733705309287,
+  "price_change_percentage_24h": -12.60673,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 124.26,
+  "ath_change_percentage": -89.31708,
+  "ath_date": "2022-06-11T12:39:15.758Z",
+  "atl": 3.24,
+  "atl_change_percentage": 309.84927,
+  "atl_date": "2024-03-22T15:48:55.700Z",
+  "roi": null,
+  "last_updated": "2024-04-25T07:39:59.282Z",
+  "platforms": {
+    "ethereum": "0x6570ffe19da7e2b425329b157d9109b87f18304b"
+  }
+}

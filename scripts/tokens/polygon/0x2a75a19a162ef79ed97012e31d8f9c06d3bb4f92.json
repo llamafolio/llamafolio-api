@@ -1,0 +1,31 @@
+{
+  "id": "poldo",
+  "symbol": "poldo",
+  "name": "Poldo",
+  "image": "https://assets.coingecko.com/coins/images/34537/large/Poldo.png?1705324970",
+  "current_price": 0.0014186,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 14186.02,
+  "total_volume": 46.71,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.090461,
+  "ath_change_percentage": -98.4318,
+  "ath_date": "2024-01-26T04:10:08.985Z",
+  "atl": 0.0012355,
+  "atl_change_percentage": 14.82053,
+  "atl_date": "2024-04-19T02:52:37.118Z",
+  "roi": null,
+  "last_updated": "2024-04-23T08:09:06.937Z",
+  "platforms": {
+    "polygon": "0x2a75a19a162ef79ed97012e31d8f9c06d3bb4f92"
+  }
+}

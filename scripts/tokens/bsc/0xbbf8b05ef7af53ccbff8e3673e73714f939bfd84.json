@@ -1,0 +1,31 @@
+{
+  "id": "frog-ceo",
+  "symbol": "frog ceo",
+  "name": "FROG CEO",
+  "image": "https://assets.coingecko.com/coins/images/29500/large/200.png?1696528445",
+  "current_price": 7.62832e-13,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 75973,
+  "total_volume": 0.816065,
+  "high_24h": 7.72496e-13,
+  "low_24h": 7.45636e-13,
+  "price_change_24h": 2.629e-15,
+  "price_change_percentage_24h": 0.34589,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000000000000,
+  "max_supply": 100000000000000000,
+  "ath": 1.088e-11,
+  "ath_change_percentage": -93.00601,
+  "ath_date": "2023-03-27T07:48:52.974Z",
+  "atl": 1.62146e-13,
+  "atl_change_percentage": 369.29818,
+  "atl_date": "2023-10-22T22:01:14.936Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:40.704Z",
+  "platforms": {
+    "bsc": "0xbbf8b05ef7af53ccbff8e3673e73714f939bfd84"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "lien",
+  "symbol": "lien",
+  "name": "Lien",
+  "image": "https://assets.coingecko.com/coins/images/12224/large/Lien.png?1696512057",
+  "current_price": 0.272005,
+  "market_cap": 96529,
+  "market_cap_rank": 3789,
+  "fully_diluted_valuation": 272008,
+  "total_volume": 19490.11,
+  "high_24h": 0.309095,
+  "low_24h": 0.2719,
+  "price_change_24h": -0.02561147675020431,
+  "price_change_percentage_24h": -8.60554,
+  "market_cap_change_24h": -7794.222367022943,
+  "market_cap_change_percentage_24h": -7.47124,
+  "circulating_supply": 354874.25822865,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 956.78,
+  "ath_change_percentage": -99.97154,
+  "ath_date": "2020-09-02T01:41:04.588Z",
+  "atl": 0.01022065,
+  "atl_change_percentage": 2564.51716,
+  "atl_date": "2022-04-13T20:11:26.361Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:30.176Z",
+  "platforms": {
+    "ethereum": "0xab37e1358b639fd877f015027bb62d3ddaa7557e"
+  }
+}

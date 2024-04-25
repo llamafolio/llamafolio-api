@@ -1,0 +1,31 @@
+{
+  "id": "livepeer",
+  "symbol": "lpt",
+  "name": "Livepeer",
+  "image": "https://assets.coingecko.com/coins/images/7137/large/logo-circle-green.png?1696507437",
+  "current_price": 14.24,
+  "market_cap": 452409527,
+  "market_cap_rank": 174,
+  "fully_diluted_valuation": 452409527,
+  "total_volume": 26529168,
+  "high_24h": 15.32,
+  "low_24h": 13.9,
+  "price_change_24h": -0.9401386416490283,
+  "price_change_percentage_24h": -6.19182,
+  "market_cap_change_24h": -33317992.848789692,
+  "market_cap_change_percentage_24h": -6.8594,
+  "circulating_supply": 31917868.4173209,
+  "total_supply": 31917868.4173209,
+  "max_supply": 31917868.4173209,
+  "ath": 99.03,
+  "ath_change_percentage": -85.64321,
+  "ath_date": "2021-11-09T16:58:44.554Z",
+  "atl": 0.354051,
+  "atl_change_percentage": 3915.58488,
+  "atl_date": "2019-10-26T22:59:09.500Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:32.620Z",
+  "platforms": {
+    "ethereum": "0x58b6a8a3302369daec383334672404ee733ab239"
+  }
+}

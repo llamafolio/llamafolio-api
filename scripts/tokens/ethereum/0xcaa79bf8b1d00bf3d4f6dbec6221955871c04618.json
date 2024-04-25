@@ -1,0 +1,31 @@
+{
+  "id": "crocbot",
+  "symbol": "croc",
+  "name": "CrocBot",
+  "image": "https://assets.coingecko.com/coins/images/31382/large/Frame_123.png?1696530199",
+  "current_price": 0.00052305,
+  "market_cap": 523053,
+  "market_cap_rank": 3044,
+  "fully_diluted_valuation": 523053,
+  "total_volume": 107.21,
+  "high_24h": 0.00055046,
+  "low_24h": 0.00052158,
+  "price_change_24h": -0.00002177991474416,
+  "price_change_percentage_24h": -3.99754,
+  "market_cap_change_24h": -21779.914744159498,
+  "market_cap_change_percentage_24h": -3.99754,
+  "circulating_supply": 1000000000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00794715,
+  "ath_change_percentage": -93.41035,
+  "ath_date": "2023-11-17T11:27:20.867Z",
+  "atl": 0.00029127,
+  "atl_change_percentage": 79.79359,
+  "atl_date": "2023-08-25T08:19:28.375Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:49:52.338Z",
+  "platforms": {
+    "ethereum": "0xcaa79bf8b1d00bf3d4f6dbec6221955871c04618"
+  }
+}

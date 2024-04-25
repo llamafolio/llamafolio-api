@@ -1,0 +1,31 @@
+{
+  "id": "blockblend",
+  "symbol": "bbl",
+  "name": "BlockBlend [OLD]",
+  "image": "https://assets.coingecko.com/coins/images/24858/large/blockblend.png?1696524018",
+  "current_price": 0.00019823,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 19823.2,
+  "total_volume": 3817.48,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.114686,
+  "ath_change_percentage": -99.82715,
+  "ath_date": "2022-05-03T17:58:46.032Z",
+  "atl": 0.00019823,
+  "atl_change_percentage": 0,
+  "atl_date": "2023-05-18T13:00:06.749Z",
+  "roi": null,
+  "last_updated": "2023-05-18T13:00:06.749Z",
+  "platforms": {
+    "bsc": "0x69b0af16fdd2e80968eb505cd41dc26efb2b80bf"
+  }
+}

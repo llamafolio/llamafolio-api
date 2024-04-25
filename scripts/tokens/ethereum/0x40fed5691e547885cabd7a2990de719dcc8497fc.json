@@ -1,0 +1,35 @@
+{
+  "id": "safe-haven",
+  "symbol": "sha",
+  "name": "Safe Haven",
+  "image": "https://assets.coingecko.com/coins/images/2584/large/safehaven.png?1696503388",
+  "current_price": 0.00038254,
+  "market_cap": 3251651,
+  "market_cap_rank": 2018,
+  "fully_diluted_valuation": 3251651,
+  "total_volume": 887.56,
+  "high_24h": 0.00039003,
+  "low_24h": 0.000312,
+  "price_change_24h": 0.00006338,
+  "price_change_percentage_24h": 19.85763,
+  "market_cap_change_24h": 535055,
+  "market_cap_change_percentage_24h": 19.69581,
+  "circulating_supply": 8500000000,
+  "total_supply": 8500000000,
+  "max_supply": 8500000000,
+  "ath": 0.01705096,
+  "ath_change_percentage": -97.76535,
+  "ath_date": "2021-04-11T03:59:13.350Z",
+  "atl": 0.00009745,
+  "atl_change_percentage": 290.9916,
+  "atl_date": "2020-03-13T02:24:47.184Z",
+  "roi": {
+    "times": -0.99981694413746,
+    "currency": "eth",
+    "percentage": -99.98169441374601
+  },
+  "last_updated": "2024-04-25T08:59:46.554Z",
+  "platforms": {
+    "ethereum": "0x40fed5691e547885cabd7a2990de719dcc8497fc"
+  }
+}

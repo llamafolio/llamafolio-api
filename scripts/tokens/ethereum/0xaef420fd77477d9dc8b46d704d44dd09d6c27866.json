@@ -1,0 +1,31 @@
+{
+  "id": "cogito-protocol",
+  "symbol": "cgv",
+  "name": "Cogito Finance",
+  "image": "https://assets.coingecko.com/coins/images/30731/large/CGV.png?1698667079",
+  "current_price": 0.10501,
+  "market_cap": 9900588,
+  "market_cap_rank": 1443,
+  "fully_diluted_valuation": 104934558,
+  "total_volume": 162101,
+  "high_24h": 0.115576,
+  "low_24h": 0.104479,
+  "price_change_24h": -0.00824278173344792,
+  "price_change_percentage_24h": -7.2782,
+  "market_cap_change_24h": -776172.2153204624,
+  "market_cap_change_percentage_24h": -7.26974,
+  "circulating_supply": 94350116.979771,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.302004,
+  "ath_change_percentage": -65.27307,
+  "ath_date": "2024-03-28T06:05:41.245Z",
+  "atl": 0.02180652,
+  "atl_change_percentage": 380.94255,
+  "atl_date": "2023-08-25T06:28:08.184Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:28.914Z",
+  "platforms": {
+    "ethereum": "0xaef420fd77477d9dc8b46d704d44dd09d6c27866"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "bitrock",
+  "symbol": "brock",
+  "name": "Bitrock",
+  "image": "https://assets.coingecko.com/coins/images/30987/large/20230713_155626.png?1696529826",
+  "current_price": 0.132907,
+  "market_cap": 13262468,
+  "market_cap_rank": 1304,
+  "fully_diluted_valuation": 13262468,
+  "total_volume": 423187,
+  "high_24h": 0.139264,
+  "low_24h": 0.132558,
+  "price_change_24h": -0.004898111053658477,
+  "price_change_percentage_24h": -3.55439,
+  "market_cap_change_24h": -391612.16775942035,
+  "market_cap_change_percentage_24h": -2.8681,
+  "circulating_supply": 100000000,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.314314,
+  "ath_change_percentage": -57.71271,
+  "ath_date": "2024-03-13T14:10:33.697Z",
+  "atl": 0.00273803,
+  "atl_change_percentage": 4754.39516,
+  "atl_date": "2023-07-17T03:18:00.483Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:31.902Z",
+  "platforms": {
+    "ethereum": "0xde67d97b8770dc98c746a3fc0093c538666eb493"
+  }
+}

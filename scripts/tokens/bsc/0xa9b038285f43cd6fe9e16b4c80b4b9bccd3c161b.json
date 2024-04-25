@@ -1,0 +1,31 @@
+{
+  "id": "flourishing-ai-token",
+  "symbol": "ai",
+  "name": "Flourishing AI",
+  "image": "https://assets.coingecko.com/coins/images/17127/large/Flourishing_Icon_FullColor_200.png?1703377529",
+  "current_price": 0.03575663,
+  "market_cap": 846078,
+  "market_cap_rank": 2779,
+  "fully_diluted_valuation": 1963443,
+  "total_volume": 5344.45,
+  "high_24h": 0.03815262,
+  "low_24h": 0.03514185,
+  "price_change_24h": -0.001767209655598741,
+  "price_change_percentage_24h": -4.70956,
+  "market_cap_change_24h": -45799.30928606528,
+  "market_cap_change_percentage_24h": -5.13516,
+  "circulating_supply": 23700337,
+  "total_supply": 55000000,
+  "max_supply": 55000000,
+  "ath": 12.89,
+  "ath_change_percentage": -99.72288,
+  "ath_date": "2021-10-02T19:55:32.952Z",
+  "atl": 0.00027908,
+  "atl_change_percentage": 12702.89078,
+  "atl_date": "2023-05-10T03:25:15.061Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:40.579Z",
+  "platforms": {
+    "bsc": "0xa9b038285f43cd6fe9e16b4c80b4b9bccd3c161b"
+  }
+}

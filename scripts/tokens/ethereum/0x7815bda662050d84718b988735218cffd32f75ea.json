@@ -1,0 +1,31 @@
+{
+  "id": "yel-finance",
+  "symbol": "yel",
+  "name": "Yel.Finance",
+  "image": "https://assets.coingecko.com/coins/images/17429/large/Logo200.png?1696516976",
+  "current_price": 0.00226915,
+  "market_cap": 596758,
+  "market_cap_rank": 2977,
+  "fully_diluted_valuation": 904896,
+  "total_volume": 6462.31,
+  "high_24h": 0.00260733,
+  "low_24h": 0.00204703,
+  "price_change_24h": -0.00029494786031346,
+  "price_change_percentage_24h": -11.50297,
+  "market_cap_change_24h": -80657.66424164304,
+  "market_cap_change_percentage_24h": -11.90667,
+  "circulating_supply": 263791016.10052076,
+  "total_supply": 400000000,
+  "max_supply": 400000000,
+  "ath": 0.359432,
+  "ath_change_percentage": -99.36915,
+  "ath_date": "2021-11-04T07:20:20.620Z",
+  "atl": 0.00073485,
+  "atl_change_percentage": 208.56558,
+  "atl_date": "2023-10-22T15:11:56.364Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:19.299Z",
+  "platforms": {
+    "ethereum": "0x7815bda662050d84718b988735218cffd32f75ea"
+  }
+}

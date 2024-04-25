@@ -1,0 +1,31 @@
+{
+  "id": "yield-guild-games",
+  "symbol": "ygg",
+  "name": "Yield Guild Games",
+  "image": "https://assets.coingecko.com/coins/images/17358/large/Shield_Mark_-_Colored_-_Iridescent.png?1696516909",
+  "current_price": 0.903803,
+  "market_cap": 281804940,
+  "market_cap_rank": 235,
+  "fully_diluted_valuation": 899840388,
+  "total_volume": 172665404,
+  "high_24h": 1.048,
+  "low_24h": 0.900021,
+  "price_change_24h": -0.09469995088657379,
+  "price_change_percentage_24h": -9.4842,
+  "market_cap_change_24h": -33429957.620067656,
+  "market_cap_change_percentage_24h": -10.60478,
+  "circulating_supply": 313172139.8780632,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 11.17,
+  "ath_change_percentage": -91.91572,
+  "ath_date": "2021-11-20T16:49:03.371Z",
+  "atl": 0.125601,
+  "atl_change_percentage": 619.06745,
+  "atl_date": "2023-06-10T04:36:01.024Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:23.720Z",
+  "platforms": {
+    "ethereum": "0x25f8087ead173b73d6e8b84329989a8eea16cf73"
+  }
+}

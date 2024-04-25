@@ -1,0 +1,31 @@
+{
+  "id": "cheems-inu-new",
+  "symbol": "cinu",
+  "name": "Cheems Inu [NEW]",
+  "image": "https://assets.coingecko.com/coins/images/29393/large/cinu.png?1696528343",
+  "current_price": 0.00013415,
+  "market_cap": 741333,
+  "market_cap_rank": 2858,
+  "fully_diluted_valuation": 1298734,
+  "total_volume": 3698.52,
+  "high_24h": 0.00014514,
+  "low_24h": 0.00012738,
+  "price_change_24h": -0.000009504477615014,
+  "price_change_percentage_24h": -6.61612,
+  "market_cap_change_24h": -52574.182945930515,
+  "market_cap_change_percentage_24h": -6.62221,
+  "circulating_supply": 5526070089.419,
+  "total_supply": 9681066719,
+  "max_supply": 14476116114,
+  "ath": 0.00151619,
+  "ath_change_percentage": -91.15338,
+  "ath_date": "2024-04-05T12:59:59.704Z",
+  "atl": 0.0001254,
+  "atl_change_percentage": 6.96686,
+  "atl_date": "2023-06-15T17:32:42.009Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:35.777Z",
+  "platforms": {
+    "avalanche": "0xc11bf915db4b43714bc8d32bf83bf5ea53d40981"
+  }
+}

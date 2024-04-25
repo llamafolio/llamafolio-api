@@ -1,0 +1,31 @@
+{
+  "id": "aave-v3-ghst",
+  "symbol": "aghst",
+  "name": "Aave v3 GHST",
+  "image": "https://assets.coingecko.com/coins/images/32923/large/ghst.png?1699826089",
+  "current_price": 1.8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 0,
+  "high_24h": 2.02,
+  "low_24h": 1.8,
+  "price_change_24h": -0.1730379099999999,
+  "price_change_percentage_24h": -8.77341,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 3.79,
+  "ath_change_percentage": -52.49193,
+  "ath_date": "2024-04-01T17:06:05.611Z",
+  "atl": 0.766273,
+  "atl_change_percentage": 134.80705,
+  "atl_date": "2023-11-22T00:05:00.968Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:18.875Z",
+  "platforms": {
+    "polygon": "0x8eb270e296023e9d92081fdf967ddd7878724424"
+  }
+}

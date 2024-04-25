@@ -1,0 +1,31 @@
+{
+  "id": "balancer",
+  "symbol": "bal",
+  "name": "Balancer",
+  "image": "https://assets.coingecko.com/coins/images/11683/large/Balancer.png?1696511572",
+  "current_price": 3.79,
+  "market_cap": 213217406,
+  "market_cap_rank": 283,
+  "fully_diluted_valuation": 238251285,
+  "total_volume": 10171330,
+  "high_24h": 4.12,
+  "low_24h": 3.78,
+  "price_change_24h": -0.3017514949530482,
+  "price_change_percentage_24h": -7.38062,
+  "market_cap_change_24h": -17321794.771344006,
+  "market_cap_change_percentage_24h": -7.5136,
+  "circulating_supply": 56308399.21565277,
+  "total_supply": 62919574.4787312,
+  "max_supply": 96150704,
+  "ath": 74.45,
+  "ath_change_percentage": -94.91207,
+  "ath_date": "2021-05-04T13:35:02.939Z",
+  "atl": 2.92,
+  "atl_change_percentage": 29.65945,
+  "atl_date": "2023-10-19T01:54:57.699Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:26.592Z",
+  "platforms": {
+    "gnosis": "0x7ef541e2a22058048904fe5744f9c7e4c57af717"
+  }
+}

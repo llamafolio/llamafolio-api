@@ -1,0 +1,31 @@
+{
+  "id": "museum-of-crypto-art",
+  "symbol": "moca",
+  "name": "Museum of Crypto Art",
+  "image": "https://assets.coingecko.com/coins/images/15829/large/photo_2021-06-04_09.36.16.jpeg?1696515447",
+  "current_price": 0.115767,
+  "market_cap": 303224,
+  "market_cap_rank": 3316,
+  "fully_diluted_valuation": 1157624,
+  "total_volume": 949.64,
+  "high_24h": 0.119534,
+  "low_24h": 0.115113,
+  "price_change_24h": -0.002939127398277467,
+  "price_change_percentage_24h": -2.47596,
+  "market_cap_change_24h": -8078.909613831609,
+  "market_cap_change_percentage_24h": -2.59519,
+  "circulating_supply": 2619365,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 11.36,
+  "ath_change_percentage": -98.98129,
+  "ath_date": "2021-06-03T12:44:49.703Z",
+  "atl": 0.06252,
+  "atl_change_percentage": 85.16178,
+  "atl_date": "2023-11-06T21:49:23.932Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:07:56.398Z",
+  "platforms": {
+    "ethereum": "0x9ac07635ddbde5db18648c360defb00f5f22537e"
+  }
+}

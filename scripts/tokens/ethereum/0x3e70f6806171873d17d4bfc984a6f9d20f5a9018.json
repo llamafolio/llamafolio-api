@@ -1,0 +1,31 @@
+{
+  "id": "brianarmstrongtrumpyellen",
+  "symbol": "coin",
+  "name": "BrianArmstrongTrumpYellenGTA6",
+  "image": "https://assets.coingecko.com/coins/images/33839/large/0x3e70f6806171873d17d4bfc984a6f9d20f5a9018.png?1703108075",
+  "current_price": 0.00022225,
+  "market_cap": 52733,
+  "market_cap_rank": 3978,
+  "fully_diluted_valuation": 52733,
+  "total_volume": 146.13,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 237270000,
+  "total_supply": 237270000,
+  "max_supply": 237270000,
+  "ath": 0.01915376,
+  "ath_change_percentage": -98.83967,
+  "ath_date": "2023-12-21T02:19:46.650Z",
+  "atl": 0.00020589,
+  "atl_change_percentage": 7.94683,
+  "atl_date": "2024-04-19T02:44:26.431Z",
+  "roi": null,
+  "last_updated": "2024-04-19T08:44:58.621Z",
+  "platforms": {
+    "ethereum": "0x3e70f6806171873d17d4bfc984a6f9d20f5a9018"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "eternalflow",
+  "symbol": "eft",
+  "name": "EternalFlow",
+  "image": "https://assets.coingecko.com/coins/images/21536/large/EFTLogoWP.png?1696520895",
+  "current_price": 2.99551e-10,
+  "market_cap": 114399,
+  "market_cap_rank": 3736,
+  "fully_diluted_valuation": 119358,
+  "total_volume": 120.59,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 381900076516682.44,
+  "total_supply": 398455000000000,
+  "max_supply": 1000000000000000,
+  "ath": 1.5113e-8,
+  "ath_change_percentage": -98.01787,
+  "ath_date": "2021-12-28T15:56:42.732Z",
+  "atl": 2.81664e-10,
+  "atl_change_percentage": 6.35047,
+  "atl_date": "2023-07-07T00:06:23.334Z",
+  "roi": null,
+  "last_updated": "2023-08-03T10:30:12.861Z",
+  "platforms": {
+    "bsc": "0x21004b11939359e7e962db6675d56f50353df29c"
+  }
+}

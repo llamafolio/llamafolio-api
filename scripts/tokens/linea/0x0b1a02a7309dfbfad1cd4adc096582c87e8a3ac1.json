@@ -1,0 +1,31 @@
+{
+  "id": "horizon-2",
+  "symbol": "hzn",
+  "name": "Horizon",
+  "image": "https://assets.coingecko.com/coins/images/31156/large/Circle_logo_black_%281%29.png?1696529983",
+  "current_price": 0.00470902,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 470654,
+  "total_volume": 14868.34,
+  "high_24h": 0.0056119,
+  "low_24h": 0.00431567,
+  "price_change_24h": 0.00030222,
+  "price_change_percentage_24h": 6.85808,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.057185,
+  "ath_change_percentage": -91.7703,
+  "ath_date": "2023-08-03T17:59:21.893Z",
+  "atl": 0.00330387,
+  "atl_change_percentage": 42.44377,
+  "atl_date": "2023-11-15T12:34:29.375Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:16:10.067Z",
+  "platforms": {
+    "linea": "0x0b1a02a7309dfbfad1cd4adc096582c87e8a3ac1"
+  }
+}

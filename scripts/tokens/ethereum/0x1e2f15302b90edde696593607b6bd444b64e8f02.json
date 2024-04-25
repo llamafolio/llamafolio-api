@@ -1,0 +1,31 @@
+{
+  "id": "shiryo-inu",
+  "symbol": "shiryo-inu",
+  "name": "Shiryo",
+  "image": "https://assets.coingecko.com/coins/images/19652/large/shiryo_inu.png?1696519080",
+  "current_price": 4.347e-12,
+  "market_cap": 4194322,
+  "market_cap_rank": 1881,
+  "fully_diluted_valuation": 4260661,
+  "total_volume": 3207.96,
+  "high_24h": 4.635e-12,
+  "low_24h": 4.344e-12,
+  "price_change_24h": -2.33231e-13,
+  "price_change_percentage_24h": -5.0916,
+  "market_cap_change_24h": -227221.39244992193,
+  "market_cap_change_percentage_24h": -5.13896,
+  "circulating_supply": 964930207093990500,
+  "total_supply": 980191996851203000,
+  "max_supply": 1000000000000000000,
+  "ath": 1.37328e-10,
+  "ath_change_percentage": -96.8335,
+  "ath_date": "2021-11-20T16:08:29.324Z",
+  "atl": 1.548e-12,
+  "atl_change_percentage": 180.86726,
+  "atl_date": "2023-12-08T16:21:43.979Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:49.668Z",
+  "platforms": {
+    "ethereum": "0x1e2f15302b90edde696593607b6bd444b64e8f02"
+  }
+}

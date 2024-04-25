@@ -1,0 +1,31 @@
+{
+  "id": "cryptomines-eternal",
+  "symbol": "eternal",
+  "name": "CryptoMines Eternal",
+  "image": "https://assets.coingecko.com/coins/images/18344/large/rn78txF.png?1696517834",
+  "current_price": 0.241214,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1205912,
+  "total_volume": 15161.86,
+  "high_24h": 0.246414,
+  "low_24h": 0.228737,
+  "price_change_24h": -0.005200409297471649,
+  "price_change_percentage_24h": -2.11043,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 5000000,
+  "max_supply": null,
+  "ath": 807.58,
+  "ath_change_percentage": -99.97014,
+  "ath_date": "2021-11-25T12:15:17.470Z",
+  "atl": 0.107267,
+  "atl_change_percentage": 124.80859,
+  "atl_date": "2023-06-12T07:15:24.644Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:56.630Z",
+  "platforms": {
+    "bsc": "0xd44fd09d74cd13838f137b590497595d6b3feea4"
+  }
+}

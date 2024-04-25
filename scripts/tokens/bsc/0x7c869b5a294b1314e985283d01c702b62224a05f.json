@@ -1,0 +1,31 @@
+{
+  "id": "jarvis-synthetic-swiss-franc",
+  "symbol": "jchf",
+  "name": "Jarvis Synthetic Swiss Franc",
+  "image": "https://assets.coingecko.com/coins/images/15727/large/jCHF.png?1696515353",
+  "current_price": 1.052,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 505372,
+  "total_volume": 537.16,
+  "high_24h": 1.074,
+  "low_24h": 1.05,
+  "price_change_24h": -0.015060079112517943,
+  "price_change_percentage_24h": -1.41142,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 481061,
+  "max_supply": null,
+  "ath": 1.24,
+  "ath_change_percentage": -15.19242,
+  "ath_date": "2021-11-06T08:07:11.182Z",
+  "atl": 0.82646,
+  "atl_change_percentage": 27.33628,
+  "atl_date": "2022-06-21T01:25:58.449Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:43.936Z",
+  "platforms": {
+    "bsc": "0x7c869b5a294b1314e985283d01c702b62224a05f"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "battleverse",
+  "symbol": "bvc",
+  "name": "BattleVerse",
+  "image": "https://assets.coingecko.com/coins/images/23750/large/bvc.png?1696522952",
+  "current_price": 0.00058967,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 589183,
+  "total_volume": 55993,
+  "high_24h": 0.00059054,
+  "low_24h": 0.00055944,
+  "price_change_24h": 0.0000249,
+  "price_change_percentage_24h": 4.40917,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.198695,
+  "ath_change_percentage": -99.7035,
+  "ath_date": "2022-02-20T10:39:46.667Z",
+  "atl": 0.00019468,
+  "atl_change_percentage": 202.61264,
+  "atl_date": "2023-11-21T18:39:53.829Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:07.726Z",
+  "platforms": {
+    "bsc": "0x9bee0c15676a65ef3c8cdb38cb3dd31c675bbd12"
+  }
+}

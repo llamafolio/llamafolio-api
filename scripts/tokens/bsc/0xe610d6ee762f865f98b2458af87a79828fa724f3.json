@@ -1,0 +1,31 @@
+{
+  "id": "trrxitte",
+  "symbol": "trrxitte",
+  "name": "TRRXITTE International",
+  "image": "https://assets.coingecko.com/coins/images/13452/large/TRRXITTE_Int..png?1696513215",
+  "current_price": 0.229305,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 22958582,
+  "total_volume": 2.59,
+  "high_24h": 0.233169,
+  "low_24h": 0.225804,
+  "price_change_24h": -0.002657254842159424,
+  "price_change_percentage_24h": -1.14556,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 3.77,
+  "ath_change_percentage": -93.90358,
+  "ath_date": "2023-11-23T10:39:44.981Z",
+  "atl": 0.00038422,
+  "atl_change_percentage": 59678.62962,
+  "atl_date": "2023-11-02T06:37:52.161Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:46.540Z",
+  "platforms": {
+    "bsc": "0xe610d6ee762f865f98b2458af87a79828fa724f3"
+  }
+}

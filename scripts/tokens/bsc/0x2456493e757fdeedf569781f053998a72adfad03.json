@@ -1,0 +1,35 @@
+{
+  "id": "smartlands",
+  "symbol": "dnt",
+  "name": "Definder Network",
+  "image": "https://assets.coingecko.com/coins/images/2073/large/2aSL-Tvl_400x400.jpeg?1696503039",
+  "current_price": 0.17882,
+  "market_cap": 910389,
+  "market_cap_rank": 2736,
+  "fully_diluted_valuation": 3845824,
+  "total_volume": 22.32,
+  "high_24h": 0.185624,
+  "low_24h": 0.175013,
+  "price_change_24h": -0.005853207040339537,
+  "price_change_percentage_24h": -3.1695,
+  "market_cap_change_24h": -37442.49816648022,
+  "market_cap_change_percentage_24h": -3.95033,
+  "circulating_supply": 5100896,
+  "total_supply": 21548097,
+  "max_supply": 21548097,
+  "ath": 21,
+  "ath_change_percentage": -99.14853,
+  "ath_date": "2021-05-01T13:25:42.061Z",
+  "atl": 0.00475507,
+  "atl_change_percentage": 3660.611,
+  "atl_date": "2019-11-02T17:32:23.561Z",
+  "roi": {
+    "times": -0.9430144102715031,
+    "currency": "eth",
+    "percentage": -94.30144102715032
+  },
+  "last_updated": "2024-04-25T09:00:12.316Z",
+  "platforms": {
+    "bsc": "0x2456493e757fdeedf569781f053998a72adfad03"
+  }
+}

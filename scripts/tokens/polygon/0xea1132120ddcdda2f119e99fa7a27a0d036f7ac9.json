@@ -1,0 +1,31 @@
+{
+  "id": "aave-v3-stmatic",
+  "symbol": "astmatic",
+  "name": "Aave v3 stMATIC",
+  "image": "https://assets.coingecko.com/coins/images/32921/large/stmatic.png?1699825800",
+  "current_price": 0.787952,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 0,
+  "high_24h": 0.845546,
+  "low_24h": 0.779257,
+  "price_change_24h": -0.05437139999999996,
+  "price_change_percentage_24h": -6.50945,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.43,
+  "ath_change_percentage": -45.27699,
+  "ath_date": "2024-03-13T14:25:19.097Z",
+  "atl": 0.680274,
+  "atl_change_percentage": 14.79152,
+  "atl_date": "2024-04-13T21:40:23.104Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:31.773Z",
+  "platforms": {
+    "polygon": "0xea1132120ddcdda2f119e99fa7a27a0d036f7ac9"
+  }
+}

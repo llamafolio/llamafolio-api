@@ -1,0 +1,31 @@
+{
+  "id": "aave-amm-uniyfiweth",
+  "symbol": "aammuniyfiweth",
+  "name": "Aave AMM UniYFIWETH",
+  "image": "https://assets.coingecko.com/coins/images/17258/large/aAmmUniYFIWETH.png?1696516814",
+  "current_price": 24589,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 84858,
+  "total_volume": 0,
+  "high_24h": 26226,
+  "low_24h": 24420,
+  "price_change_24h": -1301.0902653026678,
+  "price_change_percentage_24h": -5.03793,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 3.4511102083325,
+  "max_supply": null,
+  "ath": 57229,
+  "ath_change_percentage": -57.04699,
+  "ath_date": "2021-11-09T04:08:51.107Z",
+  "atl": 8895.36,
+  "atl_change_percentage": 176.33963,
+  "atl_date": "2022-06-18T21:00:55.798Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:51.669Z",
+  "platforms": {
+    "ethereum": "0x5394794be8b6ed5572fcd6b27103f46b5f390e8f"
+  }
+}

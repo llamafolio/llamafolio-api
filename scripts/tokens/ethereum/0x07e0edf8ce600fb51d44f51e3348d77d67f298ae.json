@@ -1,0 +1,31 @@
+{
+  "id": "harrypotterobamapacman8inu",
+  "symbol": "xrp",
+  "name": "HarryPotterObamaPacMan8Inu",
+  "image": "https://assets.coingecko.com/coins/images/31241/large/Pacman_Logo200x200.png?1696530067",
+  "current_price": 0.00411129,
+  "market_cap": 346795,
+  "market_cap_rank": 3250,
+  "fully_diluted_valuation": 346795,
+  "total_volume": 16021.15,
+  "high_24h": 0.00450609,
+  "low_24h": 0.00378137,
+  "price_change_24h": -0.000257755212049131,
+  "price_change_percentage_24h": -5.89958,
+  "market_cap_change_24h": -22405.10247241234,
+  "market_cap_change_percentage_24h": -6.06855,
+  "circulating_supply": 84470217,
+  "total_supply": 84470217,
+  "max_supply": 100000000,
+  "ath": 1.24,
+  "ath_change_percentage": -99.66627,
+  "ath_date": "2023-08-20T04:00:45.859Z",
+  "atl": 0.00118029,
+  "atl_change_percentage": 251.31672,
+  "atl_date": "2023-12-14T05:29:50.648Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:32.227Z",
+  "platforms": {
+    "ethereum": "0x07e0edf8ce600fb51d44f51e3348d77d67f298ae"
+  }
+}

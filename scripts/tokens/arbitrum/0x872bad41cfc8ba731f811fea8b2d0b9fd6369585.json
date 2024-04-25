@@ -1,0 +1,31 @@
+{
+  "id": "battlefly",
+  "symbol": "gfly",
+  "name": "BattleFly",
+  "image": "https://assets.coingecko.com/coins/images/28828/large/GFLY_LOGO.png?1696527804",
+  "current_price": 0.168728,
+  "market_cap": 654614,
+  "market_cap_rank": 2922,
+  "fully_diluted_valuation": 654614,
+  "total_volume": 63817,
+  "high_24h": 0.172986,
+  "low_24h": 0.168384,
+  "price_change_24h": -0.003945000032642255,
+  "price_change_percentage_24h": -2.28467,
+  "market_cap_change_24h": -15741.682572029182,
+  "market_cap_change_percentage_24h": -2.34826,
+  "circulating_supply": 3882377.28971832,
+  "total_supply": 3882377.28971832,
+  "max_supply": 10000000,
+  "ath": 9.24,
+  "ath_change_percentage": -98.17485,
+  "ath_date": "2023-02-07T22:17:59.734Z",
+  "atl": 0.168384,
+  "atl_change_percentage": 0.14992,
+  "atl_date": "2024-04-25T04:12:08.891Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:42.383Z",
+  "platforms": {
+    "arbitrum": "0x872bad41cfc8ba731f811fea8b2d0b9fd6369585"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "bubu",
+  "symbol": "bubu",
+  "name": "Bubu",
+  "image": "https://assets.coingecko.com/coins/images/30835/large/Bubu200x200.png?1696529693",
+  "current_price": 0.00241981,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 215094,
+  "total_volume": 215.17,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 88888888,
+  "max_supply": 88888888,
+  "ath": 0.02674867,
+  "ath_change_percentage": -90.95353,
+  "ath_date": "2023-07-10T12:28:31.073Z",
+  "atl": 0.00163101,
+  "atl_change_percentage": 48.36284,
+  "atl_date": "2024-01-23T14:20:41.109Z",
+  "roi": null,
+  "last_updated": "2024-04-03T14:10:31.232Z",
+  "platforms": {
+    "ethereum": "0x5395df198fcbc9c13bec506004c9a8b6460a7712"
+  }
+}

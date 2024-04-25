@@ -1,0 +1,31 @@
+{
+  "id": "finance-blocks",
+  "symbol": "fbx",
+  "name": "Finance Blocks",
+  "image": "https://assets.coingecko.com/coins/images/24117/large/financeblocksshadow.png?1696523309",
+  "current_price": 0.00028389,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 283999,
+  "total_volume": 12308.76,
+  "high_24h": 0.00029437,
+  "low_24h": 0.00025516,
+  "price_change_24h": -0.000007140963288948,
+  "price_change_percentage_24h": -2.45365,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.113139,
+  "ath_change_percentage": -99.74908,
+  "ath_date": "2022-03-10T08:59:46.758Z",
+  "atl": 0.00008002,
+  "atl_change_percentage": 254.77004,
+  "atl_date": "2024-02-09T13:40:49.243Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:32.331Z",
+  "platforms": {
+    "ethereum": "0x60bb16c4a931b1a0b8a7d945c651dd90f41d42cf"
+  }
+}

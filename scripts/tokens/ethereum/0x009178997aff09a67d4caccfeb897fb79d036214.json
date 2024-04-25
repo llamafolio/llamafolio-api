@@ -1,0 +1,31 @@
+{
+  "id": "1sol",
+  "symbol": "1sol",
+  "name": "1Sol",
+  "image": "https://assets.coingecko.com/coins/images/21615/large/YyGDie9f_400x400.jpg?1696520976",
+  "current_price": 0.01740089,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1739831,
+  "total_volume": 16219.62,
+  "high_24h": 0.01796685,
+  "low_24h": 0.01728216,
+  "price_change_24h": -0.000006207720474966,
+  "price_change_percentage_24h": -0.03566,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 2.6,
+  "ath_change_percentage": -99.32926,
+  "ath_date": "2021-12-16T00:44:14.543Z",
+  "atl": 0.00114915,
+  "atl_change_percentage": 1415.08395,
+  "atl_date": "2023-06-14T22:23:22.857Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:40.798Z",
+  "platforms": {
+    "ethereum": "0x009178997aff09a67d4caccfeb897fb79d036214"
+  }
+}

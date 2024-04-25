@@ -1,0 +1,31 @@
+{
+  "id": "pleasure-coin",
+  "symbol": "nsfw",
+  "name": "Pleasure Coin",
+  "image": "https://assets.coingecko.com/coins/images/15315/large/pleasurecoin-icon.png?1696514965",
+  "current_price": 0.00005595,
+  "market_cap": 2940204,
+  "market_cap_rank": 2074,
+  "fully_diluted_valuation": 3880369,
+  "total_volume": 994.66,
+  "high_24h": 0.00006232,
+  "low_24h": 0.00005592,
+  "price_change_24h": -0.000006006698154494,
+  "price_change_percentage_24h": -9.69495,
+  "market_cap_change_24h": -306512.0241377554,
+  "market_cap_change_percentage_24h": -9.44068,
+  "circulating_supply": 52282160509.7815,
+  "total_supply": 69000000000,
+  "max_supply": 69000000000,
+  "ath": 0.00114031,
+  "ath_change_percentage": -95.05041,
+  "ath_date": "2021-11-09T23:18:03.669Z",
+  "atl": 0.00000164,
+  "atl_change_percentage": 3338.1831,
+  "atl_date": "2022-03-26T13:45:51.691Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:35.316Z",
+  "platforms": {
+    "polygon": "0x8f006d1e1d9dc6c98996f50a4c810f17a47fbf19"
+  }
+}

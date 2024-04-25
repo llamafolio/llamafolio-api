@@ -1,0 +1,31 @@
+{
+  "id": "the-graph",
+  "symbol": "grt",
+  "name": "The Graph",
+  "image": "https://assets.coingecko.com/coins/images/13397/large/Graph_Token.png?1696513159",
+  "current_price": 0.264222,
+  "market_cap": 2495256352,
+  "market_cap_rank": 49,
+  "fully_diluted_valuation": 2838762504,
+  "total_volume": 99953032,
+  "high_24h": 0.296838,
+  "low_24h": 0.262715,
+  "price_change_24h": -0.02826422961766062,
+  "price_change_percentage_24h": -9.66343,
+  "market_cap_change_24h": -287524942.9167342,
+  "market_cap_change_percentage_24h": -10.33229,
+  "circulating_supply": 9482595414.02607,
+  "total_supply": 10788004319,
+  "max_supply": 10788004319,
+  "ath": 2.84,
+  "ath_change_percentage": -90.7389,
+  "ath_date": "2021-02-12T07:28:45.775Z",
+  "atl": 0.052051,
+  "atl_change_percentage": 405.57044,
+  "atl_date": "2022-11-22T10:05:03.503Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:54.936Z",
+  "platforms": {
+    "arbitrum": "0x9623063377ad1b27544c965ccd7342f7ea7e88c7"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "haven-token",
+  "symbol": "haven",
+  "name": "Safehaven DeFi",
+  "image": "https://assets.coingecko.com/coins/images/17453/large/haven.png?1696516996",
+  "current_price": 0.03013473,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 632829,
+  "total_volume": 82.64,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 21000000,
+  "max_supply": 21000000,
+  "ath": 0.319237,
+  "ath_change_percentage": -90.5604,
+  "ath_date": "2021-11-19T12:04:07.605Z",
+  "atl": 0.01893919,
+  "atl_change_percentage": 59.11304,
+  "atl_date": "2021-09-18T20:12:51.557Z",
+  "roi": null,
+  "last_updated": "2023-08-02T14:50:45.184Z",
+  "platforms": {
+    "bsc": "0x9cae753b661142ae766374cefa5dc800d80446ac"
+  }
+}

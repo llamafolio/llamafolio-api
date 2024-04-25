@@ -1,0 +1,31 @@
+{
+  "id": "cryptopunk-7171-hoodie",
+  "symbol": "hoodie",
+  "name": "CryptoPunk #7171",
+  "image": "https://assets.coingecko.com/coins/images/17842/large/cryptopunk-hoodie.png?1696517365",
+  "current_price": 15.33,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 15.33,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 997.37,
+  "ath_change_percentage": -98.46308,
+  "ath_date": "2021-08-28T22:39:35.458Z",
+  "atl": 14.67,
+  "atl_change_percentage": 4.45557,
+  "atl_date": "2024-04-20T01:08:10.868Z",
+  "roi": null,
+  "last_updated": "2024-04-21T10:39:46.849Z",
+  "platforms": {
+    "ethereum": "0xdffa3a7f5b40789c7a437dbe7b31b47f9b08fe75"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "dough",
+  "symbol": "dough",
+  "name": "Dough",
+  "image": "https://assets.coingecko.com/coins/images/18800/large/dough.png?1696518262",
+  "current_price": 0.00006397,
+  "market_cap": 13805.84,
+  "market_cap_rank": 4189,
+  "fully_diluted_valuation": 63967,
+  "total_volume": 55.67,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 215827162.9130565,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.00795314,
+  "ath_change_percentage": -99.1957,
+  "ath_date": "2021-11-15T22:04:03.487Z",
+  "atl": 0.00004475,
+  "atl_change_percentage": 42.94783,
+  "atl_date": "2024-03-06T02:59:48.531Z",
+  "roi": null,
+  "last_updated": "2024-04-22T06:19:25.861Z",
+  "platforms": {
+    "bsc": "0xede5020492be8e265db6141cb0a1d2df9dbae9bb"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "zedxion-usdz",
+  "symbol": "usdz",
+  "name": "Zedxion USDZ",
+  "image": "https://assets.coingecko.com/coins/images/25909/large/20475.png?1696524990",
+  "current_price": 0.998757,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 86825748577,
+  "total_volume": 886958,
+  "high_24h": 1.001,
+  "low_24h": 0.99516,
+  "price_change_24h": 0.00079031,
+  "price_change_percentage_24h": 0.07919,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 87000000000,
+  "max_supply": 87000000000,
+  "ath": 2.75,
+  "ath_change_percentage": -63.78003,
+  "ath_date": "2023-02-27T08:04:52.907Z",
+  "atl": 0.947478,
+  "atl_change_percentage": 5.30984,
+  "atl_date": "2023-02-24T17:14:21.601Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:16:08.348Z",
+  "platforms": {
+    "bsc": "0x734d66f635523d7ddb7d2373c128333da313041b"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "eblockstock",
+  "symbol": "ebso",
+  "name": "eBlockStock",
+  "image": "https://assets.coingecko.com/coins/images/18636/large/eBSO_logo_szines.png?1696518108",
+  "current_price": 0.01037612,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 90727,
+  "total_volume": 15109.12,
+  "high_24h": 0.01045158,
+  "low_24h": 0.00616682,
+  "price_change_24h": 0.00123871,
+  "price_change_percentage_24h": 13.55643,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 8731894,
+  "max_supply": 750000000,
+  "ath": 0.116104,
+  "ath_change_percentage": -91.06219,
+  "ath_date": "2021-09-30T09:41:27.271Z",
+  "atl": 0.00009994,
+  "atl_change_percentage": 10283.90506,
+  "atl_date": "2022-12-19T04:03:22.588Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:10.759Z",
+  "platforms": {
+    "ethereum": "0x866f8a50a64e68ca66e97e032c5da99538b3f942"
+  }
+}

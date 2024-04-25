@@ -1,0 +1,31 @@
+{
+  "id": "era7",
+  "symbol": "era",
+  "name": "Era7",
+  "image": "https://assets.coingecko.com/coins/images/24061/large/18483.png?1696523251",
+  "current_price": 0.00056632,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 250506,
+  "total_volume": 0.01193828,
+  "high_24h": 0.00056732,
+  "low_24h": 0.00056602,
+  "price_change_24h": -1.88554895788e-7,
+  "price_change_percentage_24h": -0.03328,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 442337752,
+  "max_supply": null,
+  "ath": 0.59934,
+  "ath_change_percentage": -99.90551,
+  "ath_date": "2022-04-29T05:58:08.214Z",
+  "atl": 0.00001735,
+  "atl_change_percentage": 3164.39812,
+  "atl_date": "2022-11-17T05:12:50.730Z",
+  "roi": null,
+  "last_updated": "2024-04-24T13:49:34.753Z",
+  "platforms": {
+    "bsc": "0x6f9f0c4ad9af7ebd61ac5a1d4e0f2227f7b0e5f9"
+  }
+}

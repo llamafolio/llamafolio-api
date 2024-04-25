@@ -1,0 +1,31 @@
+{
+  "id": "unique-utility-token",
+  "symbol": "unqt",
+  "name": "Unique Utility",
+  "image": "https://assets.coingecko.com/coins/images/23382/large/UniqueCoin_Logo.jpeg?1708335635",
+  "current_price": 0.00332847,
+  "market_cap": 216149,
+  "market_cap_rank": 3454,
+  "fully_diluted_valuation": 332847,
+  "total_volume": 4,
+  "high_24h": 0.00336426,
+  "low_24h": 0.00331788,
+  "price_change_24h": 0.00000169,
+  "price_change_percentage_24h": 0.05086,
+  "market_cap_change_24h": 109.89,
+  "market_cap_change_percentage_24h": 0.05086,
+  "circulating_supply": 64939434.84256838,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 0.220548,
+  "ath_change_percentage": -98.49082,
+  "ath_date": "2022-02-04T15:28:35.279Z",
+  "atl": 0.0028439,
+  "atl_change_percentage": 17.039,
+  "atl_date": "2024-04-19T02:31:33.165Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:55.583Z",
+  "platforms": {
+    "ethereum": "0xa80f2c8f61c56546001f5fc2eb8d6e4e72c45d4c"
+  }
+}

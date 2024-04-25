@@ -1,0 +1,31 @@
+{
+  "id": "instadapp",
+  "symbol": "inst",
+  "name": "Instadapp",
+  "image": "https://assets.coingecko.com/coins/images/14688/large/30hFM0-n_400x400.jpg?1696514361",
+  "current_price": 2.23,
+  "market_cap": 39938305,
+  "market_cap_rank": 784,
+  "fully_diluted_valuation": 222542777,
+  "total_volume": 48473,
+  "high_24h": 2.36,
+  "low_24h": 2.22,
+  "price_change_24h": -0.09149328501910015,
+  "price_change_percentage_24h": -3.94892,
+  "market_cap_change_24h": -1672251.3983757868,
+  "market_cap_change_percentage_24h": -4.01882,
+  "circulating_supply": 17946349.812,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 24.4,
+  "ath_change_percentage": -90.8797,
+  "ath_date": "2021-06-16T20:02:32.097Z",
+  "atl": 0.366538,
+  "atl_change_percentage": 507.14763,
+  "atl_date": "2022-12-28T16:20:48.360Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:50.723Z",
+  "platforms": {
+    "polygon": "0xf50d05a1402d0adafa880d36050736f9f6ee7dee"
+  }
+}

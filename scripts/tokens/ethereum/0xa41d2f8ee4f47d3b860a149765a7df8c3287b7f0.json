@@ -1,0 +1,31 @@
+{
+  "id": "syncus",
+  "symbol": "sync",
+  "name": "Syncus",
+  "image": "https://assets.coingecko.com/coins/images/33573/large/Syncus.png?1702450708",
+  "current_price": 0.00191723,
+  "market_cap": 8144194,
+  "market_cap_rank": 1541,
+  "fully_diluted_valuation": 8144194,
+  "total_volume": 4020923,
+  "high_24h": 0.00304681,
+  "low_24h": 0.00164522,
+  "price_change_24h": -0.000981386558031445,
+  "price_change_percentage_24h": -33.85702,
+  "market_cap_change_24h": -4193251.5735253077,
+  "market_cap_change_percentage_24h": -33.98801,
+  "circulating_supply": 4257372682.13811,
+  "total_supply": 4257372682.13811,
+  "max_supply": null,
+  "ath": 0.081826,
+  "ath_change_percentage": -97.66657,
+  "ath_date": "2024-03-10T02:14:29.503Z",
+  "atl": 0.0001076,
+  "atl_change_percentage": 1674.44753,
+  "atl_date": "2023-12-13T13:14:12.113Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:49.448Z",
+  "platforms": {
+    "ethereum": "0xa41d2f8ee4f47d3b860a149765a7df8c3287b7f0"
+  }
+}

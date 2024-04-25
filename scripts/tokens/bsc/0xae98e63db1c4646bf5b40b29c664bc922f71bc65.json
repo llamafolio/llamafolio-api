@@ -1,0 +1,31 @@
+{
+  "id": "energyfi",
+  "symbol": "eft",
+  "name": "Energyfi",
+  "image": "https://assets.coingecko.com/coins/images/23498/large/fbb562_28b2de266adc4c63b6d58e3021158c44_mv2.png?1696522708",
+  "current_price": 0.00096988,
+  "market_cap": 123920,
+  "market_cap_rank": 3714,
+  "fully_diluted_valuation": 145482,
+  "total_volume": 14.27,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 127769220.34257309,
+  "total_supply": 150000000,
+  "max_supply": null,
+  "ath": 0.02714138,
+  "ath_change_percentage": -96.42657,
+  "ath_date": "2022-03-04T17:00:42.226Z",
+  "atl": 0.00075083,
+  "atl_change_percentage": 29.17353,
+  "atl_date": "2022-11-18T04:00:33.787Z",
+  "roi": null,
+  "last_updated": "2023-08-03T10:30:12.712Z",
+  "platforms": {
+    "bsc": "0xae98e63db1c4646bf5b40b29c664bc922f71bc65"
+  }
+}

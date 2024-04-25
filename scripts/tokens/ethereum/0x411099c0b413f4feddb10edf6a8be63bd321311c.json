@@ -1,0 +1,31 @@
+{
+  "id": "hello-labs",
+  "symbol": "hello",
+  "name": "HELLO",
+  "image": "https://assets.coingecko.com/coins/images/27891/large/uFXN2S1N_400x400.jpeg?1696526908",
+  "current_price": 0.04158685,
+  "market_cap": 22135637,
+  "market_cap_rank": 1060,
+  "fully_diluted_valuation": 41662760,
+  "total_volume": 1165586,
+  "high_24h": 0.04337612,
+  "low_24h": 0.04159998,
+  "price_change_24h": -0.001169470966914124,
+  "price_change_percentage_24h": -2.7352,
+  "market_cap_change_24h": -678764.9975169599,
+  "market_cap_change_percentage_24h": -2.97516,
+  "circulating_supply": 531305095.33808607,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.210264,
+  "ath_change_percentage": -80.18805,
+  "ath_date": "2023-12-31T21:00:25.768Z",
+  "atl": 0.00434878,
+  "atl_change_percentage": 857.91058,
+  "atl_date": "2022-12-23T14:35:15.250Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:24.949Z",
+  "platforms": {
+    "ethereum": "0x411099c0b413f4feddb10edf6a8be63bd321311c"
+  }
+}

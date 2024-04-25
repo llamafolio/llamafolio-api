@@ -1,0 +1,31 @@
+{
+  "id": "anonym-chain",
+  "symbol": "anc",
+  "name": "Anonym Chain",
+  "image": "https://assets.coingecko.com/coins/images/33670/large/200x200_anc.png?1702701458",
+  "current_price": 0.0001163,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 11630.04,
+  "total_volume": 167.53,
+  "high_24h": 0.00012123,
+  "low_24h": 0.00011586,
+  "price_change_24h": -0.000004642904365558,
+  "price_change_percentage_24h": -3.83891,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 0.00303984,
+  "ath_change_percentage": -96.17413,
+  "ath_date": "2023-12-16T06:54:43.513Z",
+  "atl": 0.00011479,
+  "atl_change_percentage": 1.31829,
+  "atl_date": "2024-01-24T21:05:46.751Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:14.674Z",
+  "platforms": {
+    "ethereum": "0xde3ae6f3458db211d298da97fdcf13b6c1c8c87f"
+  }
+}

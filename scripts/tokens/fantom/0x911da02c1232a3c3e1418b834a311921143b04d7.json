@@ -1,0 +1,31 @@
+{
+  "id": "vedao",
+  "symbol": "weve",
+  "name": "veDAO",
+  "image": "https://assets.coingecko.com/coins/images/22741/large/S0aENDh0_400x400.jpg?1696522046",
+  "current_price": 0.0001026,
+  "market_cap": 30465,
+  "market_cap_rank": 4095,
+  "fully_diluted_valuation": 44518,
+  "total_volume": 183.69,
+  "high_24h": 0.00010787,
+  "low_24h": 0.00010217,
+  "price_change_24h": -0.000003824260880888,
+  "price_change_percentage_24h": -3.59339,
+  "market_cap_change_24h": -1411.111053075565,
+  "market_cap_change_percentage_24h": -4.4269,
+  "circulating_supply": 297511046,
+  "total_supply": 434748864,
+  "max_supply": 434748864,
+  "ath": 0.404308,
+  "ath_change_percentage": -99.97467,
+  "ath_date": "2022-01-18T23:00:00.248Z",
+  "atl": 0.00006999,
+  "atl_change_percentage": 46.31189,
+  "atl_date": "2023-08-28T08:01:02.363Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:31.865Z",
+  "platforms": {
+    "fantom": "0x911da02c1232a3c3e1418b834a311921143b04d7"
+  }
+}

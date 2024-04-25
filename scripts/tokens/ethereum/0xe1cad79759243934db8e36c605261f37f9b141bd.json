@@ -1,0 +1,31 @@
+{
+  "id": "peach-2",
+  "symbol": "pch",
+  "name": "Peach",
+  "image": "https://assets.coingecko.com/coins/images/34453/large/Peach_logo.png?1704931274",
+  "current_price": 0.00298676,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 298034,
+  "total_volume": 53254,
+  "high_24h": 0.00303144,
+  "low_24h": 0.00261288,
+  "price_change_24h": 0.00000455,
+  "price_change_percentage_24h": 0.15249,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 1000000000,
+  "ath": 0.01266506,
+  "ath_change_percentage": -76.45036,
+  "ath_date": "2024-01-11T00:14:13.224Z",
+  "atl": 0.00253745,
+  "atl_change_percentage": 17.54219,
+  "atl_date": "2024-04-14T09:44:58.573Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:03.317Z",
+  "platforms": {
+    "ethereum": "0xe1cad79759243934db8e36c605261f37f9b141bd"
+  }
+}

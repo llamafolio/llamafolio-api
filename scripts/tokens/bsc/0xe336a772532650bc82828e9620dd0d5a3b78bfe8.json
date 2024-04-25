@@ -1,0 +1,31 @@
+{
+  "id": "digimetaverse",
+  "symbol": "dgmv",
+  "name": "DigiMetaverse",
+  "image": "https://assets.coingecko.com/coins/images/23701/large/DigiCorpLabs_token.png?1696522902",
+  "current_price": 0.00762955,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 7629554,
+  "total_volume": 2276.43,
+  "high_24h": 0.00943243,
+  "low_24h": 0.00717457,
+  "price_change_24h": -0.000064902478375822,
+  "price_change_percentage_24h": -0.8435,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.409349,
+  "ath_change_percentage": -98.13917,
+  "ath_date": "2022-02-28T01:55:05.509Z",
+  "atl": 0,
+  "atl_change_percentage": 1.2268819746504547e+35,
+  "atl_date": "2022-05-11T19:59:55.049Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:26.516Z",
+  "platforms": {
+    "bsc": "0xe336a772532650bc82828e9620dd0d5a3b78bfe8"
+  }
+}

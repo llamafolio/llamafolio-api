@@ -1,0 +1,31 @@
+{
+  "id": "heroes-of-mavia",
+  "symbol": "mavia",
+  "name": "Heroes of Mavia",
+  "image": "https://assets.coingecko.com/coins/images/33895/large/2023-12-20_21.21.41_%281%29.jpg?1703230771",
+  "current_price": 4.26,
+  "market_cap": 127978638,
+  "market_cap_rank": 402,
+  "fully_diluted_valuation": 1066488652,
+  "total_volume": 42926711,
+  "high_24h": 4.67,
+  "low_24h": 4.22,
+  "price_change_24h": -0.3060631471137425,
+  "price_change_percentage_24h": -6.6977,
+  "market_cap_change_24h": -9305400.234307319,
+  "market_cap_change_percentage_24h": -6.77821,
+  "circulating_supply": 30000000,
+  "total_supply": 250000000,
+  "max_supply": 250000000,
+  "ath": 10.59,
+  "ath_change_percentage": -59.73189,
+  "ath_date": "2024-02-18T17:14:48.514Z",
+  "atl": 1.83,
+  "atl_change_percentage": 133.49729,
+  "atl_date": "2024-02-06T12:59:18.241Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:43.548Z",
+  "platforms": {
+    "ethereum": "0x24fcfc492c1393274b6bcd568ac9e225bec93584"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "paratoken-2",
+  "symbol": "para",
+  "name": "Para",
+  "image": "https://assets.coingecko.com/coins/images/24652/large/para.jpg?1696523821",
+  "current_price": 0.00005572,
+  "market_cap": 1867735,
+  "market_cap_rank": 2340,
+  "fully_diluted_valuation": 5572020,
+  "total_volume": 1072.32,
+  "high_24h": 0.00005622,
+  "low_24h": 0.00005572,
+  "price_change_24h": -4.43415334581e-7,
+  "price_change_percentage_24h": -0.78951,
+  "market_cap_change_24h": -14863.230609578313,
+  "market_cap_change_percentage_24h": -0.78951,
+  "circulating_supply": 33519884069,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.00201605,
+  "ath_change_percentage": -97.23617,
+  "ath_date": "2022-04-05T04:10:24.447Z",
+  "atl": 5.40427e-7,
+  "atl_change_percentage": 10210.40471,
+  "atl_date": "2022-08-29T00:17:47.307Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:31:16.782Z",
+  "platforms": {
+    "ethereum": "0xd16fd95d949f996e3808eeea0e3881c59e76ef1e"
+  }
+}

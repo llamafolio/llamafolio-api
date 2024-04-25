@@ -1,0 +1,31 @@
+{
+  "id": "robust-token",
+  "symbol": "rbt",
+  "name": "Robust",
+  "image": "https://assets.coingecko.com/coins/images/17137/large/CG-200x.png?1696516696",
+  "current_price": 0.322224,
+  "market_cap": 11731.5,
+  "market_cap_rank": 4201,
+  "fully_diluted_valuation": 27955,
+  "total_volume": 4.63,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 36407.9361957118,
+  "total_supply": 86755.4779088858,
+  "max_supply": 100000,
+  "ath": 424.5,
+  "ath_change_percentage": -99.92409,
+  "ath_date": "2021-11-07T02:05:44.311Z",
+  "atl": 0.01687812,
+  "atl_change_percentage": 1809.12218,
+  "atl_date": "2024-02-25T18:25:34.996Z",
+  "roi": null,
+  "last_updated": "2024-04-24T03:48:18.732Z",
+  "platforms": {
+    "bsc": "0x891e4554227385c5c740f9b483e935e3cbc29f01"
+  }
+}

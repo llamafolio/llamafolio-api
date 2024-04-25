@@ -1,0 +1,31 @@
+{
+  "id": "witch-token",
+  "symbol": "witch",
+  "name": "Witch Token",
+  "image": "https://assets.coingecko.com/coins/images/17205/large/download_%2829%29.png?1696516761",
+  "current_price": 0.22891,
+  "market_cap": 6161187,
+  "market_cap_rank": 1692,
+  "fully_diluted_valuation": 22819212,
+  "total_volume": 212782,
+  "high_24h": 0.230003,
+  "low_24h": 0.22436,
+  "price_change_24h": 0.00228015,
+  "price_change_percentage_24h": 1.00611,
+  "market_cap_change_24h": 61487,
+  "market_cap_change_percentage_24h": 1.00803,
+  "circulating_supply": 27000000,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 1.86,
+  "ath_change_percentage": -87.72874,
+  "ath_date": "2021-07-21T18:26:30.206Z",
+  "atl": 0.089652,
+  "atl_change_percentage": 154.72397,
+  "atl_date": "2022-08-24T18:09:15.310Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:28.724Z",
+  "platforms": {
+    "ethereum": "0xdc524e3c6910257744c1f93cf15e9f472b5bd236"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "lif3-2",
+  "symbol": "lif3",
+  "name": "Lif3",
+  "image": "https://assets.coingecko.com/coins/images/31291/large/Tokens.png?1696530112",
+  "current_price": 0.01271835,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 112459529,
+  "total_volume": 815494,
+  "high_24h": 0.01319795,
+  "low_24h": 0.01228506,
+  "price_change_24h": -0.000248253469249912,
+  "price_change_percentage_24h": -1.91456,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 8888888888,
+  "max_supply": 8888888888,
+  "ath": 0.03069966,
+  "ath_change_percentage": -58.64427,
+  "ath_date": "2024-01-18T09:33:38.457Z",
+  "atl": 0.00667769,
+  "atl_change_percentage": 90.12675,
+  "atl_date": "2024-04-18T23:11:41.877Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:37.318Z",
+  "platforms": {
+    "bsc": "0x336f374198c872ba760e85af9c6331c3c5a535d3"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "hatchypocket",
+  "symbol": "hatchy",
+  "name": "HatchyPocket",
+  "image": "https://assets.coingecko.com/coins/images/27560/large/HATCHY_200x200_Logo.png?1696526595",
+  "current_price": 0.00157607,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 630057,
+  "total_volume": 41.08,
+  "high_24h": 0.00170065,
+  "low_24h": 0.00156018,
+  "price_change_24h": -0.000124582537564717,
+  "price_change_percentage_24h": -7.32557,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 400000000,
+  "max_supply": 1000000000,
+  "ath": 0.00698404,
+  "ath_change_percentage": -77.43325,
+  "ath_date": "2023-04-27T22:30:36.471Z",
+  "atl": 0.00044587,
+  "atl_change_percentage": 253.48235,
+  "atl_date": "2022-12-12T20:50:57.742Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:40.943Z",
+  "platforms": {
+    "bsc": "0x8af48050534ee9bde12ec6e45ea3db4908c04777"
+  }
+}

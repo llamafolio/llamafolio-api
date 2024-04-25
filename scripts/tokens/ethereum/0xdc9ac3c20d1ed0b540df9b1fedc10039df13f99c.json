@@ -1,0 +1,35 @@
+{
+  "id": "utrust",
+  "symbol": "utk",
+  "name": "xMoney",
+  "image": "https://assets.coingecko.com/coins/images/1824/large/200x200.png?1696723239",
+  "current_price": 0.092416,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 92660897,
+  "total_volume": 4679514,
+  "high_24h": 0.102404,
+  "low_24h": 0.091538,
+  "price_change_24h": -0.009633533857702492,
+  "price_change_percentage_24h": -9.44006,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 1.18,
+  "ath_change_percentage": -92.25755,
+  "ath_date": "2018-01-09T00:00:00.000Z",
+  "atl": 0.00540831,
+  "atl_change_percentage": 1596.35763,
+  "atl_date": "2020-03-13T02:22:29.746Z",
+  "roi": {
+    "times": 0.32022789467024226,
+    "currency": "usd",
+    "percentage": 32.02278946702423
+  },
+  "last_updated": "2024-04-25T09:12:39.224Z",
+  "platforms": {
+    "ethereum": "0xdc9ac3c20d1ed0b540df9b1fedc10039df13f99c"
+  }
+}

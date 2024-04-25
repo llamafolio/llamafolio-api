@@ -1,0 +1,31 @@
+{
+  "id": "smart-wallet-token",
+  "symbol": "swt",
+  "name": "Smart Wallet",
+  "image": "https://assets.coingecko.com/coins/images/18159/large/%D0%9B%D0%BE%D0%B3%D0%BE%D1%82%D0%B8%D0%BF_%D0%BD%D0%B0_%D0%B1%D0%B5%D0%BB%D0%BE%D0%BC_%D1%84%D0%BE%D0%BD%D0%B5.png?1696517660",
+  "current_price": 0.00000556,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1333907,
+  "total_volume": 4306.41,
+  "high_24h": 0.00000591,
+  "low_24h": 0.00000547,
+  "price_change_24h": 8.974e-9,
+  "price_change_percentage_24h": 0.16172,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 240000005430,
+  "max_supply": null,
+  "ath": 0.611242,
+  "ath_change_percentage": -99.99909,
+  "ath_date": "2021-09-04T08:16:12.872Z",
+  "atl": 0.00000537,
+  "atl_change_percentage": 3.71375,
+  "atl_date": "2024-04-21T01:17:17.727Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:57.996Z",
+  "platforms": {
+    "bsc": "0xb1a5e3068837fcff1f7f2abf592a5de7a20b2a40"
+  }
+}

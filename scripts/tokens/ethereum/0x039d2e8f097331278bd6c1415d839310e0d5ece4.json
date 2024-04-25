@@ -1,0 +1,31 @@
+{
+  "id": "linda-2",
+  "symbol": "linda",
+  "name": "Linda",
+  "image": "https://assets.coingecko.com/coins/images/33699/large/linda-logo-200.png?1705166731",
+  "current_price": 0.00006667,
+  "market_cap": 6285328,
+  "market_cap_rank": 1683,
+  "fully_diluted_valuation": 6650041,
+  "total_volume": 11507.28,
+  "high_24h": 0.00006914,
+  "low_24h": 0.00003431,
+  "price_change_24h": 0.00000813,
+  "price_change_percentage_24h": 13.88241,
+  "market_cap_change_24h": 726648,
+  "market_cap_change_percentage_24h": 13.07232,
+  "circulating_supply": 94515636247.5434,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.00007706,
+  "ath_change_percentage": -13.6574,
+  "ath_date": "2024-04-12T10:03:15.433Z",
+  "atl": 0.00000386,
+  "atl_change_percentage": 1622.72689,
+  "atl_date": "2024-02-09T02:34:21.785Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:23.931Z",
+  "platforms": {
+    "ethereum": "0x039d2e8f097331278bd6c1415d839310e0d5ece4"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "el-hippo",
+  "symbol": "hipp",
+  "name": "El Hippo",
+  "image": "https://assets.coingecko.com/coins/images/31384/large/HIPP.png?1696530201",
+  "current_price": 3.957e-9,
+  "market_cap": 2920377,
+  "market_cap_rank": 2077,
+  "fully_diluted_valuation": 3076452,
+  "total_volume": 248103,
+  "high_24h": 4.501e-9,
+  "low_24h": 3.953e-9,
+  "price_change_24h": -3.21791414e-10,
+  "price_change_percentage_24h": -7.52031,
+  "market_cap_change_24h": -240599.20558455493,
+  "market_cap_change_percentage_24h": -7.61155,
+  "circulating_supply": 737581291822585.6,
+  "total_supply": 777000000000000,
+  "max_supply": 777000000000000,
+  "ath": 1.5489e-8,
+  "ath_change_percentage": -74.32372,
+  "ath_date": "2023-12-22T14:34:46.058Z",
+  "atl": 2.131e-9,
+  "atl_change_percentage": 86.6477,
+  "atl_date": "2023-09-04T17:45:28.943Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:31.612Z",
+  "platforms": {
+    "ethereum": "0x7b744eea1deca2f1b7b31f15ba036fa1759452d7"
+  }
+}

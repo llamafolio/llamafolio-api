@@ -1,0 +1,31 @@
+{
+  "id": "scarecrow",
+  "symbol": "scare",
+  "name": "ScareCrow",
+  "image": "https://assets.coingecko.com/coins/images/19154/large/lyd.png?1696518605",
+  "current_price": 0.01895675,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 37.91,
+  "total_volume": 1.13,
+  "high_24h": 0.01895675,
+  "low_24h": 0.01893565,
+  "price_change_24h": 0.00000211,
+  "price_change_percentage_24h": 0.01111,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2000,
+  "max_supply": 80000,
+  "ath": 480.89,
+  "ath_change_percentage": -99.99606,
+  "ath_date": "2021-11-03T03:29:29.849Z",
+  "atl": 0.01833021,
+  "atl_change_percentage": 3.41809,
+  "atl_date": "2024-04-13T02:02:01.667Z",
+  "roi": null,
+  "last_updated": "2024-04-24T11:00:28.160Z",
+  "platforms": {
+    "fantom": "0x46e1ee17f51c52661d04238f1700c547de3b84a1"
+  }
+}

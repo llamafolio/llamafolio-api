@@ -1,0 +1,31 @@
+{
+  "id": "hegic",
+  "symbol": "hegic",
+  "name": "Hegic",
+  "image": "https://assets.coingecko.com/coins/images/12454/large/new.png?1696512274",
+  "current_price": 0.019516,
+  "market_cap": 21003196,
+  "market_cap_rank": 1089,
+  "fully_diluted_valuation": 21003196,
+  "total_volume": 40274,
+  "high_24h": 0.02086427,
+  "low_24h": 0.01939094,
+  "price_change_24h": -0.000887510188323431,
+  "price_change_percentage_24h": -4.34979,
+  "market_cap_change_24h": -1014737.6040073298,
+  "market_cap_change_percentage_24h": -4.60869,
+  "circulating_supply": 1077684725,
+  "total_supply": 1077684725,
+  "max_supply": 1077684725,
+  "ath": 0.642093,
+  "ath_change_percentage": -96.96504,
+  "ath_date": "2021-02-13T16:55:14.277Z",
+  "atl": 0.0048443,
+  "atl_change_percentage": 302.27163,
+  "atl_date": "2022-05-12T22:50:04.705Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:51.850Z",
+  "platforms": {
+    "arbitrum": "0x431402e8b9de9aa016c743880e04e517074d8cec"
+  }
+}

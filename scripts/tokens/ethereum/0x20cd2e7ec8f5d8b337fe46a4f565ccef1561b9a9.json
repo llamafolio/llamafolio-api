@@ -1,0 +1,31 @@
+{
+  "id": "esg",
+  "symbol": "esg",
+  "name": "ESG",
+  "image": "https://assets.coingecko.com/coins/images/24932/large/esg.png?1696524088",
+  "current_price": 0.33813,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 16585310,
+  "total_volume": 14657.02,
+  "high_24h": 0.349343,
+  "low_24h": 0.338094,
+  "price_change_24h": -0.010524878455682953,
+  "price_change_percentage_24h": -3.01871,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 49000000,
+  "max_supply": null,
+  "ath": 3.83,
+  "ath_change_percentage": -91.15976,
+  "ath_date": "2022-11-21T09:26:35.302Z",
+  "atl": 0.115472,
+  "atl_change_percentage": 193.11315,
+  "atl_date": "2023-08-19T06:58:37.212Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:13.427Z",
+  "platforms": {
+    "ethereum": "0x20cd2e7ec8f5d8b337fe46a4f565ccef1561b9a9"
+  }
+}

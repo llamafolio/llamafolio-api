@@ -1,0 +1,31 @@
+{
+  "id": "dev-protocol",
+  "symbol": "dev",
+  "name": "Dev Protocol",
+  "image": "https://assets.coingecko.com/coins/images/11560/large/Dev_Protocol__CoinGecko_Logo___Jan.18.2021_.png?1696511459",
+  "current_price": 0.158249,
+  "market_cap": 380776,
+  "market_cap_rank": 3200,
+  "fully_diluted_valuation": 1529640,
+  "total_volume": 2117.9,
+  "high_24h": 0.167668,
+  "low_24h": 0.157045,
+  "price_change_24h": -0.008047104644722525,
+  "price_change_percentage_24h": -4.83902,
+  "market_cap_change_24h": -21005.972109282564,
+  "market_cap_change_percentage_24h": -5.2282,
+  "circulating_supply": 2411670.5948390826,
+  "total_supply": 9688065.75360679,
+  "max_supply": 9688065.75360679,
+  "ath": 20.09,
+  "ath_change_percentage": -99.21252,
+  "ath_date": "2021-05-08T21:56:34.962Z",
+  "atl": 0.093761,
+  "atl_change_percentage": 68.69083,
+  "atl_date": "2024-01-23T20:41:39.259Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:00.443Z",
+  "platforms": {
+    "ethereum": "0x5caf454ba92e6f2c929df14667ee360ed9fd5b26"
+  }
+}

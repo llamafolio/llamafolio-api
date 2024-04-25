@@ -1,0 +1,31 @@
+{
+  "id": "musd",
+  "symbol": "musd",
+  "name": "mStable USD",
+  "image": "https://assets.coingecko.com/coins/images/11576/large/mStable_USD.png?1696511474",
+  "current_price": 0.998,
+  "market_cap": 3185443,
+  "market_cap_rank": 2027,
+  "fully_diluted_valuation": 3185443,
+  "total_volume": 9758.66,
+  "high_24h": 1.001,
+  "low_24h": 0.993666,
+  "price_change_24h": -0.000808288467244567,
+  "price_change_percentage_24h": -0.08093,
+  "market_cap_change_24h": -10181.415613636374,
+  "market_cap_change_percentage_24h": -0.3186,
+  "circulating_supply": 3191827.30025035,
+  "total_supply": 3191827.30025035,
+  "max_supply": null,
+  "ath": 2.71,
+  "ath_change_percentage": -63.17935,
+  "ath_date": "2022-07-25T07:15:35.139Z",
+  "atl": 0.472562,
+  "atl_change_percentage": 111.18929,
+  "atl_date": "2023-06-19T11:31:37.482Z",
+  "roi": null,
+  "last_updated": "2024-04-24T23:12:14.932Z",
+  "platforms": {
+    "ethereum": "0xe2f2a5c287993345a840db3b0845fbc70f5935a5"
+  }
+}

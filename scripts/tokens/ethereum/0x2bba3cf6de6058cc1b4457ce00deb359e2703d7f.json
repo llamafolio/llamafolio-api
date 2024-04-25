@@ -1,0 +1,31 @@
+{
+  "id": "hashcoin",
+  "symbol": "hsc",
+  "name": "HashCoin",
+  "image": "https://assets.coingecko.com/coins/images/4989/large/hashfuture-logo.png?1696505523",
+  "current_price": 0.0000051,
+  "market_cap": 190845,
+  "market_cap_rank": 3521,
+  "fully_diluted_valuation": 255039,
+  "total_volume": 11898.13,
+  "high_24h": 0.00000652,
+  "low_24h": 0.0000051,
+  "price_change_24h": -0.000001013352380385,
+  "price_change_percentage_24h": -16.56632,
+  "market_cap_change_24h": -32954.08910471597,
+  "market_cap_change_percentage_24h": -14.72483,
+  "circulating_supply": 37414999962,
+  "total_supply": 50000000000,
+  "max_supply": null,
+  "ath": 0.00260702,
+  "ath_change_percentage": -99.77199,
+  "ath_date": "2018-07-18T02:07:49.522Z",
+  "atl": 0.00000289,
+  "atl_change_percentage": 105.8192,
+  "atl_date": "2023-09-27T19:24:54.723Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:10.517Z",
+  "platforms": {
+    "ethereum": "0x2bba3cf6de6058cc1b4457ce00deb359e2703d7f"
+  }
+}

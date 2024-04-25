@@ -1,0 +1,31 @@
+{
+  "id": "position-token",
+  "symbol": "posi",
+  "name": "Position",
+  "image": "https://assets.coingecko.com/coins/images/17459/large/posi.png?1696517002",
+  "current_price": 0.0138098,
+  "market_cap": 837074,
+  "market_cap_rank": 2789,
+  "fully_diluted_valuation": null,
+  "total_volume": 17288.43,
+  "high_24h": 0.01406693,
+  "low_24h": 0.01372245,
+  "price_change_24h": -0.000111049875798,
+  "price_change_percentage_24h": -0.79772,
+  "market_cap_change_24h": -9510.354635803495,
+  "market_cap_change_percentage_24h": -1.12338,
+  "circulating_supply": 60660531.5003999,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 7.85,
+  "ath_change_percentage": -99.82426,
+  "ath_date": "2021-09-06T13:57:23.089Z",
+  "atl": 0.01211265,
+  "atl_change_percentage": 13.9248,
+  "atl_date": "2024-01-29T09:05:39.567Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:16.628Z",
+  "platforms": {
+    "bsc": "0x5ca42204cdaa70d5c773946e69de942b85ca6706"
+  }
+}

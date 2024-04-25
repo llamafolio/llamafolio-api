@@ -1,0 +1,35 @@
+{
+  "id": "humaniq",
+  "symbol": "hmq",
+  "name": "Humaniq",
+  "image": "https://assets.coingecko.com/coins/images/647/large/humaniq.jpg?1696501841",
+  "current_price": 0.001278,
+  "market_cap": 240546,
+  "market_cap_rank": 3411,
+  "fully_diluted_valuation": 264730,
+  "total_volume": 7.02,
+  "high_24h": 0.00128653,
+  "low_24h": 0.00127624,
+  "price_change_24h": -0.000004834992823246,
+  "price_change_percentage_24h": -0.3769,
+  "market_cap_change_24h": -2383324.9987213165,
+  "market_cap_change_percentage_24h": -90.83239,
+  "circulating_supply": 188221024.98088476,
+  "total_supply": 207143695.035598,
+  "max_supply": null,
+  "ath": 0.656187,
+  "ath_change_percentage": -99.80551,
+  "ath_date": "2017-12-27T00:00:00.000Z",
+  "atl": 0.00012745,
+  "atl_change_percentage": 901.37462,
+  "atl_date": "2023-03-21T15:25:13.548Z",
+  "roi": {
+    "times": -0.9787000105963499,
+    "currency": "usd",
+    "percentage": -97.87000105963499
+  },
+  "last_updated": "2024-04-25T09:02:38.754Z",
+  "platforms": {
+    "ethereum": "0xcbcc0f036ed4788f63fc0fee32873d6a7487b908"
+  }
+}

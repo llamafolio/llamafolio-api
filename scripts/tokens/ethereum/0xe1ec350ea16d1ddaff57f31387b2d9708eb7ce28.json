@@ -1,0 +1,31 @@
+{
+  "id": "pepechain",
+  "symbol": "pc",
+  "name": "Pepechain",
+  "image": "https://assets.coingecko.com/coins/images/30059/large/Pepechain.png?1696528980",
+  "current_price": 0.00015812,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 158117,
+  "total_volume": 36.28,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.01148344,
+  "ath_change_percentage": -98.62309,
+  "ath_date": "2023-05-03T00:45:46.053Z",
+  "atl": 0.0001289,
+  "atl_change_percentage": 22.66556,
+  "atl_date": "2024-02-05T11:10:15.334Z",
+  "roi": null,
+  "last_updated": "2024-04-23T11:35:29.989Z",
+  "platforms": {
+    "ethereum": "0xe1ec350ea16d1ddaff57f31387b2d9708eb7ce28"
+  }
+}

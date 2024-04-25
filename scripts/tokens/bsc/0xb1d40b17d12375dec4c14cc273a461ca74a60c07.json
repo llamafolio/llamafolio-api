@@ -1,0 +1,31 @@
+{
+  "id": "onno-vault",
+  "symbol": "onno",
+  "name": "Onno Vault",
+  "image": "https://assets.coingecko.com/coins/images/35043/large/20240129_051226.png?1707193084",
+  "current_price": 0.01647012,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 45933,
+  "total_volume": 13.28,
+  "high_24h": 0.01654971,
+  "low_24h": 0.01601598,
+  "price_change_24h": 0.00021364,
+  "price_change_percentage_24h": 1.31421,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2800000,
+  "max_supply": 2800000,
+  "ath": 0.570662,
+  "ath_change_percentage": -97.11995,
+  "ath_date": "2024-02-24T13:18:59.432Z",
+  "atl": 0.01327614,
+  "atl_change_percentage": 23.79607,
+  "atl_date": "2024-04-17T17:19:23.547Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:45.985Z",
+  "platforms": {
+    "bsc": "0xb1d40b17d12375dec4c14cc273a461ca74a60c07"
+  }
+}

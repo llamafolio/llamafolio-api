@@ -1,0 +1,31 @@
+{
+  "id": "0xbet",
+  "symbol": "0xbet",
+  "name": "0xBET",
+  "image": "https://assets.coingecko.com/coins/images/35790/large/V7LdNy1d_400x400.jpg?1709799471",
+  "current_price": 0.04672281,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 4.656946856018457e+23,
+  "total_volume": 938.53,
+  "high_24h": 0.04927272,
+  "low_24h": 0.04654271,
+  "price_change_24h": -0.00202586628992997,
+  "price_change_percentage_24h": -4.15574,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1e+25,
+  "max_supply": 1e+25,
+  "ath": 0.242593,
+  "ath_change_percentage": -80.74025,
+  "ath_date": "2024-03-26T13:20:54.979Z",
+  "atl": 0.03357576,
+  "atl_change_percentage": 39.1564,
+  "atl_date": "2024-03-11T21:05:54.930Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:14.903Z",
+  "platforms": {
+    "ethereum": "0x78993f9bee8b68f2531a92427595405f294161db"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "ix-swap",
+  "symbol": "ixs",
+  "name": "IX Swap",
+  "image": "https://assets.coingecko.com/coins/images/18069/large/ixswap.PNG?1696517577",
+  "current_price": 0.651278,
+  "market_cap": 109863220,
+  "market_cap_rank": 448,
+  "fully_diluted_valuation": 117163704,
+  "total_volume": 1434071,
+  "high_24h": 0.811731,
+  "low_24h": 0.611216,
+  "price_change_24h": -0.10713588164960308,
+  "price_change_percentage_24h": -14.12631,
+  "market_cap_change_24h": -17421827.813475594,
+  "market_cap_change_percentage_24h": -13.68725,
+  "circulating_supply": 168784179.084762,
+  "total_supply": 180000000,
+  "max_supply": 180000000,
+  "ath": 0.942813,
+  "ath_change_percentage": -30.23853,
+  "ath_date": "2024-04-03T11:00:35.009Z",
+  "atl": 0.00010004,
+  "atl_change_percentage": 657358.27074,
+  "atl_date": "2023-10-16T19:25:47.997Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:54:05.192Z",
+  "platforms": {
+    "polygon": "0x1ba17c639bdaecd8dc4aac37df062d17ee43a1b8"
+  }
+}

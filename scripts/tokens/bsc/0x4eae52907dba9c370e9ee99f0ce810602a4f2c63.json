@@ -1,0 +1,31 @@
+{
+  "id": "kabosu-2",
+  "symbol": "kabosu",
+  "name": "KaBoSu",
+  "image": "https://assets.coingecko.com/coins/images/32622/large/BSC0231022120311.png?1698760321",
+  "current_price": 9.9718e-11,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 99325,
+  "total_volume": 2345.28,
+  "high_24h": 1.07158e-10,
+  "low_24h": 9.558e-11,
+  "price_change_24h": -4.118033e-12,
+  "price_change_percentage_24h": -3.9659,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": 1000000000000000,
+  "ath": 7.013e-9,
+  "ath_change_percentage": -98.58154,
+  "ath_date": "2023-11-01T12:14:49.573Z",
+  "atl": 4.189e-11,
+  "atl_change_percentage": 137.45933,
+  "atl_date": "2024-01-26T15:54:53.186Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:43.293Z",
+  "platforms": {
+    "bsc": "0x4eae52907dba9c370e9ee99f0ce810602a4f2c63"
+  }
+}

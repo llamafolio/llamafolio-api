@@ -1,0 +1,31 @@
+{
+  "id": "tear",
+  "symbol": "tear",
+  "name": "TEAR",
+  "image": "https://assets.coingecko.com/coins/images/35416/large/tearcoin.png?1708507106",
+  "current_price": 0.00209418,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2094177,
+  "total_volume": 1007.69,
+  "high_24h": 0.00210549,
+  "low_24h": 0.00207435,
+  "price_change_24h": 0.00001271,
+  "price_change_percentage_24h": 0.61039,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00311514,
+  "ath_change_percentage": -32.77428,
+  "ath_date": "2024-03-08T15:31:06.872Z",
+  "atl": 0.00152347,
+  "atl_change_percentage": 37.46079,
+  "atl_date": "2024-02-24T03:20:09.384Z",
+  "roi": null,
+  "last_updated": "2024-04-25T03:22:54.340Z",
+  "platforms": {
+    "ethereum": "0x299a1503e88433c0fd1bd68625c25c5a703eb64f"
+  }
+}

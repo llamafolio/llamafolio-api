@@ -1,0 +1,31 @@
+{
+  "id": "mist",
+  "symbol": "mist",
+  "name": "Mist",
+  "image": "https://assets.coingecko.com/coins/images/14841/large/pKmPjCN-_200x200.jpg?1696514508",
+  "current_price": 0.00823333,
+  "market_cap": 463641,
+  "market_cap_rank": 3099,
+  "fully_diluted_valuation": 8226848,
+  "total_volume": 39008,
+  "high_24h": 0.00866885,
+  "low_24h": 0.00815557,
+  "price_change_24h": -0.000334714233416248,
+  "price_change_percentage_24h": -3.90654,
+  "market_cap_change_24h": -19829.43431214284,
+  "market_cap_change_percentage_24h": -4.10148,
+  "circulating_supply": 56357088.21,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.371058,
+  "ath_change_percentage": -97.78501,
+  "ath_date": "2021-05-09T01:59:10.009Z",
+  "atl": 0.00124004,
+  "atl_change_percentage": 562.79306,
+  "atl_date": "2023-11-03T20:46:50.228Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:15.110Z",
+  "platforms": {
+    "bsc": "0x68e374f856bf25468d365e539b700b648bf94b67"
+  }
+}

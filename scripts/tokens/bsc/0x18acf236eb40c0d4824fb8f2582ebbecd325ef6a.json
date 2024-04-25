@@ -1,0 +1,31 @@
+{
+  "id": "oikos",
+  "symbol": "oks",
+  "name": "Oikos",
+  "image": "https://assets.coingecko.com/coins/images/11486/large/B49FnNM.png?1696511392",
+  "current_price": 0.00075314,
+  "market_cap": 188986,
+  "market_cap_rank": 3524,
+  "fully_diluted_valuation": 191875,
+  "total_volume": 2.42,
+  "high_24h": 0.00075436,
+  "low_24h": 0.0007493,
+  "price_change_24h": 5.5212e-8,
+  "price_change_percentage_24h": 0.00733,
+  "market_cap_change_24h": -57408.80018682129,
+  "market_cap_change_percentage_24h": -23.29951,
+  "circulating_supply": 251862314.731395,
+  "total_supply": 255712255.874966,
+  "max_supply": null,
+  "ath": 0.148214,
+  "ath_change_percentage": -99.49367,
+  "ath_date": "2020-08-10T22:44:53.194Z",
+  "atl": 0.00015217,
+  "atl_change_percentage": 393.15217,
+  "atl_date": "2022-10-03T03:22:19.065Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:54.598Z",
+  "platforms": {
+    "bsc": "0x18acf236eb40c0d4824fb8f2582ebbecd325ef6a"
+  }
+}

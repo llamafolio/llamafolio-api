@@ -1,0 +1,31 @@
+{
+  "id": "feg-token-bsc",
+  "symbol": "feg",
+  "name": "FEG BSC (OLD)",
+  "image": "https://assets.coingecko.com/coins/images/14533/large/feg.png?1696514217",
+  "current_price": 6.61929e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 26733096,
+  "total_volume": 1129.74,
+  "high_24h": 6.83012e-10,
+  "low_24h": 6.49193e-10,
+  "price_change_24h": -1.0401855e-11,
+  "price_change_percentage_24h": -1.54713,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 40338131009822300,
+  "max_supply": 100000000000000000,
+  "ath": 0.00077323,
+  "ath_change_percentage": -99.99991,
+  "ath_date": "2023-03-30T13:54:45.948Z",
+  "atl": 0,
+  "atl_change_percentage": 22013311091055.68,
+  "atl_date": "2021-11-21T00:37:11.960Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:50.483Z",
+  "platforms": {
+    "bsc": "0xacfc95585d80ab62f67a14c566c1b7a49fe91167"
+  }
+}

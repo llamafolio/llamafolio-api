@@ -1,0 +1,31 @@
+{
+  "id": "web3shot",
+  "symbol": "w3s",
+  "name": "Web3Shot",
+  "image": "https://assets.coingecko.com/coins/images/29723/large/W3S.jpg?1696528654",
+  "current_price": 0.723146,
+  "market_cap": 1893708,
+  "market_cap_rank": 2324,
+  "fully_diluted_valuation": 72045182,
+  "total_volume": 52587,
+  "high_24h": 0.753927,
+  "low_24h": 0.718594,
+  "price_change_24h": -0.027095903511013653,
+  "price_change_percentage_24h": -3.61162,
+  "market_cap_change_24h": -81675.64619190502,
+  "market_cap_change_percentage_24h": -4.13467,
+  "circulating_supply": 2628500,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.831376,
+  "ath_change_percentage": -13.14783,
+  "ath_date": "2024-03-14T06:32:11.908Z",
+  "atl": 0.265318,
+  "atl_change_percentage": 172.15222,
+  "atl_date": "2023-08-25T13:03:50.499Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:35.261Z",
+  "platforms": {
+    "bsc": "0x71d03f5cbf039febcc6ee8dbe20bc9ba3ea874fe"
+  }
+}

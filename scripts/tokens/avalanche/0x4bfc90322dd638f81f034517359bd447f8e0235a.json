@@ -1,0 +1,31 @@
+{
+  "id": "new-order",
+  "symbol": "newo",
+  "name": "New Order",
+  "image": "https://assets.coingecko.com/coins/images/21440/large/new-order-icon-256px.png?1696520803",
+  "current_price": 0.00733631,
+  "market_cap": 1244939,
+  "market_cap_rank": 2564,
+  "fully_diluted_valuation": 5869049,
+  "total_volume": 2512.19,
+  "high_24h": 0.00753986,
+  "low_24h": 0.00711416,
+  "price_change_24h": 0.00020717,
+  "price_change_percentage_24h": 2.90599,
+  "market_cap_change_24h": 35156,
+  "market_cap_change_percentage_24h": 2.90599,
+  "circulating_supply": 169695501,
+  "total_supply": 800000000,
+  "max_supply": 800000000,
+  "ath": 1.17,
+  "ath_change_percentage": -99.37508,
+  "ath_date": "2022-01-07T00:00:00.000Z",
+  "atl": 0.00373931,
+  "atl_change_percentage": 96.19444,
+  "atl_date": "2023-10-25T00:00:00.000Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:23:12.790Z",
+  "platforms": {
+    "avalanche": "0x4bfc90322dd638f81f034517359bd447f8e0235a"
+  }
+}

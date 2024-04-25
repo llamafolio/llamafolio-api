@@ -1,0 +1,31 @@
+{
+  "id": "magnum-2",
+  "symbol": "mag",
+  "name": "Magnum",
+  "image": "https://assets.coingecko.com/coins/images/33531/large/20231213_112204.jpg?1702499402",
+  "current_price": 0.590707,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1989020,
+  "total_volume": 1645.4,
+  "high_24h": 0.612018,
+  "low_24h": 0.578558,
+  "price_change_24h": -0.010881874562015836,
+  "price_change_percentage_24h": -1.80886,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 3380000,
+  "max_supply": 3380000,
+  "ath": 1.17,
+  "ath_change_percentage": -49.47629,
+  "ath_date": "2024-04-08T09:05:29.807Z",
+  "atl": 0.264944,
+  "atl_change_percentage": 122.95568,
+  "atl_date": "2023-12-17T23:34:56.503Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:13.499Z",
+  "platforms": {
+    "ethereum": "0xb9d4b6dc1e1ee3577cc442de015cc11f238b35ed"
+  }
+}

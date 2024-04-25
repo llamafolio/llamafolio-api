@@ -1,0 +1,31 @@
+{
+  "id": "apes",
+  "symbol": "apes",
+  "name": "APES",
+  "image": "https://assets.coingecko.com/coins/images/35030/large/mmexport1707027461489.jpg?1707156370",
+  "current_price": 9.4348e-11,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 39517,
+  "total_volume": 161.11,
+  "high_24h": 9.6004e-11,
+  "low_24h": 9.3933e-11,
+  "price_change_24h": -5.86985e-13,
+  "price_change_percentage_24h": -0.6183,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 420690000000000,
+  "max_supply": 420690000000000,
+  "ath": 1.402e-9,
+  "ath_change_percentage": -93.27066,
+  "ath_date": "2024-02-24T00:00:21.381Z",
+  "atl": 7.1852e-11,
+  "atl_change_percentage": 31.30958,
+  "atl_date": "2024-04-04T20:19:46.192Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:06:28.428Z",
+  "platforms": {
+    "ethereum": "0x9fd5555d0360adc2b5d92179e9bc36802bba8621"
+  }
+}

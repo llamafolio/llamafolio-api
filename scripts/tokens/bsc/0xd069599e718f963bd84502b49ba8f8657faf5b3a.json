@@ -1,0 +1,31 @@
+{
+  "id": "xcad-network-play",
+  "symbol": "play",
+  "name": "Play Token",
+  "image": "https://assets.coingecko.com/coins/images/29565/large/play2_%281%29.png?1696528505",
+  "current_price": 0.00132608,
+  "market_cap": 658619,
+  "market_cap_rank": 2919,
+  "fully_diluted_valuation": 1743477,
+  "total_volume": 377331,
+  "high_24h": 0.00144353,
+  "low_24h": 0.00129163,
+  "price_change_24h": -0.000083397527781571,
+  "price_change_percentage_24h": -5.91692,
+  "market_cap_change_24h": -70704.16916167142,
+  "market_cap_change_percentage_24h": -9.6945,
+  "circulating_supply": 500000000,
+  "total_supply": 1323586212.13843,
+  "max_supply": null,
+  "ath": 0.087821,
+  "ath_change_percentage": -98.48051,
+  "ath_date": "2023-06-09T00:50:43.652Z",
+  "atl": 0.00126743,
+  "atl_change_percentage": 5.28662,
+  "atl_date": "2024-04-20T10:30:04.732Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:42.045Z",
+  "platforms": {
+    "bsc": "0xd069599e718f963bd84502b49ba8f8657faf5b3a"
+  }
+}

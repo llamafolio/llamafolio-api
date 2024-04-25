@@ -1,0 +1,31 @@
+{
+  "id": "ruff",
+  "symbol": "ruff",
+  "name": "Ruff",
+  "image": "https://assets.coingecko.com/coins/images/2726/large/ruff.png?1696503504",
+  "current_price": 0.00029485,
+  "market_cap": 276842,
+  "market_cap_rank": 3355,
+  "fully_diluted_valuation": 541615,
+  "total_volume": 21666,
+  "high_24h": 0.00030375,
+  "low_24h": 0.00029266,
+  "price_change_24h": -0.000007370183704099,
+  "price_change_percentage_24h": -2.43869,
+  "market_cap_change_24h": -6947.826451260655,
+  "market_cap_change_percentage_24h": -2.44823,
+  "circulating_supply": 940500000,
+  "total_supply": 1840000000,
+  "max_supply": null,
+  "ath": 0.168013,
+  "ath_change_percentage": -99.82482,
+  "ath_date": "2018-05-03T03:38:13.266Z",
+  "atl": 0.00003964,
+  "atl_change_percentage": 642.42465,
+  "atl_date": "2023-10-24T10:54:28.175Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:18.739Z",
+  "platforms": {
+    "ethereum": "0xf278c1ca969095ffddded020290cf8b5c424ace2"
+  }
+}

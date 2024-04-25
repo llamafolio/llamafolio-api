@@ -1,0 +1,35 @@
+{
+  "id": "btu-protocol",
+  "symbol": "btu",
+  "name": "BTU Protocol",
+  "image": "https://assets.coingecko.com/coins/images/3697/large/logo-btu-white-background_%281%29.png?1707407754",
+  "current_price": 0.299687,
+  "market_cap": 23974945,
+  "market_cap_rank": 1024,
+  "fully_diluted_valuation": 29968681,
+  "total_volume": 599.37,
+  "high_24h": 0.300123,
+  "low_24h": 0.299074,
+  "price_change_24h": 0.00032455,
+  "price_change_percentage_24h": 0.10841,
+  "market_cap_change_24h": 25964,
+  "market_cap_change_percentage_24h": 0.10841,
+  "circulating_supply": 80000000,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 5,
+  "ath_change_percentage": -94.0056,
+  "ath_date": "2021-03-03T18:26:43.402Z",
+  "atl": 0.01595713,
+  "atl_change_percentage": 1778.07423,
+  "atl_date": "2022-06-25T10:31:21.247Z",
+  "roi": {
+    "times": -0.6004175858250947,
+    "currency": "usd",
+    "percentage": -60.04175858250948
+  },
+  "last_updated": "2024-04-25T02:17:22.994Z",
+  "platforms": {
+    "polygon": "0xfdc26cda2d2440d0e83cd1dee8e8be48405806dc"
+  }
+}

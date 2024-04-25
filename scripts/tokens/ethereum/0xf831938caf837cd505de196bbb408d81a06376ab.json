@@ -1,0 +1,31 @@
+{
+  "id": "jeff",
+  "symbol": "jeff",
+  "name": "Jeff",
+  "image": "https://assets.coingecko.com/coins/images/30222/large/photo_2023-05-06_23.53.02.jpeg?1696529132",
+  "current_price": 0.0060253,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 601861,
+  "total_volume": 8819.64,
+  "high_24h": 0.00689544,
+  "low_24h": 0.00600596,
+  "price_change_24h": -0.000786485044628486,
+  "price_change_percentage_24h": -11.54595,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.10357,
+  "ath_change_percentage": -94.18241,
+  "ath_date": "2023-05-09T12:09:40.302Z",
+  "atl": 0.00029906,
+  "atl_change_percentage": 1914.75718,
+  "atl_date": "2023-09-13T14:11:58.217Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:05.152Z",
+  "platforms": {
+    "ethereum": "0xf831938caf837cd505de196bbb408d81a06376ab"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "alphr",
+  "symbol": "alphr",
+  "name": "Alphr",
+  "image": "https://assets.coingecko.com/coins/images/15029/large/alphr.jpg?1696514689",
+  "current_price": 0.01334841,
+  "market_cap": 24767,
+  "market_cap_rank": 4126,
+  "fully_diluted_valuation": 133699,
+  "total_volume": 19354.83,
+  "high_24h": 0.01391558,
+  "low_24h": 0.01251058,
+  "price_change_24h": 0.00015145,
+  "price_change_percentage_24h": 1.14761,
+  "market_cap_change_24h": 56.61,
+  "market_cap_change_percentage_24h": 0.22911,
+  "circulating_supply": 1852448.0001557926,
+  "total_supply": 10000000,
+  "max_supply": null,
+  "ath": 12.72,
+  "ath_change_percentage": -99.89486,
+  "ath_date": "2021-05-12T04:04:33.065Z",
+  "atl": 0.00483117,
+  "atl_change_percentage": 176.77425,
+  "atl_date": "2022-05-12T06:34:51.452Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:04.976Z",
+  "platforms": {
+    "ethereum": "0xaa99199d1e9644b588796f3215089878440d58e0"
+  }
+}

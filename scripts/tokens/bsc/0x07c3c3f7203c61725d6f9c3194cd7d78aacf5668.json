@@ -1,0 +1,31 @@
+{
+  "id": "blinq-network",
+  "symbol": "blinq",
+  "name": "Blinq Network",
+  "image": "https://assets.coingecko.com/coins/images/31961/large/Blinq-Logo.png?1696530766",
+  "current_price": 2.76291e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 27629,
+  "total_volume": 0.276291,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.00000172,
+  "ath_change_percentage": -83.9046,
+  "ath_date": "2023-10-04T08:50:12.545Z",
+  "atl": 7.5774e-8,
+  "atl_change_percentage": 264.62528,
+  "atl_date": "2024-02-26T02:31:40.645Z",
+  "roi": null,
+  "last_updated": "2024-04-01T11:01:19.304Z",
+  "platforms": {
+    "bsc": "0x07c3c3f7203c61725d6f9c3194cd7d78aacf5668"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "sundae-the-dog",
+  "symbol": "sundae",
+  "name": "Sundae the Dog",
+  "image": "https://assets.coingecko.com/coins/images/32010/large/sundae.jpg?1696530808",
+  "current_price": 0.03214046,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 321405,
+  "total_volume": 820.11,
+  "high_24h": 0.03348424,
+  "low_24h": 0.03041474,
+  "price_change_24h": -0.000761714862685413,
+  "price_change_percentage_24h": -2.31509,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": null,
+  "ath": 4.9,
+  "ath_change_percentage": -99.34485,
+  "ath_date": "2023-11-08T09:55:50.661Z",
+  "atl": 0.02840078,
+  "atl_change_percentage": 13.10639,
+  "atl_date": "2024-04-23T12:11:56.473Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:50.590Z",
+  "platforms": {
+    "arbitrum": "0x352f4bf396a7353a0877f99e99757e5d294df374"
+  }
+}

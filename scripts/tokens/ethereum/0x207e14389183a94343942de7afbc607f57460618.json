@@ -1,0 +1,31 @@
+{
+  "id": "thol-token",
+  "symbol": "thol",
+  "name": "AngelBlock",
+  "image": "https://assets.coingecko.com/coins/images/25058/large/Tholos_circle_gradient_200x200.png?1696524208",
+  "current_price": 0.038522,
+  "market_cap": 7991649,
+  "market_cap_rank": 1552,
+  "fully_diluted_valuation": 15372012,
+  "total_volume": 54553,
+  "high_24h": 0.04065006,
+  "low_24h": 0.03833615,
+  "price_change_24h": -0.001629346347166022,
+  "price_change_percentage_24h": -4.05801,
+  "market_cap_change_24h": -354684.88593266904,
+  "market_cap_change_percentage_24h": -4.24959,
+  "circulating_supply": 207953226.875,
+  "total_supply": 400000000,
+  "max_supply": 400000000,
+  "ath": 0.14362,
+  "ath_change_percentage": -73.225,
+  "ath_date": "2023-02-20T16:04:53.749Z",
+  "atl": 0.00805274,
+  "atl_change_percentage": 377.53014,
+  "atl_date": "2023-09-12T02:35:53.702Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:19.520Z",
+  "platforms": {
+    "ethereum": "0x207e14389183a94343942de7afbc607f57460618"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "nextype-finance",
+  "symbol": "nt",
+  "name": "NEXTYPE Finance",
+  "image": "https://assets.coingecko.com/coins/images/17415/large/nextype.PNG?1696516963",
+  "current_price": 0.00073972,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 731731,
+  "total_volume": 23445,
+  "high_24h": 0.00080416,
+  "low_24h": 0.00072888,
+  "price_change_24h": -0.000010086047096269,
+  "price_change_percentage_24h": -1.34515,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.225388,
+  "ath_change_percentage": -99.67003,
+  "ath_date": "2021-11-26T06:06:33.948Z",
+  "atl": 0.00018018,
+  "atl_change_percentage": 312.76536,
+  "atl_date": "2023-09-08T17:04:18.177Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:15.155Z",
+  "platforms": {
+    "bsc": "0xfbcf80ed90856af0d6d9655f746331763efdb22c"
+  }
+}

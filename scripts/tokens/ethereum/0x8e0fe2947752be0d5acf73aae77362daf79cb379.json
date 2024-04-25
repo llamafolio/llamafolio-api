@@ -1,0 +1,31 @@
+{
+  "id": "nftrade",
+  "symbol": "nftd",
+  "name": "NFTrade",
+  "image": "https://assets.coingecko.com/coins/images/18578/large/nftrade.png?1696518055",
+  "current_price": 0.00990403,
+  "market_cap": 460203,
+  "market_cap_rank": 3105,
+  "fully_diluted_valuation": 1333659,
+  "total_volume": 23606,
+  "high_24h": 0.00994464,
+  "low_24h": 0.00973265,
+  "price_change_24h": 0.00003012,
+  "price_change_percentage_24h": 0.30507,
+  "market_cap_change_24h": -743.8150968358386,
+  "market_cap_change_percentage_24h": -0.16137,
+  "circulating_supply": 46584184.0063241,
+  "total_supply": 135000000,
+  "max_supply": 135000000,
+  "ath": 2.21,
+  "ath_change_percentage": -99.55059,
+  "ath_date": "2021-11-24T06:23:34.098Z",
+  "atl": 0.00940675,
+  "atl_change_percentage": 5.48022,
+  "atl_date": "2024-04-14T22:21:53.467Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:16.021Z",
+  "platforms": {
+    "ethereum": "0x8e0fe2947752be0d5acf73aae77362daf79cb379"
+  }
+}

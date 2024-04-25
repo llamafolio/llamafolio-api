@@ -1,0 +1,31 @@
+{
+  "id": "king-cat",
+  "symbol": "kingcat",
+  "name": "King Cat",
+  "image": "https://assets.coingecko.com/coins/images/35237/large/catking.png?1707936108",
+  "current_price": 3.15885e-13,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 132671,
+  "total_volume": 249.48,
+  "high_24h": 3.22711e-13,
+  "low_24h": 3.09197e-13,
+  "price_change_24h": -7.88e-16,
+  "price_change_percentage_24h": -0.24887,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 420000000000000000,
+  "max_supply": 420000000000000000,
+  "ath": 1.735e-12,
+  "ath_change_percentage": -81.81019,
+  "ath_date": "2024-03-28T02:24:56.160Z",
+  "atl": 1.718e-13,
+  "atl_change_percentage": 83.70045,
+  "atl_date": "2024-03-19T23:28:35.772Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:28.349Z",
+  "platforms": {
+    "bsc": "0xf51bee141c9551338d1b26844ae5035b55993f0d"
+  }
+}

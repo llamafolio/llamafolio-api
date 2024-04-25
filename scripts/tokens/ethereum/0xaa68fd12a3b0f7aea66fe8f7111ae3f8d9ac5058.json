@@ -1,0 +1,31 @@
+{
+  "id": "tweety",
+  "symbol": "tweety",
+  "name": "Tweety",
+  "image": "https://assets.coingecko.com/coins/images/30861/large/tweety_logo.png?1696529708",
+  "current_price": 0.00000238,
+  "market_cap": 266658,
+  "market_cap_rank": 3366,
+  "fully_diluted_valuation": 299630,
+  "total_volume": 9590.1,
+  "high_24h": 0.00000247,
+  "low_24h": 0.00000232,
+  "price_change_24h": -6.402093518e-8,
+  "price_change_percentage_24h": -2.62162,
+  "market_cap_change_24h": -6566.516810037661,
+  "market_cap_change_percentage_24h": -2.40334,
+  "circulating_supply": 112134890820.80298,
+  "total_supply": 126000000000,
+  "max_supply": 210000000000,
+  "ath": 0.00004745,
+  "ath_change_percentage": -94.98867,
+  "ath_date": "2024-01-26T13:41:44.140Z",
+  "atl": 5.04767e-7,
+  "atl_change_percentage": 371.11045,
+  "atl_date": "2023-10-19T09:21:42.552Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:57.053Z",
+  "platforms": {
+    "ethereum": "0xaa68fd12a3b0f7aea66fe8f7111ae3f8d9ac5058"
+  }
+}

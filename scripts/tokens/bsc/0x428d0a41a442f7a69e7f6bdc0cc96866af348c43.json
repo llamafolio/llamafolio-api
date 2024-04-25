@@ -1,0 +1,31 @@
+{
+  "id": "big-roo",
+  "symbol": "bigroo",
+  "name": "BIG ROO",
+  "image": "https://assets.coingecko.com/coins/images/33763/large/bigroo-coingecko.png?1702964759",
+  "current_price": 8.1717e-8,
+  "market_cap": 40680,
+  "market_cap_rank": 4039,
+  "fully_diluted_valuation": 81717,
+  "total_volume": 727.78,
+  "high_24h": 8.1717e-8,
+  "low_24h": 8.0405e-8,
+  "price_change_24h": 1.25e-9,
+  "price_change_percentage_24h": 1.55304,
+  "market_cap_change_24h": 523.43,
+  "market_cap_change_percentage_24h": 1.30348,
+  "circulating_supply": 497817579094.861,
+  "total_supply": 1000000000000,
+  "max_supply": 1000000000000,
+  "ath": 1.77494e-7,
+  "ath_change_percentage": -53.9608,
+  "ath_date": "2023-12-19T09:43:40.350Z",
+  "atl": 4.9193e-8,
+  "atl_change_percentage": 66.11302,
+  "atl_date": "2024-01-12T17:30:35.533Z",
+  "roi": null,
+  "last_updated": "2024-04-24T10:38:16.121Z",
+  "platforms": {
+    "bsc": "0x428d0a41a442f7a69e7f6bdc0cc96866af348c43"
+  }
+}

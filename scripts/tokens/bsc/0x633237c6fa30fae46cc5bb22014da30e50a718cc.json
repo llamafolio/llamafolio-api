@@ -1,0 +1,31 @@
+{
+  "id": "defi-warrior",
+  "symbol": "fiwa",
+  "name": "Defi Warrior",
+  "image": "https://assets.coingecko.com/coins/images/18208/large/defi_warrior.PNG?1696517706",
+  "current_price": 0.00006929,
+  "market_cap": 156714,
+  "market_cap_rank": 3608,
+  "fully_diluted_valuation": 690177,
+  "total_volume": 75407,
+  "high_24h": 0.00006992,
+  "low_24h": 0.00006796,
+  "price_change_24h": 3.96372e-7,
+  "price_change_percentage_24h": 0.57533,
+  "market_cap_change_24h": 321.05,
+  "market_cap_change_percentage_24h": 0.20528,
+  "circulating_supply": 2270639660,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.03683698,
+  "ath_change_percentage": -99.8149,
+  "ath_date": "2021-09-07T14:13:42.768Z",
+  "atl": 0.00005073,
+  "atl_change_percentage": 34.39337,
+  "atl_date": "2023-12-06T18:41:09.990Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:17.646Z",
+  "platforms": {
+    "bsc": "0x633237c6fa30fae46cc5bb22014da30e50a718cc"
+  }
+}

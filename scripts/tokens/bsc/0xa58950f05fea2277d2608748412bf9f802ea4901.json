@@ -1,0 +1,31 @@
+{
+  "id": "wall-street-games",
+  "symbol": "wsg",
+  "name": "Wall Street Games",
+  "image": "https://assets.coingecko.com/coins/images/15872/large/X3Awe42.png?1696515487",
+  "current_price": 2.51277e-10,
+  "market_cap": 106520,
+  "market_cap_rank": 3761,
+  "fully_diluted_valuation": 250401,
+  "total_volume": 2426.82,
+  "high_24h": 2.67623e-10,
+  "low_24h": 2.50455e-10,
+  "price_change_24h": -5.735735e-12,
+  "price_change_percentage_24h": -2.2317,
+  "market_cap_change_24h": -2794.9267483019357,
+  "market_cap_change_percentage_24h": -2.55677,
+  "circulating_supply": 425305470924668.25,
+  "total_supply": 999785033525476,
+  "max_supply": 1000000000000000,
+  "ath": 3.3869e-7,
+  "ath_change_percentage": -99.92588,
+  "ath_date": "2021-07-27T16:55:58.753Z",
+  "atl": 2.17766e-10,
+  "atl_change_percentage": 15.27806,
+  "atl_date": "2024-04-19T08:16:56.434Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:13.767Z",
+  "platforms": {
+    "bsc": "0xa58950f05fea2277d2608748412bf9f802ea4901"
+  }
+}

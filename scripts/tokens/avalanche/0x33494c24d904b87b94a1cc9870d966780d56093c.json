@@ -1,0 +1,31 @@
+{
+  "id": "kanaloa-network",
+  "symbol": "kana",
+  "name": "Kanaloa Network",
+  "image": "https://assets.coingecko.com/coins/images/17981/large/koa.PNG?1696517499",
+  "current_price": 0.0028243,
+  "market_cap": 281566,
+  "market_cap_rank": 3345,
+  "fully_diluted_valuation": 2815662,
+  "total_volume": 66.43,
+  "high_24h": 0.00311645,
+  "low_24h": 0.00281566,
+  "price_change_24h": -0.000270254494716887,
+  "price_change_percentage_24h": -8.73322,
+  "market_cap_change_24h": -30311.336610690283,
+  "market_cap_change_percentage_24h": -9.71899,
+  "circulating_supply": 100000000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00661697,
+  "ath_change_percentage": -57.44784,
+  "ath_date": "2024-03-14T17:35:19.256Z",
+  "atl": 0.00005221,
+  "atl_change_percentage": 5292.57872,
+  "atl_date": "2023-04-23T22:17:55.968Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:40.413Z",
+  "platforms": {
+    "avalanche": "0x33494c24d904b87b94a1cc9870d966780d56093c"
+  }
+}

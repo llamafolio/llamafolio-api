@@ -1,0 +1,31 @@
+{
+  "id": "hxro",
+  "symbol": "hxro",
+  "name": "HXRO",
+  "image": "https://assets.coingecko.com/coins/images/7805/large/X_3D_Black_%2810%29.png?1696508044",
+  "current_price": 0.074238,
+  "market_cap": 45939414,
+  "market_cap_rank": 726,
+  "fully_diluted_valuation": 74049762,
+  "total_volume": 55848,
+  "high_24h": 0.079104,
+  "low_24h": 0.073946,
+  "price_change_24h": -0.003690446583214532,
+  "price_change_percentage_24h": -4.73571,
+  "market_cap_change_24h": -2225647.697558306,
+  "market_cap_change_percentage_24h": -4.62088,
+  "circulating_supply": 620385702.0535563,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.800981,
+  "ath_change_percentage": -90.74617,
+  "ath_date": "2021-06-05T00:59:41.210Z",
+  "atl": 0.00914678,
+  "atl_change_percentage": 710.35502,
+  "atl_date": "2019-11-10T15:12:15.992Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:52.679Z",
+  "platforms": {
+    "ethereum": "0x4bd70556ae3f8a6ec6c4080a0c327b24325438f3"
+  }
+}

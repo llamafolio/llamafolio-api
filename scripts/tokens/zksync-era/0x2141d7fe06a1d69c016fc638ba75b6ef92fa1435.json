@@ -1,0 +1,31 @@
+{
+  "id": "zksync-id",
+  "symbol": "zkid",
+  "name": "zkSync id",
+  "image": "https://assets.coingecko.com/coins/images/30115/large/logo.png?1696529037",
+  "current_price": 0.0424021,
+  "market_cap": 2803481,
+  "market_cap_rank": 2100,
+  "fully_diluted_valuation": 4247698,
+  "total_volume": 62627,
+  "high_24h": 0.04511911,
+  "low_24h": 0.04026138,
+  "price_change_24h": -0.001866667565118822,
+  "price_change_percentage_24h": -4.21667,
+  "market_cap_change_24h": -121677.93904300546,
+  "market_cap_change_percentage_24h": -4.1597,
+  "circulating_supply": 66000000,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.096499,
+  "ath_change_percentage": -56.25912,
+  "ath_date": "2024-02-27T03:04:41.225Z",
+  "atl": 0.00394915,
+  "atl_change_percentage": 968.82155,
+  "atl_date": "2023-10-20T04:29:15.708Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:54.577Z",
+  "platforms": {
+    "zksync-era": "0x2141d7fe06a1d69c016fc638ba75b6ef92fa1435"
+  }
+}

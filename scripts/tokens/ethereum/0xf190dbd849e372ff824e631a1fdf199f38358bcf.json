@@ -1,0 +1,31 @@
+{
+  "id": "capybara-memecoin",
+  "symbol": "bara",
+  "name": "Capybara Memecoin",
+  "image": "https://assets.coingecko.com/coins/images/30399/large/Capy_logo.png?1696529289",
+  "current_price": 0.00060882,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 60882,
+  "total_volume": 162.41,
+  "high_24h": 0.00064502,
+  "low_24h": 0.00060304,
+  "price_change_24h": -0.00003211151716153,
+  "price_change_percentage_24h": -5.01014,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.01961517,
+  "ath_change_percentage": -96.90673,
+  "ath_date": "2023-05-17T13:34:59.275Z",
+  "atl": 0.00053977,
+  "atl_change_percentage": 12.40803,
+  "atl_date": "2024-04-13T21:42:51.350Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:47.135Z",
+  "platforms": {
+    "ethereum": "0xf190dbd849e372ff824e631a1fdf199f38358bcf"
+  }
+}

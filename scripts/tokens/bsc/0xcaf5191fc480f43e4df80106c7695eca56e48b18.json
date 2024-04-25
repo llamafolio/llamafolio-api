@@ -1,0 +1,31 @@
+{
+  "id": "deapcoin",
+  "symbol": "dep",
+  "name": "DEAPCOIN",
+  "image": "https://assets.coingecko.com/coins/images/10970/large/DEAPcoin_01.png?1696510917",
+  "current_price": 0.00197259,
+  "market_cap": 47616581,
+  "market_cap_rank": 714,
+  "fully_diluted_valuation": 59050754,
+  "total_volume": 1358644,
+  "high_24h": 0.00199415,
+  "low_24h": 0.00191367,
+  "price_change_24h": -0.000008764272343327,
+  "price_change_percentage_24h": -0.44234,
+  "market_cap_change_24h": 867871,
+  "market_cap_change_percentage_24h": 1.85646,
+  "circulating_supply": 24191010787,
+  "total_supply": 30000000000,
+  "max_supply": 30000000000,
+  "ath": 0.07894,
+  "ath_change_percentage": -97.50601,
+  "ath_date": "2021-11-24T23:45:00.680Z",
+  "atl": 0.00068582,
+  "atl_change_percentage": 187.06706,
+  "atl_date": "2023-10-18T05:25:38.729Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:38.196Z",
+  "platforms": {
+    "bsc": "0xcaf5191fc480f43e4df80106c7695eca56e48b18"
+  }
+}

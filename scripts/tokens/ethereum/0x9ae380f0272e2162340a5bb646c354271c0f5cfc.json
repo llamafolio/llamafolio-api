@@ -1,0 +1,31 @@
+{
+  "id": "conic-finance",
+  "symbol": "cnc",
+  "name": "Conic",
+  "image": "https://assets.coingecko.com/coins/images/24747/large/cnc.png?1696523909",
+  "current_price": 0.723875,
+  "market_cap": 2658390,
+  "market_cap_rank": 2135,
+  "fully_diluted_valuation": 5124742,
+  "total_volume": 50996,
+  "high_24h": 0.805566,
+  "low_24h": 0.723258,
+  "price_change_24h": -0.07669627472968266,
+  "price_change_percentage_24h": -9.58019,
+  "market_cap_change_24h": -280451.80022662133,
+  "market_cap_change_percentage_24h": -9.54294,
+  "circulating_supply": 3665149.96096013,
+  "total_supply": 7065535.77572229,
+  "max_supply": 10000000,
+  "ath": 12.22,
+  "ath_change_percentage": -94.05572,
+  "ath_date": "2023-03-01T23:15:12.292Z",
+  "atl": 0.407986,
+  "atl_change_percentage": 78.00525,
+  "atl_date": "2022-09-19T11:49:28.300Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:18.766Z",
+  "platforms": {
+    "ethereum": "0x9ae380f0272e2162340a5bb646c354271c0f5cfc"
+  }
+}

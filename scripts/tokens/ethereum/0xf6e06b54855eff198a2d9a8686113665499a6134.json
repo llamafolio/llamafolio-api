@@ -1,0 +1,31 @@
+{
+  "id": "celestial",
+  "symbol": "celt",
+  "name": "Celestial",
+  "image": "https://assets.coingecko.com/coins/images/18683/large/celt.png?1696518152",
+  "current_price": 0.00006572,
+  "market_cap": 194010,
+  "market_cap_rank": 3515,
+  "fully_diluted_valuation": 321186,
+  "total_volume": 26711,
+  "high_24h": 0.00006856,
+  "low_24h": 0.00006496,
+  "price_change_24h": -0.000002585255253901,
+  "price_change_percentage_24h": -3.78477,
+  "market_cap_change_24h": -8881.982322127937,
+  "market_cap_change_percentage_24h": -4.37769,
+  "circulating_supply": 2974753605,
+  "total_supply": 4924753605,
+  "max_supply": 5000000000,
+  "ath": 0.13017,
+  "ath_change_percentage": -99.94972,
+  "ath_date": "2021-11-23T16:44:15.987Z",
+  "atl": 0.00005507,
+  "atl_change_percentage": 18.86111,
+  "atl_date": "2023-06-30T21:40:17.842Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:25.268Z",
+  "platforms": {
+    "ethereum": "0xf6e06b54855eff198a2d9a8686113665499a6134"
+  }
+}

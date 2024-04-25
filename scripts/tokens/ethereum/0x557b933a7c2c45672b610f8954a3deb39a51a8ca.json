@@ -1,0 +1,31 @@
+{
+  "id": "revv",
+  "symbol": "revv",
+  "name": "REVV",
+  "image": "https://assets.coingecko.com/coins/images/12373/large/REVV_TOKEN_Refined_2021_%281%29.png?1696512197",
+  "current_price": 0.01213994,
+  "market_cap": 9872825,
+  "market_cap_rank": 1445,
+  "fully_diluted_valuation": 36201633,
+  "total_volume": 1218533,
+  "high_24h": 0.01346034,
+  "low_24h": 0.01203757,
+  "price_change_24h": -0.001291764135306857,
+  "price_change_percentage_24h": -9.61728,
+  "market_cap_change_24h": -966585.5603466555,
+  "market_cap_change_percentage_24h": -8.91733,
+  "circulating_supply": 818152991.46068,
+  "total_supply": 3000000000,
+  "max_supply": 3000000000,
+  "ath": 0.632317,
+  "ath_change_percentage": -98.0872,
+  "ath_date": "2021-03-30T23:09:34.480Z",
+  "atl": 0.00581896,
+  "atl_change_percentage": 107.85451,
+  "atl_date": "2023-09-09T03:55:37.675Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:10.626Z",
+  "platforms": {
+    "ethereum": "0x557b933a7c2c45672b610f8954a3deb39a51a8ca"
+  }
+}

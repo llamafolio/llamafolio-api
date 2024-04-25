@@ -1,0 +1,31 @@
+{
+  "id": "dragon-crypto-aurum",
+  "symbol": "dcau",
+  "name": "Dragon Crypto Aurum",
+  "image": "https://assets.coingecko.com/coins/images/20226/large/7f7e57.jpeg?1696519635",
+  "current_price": 3.44,
+  "market_cap": 518883,
+  "market_cap_rank": 3048,
+  "fully_diluted_valuation": 527184,
+  "total_volume": 933.73,
+  "high_24h": 3.59,
+  "low_24h": 3.42,
+  "price_change_24h": -0.13435503308578234,
+  "price_change_percentage_24h": -3.76346,
+  "market_cap_change_24h": -23305.35622161592,
+  "market_cap_change_percentage_24h": -4.29839,
+  "circulating_supply": 151702.77,
+  "total_supply": 154129.88,
+  "max_supply": 155000,
+  "ath": 177.5,
+  "ath_change_percentage": -98.06665,
+  "ath_date": "2022-01-20T15:14:01.507Z",
+  "atl": 2.03,
+  "atl_change_percentage": 68.90525,
+  "atl_date": "2023-11-04T20:05:32.340Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:09.911Z",
+  "platforms": {
+    "avalanche": "0x100cc3a819dd3e8573fd2e46d1e66ee866068f30"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "havah",
+  "symbol": "hvh",
+  "name": "HAVAH",
+  "image": "https://assets.coingecko.com/coins/images/29156/large/hvh.png?1696528115",
+  "current_price": 0.01959925,
+  "market_cap": 19166733,
+  "market_cap_rank": 1131,
+  "fully_diluted_valuation": 100531125,
+  "total_volume": 80566,
+  "high_24h": 0.0204756,
+  "low_24h": 0.01908302,
+  "price_change_24h": 0.00015262,
+  "price_change_percentage_24h": 0.7848,
+  "market_cap_change_24h": 407866,
+  "market_cap_change_percentage_24h": 2.17425,
+  "circulating_supply": 973870659.885472,
+  "total_supply": 5108033333,
+  "max_supply": 10000000000,
+  "ath": 0.106849,
+  "ath_change_percentage": -81.58859,
+  "ath_date": "2023-02-28T07:53:15.252Z",
+  "atl": 0.01038522,
+  "atl_change_percentage": 89.42788,
+  "atl_date": "2024-02-13T09:16:13.276Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:26.381Z",
+  "platforms": {
+    "ethereum": "0xd076c4ba62c57b3fa10800bcfd8da66742110e0e"
+  }
+}

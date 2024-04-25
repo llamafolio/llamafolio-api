@@ -1,0 +1,35 @@
+{
+  "id": "pundi-x",
+  "symbol": "npxs",
+  "name": "Pundi X [OLD]",
+  "image": "https://assets.coingecko.com/coins/images/2170/large/pundi-x.png?1696503130",
+  "current_price": 0.00060977,
+  "market_cap": 144133870,
+  "market_cap_rank": 373,
+  "fully_diluted_valuation": 157528028,
+  "total_volume": 5708.71,
+  "high_24h": 0.00061312,
+  "low_24h": 0.00038095,
+  "price_change_24h": 0.00013767,
+  "price_change_percentage_24h": 29.16252,
+  "market_cap_change_24h": 33610012,
+  "market_cap_change_percentage_24h": 30.40973,
+  "circulating_supply": 236519288706.32507,
+  "total_supply": 258498693019.07,
+  "max_supply": null,
+  "ath": 0.01446299,
+  "ath_change_percentage": -95.78195,
+  "ath_date": "2018-05-14T06:15:26.308Z",
+  "atl": 0.00002354,
+  "atl_change_percentage": 2491.61655,
+  "atl_date": "2023-12-14T13:41:01.487Z",
+  "roi": {
+    "times": -0.9999026130544669,
+    "currency": "eth",
+    "percentage": -99.9902613054467
+  },
+  "last_updated": "2024-04-25T08:54:19.049Z",
+  "platforms": {
+    "ethereum": "0xa15c7ebe1f07caf6bff097d8a589fb8ac49ae5b3"
+  }
+}

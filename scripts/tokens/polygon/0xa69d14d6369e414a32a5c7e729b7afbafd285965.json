@@ -1,0 +1,31 @@
+{
+  "id": "global-coin-research",
+  "symbol": "gcr",
+  "name": "Global Coin Research",
+  "image": "https://assets.coingecko.com/coins/images/14815/large/gcr.jpeg?1696514483",
+  "current_price": 0.157385,
+  "market_cap": 1573852,
+  "market_cap_rank": 2427,
+  "fully_diluted_valuation": 1573852,
+  "total_volume": 35.2,
+  "high_24h": 0.157395,
+  "low_24h": 0.155918,
+  "price_change_24h": 0.00015166,
+  "price_change_percentage_24h": 0.09646,
+  "market_cap_change_24h": 1905.3,
+  "market_cap_change_percentage_24h": 0.12121,
+  "circulating_supply": 10000000,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 13.24,
+  "ath_change_percentage": -98.81147,
+  "ath_date": "2021-04-16T07:43:46.901Z",
+  "atl": 0.142929,
+  "atl_change_percentage": 10.11398,
+  "atl_date": "2024-03-13T03:36:38.368Z",
+  "roi": null,
+  "last_updated": "2024-04-25T03:18:20.463Z",
+  "platforms": {
+    "polygon": "0xa69d14d6369e414a32a5c7e729b7afbafd285965"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "anomus-coin",
+  "symbol": "anom",
+  "name": "Anomus Coin",
+  "image": "https://assets.coingecko.com/coins/images/20865/large/w07_TWqn_400x400.png?1696520259",
+  "current_price": 0.00002325,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 92981,
+  "total_volume": 0.987928,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 4000000000,
+  "max_supply": 4000000000,
+  "ath": 0.01045756,
+  "ath_change_percentage": -99.77772,
+  "ath_date": "2021-11-29T11:13:00.857Z",
+  "atl": 0.00002313,
+  "atl_change_percentage": 0.47837,
+  "atl_date": "2023-08-02T21:22:39.859Z",
+  "roi": null,
+  "last_updated": "2023-08-03T10:30:04.943Z",
+  "platforms": {
+    "bsc": "0x5224f552f110ec78e6e0468138950ae5f3040942"
+  }
+}

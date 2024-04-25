@@ -1,0 +1,35 @@
+{
+  "id": "metronome",
+  "symbol": "met",
+  "name": "Metronome",
+  "image": "https://assets.coingecko.com/coins/images/3249/large/met.png?1696503964",
+  "current_price": 1.4,
+  "market_cap": 7342998,
+  "market_cap_rank": 1586,
+  "fully_diluted_valuation": 20082415,
+  "total_volume": 34189,
+  "high_24h": 1.47,
+  "low_24h": 1.4,
+  "price_change_24h": -0.060581974456265675,
+  "price_change_percentage_24h": -4.15435,
+  "market_cap_change_24h": -324658.7451114319,
+  "market_cap_change_percentage_24h": -4.23413,
+  "circulating_supply": 5257186.720071282,
+  "total_supply": 14377915.3098535,
+  "max_supply": 14377915,
+  "ath": 8.9,
+  "ath_change_percentage": -84.31609,
+  "ath_date": "2023-04-15T02:05:35.830Z",
+  "atl": 0.00148609,
+  "atl_change_percentage": 93799.02508,
+  "atl_date": "2022-08-23T21:03:09.202Z",
+  "roi": {
+    "times": -0.8396092617238392,
+    "currency": "eth",
+    "percentage": -83.96092617238392
+  },
+  "last_updated": "2024-04-25T08:59:59.691Z",
+  "platforms": {
+    "ethereum": "0x2ebd53d035150f328bd754d6dc66b99b0edb89aa"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "qanplatform",
+  "symbol": "qanx",
+  "name": "QANplatform",
+  "image": "https://assets.coingecko.com/coins/images/15977/large/qanx.png?1696515591",
+  "current_price": 0.064788,
+  "market_cap": 109954178,
+  "market_cap_rank": 446,
+  "fully_diluted_valuation": 135796644,
+  "total_volume": 1432363,
+  "high_24h": 0.076711,
+  "low_24h": 0.062581,
+  "price_change_24h": -0.011295152818041375,
+  "price_change_percentage_24h": -14.84585,
+  "market_cap_change_24h": -20298125.735167816,
+  "market_cap_change_percentage_24h": -15.5837,
+  "circulating_supply": 1700000000,
+  "total_supply": 2099550000,
+  "max_supply": 3333333000,
+  "ath": 0.203412,
+  "ath_change_percentage": -68.38801,
+  "ath_date": "2021-11-27T19:36:50.871Z",
+  "atl": 0.00011724,
+  "atl_change_percentage": 54748.93776,
+  "atl_date": "2023-01-13T15:01:38.815Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:03.431Z",
+  "platforms": {
+    "bsc": "0xaaa9214f675316182eaa21c85f0ca99160cc3aaa"
+  }
+}

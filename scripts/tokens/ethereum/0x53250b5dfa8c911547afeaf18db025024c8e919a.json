@@ -1,0 +1,31 @@
+{
+  "id": "kermit-cc0e2d66-4b46-4eaf-9f4e-5caa883d1c09",
+  "symbol": "kermit",
+  "name": "Kermit",
+  "image": "https://assets.coingecko.com/coins/images/29858/large/Kermit.png?1696528784",
+  "current_price": 0.0003202,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 309884,
+  "total_volume": 505439,
+  "high_24h": 0.0003501,
+  "low_24h": 0.00030975,
+  "price_change_24h": -0.000009951582660882,
+  "price_change_percentage_24h": -3.01427,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00534153,
+  "ath_change_percentage": -94.19905,
+  "ath_date": "2023-04-19T17:54:46.317Z",
+  "atl": 0.00009394,
+  "atl_change_percentage": 229.86035,
+  "atl_date": "2023-09-11T19:59:31.241Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:16:24.062Z",
+  "platforms": {
+    "ethereum": "0x53250b5dfa8c911547afeaf18db025024c8e919a"
+  }
+}

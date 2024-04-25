@@ -1,0 +1,31 @@
+{
+  "id": "joe-coin",
+  "symbol": "joe",
+  "name": "Joe Coin",
+  "image": "https://assets.coingecko.com/coins/images/32333/large/joe.png?1697452551",
+  "current_price": 0.00348572,
+  "market_cap": 3482142,
+  "market_cap_rank": 1974,
+  "fully_diluted_valuation": 3482142,
+  "total_volume": 200495,
+  "high_24h": 0.00497387,
+  "low_24h": 0.00348214,
+  "price_change_24h": -0.001149094260096245,
+  "price_change_percentage_24h": -24.79265,
+  "market_cap_change_24h": -1152692.000304516,
+  "market_cap_change_percentage_24h": -24.87019,
+  "circulating_supply": 1000000000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.03447045,
+  "ath_change_percentage": -89.69511,
+  "ath_date": "2023-11-01T02:45:55.619Z",
+  "atl": 0.00067332,
+  "atl_change_percentage": 427.55378,
+  "atl_date": "2024-02-05T01:55:46.860Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:23.821Z",
+  "platforms": {
+    "ethereum": "0x76e222b07c53d28b89b0bac18602810fc22b49a8"
+  }
+}

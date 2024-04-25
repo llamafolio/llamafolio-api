@@ -1,0 +1,31 @@
+{
+  "id": "combustion",
+  "symbol": "fire",
+  "name": "Combustion",
+  "image": "https://assets.coingecko.com/coins/images/31044/large/T-wqdlHF_400x400.jpg?1696529879",
+  "current_price": 0.00004309,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 43090,
+  "total_volume": 47.99,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.00123628,
+  "ath_change_percentage": -96.51453,
+  "ath_date": "2023-07-24T07:06:08.674Z",
+  "atl": 0.00002734,
+  "atl_change_percentage": 57.61899,
+  "atl_date": "2024-01-26T09:20:56.884Z",
+  "roi": null,
+  "last_updated": "2024-04-22T04:37:03.959Z",
+  "platforms": {
+    "ethereum": "0x9b81686140e85d28c2236c307dd49b422a663edf"
+  }
+}

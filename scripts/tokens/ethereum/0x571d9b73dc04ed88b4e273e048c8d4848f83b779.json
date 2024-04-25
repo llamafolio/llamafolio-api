@@ -1,0 +1,31 @@
+{
+  "id": "super-closed-source",
+  "symbol": "closedai",
+  "name": "Super Closed Source",
+  "image": "https://assets.coingecko.com/coins/images/35977/large/400x400.jpg?1710306253",
+  "current_price": 0.00007463,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 3120040,
+  "high_24h": 0.00008213,
+  "low_24h": 0.0000651,
+  "price_change_24h": 2.5094e-8,
+  "price_change_percentage_24h": 0.03364,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.00057367,
+  "ath_change_percentage": -86.78652,
+  "ath_date": "2024-03-13T11:19:25.755Z",
+  "atl": 0.0000651,
+  "atl_change_percentage": 16.43679,
+  "atl_date": "2024-04-25T04:15:09.032Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:16:36.599Z",
+  "platforms": {
+    "ethereum": "0x571d9b73dc04ed88b4e273e048c8d4848f83b779"
+  }
+}

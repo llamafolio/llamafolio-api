@@ -1,0 +1,31 @@
+{
+  "id": "lfg",
+  "symbol": "@lfg",
+  "name": "LFG",
+  "image": "https://assets.coingecko.com/coins/images/30910/large/LFG.jpg?1696529755",
+  "current_price": 0.03113131,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 13055437,
+  "total_volume": 197965,
+  "high_24h": 0.03269282,
+  "low_24h": 0.02463145,
+  "price_change_24h": -0.001206064558650358,
+  "price_change_percentage_24h": -3.72963,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 420420069,
+  "max_supply": 420420069,
+  "ath": 0.184596,
+  "ath_change_percentage": -83.16849,
+  "ath_date": "2024-04-09T23:30:06.516Z",
+  "atl": 0.00050976,
+  "atl_change_percentage": 5995.04109,
+  "atl_date": "2023-11-15T12:39:58.699Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:39.361Z",
+  "platforms": {
+    "ethereum": "0x40a9a694197a0b4b92f2aad48da6bc1b6ff194e9"
+  }
+}

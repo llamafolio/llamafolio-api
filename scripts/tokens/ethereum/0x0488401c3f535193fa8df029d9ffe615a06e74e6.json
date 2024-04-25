@@ -1,0 +1,31 @@
+{
+  "id": "sparkpoint",
+  "symbol": "srk",
+  "name": "SparkPoint",
+  "image": "https://assets.coingecko.com/coins/images/8371/large/SRK.png?1696508564",
+  "current_price": 0.00016405,
+  "market_cap": 1684397,
+  "market_cap_rank": 2390,
+  "fully_diluted_valuation": 2147083,
+  "total_volume": 24313,
+  "high_24h": 0.00017817,
+  "low_24h": 0.00016247,
+  "price_change_24h": -0.000008459256842387,
+  "price_change_percentage_24h": -4.90356,
+  "market_cap_change_24h": -87076.15407210588,
+  "market_cap_change_percentage_24h": -4.91546,
+  "circulating_supply": 10272790238.0716,
+  "total_supply": 13094612245.2056,
+  "max_supply": null,
+  "ath": 0.02523125,
+  "ath_change_percentage": -99.34922,
+  "ath_date": "2021-03-14T00:28:49.198Z",
+  "atl": 0.0000072,
+  "atl_change_percentage": 2179.29868,
+  "atl_date": "2020-02-12T16:09:11.462Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:37.623Z",
+  "platforms": {
+    "ethereum": "0x0488401c3f535193fa8df029d9ffe615a06e74e6"
+  }
+}

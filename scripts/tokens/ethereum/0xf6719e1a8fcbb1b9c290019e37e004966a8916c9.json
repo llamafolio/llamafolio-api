@@ -1,0 +1,31 @@
+{
+  "id": "polygen",
+  "symbol": "pgen",
+  "name": "Polygen",
+  "image": "https://assets.coingecko.com/coins/images/21476/large/polygen-logo_1.jpeg?1696520837",
+  "current_price": 0.00009,
+  "market_cap": 44797,
+  "market_cap_rank": 4014,
+  "fully_diluted_valuation": 89996,
+  "total_volume": 1.2,
+  "high_24h": 0.00009156,
+  "low_24h": 0.00008995,
+  "price_change_24h": -0.00000114661131569,
+  "price_change_percentage_24h": -1.25804,
+  "market_cap_change_24h": -2959.6568363427214,
+  "market_cap_change_percentage_24h": -6.19735,
+  "circulating_supply": 497769295.20764196,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.051757,
+  "ath_change_percentage": -99.82612,
+  "ath_date": "2021-12-13T00:28:49.762Z",
+  "atl": 0.00006294,
+  "atl_change_percentage": 42.98363,
+  "atl_date": "2023-09-16T13:04:21.954Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:41.730Z",
+  "platforms": {
+    "ethereum": "0xf6719e1a8fcbb1b9c290019e37e004966a8916c9"
+  }
+}

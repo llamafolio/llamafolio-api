@@ -1,0 +1,31 @@
+{
+  "id": "kunji-finance",
+  "symbol": "knj",
+  "name": "Kunji Finance",
+  "image": "https://assets.coingecko.com/coins/images/31651/large/logo_mark_Main_%283%29.png?1696530466",
+  "current_price": 0.160157,
+  "market_cap": 3103590,
+  "market_cap_rank": 2046,
+  "fully_diluted_valuation": 15992674,
+  "total_volume": 1444.53,
+  "high_24h": 0.171182,
+  "low_24h": 0.159789,
+  "price_change_24h": 0.00015805,
+  "price_change_percentage_24h": 0.09878,
+  "market_cap_change_24h": -98815.057081318,
+  "market_cap_change_percentage_24h": -3.08565,
+  "circulating_supply": 19406326,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.650349,
+  "ath_change_percentage": -75.39472,
+  "ath_date": "2024-04-09T07:11:10.391Z",
+  "atl": 0.04500931,
+  "atl_change_percentage": 255.52711,
+  "atl_date": "2023-11-11T06:52:27.135Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:18.919Z",
+  "platforms": {
+    "arbitrum": "0xfbbb21d8e7a461f06e5e27efd69703acb5c732a8"
+  }
+}

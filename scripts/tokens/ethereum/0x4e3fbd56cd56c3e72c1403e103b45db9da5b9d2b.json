@@ -1,0 +1,31 @@
+{
+  "id": "convex-finance",
+  "symbol": "cvx",
+  "name": "Convex Finance",
+  "image": "https://assets.coingecko.com/coins/images/15585/large/convex.png?1696515221",
+  "current_price": 2.55,
+  "market_cap": 209472747,
+  "market_cap_rank": 290,
+  "fully_diluted_valuation": 254319224,
+  "total_volume": 5821747,
+  "high_24h": 2.84,
+  "low_24h": 2.55,
+  "price_change_24h": -0.244446086906001,
+  "price_change_percentage_24h": -8.73849,
+  "market_cap_change_24h": -20305163.72711155,
+  "market_cap_change_percentage_24h": -8.83686,
+  "circulating_supply": 81990703.72425415,
+  "total_supply": 99544272.2550207,
+  "max_supply": 100000000,
+  "ath": 60.09,
+  "ath_change_percentage": -95.74328,
+  "ath_date": "2022-01-01T18:04:03.030Z",
+  "atl": 1.9,
+  "atl_change_percentage": 34.41556,
+  "atl_date": "2021-07-20T13:17:29.183Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:44.929Z",
+  "platforms": {
+    "ethereum": "0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b"
+  }
+}

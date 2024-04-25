@@ -1,0 +1,31 @@
+{
+  "id": "upcx",
+  "symbol": "upc",
+  "name": "UPCX",
+  "image": "https://assets.coingecko.com/coins/images/33308/large/02_UPC_logo_RGB_black_200_200.png?1701409035",
+  "current_price": 1.89,
+  "market_cap": 2060565,
+  "market_cap_rank": 2279,
+  "fully_diluted_valuation": 1474824197,
+  "total_volume": 914115,
+  "high_24h": 2,
+  "low_24h": 1.89,
+  "price_change_24h": -0.09183598054968556,
+  "price_change_percentage_24h": -4.62898,
+  "market_cap_change_24h": -98969.3252869402,
+  "market_cap_change_percentage_24h": -4.5829,
+  "circulating_supply": 1089784.79999995,
+  "total_supply": 780000000,
+  "max_supply": 780000000,
+  "ath": 3.18,
+  "ath_change_percentage": -40.3728,
+  "ath_date": "2023-12-24T15:49:34.474Z",
+  "atl": 1.013,
+  "atl_change_percentage": 87.01753,
+  "atl_date": "2023-12-06T06:31:51.573Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:45.241Z",
+  "platforms": {
+    "ethereum": "0x487d62468282bd04ddf976631c23128a425555ee"
+  }
+}

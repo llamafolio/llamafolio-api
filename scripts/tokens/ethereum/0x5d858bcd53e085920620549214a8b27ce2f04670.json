@@ -1,0 +1,31 @@
+{
+  "id": "pop-chest-token",
+  "symbol": "pop",
+  "name": "POP Network",
+  "image": "https://assets.coingecko.com/coins/images/7281/large/Logo_%28Light_Mode%29_%281%29.png?1696507572",
+  "current_price": 0.0000207,
+  "market_cap": 33125,
+  "market_cap_rank": 4077,
+  "fully_diluted_valuation": 33125,
+  "total_volume": 5.95,
+  "high_24h": 0.00002074,
+  "low_24h": 0.00001766,
+  "price_change_24h": 0.00000301,
+  "price_change_percentage_24h": 17.01208,
+  "market_cap_change_24h": 4952.8,
+  "market_cap_change_percentage_24h": 17.58039,
+  "circulating_supply": 1600000000,
+  "total_supply": 1600000000,
+  "max_supply": null,
+  "ath": 2.51,
+  "ath_change_percentage": -99.99918,
+  "ath_date": "2019-01-12T04:23:39.150Z",
+  "atl": 0.00000156,
+  "atl_change_percentage": 1223.19587,
+  "atl_date": "2019-04-28T00:00:00.000Z",
+  "roi": null,
+  "last_updated": "2024-04-25T03:33:48.176Z",
+  "platforms": {
+    "ethereum": "0x5d858bcd53e085920620549214a8b27ce2f04670"
+  }
+}

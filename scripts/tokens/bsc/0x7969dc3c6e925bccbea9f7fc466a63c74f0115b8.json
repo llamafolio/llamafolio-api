@@ -1,0 +1,31 @@
+{
+  "id": "lion-token",
+  "symbol": "lion",
+  "name": "Lion",
+  "image": "https://assets.coingecko.com/coins/images/15314/large/lion.PNG?1696514964",
+  "current_price": 0.00007344,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 366636,
+  "total_volume": 14266.13,
+  "high_24h": 0.00007724,
+  "low_24h": 0.00006894,
+  "price_change_24h": -0.000003748293959646,
+  "price_change_percentage_24h": -4.85595,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 4999654963,
+  "max_supply": null,
+  "ath": 0.03601896,
+  "ath_change_percentage": -99.79669,
+  "ath_date": "2021-05-09T09:52:39.460Z",
+  "atl": 0.0000164,
+  "atl_change_percentage": 346.4559,
+  "atl_date": "2023-06-15T17:12:39.547Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:23.349Z",
+  "platforms": {
+    "bsc": "0x7969dc3c6e925bccbea9f7fc466a63c74f0115b8"
+  }
+}

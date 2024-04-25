@@ -1,0 +1,31 @@
+{
+  "id": "lcx",
+  "symbol": "lcx",
+  "name": "LCX",
+  "image": "https://assets.coingecko.com/coins/images/9985/large/zRPSu_0o_400x400.jpg?1696510023",
+  "current_price": 0.29445,
+  "market_cap": 225251341,
+  "market_cap_rank": 278,
+  "fully_diluted_valuation": 276102945,
+  "total_volume": 1799787,
+  "high_24h": 0.300534,
+  "low_24h": 0.277717,
+  "price_change_24h": 0.01021458,
+  "price_change_percentage_24h": 3.5937,
+  "market_cap_change_24h": 5873504,
+  "market_cap_change_percentage_24h": 2.67735,
+  "circulating_supply": 775032563.659999,
+  "total_supply": 950000000,
+  "max_supply": null,
+  "ath": 0.563966,
+  "ath_change_percentage": -47.89882,
+  "ath_date": "2021-11-03T20:35:37.124Z",
+  "atl": 0.00007085,
+  "atl_change_percentage": 414614.5082,
+  "atl_date": "2019-11-26T14:14:11.897Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:43.032Z",
+  "platforms": {
+    "ethereum": "0x037a54aab062628c9bbae1fdb1583c195585fe41"
+  }
+}

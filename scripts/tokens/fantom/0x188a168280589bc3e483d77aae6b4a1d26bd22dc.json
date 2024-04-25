@@ -1,0 +1,31 @@
+{
+  "id": "penguin-karts",
+  "symbol": "pgk",
+  "name": "Penguin Karts",
+  "image": "https://assets.coingecko.com/coins/images/24437/large/pgk-logo-200x200.png?1696523618",
+  "current_price": 0.00001756,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3512.96,
+  "total_volume": 3.58,
+  "high_24h": 0.0000181,
+  "low_24h": 0.00001724,
+  "price_change_24h": -2.76735018699e-7,
+  "price_change_percentage_24h": -1.55107,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 200000000,
+  "max_supply": 200000000,
+  "ath": 0.208033,
+  "ath_change_percentage": -99.99156,
+  "ath_date": "2022-04-20T07:13:12.925Z",
+  "atl": 0.00001157,
+  "atl_change_percentage": 51.81512,
+  "atl_date": "2024-04-22T21:41:05.005Z",
+  "roi": null,
+  "last_updated": "2024-04-24T16:57:03.696Z",
+  "platforms": {
+    "fantom": "0x188a168280589bc3e483d77aae6b4a1d26bd22dc"
+  }
+}

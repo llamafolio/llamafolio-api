@@ -1,0 +1,31 @@
+{
+  "id": "airtor-protocol",
+  "symbol": "ator",
+  "name": "AirTor Protocol",
+  "image": "https://assets.coingecko.com/coins/images/29690/large/AirTor.png?1696528623",
+  "current_price": 2.37,
+  "market_cap": 173322939,
+  "market_cap_rank": 323,
+  "fully_diluted_valuation": 236548555,
+  "total_volume": 1144895,
+  "high_24h": 2.58,
+  "low_24h": 2.35,
+  "price_change_24h": -0.20672392203594336,
+  "price_change_percentage_24h": -8.03337,
+  "market_cap_change_24h": -16026235.696569413,
+  "market_cap_change_percentage_24h": -8.46385,
+  "circulating_supply": 73271611.92861138,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 3.97,
+  "ath_change_percentage": -40.35877,
+  "ath_date": "2024-04-08T12:06:00.759Z",
+  "atl": 0.102292,
+  "atl_change_percentage": 2214.16972,
+  "atl_date": "2023-04-24T13:31:47.968Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:56:08.264Z",
+  "platforms": {
+    "ethereum": "0x0f7b3f5a8fed821c5eb60049538a548db2d479ce"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "liferestart",
+  "symbol": "efil",
+  "name": "LifeRestart (Ordinals)",
+  "image": "https://assets.coingecko.com/coins/images/33491/large/IMG_20231205_030324_844.jpg?1702029765",
+  "current_price": 61.06,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 610845,
+  "total_volume": 136554,
+  "high_24h": 63.63,
+  "low_24h": 59.12,
+  "price_change_24h": 1.84,
+  "price_change_percentage_24h": 3.10844,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000,
+  "max_supply": 10000,
+  "ath": 1269.07,
+  "ath_change_percentage": -95.18976,
+  "ath_date": "2023-12-16T21:41:38.487Z",
+  "atl": 58.27,
+  "atl_change_percentage": 4.77209,
+  "atl_date": "2024-04-23T11:44:30.867Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:07.173Z",
+  "platforms": {
+    "bsc": "0x03cde8c2f3b53add0ca0e34983c86c047985b2be"
+  }
+}

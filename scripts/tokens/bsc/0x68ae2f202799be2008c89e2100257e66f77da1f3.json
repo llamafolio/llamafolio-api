@@ -1,0 +1,31 @@
+{
+  "id": "public-meme-token",
+  "symbol": "pmt",
+  "name": "Public Meme Token",
+  "image": "https://assets.coingecko.com/coins/images/35059/large/PMT-200x200.png?1707237964",
+  "current_price": 0.051552,
+  "market_cap": 829688,
+  "market_cap_rank": 2793,
+  "fully_diluted_valuation": 11134489,
+  "total_volume": 117968,
+  "high_24h": 0.052617,
+  "low_24h": 0.051359,
+  "price_change_24h": 0.00005563,
+  "price_change_percentage_24h": 0.10803,
+  "market_cap_change_24h": 37003,
+  "market_cap_change_percentage_24h": 4.66801,
+  "circulating_supply": 16100595.28260757,
+  "total_supply": 216071410,
+  "max_supply": 2000000000,
+  "ath": 0.053736,
+  "ath_change_percentage": -4.08901,
+  "ath_date": "2024-03-20T20:35:56.462Z",
+  "atl": 0.04857412,
+  "atl_change_percentage": 6.10279,
+  "atl_date": "2024-02-28T17:34:16.179Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:04.154Z",
+  "platforms": {
+    "bsc": "0x68ae2f202799be2008c89e2100257e66f77da1f3"
+  }
+}

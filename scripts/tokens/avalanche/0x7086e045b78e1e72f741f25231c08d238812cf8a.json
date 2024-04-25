@@ -1,0 +1,31 @@
+{
+  "id": "racex",
+  "symbol": "racex",
+  "name": "RaceX",
+  "image": "https://assets.coingecko.com/coins/images/20424/large/logo-1_%281%29.png?1696519831",
+  "current_price": 0.00018813,
+  "market_cap": 139602,
+  "market_cap_rank": 3675,
+  "fully_diluted_valuation": 188129,
+  "total_volume": 108.03,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 742058500,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.01212355,
+  "ath_change_percentage": -98.44824,
+  "ath_date": "2021-11-22T16:06:00.295Z",
+  "atl": 0.0000703,
+  "atl_change_percentage": 167.61683,
+  "atl_date": "2023-09-22T20:02:25.530Z",
+  "roi": null,
+  "last_updated": "2024-04-18T01:37:25.941Z",
+  "platforms": {
+    "avalanche": "0x7086e045b78e1e72f741f25231c08d238812cf8a"
+  }
+}

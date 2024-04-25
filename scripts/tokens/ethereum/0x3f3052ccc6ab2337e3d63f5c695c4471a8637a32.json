@@ -1,0 +1,31 @@
+{
+  "id": "oof",
+  "symbol": "oof",
+  "name": "OOF",
+  "image": "https://assets.coingecko.com/coins/images/32573/large/Oof_logi.jpeg?1698554413",
+  "current_price": 1.9736e-8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 8289009,
+  "total_volume": 190.08,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 420000000000000,
+  "max_supply": 420000000000000,
+  "ath": 8.85407e-7,
+  "ath_change_percentage": -97.771,
+  "ath_date": "2023-10-30T15:59:46.324Z",
+  "atl": 1.8739e-8,
+  "atl_change_percentage": 5.32172,
+  "atl_date": "2024-02-01T14:05:22.887Z",
+  "roi": null,
+  "last_updated": "2024-02-01T22:20:25.674Z",
+  "platforms": {
+    "ethereum": "0x3f3052ccc6ab2337e3d63f5c695c4471a8637a32"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "bsclaunch",
+  "symbol": "bsl",
+  "name": "BSClaunch",
+  "image": "https://assets.coingecko.com/coins/images/16044/large/Logo_BSCLaunch_Final_Expand-03.png?1696515654",
+  "current_price": 0.00187943,
+  "market_cap": 12006.59,
+  "market_cap_rank": 4198,
+  "fully_diluted_valuation": 187496,
+  "total_volume": 135.1,
+  "high_24h": 0.00192674,
+  "low_24h": 0.00184298,
+  "price_change_24h": -0.000011782541408484,
+  "price_change_percentage_24h": -0.62301,
+  "market_cap_change_24h": -137.01272524060914,
+  "market_cap_change_percentage_24h": -1.12827,
+  "circulating_supply": 6403660.414,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 1.023,
+  "ath_change_percentage": -99.81661,
+  "ath_date": "2021-06-04T00:02:21.552Z",
+  "atl": 0.0015116,
+  "atl_change_percentage": 24.14723,
+  "atl_date": "2023-07-10T08:38:39.767Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:06:13.288Z",
+  "platforms": {
+    "bsc": "0xb60501346240fcde1615de56ea9fff1ac1da5673"
+  }
+}

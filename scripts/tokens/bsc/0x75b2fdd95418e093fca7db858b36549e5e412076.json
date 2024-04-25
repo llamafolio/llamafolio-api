@@ -1,0 +1,31 @@
+{
+  "id": "belifex",
+  "symbol": "befx",
+  "name": "Belifex",
+  "image": "https://assets.coingecko.com/coins/images/9547/large/belifex.png?1696509629",
+  "current_price": 0.000254,
+  "market_cap": 11105.76,
+  "market_cap_rank": 4208,
+  "fully_diluted_valuation": 25400,
+  "total_volume": 3525.46,
+  "high_24h": 0.00025528,
+  "low_24h": 0.00025354,
+  "price_change_24h": -4.63696633507e-7,
+  "price_change_percentage_24h": -0.18222,
+  "market_cap_change_24h": -20.27424087098734,
+  "market_cap_change_percentage_24h": -0.18222,
+  "circulating_supply": 43723071.08992056,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.01517373,
+  "ath_change_percentage": -98.32604,
+  "ath_date": "2021-07-27T10:56:27.547Z",
+  "atl": 2.2648e-7,
+  "atl_change_percentage": 112052.23204,
+  "atl_date": "2020-04-16T20:59:16.715Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:53.505Z",
+  "platforms": {
+    "bsc": "0x75b2fdd95418e093fca7db858b36549e5e412076"
+  }
+}

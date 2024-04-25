@@ -1,0 +1,31 @@
+{
+  "id": "crazy-bunny-equity-token",
+  "symbol": "cbunny",
+  "name": "Crazy Bunny Equity",
+  "image": "https://assets.coingecko.com/coins/images/19675/large/500x500px.png?1696519103",
+  "current_price": 1.9388e-8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 19387.58,
+  "total_volume": 2.46,
+  "high_24h": 1.9717e-8,
+  "low_24h": 1.9066e-8,
+  "price_change_24h": -2.65955455e-10,
+  "price_change_percentage_24h": -1.35322,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000,
+  "max_supply": null,
+  "ath": 0.00000415,
+  "ath_change_percentage": -99.5328,
+  "ath_date": "2021-11-01T04:49:12.611Z",
+  "atl": 5.26e-9,
+  "atl_change_percentage": 268.60692,
+  "atl_date": "2022-06-18T20:35:53.127Z",
+  "roi": null,
+  "last_updated": "2024-04-25T04:56:59.047Z",
+  "platforms": {
+    "bsc": "0xaec23008b1098e39c0f8de90bf7431d185efe8b3"
+  }
+}

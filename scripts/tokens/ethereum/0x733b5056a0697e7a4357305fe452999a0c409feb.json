@@ -1,0 +1,31 @@
+{
+  "id": "vcore",
+  "symbol": "vcore",
+  "name": "IMVU",
+  "image": "https://assets.coingecko.com/coins/images/30682/large/VCORE_Logo_200x200.png?1696529551",
+  "current_price": 0.00340824,
+  "market_cap": 2732577,
+  "market_cap_rank": 2123,
+  "fully_diluted_valuation": 27226653,
+  "total_volume": 108045,
+  "high_24h": 0.00371406,
+  "low_24h": 0.00324458,
+  "price_change_24h": -0.000294805908883846,
+  "price_change_percentage_24h": -7.96117,
+  "market_cap_change_24h": -238298.1868273602,
+  "market_cap_change_percentage_24h": -8.02114,
+  "circulating_supply": 802912407,
+  "total_supply": 8000000000,
+  "max_supply": 8000000000,
+  "ath": 0.01483231,
+  "ath_change_percentage": -77.56713,
+  "ath_date": "2024-03-10T20:59:02.370Z",
+  "atl": 0.00179433,
+  "atl_change_percentage": 85.43469,
+  "atl_date": "2024-02-09T19:14:22.380Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:38.710Z",
+  "platforms": {
+    "ethereum": "0x733b5056a0697e7a4357305fe452999a0c409feb"
+  }
+}

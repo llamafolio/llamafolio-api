@@ -1,0 +1,31 @@
+{
+  "id": "coin98-dollar",
+  "symbol": "cusd",
+  "name": "Coin98 Dollar",
+  "image": "https://assets.coingecko.com/coins/images/26588/large/CUSD-01.png?1696525663",
+  "current_price": 0.705819,
+  "market_cap": 32169,
+  "market_cap_rank": 4085,
+  "fully_diluted_valuation": 32169,
+  "total_volume": 34.7,
+  "high_24h": 0.745194,
+  "low_24h": 0.70443,
+  "price_change_24h": -0.033896003470484604,
+  "price_change_percentage_24h": -4.58231,
+  "market_cap_change_24h": -1591.7072884037698,
+  "market_cap_change_percentage_24h": -4.71474,
+  "circulating_supply": 45616,
+  "total_supply": 45616,
+  "max_supply": null,
+  "ath": 1.21,
+  "ath_change_percentage": -41.94487,
+  "ath_date": "2023-10-28T05:23:59.718Z",
+  "atl": 0.446195,
+  "atl_change_percentage": 58.03548,
+  "atl_date": "2023-10-09T14:03:20.658Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:49.793Z",
+  "platforms": {
+    "bsc": "0xfa4ba88cf97e282c505bea095297786c16070129"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "donkey",
+  "symbol": "donk",
+  "name": "Donkey",
+  "image": "https://assets.coingecko.com/coins/images/15330/large/IhfFgnKO_400x400.jpg?1703454550",
+  "current_price": 0.00248327,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 24863,
+  "total_volume": 20765,
+  "high_24h": 0.00280729,
+  "low_24h": 0.00243591,
+  "price_change_24h": -0.000279830919387665,
+  "price_change_percentage_24h": -10.12743,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 1.016,
+  "ath_change_percentage": -99.75617,
+  "ath_date": "2021-05-11T03:54:30.936Z",
+  "atl": 8.67174e-7,
+  "atl_change_percentage": 285472.67864,
+  "atl_date": "2022-04-13T20:36:51.382Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:42.519Z",
+  "platforms": {
+    "bsc": "0x8f9f2c61730932c99fae229a7265851aaaf9d59e"
+  }
+}

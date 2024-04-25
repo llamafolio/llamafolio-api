@@ -1,0 +1,31 @@
+{
+  "id": "chonk-the-cat",
+  "symbol": "chonk",
+  "name": "Chonk The Cat",
+  "image": "https://assets.coingecko.com/coins/images/35943/large/2024-03-10_11.46.03.jpg?1710233570",
+  "current_price": 0.00044797,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 447972,
+  "total_volume": 11662.54,
+  "high_24h": 0.00045082,
+  "low_24h": 0.00041712,
+  "price_change_24h": 0.00003038,
+  "price_change_percentage_24h": 7.27475,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00239021,
+  "ath_change_percentage": -81.27518,
+  "ath_date": "2024-03-27T08:24:14.674Z",
+  "atl": 0.00022676,
+  "atl_change_percentage": 97.3706,
+  "atl_date": "2024-03-23T10:11:15.506Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:04.881Z",
+  "platforms": {
+    "bsc": "0x501d423a828e62f9d331b3a4ee4a7efb1ea40228"
+  }
+}

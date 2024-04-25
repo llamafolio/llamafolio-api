@@ -1,0 +1,31 @@
+{
+  "id": "liza-2",
+  "symbol": "liza",
+  "name": "LIZA",
+  "image": "https://assets.coingecko.com/coins/images/32841/large/Liza.png?1699589053",
+  "current_price": 0.00603825,
+  "market_cap": 4487265,
+  "market_cap_rank": 1850,
+  "fully_diluted_valuation": 4487265,
+  "total_volume": 6141.06,
+  "high_24h": 0.00664293,
+  "low_24h": 0.0060456,
+  "price_change_24h": -0.000582986939836334,
+  "price_change_percentage_24h": -8.8048,
+  "market_cap_change_24h": -453726.39847318456,
+  "market_cap_change_percentage_24h": -9.1829,
+  "circulating_supply": 743139939.852089,
+  "total_supply": 743139939.852089,
+  "max_supply": 777777777,
+  "ath": 0.0269121,
+  "ath_change_percentage": -77.53577,
+  "ath_date": "2024-03-11T15:39:30.148Z",
+  "atl": 0.0004313,
+  "atl_change_percentage": 1301.70049,
+  "atl_date": "2023-11-15T04:04:31.541Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:49:50.618Z",
+  "platforms": {
+    "ethereum": "0x8b227d72570d3ead66014bca8305cbef7f90d1ee"
+  }
+}

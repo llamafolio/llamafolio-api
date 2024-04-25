@@ -1,0 +1,31 @@
+{
+  "id": "aave-amm-uniusdcweth",
+  "symbol": "aammuniusdcweth",
+  "name": "Aave AMM UniUSDCWETH",
+  "image": "https://assets.coingecko.com/coins/images/17219/large/aAmmUniUSDCWETH.png?1696516774",
+  "current_price": 262609669,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 81.4,
+  "total_volume": 0,
+  "high_24h": 268012563,
+  "low_24h": 260287786,
+  "price_change_24h": -4677366.03411907,
+  "price_change_percentage_24h": -1.75832,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 3.09979423356e-7,
+  "max_supply": null,
+  "ath": 293918271,
+  "ath_change_percentage": -10.8142,
+  "ath_date": "2024-03-12T00:10:24.790Z",
+  "atl": 119099853,
+  "atl_change_percentage": 120.09545,
+  "atl_date": "2022-06-18T21:00:56.353Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:32.044Z",
+  "platforms": {
+    "ethereum": "0x391e86e2c002c70dee155eaceb88f7a3c38f5976"
+  }
+}

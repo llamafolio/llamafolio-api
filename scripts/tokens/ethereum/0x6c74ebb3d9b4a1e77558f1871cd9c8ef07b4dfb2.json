@@ -1,0 +1,31 @@
+{
+  "id": "the-autism-token",
+  "symbol": "tism",
+  "name": "The Autism Token",
+  "image": "https://assets.coingecko.com/coins/images/32794/large/tism_logo_resized.png?1699445572",
+  "current_price": 0.0000266,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 27.2,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.00067528,
+  "ath_change_percentage": -96.06143,
+  "ath_date": "2023-11-08T13:45:12.611Z",
+  "atl": 0.00001415,
+  "atl_change_percentage": 87.94669,
+  "atl_date": "2023-12-18T16:35:57.346Z",
+  "roi": null,
+  "last_updated": "2024-04-23T07:30:43.266Z",
+  "platforms": {
+    "ethereum": "0x6c74ebb3d9b4a1e77558f1871cd9c8ef07b4dfb2"
+  }
+}

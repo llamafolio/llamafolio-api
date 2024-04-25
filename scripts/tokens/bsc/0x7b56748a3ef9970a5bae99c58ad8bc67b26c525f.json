@@ -1,0 +1,31 @@
+{
+  "id": "chappyz",
+  "symbol": "chapz",
+  "name": "Chappyz",
+  "image": "https://assets.coingecko.com/coins/images/32728/large/Chappyz200x200.png?1699217057",
+  "current_price": 0.00277655,
+  "market_cap": 6592256,
+  "market_cap_rank": 1655,
+  "fully_diluted_valuation": 27801178,
+  "total_volume": 1146918,
+  "high_24h": 0.00355699,
+  "low_24h": 0.00265347,
+  "price_change_24h": -0.000082631273797085,
+  "price_change_percentage_24h": -2.89003,
+  "market_cap_change_24h": -240321.98949318565,
+  "market_cap_change_percentage_24h": -3.5173,
+  "circulating_supply": 2371214676.8606763,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.00981464,
+  "ath_change_percentage": -71.60551,
+  "ath_date": "2024-03-15T02:15:40.500Z",
+  "atl": 0.00162682,
+  "atl_change_percentage": 71.30435,
+  "atl_date": "2024-01-25T16:36:52.536Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:46.864Z",
+  "platforms": {
+    "bsc": "0x7b56748a3ef9970a5bae99c58ad8bc67b26c525f"
+  }
+}

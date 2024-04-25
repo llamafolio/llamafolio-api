@@ -1,0 +1,31 @@
+{
+  "id": "usdfi-stable",
+  "symbol": "stable",
+  "name": "Stable",
+  "image": "https://assets.coingecko.com/coins/images/31148/large/stable_200.png?1696529976",
+  "current_price": 7.08,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 538.64,
+  "high_24h": 12.24,
+  "low_24h": 6.8,
+  "price_change_24h": 0.050061,
+  "price_change_percentage_24h": 0.71162,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 14.19,
+  "ath_change_percentage": -50.08307,
+  "ath_date": "2024-04-07T15:18:06.978Z",
+  "atl": 5.03,
+  "atl_change_percentage": 40.97856,
+  "atl_date": "2023-08-31T21:30:03.174Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:36.275Z",
+  "platforms": {
+    "bsc": "0xa3870fbbeb730ba99e4107051612af3465ca9f5e"
+  }
+}

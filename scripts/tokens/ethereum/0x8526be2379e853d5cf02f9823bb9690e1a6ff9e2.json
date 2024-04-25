@@ -1,0 +1,31 @@
+{
+  "id": "habibi",
+  "symbol": "habibi",
+  "name": "Habibi",
+  "image": "https://assets.coingecko.com/coins/images/30683/large/HABIBI.png?1696529552",
+  "current_price": 5.4711e-8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 48583,
+  "total_volume": 121.59,
+  "high_24h": 5.6672e-8,
+  "low_24h": 5.4656e-8,
+  "price_change_24h": -1.356758419e-9,
+  "price_change_percentage_24h": -2.41986,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 888000000000,
+  "max_supply": 888000000000,
+  "ath": 0.00000414,
+  "ath_change_percentage": -98.67977,
+  "ath_date": "2023-06-09T13:05:43.070Z",
+  "atl": 2.4966e-8,
+  "atl_change_percentage": 119.14485,
+  "atl_date": "2023-10-19T01:46:28.723Z",
+  "roi": null,
+  "last_updated": "2024-04-24T17:09:40.853Z",
+  "platforms": {
+    "ethereum": "0x8526be2379e853d5cf02f9823bb9690e1a6ff9e2"
+  }
+}

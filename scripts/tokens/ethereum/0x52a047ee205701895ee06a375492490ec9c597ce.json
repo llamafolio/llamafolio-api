@@ -1,0 +1,31 @@
+{
+  "id": "pulse-token",
+  "symbol": "pulse",
+  "name": "PulseMarkets",
+  "image": "https://assets.coingecko.com/coins/images/19011/large/photo_2021-11-11_06-24-09.jpg?1696518463",
+  "current_price": 0.02633209,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2633184,
+  "total_volume": 432.68,
+  "high_24h": 0.02648303,
+  "low_24h": 0.02479864,
+  "price_change_24h": 0.00046187,
+  "price_change_percentage_24h": 1.78532,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.55542,
+  "ath_change_percentage": -95.26552,
+  "ath_date": "2022-02-04T16:00:56.335Z",
+  "atl": 0.00221274,
+  "atl_change_percentage": 1088.40311,
+  "atl_date": "2023-06-15T15:22:01.252Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:28.967Z",
+  "platforms": {
+    "ethereum": "0x52a047ee205701895ee06a375492490ec9c597ce"
+  }
+}

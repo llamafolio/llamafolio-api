@@ -1,0 +1,31 @@
+{
+  "id": "foho-coin",
+  "symbol": "foho",
+  "name": "Foho Coin",
+  "image": "https://assets.coingecko.com/coins/images/17933/large/FOHO.Coin_colour-02-1.png?1696517454",
+  "current_price": 0.01284792,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 12847923,
+  "total_volume": 1.75,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.120173,
+  "ath_change_percentage": -89.30885,
+  "ath_date": "2021-12-27T14:41:08.627Z",
+  "atl": 4.06168e-7,
+  "atl_change_percentage": 3163107.8101,
+  "atl_date": "2022-02-17T23:49:33.085Z",
+  "roi": null,
+  "last_updated": "2024-04-23T22:52:32.594Z",
+  "platforms": {
+    "ethereum": "0xdd2e93924bdd4e20c3cf4a8736e5955224fa450e"
+  }
+}

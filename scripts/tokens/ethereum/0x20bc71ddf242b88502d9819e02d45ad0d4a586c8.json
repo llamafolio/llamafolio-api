@@ -1,0 +1,31 @@
+{
+  "id": "gravitron",
+  "symbol": "gtron",
+  "name": "Gravitron",
+  "image": "https://assets.coingecko.com/coins/images/33622/large/photo_2023-12-13_08-36-33.jpg?1702529102",
+  "current_price": 0.00009499,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 94990,
+  "total_volume": 109.16,
+  "high_24h": 0.00010032,
+  "low_24h": 0.00009457,
+  "price_change_24h": -0.000004246585087925,
+  "price_change_percentage_24h": -4.27924,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00072859,
+  "ath_change_percentage": -86.96243,
+  "ath_date": "2023-12-15T23:59:57.077Z",
+  "atl": 0.00000238,
+  "atl_change_percentage": 3889.50738,
+  "atl_date": "2024-01-20T11:49:40.880Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:06:25.049Z",
+  "platforms": {
+    "ethereum": "0x20bc71ddf242b88502d9819e02d45ad0d4a586c8"
+  }
+}

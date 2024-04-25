@@ -1,0 +1,31 @@
+{
+  "id": "wepiggy-coin",
+  "symbol": "wpc",
+  "name": "WePiggy Coin",
+  "image": "https://assets.coingecko.com/coins/images/21914/large/WPC200.png?1696521265",
+  "current_price": 0.000119,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 951996,
+  "total_volume": 119,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 8000000000,
+  "max_supply": null,
+  "ath": 0.00505411,
+  "ath_change_percentage": -97.64549,
+  "ath_date": "2021-12-23T19:09:42.289Z",
+  "atl": 0.00010734,
+  "atl_change_percentage": 10.8652,
+  "atl_date": "2024-01-24T19:00:06.775Z",
+  "roi": null,
+  "last_updated": "2024-03-28T21:49:18.201Z",
+  "platforms": {
+    "ethereum": "0x6f620ec89b8479e97a6985792d0c64f237566746"
+  }
+}

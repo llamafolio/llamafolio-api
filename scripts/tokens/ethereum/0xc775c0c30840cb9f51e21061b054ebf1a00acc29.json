@@ -1,0 +1,31 @@
+{
+  "id": "pastel",
+  "symbol": "psl",
+  "name": "Pastel",
+  "image": "https://assets.coingecko.com/coins/images/14293/large/A4qGwEij_400x400.jpg?1696513990",
+  "current_price": 0.00021182,
+  "market_cap": 2418023,
+  "market_cap_rank": 2187,
+  "fully_diluted_valuation": 3169659,
+  "total_volume": 177239,
+  "high_24h": 0.00022269,
+  "low_24h": 0.00020735,
+  "price_change_24h": -0.000004258815718126,
+  "price_change_percentage_24h": -1.97098,
+  "market_cap_change_24h": -1200.8996774391271,
+  "market_cap_change_percentage_24h": -0.04964,
+  "circulating_supply": 11401807869.7299,
+  "total_supply": 14946030109.0299,
+  "max_supply": 21000000000,
+  "ath": 0.01301828,
+  "ath_change_percentage": -98.37116,
+  "ath_date": "2021-04-05T03:59:10.690Z",
+  "atl": 0.0001,
+  "atl_change_percentage": 112.04708,
+  "atl_date": "2021-06-18T07:52:36.264Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:52.372Z",
+  "platforms": {
+    "ethereum": "0xc775c0c30840cb9f51e21061b054ebf1a00acc29"
+  }
+}

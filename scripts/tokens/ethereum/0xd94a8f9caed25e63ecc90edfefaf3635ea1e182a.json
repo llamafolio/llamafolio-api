@@ -1,0 +1,31 @@
+{
+  "id": "stablecomp",
+  "symbol": "scomp",
+  "name": "Stablecomp",
+  "image": "https://assets.coingecko.com/coins/images/33932/large/token-icon-big.png?1703422228",
+  "current_price": 0.00871339,
+  "market_cap": 168885,
+  "market_cap_rank": 3576,
+  "fully_diluted_valuation": 1738547,
+  "total_volume": 246.53,
+  "high_24h": 0.00879255,
+  "low_24h": 0.00465446,
+  "price_change_24h": 0.00394007,
+  "price_change_percentage_24h": 82.54342,
+  "market_cap_change_24h": 75604,
+  "market_cap_change_percentage_24h": 81.0492,
+  "circulating_supply": 19428298.763,
+  "total_supply": 200000000,
+  "max_supply": 200000000,
+  "ath": 0.100213,
+  "ath_change_percentage": -91.30431,
+  "ath_date": "2024-03-09T22:46:16.784Z",
+  "atl": 0.00165019,
+  "atl_change_percentage": 428.07478,
+  "atl_date": "2024-03-07T00:44:41.177Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:15.039Z",
+  "platforms": {
+    "ethereum": "0xd94a8f9caed25e63ecc90edfefaf3635ea1e182a"
+  }
+}

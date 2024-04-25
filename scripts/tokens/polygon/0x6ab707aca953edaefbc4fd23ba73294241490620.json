@@ -1,0 +1,31 @@
+{
+  "id": "aave-v3-usdt",
+  "symbol": "ausdt",
+  "name": "Aave v3 USDT",
+  "image": "https://assets.coingecko.com/coins/images/32884/large/USDT.PNG?1699768611",
+  "current_price": 1,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 0,
+  "high_24h": 1,
+  "low_24h": 1,
+  "price_change_24h": -0.000299999999999967,
+  "price_change_percentage_24h": -0.02999,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.004,
+  "ath_change_percentage": -0.3418,
+  "ath_date": "2024-01-03T12:15:19.331Z",
+  "atl": 0.9988,
+  "atl_change_percentage": 0.12715,
+  "atl_date": "2024-03-17T12:45:11.160Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:32.504Z",
+  "platforms": {
+    "polygon": "0x6ab707aca953edaefbc4fd23ba73294241490620"
+  }
+}

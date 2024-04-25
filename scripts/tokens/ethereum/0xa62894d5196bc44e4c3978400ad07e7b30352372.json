@@ -1,0 +1,31 @@
+{
+  "id": "xerc20-pro",
+  "symbol": "x",
+  "name": "X",
+  "image": "https://assets.coingecko.com/coins/images/31144/large/X.png?1696529972",
+  "current_price": 4.01231e-7,
+  "market_cap": 386799,
+  "market_cap_rank": 3196,
+  "fully_diluted_valuation": 386799,
+  "total_volume": 6458.91,
+  "high_24h": 4.32191e-7,
+  "low_24h": 3.94588e-7,
+  "price_change_24h": -2.7208940151e-8,
+  "price_change_percentage_24h": -6.3507,
+  "market_cap_change_24h": -27109.311494116904,
+  "market_cap_change_percentage_24h": -6.54959,
+  "circulating_supply": 966082387957,
+  "total_supply": 966082387957,
+  "max_supply": 983041265693,
+  "ath": 0.00002812,
+  "ath_change_percentage": -98.57532,
+  "ath_date": "2023-08-03T03:31:10.556Z",
+  "atl": 4.948e-8,
+  "atl_change_percentage": 709.73702,
+  "atl_date": "2024-01-25T16:15:39.281Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:40.542Z",
+  "platforms": {
+    "ethereum": "0xa62894d5196bc44e4c3978400ad07e7b30352372"
+  }
+}

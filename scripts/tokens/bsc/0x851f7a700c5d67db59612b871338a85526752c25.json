@@ -1,0 +1,31 @@
+{
+  "id": "argon",
+  "symbol": "argon",
+  "name": "Argon",
+  "image": "https://assets.coingecko.com/coins/images/14280/large/200x200-no-bg.png?1696513978",
+  "current_price": 0.00126999,
+  "market_cap": 86864,
+  "market_cap_rank": 3826,
+  "fully_diluted_valuation": 126999,
+  "total_volume": 16891.14,
+  "high_24h": 0.00137469,
+  "low_24h": 0.00126361,
+  "price_change_24h": -0.000084984362044952,
+  "price_change_percentage_24h": -6.27201,
+  "market_cap_change_24h": -5780.259254873934,
+  "market_cap_change_percentage_24h": -6.23923,
+  "circulating_supply": 68396812.21812458,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 0.437525,
+  "ath_change_percentage": -99.7096,
+  "ath_date": "2021-04-02T00:34:40.470Z",
+  "atl": 0.00060171,
+  "atl_change_percentage": 111.16422,
+  "atl_date": "2022-11-14T04:21:27.988Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:11.153Z",
+  "platforms": {
+    "bsc": "0x851f7a700c5d67db59612b871338a85526752c25"
+  }
+}

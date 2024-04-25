@@ -1,0 +1,31 @@
+{
+  "id": "seek-tiger",
+  "symbol": "sti",
+  "name": "Seek Tiger",
+  "image": "https://assets.coingecko.com/coins/images/24628/large/50d6850967efa02b20fb24c6c7ba518.png?1696523799",
+  "current_price": 0.0002789,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 220095,
+  "total_volume": 10185.35,
+  "high_24h": 0.0002933,
+  "low_24h": 0.00027757,
+  "price_change_24h": -0.000011238987213903,
+  "price_change_percentage_24h": -3.87371,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 785500000,
+  "max_supply": null,
+  "ath": 2.52,
+  "ath_change_percentage": -99.98892,
+  "ath_date": "2022-04-11T12:44:09.528Z",
+  "atl": 0.00016984,
+  "atl_change_percentage": 64.20498,
+  "atl_date": "2023-09-21T09:59:21.930Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:36.384Z",
+  "platforms": {
+    "bsc": "0x4f5f7a7dca8ba0a7983381d23dfc5eaf4be9c79a"
+  }
+}

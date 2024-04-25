@@ -1,0 +1,31 @@
+{
+  "id": "wrapped-virgin-gen-0-cryptokitties",
+  "symbol": "wvg0",
+  "name": "Wrapped Virgin Gen-0 CryptoKittties",
+  "image": "https://assets.coingecko.com/coins/images/12875/large/wvg0.png?1696512663",
+  "current_price": 73.34,
+  "market_cap": 90214,
+  "market_cap_rank": 3815,
+  "fully_diluted_valuation": 90214,
+  "total_volume": 147.38,
+  "high_24h": 73.5,
+  "low_24h": 72.45,
+  "price_change_24h": 0.318236,
+  "price_change_percentage_24h": 0.43578,
+  "market_cap_change_24h": -2289.900294787163,
+  "market_cap_change_percentage_24h": -2.47546,
+  "circulating_supply": 1230,
+  "total_supply": 1230,
+  "max_supply": 1230,
+  "ath": 2426.86,
+  "ath_change_percentage": -96.97779,
+  "ath_date": "2021-09-02T22:54:26.252Z",
+  "atl": 45.45,
+  "atl_change_percentage": 61.36091,
+  "atl_date": "2023-10-04T01:11:01.556Z",
+  "roi": null,
+  "last_updated": "2024-04-25T05:57:46.671Z",
+  "platforms": {
+    "ethereum": "0x25c7b64a93eb1261e130ec21a3e9918caa38b611"
+  }
+}

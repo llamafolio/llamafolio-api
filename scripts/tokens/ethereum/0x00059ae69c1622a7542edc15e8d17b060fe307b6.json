@@ -1,0 +1,31 @@
+{
+  "id": "amond",
+  "symbol": "amon",
+  "name": "AmonD",
+  "image": "https://assets.coingecko.com/coins/images/8952/large/AmonD_512x512.png?1696509099",
+  "current_price": 0.00051581,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3921591,
+  "total_volume": 207.52,
+  "high_24h": 0.0005385,
+  "low_24h": 0.00051511,
+  "price_change_24h": -0.000021257108013117,
+  "price_change_percentage_24h": -3.95802,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 7600000000,
+  "max_supply": null,
+  "ath": 0.142539,
+  "ath_change_percentage": -99.63764,
+  "ath_date": "2020-08-30T00:51:16.436Z",
+  "atl": 0.0000768,
+  "atl_change_percentage": 572.51863,
+  "atl_date": "2020-04-04T06:34:22.549Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:32.619Z",
+  "platforms": {
+    "ethereum": "0x00059ae69c1622a7542edc15e8d17b060fe307b6"
+  }
+}

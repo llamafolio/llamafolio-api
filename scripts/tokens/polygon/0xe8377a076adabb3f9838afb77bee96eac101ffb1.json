@@ -1,0 +1,31 @@
+{
+  "id": "metasoccer",
+  "symbol": "msu",
+  "name": "MetaSoccer",
+  "image": "https://assets.coingecko.com/coins/images/21670/large/Om_U3jQg_400x400.jpg?1696521027",
+  "current_price": 0.00187901,
+  "market_cap": 302509,
+  "market_cap_rank": 3322,
+  "fully_diluted_valuation": 609829,
+  "total_volume": 13869.35,
+  "high_24h": 0.00192554,
+  "low_24h": 0.0018738,
+  "price_change_24h": -0.000039432982818205,
+  "price_change_percentage_24h": -2.05547,
+  "market_cap_change_24h": -6397.859603756806,
+  "market_cap_change_percentage_24h": -2.07113,
+  "circulating_supply": 161052962.586744,
+  "total_supply": 324667058.808543,
+  "max_supply": 324667058.808543,
+  "ath": 0.159079,
+  "ath_change_percentage": -98.81992,
+  "ath_date": "2021-12-17T02:41:53.562Z",
+  "atl": 0.00140798,
+  "atl_change_percentage": 33.32998,
+  "atl_date": "2024-02-23T09:09:36.523Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:47.856Z",
+  "platforms": {
+    "polygon": "0xe8377a076adabb3f9838afb77bee96eac101ffb1"
+  }
+}

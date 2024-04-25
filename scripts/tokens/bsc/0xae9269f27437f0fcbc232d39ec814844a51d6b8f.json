@@ -1,0 +1,31 @@
+{
+  "id": "burger-swap",
+  "symbol": "burger",
+  "name": "BurgerCities",
+  "image": "https://assets.coingecko.com/coins/images/12563/large/burger.png?1696512372",
+  "current_price": 0.479832,
+  "market_cap": 15867379,
+  "market_cap_rank": 1222,
+  "fully_diluted_valuation": 25631498,
+  "total_volume": 3459897,
+  "high_24h": 0.5426,
+  "low_24h": 0.477085,
+  "price_change_24h": -0.05611399441173314,
+  "price_change_percentage_24h": -10.47008,
+  "market_cap_change_24h": -1994010.1844627894,
+  "market_cap_change_percentage_24h": -11.1638,
+  "circulating_supply": 33259000,
+  "total_supply": 53725194.1761118,
+  "max_supply": 61000000,
+  "ath": 27.57,
+  "ath_change_percentage": -98.26893,
+  "ath_date": "2021-05-03T01:14:17.638Z",
+  "atl": 0.297787,
+  "atl_change_percentage": 60.24098,
+  "atl_date": "2023-09-11T19:41:46.833Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:24.731Z",
+  "platforms": {
+    "bsc": "0xae9269f27437f0fcbc232d39ec814844a51d6b8f"
+  }
+}

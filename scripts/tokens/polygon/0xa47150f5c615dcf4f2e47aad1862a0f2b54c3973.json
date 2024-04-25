@@ -1,0 +1,31 @@
+{
+  "id": "leap-token",
+  "symbol": "leap",
+  "name": "LEAP Token",
+  "image": "https://assets.coingecko.com/coins/images/27258/large/LEAPtoken_LOGO.png?1696526311",
+  "current_price": 0.0014448,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 288961,
+  "total_volume": 182.47,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 200000000,
+  "max_supply": 200000000,
+  "ath": 1.01,
+  "ath_change_percentage": -99.857,
+  "ath_date": "2022-11-01T06:25:21.803Z",
+  "atl": 0.0000098,
+  "atl_change_percentage": 14638.32827,
+  "atl_date": "2023-12-26T09:44:01.534Z",
+  "roi": null,
+  "last_updated": "2024-03-31T11:57:45.300Z",
+  "platforms": {
+    "polygon": "0xa47150f5c615dcf4f2e47aad1862a0f2b54c3973"
+  }
+}

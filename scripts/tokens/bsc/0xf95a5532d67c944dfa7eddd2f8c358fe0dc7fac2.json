@@ -1,0 +1,31 @@
+{
+  "id": "marblex",
+  "symbol": "mbx",
+  "name": "Marblex",
+  "image": "https://assets.coingecko.com/coins/images/24423/large/AgYzKzLt_400x400.jpg?1696523604",
+  "current_price": 0.79244,
+  "market_cap": 93661506,
+  "market_cap_rank": 490,
+  "fully_diluted_valuation": 255367954,
+  "total_volume": 1851589,
+  "high_24h": 0.855681,
+  "low_24h": 0.790331,
+  "price_change_24h": -0.060635535616869296,
+  "price_change_percentage_24h": -7.10787,
+  "market_cap_change_24h": -7418027.4700059295,
+  "market_cap_change_percentage_24h": -7.3388,
+  "circulating_supply": 118398791.865466,
+  "total_supply": 322814127,
+  "max_supply": 1000000000,
+  "ath": 20.74,
+  "ath_change_percentage": -96.18363,
+  "ath_date": "2022-06-30T23:43:10.298Z",
+  "atl": 0.590058,
+  "atl_change_percentage": 34.12413,
+  "atl_date": "2023-10-13T03:20:06.397Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:23.876Z",
+  "platforms": {
+    "bsc": "0xf95a5532d67c944dfa7eddd2f8c358fe0dc7fac2"
+  }
+}

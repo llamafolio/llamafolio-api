@@ -1,0 +1,31 @@
+{
+  "id": "pollen",
+  "symbol": "pln",
+  "name": "Pollen",
+  "image": "https://assets.coingecko.com/coins/images/21679/large/pln.png?1696521035",
+  "current_price": 0.01017561,
+  "market_cap": 919403,
+  "market_cap_rank": 2730,
+  "fully_diluted_valuation": 1079966,
+  "total_volume": 158991,
+  "high_24h": 0.01097541,
+  "low_24h": 0.00993503,
+  "price_change_24h": -0.0007803301857478,
+  "price_change_percentage_24h": -7.12244,
+  "market_cap_change_24h": -71863.99417659186,
+  "market_cap_change_percentage_24h": -7.24971,
+  "circulating_supply": 90606397.0200433,
+  "total_supply": 106429833.712881,
+  "max_supply": 200000000,
+  "ath": 1.6,
+  "ath_change_percentage": -99.36488,
+  "ath_date": "2021-12-27T15:43:08.554Z",
+  "atl": 0.00195571,
+  "atl_change_percentage": 420.097,
+  "atl_date": "2023-05-01T17:31:31.544Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:38.690Z",
+  "platforms": {
+    "avalanche": "0x7b2b702706d9b361dfe3f00bd138c0cfda7fb2cf"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "ally",
+  "symbol": "aly",
+  "name": "Ally",
+  "image": "https://assets.coingecko.com/coins/images/9619/large/BTf_sTXi_400x400.jpg?1696509692",
+  "current_price": 0.00077461,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 7754132,
+  "total_volume": 13424.57,
+  "high_24h": 0.00079544,
+  "low_24h": 0.00077419,
+  "price_change_24h": -0.000008383292286647,
+  "price_change_percentage_24h": -1.07067,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": null,
+  "ath": 0.04293118,
+  "ath_change_percentage": -98.19666,
+  "ath_date": "2021-05-16T16:09:12.520Z",
+  "atl": 0.00009239,
+  "atl_change_percentage": 737.96436,
+  "atl_date": "2020-03-17T16:19:57.315Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:24.809Z",
+  "platforms": {
+    "ethereum": "0xf2cdf38e24738ba379ffa38d47bc88a941df5627"
+  }
+}

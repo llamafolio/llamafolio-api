@@ -1,0 +1,35 @@
+{
+  "id": "the-abyss",
+  "symbol": "abyss",
+  "name": "Abyss",
+  "image": "https://assets.coingecko.com/coins/images/2105/large/NrFmpxs.png?1696503072",
+  "current_price": 0.00953535,
+  "market_cap": 2184121,
+  "market_cap_rank": 2245,
+  "fully_diluted_valuation": 4849955,
+  "total_volume": 333.98,
+  "high_24h": 0.00988481,
+  "low_24h": 0.00948219,
+  "price_change_24h": -0.000045861176451754,
+  "price_change_percentage_24h": -0.47866,
+  "market_cap_change_24h": -11461.815325521398,
+  "market_cap_change_percentage_24h": -0.52204,
+  "circulating_supply": 229054790.35985115,
+  "total_supply": 508628132,
+  "max_supply": null,
+  "ath": 0.156681,
+  "ath_change_percentage": -93.92035,
+  "ath_date": "2021-02-17T09:26:31.735Z",
+  "atl": 0.00422939,
+  "atl_change_percentage": 125.22468,
+  "atl_date": "2018-12-15T00:00:00.000Z",
+  "roi": {
+    "times": -0.9133149970195683,
+    "currency": "usd",
+    "percentage": -91.33149970195683
+  },
+  "last_updated": "2024-04-25T08:56:07.369Z",
+  "platforms": {
+    "ethereum": "0x0e8d6b471e332f140e7d9dbb99e5e3822f728da6"
+  }
+}

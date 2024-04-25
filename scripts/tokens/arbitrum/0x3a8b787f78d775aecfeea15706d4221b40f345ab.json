@@ -1,0 +1,35 @@
+{
+  "id": "celer-network",
+  "symbol": "celr",
+  "name": "Celer Network",
+  "image": "https://assets.coingecko.com/coins/images/4379/large/Celr.png?1696504978",
+  "current_price": 0.0262094,
+  "market_cap": 147701948,
+  "market_cap_rank": 368,
+  "fully_diluted_valuation": 261629841,
+  "total_volume": 8889881,
+  "high_24h": 0.02951464,
+  "low_24h": 0.02603095,
+  "price_change_24h": -0.002741268045072416,
+  "price_change_percentage_24h": -9.46876,
+  "market_cap_change_24h": -16144305.758654892,
+  "market_cap_change_percentage_24h": -9.85333,
+  "circulating_supply": 5645454935.82688,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.194843,
+  "ath_change_percentage": -86.57725,
+  "ath_date": "2021-09-26T06:49:04.741Z",
+  "atl": 0.00095575,
+  "atl_change_percentage": 2636.43126,
+  "atl_date": "2020-03-13T02:24:17.287Z",
+  "roi": {
+    "times": 2.911850085197558,
+    "currency": "usd",
+    "percentage": 291.1850085197558
+  },
+  "last_updated": "2024-04-25T08:55:51.517Z",
+  "platforms": {
+    "arbitrum": "0x3a8b787f78d775aecfeea15706d4221b40f345ab"
+  }
+}

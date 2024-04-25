@@ -1,0 +1,31 @@
+{
+  "id": "beechat",
+  "symbol": "chat",
+  "name": "BeeChat",
+  "image": "https://assets.coingecko.com/coins/images/14386/large/ezgif-6-b78b8423d870.png?1696514077",
+  "current_price": 0.00009996,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 99965,
+  "total_volume": 0.01506102,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.01988889,
+  "ath_change_percentage": -99.49738,
+  "ath_date": "2023-02-09T18:15:14.175Z",
+  "atl": 0.00001999,
+  "atl_change_percentage": 400.03888,
+  "atl_date": "2023-05-14T09:29:30.936Z",
+  "roi": null,
+  "last_updated": "2024-04-04T19:31:15.920Z",
+  "platforms": {
+    "ethereum": "0x442bc47357919446eabc18c7211e57a13d983469"
+  }
+}

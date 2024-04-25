@@ -1,0 +1,31 @@
+{
+  "id": "polkabridge",
+  "symbol": "pbr",
+  "name": "PolkaBridge",
+  "image": "https://assets.coingecko.com/coins/images/13744/large/symbol-whitebg200x200.png?1696513488",
+  "current_price": 0.075661,
+  "market_cap": 5448407,
+  "market_cap_rank": 1747,
+  "fully_diluted_valuation": 5666030,
+  "total_volume": 2070843,
+  "high_24h": 0.087947,
+  "low_24h": 0.066897,
+  "price_change_24h": 0.00845725,
+  "price_change_percentage_24h": 12.58457,
+  "market_cap_change_24h": 569360,
+  "market_cap_change_percentage_24h": 11.66949,
+  "circulating_supply": 72183409.5675955,
+  "total_supply": 75066595.421389,
+  "max_supply": null,
+  "ath": 3.95,
+  "ath_change_percentage": -98.05694,
+  "ath_date": "2021-11-15T22:25:10.304Z",
+  "atl": 0.02009282,
+  "atl_change_percentage": 281.76502,
+  "atl_date": "2021-01-23T05:04:22.180Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:04.312Z",
+  "platforms": {
+    "polygon": "0x0d6ae2a429df13e44a07cd2969e085e4833f64a0"
+  }
+}

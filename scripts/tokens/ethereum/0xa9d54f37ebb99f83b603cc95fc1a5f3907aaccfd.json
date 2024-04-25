@@ -1,0 +1,31 @@
+{
+  "id": "pikaboss",
+  "symbol": "pika",
+  "name": "Pikaboss",
+  "image": "https://assets.coingecko.com/coins/images/32061/large/logocg.png?1696530858",
+  "current_price": 1.3307e-8,
+  "market_cap": 5576148,
+  "market_cap_rank": 1734,
+  "fully_diluted_valuation": 5576148,
+  "total_volume": 18535.97,
+  "high_24h": 1.5561e-8,
+  "low_24h": 1.3223e-8,
+  "price_change_24h": -3.84114661e-10,
+  "price_change_percentage_24h": -2.80554,
+  "market_cap_change_24h": -184708.96401933953,
+  "market_cap_change_percentage_24h": -3.20628,
+  "circulating_supply": 420690000000000,
+  "total_supply": 420690000000000,
+  "max_supply": 420690000000000,
+  "ath": 2.3946e-8,
+  "ath_change_percentage": -44.58428,
+  "ath_date": "2024-01-17T00:45:55.751Z",
+  "atl": 2.89e-9,
+  "atl_change_percentage": 359.23186,
+  "atl_date": "2023-10-10T23:01:06.439Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:49.519Z",
+  "platforms": {
+    "ethereum": "0xa9d54f37ebb99f83b603cc95fc1a5f3907aaccfd"
+  }
+}

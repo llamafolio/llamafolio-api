@@ -1,0 +1,31 @@
+{
+  "id": "brick",
+  "symbol": "brick",
+  "name": "r/FortNiteBR Bricks",
+  "image": "https://assets.coingecko.com/coins/images/11223/large/Brick.png?1696511154",
+  "current_price": 0.134821,
+  "market_cap": 8625595,
+  "market_cap_rank": 1511,
+  "fully_diluted_valuation": 8625595,
+  "total_volume": 27855,
+  "high_24h": 0.140856,
+  "low_24h": 0.134657,
+  "price_change_24h": -0.005450113470160335,
+  "price_change_percentage_24h": -3.88542,
+  "market_cap_change_24h": -358606.6875711754,
+  "market_cap_change_percentage_24h": -3.99153,
+  "circulating_supply": 64010306.1939994,
+  "total_supply": 64010306.1939994,
+  "max_supply": null,
+  "ath": 0.397713,
+  "ath_change_percentage": -66.09432,
+  "ath_date": "2023-08-11T01:50:28.077Z",
+  "atl": 0.0028667,
+  "atl_change_percentage": 4603.92646,
+  "atl_date": "2023-01-27T16:03:59.282Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:10.685Z",
+  "platforms": {
+    "arbitrum-nova": "0x6dcb98f460457fe4952e12779ba852f82ecc62c1"
+  }
+}

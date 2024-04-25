@@ -1,0 +1,31 @@
+{
+  "id": "aree-shards",
+  "symbol": "aes",
+  "name": "Aree Shards",
+  "image": "https://assets.coingecko.com/coins/images/27231/large/AES_TICKER_200.png?1696526282",
+  "current_price": 0.00144448,
+  "market_cap": 461197,
+  "market_cap_rank": 3104,
+  "fully_diluted_valuation": 1387341,
+  "total_volume": 27071,
+  "high_24h": 0.00148545,
+  "low_24h": 0.00132134,
+  "price_change_24h": -0.0000398772408913,
+  "price_change_percentage_24h": -2.6865,
+  "market_cap_change_24h": -12733.918863990984,
+  "market_cap_change_percentage_24h": -2.68687,
+  "circulating_supply": 319282011.7833177,
+  "total_supply": 960442114.59551,
+  "max_supply": 1000000000,
+  "ath": 0.00654698,
+  "ath_change_percentage": -77.93754,
+  "ath_date": "2023-11-26T17:06:20.348Z",
+  "atl": 0.00100624,
+  "atl_change_percentage": 43.54597,
+  "atl_date": "2023-11-21T05:15:56.015Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:56:54.975Z",
+  "platforms": {
+    "polygon": "0x2a07461a493b994c2a32f549fd185524f306ab38"
+  }
+}

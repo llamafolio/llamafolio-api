@@ -1,0 +1,31 @@
+{
+  "id": "publc",
+  "symbol": "publx",
+  "name": "PUBLC",
+  "image": "https://assets.coingecko.com/coins/images/29074/large/PUBLX_Logo_%28200x200%29.png?1696528040",
+  "current_price": 0.00178102,
+  "market_cap": 554445,
+  "market_cap_rank": 3013,
+  "fully_diluted_valuation": 177862080,
+  "total_volume": 18867.03,
+  "high_24h": 0.00191827,
+  "low_24h": 0.00170599,
+  "price_change_24h": -0.000033435629434406,
+  "price_change_percentage_24h": -1.84274,
+  "market_cap_change_24h": -11026.402588010533,
+  "market_cap_change_percentage_24h": -1.94995,
+  "circulating_supply": 311727464.4416826,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.01290746,
+  "ath_change_percentage": -86.2105,
+  "ath_date": "2024-01-01T23:19:27.688Z",
+  "atl": 0.00069736,
+  "atl_change_percentage": 155.22879,
+  "atl_date": "2023-06-16T01:53:03.116Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:00.127Z",
+  "platforms": {
+    "base": "0xd1f398d6b3e5e2387e413831e206cfeb5fc1dcee"
+  }
+}

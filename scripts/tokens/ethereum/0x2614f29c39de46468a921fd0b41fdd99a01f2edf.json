@@ -1,0 +1,31 @@
+{
+  "id": "helios",
+  "symbol": "hlx",
+  "name": "HELIOS",
+  "image": "https://assets.coingecko.com/coins/images/35650/large/HeliosPNG.png?1709375257",
+  "current_price": 0.00000427,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 5725.23,
+  "total_volume": 35653,
+  "high_24h": 0.00000452,
+  "low_24h": 0.00000308,
+  "price_change_24h": 0.00000119,
+  "price_change_percentage_24h": 38.71409,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1341352391,
+  "max_supply": 1341352391,
+  "ath": 0.00003128,
+  "ath_change_percentage": -86.35534,
+  "ath_date": "2024-03-02T18:04:30.179Z",
+  "atl": 4.78705e-7,
+  "atl_change_percentage": 791.62554,
+  "atl_date": "2024-03-21T03:44:43.243Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:03.421Z",
+  "platforms": {
+    "ethereum": "0x2614f29c39de46468a921fd0b41fdd99a01f2edf"
+  }
+}

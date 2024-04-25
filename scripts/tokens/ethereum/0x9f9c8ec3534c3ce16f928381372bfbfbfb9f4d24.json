@@ -1,0 +1,31 @@
+{
+  "id": "graphlinq-protocol",
+  "symbol": "glq",
+  "name": "GraphLinq Protocol",
+  "image": "https://assets.coingecko.com/coins/images/14474/large/Logo_Dex_4_correct__%282%29.png?1712018526",
+  "current_price": 0.092383,
+  "market_cap": 31300383,
+  "market_cap_rank": 895,
+  "fully_diluted_valuation": 46029972,
+  "total_volume": 1128970,
+  "high_24h": 0.104681,
+  "low_24h": 0.091481,
+  "price_change_24h": -0.008244056880371317,
+  "price_change_percentage_24h": -8.19269,
+  "market_cap_change_24h": -2702435.296175219,
+  "market_cap_change_percentage_24h": -7.94768,
+  "circulating_supply": 340000000,
+  "total_supply": 499999961.366287,
+  "max_supply": 499999961.366287,
+  "ath": 0.19361,
+  "ath_change_percentage": -52.43488,
+  "ath_date": "2024-03-18T07:54:24.896Z",
+  "atl": 0.00118009,
+  "atl_change_percentage": 7703.7244,
+  "atl_date": "2022-06-18T20:00:31.663Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:40.825Z",
+  "platforms": {
+    "ethereum": "0x9f9c8ec3534c3ce16f928381372bfbfbfb9f4d24"
+  }
+}

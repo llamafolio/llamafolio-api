@@ -1,0 +1,31 @@
+{
+  "id": "tronclassic",
+  "symbol": "trxc",
+  "name": "TronClassic",
+  "image": "https://assets.coingecko.com/coins/images/4626/large/trxc.png?1696505197",
+  "current_price": 1.61547e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 161547,
+  "total_volume": 45.57,
+  "high_24h": 1.66306e-7,
+  "low_24h": 1.60222e-7,
+  "price_change_24h": -3.126976851e-9,
+  "price_change_percentage_24h": -1.89889,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000,
+  "max_supply": null,
+  "ath": 0.0090441,
+  "ath_change_percentage": -99.99821,
+  "ath_date": "2019-05-31T22:30:39.753Z",
+  "atl": 2.578e-9,
+  "atl_change_percentage": 6167.05682,
+  "atl_date": "2020-03-16T15:25:41.577Z",
+  "roi": null,
+  "last_updated": "2024-04-24T17:35:51.261Z",
+  "platforms": {
+    "ethereum": "0xad5fe5b0b8ec8ff4565204990e4405b2da117d8e"
+  }
+}

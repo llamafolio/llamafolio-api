@@ -1,0 +1,31 @@
+{
+  "id": "basis-cash",
+  "symbol": "bac",
+  "name": "Basis Cash",
+  "image": "https://assets.coingecko.com/coins/images/13246/large/BAC.png?1696513021",
+  "current_price": 0.00369083,
+  "market_cap": 201880,
+  "market_cap_rank": 3486,
+  "fully_diluted_valuation": 201880,
+  "total_volume": 15646.18,
+  "high_24h": 0.00372515,
+  "low_24h": 0.00368406,
+  "price_change_24h": -0.000015682153329638,
+  "price_change_percentage_24h": -0.4231,
+  "market_cap_change_24h": -546.4155043258506,
+  "market_cap_change_percentage_24h": -0.26993,
+  "circulating_supply": 54575249.8269909,
+  "total_supply": 54575249.8269909,
+  "max_supply": 54575249.8269909,
+  "ath": 1010.99,
+  "ath_change_percentage": -99.99964,
+  "ath_date": "2020-11-30T10:46:21.320Z",
+  "atl": 0.00174706,
+  "atl_change_percentage": 110.98187,
+  "atl_date": "2023-08-16T10:30:45.906Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:23.617Z",
+  "platforms": {
+    "ethereum": "0x3449fc1cd036255ba1eb19d65ff4ba2b8903a69a"
+  }
+}

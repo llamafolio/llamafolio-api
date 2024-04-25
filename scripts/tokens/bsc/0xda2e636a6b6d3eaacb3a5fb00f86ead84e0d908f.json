@@ -1,0 +1,31 @@
+{
+  "id": "equilibrium-exchange",
+  "symbol": "edx",
+  "name": "Equilibrium Exchange",
+  "image": "https://assets.coingecko.com/coins/images/29435/large/logo.png?1696528383",
+  "current_price": 0.00007909,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 15817.95,
+  "total_volume": 17653.26,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 200000000,
+  "max_supply": 200000000,
+  "ath": 0.01218948,
+  "ath_change_percentage": -99.35116,
+  "ath_date": "2023-03-14T22:36:03.394Z",
+  "atl": 0.00007009,
+  "atl_change_percentage": 12.84279,
+  "atl_date": "2023-06-05T15:59:54.039Z",
+  "roi": null,
+  "last_updated": "2023-06-07T22:20:45.344Z",
+  "platforms": {
+    "bsc": "0xda2e636a6b6d3eaacb3a5fb00f86ead84e0d908f"
+  }
+}

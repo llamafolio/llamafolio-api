@@ -1,0 +1,31 @@
+{
+  "id": "vempire-ddao",
+  "symbol": "vemp",
+  "name": "VEMP",
+  "image": "https://assets.coingecko.com/coins/images/18074/large/VEMP_Token_200x200.png?1696517581",
+  "current_price": 0.00695556,
+  "market_cap": 1931229,
+  "market_cap_rank": 2314,
+  "fully_diluted_valuation": 5610907,
+  "total_volume": 256930,
+  "high_24h": 0.00715998,
+  "low_24h": 0.00691327,
+  "price_change_24h": -0.000008208716084165,
+  "price_change_percentage_24h": -0.11788,
+  "market_cap_change_24h": -355.6351245890837,
+  "market_cap_change_percentage_24h": -0.01841,
+  "circulating_supply": 278073446.89924437,
+  "total_supply": 807902261.3775,
+  "max_supply": 810720000,
+  "ath": 0.655693,
+  "ath_change_percentage": -98.93513,
+  "ath_date": "2021-11-20T21:49:05.301Z",
+  "atl": 0.00295462,
+  "atl_change_percentage": 136.31697,
+  "atl_date": "2023-08-23T07:10:11.467Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:21.769Z",
+  "platforms": {
+    "bsc": "0xedf3ce4dd6725650a8e9398e5c6398d061fa7955"
+  }
+}

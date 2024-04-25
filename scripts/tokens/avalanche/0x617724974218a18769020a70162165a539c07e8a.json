@@ -1,0 +1,31 @@
+{
+  "id": "olivecash",
+  "symbol": "olive",
+  "name": "Olive Cash",
+  "image": "https://assets.coingecko.com/coins/images/14880/large/2_%285%29.png?1696514544",
+  "current_price": 0.00081158,
+  "market_cap": 27329,
+  "market_cap_rank": 4103,
+  "fully_diluted_valuation": 27770,
+  "total_volume": 194.58,
+  "high_24h": 0.00083469,
+  "low_24h": 0.00079599,
+  "price_change_24h": -0.000014452445598133,
+  "price_change_percentage_24h": -1.74963,
+  "market_cap_change_24h": -504.4236828567191,
+  "market_cap_change_percentage_24h": -1.81231,
+  "circulating_supply": 33724285.098923475,
+  "total_supply": 34268807.3256213,
+  "max_supply": null,
+  "ath": 1.6,
+  "ath_change_percentage": -99.94929,
+  "ath_date": "2021-05-01T03:41:05.834Z",
+  "atl": 0.00044004,
+  "atl_change_percentage": 84.15519,
+  "atl_date": "2023-09-23T09:31:43.053Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:06:10.934Z",
+  "platforms": {
+    "avalanche": "0x617724974218a18769020a70162165a539c07e8a"
+  }
+}

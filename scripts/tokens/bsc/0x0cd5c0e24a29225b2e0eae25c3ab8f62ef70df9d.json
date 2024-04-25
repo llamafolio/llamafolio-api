@@ -1,0 +1,31 @@
+{
+  "id": "ai-floki",
+  "symbol": "aifloki",
+  "name": "AI Floki",
+  "image": "https://assets.coingecko.com/coins/images/29261/large/uOcyUk9.jpg?1696528215",
+  "current_price": 1.4975e-8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 149746,
+  "total_volume": 671.56,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 10000000000000,
+  "max_supply": 10000000000000,
+  "ath": 5.418e-8,
+  "ath_change_percentage": -72.36139,
+  "ath_date": "2023-03-02T07:09:29.235Z",
+  "atl": 1.156e-9,
+  "atl_change_percentage": 1195.53244,
+  "atl_date": "2023-03-30T13:31:33.991Z",
+  "roi": null,
+  "last_updated": "2023-05-18T20:00:02.794Z",
+  "platforms": {
+    "bsc": "0x0cd5c0e24a29225b2e0eae25c3ab8f62ef70df9d"
+  }
+}

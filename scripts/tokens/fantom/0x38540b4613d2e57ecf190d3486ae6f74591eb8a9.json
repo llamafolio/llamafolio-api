@@ -1,0 +1,31 @@
+{
+  "id": "alium-finance",
+  "symbol": "alm",
+  "name": "Alium Finance",
+  "image": "https://assets.coingecko.com/coins/images/15621/large/alium.png?1696515255",
+  "current_price": 0.00272644,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 962.88,
+  "high_24h": 0.00275942,
+  "low_24h": 0.00263814,
+  "price_change_24h": 0.00005037,
+  "price_change_percentage_24h": 1.88242,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.400301,
+  "ath_change_percentage": -99.33238,
+  "ath_date": "2021-06-10T21:04:39.848Z",
+  "atl": 0.00240277,
+  "atl_change_percentage": 11.22598,
+  "atl_date": "2024-01-25T22:49:49.907Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:27.930Z",
+  "platforms": {
+    "fantom": "0x38540b4613d2e57ecf190d3486ae6f74591eb8a9"
+  }
+}

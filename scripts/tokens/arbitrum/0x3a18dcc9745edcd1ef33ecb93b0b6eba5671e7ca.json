@@ -1,0 +1,31 @@
+{
+  "id": "kujira",
+  "symbol": "kuji",
+  "name": "Kujira",
+  "image": "https://assets.coingecko.com/coins/images/20685/large/kuji-200x200.png?1696520085",
+  "current_price": 1.93,
+  "market_cap": 235982763,
+  "market_cap_rank": 268,
+  "fully_diluted_valuation": 236032915,
+  "total_volume": 930985,
+  "high_24h": 2.1,
+  "low_24h": 1.92,
+  "price_change_24h": -0.16821806688499907,
+  "price_change_percentage_24h": -8.0262,
+  "market_cap_change_24h": -20490064.131721765,
+  "market_cap_change_percentage_24h": -7.98918,
+  "circulating_supply": 122348479.727696,
+  "total_supply": 122374481.990696,
+  "max_supply": 122398170,
+  "ath": 5.56,
+  "ath_change_percentage": -65.26349,
+  "ath_date": "2023-12-14T13:05:04.042Z",
+  "atl": 0.00178701,
+  "atl_change_percentage": 107952.29214,
+  "atl_date": "2022-05-20T01:46:32.095Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:09.383Z",
+  "platforms": {
+    "arbitrum": "0x3a18dcc9745edcd1ef33ecb93b0b6eba5671e7ca"
+  }
+}

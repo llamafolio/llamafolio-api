@@ -1,0 +1,31 @@
+{
+  "id": "stader-sftmx",
+  "symbol": "sftmx",
+  "name": "BeethovenX sFTMX",
+  "image": "https://assets.coingecko.com/coins/images/26586/large/sftmx.png?1709705714",
+  "current_price": 0.806957,
+  "market_cap": 18575360,
+  "market_cap_rank": 1148,
+  "fully_diluted_valuation": 17458126,
+  "total_volume": 103654,
+  "high_24h": 0.852509,
+  "low_24h": 0.801101,
+  "price_change_24h": -0.032986468470243446,
+  "price_change_percentage_24h": -3.92723,
+  "market_cap_change_24h": -873069.5227691866,
+  "market_cap_change_percentage_24h": -4.48915,
+  "circulating_supply": 23068676.97007,
+  "total_supply": 21681187.5988493,
+  "max_supply": null,
+  "ath": 1.35,
+  "ath_change_percentage": -40.04466,
+  "ath_date": "2024-03-25T17:21:08.082Z",
+  "atl": 0.171647,
+  "atl_change_percentage": 372.90833,
+  "atl_date": "2022-11-21T19:51:31.717Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:01.941Z",
+  "platforms": {
+    "fantom": "0xd7028092c830b5c8fce061af2e593413ebbc1fc1"
+  }
+}

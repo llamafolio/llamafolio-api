@@ -1,0 +1,31 @@
+{
+  "id": "patientory",
+  "symbol": "ptoy",
+  "name": "Patientory",
+  "image": "https://assets.coingecko.com/coins/images/746/large/patientory.png?1696501901",
+  "current_price": 0.00865314,
+  "market_cap": 740163,
+  "market_cap_rank": 2859,
+  "fully_diluted_valuation": 865331,
+  "total_volume": 108.08,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 85537014.81342979,
+  "total_supply": 100002000,
+  "max_supply": null,
+  "ath": 0.698799,
+  "ath_change_percentage": -98.76171,
+  "ath_date": "2018-01-04T00:00:00.000Z",
+  "atl": 0.00062222,
+  "atl_change_percentage": 1290.69642,
+  "atl_date": "2024-01-01T14:52:03.383Z",
+  "roi": null,
+  "last_updated": "2024-04-18T22:50:03.260Z",
+  "platforms": {
+    "ethereum": "0x8ae4bf2c33a8e667de34b54938b0ccd03eb8cc06"
+  }
+}

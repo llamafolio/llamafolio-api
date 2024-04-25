@@ -1,0 +1,31 @@
+{
+  "id": "benqi-liquid-staked-avax",
+  "symbol": "savax",
+  "name": "BENQI Liquid Staked AVAX",
+  "image": "https://assets.coingecko.com/coins/images/23657/large/savax_blue.png?1696522860",
+  "current_price": 40.14,
+  "market_cap": 264456879,
+  "market_cap_rank": 242,
+  "fully_diluted_valuation": 264456879,
+  "total_volume": 3632484,
+  "high_24h": 44.56,
+  "low_24h": 40.05,
+  "price_change_24h": -4.163532735389566,
+  "price_change_percentage_24h": -9.39773,
+  "market_cap_change_24h": -27374460.776509702,
+  "market_cap_change_percentage_24h": -9.38023,
+  "circulating_supply": 6588348.5260659,
+  "total_supply": 6588348.5260659,
+  "max_supply": null,
+  "ath": 103.55,
+  "ath_change_percentage": -61.3236,
+  "ath_date": "2022-04-02T13:44:54.612Z",
+  "atl": 9.25,
+  "atl_change_percentage": 333.03264,
+  "atl_date": "2023-09-14T12:26:14.318Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:26.891Z",
+  "platforms": {
+    "avalanche": "0x2b2c81e08f1af8835a78bb2a90ae924ace0ea4be"
+  }
+}

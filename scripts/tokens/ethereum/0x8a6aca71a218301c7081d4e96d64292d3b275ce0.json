@@ -1,0 +1,31 @@
+{
+  "id": "s-finance",
+  "symbol": "sfg",
+  "name": "S.Finance",
+  "image": "https://assets.coingecko.com/coins/images/12605/large/Z7D8B4b.png?1696512414",
+  "current_price": 0.0048222,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 101267,
+  "total_volume": 4309.27,
+  "high_24h": 0.00499944,
+  "low_24h": 0.0044094,
+  "price_change_24h": 0.00031764,
+  "price_change_percentage_24h": 7.05161,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 21000000,
+  "max_supply": null,
+  "ath": 19.01,
+  "ath_change_percentage": -99.97463,
+  "ath_date": "2020-09-25T12:23:40.852Z",
+  "atl": 0.00222511,
+  "atl_change_percentage": 116.71833,
+  "atl_date": "2023-10-21T22:00:52.892Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:27.361Z",
+  "platforms": {
+    "ethereum": "0x8a6aca71a218301c7081d4e96d64292d3b275ce0"
+  }
+}

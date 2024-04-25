@@ -1,0 +1,31 @@
+{
+  "id": "dogeswap",
+  "symbol": "doges",
+  "name": "Dogeswap",
+  "image": "https://assets.coingecko.com/coins/images/12763/large/20200926-220107.png?1696512560",
+  "current_price": 5.42,
+  "market_cap": 82629,
+  "market_cap_rank": 3845,
+  "fully_diluted_valuation": 108272,
+  "total_volume": 1263.45,
+  "high_24h": 5.66,
+  "low_24h": 5.2,
+  "price_change_24h": -0.22530533491709637,
+  "price_change_percentage_24h": -3.98924,
+  "market_cap_change_24h": -3796.745518693191,
+  "market_cap_change_percentage_24h": -4.39305,
+  "circulating_supply": 15263.2912,
+  "total_supply": 20000,
+  "max_supply": null,
+  "ath": 904.51,
+  "ath_change_percentage": -99.40071,
+  "ath_date": "2021-04-20T12:26:00.081Z",
+  "atl": 0.00214858,
+  "atl_change_percentage": 252190.23606,
+  "atl_date": "2024-01-27T13:25:18.760Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:26.705Z",
+  "platforms": {
+    "ethereum": "0xb4fbed161bebcb37afb1cb4a6f7ca18b977ccb25"
+  }
+}

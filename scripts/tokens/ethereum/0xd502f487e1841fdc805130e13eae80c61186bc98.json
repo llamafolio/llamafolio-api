@@ -1,0 +1,31 @@
+{
+  "id": "integral",
+  "symbol": "itgr",
+  "name": "Integral",
+  "image": "https://assets.coingecko.com/coins/images/18381/large/Integral_icon_purple.png?1704724515",
+  "current_price": 0.00800772,
+  "market_cap": 654497,
+  "market_cap_rank": 2916,
+  "fully_diluted_valuation": 2339267,
+  "total_volume": 593792,
+  "high_24h": 0.00825504,
+  "low_24h": 0.00775906,
+  "price_change_24h": -0.000164301502717991,
+  "price_change_percentage_24h": -2.01054,
+  "market_cap_change_24h": -34089.67427406658,
+  "market_cap_change_percentage_24h": -4.95068,
+  "circulating_supply": 83940562.3466514,
+  "total_supply": 300015884.718709,
+  "max_supply": 300000000,
+  "ath": 3.45,
+  "ath_change_percentage": -99.76796,
+  "ath_date": "2021-09-15T18:14:27.862Z",
+  "atl": 0.00455844,
+  "atl_change_percentage": 75.66796,
+  "atl_date": "2023-11-02T08:24:31.270Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:17.592Z",
+  "platforms": {
+    "ethereum": "0xd502f487e1841fdc805130e13eae80c61186bc98"
+  }
+}

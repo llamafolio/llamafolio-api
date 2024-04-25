@@ -1,0 +1,31 @@
+{
+  "id": "kwai",
+  "symbol": "kwai",
+  "name": "KWAI",
+  "image": "https://assets.coingecko.com/coins/images/28599/large/KWAI_Logo.jpg?1696527586",
+  "current_price": 0.18044,
+  "market_cap": 6095048,
+  "market_cap_rank": 1696,
+  "fully_diluted_valuation": 9029700,
+  "total_volume": 8435.72,
+  "high_24h": 0.189622,
+  "low_24h": 0.18052,
+  "price_change_24h": -0.003562222745752575,
+  "price_change_percentage_24h": -1.93597,
+  "market_cap_change_24h": -137494.04621239658,
+  "market_cap_change_percentage_24h": -2.20607,
+  "circulating_supply": 33750000,
+  "total_supply": 50000000,
+  "max_supply": 50000000,
+  "ath": 0.230635,
+  "ath_change_percentage": -21.65385,
+  "ath_date": "2024-04-05T09:10:57.080Z",
+  "atl": 0.02998361,
+  "atl_change_percentage": 502.64184,
+  "atl_date": "2023-06-14T04:27:04.562Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:55.506Z",
+  "platforms": {
+    "bsc": "0x235d650fc6d9eb7d4bac77e128265295a0054304"
+  }
+}

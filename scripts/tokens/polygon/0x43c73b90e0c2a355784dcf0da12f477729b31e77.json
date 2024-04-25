@@ -1,0 +1,31 @@
+{
+  "id": "soil",
+  "symbol": "soil",
+  "name": "Soil",
+  "image": "https://assets.coingecko.com/coins/images/32050/large/SOIL_sygnet_dark_blue.png?1696530847",
+  "current_price": 2.02,
+  "market_cap": 15428142,
+  "market_cap_rank": 1236,
+  "fully_diluted_valuation": 202547521,
+  "total_volume": 305175,
+  "high_24h": 2.41,
+  "low_24h": 2.01,
+  "price_change_24h": -0.22707704313926724,
+  "price_change_percentage_24h": -10.12404,
+  "market_cap_change_24h": -1633130.3085995968,
+  "market_cap_change_percentage_24h": -9.57215,
+  "circulating_supply": 7617048.160078378,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 3.97,
+  "ath_change_percentage": -49.22484,
+  "ath_date": "2024-03-28T21:54:06.813Z",
+  "atl": 0.095669,
+  "atl_change_percentage": 2008.79652,
+  "atl_date": "2023-10-11T14:00:26.130Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:21.179Z",
+  "platforms": {
+    "polygon": "0x43c73b90e0c2a355784dcf0da12f477729b31e77"
+  }
+}

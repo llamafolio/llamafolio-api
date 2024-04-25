@@ -1,0 +1,31 @@
+{
+  "id": "tribeone",
+  "symbol": "haka",
+  "name": "TribeOne",
+  "image": "https://assets.coingecko.com/coins/images/16575/large/USqW1QX.png?1696516136",
+  "current_price": 0.01253247,
+  "market_cap": 1771180,
+  "market_cap_rank": 2368,
+  "fully_diluted_valuation": 2364170,
+  "total_volume": 345762,
+  "high_24h": 0.01347733,
+  "low_24h": 0.01251508,
+  "price_change_24h": -0.000759206460358514,
+  "price_change_percentage_24h": -5.7119,
+  "market_cap_change_24h": -102703.1006113966,
+  "market_cap_change_percentage_24h": -5.48076,
+  "circulating_supply": 141122556,
+  "total_supply": 188370288,
+  "max_supply": 188370238,
+  "ath": 0.522887,
+  "ath_change_percentage": -97.60322,
+  "ath_date": "2021-11-20T19:20:03.128Z",
+  "atl": 0.00374946,
+  "atl_change_percentage": 234.24699,
+  "atl_date": "2023-10-18T03:30:57.545Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:37.120Z",
+  "platforms": {
+    "ethereum": "0xd85ad783cc94bd04196a13dc042a3054a9b52210"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "popcoin",
+  "symbol": "pop",
+  "name": "Popcoin",
+  "image": "https://assets.coingecko.com/coins/images/28160/large/Popcoin-logo-200x200.png?1696527164",
+  "current_price": 2.54002e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 254003,
+  "total_volume": 12084.19,
+  "high_24h": 2.96034e-7,
+  "low_24h": 2.43289e-7,
+  "price_change_24h": -4.2032670438e-8,
+  "price_change_percentage_24h": -14.19859,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000,
+  "max_supply": 1000000000000,
+  "ath": 0.02500716,
+  "ath_change_percentage": -99.99899,
+  "ath_date": "2022-11-29T12:05:22.837Z",
+  "atl": 1.69889e-7,
+  "atl_change_percentage": 49.35479,
+  "atl_date": "2023-08-03T23:19:21.896Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:38.934Z",
+  "platforms": {
+    "bsc": "0x63bc9770ea9a2f21df6cc1224d64d8dec9c61a74"
+  }
+}

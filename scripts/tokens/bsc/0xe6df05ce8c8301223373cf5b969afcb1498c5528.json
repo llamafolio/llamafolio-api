@@ -1,0 +1,31 @@
+{
+  "id": "bnb48-club-token",
+  "symbol": "koge",
+  "name": "KOGE",
+  "image": "https://assets.coingecko.com/coins/images/13827/large/bnb48.png?1696513570",
+  "current_price": 17.14,
+  "market_cap": 58113065,
+  "market_cap_rank": 635,
+  "fully_diluted_valuation": 58113065,
+  "total_volume": 179142,
+  "high_24h": 17.63,
+  "low_24h": 16.35,
+  "price_change_24h": 0.743836,
+  "price_change_percentage_24h": 4.53695,
+  "market_cap_change_24h": 2863624,
+  "market_cap_change_percentage_24h": 5.18308,
+  "circulating_supply": 3388228.91399526,
+  "total_supply": 3388228.91399526,
+  "max_supply": 3441121.42456221,
+  "ath": 76.94,
+  "ath_change_percentage": -77.80506,
+  "ath_date": "2022-03-25T18:07:48.462Z",
+  "atl": 1.19,
+  "atl_change_percentage": 1333.46281,
+  "atl_date": "2021-02-01T15:55:03.335Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:57.111Z",
+  "platforms": {
+    "bsc": "0xe6df05ce8c8301223373cf5b969afcb1498c5528"
+  }
+}

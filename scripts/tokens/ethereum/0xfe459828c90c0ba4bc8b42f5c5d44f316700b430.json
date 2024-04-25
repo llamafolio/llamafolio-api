@@ -1,0 +1,31 @@
+{
+  "id": "bbs-network",
+  "symbol": "bbs",
+  "name": "BBS Network",
+  "image": "https://assets.coingecko.com/coins/images/23715/large/Ni13Pg1K_400x400.jpg?1696522915",
+  "current_price": 0.02132978,
+  "market_cap": 10652664,
+  "market_cap_rank": 1403,
+  "fully_diluted_valuation": 21329780,
+  "total_volume": 47274,
+  "high_24h": 0.02143943,
+  "low_24h": 0.02072829,
+  "price_change_24h": 0.00049848,
+  "price_change_percentage_24h": 2.39295,
+  "market_cap_change_24h": 248956,
+  "market_cap_change_percentage_24h": 2.39295,
+  "circulating_supply": 499426839,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.174714,
+  "ath_change_percentage": -87.78407,
+  "ath_date": "2022-02-17T15:31:52.976Z",
+  "atl": 0.00523213,
+  "atl_change_percentage": 307.9207,
+  "atl_date": "2023-10-27T22:16:35.822Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:30.156Z",
+  "platforms": {
+    "ethereum": "0xfe459828c90c0ba4bc8b42f5c5d44f316700b430"
+  }
+}

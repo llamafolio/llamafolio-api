@@ -1,0 +1,31 @@
+{
+  "id": "vanity",
+  "symbol": "vny",
+  "name": "Vanity",
+  "image": "https://assets.coingecko.com/coins/images/15899/large/GGkuplD_%281%29.png?1696515514",
+  "current_price": 0.00001802,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 181350,
+  "total_volume": 47.66,
+  "high_24h": 0.00001824,
+  "low_24h": 0.00001766,
+  "price_change_24h": 9.4942e-8,
+  "price_change_percentage_24h": 0.52974,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": null,
+  "ath": 0.00180795,
+  "ath_change_percentage": -99.00092,
+  "ath_date": "2021-08-28T17:07:44.660Z",
+  "atl": 0.00000262,
+  "atl_change_percentage": 589.65621,
+  "atl_date": "2021-07-06T19:04:14.550Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:53.506Z",
+  "platforms": {
+    "bsc": "0xabc69f2025bdb12efcdb8fd048d240fff943ca82"
+  }
+}

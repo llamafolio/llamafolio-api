@@ -1,0 +1,31 @@
+{
+  "id": "avaxtars",
+  "symbol": "avxt",
+  "name": "Avaxtars",
+  "image": "https://assets.coingecko.com/coins/images/18336/large/avxt.PNG?1696517826",
+  "current_price": 0.00031444,
+  "market_cap": 103386,
+  "market_cap_rank": 3770,
+  "fully_diluted_valuation": 94332,
+  "total_volume": 2.15,
+  "high_24h": 0.00034929,
+  "low_24h": 0.000314,
+  "price_change_24h": -0.000032919819634708,
+  "price_change_percentage_24h": -9.47712,
+  "market_cap_change_24h": -10823.81703767278,
+  "market_cap_change_percentage_24h": -9.47712,
+  "circulating_supply": 328793327.47805,
+  "total_supply": 300000000,
+  "max_supply": 1000000000,
+  "ath": 52.5,
+  "ath_change_percentage": -99.9994,
+  "ath_date": "2021-11-19T04:24:16.735Z",
+  "atl": 0.0000345,
+  "atl_change_percentage": 811.52669,
+  "atl_date": "2023-07-19T06:19:53.286Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:11:20.971Z",
+  "platforms": {
+    "avalanche": "0x397bbd6a0e41bdf4c3f971731e180db8ad06ebc1"
+  }
+}

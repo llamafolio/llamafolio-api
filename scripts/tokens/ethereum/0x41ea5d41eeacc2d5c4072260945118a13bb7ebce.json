@@ -1,0 +1,31 @@
+{
+  "id": "creso-2",
+  "symbol": "cre",
+  "name": "Creso",
+  "image": "https://assets.coingecko.com/coins/images/32954/large/CRE.jpg?1699941230",
+  "current_price": 0.00046852,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 33733622,
+  "total_volume": 166690,
+  "high_24h": 0.00054589,
+  "low_24h": 0.00046598,
+  "price_change_24h": -0.00006846244283236,
+  "price_change_percentage_24h": -12.74941,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 72000000000,
+  "max_supply": null,
+  "ath": 0.00171381,
+  "ath_change_percentage": -72.74296,
+  "ath_date": "2024-03-06T06:20:18.460Z",
+  "atl": 0.00015506,
+  "atl_change_percentage": 201.25348,
+  "atl_date": "2023-11-15T00:04:51.013Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:12.991Z",
+  "platforms": {
+    "ethereum": "0x41ea5d41eeacc2d5c4072260945118a13bb7ebce"
+  }
+}

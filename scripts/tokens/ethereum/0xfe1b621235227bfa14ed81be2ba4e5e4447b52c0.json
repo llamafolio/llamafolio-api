@@ -1,0 +1,31 @@
+{
+  "id": "ordinal-tools",
+  "symbol": "ort",
+  "name": "ORDINAL TOOLS",
+  "image": "https://assets.coingecko.com/coins/images/33623/large/photo_2023-12-13_21-16-24.jpg?1702529153",
+  "current_price": 0.00017753,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 17753.17,
+  "total_volume": 16.16,
+  "high_24h": 0.00017753,
+  "low_24h": 0.00017636,
+  "price_change_24h": 0.00000113,
+  "price_change_percentage_24h": 0.63849,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.01630326,
+  "ath_change_percentage": -98.91107,
+  "ath_date": "2023-12-17T11:05:04.931Z",
+  "atl": 0.00016272,
+  "atl_change_percentage": 9.1019,
+  "atl_date": "2024-01-31T12:14:32.727Z",
+  "roi": null,
+  "last_updated": "2024-04-24T10:59:16.123Z",
+  "platforms": {
+    "ethereum": "0xfe1b621235227bfa14ed81be2ba4e5e4447b52c0"
+  }
+}

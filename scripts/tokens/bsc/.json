@@ -1,0 +1,31 @@
+{
+  "id": "uns-token",
+  "symbol": "uns",
+  "name": "UNS Token",
+  "image": "https://assets.coingecko.com/coins/images/29616/large/uns.png?1696528552",
+  "current_price": 0.153628,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 135060,
+  "high_24h": 0.156739,
+  "low_24h": 0.14769,
+  "price_change_24h": -0.00029285391180775,
+  "price_change_percentage_24h": -0.19026,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.289437,
+  "ath_change_percentage": -46.95802,
+  "ath_date": "2023-08-05T20:25:48.525Z",
+  "atl": 0.03697373,
+  "atl_change_percentage": 315.22149,
+  "atl_date": "2023-03-31T13:50:17.303Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:33.480Z",
+  "platforms": {
+    "bsc": ""
+  }
+}

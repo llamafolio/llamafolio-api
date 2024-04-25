@@ -1,0 +1,31 @@
+{
+  "id": "nftb",
+  "symbol": "nftb",
+  "name": "NFTb",
+  "image": "https://assets.coingecko.com/coins/images/15484/large/nftb_logo.png?1696515128",
+  "current_price": 0.01189261,
+  "market_cap": 3699295,
+  "market_cap_rank": 1947,
+  "fully_diluted_valuation": 8640383,
+  "total_volume": 699136,
+  "high_24h": 0.01230598,
+  "low_24h": 0.01152677,
+  "price_change_24h": 0.00030775,
+  "price_change_percentage_24h": 2.65652,
+  "market_cap_change_24h": 116062,
+  "market_cap_change_percentage_24h": 3.23902,
+  "circulating_supply": 310948394.0475532,
+  "total_supply": 726277000,
+  "max_supply": 726277000,
+  "ath": 0.62758,
+  "ath_change_percentage": -98.10133,
+  "ath_date": "2021-11-24T10:49:40.069Z",
+  "atl": 0.00518598,
+  "atl_change_percentage": 129.76724,
+  "atl_date": "2023-11-01T11:21:28.982Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:51.643Z",
+  "platforms": {
+    "bsc": "0xde3dbbe30cfa9f437b293294d1fd64b26045c71a"
+  }
+}

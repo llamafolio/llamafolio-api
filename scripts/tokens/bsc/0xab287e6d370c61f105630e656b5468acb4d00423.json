@@ -1,0 +1,31 @@
+{
+  "id": "binstarter",
+  "symbol": "bsr",
+  "name": "BinStarter",
+  "image": "https://assets.coingecko.com/coins/images/17554/large/BSR200X200.png?1696517090",
+  "current_price": 0.071799,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 6091621,
+  "total_volume": 1435.96,
+  "high_24h": 0.073489,
+  "low_24h": 0.07012,
+  "price_change_24h": -0.000414613178318743,
+  "price_change_percentage_24h": -0.57415,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 84739797,
+  "max_supply": 100000000,
+  "ath": 3.75,
+  "ath_change_percentage": -98.09235,
+  "ath_date": "2021-11-23T02:34:49.859Z",
+  "atl": 0.02609767,
+  "atl_change_percentage": 174.35615,
+  "atl_date": "2023-10-13T07:54:21.430Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:25.187Z",
+  "platforms": {
+    "bsc": "0xab287e6d370c61f105630e656b5468acb4d00423"
+  }
+}

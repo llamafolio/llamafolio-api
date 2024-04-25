@@ -1,0 +1,31 @@
+{
+  "id": "viking-elon",
+  "symbol": "velon",
+  "name": "Viking Elon",
+  "image": "https://assets.coingecko.com/coins/images/25346/large/Viking_Elon_200.png?1696524480",
+  "current_price": 2.0011e-8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2001.11,
+  "total_volume": 5507.49,
+  "high_24h": 2.0062e-8,
+  "low_24h": 1.9955e-8,
+  "price_change_24h": 1.0786e-11,
+  "price_change_percentage_24h": 0.05393,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000000,
+  "max_supply": null,
+  "ath": 0.00000915,
+  "ath_change_percentage": -99.78145,
+  "ath_date": "2022-07-13T12:50:53.833Z",
+  "atl": 6.526e-9,
+  "atl_change_percentage": 206.32494,
+  "atl_date": "2022-07-11T17:24:15.268Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:07:24.101Z",
+  "platforms": {
+    "bsc": "0xe0167c41bea56432f8588a4ceff0f5f3642120e7"
+  }
+}

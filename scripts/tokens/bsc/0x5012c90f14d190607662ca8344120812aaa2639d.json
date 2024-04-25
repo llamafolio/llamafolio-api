@@ -1,0 +1,31 @@
+{
+  "id": "penpie",
+  "symbol": "pnp",
+  "name": "Penpie",
+  "image": "https://assets.coingecko.com/coins/images/30760/large/PNP_Token.png?1696529629",
+  "current_price": 3.71,
+  "market_cap": 17725619,
+  "market_cap_rank": 1164,
+  "fully_diluted_valuation": 37041493,
+  "total_volume": 265439,
+  "high_24h": 4.54,
+  "low_24h": 3.56,
+  "price_change_24h": -0.5380203512223272,
+  "price_change_percentage_24h": -12.66972,
+  "market_cap_change_24h": -2571162.2161458842,
+  "market_cap_change_percentage_24h": -12.66783,
+  "circulating_supply": 4785341.26184534,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 7.01,
+  "ath_change_percentage": -47.14844,
+  "ath_date": "2024-04-12T04:01:42.478Z",
+  "atl": 0.589859,
+  "atl_change_percentage": 528.53351,
+  "atl_date": "2023-09-17T18:36:29.139Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:44.902Z",
+  "platforms": {
+    "bsc": "0x5012c90f14d190607662ca8344120812aaa2639d"
+  }
+}

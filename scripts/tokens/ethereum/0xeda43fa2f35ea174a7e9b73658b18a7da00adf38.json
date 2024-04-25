@@ -1,0 +1,31 @@
+{
+  "id": "namx",
+  "symbol": "namx",
+  "name": "Namx",
+  "image": "https://assets.coingecko.com/coins/images/32437/large/Screenshot_2023-10-18_at_13.20.36.png?1698226504",
+  "current_price": 0.661355,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1588456775,
+  "total_volume": 52553,
+  "high_24h": 0.664516,
+  "low_24h": 0.659995,
+  "price_change_24h": -0.000735968823546762,
+  "price_change_percentage_24h": -0.11116,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2400000000,
+  "max_supply": null,
+  "ath": 6.04,
+  "ath_change_percentage": -89.04087,
+  "ath_date": "2023-10-25T12:30:41.787Z",
+  "atl": 0.230194,
+  "atl_change_percentage": 187.50106,
+  "atl_date": "2024-02-15T09:06:01.147Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:25.854Z",
+  "platforms": {
+    "ethereum": "0xeda43fa2f35ea174a7e9b73658b18a7da00adf38"
+  }
+}

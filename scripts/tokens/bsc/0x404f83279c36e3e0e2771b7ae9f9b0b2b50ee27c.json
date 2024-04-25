@@ -1,0 +1,31 @@
+{
+  "id": "agro-global",
+  "symbol": "agro",
+  "name": "Agro Global Token",
+  "image": "https://assets.coingecko.com/coins/images/21511/large/200x200.png?1696520870",
+  "current_price": 0.00038018,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 36130821,
+  "total_volume": 27113,
+  "high_24h": 0.00039593,
+  "low_24h": 0.00037676,
+  "price_change_24h": -0.000002103017071478,
+  "price_change_percentage_24h": -0.55012,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 95000000000,
+  "max_supply": 95000000000,
+  "ath": 0.00176814,
+  "ath_change_percentage": -78.4271,
+  "ath_date": "2021-12-15T14:27:05.671Z",
+  "atl": 0.00006712,
+  "atl_change_percentage": 468.30857,
+  "atl_date": "2022-03-20T17:56:33.788Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:34.956Z",
+  "platforms": {
+    "bsc": "0x404f83279c36e3e0e2771b7ae9f9b0b2b50ee27c"
+  }
+}

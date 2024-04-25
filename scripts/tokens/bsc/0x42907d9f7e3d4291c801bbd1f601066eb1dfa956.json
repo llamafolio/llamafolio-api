@@ -1,0 +1,31 @@
+{
+  "id": "bless-global-credit",
+  "symbol": "blec",
+  "name": "Bless Global Credit",
+  "image": "https://assets.coingecko.com/coins/images/28977/large/blec_logo.png?1696527950",
+  "current_price": 0.097491,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 1281.23,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": 100000000,
+  "ath": 0.40448,
+  "ath_change_percentage": -75.89719,
+  "ath_date": "2023-03-04T09:24:34.562Z",
+  "atl": 0.08304,
+  "atl_change_percentage": 17.40214,
+  "atl_date": "2023-05-11T12:25:16.262Z",
+  "roi": null,
+  "last_updated": "2023-05-18T12:24:26.390Z",
+  "platforms": {
+    "bsc": "0x42907d9f7e3d4291c801bbd1f601066eb1dfa956"
+  }
+}

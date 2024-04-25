@@ -1,0 +1,31 @@
+{
+  "id": "bonsai-token",
+  "symbol": "bonsai",
+  "name": "Bonsai Token",
+  "image": "https://assets.coingecko.com/coins/images/35884/large/Bonsai_BW_Coingecko-200x200.jpg?1710071621",
+  "current_price": 0.03239593,
+  "market_cap": 8642648,
+  "market_cap_rank": 1508,
+  "fully_diluted_valuation": 33186669,
+  "total_volume": 193382,
+  "high_24h": 0.04637696,
+  "low_24h": 0.03238144,
+  "price_change_24h": -0.013892489078007777,
+  "price_change_percentage_24h": -30.01288,
+  "market_cap_change_24h": -3426248.3321402613,
+  "market_cap_change_percentage_24h": -28.38908,
+  "circulating_supply": 260425292.9254953,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.138541,
+  "ath_change_percentage": -76.0432,
+  "ath_date": "2024-04-10T12:13:40.025Z",
+  "atl": 0.00859018,
+  "atl_change_percentage": 286.37073,
+  "atl_date": "2024-03-19T09:07:57.918Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:29.566Z",
+  "platforms": {
+    "polygon": "0xe9d2fa815b95a9d087862a09079549f351dab9bd"
+  }
+}

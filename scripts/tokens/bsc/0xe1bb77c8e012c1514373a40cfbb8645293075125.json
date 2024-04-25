@@ -1,0 +1,31 @@
+{
+  "id": "sports-artificial",
+  "symbol": "sports-ai",
+  "name": "Sports Artificial",
+  "image": "https://assets.coingecko.com/coins/images/29196/large/IMG_20230220_003747_737.jpg?1696528155",
+  "current_price": 0.00013255,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 13254.85,
+  "total_volume": 74.24,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.00387439,
+  "ath_change_percentage": -96.57885,
+  "ath_date": "2023-02-25T06:04:27.260Z",
+  "atl": 0.00012365,
+  "atl_change_percentage": 7.19735,
+  "atl_date": "2023-05-11T18:45:37.275Z",
+  "roi": null,
+  "last_updated": "2023-05-18T12:30:15.255Z",
+  "platforms": {
+    "bsc": "0xe1bb77c8e012c1514373a40cfbb8645293075125"
+  }
+}

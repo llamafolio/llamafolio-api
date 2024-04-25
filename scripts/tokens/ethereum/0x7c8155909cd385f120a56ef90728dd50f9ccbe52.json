@@ -1,0 +1,31 @@
+{
+  "id": "nahmii",
+  "symbol": "nii",
+  "name": "Nahmii",
+  "image": "https://assets.coingecko.com/coins/images/9786/large/nahmii-sm_icon-full-color.png?1696509845",
+  "current_price": 0.00043283,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 51942404,
+  "total_volume": 29583,
+  "high_24h": 0.00046664,
+  "low_24h": 0.00042754,
+  "price_change_24h": -0.000032861921634183,
+  "price_change_percentage_24h": -7.05654,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 120000000000,
+  "max_supply": null,
+  "ath": 0.02348121,
+  "ath_change_percentage": -98.15524,
+  "ath_date": "2021-09-30T03:11:40.352Z",
+  "atl": 0,
+  "atl_change_percentage": 1.4768022109219e+28,
+  "atl_date": "2022-04-15T13:09:59.861Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:30.142Z",
+  "platforms": {
+    "ethereum": "0x7c8155909cd385f120a56ef90728dd50f9ccbe52"
+  }
+}

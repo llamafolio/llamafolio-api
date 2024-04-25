@@ -1,0 +1,31 @@
+{
+  "id": "lattice-token",
+  "symbol": "ltx",
+  "name": "Lattice",
+  "image": "https://assets.coingecko.com/coins/images/13050/large/Lattice.jpg?1696512835",
+  "current_price": 0.105612,
+  "market_cap": 3385182,
+  "market_cap_rank": 1991,
+  "fully_diluted_valuation": 10550576,
+  "total_volume": 76648,
+  "high_24h": 0.140183,
+  "low_24h": 0.082575,
+  "price_change_24h": -0.012680526557959563,
+  "price_change_percentage_24h": -10.71962,
+  "market_cap_change_24h": -414584.98180279834,
+  "market_cap_change_percentage_24h": -10.9108,
+  "circulating_supply": 32085279.2199152,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 2.79,
+  "ath_change_percentage": -96.21962,
+  "ath_date": "2021-09-27T20:09:19.739Z",
+  "atl": 0.04927715,
+  "atl_change_percentage": 113.68993,
+  "atl_date": "2023-08-23T02:05:40.022Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:20.157Z",
+  "platforms": {
+    "ethereum": "0xa393473d64d2f9f026b60b6df7859a689715d092"
+  }
+}

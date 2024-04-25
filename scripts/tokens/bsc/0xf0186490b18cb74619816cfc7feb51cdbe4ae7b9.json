@@ -1,0 +1,31 @@
+{
+  "id": "zasset-zusd",
+  "symbol": "zusd",
+  "name": "Zasset zUSD",
+  "image": "https://assets.coingecko.com/coins/images/17664/large/zUSD_200x200.png?1699583794",
+  "current_price": 0.94861,
+  "market_cap": 603050,
+  "market_cap_rank": 2973,
+  "fully_diluted_valuation": 603050,
+  "total_volume": 284.31,
+  "high_24h": 0.951247,
+  "low_24h": 0.942833,
+  "price_change_24h": 0.00291308,
+  "price_change_percentage_24h": 0.30804,
+  "market_cap_change_24h": -2053.360767316306,
+  "market_cap_change_percentage_24h": -0.33934,
+  "circulating_supply": 636600.180132042,
+  "total_supply": 636600.180132042,
+  "max_supply": null,
+  "ath": 1.36,
+  "ath_change_percentage": -30.1144,
+  "ath_date": "2021-08-13T00:49:02.684Z",
+  "atl": 0.523874,
+  "atl_change_percentage": 80.94314,
+  "atl_date": "2023-07-30T17:58:08.561Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:24.251Z",
+  "platforms": {
+    "bsc": "0xf0186490b18cb74619816cfc7feb51cdbe4ae7b9"
+  }
+}

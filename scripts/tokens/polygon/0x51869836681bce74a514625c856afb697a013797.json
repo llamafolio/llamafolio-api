@@ -1,0 +1,31 @@
+{
+  "id": "genesis-worlds",
+  "symbol": "genesis",
+  "name": "Genesis Worlds",
+  "image": "https://assets.coingecko.com/coins/images/19905/large/kKkWmniB_400x400.jpg?1696519325",
+  "current_price": 0.00125707,
+  "market_cap": 103880,
+  "market_cap_rank": 3769,
+  "fully_diluted_valuation": 63322,
+  "total_volume": 29.28,
+  "high_24h": 0.00135243,
+  "low_24h": 0.00125351,
+  "price_change_24h": -0.000045281222461031,
+  "price_change_percentage_24h": -3.47689,
+  "market_cap_change_24h": -3860.7055402954866,
+  "market_cap_change_percentage_24h": -3.58334,
+  "circulating_supply": 82659313,
+  "total_supply": 50386562,
+  "max_supply": null,
+  "ath": 0.485444,
+  "ath_change_percentage": -99.74112,
+  "ath_date": "2021-12-01T14:48:20.022Z",
+  "atl": 0.00038172,
+  "atl_change_percentage": 229.2257,
+  "atl_date": "2023-12-25T18:05:54.706Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:52:19.766Z",
+  "platforms": {
+    "polygon": "0x51869836681bce74a514625c856afb697a013797"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "gitcoin",
+  "symbol": "gtc",
+  "name": "Gitcoin",
+  "image": "https://assets.coingecko.com/coins/images/15810/large/gitcoin.png?1696515429",
+  "current_price": 1.2,
+  "market_cap": 72569489,
+  "market_cap_rank": 566,
+  "fully_diluted_valuation": 119233436,
+  "total_volume": 6648028,
+  "high_24h": 1.33,
+  "low_24h": 1.19,
+  "price_change_24h": -0.10463228304687287,
+  "price_change_percentage_24h": -8.02166,
+  "market_cap_change_24h": -7279691.364331573,
+  "market_cap_change_percentage_24h": -9.1168,
+  "circulating_supply": 60863371.560695864,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 22.37,
+  "ath_change_percentage": -94.64979,
+  "ath_date": "2021-11-27T00:00:00.000Z",
+  "atl": 0.793567,
+  "atl_change_percentage": 50.84128,
+  "atl_date": "2023-08-17T21:46:24.012Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:35.439Z",
+  "platforms": {
+    "ethereum": "0xde30da39c46104798bb5aa3fe8b9e0e1f348163f"
+  }
+}

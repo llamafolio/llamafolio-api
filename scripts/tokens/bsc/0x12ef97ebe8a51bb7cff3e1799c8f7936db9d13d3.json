@@ -1,0 +1,31 @@
+{
+  "id": "onigiri-kitty",
+  "symbol": "oky",
+  "name": "Onigiri Kitty",
+  "image": "https://assets.coingecko.com/coins/images/32506/large/OKY.jpg?1698321668",
+  "current_price": 0.00733637,
+  "market_cap": 792051,
+  "market_cap_rank": 2823,
+  "fully_diluted_valuation": 792051,
+  "total_volume": 2021.07,
+  "high_24h": 0.00752842,
+  "low_24h": 0.00724284,
+  "price_change_24h": -0.000056125041768143,
+  "price_change_percentage_24h": -0.75922,
+  "market_cap_change_24h": -8685.891639603069,
+  "market_cap_change_percentage_24h": -1.08474,
+  "circulating_supply": 108041485.02074817,
+  "total_supply": 108041485.02074817,
+  "max_supply": 111111111,
+  "ath": 0.01614783,
+  "ath_change_percentage": -54.75915,
+  "ath_date": "2023-11-10T06:55:00.242Z",
+  "atl": 0.00630986,
+  "atl_change_percentage": 15.77781,
+  "atl_date": "2024-04-17T16:50:47.830Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:45.223Z",
+  "platforms": {
+    "bsc": "0x12ef97ebe8a51bb7cff3e1799c8f7936db9d13d3"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "phobos-token",
+  "symbol": "pbos",
+  "name": "Phobos Token",
+  "image": "https://assets.coingecko.com/coins/images/28529/large/Phobos_Token_symbol.png?1696527521",
+  "current_price": 0.01661682,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 548355,
+  "total_volume": 92.6,
+  "high_24h": 0.0166366,
+  "low_24h": 0.01410794,
+  "price_change_24h": 0.00247759,
+  "price_change_percentage_24h": 17.52284,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 33000000,
+  "max_supply": 33000000,
+  "ath": 0.203336,
+  "ath_change_percentage": -91.82789,
+  "ath_date": "2023-07-31T11:40:45.805Z",
+  "atl": 0.01213327,
+  "atl_change_percentage": 36.95254,
+  "atl_date": "2024-04-23T01:03:30.569Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:39.671Z",
+  "platforms": {
+    "polygon": "0x421b9b487d5a9b76e4b81809c0f1b9bb8cb24cb9"
+  }
+}

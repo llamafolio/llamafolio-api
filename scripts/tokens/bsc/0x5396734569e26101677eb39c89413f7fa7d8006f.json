@@ -1,0 +1,31 @@
+{
+  "id": "silverstonks",
+  "symbol": "sstx",
+  "name": "Silver Stonks",
+  "image": "https://assets.coingecko.com/coins/images/17000/large/Logo-Silver-Stonks.png?1696516565",
+  "current_price": 2.17319e-7,
+  "market_cap": 162460,
+  "market_cap_rank": 3594,
+  "fully_diluted_valuation": 499833,
+  "total_volume": 0.01282211,
+  "high_24h": 2.18045e-7,
+  "low_24h": 2.15562e-7,
+  "price_change_24h": 1.035e-9,
+  "price_change_percentage_24h": 0.47868,
+  "market_cap_change_24h": 750.31,
+  "market_cap_change_percentage_24h": 0.46398,
+  "circulating_supply": 747566991914.0453,
+  "total_supply": 2300000000000,
+  "max_supply": null,
+  "ath": 0.00000259,
+  "ath_change_percentage": -91.60686,
+  "ath_date": "2021-11-01T23:57:25.341Z",
+  "atl": 1.33964e-13,
+  "atl_change_percentage": 162221334.5697,
+  "atl_date": "2021-07-14T03:45:59.222Z",
+  "roi": null,
+  "last_updated": "2024-04-25T03:31:08.477Z",
+  "platforms": {
+    "bsc": "0x5396734569e26101677eb39c89413f7fa7d8006f"
+  }
+}

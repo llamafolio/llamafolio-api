@@ -1,0 +1,31 @@
+{
+  "id": "quint",
+  "symbol": "quint",
+  "name": "Quint",
+  "image": "https://assets.coingecko.com/coins/images/25194/large/logo-200x200.png?1696524338",
+  "current_price": 0.01599554,
+  "market_cap": 2919320,
+  "market_cap_rank": 2078,
+  "fully_diluted_valuation": 12404331,
+  "total_volume": 78154,
+  "high_24h": 0.02433092,
+  "low_24h": 0.01457355,
+  "price_change_24h": -0.008176484069202617,
+  "price_change_percentage_24h": -33.82623,
+  "market_cap_change_24h": -1542874.3689345964,
+  "market_cap_change_percentage_24h": -34.57658,
+  "circulating_supply": 184511918.00073248,
+  "total_supply": 784000000,
+  "max_supply": 784000000,
+  "ath": 2.8,
+  "ath_change_percentage": -99.46591,
+  "ath_date": "2022-06-01T13:40:57.106Z",
+  "atl": 0.01457355,
+  "atl_change_percentage": 2.47065,
+  "atl_date": "2024-04-25T04:26:19.842Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:16.475Z",
+  "platforms": {
+    "bsc": "0x64619f611248256f7f4b72fe83872f89d5d60d64"
+  }
+}

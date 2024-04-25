@@ -1,0 +1,31 @@
+{
+  "id": "etf-rocks",
+  "symbol": "etf",
+  "name": "ETF Rocks",
+  "image": "https://assets.coingecko.com/coins/images/34633/large/logo-etf-color-200x200.png?1705548981",
+  "current_price": 0.00001937,
+  "market_cap": 31294,
+  "market_cap_rank": 4090,
+  "fully_diluted_valuation": 31294,
+  "total_volume": 4896.23,
+  "high_24h": 0.00002005,
+  "low_24h": 0.00001926,
+  "price_change_24h": -5.54536950452e-7,
+  "price_change_percentage_24h": -2.78277,
+  "market_cap_change_24h": -914.1380400783783,
+  "market_cap_change_percentage_24h": -2.83822,
+  "circulating_supply": 1618000000,
+  "total_supply": 1618000000,
+  "max_supply": 1618000000,
+  "ath": 0.00009162,
+  "ath_change_percentage": -78.90733,
+  "ath_date": "2024-01-18T16:39:27.865Z",
+  "atl": 0.00001913,
+  "atl_change_percentage": 0.99814,
+  "atl_date": "2024-03-15T03:00:26.937Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:16.017Z",
+  "platforms": {
+    "ethereum": "0x4e241a9ec66832a16bceaeb9156e524487f061d7"
+  }
+}

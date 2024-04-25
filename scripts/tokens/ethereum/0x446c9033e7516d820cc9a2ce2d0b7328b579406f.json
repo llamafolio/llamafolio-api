@@ -1,0 +1,35 @@
+{
+  "id": "solve-care",
+  "symbol": "solve",
+  "name": "SOLVE",
+  "image": "https://assets.coingecko.com/coins/images/1768/large/Solve.Token_logo_200_200_wiyhout_BG.png?1696502776",
+  "current_price": 0.02037915,
+  "market_cap": 14960515,
+  "market_cap_rank": 1248,
+  "fully_diluted_valuation": 20382174,
+  "total_volume": 266247,
+  "high_24h": 0.02143099,
+  "low_24h": 0.02007822,
+  "price_change_24h": -0.00062594491845169,
+  "price_change_percentage_24h": -2.97997,
+  "market_cap_change_24h": -590595.7657211125,
+  "market_cap_change_percentage_24h": -3.79777,
+  "circulating_supply": 734000000,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 4.89,
+  "ath_change_percentage": -99.58367,
+  "ath_date": "2018-01-10T00:00:00.000Z",
+  "atl": 0.01736346,
+  "atl_change_percentage": 17.29093,
+  "atl_date": "2023-08-19T11:21:14.815Z",
+  "roi": {
+    "times": -0.7962085193955748,
+    "currency": "usd",
+    "percentage": -79.62085193955748
+  },
+  "last_updated": "2024-04-25T08:59:51.453Z",
+  "platforms": {
+    "ethereum": "0x446c9033e7516d820cc9a2ce2d0b7328b579406f"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "soul-society",
+  "symbol": "hon",
+  "name": "Soul Society",
+  "image": "https://assets.coingecko.com/coins/images/34781/large/symbol-soulsociety-new.png?1706015872",
+  "current_price": 0.00422073,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 135505,
+  "total_volume": 130974,
+  "high_24h": 0.00459031,
+  "low_24h": 0.00400638,
+  "price_change_24h": -0.000279647518354932,
+  "price_change_percentage_24h": -6.21387,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 32354706,
+  "max_supply": 1000000000,
+  "ath": 0.0490922,
+  "ath_change_percentage": -91.4036,
+  "ath_date": "2024-01-23T23:01:22.088Z",
+  "atl": 0.00385926,
+  "atl_change_percentage": 9.35163,
+  "atl_date": "2024-04-19T03:40:31.088Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:32.758Z",
+  "platforms": {
+    "ethereum": "0xebdb54e76bfec9ab4e06ccf6e484e4126f81befc"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "trustfi-network-token",
+  "symbol": "tfi",
+  "name": "TrustFi Network",
+  "image": "https://assets.coingecko.com/coins/images/16297/large/frny3dSs_400x400.jpg?1696515899",
+  "current_price": 0.02014923,
+  "market_cap": 910253,
+  "market_cap_rank": 2737,
+  "fully_diluted_valuation": 2011917,
+  "total_volume": 4001.68,
+  "high_24h": 0.02062057,
+  "low_24h": 0.0199435,
+  "price_change_24h": -0.000105094794362472,
+  "price_change_percentage_24h": -0.51888,
+  "market_cap_change_24h": -6368.655641547055,
+  "market_cap_change_percentage_24h": -0.6948,
+  "circulating_supply": 45175193.22541495,
+  "total_supply": 99850000,
+  "max_supply": 100000000,
+  "ath": 0.523648,
+  "ath_change_percentage": -96.16548,
+  "ath_date": "2021-11-18T00:46:23.729Z",
+  "atl": 0.00619917,
+  "atl_change_percentage": 223.90458,
+  "atl_date": "2023-01-07T16:15:31.785Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:51.381Z",
+  "platforms": {
+    "bsc": "0x7565ab68d3f9dadff127f864103c8c706cf28235"
+  }
+}

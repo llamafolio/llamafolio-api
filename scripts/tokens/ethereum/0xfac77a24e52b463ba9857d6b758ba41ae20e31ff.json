@@ -1,0 +1,31 @@
+{
+  "id": "lsdx-finance",
+  "symbol": "lsd",
+  "name": "LSDx Finance",
+  "image": "https://assets.coingecko.com/coins/images/29519/large/logo.png?1696528462",
+  "current_price": 0.00687805,
+  "market_cap": 371063,
+  "market_cap_rank": 3211,
+  "fully_diluted_valuation": 3433995,
+  "total_volume": 27246,
+  "high_24h": 0.00690871,
+  "low_24h": 0.00683978,
+  "price_change_24h": -0.000001985849846199,
+  "price_change_percentage_24h": -0.02886,
+  "market_cap_change_24h": -197.5719872948248,
+  "market_cap_change_percentage_24h": -0.05322,
+  "circulating_supply": 54027883.15678299,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 0.126178,
+  "ath_change_percentage": -94.55497,
+  "ath_date": "2023-04-04T15:31:10.026Z",
+  "atl": 0.00295467,
+  "atl_change_percentage": 132.52798,
+  "atl_date": "2023-10-22T05:40:33.734Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:39.437Z",
+  "platforms": {
+    "ethereum": "0xfac77a24e52b463ba9857d6b758ba41ae20e31ff"
+  }
+}

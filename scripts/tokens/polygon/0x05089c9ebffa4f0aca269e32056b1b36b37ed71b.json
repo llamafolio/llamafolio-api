@@ -1,0 +1,31 @@
+{
+  "id": "polywhale",
+  "symbol": "krill",
+  "name": "Polywhale",
+  "image": "https://assets.coingecko.com/coins/images/15016/large/2.png?1696514678",
+  "current_price": 0.0009235,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 117.66,
+  "total_volume": 2.11,
+  "high_24h": 0.00093189,
+  "low_24h": 0.00092151,
+  "price_change_24h": -9.58558880675e-7,
+  "price_change_percentage_24h": -0.10369,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 127340.722,
+  "max_supply": null,
+  "ath": 237.19,
+  "ath_change_percentage": -99.99961,
+  "ath_date": "2021-04-30T10:19:19.229Z",
+  "atl": 0.00075478,
+  "atl_change_percentage": 22.41686,
+  "atl_date": "2023-09-11T16:06:15.356Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:36.496Z",
+  "platforms": {
+    "polygon": "0x05089c9ebffa4f0aca269e32056b1b36b37ed71b"
+  }
+}

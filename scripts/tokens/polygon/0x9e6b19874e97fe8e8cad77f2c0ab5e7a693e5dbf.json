@@ -1,0 +1,31 @@
+{
+  "id": "stronghands-finance",
+  "symbol": "ishnd",
+  "name": "StrongHands Finance",
+  "image": "https://assets.coingecko.com/coins/images/20158/large/ISHND_512x512px.png?1696519571",
+  "current_price": 0.0044155,
+  "market_cap": 64072,
+  "market_cap_rank": 3921,
+  "fully_diluted_valuation": 438642,
+  "total_volume": 723.98,
+  "high_24h": 0.00448419,
+  "low_24h": 0.00435796,
+  "price_change_24h": -0.000005534862041174,
+  "price_change_percentage_24h": -0.12519,
+  "market_cap_change_24h": -83.91877039302199,
+  "market_cap_change_percentage_24h": -0.13081,
+  "circulating_supply": 14511414.848344488,
+  "total_supply": 99346969,
+  "max_supply": null,
+  "ath": 3.79,
+  "ath_change_percentage": -99.88389,
+  "ath_date": "2021-11-11T02:30:00.174Z",
+  "atl": 0.00054275,
+  "atl_change_percentage": 710.68287,
+  "atl_date": "2022-02-22T02:33:45.343Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:22.049Z",
+  "platforms": {
+    "polygon": "0x9e6b19874e97fe8e8cad77f2c0ab5e7a693e5dbf"
+  }
+}

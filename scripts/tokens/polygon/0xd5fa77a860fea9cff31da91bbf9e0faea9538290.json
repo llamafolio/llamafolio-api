@@ -1,0 +1,31 @@
+{
+  "id": "dog-collar",
+  "symbol": "collar",
+  "name": "Dog Collar",
+  "image": "https://assets.coingecko.com/coins/images/18324/large/dcLogo.png?1696517815",
+  "current_price": 5.10528e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 510528,
+  "total_volume": 36.52,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": null,
+  "ath": 2.63266e-7,
+  "ath_change_percentage": -99.80608,
+  "ath_date": "2021-11-02T18:20:27.904Z",
+  "atl": 4.19989e-10,
+  "atl_change_percentage": 21.55735,
+  "atl_date": "2024-04-17T23:06:51.038Z",
+  "roi": null,
+  "last_updated": "2024-04-23T11:59:44.278Z",
+  "platforms": {
+    "polygon": "0xd5fa77a860fea9cff31da91bbf9e0faea9538290"
+  }
+}

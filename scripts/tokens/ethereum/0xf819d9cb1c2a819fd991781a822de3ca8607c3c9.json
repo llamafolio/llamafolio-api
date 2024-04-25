@@ -1,0 +1,31 @@
+{
+  "id": "unibot",
+  "symbol": "unibot",
+  "name": "Unibot",
+  "image": "https://assets.coingecko.com/coins/images/30462/large/logonoline_%281%29.png?1696529349",
+  "current_price": 14.48,
+  "market_cap": 14522896,
+  "market_cap_rank": 1264,
+  "fully_diluted_valuation": 14522896,
+  "total_volume": 2428439,
+  "high_24h": 15.77,
+  "low_24h": 14.5,
+  "price_change_24h": -0.7736086547546588,
+  "price_change_percentage_24h": -5.07249,
+  "market_cap_change_24h": -693019.2079979405,
+  "market_cap_change_percentage_24h": -4.55457,
+  "circulating_supply": 1000000,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 236.98,
+  "ath_change_percentage": -93.81201,
+  "ath_date": "2023-08-16T13:34:42.408Z",
+  "atl": 2.46,
+  "atl_change_percentage": 495.07358,
+  "atl_date": "2023-05-22T09:19:33.417Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:14.600Z",
+  "platforms": {
+    "ethereum": "0xf819d9cb1c2a819fd991781a822de3ca8607c3c9"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "wagyu-protocol",
+  "symbol": "wagyu",
+  "name": "Wagyu Protocol",
+  "image": "https://assets.coingecko.com/coins/images/35698/large/200c.png?1709549986",
+  "current_price": 0.076726,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 767259,
+  "total_volume": 787.63,
+  "high_24h": 0.078154,
+  "low_24h": 0.076227,
+  "price_change_24h": -0.001401415516767271,
+  "price_change_percentage_24h": -1.79376,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.183314,
+  "ath_change_percentage": -58.37852,
+  "ath_date": "2024-03-04T16:20:54.530Z",
+  "atl": 0.069097,
+  "atl_change_percentage": 10.42227,
+  "atl_date": "2024-03-19T09:02:40.304Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:15.166Z",
+  "platforms": {
+    "ethereum": "0xf76c15cbf1fa9d60a7af39e660d6d7c62ef8021e"
+  }
+}

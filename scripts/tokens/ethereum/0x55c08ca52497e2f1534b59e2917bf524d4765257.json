@@ -1,0 +1,31 @@
+{
+  "id": "uwu-lend",
+  "symbol": "uwu",
+  "name": "UwU Lend",
+  "image": "https://assets.coingecko.com/coins/images/27408/large/uwu_logo_no-bg_1024.png?1696526449",
+  "current_price": 3.74,
+  "market_cap": 30021103,
+  "market_cap_rank": 912,
+  "fully_diluted_valuation": 59796536,
+  "total_volume": 25751,
+  "high_24h": 3.8,
+  "low_24h": 3.74,
+  "price_change_24h": -0.022875434144939533,
+  "price_change_percentage_24h": -0.60736,
+  "market_cap_change_24h": -214793.05252084509,
+  "market_cap_change_percentage_24h": -0.71039,
+  "circulating_supply": 8032867.33470064,
+  "total_supply": 16000000,
+  "max_supply": 16000000,
+  "ath": 380.72,
+  "ath_change_percentage": -99.01628,
+  "ath_date": "2022-10-01T09:51:24.562Z",
+  "atl": 3.54,
+  "atl_change_percentage": 5.79649,
+  "atl_date": "2024-04-19T02:33:10.482Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:13.102Z",
+  "platforms": {
+    "ethereum": "0x55c08ca52497e2f1534b59e2917bf524d4765257"
+  }
+}

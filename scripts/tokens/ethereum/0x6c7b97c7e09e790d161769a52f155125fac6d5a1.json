@@ -1,0 +1,31 @@
+{
+  "id": "polylauncher",
+  "symbol": "angel",
+  "name": "Polylauncher",
+  "image": "https://assets.coingecko.com/coins/images/17739/large/Polylauncher_-_200_x_200.png?1696517266",
+  "current_price": 0.00190199,
+  "market_cap": 159818,
+  "market_cap_rank": 3601,
+  "fully_diluted_valuation": 380397,
+  "total_volume": 452.26,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 84027033.9963827,
+  "total_supply": 200000000,
+  "max_supply": null,
+  "ath": 0.446586,
+  "ath_change_percentage": -99.57411,
+  "ath_date": "2021-08-17T21:07:55.181Z",
+  "atl": 0.00168995,
+  "atl_change_percentage": 12.54699,
+  "atl_date": "2023-08-24T13:10:29.512Z",
+  "roi": null,
+  "last_updated": "2024-04-19T15:24:08.978Z",
+  "platforms": {
+    "ethereum": "0x6c7b97c7e09e790d161769a52f155125fac6d5a1"
+  }
+}

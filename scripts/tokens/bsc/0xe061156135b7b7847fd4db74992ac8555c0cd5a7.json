@@ -1,0 +1,31 @@
+{
+  "id": "zahnymous",
+  "symbol": "zah",
+  "name": "Zahnymous",
+  "image": "https://assets.coingecko.com/coins/images/30184/large/200x200.png?1696529103",
+  "current_price": 0.00089602,
+  "market_cap": 56920,
+  "market_cap_rank": 3952,
+  "fully_diluted_valuation": 89397,
+  "total_volume": 0.397689,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 63525359.12259138,
+  "total_supply": 99771332,
+  "max_supply": 100000000,
+  "ath": 0.00202108,
+  "ath_change_percentage": -55.6661,
+  "ath_date": "2023-05-18T00:19:47.303Z",
+  "atl": 0.00076843,
+  "atl_change_percentage": 16.6037,
+  "atl_date": "2023-07-07T00:08:13.645Z",
+  "roi": null,
+  "last_updated": "2023-08-02T02:02:56.010Z",
+  "platforms": {
+    "bsc": "0xe061156135b7b7847fd4db74992ac8555c0cd5a7"
+  }
+}

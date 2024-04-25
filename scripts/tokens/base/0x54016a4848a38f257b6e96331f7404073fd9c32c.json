@@ -1,0 +1,31 @@
+{
+  "id": "equalizer-base",
+  "symbol": "scale",
+  "name": "Equalizer (BASE)",
+  "image": "https://assets.coingecko.com/coins/images/32221/large/SCALE_icon_200x200.png?1696835640",
+  "current_price": 0.329485,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 42137,
+  "high_24h": 0.369823,
+  "low_24h": 0.32772,
+  "price_change_24h": -0.03631736704462252,
+  "price_change_percentage_24h": -9.92813,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.789547,
+  "ath_change_percentage": -58.33903,
+  "ath_date": "2024-03-27T07:16:20.538Z",
+  "atl": 0.06424,
+  "atl_change_percentage": 412.03851,
+  "atl_date": "2023-10-13T09:33:07.981Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:47.055Z",
+  "platforms": {
+    "base": "0x54016a4848a38f257b6e96331f7404073fd9c32c"
+  }
+}

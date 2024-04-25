@@ -1,0 +1,31 @@
+{
+  "id": "lfi",
+  "symbol": "lfi",
+  "name": "LFi",
+  "image": "https://assets.coingecko.com/coins/images/31897/large/LFi_Token.png?1696530708",
+  "current_price": 0.277028,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 168017,
+  "high_24h": 0.278867,
+  "low_24h": 0.275448,
+  "price_change_24h": -0.000032456821222271,
+  "price_change_percentage_24h": -0.01171,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 800000000,
+  "max_supply": null,
+  "ath": 0.962947,
+  "ath_change_percentage": -71.23123,
+  "ath_date": "2023-10-16T13:31:10.534Z",
+  "atl": 0.275448,
+  "atl_change_percentage": 0.57379,
+  "atl_date": "2024-04-24T17:45:58.583Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:07:26.824Z",
+  "platforms": {
+    "ethereum": "0x4190818ffeb4c7349fa59eeb08eb6e7ab70d9aa7"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "bifi",
+  "symbol": "bifi",
+  "name": "BiFi",
+  "image": "https://assets.coingecko.com/coins/images/13671/large/ysYIu7Q.png?1696513420",
+  "current_price": 0.00371748,
+  "market_cap": 2157849,
+  "market_cap_rank": 2251,
+  "fully_diluted_valuation": 3707551,
+  "total_volume": 203482,
+  "high_24h": 0.0039622,
+  "low_24h": 0.00366106,
+  "price_change_24h": -0.000074929418051609,
+  "price_change_percentage_24h": -1.97577,
+  "market_cap_change_24h": 30133,
+  "market_cap_change_percentage_24h": 1.41624,
+  "circulating_supply": 580971013.747209,
+  "total_supply": 998206747,
+  "max_supply": 1000000000,
+  "ath": 0.297469,
+  "ath_change_percentage": -98.75026,
+  "ath_date": "2021-08-19T05:22:02.888Z",
+  "atl": 0.00330664,
+  "atl_change_percentage": 12.42827,
+  "atl_date": "2023-10-15T20:20:26.804Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:03.618Z",
+  "platforms": {
+    "ethereum": "0x2791bfd60d232150bff86b39b7146c0eaaa2ba81"
+  }
+}

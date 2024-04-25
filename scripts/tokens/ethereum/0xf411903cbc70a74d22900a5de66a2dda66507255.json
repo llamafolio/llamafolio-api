@@ -1,0 +1,31 @@
+{
+  "id": "verasity",
+  "symbol": "vra",
+  "name": "Verasity",
+  "image": "https://assets.coingecko.com/coins/images/14025/large/VRA.jpg?1696513752",
+  "current_price": 0.00575056,
+  "market_cap": 57825143,
+  "market_cap_rank": 636,
+  "fully_diluted_valuation": 578179557,
+  "total_volume": 9292365,
+  "high_24h": 0.00628953,
+  "low_24h": 0.00568619,
+  "price_change_24h": -0.000406289215382796,
+  "price_change_percentage_24h": -6.59898,
+  "market_cap_change_24h": -3728969.3467183486,
+  "market_cap_change_percentage_24h": -6.05803,
+  "circulating_supply": 10001381139,
+  "total_supply": 100001381139,
+  "max_supply": 100001381139,
+  "ath": 0.086208,
+  "ath_change_percentage": -93.28025,
+  "ath_date": "2021-11-01T00:04:34.118Z",
+  "atl": 0.00199511,
+  "atl_change_percentage": 190.35647,
+  "atl_date": "2021-02-23T11:58:52.567Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:39.555Z",
+  "platforms": {
+    "ethereum": "0xf411903cbc70a74d22900a5de66a2dda66507255"
+  }
+}

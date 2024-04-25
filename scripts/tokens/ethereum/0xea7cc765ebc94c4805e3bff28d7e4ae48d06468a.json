@@ -1,0 +1,31 @@
+{
+  "id": "nearpad",
+  "symbol": "pad",
+  "name": "Pad.Fi",
+  "image": "https://assets.coingecko.com/coins/images/18117/large/pad.fi.png?1696517620",
+  "current_price": 0.01640872,
+  "market_cap": 566969,
+  "market_cap_rank": 3005,
+  "fully_diluted_valuation": 2459329,
+  "total_volume": 17994.02,
+  "high_24h": 0.01653296,
+  "low_24h": 0.0153607,
+  "price_change_24h": 0.00044798,
+  "price_change_percentage_24h": 2.80674,
+  "market_cap_change_24h": 21203,
+  "market_cap_change_percentage_24h": 3.88497,
+  "circulating_supply": 34580691.87917123,
+  "total_supply": 150000000,
+  "max_supply": 150000000,
+  "ath": 3.57,
+  "ath_change_percentage": -99.54076,
+  "ath_date": "2021-11-13T01:12:45.550Z",
+  "atl": 0.00757481,
+  "atl_change_percentage": 116.49202,
+  "atl_date": "2023-08-17T21:50:30.472Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:30.906Z",
+  "platforms": {
+    "ethereum": "0xea7cc765ebc94c4805e3bff28d7e4ae48d06468a"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "sunflower-land",
+  "symbol": "sfl",
+  "name": "Sunflower Land",
+  "image": "https://assets.coingecko.com/coins/images/25514/large/download.png?1696524647",
+  "current_price": 0.086137,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 861206,
+  "total_volume": 7050.08,
+  "high_24h": 0.090846,
+  "low_24h": 0.0852,
+  "price_change_24h": -0.003607414897561223,
+  "price_change_percentage_24h": -4.01964,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 100000000,
+  "ath": 0.547428,
+  "ath_change_percentage": -84.32107,
+  "ath_date": "2022-06-12T05:29:45.189Z",
+  "atl": 0.02677533,
+  "atl_change_percentage": 220.55959,
+  "atl_date": "2023-07-19T09:24:19.244Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:27.914Z",
+  "platforms": {
+    "polygon": "0xd1f9c58e33933a993a3891f8acfe05a68e1afc05"
+  }
+}

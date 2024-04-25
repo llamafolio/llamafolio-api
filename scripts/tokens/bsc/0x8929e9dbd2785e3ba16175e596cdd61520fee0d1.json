@@ -1,0 +1,31 @@
+{
+  "id": "altitude",
+  "symbol": "altd",
+  "name": "Altitude",
+  "image": "https://assets.coingecko.com/coins/images/30114/large/logo.png?1696529036",
+  "current_price": 0.00418958,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 418958,
+  "total_volume": 514.96,
+  "high_24h": 0.0041956,
+  "low_24h": 0.00387506,
+  "price_change_24h": 0.00031217,
+  "price_change_percentage_24h": 8.05092,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.211076,
+  "ath_change_percentage": -98.01513,
+  "ath_date": "2023-09-02T11:05:39.542Z",
+  "atl": 0.00384551,
+  "atl_change_percentage": 8.94707,
+  "atl_date": "2024-03-30T18:15:12.339Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:02.557Z",
+  "platforms": {
+    "bsc": "0x8929e9dbd2785e3ba16175e596cdd61520fee0d1"
+  }
+}

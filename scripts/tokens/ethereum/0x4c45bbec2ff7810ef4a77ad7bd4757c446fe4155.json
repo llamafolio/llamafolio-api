@@ -1,0 +1,31 @@
+{
+  "id": "jungle-labz",
+  "symbol": "jngl",
+  "name": "Jungle Labz",
+  "image": "https://assets.coingecko.com/coins/images/31742/large/Jungle.png?1696530561",
+  "current_price": 0.12784,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1278260,
+  "total_volume": 65451,
+  "high_24h": 0.137243,
+  "low_24h": 0.112466,
+  "price_change_24h": -0.006536980472324151,
+  "price_change_percentage_24h": -4.86466,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 3.41,
+  "ath_change_percentage": -96.2491,
+  "ath_date": "2024-01-19T00:42:43.763Z",
+  "atl": 0.097933,
+  "atl_change_percentage": 30.42704,
+  "atl_date": "2023-09-17T04:59:42.991Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:46.872Z",
+  "platforms": {
+    "ethereum": "0x4c45bbec2ff7810ef4a77ad7bd4757c446fe4155"
+  }
+}

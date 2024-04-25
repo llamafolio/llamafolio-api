@@ -1,0 +1,31 @@
+{
+  "id": "yield-app",
+  "symbol": "yld",
+  "name": "Yield App",
+  "image": "https://assets.coingecko.com/coins/images/13365/large/Google_Play_Store_Icon.png?1696513130",
+  "current_price": 0.086851,
+  "market_cap": 23037395,
+  "market_cap_rank": 1038,
+  "fully_diluted_valuation": 26040534,
+  "total_volume": 405327,
+  "high_24h": 0.08738,
+  "low_24h": 0.082887,
+  "price_change_24h": 0.00374175,
+  "price_change_percentage_24h": 4.50222,
+  "market_cap_change_24h": 976083,
+  "market_cap_change_percentage_24h": 4.42441,
+  "circulating_supply": 265402333.62167677,
+  "total_supply": 300000000,
+  "max_supply": 300000000,
+  "ath": 1.29,
+  "ath_change_percentage": -93.26597,
+  "ath_date": "2021-02-16T06:54:31.749Z",
+  "atl": 0.051342,
+  "atl_change_percentage": 69.08669,
+  "atl_date": "2024-01-09T01:45:38.868Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:14.118Z",
+  "platforms": {
+    "ethereum": "0xf94b5c5651c888d928439ab6514b93944eee6f48"
+  }
+}

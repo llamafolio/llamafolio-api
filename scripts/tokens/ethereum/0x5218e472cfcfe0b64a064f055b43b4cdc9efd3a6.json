@@ -1,0 +1,31 @@
+{
+  "id": "unfederalreserve",
+  "symbol": "ersdl",
+  "name": "Residual Token",
+  "image": "https://assets.coingecko.com/coins/images/12975/large/ERSDL.jpg?1706998787",
+  "current_price": 0.00184411,
+  "market_cap": 695280,
+  "market_cap_rank": 2894,
+  "fully_diluted_valuation": 837739,
+  "total_volume": 1234.88,
+  "high_24h": 0.00194694,
+  "low_24h": 0.00181933,
+  "price_change_24h": -0.000049171393275857,
+  "price_change_percentage_24h": -2.59716,
+  "market_cap_change_24h": -20498.868512294604,
+  "market_cap_change_percentage_24h": -2.86386,
+  "circulating_supply": 377027905.69047374,
+  "total_supply": 454278599.663634,
+  "max_supply": 454278599.663634,
+  "ath": 1.71,
+  "ath_change_percentage": -99.89185,
+  "ath_date": "2021-05-06T16:34:46.943Z",
+  "atl": 0.00049322,
+  "atl_change_percentage": 273.89354,
+  "atl_date": "2023-10-11T21:44:48.664Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:02.726Z",
+  "platforms": {
+    "ethereum": "0x5218e472cfcfe0b64a064f055b43b4cdc9efd3a6"
+  }
+}

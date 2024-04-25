@@ -1,0 +1,31 @@
+{
+  "id": "lube",
+  "symbol": "lube",
+  "name": "LUBE",
+  "image": "https://assets.coingecko.com/coins/images/33070/large/Lube2-icon-200x200.png?1708581050",
+  "current_price": 0.00009771,
+  "market_cap": 6727448,
+  "market_cap_rank": 1643,
+  "fully_diluted_valuation": 6727448,
+  "total_volume": 22530,
+  "high_24h": 0.0001041,
+  "low_24h": 0.00009539,
+  "price_change_24h": -0.000004620475160651,
+  "price_change_percentage_24h": -4.51539,
+  "market_cap_change_24h": -336608.3290251363,
+  "market_cap_change_percentage_24h": -4.76509,
+  "circulating_supply": 69000000000,
+  "total_supply": 69000000000,
+  "max_supply": 69000000000,
+  "ath": 0.00035226,
+  "ath_change_percentage": -72.30715,
+  "ath_date": "2024-03-13T21:38:38.579Z",
+  "atl": 0.00002696,
+  "atl_change_percentage": 261.83276,
+  "atl_date": "2023-12-11T20:13:52.695Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:19.862Z",
+  "platforms": {
+    "linea": "0x1be3735dd0c0eb229fb11094b6c277192349ebbf"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "vinlink",
+  "symbol": "vnlnk",
+  "name": "Vinlink",
+  "image": "https://assets.coingecko.com/coins/images/30139/large/VNLNK_Logo.png?1696529060",
+  "current_price": 0.0000021,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 210046,
+  "total_volume": 59.86,
+  "high_24h": 0.00000211,
+  "low_24h": 0.00000209,
+  "price_change_24h": -1.1276252504e-8,
+  "price_change_percentage_24h": -0.53398,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.00001205,
+  "ath_change_percentage": -82.62281,
+  "ath_date": "2024-01-07T21:59:44.047Z",
+  "atl": 9.97819e-7,
+  "atl_change_percentage": 109.81892,
+  "atl_date": "2023-08-21T08:35:07.303Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:06.496Z",
+  "platforms": {
+    "ethereum": "0x0f1e49d6dcfc9eefcce9d5ae3c660f8ead75061a"
+  }
+}

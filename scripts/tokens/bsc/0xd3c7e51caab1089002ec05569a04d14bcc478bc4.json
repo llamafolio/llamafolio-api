@@ -1,0 +1,31 @@
+{
+  "id": "d3d-social",
+  "symbol": "d3d",
+  "name": "D3D Social",
+  "image": "https://assets.coingecko.com/coins/images/28921/large/LogoD3D.png?1696527896",
+  "current_price": 0.072832,
+  "market_cap": 12122381,
+  "market_cap_rank": 1339,
+  "fully_diluted_valuation": 72527077,
+  "total_volume": 148356,
+  "high_24h": 0.085092,
+  "low_24h": 0.063534,
+  "price_change_24h": 0.00236289,
+  "price_change_percentage_24h": 3.35311,
+  "market_cap_change_24h": 237250,
+  "market_cap_change_percentage_24h": 1.99619,
+  "circulating_supply": 167142833,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.175818,
+  "ath_change_percentage": -58.94795,
+  "ath_date": "2024-03-14T01:14:56.292Z",
+  "atl": 0.01296803,
+  "atl_change_percentage": 456.57501,
+  "atl_date": "2023-06-24T02:27:35.271Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:33.207Z",
+  "platforms": {
+    "bsc": "0xd3c7e51caab1089002ec05569a04d14bcc478bc4"
+  }
+}

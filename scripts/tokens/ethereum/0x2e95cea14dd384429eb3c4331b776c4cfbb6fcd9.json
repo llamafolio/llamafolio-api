@@ -1,0 +1,31 @@
+{
+  "id": "throne",
+  "symbol": "thn",
+  "name": "Throne",
+  "image": "https://assets.coingecko.com/coins/images/16965/large/aXhD3i_g_400x400.jpg?1696516531",
+  "current_price": 0.00191275,
+  "market_cap": 58268,
+  "market_cap_rank": 3946,
+  "fully_diluted_valuation": 3775157,
+  "total_volume": 143517,
+  "high_24h": 0.00254125,
+  "low_24h": 0.00179451,
+  "price_change_24h": -0.000421431300528492,
+  "price_change_percentage_24h": -18.0548,
+  "market_cap_change_24h": -11087.551731732186,
+  "market_cap_change_percentage_24h": -15.98645,
+  "circulating_supply": 30471152.2214,
+  "total_supply": 1974198687,
+  "max_supply": null,
+  "ath": 8.68,
+  "ath_change_percentage": -99.97796,
+  "ath_date": "2021-09-22T14:08:03.234Z",
+  "atl": 0.00179451,
+  "atl_change_percentage": 6.66048,
+  "atl_date": "2024-04-24T17:00:18.959Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:19.137Z",
+  "platforms": {
+    "ethereum": "0x2e95cea14dd384429eb3c4331b776c4cfbb6fcd9"
+  }
+}

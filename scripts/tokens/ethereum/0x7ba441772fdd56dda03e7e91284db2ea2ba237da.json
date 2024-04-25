@@ -1,0 +1,31 @@
+{
+  "id": "alphabyte",
+  "symbol": "$alpha",
+  "name": "ALPHABYTE",
+  "image": "https://assets.coingecko.com/coins/images/35537/large/Alphabyte.jpeg?1709033596",
+  "current_price": 0.00008554,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 8554.25,
+  "total_volume": 89.52,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.01405926,
+  "ath_change_percentage": -99.39156,
+  "ath_date": "2024-02-29T14:51:03.122Z",
+  "atl": 0.00008086,
+  "atl_change_percentage": 5.79269,
+  "atl_date": "2024-04-20T05:36:27.346Z",
+  "roi": null,
+  "last_updated": "2024-04-24T07:10:42.872Z",
+  "platforms": {
+    "ethereum": "0x7ba441772fdd56dda03e7e91284db2ea2ba237da"
+  }
+}

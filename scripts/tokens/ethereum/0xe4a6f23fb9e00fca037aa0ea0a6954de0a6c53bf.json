@@ -1,0 +1,31 @@
+{
+  "id": "tgold",
+  "symbol": "txau",
+  "name": "tGOLD",
+  "image": "https://assets.coingecko.com/coins/images/27828/large/tGOLD_token_2D.jpg?1696526846",
+  "current_price": 74.95,
+  "market_cap": 6947753,
+  "market_cap_rank": 1626,
+  "fully_diluted_valuation": 6947753,
+  "total_volume": 14341.95,
+  "high_24h": 75.31,
+  "low_24h": 74.11,
+  "price_change_24h": 0.541907,
+  "price_change_percentage_24h": 0.72828,
+  "market_cap_change_24h": -6759.699672323652,
+  "market_cap_change_percentage_24h": -0.0972,
+  "circulating_supply": 93398.5,
+  "total_supply": 93398.5,
+  "max_supply": null,
+  "ath": 77.93,
+  "ath_change_percentage": -4.42089,
+  "ath_date": "2024-04-19T05:44:54.227Z",
+  "atl": 20,
+  "atl_change_percentage": 272.43576,
+  "atl_date": "2023-06-03T15:01:53.611Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:52.229Z",
+  "platforms": {
+    "ethereum": "0xe4a6f23fb9e00fca037aa0ea0a6954de0a6c53bf"
+  }
+}

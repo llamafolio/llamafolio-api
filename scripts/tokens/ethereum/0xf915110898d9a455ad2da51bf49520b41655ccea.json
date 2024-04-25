@@ -1,0 +1,31 @@
+{
+  "id": "tai-money",
+  "symbol": "tai",
+  "name": "TAI",
+  "image": "https://assets.coingecko.com/coins/images/30574/large/tai.png?1696529439",
+  "current_price": 1.024,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 51.21,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.36,
+  "ath_change_percentage": -24.80107,
+  "ath_date": "2024-02-29T15:45:21.888Z",
+  "atl": 0.776922,
+  "atl_change_percentage": 31.81524,
+  "atl_date": "2024-04-18T00:36:46.518Z",
+  "roi": null,
+  "last_updated": "2024-04-23T22:30:54.093Z",
+  "platforms": {
+    "ethereum": "0xf915110898d9a455ad2da51bf49520b41655ccea"
+  }
+}

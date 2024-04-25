@@ -1,0 +1,31 @@
+{
+  "id": "pacoca",
+  "symbol": "pacoca",
+  "name": "Pacoca",
+  "image": "https://assets.coingecko.com/coins/images/16567/large/pacoca.PNG?1696516129",
+  "current_price": 0.00094903,
+  "market_cap": 429740,
+  "market_cap_rank": 3147,
+  "fully_diluted_valuation": 169298,
+  "total_volume": 785.75,
+  "high_24h": 0.00096514,
+  "low_24h": 0.00093227,
+  "price_change_24h": -0.000003733668232491,
+  "price_change_percentage_24h": -0.39188,
+  "market_cap_change_24h": -5244.441056468524,
+  "market_cap_change_percentage_24h": -1.20566,
+  "circulating_supply": 455389834.38,
+  "total_supply": 179402622.86,
+  "max_supply": null,
+  "ath": 0.484225,
+  "ath_change_percentage": -99.80496,
+  "ath_date": "2021-10-12T18:55:56.787Z",
+  "atl": 0.00030799,
+  "atl_change_percentage": 206.6482,
+  "atl_date": "2023-10-13T18:11:48.641Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:44.246Z",
+  "platforms": {
+    "bsc": "0x55671114d774ee99d653d6c12460c780a67f1d18"
+  }
+}

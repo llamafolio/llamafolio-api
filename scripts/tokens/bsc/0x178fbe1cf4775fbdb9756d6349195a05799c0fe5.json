@@ -1,0 +1,31 @@
+{
+  "id": "espento",
+  "symbol": "spent",
+  "name": "Espento",
+  "image": "https://assets.coingecko.com/coins/images/29818/large/espento.png?1696528746",
+  "current_price": 1.38,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 70631075,
+  "total_volume": 50314,
+  "high_24h": 1.44,
+  "low_24h": 1.38,
+  "price_change_24h": -0.049268657302255825,
+  "price_change_percentage_24h": -3.43529,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 51000000,
+  "max_supply": 51000000,
+  "ath": 1.79,
+  "ath_change_percentage": -22.53099,
+  "ath_date": "2023-10-29T00:03:26.721Z",
+  "atl": 0.212735,
+  "atl_change_percentage": 551.00875,
+  "atl_date": "2023-07-10T09:10:37.373Z",
+  "roi": null,
+  "last_updated": "2024-04-25T04:17:49.650Z",
+  "platforms": {
+    "bsc": "0x178fbe1cf4775fbdb9756d6349195a05799c0fe5"
+  }
+}

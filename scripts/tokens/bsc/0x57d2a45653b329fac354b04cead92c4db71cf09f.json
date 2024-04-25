@@ -1,0 +1,31 @@
+{
+  "id": "ibs",
+  "symbol": "ibs",
+  "name": "IBS",
+  "image": "https://assets.coingecko.com/coins/images/26003/large/a.jpg?1696525080",
+  "current_price": 0.00120617,
+  "market_cap": 1303647,
+  "market_cap_rank": 2541,
+  "fully_diluted_valuation": 1810197,
+  "total_volume": 2899.82,
+  "high_24h": 0.00121015,
+  "low_24h": 0.00119572,
+  "price_change_24h": -0.000001035916433074,
+  "price_change_percentage_24h": -0.08581,
+  "market_cap_change_24h": 1540.97,
+  "market_cap_change_percentage_24h": 0.11834,
+  "circulating_supply": 1080252627.3796403,
+  "total_supply": 1500000000,
+  "max_supply": 1500000000,
+  "ath": 0.00220388,
+  "ath_change_percentage": -45.52279,
+  "ath_date": "2022-12-24T10:05:04.335Z",
+  "atl": 0.00017036,
+  "atl_change_percentage": 604.76569,
+  "atl_date": "2022-11-16T11:54:53.237Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:12.904Z",
+  "platforms": {
+    "bsc": "0x57d2a45653b329fac354b04cead92c4db71cf09f"
+  }
+}

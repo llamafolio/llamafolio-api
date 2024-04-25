@@ -1,0 +1,31 @@
+{
+  "id": "sharbi",
+  "symbol": "$sharbi",
+  "name": "Sharbi",
+  "image": "https://assets.coingecko.com/coins/images/29075/large/Sharbi_New_Logo_200x200.png?1712686416",
+  "current_price": 0.00000505,
+  "market_cap": 5044687,
+  "market_cap_rank": 1791,
+  "fully_diluted_valuation": 5044687,
+  "total_volume": 20362,
+  "high_24h": 0.00000629,
+  "low_24h": 0.00000442,
+  "price_change_24h": -9.66351903978e-7,
+  "price_change_percentage_24h": -16.06286,
+  "market_cap_change_24h": -959036.6557403756,
+  "market_cap_change_percentage_24h": -15.97403,
+  "circulating_supply": 1000000000000,
+  "total_supply": 1000000000000,
+  "max_supply": 1000000000000,
+  "ath": 0.00001997,
+  "ath_change_percentage": -74.76009,
+  "ath_date": "2023-03-15T20:51:54.426Z",
+  "atl": 3.7457e-8,
+  "atl_change_percentage": 13357.59638,
+  "atl_date": "2024-04-19T03:00:49.463Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:29.808Z",
+  "platforms": {
+    "ethereum": "0xf3a3023e6dede84ad88a656a3269f2a36e83c9a9"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "wsb-coin",
+  "symbol": "wsb",
+  "name": "WSB Coin",
+  "image": "https://assets.coingecko.com/coins/images/30060/large/wsb_pfp.png?1696528981",
+  "current_price": 0.00000314,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 184740,
+  "total_volume": 208.42,
+  "high_24h": 0.00000327,
+  "low_24h": 0.00000311,
+  "price_change_24h": -9.1903193678e-8,
+  "price_change_percentage_24h": -2.8424,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 58808323232,
+  "max_supply": 69420000000,
+  "ath": 0.00067279,
+  "ath_change_percentage": -99.53526,
+  "ath_date": "2023-05-02T23:14:40.944Z",
+  "atl": 5.99779e-7,
+  "atl_change_percentage": 421.31368,
+  "atl_date": "2023-08-24T17:01:03.347Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:43.771Z",
+  "platforms": {
+    "ethereum": "0x0414d8c87b271266a5864329fb4932bbe19c0c49"
+  }
+}

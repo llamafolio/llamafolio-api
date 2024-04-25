@@ -1,0 +1,31 @@
+{
+  "id": "tradestars",
+  "symbol": "tsx",
+  "name": "TradeStars",
+  "image": "https://assets.coingecko.com/coins/images/15229/large/WsO9siKG_400x400.png?1696514884",
+  "current_price": 0.00214959,
+  "market_cap": 41864,
+  "market_cap_rank": 4032,
+  "fully_diluted_valuation": 150456,
+  "total_volume": 5.64,
+  "high_24h": 0.00215428,
+  "low_24h": 0.00214487,
+  "price_change_24h": 2.56324e-7,
+  "price_change_percentage_24h": 0.01193,
+  "market_cap_change_24h": -19.908095421305916,
+  "market_cap_change_percentage_24h": -0.04753,
+  "circulating_supply": 19475547.2643775,
+  "total_supply": 69992838.0326594,
+  "max_supply": null,
+  "ath": 0.757902,
+  "ath_change_percentage": -99.71638,
+  "ath_date": "2021-05-08T21:20:44.963Z",
+  "atl": 0.00157872,
+  "atl_change_percentage": 36.16006,
+  "atl_date": "2023-08-23T06:18:38.905Z",
+  "roi": null,
+  "last_updated": "2024-04-25T06:01:37.762Z",
+  "platforms": {
+    "ethereum": "0x734c90044a0ba31b3f2e640c10dc5d3540499bfd"
+  }
+}

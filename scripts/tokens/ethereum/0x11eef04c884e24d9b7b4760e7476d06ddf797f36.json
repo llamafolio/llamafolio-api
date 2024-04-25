@@ -1,0 +1,31 @@
+{
+  "id": "mx-token",
+  "symbol": "mx",
+  "name": "MX",
+  "image": "https://assets.coingecko.com/coins/images/8545/large/MEXC_GLOBAL_LOGO.jpeg?1696508719",
+  "current_price": 5.1,
+  "market_cap": 500576030,
+  "market_cap_rank": 163,
+  "fully_diluted_valuation": 2170327548,
+  "total_volume": 25636265,
+  "high_24h": 5.24,
+  "low_24h": 4.94,
+  "price_change_24h": -0.10677064490380773,
+  "price_change_percentage_24h": -2.05032,
+  "market_cap_change_24h": -13632984.910514593,
+  "market_cap_change_percentage_24h": -2.65125,
+  "circulating_supply": 98368834,
+  "total_supply": 426493834,
+  "max_supply": null,
+  "ath": 5.85,
+  "ath_change_percentage": -12.87383,
+  "ath_date": "2024-04-09T22:10:39.934Z",
+  "atl": 0.04218457,
+  "atl_change_percentage": 11991.87962,
+  "atl_date": "2019-11-25T05:59:45.392Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:44.516Z",
+  "platforms": {
+    "ethereum": "0x11eef04c884e24d9b7b4760e7476d06ddf797f36"
+  }
+}

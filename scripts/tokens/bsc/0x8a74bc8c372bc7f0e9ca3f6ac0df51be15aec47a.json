@@ -1,0 +1,31 @@
+{
+  "id": "pulsepad",
+  "symbol": "plspad",
+  "name": "PulsePad",
+  "image": "https://assets.coingecko.com/coins/images/20102/large/Mypk8PG_-_Imgur.jpg?1696519518",
+  "current_price": 0.00276452,
+  "market_cap": 470789,
+  "market_cap_rank": 3093,
+  "fully_diluted_valuation": 13846721,
+  "total_volume": 15656.87,
+  "high_24h": 0.00294141,
+  "low_24h": 0.0027332,
+  "price_change_24h": -0.00005399510455221,
+  "price_change_percentage_24h": -1.91573,
+  "market_cap_change_24h": -10489.137493315036,
+  "market_cap_change_percentage_24h": -2.17944,
+  "circulating_supply": 170000000,
+  "total_supply": 5000000000,
+  "max_supply": null,
+  "ath": 0.447594,
+  "ath_change_percentage": -99.38031,
+  "ath_date": "2021-11-13T04:20:00.893Z",
+  "atl": 0.0015431,
+  "atl_change_percentage": 79.74852,
+  "atl_date": "2022-11-14T03:27:28.419Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:16.549Z",
+  "platforms": {
+    "bsc": "0x8a74bc8c372bc7f0e9ca3f6ac0df51be15aec47a"
+  }
+}

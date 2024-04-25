@@ -1,0 +1,31 @@
+{
+  "id": "betswirl",
+  "symbol": "bets",
+  "name": "BetSwirl",
+  "image": "https://assets.coingecko.com/coins/images/26618/large/icon_200.png?1696525691",
+  "current_price": 0.00057349,
+  "market_cap": 2811731,
+  "market_cap_rank": 2098,
+  "fully_diluted_valuation": 4185101,
+  "total_volume": 1508.56,
+  "high_24h": 0.00062024,
+  "low_24h": 0.00057064,
+  "price_change_24h": -0.000046755544748319,
+  "price_change_percentage_24h": -7.53828,
+  "market_cap_change_24h": -232021.82406237395,
+  "market_cap_change_percentage_24h": -7.62289,
+  "circulating_supply": 4903073006.92958,
+  "total_supply": 7297943736.41154,
+  "max_supply": 7777777777,
+  "ath": 0.00137545,
+  "ath_change_percentage": -58.33227,
+  "ath_date": "2023-07-20T02:30:36.469Z",
+  "atl": 0.00003457,
+  "atl_change_percentage": 1557.88143,
+  "atl_date": "2023-01-03T09:00:47.178Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:35.827Z",
+  "platforms": {
+    "bsc": "0x94025780a1ab58868d9b2dbbb775f44b32e8e6e5"
+  }
+}

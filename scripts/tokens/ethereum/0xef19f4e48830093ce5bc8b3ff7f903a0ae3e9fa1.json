@@ -1,0 +1,35 @@
+{
+  "id": "botxcoin",
+  "symbol": "botx",
+  "name": "BOTXCOIN",
+  "image": "https://assets.coingecko.com/coins/images/6827/large/botx.jpg?1696507152",
+  "current_price": 0.00185477,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 9287972,
+  "total_volume": 442.73,
+  "high_24h": 0.0019201,
+  "low_24h": 0.00184929,
+  "price_change_24h": -0.000063060971894458,
+  "price_change_percentage_24h": -3.28814,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 5000000000,
+  "max_supply": null,
+  "ath": 3.27,
+  "ath_change_percentage": -99.94317,
+  "ath_date": "2021-11-08T13:35:57.445Z",
+  "atl": 0.00158207,
+  "atl_change_percentage": 17.42537,
+  "atl_date": "2023-07-07T06:47:52.218Z",
+  "roi": {
+    "times": -0.9764094513309255,
+    "currency": "eth",
+    "percentage": -97.64094513309256
+  },
+  "last_updated": "2024-04-25T09:13:15.005Z",
+  "platforms": {
+    "ethereum": "0xef19f4e48830093ce5bc8b3ff7f903a0ae3e9fa1"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "bebe",
+  "symbol": "bebe",
+  "name": "BEBE",
+  "image": "https://assets.coingecko.com/coins/images/34932/large/1000003129.jpg?1706694024",
+  "current_price": 1.6066e-8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1428086,
+  "total_volume": 92910,
+  "high_24h": 2.0299e-8,
+  "low_24h": 1.4805e-8,
+  "price_change_24h": -3.104256558e-9,
+  "price_change_percentage_24h": -16.19311,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 88888888888888,
+  "max_supply": 88888888888888,
+  "ath": 8.892e-8,
+  "ath_change_percentage": -81.93205,
+  "ath_date": "2024-03-02T04:51:21.795Z",
+  "atl": 5.08e-9,
+  "atl_change_percentage": 216.23905,
+  "atl_date": "2024-02-01T14:10:30.765Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:58.954Z",
+  "platforms": {
+    "ethereum": "0xec21890967a8ceb3e55a3f79dac4e90673ba3c2e"
+  }
+}

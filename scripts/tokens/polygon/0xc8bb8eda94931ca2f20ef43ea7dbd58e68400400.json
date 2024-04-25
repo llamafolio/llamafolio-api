@@ -1,0 +1,31 @@
+{
+  "id": "vnx-gold",
+  "symbol": "vnxau",
+  "name": "VNX Gold",
+  "image": "https://assets.coingecko.com/coins/images/28019/large/VNX_Token_logo_%283%29.png?1696527035",
+  "current_price": 74.24,
+  "market_cap": 757053,
+  "market_cap_rank": 2847,
+  "fully_diluted_valuation": 757053,
+  "total_volume": 111276,
+  "high_24h": 75.89,
+  "low_24h": 73.36,
+  "price_change_24h": 0.268157,
+  "price_change_percentage_24h": 0.3625,
+  "market_cap_change_24h": -2296.904635346262,
+  "market_cap_change_percentage_24h": -0.30248,
+  "circulating_supply": 10100,
+  "total_supply": 10100,
+  "max_supply": null,
+  "ath": 78.16,
+  "ath_change_percentage": -3.30433,
+  "ath_date": "2024-04-12T15:26:50.119Z",
+  "atl": 51.65,
+  "atl_change_percentage": 46.323,
+  "atl_date": "2022-11-03T13:02:40.930Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:22.325Z",
+  "platforms": {
+    "polygon": "0xc8bb8eda94931ca2f20ef43ea7dbd58e68400400"
+  }
+}

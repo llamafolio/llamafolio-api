@@ -1,0 +1,31 @@
+{
+  "id": "lithium-ventures",
+  "symbol": "ions",
+  "name": "Lithium Ventures",
+  "image": "https://assets.coingecko.com/coins/images/15298/large/lithium_ions.jpg?1696514948",
+  "current_price": 0.00180048,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 90024,
+  "total_volume": 150.4,
+  "high_24h": 0.00188434,
+  "low_24h": 0.00177385,
+  "price_change_24h": -0.000076841050251555,
+  "price_change_percentage_24h": -4.09312,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 50000000,
+  "max_supply": 50000000,
+  "ath": 0.099354,
+  "ath_change_percentage": -98.18782,
+  "ath_date": "2022-06-12T05:32:32.415Z",
+  "atl": 3.015e-9,
+  "atl_change_percentage": 59723317.97595,
+  "atl_date": "2021-06-26T07:03:32.659Z",
+  "roi": null,
+  "last_updated": "2024-04-25T01:00:00.651Z",
+  "platforms": {
+    "polygon": "0xd6d3b4254b4526c3095d8ab00b75f186c56dd72c"
+  }
+}

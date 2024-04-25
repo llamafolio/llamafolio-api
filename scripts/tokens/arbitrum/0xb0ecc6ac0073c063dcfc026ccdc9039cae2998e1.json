@@ -1,0 +1,31 @@
+{
+  "id": "a3s",
+  "symbol": "aa",
+  "name": "A3S",
+  "image": "https://assets.coingecko.com/coins/images/32133/large/A3S.jpg?1696588511",
+  "current_price": 0.774834,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 155109825,
+  "total_volume": 422791,
+  "high_24h": 0.837057,
+  "low_24h": 0.698782,
+  "price_change_24h": 0.050799,
+  "price_change_percentage_24h": 7.01616,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 200226092,
+  "max_supply": null,
+  "ath": 2.06,
+  "ath_change_percentage": -62.38813,
+  "ath_date": "2023-12-22T12:20:30.070Z",
+  "atl": 0.308625,
+  "atl_change_percentage": 151.09945,
+  "atl_date": "2023-10-14T02:57:36.744Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:59.481Z",
+  "platforms": {
+    "arbitrum": "0xb0ecc6ac0073c063dcfc026ccdc9039cae2998e1"
+  }
+}

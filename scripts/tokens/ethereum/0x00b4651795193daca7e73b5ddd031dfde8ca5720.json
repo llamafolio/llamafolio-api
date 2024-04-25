@@ -1,0 +1,31 @@
+{
+  "id": "chainmail",
+  "symbol": "mail",
+  "name": "CHAINMAIL",
+  "image": "https://assets.coingecko.com/coins/images/33431/large/Z_hlFCgV_400x400.jpg?1701818031",
+  "current_price": 0.00726849,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 7257287,
+  "total_volume": 181310,
+  "high_24h": 0.00857819,
+  "low_24h": 0.00726644,
+  "price_change_24h": -0.001012809213446141,
+  "price_change_percentage_24h": -12.23008,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.01470391,
+  "ath_change_percentage": -50.56084,
+  "ath_date": "2024-04-14T08:15:47.673Z",
+  "atl": 0.00002145,
+  "atl_change_percentage": 33791.23889,
+  "atl_date": "2024-01-26T09:00:07.027Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:41.260Z",
+  "platforms": {
+    "ethereum": "0x00b4651795193daca7e73b5ddd031dfde8ca5720"
+  }
+}

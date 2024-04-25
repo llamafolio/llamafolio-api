@@ -1,0 +1,31 @@
+{
+  "id": "scarcity",
+  "symbol": "scx",
+  "name": "Scarcity",
+  "image": "https://assets.coingecko.com/coins/images/19064/large/scx_gecko.png?1696518513",
+  "current_price": 19.83,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 139689,
+  "total_volume": 1897.59,
+  "high_24h": 19.93,
+  "low_24h": 15.26,
+  "price_change_24h": 4.33,
+  "price_change_percentage_24h": 27.94631,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 7388,
+  "max_supply": 1000000,
+  "ath": 2021.96,
+  "ath_change_percentage": -99.06746,
+  "ath_date": "2023-03-10T16:35:31.660Z",
+  "atl": 2.63,
+  "atl_change_percentage": 615.8465,
+  "atl_date": "2024-04-13T04:34:19.482Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:45.416Z",
+  "platforms": {
+    "ethereum": "0x1b8568fbb47708e9e9d31ff303254f748805bf21"
+  }
+}

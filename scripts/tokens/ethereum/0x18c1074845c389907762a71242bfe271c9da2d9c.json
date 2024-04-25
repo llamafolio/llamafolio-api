@@ -1,0 +1,31 @@
+{
+  "id": "bull-token",
+  "symbol": "$bull",
+  "name": "BULL Token",
+  "image": "https://assets.coingecko.com/coins/images/30785/large/BULL200x200.jpg?1696529652",
+  "current_price": 2.10209e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 88288,
+  "total_volume": 67.46,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 420000000000,
+  "max_supply": null,
+  "ath": 0.00000123,
+  "ath_change_percentage": -82.84197,
+  "ath_date": "2023-06-20T13:02:47.664Z",
+  "atl": 1.35943e-7,
+  "atl_change_percentage": 54.63028,
+  "atl_date": "2023-09-11T23:05:40.486Z",
+  "roi": null,
+  "last_updated": "2024-04-22T14:45:35.458Z",
+  "platforms": {
+    "ethereum": "0x18c1074845c389907762a71242bfe271c9da2d9c"
+  }
+}

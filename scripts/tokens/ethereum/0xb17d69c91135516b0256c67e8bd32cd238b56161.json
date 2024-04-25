@@ -1,0 +1,31 @@
+{
+  "id": "gravitas",
+  "symbol": "gravitas",
+  "name": "Gravitas",
+  "image": "https://assets.coingecko.com/coins/images/32995/large/200photo_2023-11-12_14-07-05.jpg?1700110430",
+  "current_price": 0.00003339,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 31723,
+  "total_volume": 849.89,
+  "high_24h": 0.00003351,
+  "low_24h": 0.00003204,
+  "price_change_24h": 0.0000012,
+  "price_change_percentage_24h": 3.73573,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 950000000,
+  "max_supply": 950000000,
+  "ath": 0.00029488,
+  "ath_change_percentage": -88.67605,
+  "ath_date": "2023-11-16T05:14:56.319Z",
+  "atl": 0.00001227,
+  "atl_change_percentage": 172.08317,
+  "atl_date": "2023-12-26T10:51:50.864Z",
+  "roi": null,
+  "last_updated": "2024-04-25T07:08:47.535Z",
+  "platforms": {
+    "ethereum": "0xb17d69c91135516b0256c67e8bd32cd238b56161"
+  }
+}

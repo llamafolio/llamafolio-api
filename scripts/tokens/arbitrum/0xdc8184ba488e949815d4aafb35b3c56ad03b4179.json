@@ -1,0 +1,31 @@
+{
+  "id": "roseon",
+  "symbol": "rosx",
+  "name": "Roseon",
+  "image": "https://assets.coingecko.com/coins/images/29698/large/roseon.png?1696528631",
+  "current_price": 0.01467321,
+  "market_cap": 1314876,
+  "market_cap_rank": 2534,
+  "fully_diluted_valuation": 1314876,
+  "total_volume": 452879,
+  "high_24h": 0.01635221,
+  "low_24h": 0.01459354,
+  "price_change_24h": -0.00142761238453794,
+  "price_change_percentage_24h": -8.8667,
+  "market_cap_change_24h": -136835.109904089,
+  "market_cap_change_percentage_24h": -9.42578,
+  "circulating_supply": 89694165.968095,
+  "total_supply": 89694165.968095,
+  "max_supply": 185000000,
+  "ath": 0.135076,
+  "ath_change_percentage": -89.10738,
+  "ath_date": "2023-04-06T12:34:39.949Z",
+  "atl": 0.00483333,
+  "atl_change_percentage": 204.41372,
+  "atl_date": "2023-10-20T09:50:00.164Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:56:54.996Z",
+  "platforms": {
+    "arbitrum": "0xdc8184ba488e949815d4aafb35b3c56ad03b4179"
+  }
+}

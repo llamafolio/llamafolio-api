@@ -1,0 +1,31 @@
+{
+  "id": "pepedex",
+  "symbol": "ppdex",
+  "name": "Pepedex",
+  "image": "https://assets.coingecko.com/coins/images/13022/large/output-onlinepngtools-1.png?1696512811",
+  "current_price": 0.257531,
+  "market_cap": 118031,
+  "market_cap_rank": 3726,
+  "fully_diluted_valuation": 135740,
+  "total_volume": 5103.56,
+  "high_24h": 0.330873,
+  "low_24h": 0.234704,
+  "price_change_24h": -0.0698176514301167,
+  "price_change_percentage_24h": -21.3282,
+  "market_cap_change_24h": -32304.361764180503,
+  "market_cap_change_percentage_24h": -21.48821,
+  "circulating_supply": 459405.873439633,
+  "total_supply": 528335.328533383,
+  "max_supply": null,
+  "ath": 32.47,
+  "ath_change_percentage": -99.20668,
+  "ath_date": "2021-03-06T18:19:39.135Z",
+  "atl": 0.054617,
+  "atl_change_percentage": 371.56551,
+  "atl_date": "2024-01-09T23:22:31.855Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:19.177Z",
+  "platforms": {
+    "fantom": "0x4272dd51961a5181ace0dc7eb6f9807311345559"
+  }
+}

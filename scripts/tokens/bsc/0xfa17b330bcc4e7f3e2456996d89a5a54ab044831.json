@@ -1,0 +1,31 @@
+{
+  "id": "cardence",
+  "symbol": "$crdn",
+  "name": "Cardence",
+  "image": "https://assets.coingecko.com/coins/images/17744/large/logo_-_2021-08-17T084037.897.png?1696517271",
+  "current_price": 0.00182469,
+  "market_cap": 53669,
+  "market_cap_rank": 3973,
+  "fully_diluted_valuation": 91234,
+  "total_volume": 6.35,
+  "high_24h": 0.00186257,
+  "low_24h": 0.00178277,
+  "price_change_24h": 0.00000166,
+  "price_change_percentage_24h": 0.09096,
+  "market_cap_change_24h": 48.77,
+  "market_cap_change_percentage_24h": 0.09096,
+  "circulating_supply": 29412734.731553588,
+  "total_supply": 50000000,
+  "max_supply": null,
+  "ath": 0.396125,
+  "ath_change_percentage": -99.54062,
+  "ath_date": "2021-10-20T23:28:24.556Z",
+  "atl": 0.00072404,
+  "atl_change_percentage": 151.32741,
+  "atl_date": "2023-11-21T23:06:45.815Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:53.596Z",
+  "platforms": {
+    "bsc": "0xfa17b330bcc4e7f3e2456996d89a5a54ab044831"
+  }
+}

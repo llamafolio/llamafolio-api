@@ -1,0 +1,31 @@
+{
+  "id": "ethos-2",
+  "symbol": "3th",
+  "name": "Ethos",
+  "image": "https://assets.coingecko.com/coins/images/31823/large/cUOoVR18_400x400.jpg?1696530637",
+  "current_price": 0.00351726,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3510756,
+  "total_volume": 103212,
+  "high_24h": 0.00373915,
+  "low_24h": 0.00317932,
+  "price_change_24h": 0.00032365,
+  "price_change_percentage_24h": 10.13429,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.01968679,
+  "ath_change_percentage": -81.83748,
+  "ath_date": "2023-09-20T21:40:00.975Z",
+  "atl": 0.00201571,
+  "atl_change_percentage": 77.38776,
+  "atl_date": "2024-01-04T16:10:28.858Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:07.127Z",
+  "platforms": {
+    "bsc": "0x6ccc8db8e3fd5ffdd2e7b92bd92e8e27baf704a8"
+  }
+}

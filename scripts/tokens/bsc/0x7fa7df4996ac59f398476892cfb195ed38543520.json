@@ -1,0 +1,31 @@
+{
+  "id": "wagyuswap",
+  "symbol": "wag",
+  "name": "WagyuSwap",
+  "image": "https://assets.coingecko.com/coins/images/18225/large/maoZ8h22_400x400.jpg?1696517722",
+  "current_price": 0.00202823,
+  "market_cap": 94633,
+  "market_cap_rank": 3795,
+  "fully_diluted_valuation": 1011495,
+  "total_volume": 27888,
+  "high_24h": 0.00211282,
+  "low_24h": 0.00201822,
+  "price_change_24h": -0.000036852412535938,
+  "price_change_percentage_24h": -1.78455,
+  "market_cap_change_24h": -1802.0246926273685,
+  "market_cap_change_percentage_24h": -1.86865,
+  "circulating_supply": 46778526.79170269,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 2.94,
+  "ath_change_percentage": -99.9312,
+  "ath_date": "2021-11-04T07:19:27.541Z",
+  "atl": 0.00079373,
+  "atl_change_percentage": 154.77211,
+  "atl_date": "2023-09-13T18:14:05.475Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:19.446Z",
+  "platforms": {
+    "bsc": "0x7fa7df4996ac59f398476892cfb195ed38543520"
+  }
+}

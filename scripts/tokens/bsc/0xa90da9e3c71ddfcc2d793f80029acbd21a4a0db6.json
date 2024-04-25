@@ -1,0 +1,31 @@
+{
+  "id": "gagarin",
+  "symbol": "ggr",
+  "name": "GAGARIN",
+  "image": "https://assets.coingecko.com/coins/images/28898/large/GGR-200x200.png?1696527874",
+  "current_price": 0.059226,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 145655,
+  "total_volume": 1134.05,
+  "high_24h": 0.063183,
+  "low_24h": 0.059189,
+  "price_change_24h": -0.002811656415777075,
+  "price_change_percentage_24h": -4.53217,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2459312,
+  "max_supply": 100000000,
+  "ath": 0.199245,
+  "ath_change_percentage": -70.25366,
+  "ath_date": "2023-02-20T04:41:20.171Z",
+  "atl": 0.01766689,
+  "atl_change_percentage": 235.47524,
+  "atl_date": "2023-11-29T12:26:16.285Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:41.364Z",
+  "platforms": {
+    "bsc": "0xa90da9e3c71ddfcc2d793f80029acbd21a4a0db6"
+  }
+}

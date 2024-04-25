@@ -1,0 +1,31 @@
+{
+  "id": "bidao",
+  "symbol": "bid",
+  "name": "Bidao",
+  "image": "https://assets.coingecko.com/coins/images/12596/large/bidao.png?1696512405",
+  "current_price": 0.00185503,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 4915832,
+  "total_volume": 649.76,
+  "high_24h": 0.00196488,
+  "low_24h": 0.00184911,
+  "price_change_24h": -0.000076656828221622,
+  "price_change_percentage_24h": -3.96839,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2650000000,
+  "max_supply": null,
+  "ath": 0.04678793,
+  "ath_change_percentage": -96.0479,
+  "ath_date": "2020-10-01T12:53:35.174Z",
+  "atl": 0.00041319,
+  "atl_change_percentage": 347.5243,
+  "atl_date": "2023-08-02T01:18:49.325Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:01.036Z",
+  "platforms": {
+    "ethereum": "0x25e1474170c4c0aa64fa98123bdc8db49d7802fa"
+  }
+}

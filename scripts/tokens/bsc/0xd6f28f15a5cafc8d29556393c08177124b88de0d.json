@@ -1,0 +1,31 @@
+{
+  "id": "spellfire",
+  "symbol": "spellfire",
+  "name": "Spellfire",
+  "image": "https://assets.coingecko.com/coins/images/23107/large/17316.png?1696522396",
+  "current_price": 0.00085858,
+  "market_cap": 311706,
+  "market_cap_rank": 3299,
+  "fully_diluted_valuation": 550512,
+  "total_volume": 110884,
+  "high_24h": 0.0008858,
+  "low_24h": 0.00083858,
+  "price_change_24h": -0.000017437524548965,
+  "price_change_percentage_24h": -1.99053,
+  "market_cap_change_24h": -6315.419313903374,
+  "market_cap_change_percentage_24h": -1.98585,
+  "circulating_supply": 362374848.1359,
+  "total_supply": 640000000,
+  "max_supply": 640000000,
+  "ath": 0.161632,
+  "ath_change_percentage": -99.46722,
+  "ath_date": "2022-01-27T13:13:57.573Z",
+  "atl": 0.00040283,
+  "atl_change_percentage": 113.77455,
+  "atl_date": "2023-10-15T06:40:48.183Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:54.841Z",
+  "platforms": {
+    "bsc": "0xd6f28f15a5cafc8d29556393c08177124b88de0d"
+  }
+}

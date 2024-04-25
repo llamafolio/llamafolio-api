@@ -1,0 +1,31 @@
+{
+  "id": "flooring-protocol-microelemental",
+  "symbol": "uelem",
+  "name": "FP μElemental",
+  "image": "https://assets.coingecko.com/coins/images/32785/large/elemental_%281%29.png?1699352536",
+  "current_price": 0.001199,
+  "market_cap": 828511,
+  "market_cap_rank": 2799,
+  "fully_diluted_valuation": 828511,
+  "total_volume": 387.45,
+  "high_24h": 0.0012205,
+  "low_24h": 0.00115991,
+  "price_change_24h": 7.6216e-8,
+  "price_change_percentage_24h": 0.00636,
+  "market_cap_change_24h": -2559.7331418883987,
+  "market_cap_change_percentage_24h": -0.308,
+  "circulating_supply": 691000000,
+  "total_supply": 691000000,
+  "max_supply": 15000000000,
+  "ath": 0.00200896,
+  "ath_change_percentage": -40.30495,
+  "ath_date": "2024-01-18T16:02:01.062Z",
+  "atl": 0.00090965,
+  "atl_change_percentage": 31.8355,
+  "atl_date": "2023-11-07T10:25:02.241Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:13.814Z",
+  "platforms": {
+    "ethereum": "0xba10085f901ae4048134e556d579cfd1bfaf89cf"
+  }
+}

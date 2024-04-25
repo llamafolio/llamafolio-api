@@ -1,0 +1,31 @@
+{
+  "id": "pooltogether",
+  "symbol": "pool",
+  "name": "PoolTogether",
+  "image": "https://assets.coingecko.com/coins/images/14003/large/PoolTogether.png?1696513732",
+  "current_price": 0.546389,
+  "market_cap": 3171836,
+  "market_cap_rank": 2032,
+  "fully_diluted_valuation": 5458659,
+  "total_volume": 1430.51,
+  "high_24h": 0.573311,
+  "low_24h": 0.542673,
+  "price_change_24h": -0.019904893912465416,
+  "price_change_percentage_24h": -3.51494,
+  "market_cap_change_24h": -117434.44508652017,
+  "market_cap_change_percentage_24h": -3.57023,
+  "circulating_supply": 5810649.336054615,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 53.98,
+  "ath_change_percentage": -98.98941,
+  "ath_date": "2021-02-20T04:38:40.257Z",
+  "atl": 0.172745,
+  "atl_change_percentage": 215.81309,
+  "atl_date": "2023-12-29T23:16:36.097Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:59.772Z",
+  "platforms": {
+    "polygon": "0x25788a1a171ec66da6502f9975a15b609ff54cf6"
+  }
+}

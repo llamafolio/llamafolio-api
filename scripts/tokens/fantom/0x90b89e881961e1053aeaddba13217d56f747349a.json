@@ -1,0 +1,31 @@
+{
+  "id": "hyve",
+  "symbol": "hyve",
+  "name": "Hyve",
+  "image": "https://assets.coingecko.com/coins/images/13072/large/bAe1G-lD_400x400.png?1696512861",
+  "current_price": 0.03075874,
+  "market_cap": 1781050,
+  "market_cap_rank": 2369,
+  "fully_diluted_valuation": 3074580,
+  "total_volume": 327949,
+  "high_24h": 0.0310669,
+  "low_24h": 0.02931735,
+  "price_change_24h": -0.000308167157308737,
+  "price_change_percentage_24h": -0.99195,
+  "market_cap_change_24h": -21121.15400226484,
+  "market_cap_change_percentage_24h": -1.17198,
+  "circulating_supply": 57928252.26558929,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.756865,
+  "ath_change_percentage": -95.94014,
+  "ath_date": "2021-10-15T02:45:43.083Z",
+  "atl": 0.00850736,
+  "atl_change_percentage": 261.18877,
+  "atl_date": "2021-01-03T05:26:54.100Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:01.656Z",
+  "platforms": {
+    "fantom": "0x90b89e881961e1053aeaddba13217d56f747349a"
+  }
+}

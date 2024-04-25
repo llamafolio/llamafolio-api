@@ -1,0 +1,31 @@
+{
+  "id": "baby-alvey",
+  "symbol": "balvey",
+  "name": "Baby Alvey",
+  "image": "https://assets.coingecko.com/coins/images/28438/large/logo_200.png?1696527434",
+  "current_price": 4.34139e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 43414,
+  "total_volume": 3.04,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.00000368,
+  "ath_change_percentage": -88.21213,
+  "ath_date": "2023-01-25T09:19:06.178Z",
+  "atl": 2.6125e-7,
+  "atl_change_percentage": 66.17779,
+  "atl_date": "2023-01-08T14:15:01.910Z",
+  "roi": null,
+  "last_updated": "2023-05-16T01:01:03.138Z",
+  "platforms": {
+    "bsc": "0x4c496592fd52c2810651b4862cc9fe13940fea31"
+  }
+}

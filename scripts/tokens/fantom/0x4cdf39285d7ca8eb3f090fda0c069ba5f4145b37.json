@@ -1,0 +1,31 @@
+{
+  "id": "tomb-shares",
+  "symbol": "tshare",
+  "name": "Tomb Shares",
+  "image": "https://assets.coingecko.com/coins/images/16405/large/crypto_tomb_share.bf1a6c52.png?1696516002",
+  "current_price": 35.68,
+  "market_cap": 1396770,
+  "market_cap_rank": 2482,
+  "fully_diluted_valuation": 2341254,
+  "total_volume": 2802.8,
+  "high_24h": 37.69,
+  "low_24h": 35.49,
+  "price_change_24h": -1.4998214555414577,
+  "price_change_percentage_24h": -4.0345,
+  "market_cap_change_24h": -59030.93324237969,
+  "market_cap_change_percentage_24h": -4.05488,
+  "circulating_supply": 39127.672143296,
+  "total_supply": 65585.45,
+  "max_supply": 70000,
+  "ath": 24382,
+  "ath_change_percentage": -99.85368,
+  "ath_date": "2022-01-04T07:03:37.653Z",
+  "atl": 16.38,
+  "atl_change_percentage": 117.74485,
+  "atl_date": "2021-09-05T20:32:34.366Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:33.641Z",
+  "platforms": {
+    "fantom": "0x4cdf39285d7ca8eb3f090fda0c069ba5f4145b37"
+  }
+}

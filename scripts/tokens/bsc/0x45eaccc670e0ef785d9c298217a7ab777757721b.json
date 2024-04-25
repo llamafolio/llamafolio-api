@@ -1,0 +1,31 @@
+{
+  "id": "hefi",
+  "symbol": "hefi",
+  "name": "HeFi",
+  "image": "https://assets.coingecko.com/coins/images/33439/large/%ED%97%A4%ED%8C%8C%EC%9D%B4%EB%A1%9C%EA%B3%A0.png?1702501188",
+  "current_price": 0.367802,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 367975725,
+  "total_volume": 1750274,
+  "high_24h": 0.374494,
+  "low_24h": 0.365308,
+  "price_change_24h": -0.003044797949458722,
+  "price_change_percentage_24h": -0.82104,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.615838,
+  "ath_change_percentage": -40.21403,
+  "ath_date": "2024-01-08T14:06:11.292Z",
+  "atl": 0.154647,
+  "atl_change_percentage": 138.08022,
+  "atl_date": "2024-02-14T09:12:30.542Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:29.019Z",
+  "platforms": {
+    "bsc": "0x45eaccc670e0ef785d9c298217a7ab777757721b"
+  }
+}

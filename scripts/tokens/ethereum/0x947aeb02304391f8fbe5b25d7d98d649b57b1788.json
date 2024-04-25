@@ -1,0 +1,31 @@
+{
+  "id": "mandala-exchange-token",
+  "symbol": "mdx",
+  "name": "Mandala Exchange",
+  "image": "https://assets.coingecko.com/coins/images/13736/large/png-cmc.png?1696513480",
+  "current_price": 0.00703135,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2806601,
+  "total_volume": 72.59,
+  "high_24h": 0.00749923,
+  "low_24h": 0.00700462,
+  "price_change_24h": -0.000435467369823821,
+  "price_change_percentage_24h": -5.83203,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 400000000,
+  "max_supply": null,
+  "ath": 0.518192,
+  "ath_change_percentage": -98.64826,
+  "ath_date": "2021-04-15T22:48:11.819Z",
+  "atl": 0.00173073,
+  "atl_change_percentage": 304.72093,
+  "atl_date": "2023-06-10T07:50:02.161Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:31.299Z",
+  "platforms": {
+    "ethereum": "0x947aeb02304391f8fbe5b25d7d98d649b57b1788"
+  }
+}

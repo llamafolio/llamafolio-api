@@ -1,0 +1,31 @@
+{
+  "id": "bird-money",
+  "symbol": "bird",
+  "name": "Bird.Money",
+  "image": "https://assets.coingecko.com/coins/images/13260/large/favicon-180x180.png?1696513035",
+  "current_price": 16.77,
+  "market_cap": 1623553,
+  "market_cap_rank": 2411,
+  "fully_diluted_valuation": 2352374,
+  "total_volume": 23047,
+  "high_24h": 17.5,
+  "low_24h": 16.69,
+  "price_change_24h": -0.519458000963521,
+  "price_change_percentage_24h": -3.00486,
+  "market_cap_change_24h": -47587.96558274911,
+  "market_cap_change_percentage_24h": -2.84763,
+  "circulating_supply": 96624.6567997778,
+  "total_supply": 140000,
+  "max_supply": null,
+  "ath": 282.13,
+  "ath_change_percentage": -94.0504,
+  "ath_date": "2021-11-13T20:05:38.891Z",
+  "atl": 0,
+  "atl_change_percentage": 1.809637343167371e+38,
+  "atl_date": "2021-08-30T04:48:52.384Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:01.637Z",
+  "platforms": {
+    "bsc": "0x8780fea4c6b242677d4a397fe1110ac09ce99ad2"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "spherium",
+  "symbol": "sphri",
+  "name": "Spherium",
+  "image": "https://assets.coingecko.com/coins/images/17787/large/Group_15.png?1696517311",
+  "current_price": 0.00621474,
+  "market_cap": 134576,
+  "market_cap_rank": 3686,
+  "fully_diluted_valuation": 80184,
+  "total_volume": 11145.8,
+  "high_24h": 0.00663219,
+  "low_24h": 0.00620462,
+  "price_change_24h": -0.00037919922709308,
+  "price_change_percentage_24h": -5.75073,
+  "market_cap_change_24h": -8679.899892943999,
+  "market_cap_change_percentage_24h": -6.05903,
+  "circulating_supply": 21689602,
+  "total_supply": 12923347,
+  "max_supply": 100000000,
+  "ath": 0.759472,
+  "ath_change_percentage": -99.1814,
+  "ath_date": "2021-08-18T13:12:12.732Z",
+  "atl": 0.00501756,
+  "atl_change_percentage": 23.90537,
+  "atl_date": "2023-10-21T12:24:43.295Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:15.991Z",
+  "platforms": {
+    "ethereum": "0x8a0cdfab62ed35b836dc0633482798421c81b3ec"
+  }
+}

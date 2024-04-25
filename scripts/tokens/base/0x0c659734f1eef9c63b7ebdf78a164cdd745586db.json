@@ -1,0 +1,31 @@
+{
+  "id": "balancer-usdc-usdbc-axlusdc",
+  "symbol": "usdc-usdbc-axlusdc",
+  "name": "Balancer USDC/USDbC/axlUSDC",
+  "image": "missing_large.png",
+  "current_price": 1.037,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 1.12,
+  "high_24h": 1.045,
+  "low_24h": 1.029,
+  "price_change_24h": -0.008206082621400101,
+  "price_change_percentage_24h": -0.78527,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.064,
+  "ath_change_percentage": -2.56958,
+  "ath_date": "2024-04-13T22:43:18.266Z",
+  "atl": 0.858418,
+  "atl_change_percentage": 20.77988,
+  "atl_date": "2023-11-09T11:12:30.801Z",
+  "roi": null,
+  "last_updated": "2024-04-25T02:30:29.694Z",
+  "platforms": {
+    "base": "0x0c659734f1eef9c63b7ebdf78a164cdd745586db"
+  }
+}

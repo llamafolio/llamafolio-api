@@ -1,0 +1,31 @@
+{
+  "id": "gains-network",
+  "symbol": "gns",
+  "name": "Gains Network",
+  "image": "https://assets.coingecko.com/coins/images/19737/large/logo.png?1696519161",
+  "current_price": 3.37,
+  "market_cap": 114523733,
+  "market_cap_rank": 428,
+  "fully_diluted_valuation": 114523733,
+  "total_volume": 5720682,
+  "high_24h": 3.65,
+  "low_24h": 3.37,
+  "price_change_24h": -0.25574711264176875,
+  "price_change_percentage_24h": -7.05149,
+  "market_cap_change_24h": -8913413.7526045,
+  "market_cap_change_percentage_24h": -7.22101,
+  "circulating_supply": 33995558,
+  "total_supply": 33995558,
+  "max_supply": 33995558,
+  "ath": 12.48,
+  "ath_change_percentage": -72.90504,
+  "ath_date": "2023-02-17T07:55:07.998Z",
+  "atl": 0.265841,
+  "atl_change_percentage": 1171.89229,
+  "atl_date": "2021-11-29T05:56:42.899Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:52.184Z",
+  "platforms": {
+    "arbitrum": "0x18c11fd286c5ec11c3b683caa813b77f5163a122"
+  }
+}

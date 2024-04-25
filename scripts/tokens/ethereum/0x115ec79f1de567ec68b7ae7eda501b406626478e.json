@@ -1,0 +1,35 @@
+{
+  "id": "carry",
+  "symbol": "cre",
+  "name": "Carry",
+  "image": "https://assets.coingecko.com/coins/images/3994/large/Carry.png?1696504635",
+  "current_price": 0.00610458,
+  "market_cap": 61438741,
+  "market_cap_rank": 617,
+  "fully_diluted_valuation": 61438741,
+  "total_volume": 8599862,
+  "high_24h": 0.00707449,
+  "low_24h": 0.0060419,
+  "price_change_24h": -0.000567440064236352,
+  "price_change_percentage_24h": -8.50477,
+  "market_cap_change_24h": -5551949.963336952,
+  "market_cap_change_percentage_24h": -8.28764,
+  "circulating_supply": 10000000000,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.084369,
+  "ath_change_percentage": -92.81272,
+  "ath_date": "2019-05-17T09:53:37.754Z",
+  "atl": 0.00083473,
+  "atl_change_percentage": 626.43905,
+  "atl_date": "2020-03-13T02:17:31.348Z",
+  "roi": {
+    "times": -0.8734155264917345,
+    "currency": "eth",
+    "percentage": -87.34155264917345
+  },
+  "last_updated": "2024-04-25T08:59:33.983Z",
+  "platforms": {
+    "ethereum": "0x115ec79f1de567ec68b7ae7eda501b406626478e"
+  }
+}

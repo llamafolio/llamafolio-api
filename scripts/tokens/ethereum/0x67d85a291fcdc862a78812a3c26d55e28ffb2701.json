@@ -1,0 +1,31 @@
+{
+  "id": "asymetrix",
+  "symbol": "asx",
+  "name": "Asymetrix",
+  "image": "https://assets.coingecko.com/coins/images/29984/large/Asymetrix_Logo_Only_Square_w200.png?1696528909",
+  "current_price": 0.067676,
+  "market_cap": 338783,
+  "market_cap_rank": 3254,
+  "fully_diluted_valuation": 6726408,
+  "total_volume": 7.3,
+  "high_24h": 0.06845,
+  "low_24h": 0.06749,
+  "price_change_24h": 0.00018595,
+  "price_change_percentage_24h": 0.27552,
+  "market_cap_change_24h": -11610.077500501822,
+  "market_cap_change_percentage_24h": -3.31344,
+  "circulating_supply": 5005934,
+  "total_supply": 99390914.3575453,
+  "max_supply": 100000000,
+  "ath": 9.23,
+  "ath_change_percentage": -99.267,
+  "ath_date": "2023-11-28T02:31:40.768Z",
+  "atl": 0.066662,
+  "atl_change_percentage": 1.52122,
+  "atl_date": "2024-04-15T19:32:34.124Z",
+  "roi": null,
+  "last_updated": "2024-04-25T07:49:30.259Z",
+  "platforms": {
+    "ethereum": "0x67d85a291fcdc862a78812a3c26d55e28ffb2701"
+  }
+}

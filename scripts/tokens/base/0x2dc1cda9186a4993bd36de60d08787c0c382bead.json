@@ -1,0 +1,31 @@
+{
+  "id": "magnate-finance",
+  "symbol": "mag",
+  "name": "Magnate Finance",
+  "image": "https://assets.coingecko.com/coins/images/31278/large/192.png?1696530101",
+  "current_price": 0.00009517,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 13894.31,
+  "total_volume": 14.89,
+  "high_24h": 0.00009786,
+  "low_24h": 0.00009517,
+  "price_change_24h": -0.000002380209450768,
+  "price_change_percentage_24h": -2.44007,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 146000000,
+  "max_supply": 1000000000,
+  "ath": 0.01057205,
+  "ath_change_percentage": -99.09983,
+  "ath_date": "2023-08-18T09:44:48.717Z",
+  "atl": 0.00002894,
+  "atl_change_percentage": 228.89301,
+  "atl_date": "2023-10-11T16:11:35.161Z",
+  "roi": null,
+  "last_updated": "2024-04-24T15:31:01.560Z",
+  "platforms": {
+    "base": "0x2dc1cda9186a4993bd36de60d08787c0c382bead"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "crypto-news-flash-ai",
+  "symbol": "cnf",
+  "name": "Crypto News Flash AI",
+  "image": "missing_large.png",
+  "current_price": 0.00004625,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 46305,
+  "total_volume": 94610,
+  "high_24h": 0.00005434,
+  "low_24h": 0.00004199,
+  "price_change_24h": 0.00000205,
+  "price_change_percentage_24h": 4.63041,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00005938,
+  "ath_change_percentage": -22.21689,
+  "ath_date": "2023-09-20T22:05:06.514Z",
+  "atl": 0.00000926,
+  "atl_change_percentage": 398.562,
+  "atl_date": "2024-01-12T22:26:54.367Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:34.332Z",
+  "platforms": {
+    "bsc": "0xcb4e83b660e941e021c6842fc6eb63ad638600e3"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "wagyu",
+  "symbol": "$wagyu",
+  "name": "Wagyu",
+  "image": "https://assets.coingecko.com/coins/images/33295/large/200x200.png?1701401886",
+  "current_price": 0.00002684,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 24.44,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.00057615,
+  "ath_change_percentage": -95.3423,
+  "ath_date": "2023-12-01T11:04:54.273Z",
+  "atl": 0.00002379,
+  "atl_change_percentage": 12.81911,
+  "atl_date": "2023-12-26T17:51:22.665Z",
+  "roi": null,
+  "last_updated": "2024-02-13T19:13:18.577Z",
+  "platforms": {
+    "ethereum": "0x13630da53ac2f3004e6e2a127546935ad932f92f"
+  }
+}

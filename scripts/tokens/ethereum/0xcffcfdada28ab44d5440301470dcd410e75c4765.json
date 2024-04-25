@@ -1,0 +1,31 @@
+{
+  "id": "parifi",
+  "symbol": "prf",
+  "name": "Parifi",
+  "image": "https://assets.coingecko.com/coins/images/34710/large/parifi200x200.png?1705894380",
+  "current_price": 0.00354867,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3528704,
+  "total_volume": 39230,
+  "high_24h": 0.00357872,
+  "low_24h": 0.00350234,
+  "price_change_24h": 0.00004634,
+  "price_change_percentage_24h": 1.32302,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.03004854,
+  "ath_change_percentage": -88.24863,
+  "ath_date": "2024-03-25T17:39:50.668Z",
+  "atl": 0.00298954,
+  "atl_change_percentage": 18.11556,
+  "atl_date": "2024-04-03T14:03:59.120Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:06.480Z",
+  "platforms": {
+    "ethereum": "0xcffcfdada28ab44d5440301470dcd410e75c4765"
+  }
+}

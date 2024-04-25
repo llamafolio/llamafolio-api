@@ -1,0 +1,31 @@
+{
+  "id": "splyt",
+  "symbol": "shopx",
+  "name": "SHOPX",
+  "image": "https://assets.coingecko.com/coins/images/14600/large/shopx_icon_.png?1696514279",
+  "current_price": 0.01788368,
+  "market_cap": 8379098,
+  "market_cap_rank": 1527,
+  "fully_diluted_valuation": 8938760,
+  "total_volume": 327204,
+  "high_24h": 0.01800508,
+  "low_24h": 0.01703616,
+  "price_change_24h": -0.000039508360995796,
+  "price_change_percentage_24h": -0.22043,
+  "market_cap_change_24h": -10064.702670769766,
+  "market_cap_change_percentage_24h": -0.11997,
+  "circulating_supply": 468694625,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 4.77,
+  "ath_change_percentage": -99.62407,
+  "ath_date": "2021-03-31T23:29:51.668Z",
+  "atl": 0.00498279,
+  "atl_change_percentage": 259.87311,
+  "atl_date": "2023-11-07T13:45:19.516Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:10.028Z",
+  "platforms": {
+    "ethereum": "0x7bef710a5759d197ec0bf621c3df802c2d60d848"
+  }
+}

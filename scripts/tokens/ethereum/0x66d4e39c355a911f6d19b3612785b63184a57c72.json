@@ -1,0 +1,31 @@
+{
+  "id": "aardvark-2",
+  "symbol": "vark",
+  "name": "Aardvark",
+  "image": "https://assets.coingecko.com/coins/images/32678/large/VARK.jpg?1698929830",
+  "current_price": 0.0024665,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2989621,
+  "total_volume": 26.83,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1212091913,
+  "max_supply": null,
+  "ath": 0.00677755,
+  "ath_change_percentage": -63.60782,
+  "ath_date": "2024-03-04T04:10:16.962Z",
+  "atl": 0.00040796,
+  "atl_change_percentage": 504.59808,
+  "atl_date": "2023-12-20T21:40:41.663Z",
+  "roi": null,
+  "last_updated": "2024-04-20T05:35:03.559Z",
+  "platforms": {
+    "ethereum": "0x66d4e39c355a911f6d19b3612785b63184a57c72"
+  }
+}

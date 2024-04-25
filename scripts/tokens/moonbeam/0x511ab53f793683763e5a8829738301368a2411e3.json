@@ -1,0 +1,31 @@
+{
+  "id": "moonwell-artemis",
+  "symbol": "well",
+  "name": "Moonwell",
+  "image": "https://assets.coingecko.com/coins/images/26133/large/WELL.png?1696525221",
+  "current_price": 0.03361454,
+  "market_cap": 77409059,
+  "market_cap_rank": 543,
+  "fully_diluted_valuation": 167689533,
+  "total_volume": 851277,
+  "high_24h": 0.03581944,
+  "low_24h": 0.0332766,
+  "price_change_24h": -0.0011780794114368,
+  "price_change_percentage_24h": -3.386,
+  "market_cap_change_24h": -2839623.0539866984,
+  "market_cap_change_percentage_24h": -3.53853,
+  "circulating_supply": 2308106452,
+  "total_supply": 5000000000,
+  "max_supply": 5000000000,
+  "ath": 0.298797,
+  "ath_change_percentage": -88.66744,
+  "ath_date": "2022-06-23T08:08:53.973Z",
+  "atl": 0.00298508,
+  "atl_change_percentage": 1034.35575,
+  "atl_date": "2022-12-21T02:20:29.893Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:44.283Z",
+  "platforms": {
+    "moonbeam": "0x511ab53f793683763e5a8829738301368a2411e3"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "galactic-arena-the-nftverse",
+  "symbol": "gan",
+  "name": "Galactic Arena: The NFTverse",
+  "image": "https://assets.coingecko.com/coins/images/19925/large/gan.png?1696519344",
+  "current_price": 0.00012039,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 120346,
+  "total_volume": 11510.77,
+  "high_24h": 0.00012204,
+  "low_24h": 0.00011999,
+  "price_change_24h": -0.000001086257720795,
+  "price_change_percentage_24h": -0.89419,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.079819,
+  "ath_change_percentage": -99.84929,
+  "ath_date": "2021-11-08T12:39:17.318Z",
+  "atl": 0.00006881,
+  "atl_change_percentage": 74.80722,
+  "atl_date": "2023-06-12T05:30:47.463Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:58.352Z",
+  "platforms": {
+    "bsc": "0x8f1408171eae06aec4549fd0a5808a42cee6dd84"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "k9-finance-dao",
+  "symbol": "knine",
+  "name": "K9 Finance DAO",
+  "image": "https://assets.coingecko.com/coins/images/35824/large/k9_200_X_200.png?1709886958",
+  "current_price": 0.00004529,
+  "market_cap": 3961832,
+  "market_cap_rank": 1913,
+  "fully_diluted_valuation": 45285929,
+  "total_volume": 757817,
+  "high_24h": 0.00005113,
+  "low_24h": 0.00004518,
+  "price_change_24h": -0.00000399893368957,
+  "price_change_percentage_24h": -8.11357,
+  "market_cap_change_24h": -391815.1956982943,
+  "market_cap_change_percentage_24h": -8.9997,
+  "circulating_supply": 87484824371.7875,
+  "total_supply": 999999999999,
+  "max_supply": 999999999999,
+  "ath": 0.00034682,
+  "ath_change_percentage": -86.94473,
+  "ath_date": "2024-03-10T18:23:40.244Z",
+  "atl": 0.00004518,
+  "atl_change_percentage": 0.21035,
+  "atl_date": "2024-04-25T08:21:15.527Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:14.449Z",
+  "platforms": {
+    "ethereum": "0x91fbb2503ac69702061f1ac6885759fc853e6eae"
+  }
+}

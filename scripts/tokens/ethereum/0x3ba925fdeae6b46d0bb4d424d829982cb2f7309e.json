@@ -1,0 +1,31 @@
+{
+  "id": "rabbitx",
+  "symbol": "rbx",
+  "name": "RabbitX",
+  "image": "https://assets.coingecko.com/coins/images/30048/large/RBX.png?1696528970",
+  "current_price": 0.084367,
+  "market_cap": 30780590,
+  "market_cap_rank": 902,
+  "fully_diluted_valuation": 84366341,
+  "total_volume": 251769,
+  "high_24h": 0.096156,
+  "low_24h": 0.084254,
+  "price_change_24h": -0.004457286813436379,
+  "price_change_percentage_24h": -5.01809,
+  "market_cap_change_24h": -1626191.6230002828,
+  "market_cap_change_percentage_24h": -5.01806,
+  "circulating_supply": 364844438.27594036,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.300034,
+  "ath_change_percentage": -71.85892,
+  "ath_date": "2023-12-24T17:39:59.256Z",
+  "atl": 0.02477276,
+  "atl_change_percentage": 240.82982,
+  "atl_date": "2023-10-19T09:21:37.222Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:03.405Z",
+  "platforms": {
+    "ethereum": "0x3ba925fdeae6b46d0bb4d424d829982cb2f7309e"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "id": "xyo-network",
+  "symbol": "xyo",
+  "name": "XYO Network",
+  "image": "https://assets.coingecko.com/coins/images/4519/large/XYO_Network-logo.png?1696505103",
+  "current_price": 0.00805141,
+  "market_cap": 112284910,
+  "market_cap_rank": 435,
+  "fully_diluted_valuation": 112284910,
+  "total_volume": 1183759,
+  "high_24h": 0.00884644,
+  "low_24h": 0.0080219,
+  "price_change_24h": -0.000639277041330166,
+  "price_change_percentage_24h": -7.35589,
+  "market_cap_change_24h": -8654388.92363803,
+  "market_cap_change_percentage_24h": -7.15598,
+  "circulating_supply": 13931216938.0113,
+  "total_supply": 13931216938.0113,
+  "max_supply": 13931216938.0113,
+  "ath": 0.081391,
+  "ath_change_percentage": -90.0922,
+  "ath_date": "2021-11-06T04:44:55.346Z",
+  "atl": 0.00009672,
+  "atl_change_percentage": 8237.35062,
+  "atl_date": "2020-03-13T02:24:24.303Z",
+  "roi": {
+    "times": -0.9142745706406936,
+    "currency": "eth",
+    "percentage": -91.42745706406937
+  },
+  "last_updated": "2024-04-25T08:55:58.446Z",
+  "platforms": {
+    "ethereum": "0x55296f69f40ea6d20e478533c15a6b08b654e758"
+  }
+}

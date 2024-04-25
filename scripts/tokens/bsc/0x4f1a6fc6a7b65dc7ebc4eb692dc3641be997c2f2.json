@@ -1,0 +1,31 @@
+{
+  "id": "santa-coin-2",
+  "symbol": "santa",
+  "name": "Santa Coin",
+  "image": "https://assets.coingecko.com/coins/images/19654/large/eXsu0oNf_400x400.jpg?1696519082",
+  "current_price": 1.158e-9,
+  "market_cap": 254585,
+  "market_cap_rank": 3387,
+  "fully_diluted_valuation": 254585,
+  "total_volume": 797.01,
+  "high_24h": 1.199e-9,
+  "low_24h": 1.144e-9,
+  "price_change_24h": -1.9110875e-11,
+  "price_change_percentage_24h": -1.6234,
+  "market_cap_change_24h": -5489.096737994085,
+  "market_cap_change_percentage_24h": -2.11059,
+  "circulating_supply": 220310523936299,
+  "total_supply": 220310523936299,
+  "max_supply": 1000000000000000,
+  "ath": 1.67851e-7,
+  "ath_change_percentage": -99.31155,
+  "ath_date": "2021-11-04T12:32:39.310Z",
+  "atl": 3.74377e-10,
+  "atl_change_percentage": 208.66526,
+  "atl_date": "2022-06-18T20:35:53.037Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:22.971Z",
+  "platforms": {
+    "bsc": "0x4f1a6fc6a7b65dc7ebc4eb692dc3641be997c2f2"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "id": "noia-network",
+  "symbol": "noia",
+  "name": "Syntropy",
+  "image": "https://assets.coingecko.com/coins/images/3269/large/Twitter-Profile-01.png?1714005625",
+  "current_price": 0.176575,
+  "market_cap": 141036182,
+  "market_cap_rank": 381,
+  "fully_diluted_valuation": 176582373,
+  "total_volume": 4453436,
+  "high_24h": 0.210249,
+  "low_24h": 0.171044,
+  "price_change_24h": -0.03367417226213312,
+  "price_change_percentage_24h": -16.01635,
+  "market_cap_change_24h": -27039224.126738906,
+  "market_cap_change_percentage_24h": -16.08756,
+  "circulating_supply": 798699097.4099838,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.891859,
+  "ath_change_percentage": -80.23673,
+  "ath_date": "2021-03-29T06:04:08.394Z",
+  "atl": 0.00214757,
+  "atl_change_percentage": 8107.44882,
+  "atl_date": "2020-09-27T23:39:49.917Z",
+  "roi": {
+    "times": 4.350745452590582,
+    "currency": "usd",
+    "percentage": 435.0745452590582
+  },
+  "last_updated": "2024-04-25T08:56:00.765Z",
+  "platforms": {
+    "ethereum": "0xa8c8cfb141a3bb59fea1e2ea6b79b5ecbcd7b6ca"
+  }
+}

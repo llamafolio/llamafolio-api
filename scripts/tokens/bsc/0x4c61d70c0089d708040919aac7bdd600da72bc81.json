@@ -1,0 +1,31 @@
+{
+  "id": "hyme",
+  "symbol": "hyme",
+  "name": "HYME",
+  "image": "https://assets.coingecko.com/coins/images/33183/large/HYME.jpg?1700926551",
+  "current_price": 0.00274727,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 665.87,
+  "high_24h": 0.00294575,
+  "low_24h": 0.00274258,
+  "price_change_24h": -0.000088072192424428,
+  "price_change_percentage_24h": -3.10623,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1503474,
+  "max_supply": null,
+  "ath": 0.01214393,
+  "ath_change_percentage": -77.3618,
+  "ath_date": "2023-11-30T08:40:06.188Z",
+  "atl": 0.00241174,
+  "atl_change_percentage": 13.99123,
+  "atl_date": "2024-04-15T06:19:41.834Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:43.696Z",
+  "platforms": {
+    "bsc": "0x4c61d70c0089d708040919aac7bdd600da72bc81"
+  }
+}

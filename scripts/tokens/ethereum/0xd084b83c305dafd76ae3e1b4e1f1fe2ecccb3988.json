@@ -1,0 +1,31 @@
+{
+  "id": "the-virtua-kolect",
+  "symbol": "tvk",
+  "name": "Virtua",
+  "image": "https://assets.coingecko.com/coins/images/13330/large/virtua_original.png?1696513099",
+  "current_price": 0.195699,
+  "market_cap": 34809452,
+  "market_cap_rank": 847,
+  "fully_diluted_valuation": 234752533,
+  "total_volume": 816528,
+  "high_24h": 0.230498,
+  "low_24h": 0.178458,
+  "price_change_24h": -0.002603010625279512,
+  "price_change_percentage_24h": -1.31265,
+  "market_cap_change_24h": 366933,
+  "market_cap_change_percentage_24h": 1.06535,
+  "circulating_supply": 177937771.80965117,
+  "total_supply": 1200000000,
+  "max_supply": 1200000000,
+  "ath": 1.21,
+  "ath_change_percentage": -83.85059,
+  "ath_date": "2021-03-15T23:24:29.280Z",
+  "atl": 0.01767338,
+  "atl_change_percentage": 1007.30156,
+  "atl_date": "2023-09-13T06:16:42.947Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:49.884Z",
+  "platforms": {
+    "ethereum": "0xd084b83c305dafd76ae3e1b4e1f1fe2ecccb3988"
+  }
+}

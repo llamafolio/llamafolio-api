@@ -1,0 +1,31 @@
+{
+  "id": "suku",
+  "symbol": "suku",
+  "name": "SUKU",
+  "image": "https://assets.coingecko.com/coins/images/11969/large/suku-200.png?1696511828",
+  "current_price": 0.173974,
+  "market_cap": 39927510,
+  "market_cap_rank": 786,
+  "fully_diluted_valuation": 260181907,
+  "total_volume": 3259995,
+  "high_24h": 0.183178,
+  "low_24h": 0.164914,
+  "price_change_24h": -0.006504590819096407,
+  "price_change_percentage_24h": -3.60408,
+  "market_cap_change_24h": -1929611.919101186,
+  "market_cap_change_percentage_24h": -4.61,
+  "circulating_supply": 230189965.5,
+  "total_supply": 1500000000,
+  "max_supply": 1500000000,
+  "ath": 1.51,
+  "ath_change_percentage": -88.50737,
+  "ath_date": "2021-11-04T09:14:11.505Z",
+  "atl": 0.03358546,
+  "atl_change_percentage": 418.0548,
+  "atl_date": "2023-10-18T07:02:23.970Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:36.388Z",
+  "platforms": {
+    "ethereum": "0x0763fdccf1ae541a5961815c0872a8c5bc6de4d7"
+  }
+}

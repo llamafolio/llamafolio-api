@@ -1,0 +1,31 @@
+{
+  "id": "ydragon",
+  "symbol": "ydr",
+  "name": "YDragon",
+  "image": "https://assets.coingecko.com/coins/images/17807/large/icon.png?1696517328",
+  "current_price": 0.00031793,
+  "market_cap": 39989,
+  "market_cap_rank": 4041,
+  "fully_diluted_valuation": 158963,
+  "total_volume": 11.32,
+  "high_24h": 0.00032059,
+  "low_24h": 0.00031453,
+  "price_change_24h": -0.000002668315790567,
+  "price_change_percentage_24h": -0.8323,
+  "market_cap_change_24h": -684.9211840623757,
+  "market_cap_change_percentage_24h": -1.68394,
+  "circulating_supply": 125780634.40860215,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 0.106311,
+  "ath_change_percentage": -99.70095,
+  "ath_date": "2021-09-07T01:47:38.242Z",
+  "atl": 0.00003015,
+  "atl_change_percentage": 954.32422,
+  "atl_date": "2023-09-03T19:35:08.784Z",
+  "roi": null,
+  "last_updated": "2024-04-25T01:45:49.409Z",
+  "platforms": {
+    "avalanche": "0xf03dccaec9a28200a6708c686cf0b8bf26ddc356"
+  }
+}

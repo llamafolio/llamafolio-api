@@ -1,0 +1,31 @@
+{
+  "id": "tipsycoin",
+  "symbol": "$tipsy",
+  "name": "TipsyCoin",
+  "image": "https://assets.coingecko.com/coins/images/24821/large/TipsyCoin-Icon.png?1696523979",
+  "current_price": 0.00001888,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1721988,
+  "total_volume": 1051.94,
+  "high_24h": 0.00001902,
+  "low_24h": 0.00001828,
+  "price_change_24h": 2.14281e-7,
+  "price_change_percentage_24h": 1.14818,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 91517982095.9639,
+  "max_supply": null,
+  "ath": 0.00020719,
+  "ath_change_percentage": -90.91862,
+  "ath_date": "2022-04-05T08:29:41.236Z",
+  "atl": 0.00001311,
+  "atl_change_percentage": 43.50779,
+  "atl_date": "2024-04-19T09:17:54.119Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:28.116Z",
+  "platforms": {
+    "bsc": "0xe097bceb09bfb18047cf259f321cc129b7beba5e"
+  }
+}

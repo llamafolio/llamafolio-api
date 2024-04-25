@@ -1,0 +1,31 @@
+{
+  "id": "rebel-bots",
+  "symbol": "rbls",
+  "name": "Rebel Bots",
+  "image": "https://assets.coingecko.com/coins/images/24094/large/logo-footer-356.88b37f33.png?1696523287",
+  "current_price": 0.03601863,
+  "market_cap": 10368319,
+  "market_cap_rank": 1421,
+  "fully_diluted_valuation": 10368319,
+  "total_volume": 59817,
+  "high_24h": 0.03833708,
+  "low_24h": 0.03595729,
+  "price_change_24h": -0.001869939851124214,
+  "price_change_percentage_24h": -4.93537,
+  "market_cap_change_24h": -571356.2884257473,
+  "market_cap_change_percentage_24h": -5.22279,
+  "circulating_supply": 287943090,
+  "total_supply": 287943090,
+  "max_supply": 300000000,
+  "ath": 2.73,
+  "ath_change_percentage": -98.67501,
+  "ath_date": "2022-03-22T18:39:43.175Z",
+  "atl": 0.01276722,
+  "atl_change_percentage": 183.13953,
+  "atl_date": "2024-02-15T03:22:22.868Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:27.782Z",
+  "platforms": {
+    "polygon": "0xe26cda27c13f4f87cffc2f437c5900b27ebb5bbb"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "milky-token",
+  "symbol": "milky",
+  "name": "Milky",
+  "image": "https://assets.coingecko.com/coins/images/20269/large/milky.png?1696519675",
+  "current_price": 0.000006,
+  "market_cap": 25176,
+  "market_cap_rank": 4123,
+  "fully_diluted_valuation": 25176,
+  "total_volume": 0.119099,
+  "high_24h": 0.00000601,
+  "low_24h": 0.00000599,
+  "price_change_24h": -2.851668463e-9,
+  "price_change_percentage_24h": -0.04752,
+  "market_cap_change_24h": -8.577800471884984,
+  "market_cap_change_percentage_24h": -0.03406,
+  "circulating_supply": 4197569177.09422,
+  "total_supply": 4197569177.09422,
+  "max_supply": null,
+  "ath": 0.01651121,
+  "ath_change_percentage": -99.96365,
+  "ath_date": "2021-11-14T22:17:17.245Z",
+  "atl": 0.00000598,
+  "atl_change_percentage": 0.36045,
+  "atl_date": "2024-04-21T22:11:46.035Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:05.090Z",
+  "platforms": {
+    "bsc": "0x6fe3d0f096fc932a905accd1eb1783f6e4cec717"
+  }
+}

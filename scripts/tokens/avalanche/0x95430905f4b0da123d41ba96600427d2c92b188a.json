@@ -1,0 +1,31 @@
+{
+  "id": "cross-chain-degen-dao",
+  "symbol": "degen",
+  "name": "Cross Chain Degen DAO",
+  "image": "https://assets.coingecko.com/coins/images/35856/large/image-200x200.jpg?1711030686",
+  "current_price": 0.973827,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 67603,
+  "total_volume": 1870.98,
+  "high_24h": 1.091,
+  "low_24h": 0.958124,
+  "price_change_24h": -0.11070767319455366,
+  "price_change_percentage_24h": -10.20785,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 69420,
+  "max_supply": 69420,
+  "ath": 16.91,
+  "ath_change_percentage": -94.11282,
+  "ath_date": "2024-03-22T06:16:06.178Z",
+  "atl": 0.857152,
+  "atl_change_percentage": 16.15266,
+  "atl_date": "2024-04-19T02:49:45.546Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:38.958Z",
+  "platforms": {
+    "avalanche": "0x95430905f4b0da123d41ba96600427d2c92b188a"
+  }
+}

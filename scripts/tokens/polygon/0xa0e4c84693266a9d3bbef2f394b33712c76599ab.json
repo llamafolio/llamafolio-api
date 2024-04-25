@@ -1,0 +1,31 @@
+{
+  "id": "euro3",
+  "symbol": "euro3",
+  "name": "EURO3",
+  "image": "https://assets.coingecko.com/coins/images/33118/large/EURO3.png?1700732918",
+  "current_price": 1.051,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 2724.91,
+  "high_24h": 1.088,
+  "low_24h": 1.039,
+  "price_change_24h": -0.029584376152846037,
+  "price_change_percentage_24h": -2.7388,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.13,
+  "ath_change_percentage": -7.13097,
+  "ath_date": "2024-03-30T12:32:50.727Z",
+  "atl": 0.746849,
+  "atl_change_percentage": 40.20619,
+  "atl_date": "2023-12-16T21:48:32.576Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:46.893Z",
+  "platforms": {
+    "polygon": "0xa0e4c84693266a9d3bbef2f394b33712c76599ab"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "messier",
+  "symbol": "m87",
+  "name": "MESSIER",
+  "image": "https://assets.coingecko.com/coins/images/25957/large/MESSIERlogonew_%281%29.png?1696525036",
+  "current_price": 0.00000513,
+  "market_cap": 4537027,
+  "market_cap_rank": 1845,
+  "fully_diluted_valuation": 4537027,
+  "total_volume": 15597.98,
+  "high_24h": 0.00000585,
+  "low_24h": 0.00000513,
+  "price_change_24h": -6.7885625848e-7,
+  "price_change_percentage_24h": -11.69166,
+  "market_cap_change_24h": -599214.9128208291,
+  "market_cap_change_percentage_24h": -11.66641,
+  "circulating_supply": 884846293944.9,
+  "total_supply": 884846293944.9,
+  "max_supply": 884846293944.9,
+  "ath": 0.00002281,
+  "ath_change_percentage": -77.49278,
+  "ath_date": "2024-03-10T09:10:34.636Z",
+  "atl": 2.7498e-8,
+  "atl_change_percentage": 18569.07541,
+  "atl_date": "2023-08-09T21:18:59.844Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:49:53.189Z",
+  "platforms": {
+    "ethereum": "0x80122c6a83c8202ea365233363d3f4837d13e888"
+  }
+}

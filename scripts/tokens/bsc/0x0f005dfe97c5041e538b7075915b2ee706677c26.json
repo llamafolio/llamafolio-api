@@ -1,0 +1,31 @@
+{
+  "id": "jetoken",
+  "symbol": "jets",
+  "name": "JeToken",
+  "image": "https://assets.coingecko.com/coins/images/21104/large/fav-icon.png?1696520485",
+  "current_price": 0.00000237,
+  "market_cap": 22162,
+  "market_cap_rank": 4136,
+  "fully_diluted_valuation": 236704,
+  "total_volume": 1162.44,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 9362790826.179579,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.00025485,
+  "ath_change_percentage": -99.07121,
+  "ath_date": "2021-12-04T15:38:47.505Z",
+  "atl": 0.00000214,
+  "atl_change_percentage": 10.82913,
+  "atl_date": "2023-06-12T03:01:37.089Z",
+  "roi": null,
+  "last_updated": "2023-08-03T10:30:17.082Z",
+  "platforms": {
+    "bsc": "0x0f005dfe97c5041e538b7075915b2ee706677c26"
+  }
+}

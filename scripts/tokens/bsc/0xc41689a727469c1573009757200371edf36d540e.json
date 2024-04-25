@@ -1,0 +1,31 @@
+{
+  "id": "dynamix",
+  "symbol": "dyna",
+  "name": "Dynamix",
+  "image": "https://assets.coingecko.com/coins/images/18747/large/12275.png?1696518212",
+  "current_price": 4.3234e-10,
+  "market_cap": 228131,
+  "market_cap_rank": 3428,
+  "fully_diluted_valuation": 431358,
+  "total_volume": 171.44,
+  "high_24h": 4.36854e-10,
+  "low_24h": 4.19072e-10,
+  "price_change_24h": 3.478e-12,
+  "price_change_percentage_24h": 0.81096,
+  "market_cap_change_24h": 600.51,
+  "market_cap_change_percentage_24h": 0.26392,
+  "circulating_supply": 528866594042176.3,
+  "total_supply": 1000000000000000,
+  "max_supply": 1000000000000000,
+  "ath": 1.5234e-8,
+  "ath_change_percentage": -97.16823,
+  "ath_date": "2021-12-08T15:12:38.812Z",
+  "atl": 1.80053e-10,
+  "atl_change_percentage": 139.59485,
+  "atl_date": "2023-06-28T19:48:48.956Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:29.641Z",
+  "platforms": {
+    "bsc": "0xc41689a727469c1573009757200371edf36d540e"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "simbcoin-swap",
+  "symbol": "smbswap",
+  "name": "SimbCoin Swap",
+  "image": "https://assets.coingecko.com/coins/images/16808/large/smb.png?1696516378",
+  "current_price": 0.00126941,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 190412,
+  "total_volume": 0.904248,
+  "high_24h": 0.00127387,
+  "low_24h": 0.00126782,
+  "price_change_24h": -8.84755512196e-7,
+  "price_change_percentage_24h": -0.06965,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 150000000,
+  "max_supply": null,
+  "ath": 1.79,
+  "ath_change_percentage": -99.92916,
+  "ath_date": "2021-08-10T21:16:48.885Z",
+  "atl": 0.00014991,
+  "atl_change_percentage": 746.75484,
+  "atl_date": "2023-08-25T23:09:48.405Z",
+  "roi": null,
+  "last_updated": "2024-04-24T17:20:14.488Z",
+  "platforms": {
+    "ethereum": "0x53bd789f2cdb846b227d8ffc7b46ed4263231fdf"
+  }
+}

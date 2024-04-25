@@ -1,0 +1,31 @@
+{
+  "id": "criptoville-coins-2",
+  "symbol": "cvlc2",
+  "name": "CriptoVille Coins 2",
+  "image": "https://assets.coingecko.com/coins/images/28614/large/cvlc2.png?1696527599",
+  "current_price": 0.00147091,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 274931,
+  "total_volume": 20.37,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 186912100,
+  "max_supply": null,
+  "ath": 0.01869167,
+  "ath_change_percentage": -92.13067,
+  "ath_date": "2023-01-24T04:05:11.058Z",
+  "atl": 0.00146078,
+  "atl_change_percentage": 0.69358,
+  "atl_date": "2023-05-16T14:40:05.385Z",
+  "roi": null,
+  "last_updated": "2023-05-18T13:00:09.898Z",
+  "platforms": {
+    "bsc": "0x21c7e9ed228242dfd527f456dbf66fee2af67e31"
+  }
+}

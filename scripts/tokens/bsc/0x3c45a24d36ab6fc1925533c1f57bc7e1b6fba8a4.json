@@ -1,0 +1,31 @@
+{
+  "id": "option-room",
+  "symbol": "room",
+  "name": "OptionRoom",
+  "image": "https://assets.coingecko.com/coins/images/13889/large/option_room_logo.png?1696513633",
+  "current_price": 0.04624136,
+  "market_cap": 577286,
+  "market_cap_rank": 2996,
+  "fully_diluted_valuation": 4620734,
+  "total_volume": 20918,
+  "high_24h": 0.04847256,
+  "low_24h": 0.00229036,
+  "price_change_24h": 0.04393492,
+  "price_change_percentage_24h": 1904.88343,
+  "market_cap_change_24h": 548389,
+  "market_cap_change_percentage_24h": 1897.76257,
+  "circulating_supply": 12493373.14272445,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 4.66,
+  "ath_change_percentage": -99.00804,
+  "ath_date": "2021-02-05T13:37:34.254Z",
+  "atl": 0.00008718,
+  "atl_change_percentage": 52905.08998,
+  "atl_date": "2024-01-10T12:35:42.362Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:46.515Z",
+  "platforms": {
+    "bsc": "0x3c45a24d36ab6fc1925533c1f57bc7e1b6fba8a4"
+  }
+}

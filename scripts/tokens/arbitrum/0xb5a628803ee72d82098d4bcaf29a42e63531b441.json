@@ -1,0 +1,31 @@
+{
+  "id": "unstoppable-defi",
+  "symbol": "und",
+  "name": "Unstoppable DeFi",
+  "image": "https://assets.coingecko.com/coins/images/29819/large/cglogocen.png?1707169718",
+  "current_price": 0.051766,
+  "market_cap": 1551812,
+  "market_cap_rank": 2433,
+  "fully_diluted_valuation": 5172705,
+  "total_volume": 4027.84,
+  "high_24h": 0.053514,
+  "low_24h": 0.050667,
+  "price_change_24h": -0.001645411850419588,
+  "price_change_percentage_24h": -3.08066,
+  "market_cap_change_24h": -50518.83254565485,
+  "market_cap_change_percentage_24h": -3.15283,
+  "circulating_supply": 30000000,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.146878,
+  "ath_change_percentage": -64.78239,
+  "ath_date": "2023-04-14T07:48:19.332Z",
+  "atl": 0.02142597,
+  "atl_change_percentage": 141.42219,
+  "atl_date": "2023-10-26T17:01:41.537Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:53:37.272Z",
+  "platforms": {
+    "arbitrum": "0xb5a628803ee72d82098d4bcaf29a42e63531b441"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "beebox",
+  "symbol": "xbbc",
+  "name": "Beebox",
+  "image": "https://assets.coingecko.com/coins/images/31811/large/XBBC_logo.png?1696530626",
+  "current_price": 0.01279687,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1279687,
+  "total_volume": 1044.28,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.03863473,
+  "ath_change_percentage": -66.87729,
+  "ath_date": "2023-10-17T10:43:54.958Z",
+  "atl": 0.00997872,
+  "atl_change_percentage": 28.24164,
+  "atl_date": "2024-02-26T11:10:16.589Z",
+  "roi": null,
+  "last_updated": "2024-03-29T12:37:34.421Z",
+  "platforms": {
+    "polygon": "0x0395e3178305e64ff9e8d942eb3a470b5d88fae8"
+  }
+}

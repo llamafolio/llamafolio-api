@@ -1,0 +1,31 @@
+{
+  "id": "yieldwatch",
+  "symbol": "watch",
+  "name": "Yieldwatch",
+  "image": "https://assets.coingecko.com/coins/images/14186/large/WATCH1.png?1696513904",
+  "current_price": 0.01796954,
+  "market_cap": 175169,
+  "market_cap_rank": 3558,
+  "fully_diluted_valuation": 357489,
+  "total_volume": 134.38,
+  "high_24h": 0.01825326,
+  "low_24h": 0.01760621,
+  "price_change_24h": 0.00005301,
+  "price_change_percentage_24h": 0.29585,
+  "market_cap_change_24h": -1112.0701549937949,
+  "market_cap_change_percentage_24h": -0.63085,
+  "circulating_supply": 9800000,
+  "total_supply": 20000000,
+  "max_supply": 20000000,
+  "ath": 3.61,
+  "ath_change_percentage": -99.50416,
+  "ath_date": "2021-03-04T13:15:58.465Z",
+  "atl": 0.0088812,
+  "atl_change_percentage": 101.41054,
+  "atl_date": "2023-12-11T02:16:27.902Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:44.816Z",
+  "platforms": {
+    "polygon": "0x09211dc67f9fe98fb7bbb91be0ef05f4a12fa2b2"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "mettalex",
+  "symbol": "mtlx",
+  "name": "Mettalex",
+  "image": "https://assets.coingecko.com/coins/images/12730/large/nrEqFTEW_400x400.jpg?1696512529",
+  "current_price": 3.61,
+  "market_cap": 14709347,
+  "market_cap_rank": 1257,
+  "fully_diluted_valuation": 144823903,
+  "total_volume": 40079,
+  "high_24h": 3.87,
+  "low_24h": 3.55,
+  "price_change_24h": -0.2664116365458078,
+  "price_change_percentage_24h": -6.88031,
+  "market_cap_change_24h": -1036108.2250926867,
+  "market_cap_change_percentage_24h": -6.58036,
+  "circulating_supply": 4062685,
+  "total_supply": 40000000,
+  "max_supply": null,
+  "ath": 14.4,
+  "ath_change_percentage": -74.84666,
+  "ath_date": "2021-02-21T20:57:10.224Z",
+  "atl": 0.04658621,
+  "atl_change_percentage": 7675.09437,
+  "atl_date": "2022-10-25T13:18:59.275Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:34.061Z",
+  "platforms": {
+    "ethereum": "0x2e1e15c44ffe4df6a0cb7371cd00d5028e571d14"
+  }
+}

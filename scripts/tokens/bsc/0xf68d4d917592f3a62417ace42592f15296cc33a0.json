@@ -1,0 +1,31 @@
+{
+  "id": "coinhub",
+  "symbol": "chb",
+  "name": "COINHUB",
+  "image": "https://assets.coingecko.com/coins/images/26818/large/a08jRqRh_400x400.jpg?1696525877",
+  "current_price": 0.00004198,
+  "market_cap": 37983,
+  "market_cap_rank": 4048,
+  "fully_diluted_valuation": 420361,
+  "total_volume": 90531,
+  "high_24h": 0.0000483,
+  "low_24h": 0.00004128,
+  "price_change_24h": -0.000002908049922578,
+  "price_change_percentage_24h": -6.47779,
+  "market_cap_change_24h": -2570.2531130947827,
+  "market_cap_change_percentage_24h": -6.33794,
+  "circulating_supply": 903585173.7845329,
+  "total_supply": 10000000001,
+  "max_supply": 10000000001,
+  "ath": 0.01054749,
+  "ath_change_percentage": -99.60168,
+  "ath_date": "2022-10-31T08:16:27.135Z",
+  "atl": 0.00000998,
+  "atl_change_percentage": 320.94359,
+  "atl_date": "2023-06-20T00:02:18.834Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:50.998Z",
+  "platforms": {
+    "bsc": "0xf68d4d917592f3a62417ace42592f15296cc33a0"
+  }
+}

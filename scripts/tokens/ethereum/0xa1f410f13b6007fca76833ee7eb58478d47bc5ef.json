@@ -1,0 +1,31 @@
+{
+  "id": "rejuve-ai",
+  "symbol": "rjv",
+  "name": "Rejuve.AI",
+  "image": "https://assets.coingecko.com/coins/images/29366/large/2023_Rejuve_Logo_-_Square_-_Teal.jpg?1696528314",
+  "current_price": 0.02907721,
+  "market_cap": 16427231,
+  "market_cap_rank": 1202,
+  "fully_diluted_valuation": 28984804,
+  "total_volume": 432212,
+  "high_24h": 0.03110655,
+  "low_24h": 0.02899096,
+  "price_change_24h": -0.001955425361372342,
+  "price_change_percentage_24h": -6.30119,
+  "market_cap_change_24h": -1142333.1989213414,
+  "market_cap_change_percentage_24h": -6.50177,
+  "circulating_supply": 566753219,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.143693,
+  "ath_change_percentage": -79.72132,
+  "ath_date": "2023-03-20T01:13:48.233Z",
+  "atl": 0.01327438,
+  "atl_change_percentage": 119.51305,
+  "atl_date": "2023-10-21T08:39:33.775Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:19.387Z",
+  "platforms": {
+    "ethereum": "0xa1f410f13b6007fca76833ee7eb58478d47bc5ef"
+  }
+}

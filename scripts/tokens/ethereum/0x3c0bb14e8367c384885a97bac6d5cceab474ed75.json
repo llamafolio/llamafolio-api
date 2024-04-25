@@ -1,0 +1,31 @@
+{
+  "id": "artificial-idiot",
+  "symbol": "aii",
+  "name": "Artificial idiot",
+  "image": "https://assets.coingecko.com/coins/images/36082/large/AII_200x200.png?1710415710",
+  "current_price": 0.000315,
+  "market_cap": 309776,
+  "market_cap_rank": 3303,
+  "fully_diluted_valuation": 309776,
+  "total_volume": 5355.31,
+  "high_24h": 0.00038663,
+  "low_24h": 0.00031198,
+  "price_change_24h": -0.000068295805775647,
+  "price_change_percentage_24h": -17.81827,
+  "market_cap_change_24h": -68281.07375851023,
+  "market_cap_change_percentage_24h": -18.06107,
+  "circulating_supply": 986620346.982474,
+  "total_supply": 986620346.982474,
+  "max_supply": 986620347,
+  "ath": 0.00587289,
+  "ath_change_percentage": -94.63645,
+  "ath_date": "2024-03-20T22:31:55.163Z",
+  "atl": 0.00031198,
+  "atl_change_percentage": 0.96712,
+  "atl_date": "2024-04-25T04:10:09.818Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:29.135Z",
+  "platforms": {
+    "ethereum": "0x3c0bb14e8367c384885a97bac6d5cceab474ed75"
+  }
+}

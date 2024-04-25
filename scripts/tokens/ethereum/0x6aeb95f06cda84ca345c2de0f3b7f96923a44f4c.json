@@ -1,0 +1,35 @@
+{
+  "id": "rentberry",
+  "symbol": "berry",
+  "name": "Rentberry",
+  "image": "https://assets.coingecko.com/coins/images/1787/large/rentberry.png?1696502792",
+  "current_price": 0.00040115,
+  "market_cap": 120936,
+  "market_cap_rank": 3720,
+  "fully_diluted_valuation": 120936,
+  "total_volume": 10.05,
+  "high_24h": 0.00041584,
+  "low_24h": 0.00040115,
+  "price_change_24h": -0.000009927447729793,
+  "price_change_percentage_24h": -2.41499,
+  "market_cap_change_24h": -3234.7402104998473,
+  "market_cap_change_percentage_24h": -2.60508,
+  "circulating_supply": 301473027,
+  "total_supply": 301473027,
+  "max_supply": null,
+  "ath": 0.115481,
+  "ath_change_percentage": -99.65263,
+  "ath_date": "2018-04-28T11:35:00.848Z",
+  "atl": 0.00008749,
+  "atl_change_percentage": 358.52952,
+  "atl_date": "2024-01-07T16:55:09.274Z",
+  "roi": {
+    "times": -0.9996832501638699,
+    "currency": "eth",
+    "percentage": -99.96832501638698
+  },
+  "last_updated": "2024-04-24T16:31:41.554Z",
+  "platforms": {
+    "ethereum": "0x6aeb95f06cda84ca345c2de0f3b7f96923a44f4c"
+  }
+}

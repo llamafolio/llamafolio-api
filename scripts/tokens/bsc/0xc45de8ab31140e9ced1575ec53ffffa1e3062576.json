@@ -1,0 +1,31 @@
+{
+  "id": "mad-viking-games-token",
+  "symbol": "mvg",
+  "name": "Mad Viking Games Token",
+  "image": "https://assets.coingecko.com/coins/images/30104/large/MVG_Token_Logo_200x200p.png?1696529026",
+  "current_price": 0.00115859,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 16048981,
+  "total_volume": 52350,
+  "high_24h": 0.00144874,
+  "low_24h": 0.00111157,
+  "price_change_24h": -0.000184018123725052,
+  "price_change_percentage_24h": -13.70606,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 14000000000,
+  "max_supply": 14000000000,
+  "ath": 0.00200367,
+  "ath_change_percentage": -42.74002,
+  "ath_date": "2024-03-30T17:50:27.123Z",
+  "atl": 0.00053765,
+  "atl_change_percentage": 113.39311,
+  "atl_date": "2023-08-03T02:23:03.425Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:42.945Z",
+  "platforms": {
+    "bsc": "0xc45de8ab31140e9ced1575ec53ffffa1e3062576"
+  }
+}

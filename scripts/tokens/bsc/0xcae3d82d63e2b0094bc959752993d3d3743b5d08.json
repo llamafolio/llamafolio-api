@@ -1,0 +1,31 @@
+{
+  "id": "btaf-token",
+  "symbol": "btaf",
+  "name": "BTAF token",
+  "image": "https://assets.coingecko.com/coins/images/28871/large/BTAF_BSC200x200-CoinGecko.png?1696527849",
+  "current_price": 0.095026,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 19005223,
+  "total_volume": 98.35,
+  "high_24h": 0.096008,
+  "low_24h": 0.092406,
+  "price_change_24h": 0.00101614,
+  "price_change_percentage_24h": 1.08089,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 200000000,
+  "max_supply": null,
+  "ath": 0.144005,
+  "ath_change_percentage": -34.17477,
+  "ath_date": "2024-03-06T10:41:41.251Z",
+  "atl": 0.01064529,
+  "atl_change_percentage": 790.45398,
+  "atl_date": "2023-10-31T10:21:28.439Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:41.497Z",
+  "platforms": {
+    "bsc": "0xcae3d82d63e2b0094bc959752993d3d3743b5d08"
+  }
+}

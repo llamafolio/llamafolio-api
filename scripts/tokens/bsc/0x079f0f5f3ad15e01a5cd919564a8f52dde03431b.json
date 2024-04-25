@@ -1,0 +1,31 @@
+{
+  "id": "megatoken",
+  "symbol": "mega",
+  "name": "MegaToken",
+  "image": "https://assets.coingecko.com/coins/images/20671/large/undefined-Imgur-5.png?1696520072",
+  "current_price": 4.66553e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 46655,
+  "total_volume": 508.04,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.0000474,
+  "ath_change_percentage": -99.01563,
+  "ath_date": "2021-11-22T04:20:32.268Z",
+  "atl": 4.5309e-7,
+  "atl_change_percentage": 2.97131,
+  "atl_date": "2023-06-12T07:13:18.265Z",
+  "roi": null,
+  "last_updated": "2023-08-02T03:14:55.223Z",
+  "platforms": {
+    "bsc": "0x079f0f5f3ad15e01a5cd919564a8f52dde03431b"
+  }
+}

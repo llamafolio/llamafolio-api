@@ -1,0 +1,31 @@
+{
+  "id": "moneyswap",
+  "symbol": "mswap",
+  "name": "MoneySwap",
+  "image": "https://assets.coingecko.com/coins/images/13576/large/logo_%281%29.png?1696513329",
+  "current_price": 0.00003711,
+  "market_cap": 50070,
+  "market_cap_rank": 3986,
+  "fully_diluted_valuation": 55705,
+  "total_volume": 13608.34,
+  "high_24h": 0.0000385,
+  "low_24h": 0.00003692,
+  "price_change_24h": -0.000001118170305889,
+  "price_change_percentage_24h": -2.92495,
+  "market_cap_change_24h": -1059.225830832016,
+  "market_cap_change_percentage_24h": -2.07165,
+  "circulating_supply": 1348271983,
+  "total_supply": 1500000000,
+  "max_supply": 1500000000,
+  "ath": 0.0171305,
+  "ath_change_percentage": -99.78313,
+  "ath_date": "2021-01-26T20:03:05.706Z",
+  "atl": 0.00001602,
+  "atl_change_percentage": 131.96988,
+  "atl_date": "2023-11-15T11:31:54.111Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:02.246Z",
+  "platforms": {
+    "bsc": "0xdd5a149740c055bdcdc5c066888f739dbe0bf2d0"
+  }
+}

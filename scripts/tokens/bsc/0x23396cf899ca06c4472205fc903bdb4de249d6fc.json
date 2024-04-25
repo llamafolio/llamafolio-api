@@ -1,0 +1,31 @@
+{
+  "id": "wrapped-ust",
+  "symbol": "ustc",
+  "name": "Wrapped USTC",
+  "image": "https://assets.coingecko.com/coins/images/15462/large/ust.png?1696515108",
+  "current_price": 0.069457,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 6195048,
+  "total_volume": 169.91,
+  "high_24h": 0.071785,
+  "low_24h": 0.01866818,
+  "price_change_24h": 0.04944975,
+  "price_change_percentage_24h": 247.15632,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 89129121.425727,
+  "max_supply": null,
+  "ath": 1.091,
+  "ath_change_percentage": -93.65613,
+  "ath_date": "2021-05-19T16:50:58.131Z",
+  "atl": 0.00609686,
+  "atl_change_percentage": 1035.54305,
+  "atl_date": "2022-06-18T20:47:07.867Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:16:29.681Z",
+  "platforms": {
+    "bsc": "0x23396cf899ca06c4472205fc903bdb4de249d6fc"
+  }
+}

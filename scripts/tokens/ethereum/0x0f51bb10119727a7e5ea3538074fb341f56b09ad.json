@@ -1,0 +1,31 @@
+{
+  "id": "dao-maker",
+  "symbol": "dao",
+  "name": "DAO Maker",
+  "image": "https://assets.coingecko.com/coins/images/13915/large/4.png?1696513656",
+  "current_price": 0.997459,
+  "market_cap": 249278979,
+  "market_cap_rank": 258,
+  "fully_diluted_valuation": 277167064,
+  "total_volume": 2689966,
+  "high_24h": 1.1,
+  "low_24h": 0.998714,
+  "price_change_24h": -0.09611707015333804,
+  "price_change_percentage_24h": -8.78924,
+  "market_cap_change_24h": -24020780.051936954,
+  "market_cap_change_percentage_24h": -8.78917,
+  "circulating_supply": 249600000,
+  "total_supply": 277524000,
+  "max_supply": 277524000,
+  "ath": 8.71,
+  "ath_change_percentage": -88.52206,
+  "ath_date": "2021-04-21T17:13:06.858Z",
+  "atl": 0.50243,
+  "atl_change_percentage": 99.00629,
+  "atl_date": "2023-10-19T23:41:31.954Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:33.251Z",
+  "platforms": {
+    "ethereum": "0x0f51bb10119727a7e5ea3538074fb341f56b09ad"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "metis-token",
+  "symbol": "metis",
+  "name": "Metis",
+  "image": "https://assets.coingecko.com/coins/images/15595/large/Metis_Black_Bg.png?1702968192",
+  "current_price": 63.8,
+  "market_cap": 358391499,
+  "market_cap_rank": 209,
+  "fully_diluted_valuation": 636084898,
+  "total_volume": 31433471,
+  "high_24h": 70.25,
+  "low_24h": 63.43,
+  "price_change_24h": -5.516673344043781,
+  "price_change_percentage_24h": -7.95851,
+  "market_cap_change_24h": -32822305.899879158,
+  "market_cap_change_percentage_24h": -8.38986,
+  "circulating_supply": 5634334.342,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 323.54,
+  "ath_change_percentage": -80.29532,
+  "ath_date": "2022-01-16T20:14:31.709Z",
+  "atl": 3.45,
+  "atl_change_percentage": 1747.11162,
+  "atl_date": "2021-05-23T17:07:45.384Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:58.389Z",
+  "platforms": {
+    "ethereum": "0x9e32b13ce7f2e80a01932b42553652e053d6ed8e"
+  }
+}

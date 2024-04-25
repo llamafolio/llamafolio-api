@@ -1,0 +1,31 @@
+{
+  "id": "darwinia-network-native-token",
+  "symbol": "ring",
+  "name": "Darwinia Network",
+  "image": "https://assets.coingecko.com/coins/images/9443/large/RING.png?1696509535",
+  "current_price": 0.0040157,
+  "market_cap": 7141315,
+  "market_cap_rank": 1608,
+  "fully_diluted_valuation": 9630090,
+  "total_volume": 430118,
+  "high_24h": 0.00410176,
+  "low_24h": 0.00398208,
+  "price_change_24h": -0.000057699937715834,
+  "price_change_percentage_24h": -1.4165,
+  "market_cap_change_24h": -98989.22059353068,
+  "market_cap_change_percentage_24h": -1.3672,
+  "circulating_supply": 1779958534,
+  "total_supply": 2400280481,
+  "max_supply": 10000000000,
+  "ath": 0.30361,
+  "ath_change_percentage": -98.68035,
+  "ath_date": "2021-03-14T00:09:30.014Z",
+  "atl": 0.00149943,
+  "atl_change_percentage": 167.20831,
+  "atl_date": "2020-03-17T14:50:20.824Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:57.095Z",
+  "platforms": {
+    "ethereum": "0x9469d013805bffb7d3debe5e7839237e535ec483"
+  }
+}

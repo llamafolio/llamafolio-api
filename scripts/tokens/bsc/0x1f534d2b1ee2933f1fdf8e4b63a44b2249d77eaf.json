@@ -1,0 +1,31 @@
+{
+  "id": "zero-exchange",
+  "symbol": "zero",
+  "name": "0.exchange",
+  "image": "https://assets.coingecko.com/coins/images/13706/large/0.exchange_%28logo%29.jpg?1696513452",
+  "current_price": 0.00010125,
+  "market_cap": 37968,
+  "market_cap_rank": 4049,
+  "fully_diluted_valuation": 57114,
+  "total_volume": 50.37,
+  "high_24h": 0.0001017,
+  "low_24h": 0.0001004,
+  "price_change_24h": 8.28727e-7,
+  "price_change_percentage_24h": 0.82526,
+  "market_cap_change_24h": 310.77,
+  "market_cap_change_percentage_24h": 0.82526,
+  "circulating_supply": 375000000,
+  "total_supply": 564100000,
+  "max_supply": 950000000,
+  "ath": 0.425989,
+  "ath_change_percentage": -99.97623,
+  "ath_date": "2021-03-18T22:54:45.126Z",
+  "atl": 0.0000884,
+  "atl_change_percentage": 14.53826,
+  "atl_date": "2024-02-15T17:06:00.045Z",
+  "roi": null,
+  "last_updated": "2024-04-25T04:42:24.837Z",
+  "platforms": {
+    "bsc": "0x1f534d2b1ee2933f1fdf8e4b63a44b2249d77eaf"
+  }
+}

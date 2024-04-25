@@ -1,0 +1,31 @@
+{
+  "id": "orca-avai",
+  "symbol": "avai",
+  "name": "Orca AVAI",
+  "image": "https://assets.coingecko.com/coins/images/18859/large/ic_orca.png?1696518319",
+  "current_price": 0.791091,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1737487,
+  "total_volume": 4.91,
+  "high_24h": 0.790595,
+  "low_24h": 0.786798,
+  "price_change_24h": 0.00295049,
+  "price_change_percentage_24h": 0.37436,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2196315.86,
+  "max_supply": null,
+  "ath": 1.21,
+  "ath_change_percentage": -35.02402,
+  "ath_date": "2022-10-31T15:21:06.651Z",
+  "atl": 0.2591,
+  "atl_change_percentage": 204.28717,
+  "atl_date": "2022-05-24T19:40:29.877Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:23.117Z",
+  "platforms": {
+    "avalanche": "0x346a59146b9b4a77100d369a3d18e8007a9f46a6"
+  }
+}

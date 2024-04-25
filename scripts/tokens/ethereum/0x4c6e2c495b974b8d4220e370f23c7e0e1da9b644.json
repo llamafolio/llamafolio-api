@@ -1,0 +1,31 @@
+{
+  "id": "smiley-coin",
+  "symbol": "smiley",
+  "name": "Smiley Coin",
+  "image": "https://assets.coingecko.com/coins/images/30809/large/photo_2023-06-21_03-25-14.jpg?1696529666",
+  "current_price": 5.875e-12,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 8860146,
+  "high_24h": 6.247e-12,
+  "low_24h": 5.872e-12,
+  "price_change_24h": -3.27419e-13,
+  "price_change_percentage_24h": -5.2789,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 420690000000000000,
+  "max_supply": 420690000000000000,
+  "ath": 5.4431e-11,
+  "ath_change_percentage": -89.18236,
+  "ath_date": "2024-01-17T01:14:56.998Z",
+  "atl": 2.00307e-13,
+  "atl_change_percentage": 2839.58618,
+  "atl_date": "2023-10-19T09:21:44.319Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:35.197Z",
+  "platforms": {
+    "ethereum": "0x4c6e2c495b974b8d4220e370f23c7e0e1da9b644"
+  }
+}

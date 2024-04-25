@@ -1,0 +1,31 @@
+{
+  "id": "drunk-robots",
+  "symbol": "metal",
+  "name": "Badmad Robots",
+  "image": "https://assets.coingecko.com/coins/images/24376/large/metal.png?1696523559",
+  "current_price": 0.04394874,
+  "market_cap": 31606535,
+  "market_cap_rank": 893,
+  "fully_diluted_valuation": 120836920,
+  "total_volume": 228879,
+  "high_24h": 0.0488401,
+  "low_24h": 0.0438494,
+  "price_change_24h": -0.004750993482463467,
+  "price_change_percentage_24h": -9.75569,
+  "market_cap_change_24h": -3397207.2536396645,
+  "market_cap_change_percentage_24h": -9.70527,
+  "circulating_supply": 719299800.6825,
+  "total_supply": 2750000000,
+  "max_supply": 2750000000,
+  "ath": 0.275095,
+  "ath_change_percentage": -83.96325,
+  "ath_date": "2022-10-25T08:25:43.491Z",
+  "atl": 0.00040351,
+  "atl_change_percentage": 10833.10675,
+  "atl_date": "2023-11-25T11:08:27.779Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:18.151Z",
+  "platforms": {
+    "polygon": "0x200c234721b5e549c3693ccc93cf191f90dc2af9"
+  }
+}

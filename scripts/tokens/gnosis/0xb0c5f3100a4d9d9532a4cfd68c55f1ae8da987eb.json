@@ -1,0 +1,31 @@
+{
+  "id": "daohaus",
+  "symbol": "haus",
+  "name": "DAOhaus",
+  "image": "https://assets.coingecko.com/coins/images/14551/large/jN3kkqke_400x400.png?1696514234",
+  "current_price": 0.897303,
+  "market_cap": 897303,
+  "market_cap_rank": 2747,
+  "fully_diluted_valuation": 897303,
+  "total_volume": 114.38,
+  "high_24h": 0.919356,
+  "low_24h": 0.892854,
+  "price_change_24h": -0.021648922363251333,
+  "price_change_percentage_24h": -2.35583,
+  "market_cap_change_24h": -21462.525123138563,
+  "market_cap_change_percentage_24h": -2.33602,
+  "circulating_supply": 1000000,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 85.61,
+  "ath_change_percentage": -98.95138,
+  "ath_date": "2021-03-30T15:56:59.843Z",
+  "atl": 0.395942,
+  "atl_change_percentage": 126.73436,
+  "atl_date": "2023-07-04T23:32:30.413Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:50:24.772Z",
+  "platforms": {
+    "gnosis": "0xb0c5f3100a4d9d9532a4cfd68c55f1ae8da987eb"
+  }
+}

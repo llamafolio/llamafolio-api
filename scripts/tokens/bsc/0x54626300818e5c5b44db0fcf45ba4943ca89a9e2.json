@@ -1,0 +1,31 @@
+{
+  "id": "checoin",
+  "symbol": "checoin",
+  "name": "CheCoin",
+  "image": "https://assets.coingecko.com/coins/images/17399/large/hmvUIO89jIpjmOD6astn5S5pTSJqnhc3KowWEcI2.png?1696516947",
+  "current_price": 0.00000447,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 447220,
+  "total_volume": 29.67,
+  "high_24h": 0.00000452,
+  "low_24h": 0.00000435,
+  "price_change_24h": 3.1592e-8,
+  "price_change_percentage_24h": 0.71143,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.0005154,
+  "ath_change_percentage": -99.13574,
+  "ath_date": "2021-08-03T20:20:52.872Z",
+  "atl": 0.00000167,
+  "atl_change_percentage": 166.59711,
+  "atl_date": "2023-10-13T05:45:40.946Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:22.687Z",
+  "platforms": {
+    "bsc": "0x54626300818e5c5b44db0fcf45ba4943ca89a9e2"
+  }
+}

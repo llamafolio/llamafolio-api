@@ -1,0 +1,31 @@
+{
+  "id": "mithril",
+  "symbol": "mith",
+  "name": "Mithril",
+  "image": "https://assets.coingecko.com/coins/images/3484/large/mithril.png?1696504172",
+  "current_price": 0.00068222,
+  "market_cap": 420337,
+  "market_cap_rank": 3155,
+  "fully_diluted_valuation": 679329,
+  "total_volume": 73546,
+  "high_24h": 0.00075394,
+  "low_24h": 0.00066713,
+  "price_change_24h": -0.000066356977232674,
+  "price_change_percentage_24h": -8.86442,
+  "market_cap_change_24h": -42640.2893271487,
+  "market_cap_change_percentage_24h": -9.21001,
+  "circulating_supply": 618753636.2575071,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 3.82,
+  "ath_change_percentage": -99.98215,
+  "ath_date": "2018-04-12T09:41:52.515Z",
+  "atl": 0.00049478,
+  "atl_change_percentage": 37.882,
+  "atl_date": "2024-04-13T02:16:33.317Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:05.467Z",
+  "platforms": {
+    "ethereum": "0x3893b9422cd5d70a81edeffe3d5a1c6a978310bb"
+  }
+}

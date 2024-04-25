@@ -1,0 +1,31 @@
+{
+  "id": "threefold-token",
+  "symbol": "tft",
+  "name": "ThreeFold",
+  "image": "https://assets.coingecko.com/coins/images/6704/large/black_logo_on_white_background_%282%29.jpg?1696507044",
+  "current_price": 0.02215449,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 89212510,
+  "total_volume": 21749,
+  "high_24h": 0.02347423,
+  "low_24h": 0.02216128,
+  "price_change_24h": -0.000505893563788003,
+  "price_change_percentage_24h": -2.2325,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 4000000000,
+  "max_supply": null,
+  "ath": 0.23127,
+  "ath_change_percentage": -90.41756,
+  "ath_date": "2024-03-08T10:25:21.679Z",
+  "atl": 0.00516431,
+  "atl_change_percentage": 329.12352,
+  "atl_date": "2023-10-18T04:59:52.522Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:16:11.782Z",
+  "platforms": {
+    "bsc": "0x8f0fb159380176d324542b3a7933f0c2fd0c2bbf"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "victorum",
+  "symbol": "vcc",
+  "name": "Victorum",
+  "image": "https://assets.coingecko.com/coins/images/17391/large/Victorum-logo200X200.png?1696516940",
+  "current_price": 0.00201618,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 20119248,
+  "total_volume": 2301.64,
+  "high_24h": 0.00202509,
+  "low_24h": 0.00197478,
+  "price_change_24h": 0.0000138,
+  "price_change_percentage_24h": 0.68898,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.285097,
+  "ath_change_percentage": -99.29725,
+  "ath_date": "2021-08-20T16:29:21.949Z",
+  "atl": 0.00009975,
+  "atl_change_percentage": 1908.63655,
+  "atl_date": "2023-09-05T09:49:54.362Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:53.756Z",
+  "platforms": {
+    "bsc": "0x5fc6179fcf814fcd4344ee03376ba717a95992b6"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "kassandra",
+  "symbol": "kacy",
+  "name": "Kassandra",
+  "image": "https://assets.coingecko.com/coins/images/22918/large/kacy.png?1696522215",
+  "current_price": 0.055452,
+  "market_cap": 155928,
+  "market_cap_rank": 3611,
+  "fully_diluted_valuation": 532526,
+  "total_volume": 240.89,
+  "high_24h": 0.056432,
+  "low_24h": 0.055436,
+  "price_change_24h": -0.000980188267406812,
+  "price_change_percentage_24h": -1.73694,
+  "market_cap_change_24h": -15388.41112671257,
+  "market_cap_change_percentage_24h": -8.98244,
+  "circulating_supply": 2810962.29,
+  "total_supply": 9600000,
+  "max_supply": 10000000,
+  "ath": 2.98,
+  "ath_change_percentage": -98.1366,
+  "ath_date": "2022-01-30T06:18:50.592Z",
+  "atl": 0.03646736,
+  "atl_change_percentage": 52.11265,
+  "atl_date": "2022-11-21T09:36:40.873Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:26.272Z",
+  "platforms": {
+    "avalanche": "0xf32398dae246c5f672b52a54e9b413dffcae1a44"
+  }
+}

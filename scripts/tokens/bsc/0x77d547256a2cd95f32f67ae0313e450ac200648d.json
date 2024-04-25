@@ -1,0 +1,31 @@
+{
+  "id": "lazio-fan-token",
+  "symbol": "lazio",
+  "name": "Lazio Fan Token",
+  "image": "https://assets.coingecko.com/coins/images/19263/large/B4Lla6V6_400x400.png?1696518707",
+  "current_price": 3.14,
+  "market_cap": 26282583,
+  "market_cap_rank": 976,
+  "fully_diluted_valuation": 125710093,
+  "total_volume": 13736492,
+  "high_24h": 3.5,
+  "low_24h": 3.1,
+  "price_change_24h": -0.06602534403449667,
+  "price_change_percentage_24h": -2.05795,
+  "market_cap_change_24h": -462697.3057254106,
+  "market_cap_change_percentage_24h": -1.73001,
+  "circulating_supply": 8362918.81763,
+  "total_supply": 40000000,
+  "max_supply": null,
+  "ath": 26.75,
+  "ath_change_percentage": -88.01989,
+  "ath_date": "2021-10-21T20:50:30.141Z",
+  "atl": 0.915594,
+  "atl_change_percentage": 250.02482,
+  "atl_date": "2022-05-12T07:20:44.012Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:49.029Z",
+  "platforms": {
+    "bsc": "0x77d547256a2cd95f32f67ae0313e450ac200648d"
+  }
+}

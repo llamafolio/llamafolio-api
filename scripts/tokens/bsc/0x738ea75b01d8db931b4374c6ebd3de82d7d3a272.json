@@ -1,0 +1,31 @@
+{
+  "id": "dusd",
+  "symbol": "dusd",
+  "name": "DUSD",
+  "image": "https://assets.coingecko.com/coins/images/30196/large/LOGO_200X200.png?1696529111",
+  "current_price": 3.22644e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 74705,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": 210000000000000,
+  "ath": 3.258e-9,
+  "ath_change_percentage": -90.09561,
+  "ath_date": "2023-05-10T07:56:04.557Z",
+  "atl": 2.18174e-10,
+  "atl_change_percentage": 47.88381,
+  "atl_date": "2023-05-09T05:22:35.398Z",
+  "roi": null,
+  "last_updated": "2023-05-18T20:30:10.777Z",
+  "platforms": {
+    "bsc": "0x738ea75b01d8db931b4374c6ebd3de82d7d3a272"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "id": "singularitynet",
+  "symbol": "agix",
+  "name": "SingularityNET",
+  "image": "https://assets.coingecko.com/coins/images/2138/large/singularitynet.png?1696503103",
+  "current_price": 0.927745,
+  "market_cap": 1185002351,
+  "market_cap_rank": 84,
+  "fully_diluted_valuation": 1295638614,
+  "total_volume": 182139767,
+  "high_24h": 1.074,
+  "low_24h": 0.918655,
+  "price_change_24h": -0.09329457298182021,
+  "price_change_percentage_24h": -9.13721,
+  "market_cap_change_24h": -128508244.13845468,
+  "market_cap_change_percentage_24h": -9.78357,
+  "circulating_supply": 1282094972.15337,
+  "total_supply": 1401796166.00502,
+  "max_supply": 2000000000,
+  "ath": 1.46,
+  "ath_change_percentage": -36.45489,
+  "ath_date": "2024-03-10T00:24:59.207Z",
+  "atl": 0.00747159,
+  "atl_change_percentage": 12324.29194,
+  "atl_date": "2020-03-13T02:24:16.528Z",
+  "roi": {
+    "times": 8.277451905619213,
+    "currency": "usd",
+    "percentage": 827.7451905619212
+  },
+  "last_updated": "2024-04-25T09:02:35.861Z",
+  "platforms": {
+    "ethereum": "0x5b7533812759b45c2b44c19e320ba2cd2681b542"
+  }
+}

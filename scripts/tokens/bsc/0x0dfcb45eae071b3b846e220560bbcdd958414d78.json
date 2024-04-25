@@ -1,0 +1,31 @@
+{
+  "id": "libero-financial",
+  "symbol": "libero",
+  "name": "Libero Financial",
+  "image": "https://assets.coingecko.com/coins/images/23971/large/libero.png?1696523167",
+  "current_price": 0.00000249,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1059403,
+  "total_volume": 1.7,
+  "high_24h": 0.0000032,
+  "low_24h": 0.00000249,
+  "price_change_24h": -7.0574061537e-7,
+  "price_change_percentage_24h": -22.07334,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 425634134319.633,
+  "max_supply": 425634134319.633,
+  "ath": 0.01425557,
+  "ath_change_percentage": -99.98254,
+  "ath_date": "2022-03-19T16:59:27.096Z",
+  "atl": 7.88988e-7,
+  "atl_change_percentage": 215.46711,
+  "atl_date": "2023-08-03T08:32:42.848Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:07:30.097Z",
+  "platforms": {
+    "bsc": "0x0dfcb45eae071b3b846e220560bbcdd958414d78"
+  }
+}

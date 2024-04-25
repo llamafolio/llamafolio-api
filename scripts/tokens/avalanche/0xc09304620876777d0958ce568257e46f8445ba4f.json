@@ -1,0 +1,31 @@
+{
+  "id": "snowball-2",
+  "symbol": "snox",
+  "name": "Snowball",
+  "image": "https://assets.coingecko.com/coins/images/34455/large/IMG_20240110_173333_371.jpg?1704932715",
+  "current_price": 0.00085363,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 8536.25,
+  "total_volume": 20.87,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.058534,
+  "ath_change_percentage": -98.54167,
+  "ath_date": "2024-01-11T02:24:59.392Z",
+  "atl": 0.00083237,
+  "atl_change_percentage": 2.5541,
+  "atl_date": "2024-04-18T18:15:52.076Z",
+  "roi": null,
+  "last_updated": "2024-04-18T22:50:16.386Z",
+  "platforms": {
+    "avalanche": "0xc09304620876777d0958ce568257e46f8445ba4f"
+  }
+}

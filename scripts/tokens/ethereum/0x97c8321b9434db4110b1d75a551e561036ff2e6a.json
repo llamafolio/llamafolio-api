@@ -1,0 +1,31 @@
+{
+  "id": "wageron",
+  "symbol": "wager",
+  "name": "WagerOn",
+  "image": "https://assets.coingecko.com/coins/images/32385/large/logo.png?1698047095",
+  "current_price": 0.00032635,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 32635,
+  "total_volume": 166.07,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.01383512,
+  "ath_change_percentage": -97.64115,
+  "ath_date": "2023-11-02T16:43:53.224Z",
+  "atl": 0.00032541,
+  "atl_change_percentage": 0.28818,
+  "atl_date": "2024-04-19T16:28:01.658Z",
+  "roi": null,
+  "last_updated": "2024-04-19T23:03:17.814Z",
+  "platforms": {
+    "ethereum": "0x97c8321b9434db4110b1d75a551e561036ff2e6a"
+  }
+}

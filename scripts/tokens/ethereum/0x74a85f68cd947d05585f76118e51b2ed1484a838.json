@@ -1,0 +1,31 @@
+{
+  "id": "diamault",
+  "symbol": "dvt",
+  "name": "Diamault",
+  "image": "https://assets.coingecko.com/coins/images/32200/large/DVT.jpg?1696745951",
+  "current_price": 0.00003471,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 34713,
+  "total_volume": 128.75,
+  "high_24h": 0.00003477,
+  "low_24h": 0.00003463,
+  "price_change_24h": 1.9897e-8,
+  "price_change_percentage_24h": 0.05735,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.00104077,
+  "ath_change_percentage": -96.66472,
+  "ath_date": "2023-11-08T14:30:48.734Z",
+  "atl": 0.00002793,
+  "atl_change_percentage": 24.27681,
+  "atl_date": "2024-04-16T16:55:43.122Z",
+  "roi": null,
+  "last_updated": "2024-04-25T01:31:47.051Z",
+  "platforms": {
+    "ethereum": "0x74a85f68cd947d05585f76118e51b2ed1484a838"
+  }
+}

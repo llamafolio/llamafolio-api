@@ -1,0 +1,31 @@
+{
+  "id": "xsl-labs",
+  "symbol": "syl",
+  "name": "myDid",
+  "image": "https://assets.coingecko.com/coins/images/14847/large/myDid.png?1696514513",
+  "current_price": 0.00035399,
+  "market_cap": 2779459,
+  "market_cap_rank": 2107,
+  "fully_diluted_valuation": 2876481,
+  "total_volume": 208763,
+  "high_24h": 0.00036201,
+  "low_24h": 0.00034739,
+  "price_change_24h": 0.00000164,
+  "price_change_percentage_24h": 0.46408,
+  "market_cap_change_24h": -3175.2151000471786,
+  "market_cap_change_percentage_24h": -0.11411,
+  "circulating_supply": 7865442006.83008,
+  "total_supply": 8140000002,
+  "max_supply": 10000000000,
+  "ath": 0.01320312,
+  "ath_change_percentage": -97.32736,
+  "ath_date": "2021-04-20T19:08:12.213Z",
+  "atl": 0.00025679,
+  "atl_change_percentage": 37.41574,
+  "atl_date": "2023-08-21T18:00:55.409Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:49.153Z",
+  "platforms": {
+    "bsc": "0x7e52a123ed6db6ac872a875552935fbbd2544c86"
+  }
+}

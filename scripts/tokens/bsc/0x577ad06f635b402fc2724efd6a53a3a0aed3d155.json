@@ -1,0 +1,31 @@
+{
+  "id": "befasterholdertoken",
+  "symbol": "bfht",
+  "name": "BeFaster Holder Token",
+  "image": "https://assets.coingecko.com/coins/images/13205/large/BFHT_Logo_200.png?1696512986",
+  "current_price": 0.00953165,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2811179,
+  "total_volume": 108405,
+  "high_24h": 0.01203677,
+  "low_24h": 0.00907504,
+  "price_change_24h": -0.002419903059235149,
+  "price_change_percentage_24h": -20.2476,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 297702612,
+  "max_supply": 300000000,
+  "ath": 6.26,
+  "ath_change_percentage": -99.849,
+  "ath_date": "2021-01-12T12:37:36.991Z",
+  "atl": 0.00073352,
+  "atl_change_percentage": 1188.93608,
+  "atl_date": "2023-12-18T07:33:30.306Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:33.000Z",
+  "platforms": {
+    "bsc": "0x577ad06f635b402fc2724efd6a53a3a0aed3d155"
+  }
+}

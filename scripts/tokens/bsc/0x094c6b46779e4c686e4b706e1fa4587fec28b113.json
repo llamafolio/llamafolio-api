@@ -1,0 +1,31 @@
+{
+  "id": "nikssa",
+  "symbol": "nks",
+  "name": "Nikssa",
+  "image": "https://assets.coingecko.com/coins/images/34505/large/NKS_logo.png?1705287289",
+  "current_price": 0.00121536,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 15.9,
+  "high_24h": 0.00122426,
+  "low_24h": 0.00121354,
+  "price_change_24h": -0.000008896895185898,
+  "price_change_percentage_24h": -0.72672,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.00271927,
+  "ath_change_percentage": -55.30548,
+  "ath_date": "2024-01-16T19:03:33.349Z",
+  "atl": 0.00121354,
+  "atl_change_percentage": 0.14981,
+  "atl_date": "2024-04-24T20:16:17.977Z",
+  "roi": null,
+  "last_updated": "2024-04-25T00:18:38.057Z",
+  "platforms": {
+    "bsc": "0x094c6b46779e4c686e4b706e1fa4587fec28b113"
+  }
+}

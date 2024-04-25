@@ -1,0 +1,31 @@
+{
+  "id": "aga-carbon-credit",
+  "symbol": "agac",
+  "name": "AGA Carbon Credit",
+  "image": "https://assets.coingecko.com/coins/images/16728/large/agac128.png?1696516302",
+  "current_price": 0.0019478,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1947797474,
+  "total_volume": 3.19,
+  "high_24h": 0.00194886,
+  "low_24h": 0.00192937,
+  "price_change_24h": 0.00001603,
+  "price_change_percentage_24h": 0.82976,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000,
+  "max_supply": null,
+  "ath": 0.02032951,
+  "ath_change_percentage": -90.41887,
+  "ath_date": "2021-07-28T20:08:48.856Z",
+  "atl": 0.00186748,
+  "atl_change_percentage": 4.30065,
+  "atl_date": "2024-04-13T21:16:51.472Z",
+  "roi": null,
+  "last_updated": "2024-04-25T03:24:33.097Z",
+  "platforms": {
+    "polygon": "0x669ddc70273084ea30e6cd4f28ca6e2c70735065"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "rai-finance",
+  "symbol": "sofi",
+  "name": "RAI Finance",
+  "image": "https://assets.coingecko.com/coins/images/14686/large/sofi.png?1696514359",
+  "current_price": 0.02266107,
+  "market_cap": 11659894,
+  "market_cap_rank": 1361,
+  "fully_diluted_valuation": 22989600,
+  "total_volume": 1455327,
+  "high_24h": 0.02419983,
+  "low_24h": 0.02213115,
+  "price_change_24h": -0.001071072992619583,
+  "price_change_percentage_24h": -4.51317,
+  "market_cap_change_24h": -8158.993748378009,
+  "market_cap_change_percentage_24h": -0.06993,
+  "circulating_supply": 507181250,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 2.86,
+  "ath_change_percentage": -99.20433,
+  "ath_date": "2021-04-07T07:04:06.483Z",
+  "atl": 0.01459913,
+  "atl_change_percentage": 55.87431,
+  "atl_date": "2023-09-20T11:20:37.993Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:58.099Z",
+  "platforms": {
+    "base": "0x703d57164ca270b0b330a87fd159cfef1490c0a5"
+  }
+}

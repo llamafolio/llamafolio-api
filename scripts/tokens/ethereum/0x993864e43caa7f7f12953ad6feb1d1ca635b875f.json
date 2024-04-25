@@ -1,0 +1,31 @@
+{
+  "id": "singularitydao",
+  "symbol": "sdao",
+  "name": "SingularityDAO",
+  "image": "https://assets.coingecko.com/coins/images/15385/large/200x200_logo.png?1696515032",
+  "current_price": 0.69177,
+  "market_cap": 62448435,
+  "market_cap_rank": 614,
+  "fully_diluted_valuation": 69117166,
+  "total_volume": 487978,
+  "high_24h": 0.744328,
+  "low_24h": 0.683537,
+  "price_change_24h": -0.04035677056372967,
+  "price_change_percentage_24h": -5.51227,
+  "market_cap_change_24h": -3423054.5208061635,
+  "market_cap_change_percentage_24h": -5.19656,
+  "circulating_supply": 90351556.1968638,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 6.62,
+  "ath_change_percentage": -89.54471,
+  "ath_date": "2021-09-06T23:53:52.687Z",
+  "atl": 0.145726,
+  "atl_change_percentage": 375.23653,
+  "atl_date": "2021-05-13T15:50:14.728Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:35.199Z",
+  "platforms": {
+    "ethereum": "0x993864e43caa7f7f12953ad6feb1d1ca635b875f"
+  }
+}

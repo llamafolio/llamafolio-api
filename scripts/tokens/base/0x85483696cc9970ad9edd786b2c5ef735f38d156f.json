@@ -1,0 +1,31 @@
+{
+  "id": "usdc-plus-overnight",
+  "symbol": "usdc+",
+  "name": "Overnight.fi USDC+",
+  "image": "https://assets.coingecko.com/coins/images/34763/large/USDC_.png?1705990720",
+  "current_price": 1,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 52704,
+  "high_24h": 1.009,
+  "low_24h": 0.992144,
+  "price_change_24h": 0.00192743,
+  "price_change_percentage_24h": 0.19308,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.25,
+  "ath_change_percentage": -20.15374,
+  "ath_date": "2024-04-22T11:06:11.355Z",
+  "atl": 0.751478,
+  "atl_change_percentage": 33.09464,
+  "atl_date": "2024-04-13T04:37:38.712Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:07:11.744Z",
+  "platforms": {
+    "base": "0x85483696cc9970ad9edd786b2c5ef735f38d156f"
+  }
+}

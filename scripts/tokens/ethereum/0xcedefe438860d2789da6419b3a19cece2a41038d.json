@@ -1,0 +1,31 @@
+{
+  "id": "love-hate-inu",
+  "symbol": "lhinu",
+  "name": "Love Hate Inu",
+  "image": "https://assets.coingecko.com/coins/images/30455/large/lhinu.png?1696529342",
+  "current_price": 0.00000996,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 999899,
+  "total_volume": 1751235,
+  "high_24h": 0.00001084,
+  "low_24h": 0.00000995,
+  "price_change_24h": -5.2699688886e-7,
+  "price_change_percentage_24h": -5.0263,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000000,
+  "max_supply": null,
+  "ath": 0.00028713,
+  "ath_change_percentage": -96.51783,
+  "ath_date": "2023-05-19T11:20:03.279Z",
+  "atl": 0.00000907,
+  "atl_change_percentage": 10.20018,
+  "atl_date": "2023-11-22T18:31:13.356Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:49.739Z",
+  "platforms": {
+    "ethereum": "0xcedefe438860d2789da6419b3a19cece2a41038d"
+  }
+}

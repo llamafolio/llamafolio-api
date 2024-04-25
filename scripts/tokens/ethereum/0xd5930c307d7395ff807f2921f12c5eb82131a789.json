@@ -1,0 +1,31 @@
+{
+  "id": "bolt",
+  "symbol": "bolt",
+  "name": "Bolt",
+  "image": "https://assets.coingecko.com/coins/images/4489/large/bolt.png?1696505078",
+  "current_price": 0.00377265,
+  "market_cap": 3754567,
+  "market_cap_rank": 1938,
+  "fully_diluted_valuation": 3754567,
+  "total_volume": 317759,
+  "high_24h": 0.00398716,
+  "low_24h": 0.00359317,
+  "price_change_24h": 0.00010384,
+  "price_change_percentage_24h": 2.83022,
+  "market_cap_change_24h": 94306,
+  "market_cap_change_percentage_24h": 2.57648,
+  "circulating_supply": 999000000,
+  "total_supply": 999000000,
+  "max_supply": 999000000,
+  "ath": 0.04071407,
+  "ath_change_percentage": -90.76895,
+  "ath_date": "2019-04-30T12:51:49.465Z",
+  "atl": 0.00065583,
+  "atl_change_percentage": 473.06925,
+  "atl_date": "2020-03-30T06:25:07.099Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:06.670Z",
+  "platforms": {
+    "ethereum": "0xd5930c307d7395ff807f2921f12c5eb82131a789"
+  }
+}

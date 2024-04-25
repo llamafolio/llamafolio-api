@@ -1,0 +1,31 @@
+{
+  "id": "dork-lord",
+  "symbol": "dorkl",
+  "name": "DORK LORD",
+  "image": "https://assets.coingecko.com/coins/images/31654/large/%E1%97%AAO%E1%96%87K_%E1%92%AAO%E1%96%87%E1%97%AA.png?1696530469",
+  "current_price": 0.00077037,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 770379,
+  "total_volume": 559414,
+  "high_24h": 0.00085508,
+  "low_24h": 0.00075142,
+  "price_change_24h": -0.00006292236715162,
+  "price_change_percentage_24h": -7.55102,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.01343284,
+  "ath_change_percentage": -94.27874,
+  "ath_date": "2023-09-08T13:44:37.614Z",
+  "atl": 0.00059528,
+  "atl_change_percentage": 29.10286,
+  "atl_date": "2024-02-21T19:02:51.671Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:40.935Z",
+  "platforms": {
+    "ethereum": "0x94be6962be41377d5beda8dfe1b100f3bf0eacf3"
+  }
+}

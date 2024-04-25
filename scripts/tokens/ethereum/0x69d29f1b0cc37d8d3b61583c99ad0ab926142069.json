@@ -1,0 +1,31 @@
+{
+  "id": "pepe-inverted",
+  "symbol": "ǝԁǝԁ",
+  "name": "Pepe Inverted",
+  "image": "https://assets.coingecko.com/coins/images/31948/large/photo_2023-09-25_14-05-49.jpg?1696530754",
+  "current_price": 5.11177e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 215047,
+  "total_volume": 1330.93,
+  "high_24h": 5.64355e-10,
+  "low_24h": 5.09459e-10,
+  "price_change_24h": -4.8636041e-11,
+  "price_change_percentage_24h": -8.68791,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 420690000000000,
+  "max_supply": 420690000000000,
+  "ath": 7.31816e-10,
+  "ath_change_percentage": -30.14953,
+  "ath_date": "2024-04-09T02:33:10.321Z",
+  "atl": 5.1921e-11,
+  "atl_change_percentage": 884.52,
+  "atl_date": "2024-02-05T06:21:25.507Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:01.395Z",
+  "platforms": {
+    "ethereum": "0x69d29f1b0cc37d8d3b61583c99ad0ab926142069"
+  }
+}

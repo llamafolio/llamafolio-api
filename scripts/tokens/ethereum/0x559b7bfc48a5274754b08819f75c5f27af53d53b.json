@@ -1,0 +1,31 @@
+{
+  "id": "qi-dao",
+  "symbol": "qi",
+  "name": "Qi Dao",
+  "image": "https://assets.coingecko.com/coins/images/15329/large/qidao.jpeg?1697093140",
+  "current_price": 0.04018468,
+  "market_cap": 3366803,
+  "market_cap_rank": 1997,
+  "fully_diluted_valuation": 8027644,
+  "total_volume": 3112.63,
+  "high_24h": 0.04114904,
+  "low_24h": 0.03902238,
+  "price_change_24h": 0.00093109,
+  "price_change_percentage_24h": 2.37198,
+  "market_cap_change_24h": -45898.959013939835,
+  "market_cap_change_percentage_24h": -1.34494,
+  "circulating_supply": 83880221.3651965,
+  "total_supply": 200000000,
+  "max_supply": 200000000,
+  "ath": 6.09,
+  "ath_change_percentage": -99.3411,
+  "ath_date": "2021-06-16T09:41:28.898Z",
+  "atl": 0.00255096,
+  "atl_change_percentage": 1474.08586,
+  "atl_date": "2023-12-12T22:14:43.977Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:54.796Z",
+  "platforms": {
+    "ethereum": "0x559b7bfc48a5274754b08819f75c5f27af53d53b"
+  }
+}

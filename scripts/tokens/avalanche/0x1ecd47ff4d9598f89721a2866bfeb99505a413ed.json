@@ -1,0 +1,31 @@
+{
+  "id": "avme",
+  "symbol": "avme",
+  "name": "AVME",
+  "image": "https://assets.coingecko.com/coins/images/17184/large/avme_logo.png?1696516742",
+  "current_price": 0.00048135,
+  "market_cap": 2598.44,
+  "market_cap_rank": 4265,
+  "fully_diluted_valuation": 1431.05,
+  "total_volume": 2.18,
+  "high_24h": 0.00049241,
+  "low_24h": 0.00048135,
+  "price_change_24h": -0.000009506193048359,
+  "price_change_percentage_24h": -1.93664,
+  "market_cap_change_24h": -51.31624718386183,
+  "market_cap_change_percentage_24h": -1.93664,
+  "circulating_supply": 5398191.15000207,
+  "total_supply": 2972966.073434,
+  "max_supply": 21000000,
+  "ath": 1.44,
+  "ath_change_percentage": -99.96646,
+  "ath_date": "2021-08-26T01:42:12.277Z",
+  "atl": 0.00020127,
+  "atl_change_percentage": 139.1548,
+  "atl_date": "2023-11-21T15:00:11.369Z",
+  "roi": null,
+  "last_updated": "2024-04-24T15:01:18.546Z",
+  "platforms": {
+    "avalanche": "0x1ecd47ff4d9598f89721a2866bfeb99505a413ed"
+  }
+}

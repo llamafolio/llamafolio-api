@@ -1,0 +1,31 @@
+{
+  "id": "hedron",
+  "symbol": "hdrn",
+  "name": "Hedron",
+  "image": "https://assets.coingecko.com/coins/images/24208/large/hdrn.png?1696523395",
+  "current_price": 8.0501e-8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 11569114,
+  "total_volume": 3636.51,
+  "high_24h": 9.4246e-8,
+  "low_24h": 7.9988e-8,
+  "price_change_24h": -4.614183734e-9,
+  "price_change_percentage_24h": -5.42111,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 144300650738234,
+  "max_supply": 144300650738234,
+  "ath": 0.0000071,
+  "ath_change_percentage": -98.87079,
+  "ath_date": "2022-03-12T05:04:47.628Z",
+  "atl": 4.5036e-11,
+  "atl_change_percentage": 177921.83057,
+  "atl_date": "2023-08-15T17:05:32.795Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:38.435Z",
+  "platforms": {
+    "ethereum": "0x3819f64f282bf135d62168c1e513280daf905e06"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "ribbit-meme",
+  "symbol": "ribbit",
+  "name": "Ribbit Meme",
+  "image": "https://assets.coingecko.com/coins/images/30145/large/ribbit-logo.png?1696529066",
+  "current_price": 2.434e-9,
+  "market_cap": 1020507,
+  "market_cap_rank": 2673,
+  "fully_diluted_valuation": 1020507,
+  "total_volume": 35733,
+  "high_24h": 2.508e-9,
+  "low_24h": 2.241e-9,
+  "price_change_24h": -2.03098e-11,
+  "price_change_percentage_24h": -0.82738,
+  "market_cap_change_24h": -8820.023558715591,
+  "market_cap_change_percentage_24h": -0.85687,
+  "circulating_supply": 420690000000000,
+  "total_supply": 420690000000000,
+  "max_supply": 420690000000000,
+  "ath": 8.6198e-8,
+  "ath_change_percentage": -97.18466,
+  "ath_date": "2023-05-07T06:09:49.083Z",
+  "atl": 4.28101e-10,
+  "atl_change_percentage": 466.86717,
+  "atl_date": "2023-10-18T19:51:46.758Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:22.716Z",
+  "platforms": {
+    "ethereum": "0xb794ad95317f75c44090f64955954c3849315ffe"
+  }
+}

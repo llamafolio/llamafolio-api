@@ -1,0 +1,31 @@
+{
+  "id": "defichain",
+  "symbol": "dfi",
+  "name": "DeFiChain",
+  "image": "https://assets.coingecko.com/coins/images/11757/large/symbol-defi-blockchain_200.png?1696511638",
+  "current_price": 0.066139,
+  "market_cap": 57667015,
+  "market_cap_rank": 639,
+  "fully_diluted_valuation": 79224431,
+  "total_volume": 3778482,
+  "high_24h": 0.068459,
+  "low_24h": 0.063676,
+  "price_change_24h": -0.000947835927040466,
+  "price_change_percentage_24h": -1.41285,
+  "market_cap_change_24h": -945932.0405989736,
+  "market_cap_change_percentage_24h": -1.61386,
+  "circulating_supply": 873473206.808604,
+  "total_supply": 1200000000,
+  "max_supply": null,
+  "ath": 5.61,
+  "ath_change_percentage": -98.80495,
+  "ath_date": "2021-12-06T03:05:01.038Z",
+  "atl": 0.062023,
+  "atl_change_percentage": 8.15478,
+  "atl_date": "2024-04-19T02:51:47.220Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:48.689Z",
+  "platforms": {
+    "bsc": "0x361c60b7c2828fcab80988d00d1d542c83387b50"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "coinmerge-os",
+  "symbol": "cmos",
+  "name": "CoinMerge OS",
+  "image": "https://assets.coingecko.com/coins/images/29327/large/cmos.png?1696528277",
+  "current_price": 0.00008017,
+  "market_cap": 821342,
+  "market_cap_rank": 2806,
+  "fully_diluted_valuation": 874753,
+  "total_volume": 428.84,
+  "high_24h": 0.00008508,
+  "low_24h": 0.00007992,
+  "price_change_24h": -0.00000443098489141,
+  "price_change_percentage_24h": -5.23778,
+  "market_cap_change_24h": -47031.30381562945,
+  "market_cap_change_percentage_24h": -5.41602,
+  "circulating_supply": 10246500276.794893,
+  "total_supply": 10912824612,
+  "max_supply": 10912824612,
+  "ath": 0.00034953,
+  "ath_change_percentage": -77.0792,
+  "ath_date": "2023-10-24T03:14:36.007Z",
+  "atl": 0.00006356,
+  "atl_change_percentage": 26.05308,
+  "atl_date": "2024-04-13T21:38:02.686Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:07.242Z",
+  "platforms": {
+    "ethereum": "0x87869a9789291a6cec99f3c3ef2ff71fceb12a8e"
+  }
+}

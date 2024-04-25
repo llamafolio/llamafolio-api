@@ -1,0 +1,31 @@
+{
+  "id": "helio-protocol-hay",
+  "symbol": "lisusd",
+  "name": "Lista USD",
+  "image": "https://assets.coingecko.com/coins/images/26947/large/Coingecko_profile_lisUSD_200x200_%281%29.png?1707363097",
+  "current_price": 0.983668,
+  "market_cap": 48713481,
+  "market_cap_rank": 698,
+  "fully_diluted_valuation": 50283657,
+  "total_volume": 300612,
+  "high_24h": 0.987968,
+  "low_24h": 0.973578,
+  "price_change_24h": -0.001099606130257502,
+  "price_change_percentage_24h": -0.11166,
+  "market_cap_change_24h": -149604.41831434518,
+  "market_cap_change_percentage_24h": -0.30617,
+  "circulating_supply": 49565718.6232591,
+  "total_supply": 51163364.0948048,
+  "max_supply": 44000000,
+  "ath": 2,
+  "ath_change_percentage": -50.99718,
+  "ath_date": "2022-08-25T12:10:21.873Z",
+  "atl": 0.208609,
+  "atl_change_percentage": 370.11938,
+  "atl_date": "2022-12-02T02:43:06.227Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:39.048Z",
+  "platforms": {
+    "bsc": "0x0782b6d8c4551b9760e74c0545a9bcd90bdc41e5"
+  }
+}

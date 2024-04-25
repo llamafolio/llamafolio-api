@@ -1,0 +1,31 @@
+{
+  "id": "ponkefork",
+  "symbol": "porke",
+  "name": "PonkeFork",
+  "image": "https://assets.coingecko.com/coins/images/35076/large/photo_2024-02-02_18-27-58.jpg?1707300752",
+  "current_price": 0.0000262,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 26197,
+  "total_volume": 152.46,
+  "high_24h": 0.0000264,
+  "low_24h": 0.00002593,
+  "price_change_24h": -1.7335310247e-7,
+  "price_change_percentage_24h": -0.65737,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00047383,
+  "ath_change_percentage": -94.47114,
+  "ath_date": "2024-02-07T16:23:34.298Z",
+  "atl": 0.00001388,
+  "atl_change_percentage": 88.74161,
+  "atl_date": "2024-02-21T07:13:47.606Z",
+  "roi": null,
+  "last_updated": "2024-04-25T00:31:10.114Z",
+  "platforms": {
+    "bsc": "0x865331a601f129540b6f70a9fca2ba9dd71de298"
+  }
+}

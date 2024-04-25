@@ -1,0 +1,31 @@
+{
+  "id": "frgx-finance",
+  "symbol": "frgx",
+  "name": "FRGX Finance",
+  "image": "https://assets.coingecko.com/coins/images/34196/large/frgx_200x200.png?1704273652",
+  "current_price": 0.177913,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3660497,
+  "total_volume": 204284,
+  "high_24h": 0.182959,
+  "low_24h": 0.172257,
+  "price_change_24h": 0.00385465,
+  "price_change_percentage_24h": 2.21457,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 20585684,
+  "max_supply": 20585684,
+  "ath": 0.437533,
+  "ath_change_percentage": -59.33011,
+  "ath_date": "2024-02-05T08:20:22.251Z",
+  "atl": 0.065654,
+  "atl_change_percentage": 171.03436,
+  "atl_date": "2024-01-08T05:04:10.574Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:21.641Z",
+  "platforms": {
+    "bsc": "0xc703da39ae3b9db67c207c7bad8100e1afdc0f9c"
+  }
+}

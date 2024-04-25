@@ -1,0 +1,31 @@
+{
+  "id": "a-hunters-dream",
+  "symbol": "caw",
+  "name": "A Hunters Dream",
+  "image": "https://assets.coingecko.com/coins/images/25130/large/x-Logo-color-10x.png?1696524280",
+  "current_price": 9.9295e-8,
+  "market_cap": 63198275,
+  "market_cap_rank": 610,
+  "fully_diluted_valuation": 66176204,
+  "total_volume": 1304007,
+  "high_24h": 1.0343e-7,
+  "low_24h": 9.785e-8,
+  "price_change_24h": -3.720991822e-9,
+  "price_change_percentage_24h": -3.61206,
+  "market_cap_change_24h": -2222984.3708435968,
+  "market_cap_change_percentage_24h": -3.39795,
+  "circulating_supply": 636666666666667,
+  "total_supply": 666666666666666,
+  "max_supply": 666666666666666,
+  "ath": 1.6415e-7,
+  "ath_change_percentage": -39.43411,
+  "ath_date": "2022-06-04T18:14:15.904Z",
+  "atl": 3.0922e-8,
+  "atl_change_percentage": 221.51634,
+  "atl_date": "2022-05-12T07:45:18.075Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:32.739Z",
+  "platforms": {
+    "ethereum": "0xf3b9569f82b18aef890de263b84189bd33ebe452"
+  }
+}

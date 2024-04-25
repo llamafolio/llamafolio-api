@@ -1,0 +1,31 @@
+{
+  "id": "balance-network-finance",
+  "symbol": "balance",
+  "name": "Balance Network Finance",
+  "image": "https://assets.coingecko.com/coins/images/34530/large/20240113_025010.png?1705307118",
+  "current_price": 0.00084204,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 8420.37,
+  "total_volume": 564.2,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.06087,
+  "ath_change_percentage": -98.61666,
+  "ath_date": "2024-01-16T01:55:21.027Z",
+  "atl": 0.0007091,
+  "atl_change_percentage": 18.74695,
+  "atl_date": "2024-02-14T05:22:01.247Z",
+  "roi": null,
+  "last_updated": "2024-02-20T06:43:46.973Z",
+  "platforms": {
+    "ethereum": "0xb84f00b5ab187bc795d61389ac2418d4e7c77bb0"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "kiwi",
+  "symbol": "kiwi",
+  "name": "kiwi",
+  "image": "https://assets.coingecko.com/coins/images/28986/large/kiwi.png?1696527959",
+  "current_price": 0.00133846,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 6692.29,
+  "total_volume": 53.68,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 5000000,
+  "max_supply": 5000000,
+  "ath": 0.140006,
+  "ath_change_percentage": -99.044,
+  "ath_date": "2023-05-01T23:43:34.610Z",
+  "atl": 0.00128703,
+  "atl_change_percentage": 3.9961,
+  "atl_date": "2024-04-13T20:12:17.607Z",
+  "roi": null,
+  "last_updated": "2024-04-16T05:42:35.408Z",
+  "platforms": {
+    "bsc": "0xba625fdcc8d35e43e9b9e337779d4e4794a80dac"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "feels-good-man",
+  "symbol": "good",
+  "name": "Feels Good Man",
+  "image": "https://assets.coingecko.com/coins/images/31980/large/Feels_Good_Man.png?1696530783",
+  "current_price": 0.00002492,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 24831,
+  "total_volume": 156.62,
+  "high_24h": 0.00002506,
+  "low_24h": 0.00002476,
+  "price_change_24h": -7.7162183935e-8,
+  "price_change_percentage_24h": -0.30863,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00092533,
+  "ath_change_percentage": -97.31655,
+  "ath_date": "2023-09-28T12:06:12.028Z",
+  "atl": 0.00000879,
+  "atl_change_percentage": 182.34907,
+  "atl_date": "2023-11-04T16:00:17.074Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:49.037Z",
+  "platforms": {
+    "ethereum": "0x76af4cb74c8d4da51403d672a799e94b5958c230"
+  }
+}

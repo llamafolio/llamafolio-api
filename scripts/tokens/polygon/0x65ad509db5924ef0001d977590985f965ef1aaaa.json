@@ -1,0 +1,31 @@
+{
+  "id": "meta-toy-dragonz-saga-fxerc20",
+  "symbol": "fxmetod",
+  "name": "Meta Toy DragonZ SAGA (FXERC20)",
+  "image": "https://assets.coingecko.com/coins/images/32859/large/Coin-Line_%281%29.png?1699669121",
+  "current_price": 0.00528751,
+  "market_cap": 1014982,
+  "market_cap_rank": 2679,
+  "fully_diluted_valuation": 2643757,
+  "total_volume": 1.9,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 191958336.24732462,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 0.058478,
+  "ath_change_percentage": -90.95816,
+  "ath_date": "2023-11-30T12:59:37.574Z",
+  "atl": 0.00362516,
+  "atl_change_percentage": 45.85595,
+  "atl_date": "2024-04-04T00:02:50.733Z",
+  "roi": null,
+  "last_updated": "2024-04-22T01:00:31.989Z",
+  "platforms": {
+    "polygon": "0x65ad509db5924ef0001d977590985f965ef1aaaa"
+  }
+}

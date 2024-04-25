@@ -1,0 +1,31 @@
+{
+  "id": "rentible",
+  "symbol": "rnb",
+  "name": "Rentible",
+  "image": "https://assets.coingecko.com/coins/images/15176/large/rnb_200x200.png?1703145247",
+  "current_price": 0.065164,
+  "market_cap": 649169,
+  "market_cap_rank": 2925,
+  "fully_diluted_valuation": 649169,
+  "total_volume": 622.44,
+  "high_24h": 0.068975,
+  "low_24h": 0.064744,
+  "price_change_24h": -0.003063954409597183,
+  "price_change_percentage_24h": -4.49077,
+  "market_cap_change_24h": -55048.46596436761,
+  "market_cap_change_percentage_24h": -7.81697,
+  "circulating_supply": 10000000,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 5.38,
+  "ath_change_percentage": -98.79254,
+  "ath_date": "2021-05-04T20:59:22.265Z",
+  "atl": 0.00005228,
+  "atl_change_percentage": 124069.62107,
+  "atl_date": "2023-12-18T12:40:45.879Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:14.652Z",
+  "platforms": {
+    "ethereum": "0x20a62aca58526836165ca53fe67dd884288c8abf"
+  }
+}

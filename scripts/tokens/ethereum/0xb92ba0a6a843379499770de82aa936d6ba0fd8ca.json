@@ -1,0 +1,31 @@
+{
+  "id": "youwho",
+  "symbol": "you",
+  "name": "Youwho",
+  "image": "https://assets.coingecko.com/coins/images/25353/large/youwho_200.png?1696524487",
+  "current_price": 0.00127817,
+  "market_cap": 624104,
+  "market_cap_rank": 2952,
+  "fully_diluted_valuation": 9274019,
+  "total_volume": 3420.63,
+  "high_24h": 0.00128201,
+  "low_24h": 0.00127588,
+  "price_change_24h": -6.78076074428e-7,
+  "price_change_percentage_24h": -0.05302,
+  "market_cap_change_24h": 3467.24,
+  "market_cap_change_percentage_24h": 0.55866,
+  "circulating_supply": 488058908.680094,
+  "total_supply": 7252422611.90382,
+  "max_supply": 51000000000,
+  "ath": 0.00326828,
+  "ath_change_percentage": -60.87398,
+  "ath_date": "2023-07-20T12:47:10.165Z",
+  "atl": 0.00025254,
+  "atl_change_percentage": 406.35322,
+  "atl_date": "2023-06-26T18:08:10.037Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:54:52.913Z",
+  "platforms": {
+    "ethereum": "0xb92ba0a6a843379499770de82aa936d6ba0fd8ca"
+  }
+}

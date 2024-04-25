@@ -1,0 +1,31 @@
+{
+  "id": "fulcrom",
+  "symbol": "ful",
+  "name": "Fulcrom",
+  "image": "https://assets.coingecko.com/coins/images/29684/large/FUL_Token_%281%29.png?1696528618",
+  "current_price": 0.01124918,
+  "market_cap": 19931224,
+  "market_cap_rank": 1111,
+  "fully_diluted_valuation": 224235346,
+  "total_volume": 55617,
+  "high_24h": 0.01142565,
+  "low_24h": 0.01078178,
+  "price_change_24h": -0.000119683268234203,
+  "price_change_percentage_24h": -1.05273,
+  "market_cap_change_24h": -300267.85364848,
+  "market_cap_change_percentage_24h": -1.48416,
+  "circulating_supply": 1777705844.81142,
+  "total_supply": 20000000000,
+  "max_supply": 20000000000,
+  "ath": 0.04004179,
+  "ath_change_percentage": -71.94445,
+  "ath_date": "2023-04-05T02:48:03.311Z",
+  "atl": 0.00622521,
+  "atl_change_percentage": 80.45888,
+  "atl_date": "2023-07-20T07:41:06.195Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:09.196Z",
+  "platforms": {
+    "zksync-era": "0xe593853b4d603d5b8f21036bb4ad0d1880097a6e"
+  }
+}

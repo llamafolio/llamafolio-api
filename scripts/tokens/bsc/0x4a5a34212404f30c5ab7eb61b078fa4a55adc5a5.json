@@ -1,0 +1,31 @@
+{
+  "id": "spaceswap-milk2",
+  "symbol": "milk2",
+  "name": "Spaceswap MILK2",
+  "image": "https://assets.coingecko.com/coins/images/12771/large/milk.png?1696512567",
+  "current_price": 0.01120503,
+  "market_cap": 252748,
+  "market_cap_rank": 3391,
+  "fully_diluted_valuation": 252748,
+  "total_volume": 1136.54,
+  "high_24h": 0.01227938,
+  "low_24h": 0.01096886,
+  "price_change_24h": -0.000867680090286519,
+  "price_change_percentage_24h": -7.18712,
+  "market_cap_change_24h": -20709.5927529858,
+  "market_cap_change_percentage_24h": -7.57323,
+  "circulating_supply": 22582180.473609,
+  "total_supply": 22582180.473609,
+  "max_supply": 65200000,
+  "ath": 5.2,
+  "ath_change_percentage": -99.78484,
+  "ath_date": "2021-02-04T18:34:38.387Z",
+  "atl": 0.00266918,
+  "atl_change_percentage": 319.01152,
+  "atl_date": "2023-11-26T04:21:20.264Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:55.199Z",
+  "platforms": {
+    "bsc": "0x4a5a34212404f30c5ab7eb61b078fa4a55adc5a5"
+  }
+}

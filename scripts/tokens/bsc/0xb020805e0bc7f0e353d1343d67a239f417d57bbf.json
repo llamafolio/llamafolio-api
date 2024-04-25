@@ -1,0 +1,31 @@
+{
+  "id": "krypton-dao",
+  "symbol": "krd",
+  "name": "Krypton DAO",
+  "image": "https://assets.coingecko.com/coins/images/25467/large/krd.png?1696524597",
+  "current_price": 0.768974,
+  "market_cap": 78718429,
+  "market_cap_rank": 538,
+  "fully_diluted_valuation": 7683060483,
+  "total_volume": 6792.9,
+  "high_24h": 0.787282,
+  "low_24h": 0.756374,
+  "price_change_24h": -0.010251726384619908,
+  "price_change_percentage_24h": -1.31563,
+  "market_cap_change_24h": -343360.86015447974,
+  "market_cap_change_percentage_24h": -0.43429,
+  "circulating_supply": 102457125,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 4.04,
+  "ath_change_percentage": -80.96124,
+  "ath_date": "2023-05-31T00:21:03.622Z",
+  "atl": 0.153898,
+  "atl_change_percentage": 399.44904,
+  "atl_date": "2022-08-18T07:19:22.184Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:20.600Z",
+  "platforms": {
+    "bsc": "0xb020805e0bc7f0e353d1343d67a239f417d57bbf"
+  }
+}

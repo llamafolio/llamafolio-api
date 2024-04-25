@@ -1,0 +1,31 @@
+{
+  "id": "nyan-meme-coin",
+  "symbol": "nyan",
+  "name": "Nyan Meme Coin",
+  "image": "https://assets.coingecko.com/coins/images/30197/large/n0z-571z_400x400.png?1696529112",
+  "current_price": 4.09e-8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2839268,
+  "total_volume": 1182.11,
+  "high_24h": 4.3211e-8,
+  "low_24h": 4.0616e-8,
+  "price_change_24h": -1.835457365e-9,
+  "price_change_percentage_24h": -4.29494,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 69420000000000,
+  "max_supply": 69420000000000,
+  "ath": 1.5006e-7,
+  "ath_change_percentage": -72.87166,
+  "ath_date": "2024-03-14T03:51:17.315Z",
+  "atl": 4.44e-9,
+  "atl_change_percentage": 816.91391,
+  "atl_date": "2023-05-20T11:29:56.287Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:44.051Z",
+  "platforms": {
+    "ethereum": "0x0ebe30595a44e5288c24161ddfc1e9fa08e33a0c"
+  }
+}

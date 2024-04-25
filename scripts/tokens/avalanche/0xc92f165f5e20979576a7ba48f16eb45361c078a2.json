@@ -1,0 +1,31 @@
+{
+  "id": "emingunsirer",
+  "symbol": "egs",
+  "name": "EminGunSirer",
+  "image": "https://assets.coingecko.com/coins/images/34557/large/coingecko.png?1705371524",
+  "current_price": 0.545236,
+  "market_cap": 33894,
+  "market_cap_rank": 4076,
+  "fully_diluted_valuation": 33894,
+  "total_volume": 2881.49,
+  "high_24h": 0.55372,
+  "low_24h": 0.44235,
+  "price_change_24h": 0.02680542,
+  "price_change_percentage_24h": 5.17049,
+  "market_cap_change_24h": 1666.31,
+  "market_cap_change_percentage_24h": 5.17049,
+  "circulating_supply": 62163.06352649091,
+  "total_supply": 62163.06352649091,
+  "max_supply": 10000000,
+  "ath": 4.56,
+  "ath_change_percentage": -87.9139,
+  "ath_date": "2024-01-28T03:59:24.142Z",
+  "atl": 0.150436,
+  "atl_change_percentage": 266.03956,
+  "atl_date": "2024-04-14T01:13:28.785Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:33.838Z",
+  "platforms": {
+    "avalanche": "0xc92f165f5e20979576a7ba48f16eb45361c078a2"
+  }
+}

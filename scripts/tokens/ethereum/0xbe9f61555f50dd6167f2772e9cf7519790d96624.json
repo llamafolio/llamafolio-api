@@ -1,0 +1,31 @@
+{
+  "id": "sx-network-2",
+  "symbol": "sx",
+  "name": "SX Network",
+  "image": "https://assets.coingecko.com/coins/images/34934/large/sx-ntework.jpeg?1706699134",
+  "current_price": 0.085064,
+  "market_cap": 37402249,
+  "market_cap_rank": 813,
+  "fully_diluted_valuation": 85208488,
+  "total_volume": 4987.92,
+  "high_24h": 0.08673,
+  "low_24h": 0.083434,
+  "price_change_24h": -0.001035278163703107,
+  "price_change_percentage_24h": -1.20242,
+  "market_cap_change_24h": -391457.83049955964,
+  "market_cap_change_percentage_24h": -1.03578,
+  "circulating_supply": 438622333.354,
+  "total_supply": 999253979,
+  "max_supply": 1000000000,
+  "ath": 0.166956,
+  "ath_change_percentage": -48.90385,
+  "ath_date": "2024-03-14T01:25:14.524Z",
+  "atl": 0.083434,
+  "atl_change_percentage": 2.24661,
+  "atl_date": "2024-04-24T15:16:27.982Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:10.643Z",
+  "platforms": {
+    "ethereum": "0xbe9f61555f50dd6167f2772e9cf7519790d96624"
+  }
+}

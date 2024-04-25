@@ -1,0 +1,31 @@
+{
+  "id": "alaska-gold-rush",
+  "symbol": "carat",
+  "name": "Alaska Gold Rush",
+  "image": "https://assets.coingecko.com/coins/images/29911/large/O5Z-nlcb_400x400.jpg?1696528840",
+  "current_price": 0.00554881,
+  "market_cap": 1582103,
+  "market_cap_rank": 2425,
+  "fully_diluted_valuation": 5195042,
+  "total_volume": 43072,
+  "high_24h": 0.00586682,
+  "low_24h": 0.00529594,
+  "price_change_24h": -0.000143349172833937,
+  "price_change_percentage_24h": -2.51836,
+  "market_cap_change_24h": -39550.50986279431,
+  "market_cap_change_percentage_24h": -2.4389,
+  "circulating_supply": 285160568.9969251,
+  "total_supply": 936362230.812054,
+  "max_supply": 1000000000,
+  "ath": 0.03147683,
+  "ath_change_percentage": -82.36241,
+  "ath_date": "2023-04-21T12:38:47.257Z",
+  "atl": 0.00218232,
+  "atl_change_percentage": 154.39732,
+  "atl_date": "2023-09-20T08:18:37.682Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:21.490Z",
+  "platforms": {
+    "bsc": "0x426c1c971fb00caaf1883bd801323a8becb0c919"
+  }
+}

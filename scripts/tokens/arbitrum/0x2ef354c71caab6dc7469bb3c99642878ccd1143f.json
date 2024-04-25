@@ -1,0 +1,31 @@
+{
+  "id": "grail-inu",
+  "symbol": "igrail",
+  "name": "Grail Inu",
+  "image": "https://assets.coingecko.com/coins/images/33487/large/iGRAIL_Ticker_LOGO_200_by_200.png?1702028919",
+  "current_price": 0.00000454,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 226130,
+  "total_volume": 15.99,
+  "high_24h": 0.00000482,
+  "low_24h": 0.00000451,
+  "price_change_24h": -2.29834155089e-7,
+  "price_change_percentage_24h": -4.81872,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 50000000000,
+  "max_supply": 50000000000,
+  "ath": 0.00002285,
+  "ath_change_percentage": -80.20637,
+  "ath_date": "2024-03-05T15:06:20.073Z",
+  "atl": 0.00000451,
+  "atl_change_percentage": 0.30691,
+  "atl_date": "2024-04-25T08:51:49.138Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:16.192Z",
+  "platforms": {
+    "arbitrum": "0x2ef354c71caab6dc7469bb3c99642878ccd1143f"
+  }
+}

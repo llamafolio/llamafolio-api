@@ -1,0 +1,31 @@
+{
+  "id": "aave-snx",
+  "symbol": "asnx",
+  "name": "Aave SNX",
+  "image": "https://assets.coingecko.com/coins/images/14265/large/aSNX.3238f3e7.png?1696513966",
+  "current_price": 2.81,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2374198,
+  "total_volume": 0,
+  "high_24h": 3.14,
+  "low_24h": 2.8,
+  "price_change_24h": -0.2884656063192632,
+  "price_change_percentage_24h": -9.32496,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 846412.692443224,
+  "max_supply": null,
+  "ath": 25.59,
+  "ath_change_percentage": -89.01205,
+  "ath_date": "2021-05-18T17:02:21.582Z",
+  "atl": 1.4,
+  "atl_change_percentage": 100.42547,
+  "atl_date": "2022-12-30T15:07:03.552Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:53.938Z",
+  "platforms": {
+    "ethereum": "0x35f6b052c598d933d69a4eec4d04c73a191fe6c2"
+  }
+}

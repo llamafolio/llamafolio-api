@@ -1,0 +1,31 @@
+{
+  "id": "grai",
+  "symbol": "grai",
+  "name": "Grai",
+  "image": "https://assets.coingecko.com/coins/images/30427/large/GRAI_Token.png?1696529315",
+  "current_price": 0.977721,
+  "market_cap": 4469443,
+  "market_cap_rank": 1853,
+  "fully_diluted_valuation": 4469443,
+  "total_volume": 876067,
+  "high_24h": 0.984744,
+  "low_24h": 0.973222,
+  "price_change_24h": -0.002758131545930409,
+  "price_change_percentage_24h": -0.2813,
+  "market_cap_change_24h": -8716.953093140386,
+  "market_cap_change_percentage_24h": -0.19465,
+  "circulating_supply": 4576816.33865541,
+  "total_supply": 4576816.33865541,
+  "max_supply": null,
+  "ath": 1.74,
+  "ath_change_percentage": -44.02613,
+  "ath_date": "2023-07-27T06:19:34.197Z",
+  "atl": 0.739514,
+  "atl_change_percentage": 31.94361,
+  "atl_date": "2023-06-27T12:54:35.599Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:29.329Z",
+  "platforms": {
+    "ethereum": "0x15f74458ae0bfdaa1a96ca1aa779d715cc1eefe4"
+  }
+}

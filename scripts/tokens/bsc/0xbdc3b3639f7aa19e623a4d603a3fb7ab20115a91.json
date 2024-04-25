@@ -1,0 +1,31 @@
+{
+  "id": "coin-of-the-champions",
+  "symbol": "coc",
+  "name": "Coin of the champions",
+  "image": "https://assets.coingecko.com/coins/images/18478/large/COC-Yellow-Transparent-1.png?1696517963",
+  "current_price": 1.0129e-8,
+  "market_cap": 1025182,
+  "market_cap_rank": 2672,
+  "fully_diluted_valuation": 10056340,
+  "total_volume": 1016,
+  "high_24h": 2.05796e-7,
+  "low_24h": 9.992e-9,
+  "price_change_24h": -6.92529463e-10,
+  "price_change_percentage_24h": -6.39929,
+  "market_cap_change_24h": -70141.41996288626,
+  "market_cap_change_percentage_24h": -6.40372,
+  "circulating_supply": 101222410080386,
+  "total_supply": 992923045761310,
+  "max_supply": null,
+  "ath": 0.00000237,
+  "ath_change_percentage": -99.57324,
+  "ath_date": "2021-10-13T05:30:56.896Z",
+  "atl": 4.161e-9,
+  "atl_change_percentage": 142.61505,
+  "atl_date": "2023-12-08T17:56:00.983Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:01.024Z",
+  "platforms": {
+    "bsc": "0xbdc3b3639f7aa19e623a4d603a3fb7ab20115a91"
+  }
+}

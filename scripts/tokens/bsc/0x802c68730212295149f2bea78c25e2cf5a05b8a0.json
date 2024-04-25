@@ -1,0 +1,31 @@
+{
+  "id": "corgidoge",
+  "symbol": "corgi",
+  "name": "Corgidoge",
+  "image": "https://assets.coingecko.com/coins/images/17156/large/corgi-200.png?1696516716",
+  "current_price": 2.9777e-8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 267997,
+  "total_volume": 6.03,
+  "high_24h": 3.0095e-8,
+  "low_24h": 2.9062e-8,
+  "price_change_24h": 2.09596e-10,
+  "price_change_percentage_24h": 0.70887,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 9000000000000,
+  "max_supply": null,
+  "ath": 0.00000113,
+  "ath_change_percentage": -97.38427,
+  "ath_date": "2021-07-27T22:54:04.392Z",
+  "atl": 8.285e-9,
+  "atl_change_percentage": 257.96583,
+  "atl_date": "2023-12-20T07:26:37.924Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:21.125Z",
+  "platforms": {
+    "bsc": "0x802c68730212295149f2bea78c25e2cf5a05b8a0"
+  }
+}

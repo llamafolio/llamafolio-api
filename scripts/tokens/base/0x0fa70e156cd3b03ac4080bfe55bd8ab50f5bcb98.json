@@ -1,0 +1,31 @@
+{
+  "id": "youcoin-2",
+  "symbol": "you",
+  "name": "Youcoin",
+  "image": "https://assets.coingecko.com/coins/images/31218/large/Group_4.png?1696530044",
+  "current_price": 0.00004164,
+  "market_cap": 41635,
+  "market_cap_rank": 4033,
+  "fully_diluted_valuation": 41635,
+  "total_volume": 308.81,
+  "high_24h": 0.00004278,
+  "low_24h": 0.0000409,
+  "price_change_24h": -5.75168471553e-7,
+  "price_change_percentage_24h": -1.36263,
+  "market_cap_change_24h": -564.6700416475142,
+  "market_cap_change_percentage_24h": -1.33809,
+  "circulating_supply": 1000000000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00313123,
+  "ath_change_percentage": -98.66998,
+  "ath_date": "2023-10-07T14:49:37.307Z",
+  "atl": 0.00001412,
+  "atl_change_percentage": 194.90613,
+  "atl_date": "2024-01-25T09:48:35.930Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:28.765Z",
+  "platforms": {
+    "base": "0x0fa70e156cd3b03ac4080bfe55bd8ab50f5bcb98"
+  }
+}

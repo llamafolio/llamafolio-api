@@ -1,0 +1,31 @@
+{
+  "id": "unique-one",
+  "symbol": "rare",
+  "name": "Unique One",
+  "image": "https://assets.coingecko.com/coins/images/13458/large/Logo_Unique.png?1696513221",
+  "current_price": 0.01095977,
+  "market_cap": 27399,
+  "market_cap_rank": 4102,
+  "fully_diluted_valuation": 27399,
+  "total_volume": 26.71,
+  "high_24h": 0.01102453,
+  "low_24h": 0.01085988,
+  "price_change_24h": 0.00007307,
+  "price_change_percentage_24h": 0.6712,
+  "market_cap_change_24h": -1118.5126886607504,
+  "market_cap_change_percentage_24h": -3.92214,
+  "circulating_supply": 2500000,
+  "total_supply": 2500000,
+  "max_supply": null,
+  "ath": 5.36,
+  "ath_change_percentage": -99.79555,
+  "ath_date": "2021-02-16T12:34:58.720Z",
+  "atl": 0.00086427,
+  "atl_change_percentage": 1168.10072,
+  "atl_date": "2023-09-11T12:25:45.574Z",
+  "roi": null,
+  "last_updated": "2024-04-25T05:32:06.624Z",
+  "platforms": {
+    "ethereum": "0x93dfaf57d986b9ca77df9376c50878e013d9c7c8"
+  }
+}

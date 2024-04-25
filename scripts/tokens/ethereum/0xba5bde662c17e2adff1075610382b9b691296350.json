@@ -1,0 +1,31 @@
+{
+  "id": "superrare",
+  "symbol": "rare",
+  "name": "SuperRare",
+  "image": "https://assets.coingecko.com/coins/images/17753/large/RARE.png?1709598473",
+  "current_price": 0.121802,
+  "market_cap": 83755521,
+  "market_cap_rank": 520,
+  "fully_diluted_valuation": 121539994,
+  "total_volume": 4555982,
+  "high_24h": 0.134329,
+  "low_24h": 0.120918,
+  "price_change_24h": -0.01093499843390536,
+  "price_change_percentage_24h": -8.23811,
+  "market_cap_change_24h": -7809207.360882923,
+  "market_cap_change_percentage_24h": -8.52862,
+  "circulating_supply": 689119013.4080311,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 3.64,
+  "ath_change_percentage": -96.65624,
+  "ath_date": "2021-10-11T06:31:17.858Z",
+  "atl": 0.051224,
+  "atl_change_percentage": 137.69653,
+  "atl_date": "2023-10-19T06:35:40.919Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:54.418Z",
+  "platforms": {
+    "ethereum": "0xba5bde662c17e2adff1075610382b9b691296350"
+  }
+}

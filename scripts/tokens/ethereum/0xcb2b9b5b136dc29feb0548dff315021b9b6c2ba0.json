@@ -1,0 +1,31 @@
+{
+  "id": "gigatoken",
+  "symbol": "giga",
+  "name": "GigaToken",
+  "image": "https://assets.coingecko.com/coins/images/34899/large/Giga_Logo.png?1708020799",
+  "current_price": 0.00212336,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 212336,
+  "total_volume": 719.65,
+  "high_24h": 0.00228716,
+  "low_24h": 0.00211402,
+  "price_change_24h": -0.000139036543361149,
+  "price_change_percentage_24h": -6.14555,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.01149045,
+  "ath_change_percentage": -81.52067,
+  "ath_date": "2024-01-30T23:03:42.735Z",
+  "atl": 0.00174804,
+  "atl_change_percentage": 21.4708,
+  "atl_date": "2024-03-22T14:45:00.091Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:06:30.374Z",
+  "platforms": {
+    "ethereum": "0xcb2b9b5b136dc29feb0548dff315021b9b6c2ba0"
+  }
+}

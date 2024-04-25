@@ -1,0 +1,31 @@
+{
+  "id": "chain-of-legends",
+  "symbol": "cleg",
+  "name": "Chain of Legends",
+  "image": "https://assets.coingecko.com/coins/images/26440/large/logo1.png?1696525513",
+  "current_price": 0.00404358,
+  "market_cap": 275660,
+  "market_cap_rank": 3356,
+  "fully_diluted_valuation": 2729854,
+  "total_volume": 7255.39,
+  "high_24h": 0.00412788,
+  "low_24h": 0.00389117,
+  "price_change_24h": 0.00004865,
+  "price_change_percentage_24h": 1.21784,
+  "market_cap_change_24h": 2071.88,
+  "market_cap_change_percentage_24h": 0.7573,
+  "circulating_supply": 68333235,
+  "total_supply": 676702477,
+  "max_supply": 1000000000,
+  "ath": 0.199246,
+  "ath_change_percentage": -97.97323,
+  "ath_date": "2024-02-25T00:30:42.637Z",
+  "atl": 0.00159396,
+  "atl_change_percentage": 153.34748,
+  "atl_date": "2023-10-27T03:59:56.066Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:23.617Z",
+  "platforms": {
+    "bsc": "0x4027d91ecd3140e53ae743d657549adfeebb27ab"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "stox",
+  "symbol": "stx",
+  "name": "Stox",
+  "image": "https://assets.coingecko.com/coins/images/1230/large/stox-token.png?1696502307",
+  "current_price": 0.00624225,
+  "market_cap": 320808,
+  "market_cap_rank": 3284,
+  "fully_diluted_valuation": 341951,
+  "total_volume": 7986.64,
+  "high_24h": 0.00704688,
+  "low_24h": 0.00621541,
+  "price_change_24h": -0.00043416390418778,
+  "price_change_percentage_24h": -6.50295,
+  "market_cap_change_24h": -23467.38424675318,
+  "market_cap_change_percentage_24h": -6.81646,
+  "circulating_supply": 51504586.22496416,
+  "total_supply": 54898978.5727948,
+  "max_supply": null,
+  "ath": 0.983723,
+  "ath_change_percentage": -99.36812,
+  "ath_date": "2018-05-07T00:08:49.881Z",
+  "atl": 0.00120924,
+  "atl_change_percentage": 414.04075,
+  "atl_date": "2021-07-01T19:43:39.924Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:23.480Z",
+  "platforms": {
+    "ethereum": "0x006bea43baa3f7a6f765f14f10a1a1b08334ef45"
+  }
+}

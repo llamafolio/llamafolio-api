@@ -1,0 +1,31 @@
+{
+  "id": "dork",
+  "symbol": "dork",
+  "name": "DORK",
+  "image": "https://assets.coingecko.com/coins/images/32704/large/Coin_2.png?1698985483",
+  "current_price": 0.00000687,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 687268,
+  "total_volume": 330.85,
+  "high_24h": 0.00000722,
+  "low_24h": 0.00000685,
+  "price_change_24h": -2.6442088491e-7,
+  "price_change_percentage_24h": -3.70488,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.00023426,
+  "ath_change_percentage": -97.06625,
+  "ath_date": "2023-11-05T00:24:36.292Z",
+  "atl": 0.00000638,
+  "atl_change_percentage": 7.78539,
+  "atl_date": "2024-02-01T13:15:18.148Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:07.599Z",
+  "platforms": {
+    "ethereum": "0xae3359ed3c567482fb0102c584c23daa2693eacf"
+  }
+}

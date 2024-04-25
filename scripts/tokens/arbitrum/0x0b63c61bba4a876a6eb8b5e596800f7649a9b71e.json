@@ -1,0 +1,31 @@
+{
+  "id": "sector",
+  "symbol": "sect",
+  "name": "Sector",
+  "image": "https://assets.coingecko.com/coins/images/29672/large/ZVLrbTWD_400x400.jpg?1696528607",
+  "current_price": 0.03859288,
+  "market_cap": 361372,
+  "market_cap_rank": 3225,
+  "fully_diluted_valuation": 3859288,
+  "total_volume": 487.35,
+  "high_24h": 0.04064509,
+  "low_24h": 0.03865046,
+  "price_change_24h": -0.001589161487093482,
+  "price_change_percentage_24h": -3.9549,
+  "market_cap_change_24h": -14863.16150956566,
+  "market_cap_change_percentage_24h": -3.9505,
+  "circulating_supply": 9363688.23,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.213099,
+  "ath_change_percentage": -81.8627,
+  "ath_date": "2023-04-26T16:38:20.581Z",
+  "atl": 0.02424131,
+  "atl_change_percentage": 59.44051,
+  "atl_date": "2023-10-13T07:01:29.950Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:50:52.848Z",
+  "platforms": {
+    "arbitrum": "0x0b63c61bba4a876a6eb8b5e596800f7649a9b71e"
+  }
+}

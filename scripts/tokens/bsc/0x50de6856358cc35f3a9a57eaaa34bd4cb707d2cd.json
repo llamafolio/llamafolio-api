@@ -1,0 +1,31 @@
+{
+  "id": "razor-network",
+  "symbol": "razor",
+  "name": "Razor Network",
+  "image": "https://assets.coingecko.com/coins/images/13797/large/icon.png?1696513545",
+  "current_price": 0.00561293,
+  "market_cap": 3153970,
+  "market_cap_rank": 2038,
+  "fully_diluted_valuation": 5620111,
+  "total_volume": 51267,
+  "high_24h": 0.00602357,
+  "low_24h": 0.00559066,
+  "price_change_24h": -0.000361497016179858,
+  "price_change_percentage_24h": -6.05074,
+  "market_cap_change_24h": -193475.43963331636,
+  "market_cap_change_percentage_24h": -5.77979,
+  "circulating_supply": 561193496.0014608,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.978539,
+  "ath_change_percentage": -99.42565,
+  "ath_date": "2021-02-04T13:52:01.426Z",
+  "atl": 0.00347371,
+  "atl_change_percentage": 61.79379,
+  "atl_date": "2023-08-17T21:51:44.273Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:00.508Z",
+  "platforms": {
+    "bsc": "0x50de6856358cc35f3a9a57eaaa34bd4cb707d2cd"
+  }
+}

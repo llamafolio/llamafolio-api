@@ -1,0 +1,31 @@
+{
+  "id": "nexai",
+  "symbol": "nex",
+  "name": "NexAI",
+  "image": "https://assets.coingecko.com/coins/images/31056/large/NexAI-LOGO_200x200.png?1696529891",
+  "current_price": 0.00008235,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 85.29,
+  "high_24h": 0.00008647,
+  "low_24h": 0.00008208,
+  "price_change_24h": -0.000003565771479091,
+  "price_change_percentage_24h": -4.15046,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.00690827,
+  "ath_change_percentage": -98.808,
+  "ath_date": "2023-07-23T19:51:49.943Z",
+  "atl": 0.00007385,
+  "atl_change_percentage": 11.50342,
+  "atl_date": "2024-04-13T21:38:10.231Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:48:50.353Z",
+  "platforms": {
+    "ethereum": "0x2c623d3cc9a2cc158951b8093cb94e80cf56deea"
+  }
+}

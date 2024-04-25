@@ -1,0 +1,31 @@
+{
+  "id": "ftribe-fighters",
+  "symbol": "f2c",
+  "name": "Ftribe Fighters",
+  "image": "https://assets.coingecko.com/coins/images/22250/large/d2pxPhBW_400x400.png?1696521595",
+  "current_price": 0.00033041,
+  "market_cap": 238643,
+  "market_cap_rank": 3413,
+  "fully_diluted_valuation": 330167,
+  "total_volume": 7718.3,
+  "high_24h": 0.00035678,
+  "low_24h": 0.00032912,
+  "price_change_24h": -0.000007832119874178,
+  "price_change_percentage_24h": -2.31557,
+  "market_cap_change_24h": -5972.1736386354605,
+  "market_cap_change_percentage_24h": -2.44145,
+  "circulating_supply": 722795000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.216424,
+  "ath_change_percentage": -99.84745,
+  "ath_date": "2022-01-05T12:08:55.874Z",
+  "atl": 0.00031132,
+  "atl_change_percentage": 6.05175,
+  "atl_date": "2024-04-19T18:12:58.680Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:41.524Z",
+  "platforms": {
+    "bsc": "0x657b632714e08ac66b79444ad3f3875526ee6689"
+  }
+}

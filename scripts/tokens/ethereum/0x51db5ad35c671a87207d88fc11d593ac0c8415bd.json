@@ -1,0 +1,31 @@
+{
+  "id": "moeda-loyalty-points",
+  "symbol": "mda",
+  "name": "Moeda Loyalty Points",
+  "image": "https://assets.coingecko.com/coins/images/895/large/moeda-loyalty-points.png?1696502019",
+  "current_price": 0.03606449,
+  "market_cap": 701152,
+  "market_cap_rank": 2888,
+  "fully_diluted_valuation": 701152,
+  "total_volume": 8166.48,
+  "high_24h": 0.038213,
+  "low_24h": 0.03449038,
+  "price_change_24h": 0.00032255,
+  "price_change_percentage_24h": 0.90243,
+  "market_cap_change_24h": -3947.35831486003,
+  "market_cap_change_percentage_24h": -0.55983,
+  "circulating_supply": 19628888,
+  "total_supply": 19628888,
+  "max_supply": null,
+  "ath": 5.39,
+  "ath_change_percentage": -99.33678,
+  "ath_date": "2018-01-13T00:00:00.000Z",
+  "atl": 0.01838957,
+  "atl_change_percentage": 94.50826,
+  "atl_date": "2023-11-04T06:57:58.100Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:36.496Z",
+  "platforms": {
+    "ethereum": "0x51db5ad35c671a87207d88fc11d593ac0c8415bd"
+  }
+}

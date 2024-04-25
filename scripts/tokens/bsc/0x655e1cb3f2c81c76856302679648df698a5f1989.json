@@ -1,0 +1,31 @@
+{
+  "id": "gli",
+  "symbol": "gli",
+  "name": "GLI",
+  "image": "https://assets.coingecko.com/coins/images/32014/large/gli.png?1696530812",
+  "current_price": 1.29,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 258683,
+  "total_volume": 54331,
+  "high_24h": 1.45,
+  "low_24h": 1.22,
+  "price_change_24h": -0.02674494363493296,
+  "price_change_percentage_24h": -2.02589,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 200000,
+  "max_supply": 200000,
+  "ath": 3.89,
+  "ath_change_percentage": -68.3442,
+  "ath_date": "2024-01-21T04:23:45.627Z",
+  "atl": 0.083506,
+  "atl_change_percentage": 1376.47283,
+  "atl_date": "2024-01-24T06:17:02.869Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:06.048Z",
+  "platforms": {
+    "bsc": "0x655e1cb3f2c81c76856302679648df698a5f1989"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "flurry",
+  "symbol": "flurry",
+  "name": "Flurry Finance",
+  "image": "https://assets.coingecko.com/coins/images/16235/large/flurry_logo_only_200x200.png?1696515836",
+  "current_price": 0.00005439,
+  "market_cap": 44841,
+  "market_cap_rank": 4013,
+  "fully_diluted_valuation": 41132,
+  "total_volume": 32353,
+  "high_24h": 0.00006123,
+  "low_24h": 0.0000442,
+  "price_change_24h": 0.00000484,
+  "price_change_percentage_24h": 9.7683,
+  "market_cap_change_24h": 3689.5,
+  "market_cap_change_percentage_24h": 8.96574,
+  "circulating_supply": 824698611.278836,
+  "total_supply": 756482832.613346,
+  "max_supply": 10000000000,
+  "ath": 0.01429149,
+  "ath_change_percentage": -99.61909,
+  "ath_date": "2021-09-07T02:24:29.612Z",
+  "atl": 0.00001387,
+  "atl_change_percentage": 292.34641,
+  "atl_date": "2024-01-26T09:09:21.485Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:06.723Z",
+  "platforms": {
+    "bsc": "0x47c9bcef4fe2dbcdf3abf508f147f1bbe8d4fef2"
+  }
+}

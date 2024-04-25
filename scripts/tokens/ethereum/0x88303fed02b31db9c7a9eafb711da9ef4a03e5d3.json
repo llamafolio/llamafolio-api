@@ -1,0 +1,31 @@
+{
+  "id": "zik-token",
+  "symbol": "zik",
+  "name": "Ziktalk",
+  "image": "https://assets.coingecko.com/coins/images/8991/large/ziktalk.logo.jpeg?1696509132",
+  "current_price": 0.00711699,
+  "market_cap": 3283371,
+  "market_cap_rank": 2011,
+  "fully_diluted_valuation": 7110600,
+  "total_volume": 63163,
+  "high_24h": 0.00999568,
+  "low_24h": 0.00710406,
+  "price_change_24h": -0.002383847127595089,
+  "price_change_percentage_24h": -25.09092,
+  "market_cap_change_24h": -1335463.463285307,
+  "market_cap_change_percentage_24h": -28.91343,
+  "circulating_supply": 461757321.8,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.11414,
+  "ath_change_percentage": -93.77576,
+  "ath_date": "2022-04-17T14:39:51.184Z",
+  "atl": 0.00006419,
+  "atl_change_percentage": 10968.04867,
+  "atl_date": "2020-01-18T15:04:37.221Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:19.580Z",
+  "platforms": {
+    "ethereum": "0x88303fed02b31db9c7a9eafb711da9ef4a03e5d3"
+  }
+}

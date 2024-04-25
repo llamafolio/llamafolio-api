@@ -1,0 +1,31 @@
+{
+  "id": "voxies",
+  "symbol": "voxel",
+  "name": "Voxies",
+  "image": "https://assets.coingecko.com/coins/images/21260/large/voxies.png?1696520632",
+  "current_price": 0.251442,
+  "market_cap": 43809679,
+  "market_cap_rank": 747,
+  "fully_diluted_valuation": 75084857,
+  "total_volume": 5848853,
+  "high_24h": 0.286284,
+  "low_24h": 0.250283,
+  "price_change_24h": -0.025398540568514927,
+  "price_change_percentage_24h": -9.17442,
+  "market_cap_change_24h": -4409332.462644272,
+  "market_cap_change_percentage_24h": -9.14439,
+  "circulating_supply": 175040671.136504,
+  "total_supply": 300000000,
+  "max_supply": 300000000,
+  "ath": 4.7,
+  "ath_change_percentage": -94.65895,
+  "ath_date": "2021-12-16T03:08:07.356Z",
+  "atl": 0.122615,
+  "atl_change_percentage": 104.62939,
+  "atl_date": "2023-08-17T21:51:30.471Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:01.004Z",
+  "platforms": {
+    "polygon": "0xd0258a3fd00f38aa8090dfee343f10a9d4d30d3f"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "sqgl-vault-nftx",
+  "symbol": "sqgl",
+  "name": "SQGL Vault (NFTX)",
+  "image": "https://assets.coingecko.com/coins/images/17041/large/SQGL.png?1696516604",
+  "current_price": 17999.37,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1145677,
+  "total_volume": 4859.83,
+  "high_24h": 20762,
+  "low_24h": 17872.86,
+  "price_change_24h": -2605.181467300583,
+  "price_change_percentage_24h": -12.64372,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 64,
+  "max_supply": null,
+  "ath": 53504,
+  "ath_change_percentage": -66.54227,
+  "ath_date": "2021-09-01T00:34:15.745Z",
+  "atl": 3530.28,
+  "atl_change_percentage": 407.07545,
+  "atl_date": "2021-07-20T22:40:09.462Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:35.424Z",
+  "platforms": {
+    "ethereum": "0x8d137e3337eb1b58a222fef2b2cc7c423903d9cf"
+  }
+}

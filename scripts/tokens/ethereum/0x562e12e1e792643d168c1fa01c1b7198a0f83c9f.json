@@ -1,0 +1,31 @@
+{
+  "id": "bookiebot",
+  "symbol": "bb",
+  "name": "BookieBot",
+  "image": "https://assets.coingecko.com/coins/images/31546/large/photo_2023-08-23_17-48-35_200x200.jpg?1696530359",
+  "current_price": 0.433878,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 433878,
+  "total_volume": 1160.34,
+  "high_24h": 0.436674,
+  "low_24h": 0.431972,
+  "price_change_24h": -0.000392004093193343,
+  "price_change_percentage_24h": -0.09027,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 4.79,
+  "ath_change_percentage": -90.93966,
+  "ath_date": "2023-09-05T22:15:41.444Z",
+  "atl": 0.40696,
+  "atl_change_percentage": 6.61453,
+  "atl_date": "2024-04-17T17:27:25.648Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:22:53.190Z",
+  "platforms": {
+    "ethereum": "0x562e12e1e792643d168c1fa01c1b7198a0f83c9f"
+  }
+}

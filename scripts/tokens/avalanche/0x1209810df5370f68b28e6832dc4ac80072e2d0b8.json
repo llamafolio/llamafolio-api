@@ -1,0 +1,31 @@
+{
+  "id": "avalox",
+  "symbol": "avalox",
+  "name": "Avalox",
+  "image": "https://assets.coingecko.com/coins/images/34823/large/avalox.jpg?1706189694",
+  "current_price": 0.330856,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 4205353,
+  "high_24h": 0.418763,
+  "low_24h": 0.317991,
+  "price_change_24h": -0.04274988443015527,
+  "price_change_percentage_24h": -11.4425,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 8.51,
+  "ath_change_percentage": -96.13582,
+  "ath_date": "2024-02-26T16:04:07.074Z",
+  "atl": 0.143837,
+  "atl_change_percentage": 128.50442,
+  "atl_date": "2024-01-25T17:29:25.285Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:14.056Z",
+  "platforms": {
+    "avalanche": "0x1209810df5370f68b28e6832dc4ac80072e2d0b8"
+  }
+}

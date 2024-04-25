@@ -1,0 +1,31 @@
+{
+  "id": "more-token",
+  "symbol": "more",
+  "name": "Moremoney Finance",
+  "image": "https://assets.coingecko.com/coins/images/23294/large/Moremoney_05.jpg?1696522512",
+  "current_price": 0.00103858,
+  "market_cap": 70689,
+  "market_cap_rank": 3894,
+  "fully_diluted_valuation": 1036823,
+  "total_volume": 288.89,
+  "high_24h": 0.0010603,
+  "low_24h": 0.00101479,
+  "price_change_24h": -0.000016312219831111,
+  "price_change_percentage_24h": -1.54633,
+  "market_cap_change_24h": -1252.0694313773856,
+  "market_cap_change_percentage_24h": -1.74042,
+  "circulating_supply": 68178189.7548297,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.369388,
+  "ath_change_percentage": -99.71875,
+  "ath_date": "2022-01-30T22:14:54.125Z",
+  "atl": 0.00039719,
+  "atl_change_percentage": 161.56626,
+  "atl_date": "2023-11-21T23:54:35.091Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:26.473Z",
+  "platforms": {
+    "avalanche": "0xd9d90f882cddd6063959a9d837b05cb748718a05"
+  }
+}

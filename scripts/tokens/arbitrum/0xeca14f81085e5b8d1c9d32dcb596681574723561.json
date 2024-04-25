@@ -1,0 +1,31 @@
+{
+  "id": "spool-dao-token",
+  "symbol": "spool",
+  "name": "Spool",
+  "image": "https://assets.coingecko.com/coins/images/21532/large/spool.png?1696520891",
+  "current_price": 0.202991,
+  "market_cap": 8062412,
+  "market_cap_rank": 1545,
+  "fully_diluted_valuation": 28450546,
+  "total_volume": 85066,
+  "high_24h": 0.213578,
+  "low_24h": 0.199648,
+  "price_change_24h": -0.01024342778708254,
+  "price_change_percentage_24h": -4.80384,
+  "market_cap_change_24h": -323505.53180768434,
+  "market_cap_change_percentage_24h": -3.85772,
+  "circulating_supply": 39673675.5995711,
+  "total_supply": 140000000,
+  "max_supply": 210000000,
+  "ath": 8.2,
+  "ath_change_percentage": -97.51137,
+  "ath_date": "2022-01-02T17:09:14.766Z",
+  "atl": 0.117775,
+  "atl_change_percentage": 73.1884,
+  "atl_date": "2023-01-02T16:40:43.526Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:16.105Z",
+  "platforms": {
+    "arbitrum": "0xeca14f81085e5b8d1c9d32dcb596681574723561"
+  }
+}

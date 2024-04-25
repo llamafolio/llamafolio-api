@@ -1,0 +1,31 @@
+{
+  "id": "mt-pelerin-shares",
+  "symbol": "mps",
+  "name": "Mt Pelerin Shares",
+  "image": "https://assets.coingecko.com/coins/images/11471/large/MPS.png?1696511378",
+  "current_price": 4.33,
+  "market_cap": 2164755,
+  "market_cap_rank": 2249,
+  "fully_diluted_valuation": 43295108,
+  "total_volume": 95.25,
+  "high_24h": 4.42,
+  "low_24h": 4.32,
+  "price_change_24h": -0.03754864325217522,
+  "price_change_percentage_24h": -0.85982,
+  "market_cap_change_24h": -19298.48310141731,
+  "market_cap_change_percentage_24h": -0.88361,
+  "circulating_supply": 500000,
+  "total_supply": 10000000,
+  "max_supply": null,
+  "ath": 28.26,
+  "ath_change_percentage": -84.68951,
+  "ath_date": "2022-02-20T02:20:31.352Z",
+  "atl": 1.1,
+  "atl_change_percentage": 291.75074,
+  "atl_date": "2020-12-10T16:20:01.929Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:48:26.674Z",
+  "platforms": {
+    "ethereum": "0x96c645d3d3706f793ef52c19bbace441900ed47d"
+  }
+}

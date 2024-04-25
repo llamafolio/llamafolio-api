@@ -1,0 +1,31 @@
+{
+  "id": "bountykinds-yu",
+  "symbol": "yu",
+  "name": "BountyKinds YU",
+  "image": "https://assets.coingecko.com/coins/images/30454/large/YU_TOKEN_%281%29.png?1696529341",
+  "current_price": 1.81,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 92132446,
+  "total_volume": 60808,
+  "high_24h": 1.89,
+  "low_24h": 1.76,
+  "price_change_24h": -0.05882486443977064,
+  "price_change_percentage_24h": -3.14716,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 50965609.2173419,
+  "max_supply": 3000000000,
+  "ath": 2.45,
+  "ath_change_percentage": -26.5469,
+  "ath_date": "2024-03-14T00:10:15.008Z",
+  "atl": 0.677963,
+  "atl_change_percentage": 165.98381,
+  "atl_date": "2023-05-29T23:55:58.585Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:34.621Z",
+  "platforms": {
+    "bsc": "0x3e098c23dcfbbe0a3f468a6bed1cf1a59dc1770d"
+  }
+}

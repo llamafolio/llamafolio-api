@@ -1,0 +1,31 @@
+{
+  "id": "mineable",
+  "symbol": "mnb",
+  "name": "Mineable",
+  "image": "https://assets.coingecko.com/coins/images/29272/large/mnb.png?1696528225",
+  "current_price": 0.00020918,
+  "market_cap": 125252,
+  "market_cap_rank": 3711,
+  "fully_diluted_valuation": 142509,
+  "total_volume": 260.43,
+  "high_24h": 0.00025047,
+  "low_24h": 0.00020887,
+  "price_change_24h": -0.000020840636974834,
+  "price_change_percentage_24h": -9.06035,
+  "market_cap_change_24h": -12561.473826379515,
+  "market_cap_change_percentage_24h": -9.11481,
+  "circulating_supply": 599672279.9354488,
+  "total_supply": 682290000,
+  "max_supply": 1500000000,
+  "ath": 0.124163,
+  "ath_change_percentage": -99.83162,
+  "ath_date": "2023-03-02T09:45:42.859Z",
+  "atl": 0.00002197,
+  "atl_change_percentage": 851.64976,
+  "atl_date": "2023-12-18T10:41:17.192Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:41.137Z",
+  "platforms": {
+    "ethereum": "0x42b91f1d05afea671a2da3c780eda2abf0a2a366"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "datamine",
+  "symbol": "dam",
+  "name": "Datamine",
+  "image": "https://assets.coingecko.com/coins/images/11695/large/qxsFH8W.png?1696511584",
+  "current_price": 0.04112106,
+  "market_cap": 116050,
+  "market_cap_rank": 3733,
+  "fully_diluted_valuation": 693991,
+  "total_volume": 86.92,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 2822150.6688282564,
+  "total_supply": 16876778,
+  "max_supply": null,
+  "ath": 0.960724,
+  "ath_change_percentage": -95.71978,
+  "ath_date": "2021-04-11T18:29:07.951Z",
+  "atl": 9.8445e-8,
+  "atl_change_percentage": 41770293.7747,
+  "atl_date": "2022-04-13T20:14:42.209Z",
+  "roi": null,
+  "last_updated": "2024-04-24T04:30:33.898Z",
+  "platforms": {
+    "polygon": "0xb75bbd79985a8092b05224f62d7fed25924b075d"
+  }
+}

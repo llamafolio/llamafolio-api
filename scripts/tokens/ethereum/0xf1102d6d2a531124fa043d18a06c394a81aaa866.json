@@ -1,0 +1,31 @@
+{
+  "id": "shiba-inu-classic-2",
+  "symbol": "shibc",
+  "name": "Shiba Inu Classic",
+  "image": "https://assets.coingecko.com/coins/images/31941/large/Shiba_Inu_Classic.png?1696530748",
+  "current_price": 1.81971e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 181971,
+  "total_volume": 3728.62,
+  "high_24h": 2.2497e-10,
+  "low_24h": 1.8136e-10,
+  "price_change_24h": -4.1778117e-11,
+  "price_change_percentage_24h": -18.67182,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": 1000000000000000,
+  "ath": 1.891e-9,
+  "ath_change_percentage": -90.37701,
+  "ath_date": "2024-01-25T18:54:52.569Z",
+  "atl": 1.8136e-10,
+  "atl_change_percentage": 0.337,
+  "atl_date": "2024-04-24T20:25:01.218Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:02.051Z",
+  "platforms": {
+    "ethereum": "0xf1102d6d2a531124fa043d18a06c394a81aaa866"
+  }
+}

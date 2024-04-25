@@ -1,0 +1,31 @@
+{
+  "id": "pixels",
+  "symbol": "pixel",
+  "name": "Pixels",
+  "image": "https://assets.coingecko.com/coins/images/35100/large/pixel-icon.png?1708339519",
+  "current_price": 0.43653,
+  "market_cap": 335997062,
+  "market_cap_rank": 218,
+  "fully_diluted_valuation": 2178851523,
+  "total_volume": 65839724,
+  "high_24h": 0.521124,
+  "low_24h": 0.427039,
+  "price_change_24h": -0.05783923763766119,
+  "price_change_percentage_24h": -11.6996,
+  "market_cap_change_24h": -46167608.15242934,
+  "market_cap_change_percentage_24h": -12.08055,
+  "circulating_supply": 771041667,
+  "total_supply": 5000000000,
+  "max_supply": 5000000000,
+  "ath": 1.017,
+  "ath_change_percentage": -57.10062,
+  "ath_date": "2024-03-11T01:54:40.885Z",
+  "atl": 0.341753,
+  "atl_change_percentage": 27.67312,
+  "atl_date": "2024-04-13T21:30:02.354Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:39.162Z",
+  "platforms": {
+    "ethereum": "0x3429d03c6f7521aec737a0bbf2e5ddcef2c3ae31"
+  }
+}

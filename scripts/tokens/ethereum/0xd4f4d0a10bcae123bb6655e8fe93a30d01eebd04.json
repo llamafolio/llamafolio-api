@@ -1,0 +1,31 @@
+{
+  "id": "linqai",
+  "symbol": "lnq",
+  "name": "LinqAI",
+  "image": "https://assets.coingecko.com/coins/images/35645/large/cmc-cg-linq-logo_%282%29.png?1709368877",
+  "current_price": 0.103812,
+  "market_cap": 15543542,
+  "market_cap_rank": 1233,
+  "fully_diluted_valuation": 103623615,
+  "total_volume": 848220,
+  "high_24h": 0.13163,
+  "low_24h": 0.093229,
+  "price_change_24h": -0.023843109845338786,
+  "price_change_percentage_24h": -18.67779,
+  "market_cap_change_24h": -3567183.2534728497,
+  "market_cap_change_percentage_24h": -18.66587,
+  "circulating_supply": 150000000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.23683,
+  "ath_change_percentage": -56.17513,
+  "ath_date": "2024-03-29T14:15:42.042Z",
+  "atl": 0.02327078,
+  "atl_change_percentage": 346.01108,
+  "atl_date": "2024-03-07T08:01:53.948Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:54.154Z",
+  "platforms": {
+    "ethereum": "0xd4f4d0a10bcae123bb6655e8fe93a30d01eebd04"
+  }
+}

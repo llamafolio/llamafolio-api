@@ -1,0 +1,31 @@
+{
+  "id": "cex-index",
+  "symbol": "cex",
+  "name": "CEX Index",
+  "image": "https://assets.coingecko.com/coins/images/32492/large/CEX.jpg?1698293422",
+  "current_price": 1.5697e-11,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 6592.54,
+  "total_volume": 2569.43,
+  "high_24h": 2.5037e-11,
+  "low_24h": 1.3898e-11,
+  "price_change_24h": -6.206104e-12,
+  "price_change_percentage_24h": -28.33498,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 420000000000000,
+  "max_supply": null,
+  "ath": 1.0316e-8,
+  "ath_change_percentage": -99.83042,
+  "ath_date": "2023-11-03T13:48:25.879Z",
+  "atl": 1.3898e-11,
+  "atl_change_percentage": 25.8735,
+  "atl_date": "2024-04-25T06:24:37.170Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:07.793Z",
+  "platforms": {
+    "arbitrum": "0x306634bd3a7982afdb42dec1c6b15176cd9e02e0"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "artemis-vision",
+  "symbol": "arv",
+  "name": "Artemis Vision",
+  "image": "https://assets.coingecko.com/coins/images/23716/large/uUMU6_Cr_400x400.jpg?1696522916",
+  "current_price": 0.00762293,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 39411,
+  "total_volume": 154.06,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 5170000,
+  "max_supply": 10000000,
+  "ath": 5.31,
+  "ath_change_percentage": -99.85649,
+  "ath_date": "2022-02-18T02:51:41.245Z",
+  "atl": 0.00345121,
+  "atl_change_percentage": 120.87719,
+  "atl_date": "2023-12-04T18:05:28.359Z",
+  "roi": null,
+  "last_updated": "2024-04-04T22:26:24.849Z",
+  "platforms": {
+    "ethereum": "0x28fda76721a8077a5de802ab0212849b8c38429e"
+  }
+}

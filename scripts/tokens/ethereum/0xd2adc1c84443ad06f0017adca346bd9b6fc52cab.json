@@ -1,0 +1,31 @@
+{
+  "id": "dfund",
+  "symbol": "dfnd",
+  "name": "dFund",
+  "image": "https://assets.coingecko.com/coins/images/15286/large/1zbdX36.png?1696514937",
+  "current_price": 0.0002821,
+  "market_cap": 93958,
+  "market_cap_rank": 3799,
+  "fully_diluted_valuation": 282627,
+  "total_volume": 43291,
+  "high_24h": 0.00030908,
+  "low_24h": 0.00028142,
+  "price_change_24h": -0.00002556036954111,
+  "price_change_percentage_24h": -8.30801,
+  "market_cap_change_24h": -7797.7534052038245,
+  "market_cap_change_percentage_24h": -7.66317,
+  "circulating_supply": 332447042.9283598,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.061523,
+  "ath_change_percentage": -99.53957,
+  "ath_date": "2021-05-07T04:49:00.629Z",
+  "atl": 0.0001991,
+  "atl_change_percentage": 42.27539,
+  "atl_date": "2023-12-26T09:23:07.474Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:11.757Z",
+  "platforms": {
+    "ethereum": "0xd2adc1c84443ad06f0017adca346bd9b6fc52cab"
+  }
+}

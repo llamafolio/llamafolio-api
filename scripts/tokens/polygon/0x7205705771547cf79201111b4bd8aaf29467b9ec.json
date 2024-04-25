@@ -1,0 +1,31 @@
+{
+  "id": "rocket-pool",
+  "symbol": "rpl",
+  "name": "Rocket Pool",
+  "image": "https://assets.coingecko.com/coins/images/2090/large/rocket_pool_%28RPL%29.png?1696503058",
+  "current_price": 21.8,
+  "market_cap": 441474239,
+  "market_cap_rank": 181,
+  "fully_diluted_valuation": 441474239,
+  "total_volume": 7539804,
+  "high_24h": 24.49,
+  "low_24h": 21.75,
+  "price_change_24h": -2.2750885301085013,
+  "price_change_percentage_24h": -9.44813,
+  "market_cap_change_24h": -48966231.55643815,
+  "market_cap_change_percentage_24h": -9.98413,
+  "circulating_supply": 20292984.947547,
+  "total_supply": 20292984.947547,
+  "max_supply": null,
+  "ath": 61.9,
+  "ath_change_percentage": -64.77866,
+  "ath_date": "2023-04-16T19:20:19.534Z",
+  "atl": 0.00884718,
+  "atl_change_percentage": 246320.69476,
+  "atl_date": "2018-08-28T00:00:00.000Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:59.429Z",
+  "platforms": {
+    "polygon": "0x7205705771547cf79201111b4bd8aaf29467b9ec"
+  }
+}

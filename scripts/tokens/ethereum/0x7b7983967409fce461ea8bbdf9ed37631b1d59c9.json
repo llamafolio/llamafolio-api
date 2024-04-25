@@ -1,0 +1,31 @@
+{
+  "id": "kpop-coin",
+  "symbol": "kpop",
+  "name": "KPOP Coin",
+  "image": "https://assets.coingecko.com/coins/images/15923/large/kpop.PNG?1696515536",
+  "current_price": 0.00008957,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 626998,
+  "total_volume": 165.4,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 7000000000,
+  "max_supply": null,
+  "ath": 0.00085097,
+  "ath_change_percentage": -89.47429,
+  "ath_date": "2021-06-01T22:07:11.364Z",
+  "atl": 0.00001099,
+  "atl_change_percentage": 715.02981,
+  "atl_date": "2022-11-29T07:15:46.769Z",
+  "roi": null,
+  "last_updated": "2024-04-23T15:46:38.629Z",
+  "platforms": {
+    "ethereum": "0x7b7983967409fce461ea8bbdf9ed37631b1d59c9"
+  }
+}

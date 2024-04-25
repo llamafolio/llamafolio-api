@@ -1,0 +1,31 @@
+{
+  "id": "leaxcoin",
+  "symbol": "leax",
+  "name": "Leaxcoin",
+  "image": "https://assets.coingecko.com/coins/images/6918/large/X_C0tYzl_400x400.jpg?1696507236",
+  "current_price": 0.603095,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1202035293,
+  "total_volume": 7241.07,
+  "high_24h": 0.647211,
+  "low_24h": 0.597658,
+  "price_change_24h": -0.04151569306520508,
+  "price_change_percentage_24h": -6.44043,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2000000000,
+  "max_supply": null,
+  "ath": 0.994901,
+  "ath_change_percentage": -39.59193,
+  "ath_date": "2019-01-31T15:42:29.360Z",
+  "atl": 0.0012785,
+  "atl_change_percentage": 46908.35348,
+  "atl_date": "2019-07-26T00:00:00.000Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:29.922Z",
+  "platforms": {
+    "ethereum": "0x2960d71855a521c8414d29a27218efdb67c34180"
+  }
+}

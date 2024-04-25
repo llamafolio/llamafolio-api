@@ -1,0 +1,31 @@
+{
+  "id": "sunrise",
+  "symbol": "sunc",
+  "name": "Sunrise",
+  "image": "https://assets.coingecko.com/coins/images/17601/large/ticker_sunc_200_200.png?1696517134",
+  "current_price": 0.00021771,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1741720,
+  "total_volume": 276.39,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 8000000000,
+  "max_supply": null,
+  "ath": 0.04582545,
+  "ath_change_percentage": -99.5249,
+  "ath_date": "2021-09-03T14:33:40.695Z",
+  "atl": 0.00020284,
+  "atl_change_percentage": 7.3324,
+  "atl_date": "2024-04-17T17:00:27.294Z",
+  "roi": null,
+  "last_updated": "2024-04-22T00:21:34.433Z",
+  "platforms": {
+    "ethereum": "0x692accdd8b86692427e0aa4752ae917df01cc56f"
+  }
+}

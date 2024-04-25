@@ -1,0 +1,31 @@
+{
+  "id": "sanin-inu",
+  "symbol": "sani",
+  "name": "Sanin Inu",
+  "image": "https://assets.coingecko.com/coins/images/25222/large/B7r0ocfQ_400x400.jpg?1696524365",
+  "current_price": 0.0000028,
+  "market_cap": 2468914,
+  "market_cap_rank": 2182,
+  "fully_diluted_valuation": 2468914,
+  "total_volume": 11999.37,
+  "high_24h": 0.00000314,
+  "low_24h": 0.0000028,
+  "price_change_24h": -3.30348049454e-7,
+  "price_change_percentage_24h": -10.56899,
+  "market_cap_change_24h": -291777.31493905233,
+  "market_cap_change_percentage_24h": -10.56899,
+  "circulating_supply": 883242130296.9116,
+  "total_supply": 883242130296.9116,
+  "max_supply": null,
+  "ath": 0.00002428,
+  "ath_change_percentage": -88.4653,
+  "ath_date": "2024-03-14T00:11:14.968Z",
+  "atl": 6.30177e-7,
+  "atl_change_percentage": 344.34914,
+  "atl_date": "2022-09-16T22:09:00.539Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:48:25.319Z",
+  "platforms": {
+    "ethereum": "0x4521c9ad6a3d4230803ab752ed238be11f8b342f"
+  }
+}

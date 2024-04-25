@@ -1,0 +1,31 @@
+{
+  "id": "gamefi",
+  "symbol": "gafi",
+  "name": "GameFi.org",
+  "image": "https://assets.coingecko.com/coins/images/18292/large/gamefi.PNG?1696517784",
+  "current_price": 7.72,
+  "market_cap": 84316315,
+  "market_cap_rank": 519,
+  "fully_diluted_valuation": 115207010,
+  "total_volume": 500432,
+  "high_24h": 7.87,
+  "low_24h": 7.5,
+  "price_change_24h": 0.04798741,
+  "price_change_percentage_24h": 0.62511,
+  "market_cap_change_24h": 224696,
+  "market_cap_change_percentage_24h": 0.2672,
+  "circulating_supply": 10945062.8598,
+  "total_supply": 14954970,
+  "max_supply": 14954970,
+  "ath": 352.17,
+  "ath_change_percentage": -97.80312,
+  "ath_date": "2021-11-21T05:19:36.624Z",
+  "atl": 2.4e-17,
+  "atl_change_percentage": 31657311286740300000,
+  "atl_date": "2021-09-11T11:30:41.311Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:47.134Z",
+  "platforms": {
+    "bsc": "0x89af13a10b32f1b2f8d1588f93027f69b6f4e27e"
+  }
+}

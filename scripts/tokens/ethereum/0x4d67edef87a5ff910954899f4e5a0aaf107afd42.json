@@ -1,0 +1,31 @@
+{
+  "id": "bluesparrow-token",
+  "symbol": "bluesparrow",
+  "name": "BlueSparrow [OLD]",
+  "image": "https://assets.coingecko.com/coins/images/19995/large/bluesparrow.png?1696519417",
+  "current_price": 9.327e-12,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 932998,
+  "total_volume": 2.35,
+  "high_24h": 9.339e-12,
+  "low_24h": 9.323e-12,
+  "price_change_24h": -8.38e-16,
+  "price_change_percentage_24h": -0.00899,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000000000000,
+  "max_supply": null,
+  "ath": 0.150651,
+  "ath_change_percentage": -100,
+  "ath_date": "2022-07-19T00:19:05.733Z",
+  "atl": 1.279e-12,
+  "atl_change_percentage": 629.22059,
+  "atl_date": "2023-12-09T06:43:24.084Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:32.389Z",
+  "platforms": {
+    "ethereum": "0x4d67edef87a5ff910954899f4e5a0aaf107afd42"
+  }
+}

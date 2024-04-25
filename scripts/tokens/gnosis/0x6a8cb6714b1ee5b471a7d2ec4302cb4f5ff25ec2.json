@@ -1,0 +1,31 @@
+{
+  "id": "energy-web-token",
+  "symbol": "ewt",
+  "name": "Energy Web",
+  "image": "https://assets.coingecko.com/coins/images/10886/large/R9gQTJV__400x400.png?1696510839",
+  "current_price": 2.17,
+  "market_cap": 109489204,
+  "market_cap_rank": 452,
+  "fully_diluted_valuation": 149728363,
+  "total_volume": 1551309,
+  "high_24h": 2.27,
+  "low_24h": 2.16,
+  "price_change_24h": -0.09095142855272442,
+  "price_change_percentage_24h": -4.02036,
+  "market_cap_change_24h": -5201776.958651766,
+  "market_cap_change_percentage_24h": -4.53547,
+  "circulating_supply": 50469167.0435941,
+  "total_supply": 69017450.9455633,
+  "max_supply": 100000000,
+  "ath": 22.67,
+  "ath_change_percentage": -90.42228,
+  "ath_date": "2021-04-17T03:10:00.960Z",
+  "atl": 0.543628,
+  "atl_change_percentage": 299.45803,
+  "atl_date": "2020-04-03T00:00:00.000Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:25.149Z",
+  "platforms": {
+    "gnosis": "0x6a8cb6714b1ee5b471a7d2ec4302cb4f5ff25ec2"
+  }
+}

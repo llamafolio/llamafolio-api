@@ -1,0 +1,31 @@
+{
+  "id": "galaxy-war",
+  "symbol": "gwt",
+  "name": "Galaxy War",
+  "image": "https://assets.coingecko.com/coins/images/22166/large/e2x7gMJ4_400x400.jpg?1696521510",
+  "current_price": 0.00020313,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 203132,
+  "total_volume": 2.25,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.199428,
+  "ath_change_percentage": -99.89814,
+  "ath_date": "2022-01-03T06:04:48.157Z",
+  "atl": 0.00015466,
+  "atl_change_percentage": 31.33742,
+  "atl_date": "2024-03-27T06:44:24.751Z",
+  "roi": null,
+  "last_updated": "2024-04-24T00:47:03.183Z",
+  "platforms": {
+    "bsc": "0x552594612f935441c01c6854edf111f343c1ca07"
+  }
+}

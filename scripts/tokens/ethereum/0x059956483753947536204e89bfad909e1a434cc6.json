@@ -1,0 +1,31 @@
+{
+  "id": "mintlayer",
+  "symbol": "ml",
+  "name": "Mintlayer",
+  "image": "https://assets.coingecko.com/coins/images/29454/large/mintlayer-icon-coingecko200x200.png?1696528401",
+  "current_price": 0.336102,
+  "market_cap": 38785208,
+  "market_cap_rank": 789,
+  "fully_diluted_valuation": 134462899,
+  "total_volume": 973061,
+  "high_24h": 0.353437,
+  "low_24h": 0.331459,
+  "price_change_24h": -0.012813398560301836,
+  "price_change_percentage_24h": -3.67235,
+  "market_cap_change_24h": -1373358.703292407,
+  "market_cap_change_percentage_24h": -3.41984,
+  "circulating_supply": 115378171.373648,
+  "total_supply": 400000000,
+  "max_supply": 600000000,
+  "ath": 0.988308,
+  "ath_change_percentage": -65.24349,
+  "ath_date": "2024-01-11T03:52:06.615Z",
+  "atl": 0.02136811,
+  "atl_change_percentage": 1507.54215,
+  "atl_date": "2023-09-10T04:59:24.167Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:49.660Z",
+  "platforms": {
+    "ethereum": "0x059956483753947536204e89bfad909e1a434cc6"
+  }
+}

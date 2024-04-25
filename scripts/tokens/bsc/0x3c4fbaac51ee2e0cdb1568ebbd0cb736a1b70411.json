@@ -1,0 +1,31 @@
+{
+  "id": "cassie-dragon",
+  "symbol": "cassie 🐉",
+  "name": "Cassie Dragon",
+  "image": "https://assets.coingecko.com/coins/images/35265/large/IMG_20240211_001046_064.png?1708011615",
+  "current_price": 4.19594e-13,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 41959,
+  "total_volume": 0.617427,
+  "high_24h": 4.33125e-13,
+  "low_24h": 4.19313e-13,
+  "price_change_24h": -6.96e-15,
+  "price_change_percentage_24h": -1.63157,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000000000000,
+  "max_supply": 100000000000000000,
+  "ath": 6.008e-12,
+  "ath_change_percentage": -93.0165,
+  "ath_date": "2024-02-18T05:19:34.987Z",
+  "atl": 3.42405e-13,
+  "atl_change_percentage": 22.54333,
+  "atl_date": "2024-02-22T22:30:09.830Z",
+  "roi": null,
+  "last_updated": "2024-04-24T16:04:08.059Z",
+  "platforms": {
+    "bsc": "0x3c4fbaac51ee2e0cdb1568ebbd0cb736a1b70411"
+  }
+}

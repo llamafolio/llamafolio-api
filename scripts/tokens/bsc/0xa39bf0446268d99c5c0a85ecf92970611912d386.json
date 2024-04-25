@@ -1,0 +1,31 @@
+{
+  "id": "moon-rabbit",
+  "symbol": "aaa",
+  "name": "Moon Rabbit",
+  "image": "https://assets.coingecko.com/coins/images/17310/large/logo_moon_no_inscriptions-01.png?1696516863",
+  "current_price": 0.0000021,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 4208.44,
+  "total_volume": 28038,
+  "high_24h": 0.00000239,
+  "low_24h": 0.00000207,
+  "price_change_24h": -2.72760135023e-7,
+  "price_change_percentage_24h": -11.47506,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1999999998,
+  "max_supply": null,
+  "ath": 0.00578477,
+  "ath_change_percentage": -99.96354,
+  "ath_date": "2021-08-28T13:25:52.098Z",
+  "atl": 0,
+  "atl_change_percentage": 2.3743258124548363e+31,
+  "atl_date": "2022-04-16T20:58:32.850Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:28.569Z",
+  "platforms": {
+    "bsc": "0xa39bf0446268d99c5c0a85ecf92970611912d386"
+  }
+}

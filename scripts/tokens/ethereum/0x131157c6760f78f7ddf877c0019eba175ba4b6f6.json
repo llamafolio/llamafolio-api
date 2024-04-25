@@ -1,0 +1,31 @@
+{
+  "id": "bigshortbets",
+  "symbol": "bigsb",
+  "name": "BigShortBets",
+  "image": "https://assets.coingecko.com/coins/images/18235/large/bigsb-token-logo.png?1696517731",
+  "current_price": 0.462034,
+  "market_cap": 3163356,
+  "market_cap_rank": 2035,
+  "fully_diluted_valuation": 13787241,
+  "total_volume": 7754.9,
+  "high_24h": 0.461817,
+  "low_24h": 0.443202,
+  "price_change_24h": 0.01045969,
+  "price_change_percentage_24h": 2.31627,
+  "market_cap_change_24h": 61669,
+  "market_cap_change_percentage_24h": 1.98825,
+  "circulating_supply": 6849800.761044761,
+  "total_supply": 29854323.077543378,
+  "max_supply": 100000000,
+  "ath": 2.08,
+  "ath_change_percentage": -77.79401,
+  "ath_date": "2022-06-13T04:00:17.632Z",
+  "atl": 0.369395,
+  "atl_change_percentage": 24.92481,
+  "atl_date": "2022-01-22T20:10:23.806Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:35.908Z",
+  "platforms": {
+    "ethereum": "0x131157c6760f78f7ddf877c0019eba175ba4b6f6"
+  }
+}

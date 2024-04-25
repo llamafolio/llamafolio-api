@@ -1,0 +1,31 @@
+{
+  "id": "bscpad",
+  "symbol": "bscpad",
+  "name": "BSCPAD",
+  "image": "https://assets.coingecko.com/coins/images/14135/large/bscpad_logo.jpg?1696513855",
+  "current_price": 0.127409,
+  "market_cap": 10098102,
+  "market_cap_rank": 1436,
+  "fully_diluted_valuation": 22385941,
+  "total_volume": 566850,
+  "high_24h": 0.136389,
+  "low_24h": 0.124175,
+  "price_change_24h": -0.008979902010171015,
+  "price_change_percentage_24h": -6.58403,
+  "market_cap_change_24h": -716287.5139657184,
+  "market_cap_change_percentage_24h": -6.62347,
+  "circulating_supply": 79211621.07910761,
+  "total_supply": 175600000,
+  "max_supply": 175600000,
+  "ath": 7.45,
+  "ath_change_percentage": -98.29319,
+  "ath_date": "2021-03-07T20:09:42.684Z",
+  "atl": 0.074819,
+  "atl_change_percentage": 69.99229,
+  "atl_date": "2022-12-26T19:55:00.009Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:45.911Z",
+  "platforms": {
+    "bsc": "0x5a3010d4d8d3b5fb49f8b6e57fb9e48063f16700"
+  }
+}

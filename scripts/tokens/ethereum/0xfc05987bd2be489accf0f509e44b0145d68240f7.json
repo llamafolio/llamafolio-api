@@ -1,0 +1,35 @@
+{
+  "id": "essentia",
+  "symbol": "ess",
+  "name": "Essentia",
+  "image": "https://assets.coingecko.com/coins/images/2483/large/Essentia-token.jpg?1696503302",
+  "current_price": 0.00037196,
+  "market_cap": 400335,
+  "market_cap_rank": 3174,
+  "fully_diluted_valuation": 650315,
+  "total_volume": 56123,
+  "high_24h": 0.00038825,
+  "low_24h": 0.00034035,
+  "price_change_24h": 0.00001844,
+  "price_change_percentage_24h": 5.21639,
+  "market_cap_change_24h": 18930.11,
+  "market_cap_change_percentage_24h": 4.96326,
+  "circulating_supply": 1080572457.5912588,
+  "total_supply": 1755313373,
+  "max_supply": null,
+  "ath": 0.062291,
+  "ath_change_percentage": -99.40286,
+  "ath_date": "2018-07-06T09:04:05.997Z",
+  "atl": 0.00008743,
+  "atl_change_percentage": 325.4326,
+  "atl_date": "2020-05-30T03:27:06.315Z",
+  "roi": {
+    "times": -0.9913496680582149,
+    "currency": "usd",
+    "percentage": -99.13496680582149
+  },
+  "last_updated": "2024-04-25T09:00:11.546Z",
+  "platforms": {
+    "ethereum": "0xfc05987bd2be489accf0f509e44b0145d68240f7"
+  }
+}

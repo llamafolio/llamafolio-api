@@ -1,0 +1,31 @@
+{
+  "id": "definer",
+  "symbol": "fin",
+  "name": "DeFiner",
+  "image": "https://assets.coingecko.com/coins/images/12780/large/PdaW8Lb.png?1696512575",
+  "current_price": 0.00077471,
+  "market_cap": 114123,
+  "market_cap_rank": 3738,
+  "fully_diluted_valuation": 129444,
+  "total_volume": 149217,
+  "high_24h": 0.00079176,
+  "low_24h": 0.00076824,
+  "price_change_24h": -0.000014861785923637,
+  "price_change_percentage_24h": -1.88225,
+  "market_cap_change_24h": -2814.0708929341345,
+  "market_cap_change_percentage_24h": -2.40648,
+  "circulating_supply": 148115903.01781997,
+  "total_supply": 168000000,
+  "max_supply": 168000000,
+  "ath": 2.97,
+  "ath_change_percentage": -99.97403,
+  "ath_date": "2020-10-12T13:56:13.601Z",
+  "atl": 0.00020567,
+  "atl_change_percentage": 274.68747,
+  "atl_date": "2023-11-07T09:09:43.696Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:33.287Z",
+  "platforms": {
+    "ethereum": "0x054f76beed60ab6dbeb23502178c52d6c5debe40"
+  }
+}

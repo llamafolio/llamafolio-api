@@ -1,0 +1,31 @@
+{
+  "id": "knightswap",
+  "symbol": "knight",
+  "name": "KnightSwap",
+  "image": "https://assets.coingecko.com/coins/images/24132/large/knightswap.png?1696523323",
+  "current_price": 0.00179855,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 3981.89,
+  "high_24h": 0.00180592,
+  "low_24h": 0.00176627,
+  "price_change_24h": 0.00001391,
+  "price_change_percentage_24h": 0.77947,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.584973,
+  "ath_change_percentage": -99.69332,
+  "ath_date": "2022-04-14T00:39:02.490Z",
+  "atl": 0.00176627,
+  "atl_change_percentage": 1.56871,
+  "atl_date": "2024-04-24T18:58:36.357Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:26.859Z",
+  "platforms": {
+    "bsc": "0xd23811058eb6e7967d9a00dc3886e75610c4abba"
+  }
+}

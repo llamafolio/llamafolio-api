@@ -1,0 +1,31 @@
+{
+  "id": "index-cooperative",
+  "symbol": "index",
+  "name": "Index Cooperative",
+  "image": "https://assets.coingecko.com/coins/images/12729/large/index.png?1696512528",
+  "current_price": 4.08,
+  "market_cap": 27455528,
+  "market_cap_rank": 961,
+  "fully_diluted_valuation": 40814781,
+  "total_volume": 514834,
+  "high_24h": 4.37,
+  "low_24h": 4.08,
+  "price_change_24h": -0.22867500729525503,
+  "price_change_percentage_24h": -5.30624,
+  "market_cap_change_24h": -1537981.2169716433,
+  "market_cap_change_percentage_24h": -5.30457,
+  "circulating_supply": 6726859.191973535,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 67.08,
+  "ath_change_percentage": -93.91543,
+  "ath_date": "2021-05-09T03:51:28.144Z",
+  "atl": 0.804871,
+  "atl_change_percentage": 407.07899,
+  "atl_date": "2023-10-12T17:35:31.367Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:59.475Z",
+  "platforms": {
+    "polygon": "0xfbd8a3b908e764dbcd51e27992464b4432a1132b"
+  }
+}

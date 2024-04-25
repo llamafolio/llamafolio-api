@@ -1,0 +1,31 @@
+{
+  "id": "yfdai-finance",
+  "symbol": "yf-dai",
+  "name": "YfDAI.finance",
+  "image": "https://assets.coingecko.com/coins/images/12385/large/1619048513068.png?1696512208",
+  "current_price": 39.57,
+  "market_cap": 818455,
+  "market_cap_rank": 2807,
+  "fully_diluted_valuation": 818455,
+  "total_volume": 58557,
+  "high_24h": 46.26,
+  "low_24h": 39.44,
+  "price_change_24h": -2.6370434789335704,
+  "price_change_percentage_24h": -6.24842,
+  "market_cap_change_24h": -53940.36789301701,
+  "market_cap_change_percentage_24h": -6.18302,
+  "circulating_supply": 20603.5,
+  "total_supply": 20603.5,
+  "max_supply": 21000,
+  "ath": 7277.74,
+  "ath_change_percentage": -99.45759,
+  "ath_date": "2021-03-16T17:37:35.862Z",
+  "atl": 22.88,
+  "atl_change_percentage": 72.49953,
+  "atl_date": "2022-07-03T15:09:37.168Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:46.865Z",
+  "platforms": {
+    "polygon": "0x7e7ff932fab08a0af569f93ce65e7b8b23698ad8"
+  }
+}

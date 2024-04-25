@@ -1,0 +1,31 @@
+{
+  "id": "wrapped-thunderpokt",
+  "symbol": "wtpokt",
+  "name": "Wrapped ThunderPOKT",
+  "image": "https://assets.coingecko.com/coins/images/24835/large/vjCQH6sw.jpg?1696523992",
+  "current_price": 0.639403,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 111011,
+  "total_volume": 104.15,
+  "high_24h": 0.654055,
+  "low_24h": 0.636324,
+  "price_change_24h": -0.01329426225548114,
+  "price_change_percentage_24h": -2.03682,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 173616.350627998,
+  "max_supply": null,
+  "ath": 2.59,
+  "ath_change_percentage": -75.36014,
+  "ath_date": "2022-04-04T13:03:55.743Z",
+  "atl": 0.051801,
+  "atl_change_percentage": 1133.29292,
+  "atl_date": "2023-10-23T10:09:07.669Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:58.648Z",
+  "platforms": {
+    "polygon": "0x301595f6fd5f69fad7a488dacb8971e7c0c2f559"
+  }
+}

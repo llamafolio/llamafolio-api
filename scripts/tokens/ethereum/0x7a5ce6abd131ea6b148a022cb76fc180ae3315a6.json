@@ -1,0 +1,31 @@
+{
+  "id": "balpha",
+  "symbol": "balpha",
+  "name": "bAlpha",
+  "image": "https://assets.coingecko.com/coins/images/14224/large/logo_bAlpha_200.png?1696513939",
+  "current_price": 17.56,
+  "market_cap": 315999,
+  "market_cap_rank": 3291,
+  "fully_diluted_valuation": 315999,
+  "total_volume": 123.1,
+  "high_24h": 18.22,
+  "low_24h": 17.56,
+  "price_change_24h": -0.4488464728284498,
+  "price_change_percentage_24h": -2.493,
+  "market_cap_change_24h": -8079.281395559432,
+  "market_cap_change_percentage_24h": -2.493,
+  "circulating_supply": 18000.1,
+  "total_supply": 18000.1,
+  "max_supply": 18000.1,
+  "ath": 42136,
+  "ath_change_percentage": -99.95834,
+  "ath_date": "2021-03-07T11:34:39.676Z",
+  "atl": 0,
+  "atl_change_percentage": 1.795125221437927e+38,
+  "atl_date": "2021-08-23T07:35:44.838Z",
+  "roi": null,
+  "last_updated": "2024-04-24T16:32:30.221Z",
+  "platforms": {
+    "ethereum": "0x7a5ce6abd131ea6b148a022cb76fc180ae3315a6"
+  }
+}

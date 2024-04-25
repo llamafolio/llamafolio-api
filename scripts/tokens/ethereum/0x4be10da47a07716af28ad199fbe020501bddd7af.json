@@ -1,0 +1,31 @@
+{
+  "id": "xtcom-token",
+  "symbol": "xt",
+  "name": "XT.com",
+  "image": "https://assets.coingecko.com/coins/images/8391/large/XT_token.jpg?1696508583",
+  "current_price": 2.98,
+  "market_cap": 2977504701,
+  "market_cap_rank": 42,
+  "fully_diluted_valuation": 2977504701,
+  "total_volume": 1430899,
+  "high_24h": 3.08,
+  "low_24h": 2.94,
+  "price_change_24h": -0.06641766828442552,
+  "price_change_percentage_24h": -2.17889,
+  "market_cap_change_24h": -78712103.63005781,
+  "market_cap_change_percentage_24h": -2.57548,
+  "circulating_supply": 1000000000,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 366.24,
+  "ath_change_percentage": -99.18709,
+  "ath_date": "2021-03-26T17:30:05.584Z",
+  "atl": 0.00900591,
+  "atl_change_percentage": 32958.40516,
+  "atl_date": "2021-03-26T18:09:59.738Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:29.185Z",
+  "platforms": {
+    "ethereum": "0x4be10da47a07716af28ad199fbe020501bddd7af"
+  }
+}

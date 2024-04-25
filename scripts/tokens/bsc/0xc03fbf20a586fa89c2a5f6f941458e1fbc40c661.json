@@ -1,0 +1,31 @@
+{
+  "id": "cocos-bcx",
+  "symbol": "combo",
+  "name": "COMBO",
+  "image": "https://assets.coingecko.com/coins/images/4932/large/COMBO.jpg?1696505472",
+  "current_price": 0.706916,
+  "market_cap": 50022009,
+  "market_cap_rank": 687,
+  "fully_diluted_valuation": 70402221,
+  "total_volume": 4965076,
+  "high_24h": 0.784058,
+  "low_24h": 0.699442,
+  "price_change_24h": -0.06513994393585054,
+  "price_change_percentage_24h": -8.43721,
+  "market_cap_change_24h": -4868485.300815508,
+  "market_cap_change_percentage_24h": -8.86945,
+  "circulating_supply": 71051748,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 5.44,
+  "ath_change_percentage": -87.05085,
+  "ath_date": "2021-11-20T18:43:23.013Z",
+  "atl": 0.00018783,
+  "atl_change_percentage": 375234.95424,
+  "atl_date": "2020-03-13T02:22:35.503Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:32.104Z",
+  "platforms": {
+    "bsc": "0xc03fbf20a586fa89c2a5f6f941458e1fbc40c661"
+  }
+}

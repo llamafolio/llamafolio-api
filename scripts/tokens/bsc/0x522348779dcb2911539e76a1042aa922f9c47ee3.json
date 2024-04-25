@@ -1,0 +1,31 @@
+{
+  "id": "bomb-money",
+  "symbol": "bomb",
+  "name": "Bomb Money",
+  "image": "https://assets.coingecko.com/coins/images/21406/large/CD9qxg9l_400x400.jpg?1696520769",
+  "current_price": 0.01913066,
+  "market_cap": 42965,
+  "market_cap_rank": 4025,
+  "fully_diluted_valuation": 120967,
+  "total_volume": 157.96,
+  "high_24h": 0.02009411,
+  "low_24h": 0.01890653,
+  "price_change_24h": -0.000749744639378085,
+  "price_change_percentage_24h": -3.77127,
+  "market_cap_change_24h": -1724.801653688679,
+  "market_cap_change_percentage_24h": -3.85951,
+  "circulating_supply": 2253606.43945925,
+  "total_supply": 6344998.15459605,
+  "max_supply": null,
+  "ath": 32.14,
+  "ath_change_percentage": -99.94053,
+  "ath_date": "2022-04-14T08:20:02.434Z",
+  "atl": 0.00094915,
+  "atl_change_percentage": 1913.72722,
+  "atl_date": "2023-09-20T08:01:24.526Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:06:09.800Z",
+  "platforms": {
+    "bsc": "0x522348779dcb2911539e76a1042aa922f9c47ee3"
+  }
+}

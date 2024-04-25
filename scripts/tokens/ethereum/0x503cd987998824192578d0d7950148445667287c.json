@@ -1,0 +1,31 @@
+{
+  "id": "fognet",
+  "symbol": "fog",
+  "name": "FOGnet",
+  "image": "https://assets.coingecko.com/coins/images/31743/large/fognet_logo_512-pso36yibc3wmls8sg2l5arxqptos6g1glqowa3rgik.png?1696530562",
+  "current_price": 0.159975,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1600096483,
+  "total_volume": 1472.2,
+  "high_24h": 0.239677,
+  "low_24h": 0.150737,
+  "price_change_24h": -0.07961416790814771,
+  "price_change_percentage_24h": -33.22952,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 2.12,
+  "ath_change_percentage": -92.44085,
+  "ath_date": "2023-11-05T02:05:22.476Z",
+  "atl": 0.02581031,
+  "atl_change_percentage": 519.69935,
+  "atl_date": "2024-03-15T15:52:01.140Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:45.392Z",
+  "platforms": {
+    "ethereum": "0x503cd987998824192578d0d7950148445667287c"
+  }
+}

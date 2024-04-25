@@ -1,0 +1,31 @@
+{
+  "id": "boost",
+  "symbol": "boost",
+  "name": "Boost",
+  "image": "https://assets.coingecko.com/coins/images/17657/large/02FjG1Og.png?1696517188",
+  "current_price": 0.00002992,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 29918,
+  "total_volume": 287.36,
+  "high_24h": 0.00003123,
+  "low_24h": 0.00002967,
+  "price_change_24h": -0.000001061314817143,
+  "price_change_percentage_24h": -3.4259,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.482364,
+  "ath_change_percentage": -99.9938,
+  "ath_date": "2021-10-21T23:31:03.777Z",
+  "atl": 0.00001919,
+  "atl_change_percentage": 55.86749,
+  "atl_date": "2024-01-25T06:38:54.599Z",
+  "roi": null,
+  "last_updated": "2024-04-25T00:32:27.952Z",
+  "platforms": {
+    "ethereum": "0x302cae5dcf8f051d0177043c3438020b89b33218"
+  }
+}

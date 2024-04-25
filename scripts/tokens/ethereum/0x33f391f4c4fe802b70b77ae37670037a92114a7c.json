@@ -1,0 +1,31 @@
+{
+  "id": "burp",
+  "symbol": "burp",
+  "name": "Burp",
+  "image": "https://assets.coingecko.com/coins/images/17317/large/Big_Town_Chef_-__BURP_-_Avatar_3x.png?1696516871",
+  "current_price": 0.00044132,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 220929,
+  "total_volume": 13929.39,
+  "high_24h": 0.00045121,
+  "low_24h": 0.00043367,
+  "price_change_24h": -0.000001365421323663,
+  "price_change_percentage_24h": -0.30844,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 500000000,
+  "max_supply": null,
+  "ath": 0.427795,
+  "ath_change_percentage": -99.89675,
+  "ath_date": "2021-07-26T14:51:17.207Z",
+  "atl": 0.0003003,
+  "atl_change_percentage": 47.08852,
+  "atl_date": "2023-11-08T22:26:20.180Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:53.207Z",
+  "platforms": {
+    "ethereum": "0x33f391f4c4fe802b70b77ae37670037a92114a7c"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "monsoon-finance",
+  "symbol": "mcash",
+  "name": "Monsoon Finance",
+  "image": "https://assets.coingecko.com/coins/images/18632/large/DdcZZeP_%282%29.png?1696518104",
+  "current_price": 0.00062976,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 62977,
+  "total_volume": 6675.97,
+  "high_24h": 0.00063597,
+  "low_24h": 0.0005554,
+  "price_change_24h": 0.00005061,
+  "price_change_percentage_24h": 8.73892,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 0.426201,
+  "ath_change_percentage": -99.85224,
+  "ath_date": "2021-09-30T02:08:52.036Z",
+  "atl": 0.00030901,
+  "atl_change_percentage": 103.79638,
+  "atl_date": "2023-11-16T20:53:40.491Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:30.399Z",
+  "platforms": {
+    "polygon": "0xa25610a77077390a75ad9072a084c5fbc7d43a0d"
+  }
+}

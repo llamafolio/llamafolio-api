@@ -1,0 +1,31 @@
+{
+  "id": "splinterlands",
+  "symbol": "sps",
+  "name": "Splintershards",
+  "image": "https://assets.coingecko.com/coins/images/17332/large/splinter.PNG?1696516884",
+  "current_price": 0.01443487,
+  "market_cap": 7057303,
+  "market_cap_rank": 1614,
+  "fully_diluted_valuation": 18971121,
+  "total_volume": 71281,
+  "high_24h": 0.01514603,
+  "low_24h": 0.01425264,
+  "price_change_24h": -0.00055233180832704,
+  "price_change_percentage_24h": -3.68536,
+  "market_cap_change_24h": -276579.7308938382,
+  "market_cap_change_percentage_24h": -3.77126,
+  "circulating_supply": 489718725.3536008,
+  "total_supply": 1316439560.71264,
+  "max_supply": 3000000000,
+  "ath": 1.065,
+  "ath_change_percentage": -98.64722,
+  "ath_date": "2021-07-28T03:16:00.096Z",
+  "atl": 0.01261103,
+  "atl_change_percentage": 14.24528,
+  "atl_date": "2023-10-09T17:04:38.374Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:08.481Z",
+  "platforms": {
+    "bsc": "0x1633b7157e7638c4d6593436111bf125ee74703f"
+  }
+}

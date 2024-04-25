@@ -1,0 +1,31 @@
+{
+  "id": "sphere-finance",
+  "symbol": "sphere",
+  "name": "Sphere Finance",
+  "image": "https://assets.coingecko.com/coins/images/24424/large/2iR2JsL.png?1696523606",
+  "current_price": 0.00046634,
+  "market_cap": 3574000,
+  "market_cap_rank": 1964,
+  "fully_diluted_valuation": 4175997,
+  "total_volume": 6863.06,
+  "high_24h": 0.00052451,
+  "low_24h": 0.00045361,
+  "price_change_24h": -0.000031825407992016,
+  "price_change_percentage_24h": -6.38857,
+  "market_cap_change_24h": -248450.05870527355,
+  "market_cap_change_percentage_24h": -6.49976,
+  "circulating_supply": 7671869907.40657,
+  "total_supply": 8964103688.80964,
+  "max_supply": null,
+  "ath": 0.115363,
+  "ath_change_percentage": -99.59629,
+  "ath_date": "2022-04-16T01:08:42.579Z",
+  "atl": 0.00038718,
+  "atl_change_percentage": 20.28896,
+  "atl_date": "2024-04-13T20:58:56.330Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:53.884Z",
+  "platforms": {
+    "polygon": "0x62f594339830b90ae4c084ae7d223ffafd9658a7"
+  }
+}

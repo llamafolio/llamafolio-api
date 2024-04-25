@@ -1,0 +1,31 @@
+{
+  "id": "somnium-space-cubes",
+  "symbol": "cube",
+  "name": "Somnium Space CUBEs",
+  "image": "https://assets.coingecko.com/coins/images/10687/large/CUBE_icon.png?1696510656",
+  "current_price": 1.057,
+  "market_cap": 15680079,
+  "market_cap_rank": 1230,
+  "fully_diluted_valuation": 42313431,
+  "total_volume": 37884,
+  "high_24h": 1.13,
+  "low_24h": 1.054,
+  "price_change_24h": -0.06806898779108228,
+  "price_change_percentage_24h": -6.04858,
+  "market_cap_change_24h": -958411.0518032964,
+  "market_cap_change_percentage_24h": -5.7602,
+  "circulating_supply": 14842905.20506071,
+  "total_supply": 40054278.79,
+  "max_supply": 100000000,
+  "ath": 28.12,
+  "ath_change_percentage": -96.25044,
+  "ath_date": "2021-11-03T13:28:54.861Z",
+  "atl": 0.03639773,
+  "atl_change_percentage": 2796.60861,
+  "atl_date": "2020-03-13T02:24:45.699Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:22.081Z",
+  "platforms": {
+    "ethereum": "0xdf801468a808a32656d2ed2d2d80b72a129739f4"
+  }
+}

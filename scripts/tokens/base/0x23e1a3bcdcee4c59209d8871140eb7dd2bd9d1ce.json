@@ -1,0 +1,31 @@
+{
+  "id": "baso-finance",
+  "symbol": "baso",
+  "name": "Baso Finance",
+  "image": "https://assets.coingecko.com/coins/images/31327/large/baso.jpeg?1696530146",
+  "current_price": 0.00015897,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 1605.67,
+  "high_24h": 0.00019947,
+  "low_24h": 0.00015806,
+  "price_change_24h": -0.000018213072693482,
+  "price_change_percentage_24h": -10.27903,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 103750000,
+  "max_supply": 437500000,
+  "ath": 0.01030237,
+  "ath_change_percentage": -98.45969,
+  "ath_date": "2023-08-21T03:18:40.727Z",
+  "atl": 0.00006452,
+  "atl_change_percentage": 145.97009,
+  "atl_date": "2023-10-13T09:39:56.637Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:48.367Z",
+  "platforms": {
+    "base": "0x23e1a3bcdcee4c59209d8871140eb7dd2bd9d1ce"
+  }
+}

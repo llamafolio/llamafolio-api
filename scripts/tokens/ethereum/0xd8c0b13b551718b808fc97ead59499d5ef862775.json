@@ -1,0 +1,31 @@
+{
+  "id": "gala-music",
+  "symbol": "music",
+  "name": "Gala Music",
+  "image": "https://assets.coingecko.com/coins/images/33472/large/gmusic.jpeg?1701947141",
+  "current_price": 0.093027,
+  "market_cap": 10110548,
+  "market_cap_rank": 1434,
+  "fully_diluted_valuation": 10110548,
+  "total_volume": 5737514,
+  "high_24h": 0.096289,
+  "low_24h": 0.089042,
+  "price_change_24h": -0.002079628648202728,
+  "price_change_percentage_24h": -2.18662,
+  "market_cap_change_24h": -252622.94860410877,
+  "market_cap_change_percentage_24h": -2.4377,
+  "circulating_supply": 108599334.962283,
+  "total_supply": 108599334.962283,
+  "max_supply": 1000000000,
+  "ath": 0.303994,
+  "ath_change_percentage": -69.18857,
+  "ath_date": "2023-12-14T02:15:24.655Z",
+  "atl": 0.080581,
+  "atl_change_percentage": 16.23661,
+  "atl_date": "2024-01-06T12:04:44.608Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:06.644Z",
+  "platforms": {
+    "ethereum": "0xd8c0b13b551718b808fc97ead59499d5ef862775"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "id": "ferrum-network",
+  "symbol": "frm",
+  "name": "Ferrum Network",
+  "image": "https://assets.coingecko.com/coins/images/8251/large/FRM.png?1696508455",
+  "current_price": 0.05968,
+  "market_cap": 15741735,
+  "market_cap_rank": 1227,
+  "fully_diluted_valuation": 35472996,
+  "total_volume": 576456,
+  "high_24h": 0.060548,
+  "low_24h": 0.058176,
+  "price_change_24h": 0.00122872,
+  "price_change_percentage_24h": 2.10211,
+  "market_cap_change_24h": 343519,
+  "market_cap_change_percentage_24h": 2.2309,
+  "circulating_supply": 264972590.136151,
+  "total_supply": 597098831.916515,
+  "max_supply": 615617784,
+  "ath": 0.969562,
+  "ath_change_percentage": -93.8519,
+  "ath_date": "2021-04-05T04:48:05.721Z",
+  "atl": 0.00273262,
+  "atl_change_percentage": 2081.40879,
+  "atl_date": "2019-10-25T09:44:39.256Z",
+  "roi": {
+    "times": 2.7300126537717855,
+    "currency": "usd",
+    "percentage": 273.0012653771786
+  },
+  "last_updated": "2024-04-25T09:00:09.002Z",
+  "platforms": {
+    "avalanche": "0xe5caef4af8780e59df925470b050fb23c43ca68c"
+  }
+}

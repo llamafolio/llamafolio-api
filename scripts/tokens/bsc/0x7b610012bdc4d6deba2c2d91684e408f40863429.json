@@ -1,0 +1,31 @@
+{
+  "id": "omnisea",
+  "symbol": "osea",
+  "name": "Omnisea",
+  "image": "https://assets.coingecko.com/coins/images/26475/large/293837892_407994084681555_3167689470652146992_n.png?1696525547",
+  "current_price": 0.00618439,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 6184419,
+  "total_volume": 5140.02,
+  "high_24h": 0.00643885,
+  "low_24h": 0.00611131,
+  "price_change_24h": -0.000222723232168704,
+  "price_change_percentage_24h": -3.47618,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.01694293,
+  "ath_change_percentage": -63.49126,
+  "ath_date": "2023-12-25T07:51:39.161Z",
+  "atl": 0.00380894,
+  "atl_change_percentage": 62.39842,
+  "atl_date": "2023-10-21T14:25:12.416Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:41.033Z",
+  "platforms": {
+    "bsc": "0x7b610012bdc4d6deba2c2d91684e408f40863429"
+  }
+}

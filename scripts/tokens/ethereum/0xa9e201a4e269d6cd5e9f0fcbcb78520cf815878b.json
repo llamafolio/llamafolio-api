@@ -1,0 +1,31 @@
+{
+  "id": "aave-amm-unirenweth",
+  "symbol": "aammunirenweth",
+  "name": "Aave AMM UniRENWETH",
+  "image": "https://assets.coingecko.com/coins/images/17223/large/aAmmUniRENWETH.png?1696516778",
+  "current_price": 61.84,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 371.04,
+  "total_volume": 0,
+  "high_24h": 66.17,
+  "low_24h": 61.56,
+  "price_change_24h": -3.566596647467364,
+  "price_change_percentage_24h": -5.4648,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 6,
+  "max_supply": null,
+  "ath": 228.42,
+  "ath_change_percentage": -72.92706,
+  "ath_date": "2021-10-26T18:08:21.738Z",
+  "atl": 29.96,
+  "atl_change_percentage": 106.40416,
+  "atl_date": "2022-12-25T15:00:01.075Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:19.475Z",
+  "platforms": {
+    "ethereum": "0xa9e201a4e269d6cd5e9f0fcbcb78520cf815878b"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "yfii-finance",
+  "symbol": "yfii",
+  "name": "DFI.money",
+  "image": "https://assets.coingecko.com/coins/images/11902/large/YFII-logo.78631676.png?1696511768",
+  "current_price": 515.17,
+  "market_cap": 20489427,
+  "market_cap_rank": 1102,
+  "fully_diluted_valuation": 20627575,
+  "total_volume": 34851183,
+  "high_24h": 525.86,
+  "low_24h": 503.56,
+  "price_change_24h": -6.220799251140761,
+  "price_change_percentage_24h": -1.19312,
+  "market_cap_change_24h": -223289.93121951446,
+  "market_cap_change_percentage_24h": -1.07803,
+  "circulating_supply": 39732.11082502074,
+  "total_supply": 39999.9996996485,
+  "max_supply": 40000,
+  "ath": 9251.7,
+  "ath_change_percentage": -94.41887,
+  "ath_date": "2020-09-01T20:28:46.345Z",
+  "atl": 97.84,
+  "atl_change_percentage": 427.74831,
+  "atl_date": "2020-08-03T17:50:20.141Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:57.092Z",
+  "platforms": {
+    "ethereum": "0xa1d0e215a23d7030842fc67ce582a6afa3ccab83"
+  }
+}

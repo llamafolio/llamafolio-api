@@ -1,0 +1,31 @@
+{
+  "id": "fame-ai",
+  "symbol": "$fmc",
+  "name": "FAME AI",
+  "image": "https://assets.coingecko.com/coins/images/33574/large/20231205-153104.png?1702450853",
+  "current_price": 0.00057727,
+  "market_cap": 1500905,
+  "market_cap_rank": 2455,
+  "fully_diluted_valuation": 5772711,
+  "total_volume": 277454,
+  "high_24h": 0.00080763,
+  "low_24h": 0.00051702,
+  "price_change_24h": -0.000227456220961391,
+  "price_change_percentage_24h": -28.26502,
+  "market_cap_change_24h": -592434.0428206576,
+  "market_cap_change_percentage_24h": -28.30091,
+  "circulating_supply": 2600000000,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.00293894,
+  "ath_change_percentage": -80.36571,
+  "ath_date": "2023-12-13T15:14:19.846Z",
+  "atl": 0.00037465,
+  "atl_change_percentage": 54.01983,
+  "atl_date": "2024-02-09T18:11:41.397Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:47.282Z",
+  "platforms": {
+    "ethereum": "0x6bfdb6f4e65ead27118592a41eb927cea6956198"
+  }
+}

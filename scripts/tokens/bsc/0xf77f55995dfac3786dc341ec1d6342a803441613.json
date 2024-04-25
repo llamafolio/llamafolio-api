@@ -1,0 +1,31 @@
+{
+  "id": "capone",
+  "symbol": "capone",
+  "name": "Capone",
+  "image": "https://assets.coingecko.com/coins/images/30500/large/CAPONE_200.png?1696529386",
+  "current_price": 0.00000309,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 30873,
+  "total_volume": 0.29329,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.00002754,
+  "ath_change_percentage": -88.78927,
+  "ath_date": "2023-05-22T07:32:41.412Z",
+  "atl": 0.00000288,
+  "atl_change_percentage": 7.17606,
+  "atl_date": "2023-06-12T07:12:47.468Z",
+  "roi": null,
+  "last_updated": "2023-08-02T22:10:49.734Z",
+  "platforms": {
+    "bsc": "0xf77f55995dfac3786dc341ec1d6342a803441613"
+  }
+}

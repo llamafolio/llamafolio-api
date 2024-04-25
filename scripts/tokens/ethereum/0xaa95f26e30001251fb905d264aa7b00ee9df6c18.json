@@ -1,0 +1,31 @@
+{
+  "id": "kendu-inu",
+  "symbol": "kendu",
+  "name": "Kendu Inu",
+  "image": "https://assets.coingecko.com/coins/images/35722/large/photo_2024-03-05_01-23-59_%281%29.jpg?1709632285",
+  "current_price": 0.00000294,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2942306,
+  "total_volume": 68866,
+  "high_24h": 0.00000325,
+  "low_24h": 0.00000272,
+  "price_change_24h": -2.40854686397e-7,
+  "price_change_percentage_24h": -7.56653,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000,
+  "max_supply": null,
+  "ath": 0.00000809,
+  "ath_change_percentage": -63.68537,
+  "ath_date": "2024-04-09T18:58:02.988Z",
+  "atl": 0.00000272,
+  "atl_change_percentage": 7.9863,
+  "atl_date": "2024-04-25T02:03:12.003Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:00.973Z",
+  "platforms": {
+    "ethereum": "0xaa95f26e30001251fb905d264aa7b00ee9df6c18"
+  }
+}

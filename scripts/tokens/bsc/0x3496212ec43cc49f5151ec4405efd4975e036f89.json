@@ -1,0 +1,31 @@
+{
+  "id": "livegreen-coin",
+  "symbol": "lgc",
+  "name": "LiveGreen Coin",
+  "image": "https://assets.coingecko.com/coins/images/28197/large/lgclogo_final-200px.png?1696527200",
+  "current_price": 0.00013834,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 93689,
+  "total_volume": 0.077667,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 677215955,
+  "max_supply": 1000000000,
+  "ath": 0.01551419,
+  "ath_change_percentage": -99.10827,
+  "ath_date": "2022-11-24T01:52:18.585Z",
+  "atl": 0.00009247,
+  "atl_change_percentage": 49.614,
+  "atl_date": "2024-04-09T09:51:23.114Z",
+  "roi": null,
+  "last_updated": "2024-04-23T05:35:25.319Z",
+  "platforms": {
+    "bsc": "0x3496212ec43cc49f5151ec4405efd4975e036f89"
+  }
+}

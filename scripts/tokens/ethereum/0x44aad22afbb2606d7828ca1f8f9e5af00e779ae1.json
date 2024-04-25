@@ -1,0 +1,31 @@
+{
+  "id": "homer",
+  "symbol": "simpson",
+  "name": "Homer",
+  "image": "https://assets.coingecko.com/coins/images/30243/large/1111.png?1696529152",
+  "current_price": 9.459e-12,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3970192,
+  "total_volume": 641981,
+  "high_24h": 1.1923e-11,
+  "low_24h": 9.044e-12,
+  "price_change_24h": -6.85173e-13,
+  "price_change_percentage_24h": -6.75427,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 420000000000000000,
+  "max_supply": 420000000000000000,
+  "ath": 4.8965e-11,
+  "ath_change_percentage": -80.67558,
+  "ath_date": "2023-05-14T13:55:17.420Z",
+  "atl": 7.53839e-13,
+  "atl_change_percentage": 1155.21053,
+  "atl_date": "2023-10-12T10:16:25.595Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:16:08.889Z",
+  "platforms": {
+    "ethereum": "0x44aad22afbb2606d7828ca1f8f9e5af00e779ae1"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "axie-infinity",
+  "symbol": "axs",
+  "name": "Axie Infinity",
+  "image": "https://assets.coingecko.com/coins/images/13029/large/axie_infinity_logo.png?1696512817",
+  "current_price": 7.29,
+  "market_cap": 1047779189,
+  "market_cap_rank": 90,
+  "fully_diluted_valuation": 1969157816,
+  "total_volume": 91801017,
+  "high_24h": 8.38,
+  "low_24h": 7.27,
+  "price_change_24h": -0.6872836973036387,
+  "price_change_percentage_24h": -8.61466,
+  "market_cap_change_24h": -105428254.54234219,
+  "market_cap_change_percentage_24h": -9.14218,
+  "circulating_supply": 143665672.128537,
+  "total_supply": 270000000,
+  "max_supply": 270000000,
+  "ath": 164.9,
+  "ath_change_percentage": -95.57902,
+  "ath_date": "2021-11-06T19:29:29.482Z",
+  "atl": 0.123718,
+  "atl_change_percentage": 5792.50513,
+  "atl_date": "2020-11-06T08:05:43.662Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:50.489Z",
+  "platforms": {
+    "ethereum": "0xbb0e17ef65f82ab018d8edd776e8dd940327b28b"
+  }
+}

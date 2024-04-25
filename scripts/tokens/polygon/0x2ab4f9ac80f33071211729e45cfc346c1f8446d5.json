@@ -1,0 +1,31 @@
+{
+  "id": "chain-guardians",
+  "symbol": "cgg",
+  "name": "Chain Guardians",
+  "image": "https://assets.coingecko.com/coins/images/14326/large/cgg_logo.png?1696514015",
+  "current_price": 0.03952113,
+  "market_cap": 4419494,
+  "market_cap_rank": 1858,
+  "fully_diluted_valuation": 4739404,
+  "total_volume": 48588,
+  "high_24h": 0.04179473,
+  "low_24h": 0.03778811,
+  "price_change_24h": -0.002155101301624003,
+  "price_change_percentage_24h": -5.17106,
+  "market_cap_change_24h": -241366.54776726943,
+  "market_cap_change_percentage_24h": -5.17858,
+  "circulating_supply": 111900000,
+  "total_supply": 120000000,
+  "max_supply": 120000000,
+  "ath": 4.33,
+  "ath_change_percentage": -99.08622,
+  "ath_date": "2021-03-14T07:05:49.617Z",
+  "atl": 0.0139933,
+  "atl_change_percentage": 182.45927,
+  "atl_date": "2023-10-29T06:22:49.184Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:55.914Z",
+  "platforms": {
+    "polygon": "0x2ab4f9ac80f33071211729e45cfc346c1f8446d5"
+  }
+}

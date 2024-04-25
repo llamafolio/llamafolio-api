@@ -1,0 +1,35 @@
+{
+  "id": "uhive",
+  "symbol": "hve2",
+  "name": "Uhive",
+  "image": "https://assets.coingecko.com/coins/images/3811/large/hve2.png?1696504483",
+  "current_price": 0.00037688,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 22613042,
+  "total_volume": 73.94,
+  "high_24h": 0.00042539,
+  "low_24h": 0.00028585,
+  "price_change_24h": -0.000048166855063076,
+  "price_change_percentage_24h": -11.33202,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 60000000000,
+  "max_supply": null,
+  "ath": 0.00400794,
+  "ath_change_percentage": -90.59657,
+  "ath_date": "2021-03-24T04:05:47.333Z",
+  "atl": 0.00001375,
+  "atl_change_percentage": 2640.97935,
+  "atl_date": "2021-03-24T10:27:31.280Z",
+  "roi": {
+    "times": -0.8743719891144218,
+    "currency": "usd",
+    "percentage": -87.43719891144218
+  },
+  "last_updated": "2024-04-25T00:28:10.030Z",
+  "platforms": {
+    "ethereum": "0xd487892bb4c57edbe7ab401d9fe801c8fe6473f5"
+  }
+}

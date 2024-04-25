@@ -1,0 +1,31 @@
+{
+  "id": "molecules-of-korolchuk-ip-nft",
+  "symbol": "vita-fast",
+  "name": "Molecules of Korolchuk IP-NFT",
+  "image": "https://assets.coingecko.com/coins/images/33055/large/Vita-FAST_1024px.png?1700475313",
+  "current_price": 5.31,
+  "market_cap": 5308606,
+  "market_cap_rank": 1765,
+  "fully_diluted_valuation": 5308606,
+  "total_volume": 530.86,
+  "high_24h": 5.32,
+  "low_24h": 5.3,
+  "price_change_24h": -0.000506987721621499,
+  "price_change_percentage_24h": -0.00955,
+  "market_cap_change_24h": -506.9877216219902,
+  "market_cap_change_percentage_24h": -0.00955,
+  "circulating_supply": 1000000,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 16.21,
+  "ath_change_percentage": -67.25492,
+  "ath_date": "2023-12-08T01:05:57.617Z",
+  "atl": 2.39,
+  "atl_change_percentage": 122.46584,
+  "atl_date": "2023-11-30T00:25:40.906Z",
+  "roi": null,
+  "last_updated": "2024-04-25T01:23:20.293Z",
+  "platforms": {
+    "ethereum": "0x6034e0d6999741f07cb6fb1162cbaa46a1d33d36"
+  }
+}

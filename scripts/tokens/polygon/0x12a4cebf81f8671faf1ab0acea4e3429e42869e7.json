@@ -1,0 +1,31 @@
+{
+  "id": "hom",
+  "symbol": "hom",
+  "name": "Homeety",
+  "image": "https://assets.coingecko.com/coins/images/34358/large/logo-token-circle.png?1713035210",
+  "current_price": 0.04756405,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 237820261,
+  "total_volume": 1441.68,
+  "high_24h": 0.051001,
+  "low_24h": 0.04732305,
+  "price_change_24h": -0.002133348308149819,
+  "price_change_percentage_24h": -4.29268,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 5000000000,
+  "max_supply": 5000000000,
+  "ath": 0.074733,
+  "ath_change_percentage": -36.3547,
+  "ath_date": "2024-03-13T13:20:50.696Z",
+  "atl": 0.04017548,
+  "atl_change_percentage": 18.39075,
+  "atl_date": "2024-01-23T14:23:02.011Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:07:50.219Z",
+  "platforms": {
+    "polygon": "0x12a4cebf81f8671faf1ab0acea4e3429e42869e7"
+  }
+}

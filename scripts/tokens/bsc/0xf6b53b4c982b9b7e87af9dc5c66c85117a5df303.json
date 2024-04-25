@@ -1,0 +1,31 @@
+{
+  "id": "denarius",
+  "symbol": "d",
+  "name": "Denarius",
+  "image": "https://assets.coingecko.com/coins/images/760/large/denarius.png?1696501913",
+  "current_price": 0.07915,
+  "market_cap": 706917,
+  "market_cap_rank": 2880,
+  "fully_diluted_valuation": 791499,
+  "total_volume": 98.86,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 8931371.86553468,
+  "total_supply": 10000000,
+  "max_supply": null,
+  "ath": 4.58,
+  "ath_change_percentage": -98.27128,
+  "ath_date": "2018-01-07T00:00:00.000Z",
+  "atl": 0.000027,
+  "atl_change_percentage": 293047.84807,
+  "atl_date": "2017-08-02T00:00:00.000Z",
+  "roi": null,
+  "last_updated": "2024-04-22T23:07:42.804Z",
+  "platforms": {
+    "bsc": "0xf6b53b4c982b9b7e87af9dc5c66c85117a5df303"
+  }
+}

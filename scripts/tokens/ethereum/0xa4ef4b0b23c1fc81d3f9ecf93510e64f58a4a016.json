@@ -1,0 +1,31 @@
+{
+  "id": "1million-nfts",
+  "symbol": "1mil",
+  "name": "1MillionNFTs",
+  "image": "https://assets.coingecko.com/coins/images/14990/large/4kQ8hRnU_400x400.jpg?1696514654",
+  "current_price": 0.145891,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 320188,
+  "total_volume": 117.87,
+  "high_24h": 0.147504,
+  "low_24h": 0.143585,
+  "price_change_24h": 0.00003354,
+  "price_change_percentage_24h": 0.023,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2196660,
+  "max_supply": 2196660,
+  "ath": 19.08,
+  "ath_change_percentage": -99.24607,
+  "ath_date": "2021-04-30T10:59:48.582Z",
+  "atl": 0.08133,
+  "atl_change_percentage": 76.86946,
+  "atl_date": "2023-08-18T10:10:28.211Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:03.854Z",
+  "platforms": {
+    "ethereum": "0xa4ef4b0b23c1fc81d3f9ecf93510e64f58a4a016"
+  }
+}

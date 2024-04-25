@@ -1,0 +1,31 @@
+{
+  "id": "avatly-2",
+  "symbol": "avatly",
+  "name": "Avatly",
+  "image": "https://assets.coingecko.com/coins/images/33922/large/28738.png?1703370955",
+  "current_price": 0.01170808,
+  "market_cap": 760261,
+  "market_cap_rank": 2844,
+  "fully_diluted_valuation": 877342,
+  "total_volume": 920.38,
+  "high_24h": 0.01196636,
+  "low_24h": 0.01155949,
+  "price_change_24h": -0.000137922916744155,
+  "price_change_percentage_24h": -1.1643,
+  "market_cap_change_24h": -8955.993014434003,
+  "market_cap_change_percentage_24h": -1.1643,
+  "circulating_supply": 64934771,
+  "total_supply": 74934771,
+  "max_supply": 100000000,
+  "ath": 0.083384,
+  "ath_change_percentage": -85.9786,
+  "ath_date": "2024-02-08T06:26:46.313Z",
+  "atl": 0.01099365,
+  "atl_change_percentage": 6.34835,
+  "atl_date": "2024-03-23T14:18:31.663Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:06.150Z",
+  "platforms": {
+    "ethereum": "0x5fa3418d828e5cd3c61a66e0fc7fa4a35dadf960"
+  }
+}

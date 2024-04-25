@@ -1,0 +1,31 @@
+{
+  "id": "raze-network",
+  "symbol": "raze",
+  "name": "Raze Network",
+  "image": "https://assets.coingecko.com/coins/images/14767/large/logo-2.png?1696514437",
+  "current_price": 0.00210904,
+  "market_cap": 141619,
+  "market_cap_rank": 3660,
+  "fully_diluted_valuation": 252587,
+  "total_volume": 51179,
+  "high_24h": 0.00221924,
+  "low_24h": 0.00205969,
+  "price_change_24h": -0.000045990756845732,
+  "price_change_percentage_24h": -2.13412,
+  "market_cap_change_24h": -3569.502814609761,
+  "market_cap_change_percentage_24h": -2.45853,
+  "circulating_supply": 67280910,
+  "total_supply": 120000000,
+  "max_supply": 120000000,
+  "ath": 2.11,
+  "ath_change_percentage": -99.89998,
+  "ath_date": "2021-04-16T12:31:18.945Z",
+  "atl": 0.001001,
+  "atl_change_percentage": 111.16785,
+  "atl_date": "2023-01-08T09:21:06.965Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:13.628Z",
+  "platforms": {
+    "bsc": "0x65e66a61d0a8f1e686c2d6083ad611a10d84d97a"
+  }
+}

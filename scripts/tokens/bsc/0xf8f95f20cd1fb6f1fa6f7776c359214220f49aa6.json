@@ -1,0 +1,31 @@
+{
+  "id": "gangs-rabbit",
+  "symbol": "rabbit",
+  "name": "Gangs Rabbit",
+  "image": "https://assets.coingecko.com/coins/images/29705/large/200x200.jpg?1696528637",
+  "current_price": 0.00003362,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 38.11,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00026057,
+  "ath_change_percentage": -87.09725,
+  "ath_date": "2023-04-06T07:51:06.546Z",
+  "atl": 0.00003303,
+  "atl_change_percentage": 1.79404,
+  "atl_date": "2023-05-17T14:41:21.690Z",
+  "roi": null,
+  "last_updated": "2023-05-18T12:32:06.864Z",
+  "platforms": {
+    "bsc": "0xf8f95f20cd1fb6f1fa6f7776c359214220f49aa6"
+  }
+}

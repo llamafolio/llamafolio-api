@@ -1,0 +1,31 @@
+{
+  "id": "gm",
+  "symbol": "gm",
+  "name": "GM",
+  "image": "https://assets.coingecko.com/coins/images/20066/large/PQ29R4D.png?1696519484",
+  "current_price": 0.00000252,
+  "market_cap": 1202301,
+  "market_cap_rank": 2579,
+  "fully_diluted_valuation": 2517015,
+  "total_volume": 138957,
+  "high_24h": 0.00000348,
+  "low_24h": 0.00000244,
+  "price_change_24h": -9.36593440809e-7,
+  "price_change_percentage_24h": -27.08942,
+  "market_cap_change_24h": -448762.7645025952,
+  "market_cap_change_percentage_24h": -27.18022,
+  "circulating_supply": 477669287856,
+  "total_supply": 1000000000000,
+  "max_supply": null,
+  "ath": 0.00093125,
+  "ath_change_percentage": -99.73081,
+  "ath_date": "2021-11-12T07:08:50.373Z",
+  "atl": 0.00000171,
+  "atl_change_percentage": 46.61457,
+  "atl_date": "2023-10-16T09:10:47.761Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:20.437Z",
+  "platforms": {
+    "ethereum": "0xe5597f0723eeaba1b26948e06f008bf0fc1e37e6"
+  }
+}

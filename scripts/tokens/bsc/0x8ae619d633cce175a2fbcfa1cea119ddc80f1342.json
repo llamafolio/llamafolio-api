@@ -1,0 +1,31 @@
+{
+  "id": "polypad",
+  "symbol": "polypad",
+  "name": "PolyPad",
+  "image": "https://assets.coingecko.com/coins/images/24905/large/BXApUK87_400x400.png?1696524062",
+  "current_price": 0.00156359,
+  "market_cap": 1719947,
+  "market_cap_rank": 2382,
+  "fully_diluted_valuation": 3126836,
+  "total_volume": 15822.22,
+  "high_24h": 0.00162717,
+  "low_24h": 0.00142613,
+  "price_change_24h": 0.00002548,
+  "price_change_percentage_24h": 1.65685,
+  "market_cap_change_24h": 33048,
+  "market_cap_change_percentage_24h": 1.9591,
+  "circulating_supply": 1100000000,
+  "total_supply": 1999782235,
+  "max_supply": 1999782235,
+  "ath": 0.129057,
+  "ath_change_percentage": -98.78792,
+  "ath_date": "2022-04-07T13:29:46.105Z",
+  "atl": 0.00135044,
+  "atl_change_percentage": 15.83408,
+  "atl_date": "2024-04-13T21:45:31.456Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:01.408Z",
+  "platforms": {
+    "bsc": "0x8ae619d633cce175a2fbcfa1cea119ddc80f1342"
+  }
+}

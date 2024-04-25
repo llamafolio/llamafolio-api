@@ -1,0 +1,31 @@
+{
+  "id": "minted",
+  "symbol": "mtd",
+  "name": "Minted",
+  "image": "https://assets.coingecko.com/coins/images/26893/large/MTD_Token_%282%29.png?1696525951",
+  "current_price": 0.04313911,
+  "market_cap": 8650335,
+  "market_cap_rank": 1506,
+  "fully_diluted_valuation": 40182628,
+  "total_volume": 11415.45,
+  "high_24h": 0.04512769,
+  "low_24h": 0.04273014,
+  "price_change_24h": -0.001884991244538795,
+  "price_change_percentage_24h": -4.18663,
+  "market_cap_change_24h": -390942.3202931788,
+  "market_cap_change_percentage_24h": -4.32397,
+  "circulating_supply": 200972937.389758,
+  "total_supply": 933561645.263162,
+  "max_supply": 1000000000,
+  "ath": 0.534614,
+  "ath_change_percentage": -91.95873,
+  "ath_date": "2022-11-06T13:23:52.441Z",
+  "atl": 0.02253041,
+  "atl_change_percentage": 90.80774,
+  "atl_date": "2023-10-20T06:00:34.264Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:09.464Z",
+  "platforms": {
+    "ethereum": "0x809e130e10e787139c54e1d12d3d1971b7a675bf"
+  }
+}

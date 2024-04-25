@@ -1,0 +1,31 @@
+{
+  "id": "laqira-protocol",
+  "symbol": "lqr",
+  "name": "Laqira Protocol",
+  "image": "https://assets.coingecko.com/coins/images/20307/large/lqt.PNG?1696519711",
+  "current_price": 0.02153213,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 215321267,
+  "total_volume": 23311,
+  "high_24h": 0.02253106,
+  "low_24h": 0.02105762,
+  "price_change_24h": -0.0007349398379299,
+  "price_change_percentage_24h": -3.30057,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.208834,
+  "ath_change_percentage": -89.70429,
+  "ath_date": "2021-11-15T09:04:42.335Z",
+  "atl": 0.00324875,
+  "atl_change_percentage": 561.82207,
+  "atl_date": "2023-07-20T16:58:16.664Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:53.427Z",
+  "platforms": {
+    "bsc": "0xc4a1e7106d08b7ff947254b6d75cf2b877d55daf"
+  }
+}

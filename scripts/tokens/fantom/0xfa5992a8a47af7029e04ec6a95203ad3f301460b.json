@@ -1,0 +1,31 @@
+{
+  "id": "skullswap-exchange",
+  "symbol": "skull",
+  "name": "SkullSwap Exchange",
+  "image": "https://assets.coingecko.com/coins/images/29172/large/skull.png?1696528130",
+  "current_price": 0.00583654,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 40856,
+  "total_volume": 13.57,
+  "high_24h": 0.00626561,
+  "low_24h": 0.00581009,
+  "price_change_24h": -0.000335945832108097,
+  "price_change_percentage_24h": -5.44264,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 7000000,
+  "max_supply": null,
+  "ath": 17.89,
+  "ath_change_percentage": -99.96751,
+  "ath_date": "2023-03-02T17:03:31.075Z",
+  "atl": 0.00452534,
+  "atl_change_percentage": 28.46276,
+  "atl_date": "2024-01-25T17:14:32.282Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:58.518Z",
+  "platforms": {
+    "fantom": "0xfa5992a8a47af7029e04ec6a95203ad3f301460b"
+  }
+}

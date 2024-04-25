@@ -1,0 +1,31 @@
+{
+  "id": "floxypay",
+  "symbol": "fxy",
+  "name": "Floxypay",
+  "image": "https://assets.coingecko.com/coins/images/30702/large/mNfZxsg__400x400.jpg?1696529574",
+  "current_price": 0.011593,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 118909,
+  "high_24h": 0.01172145,
+  "low_24h": 0.01152602,
+  "price_change_24h": -0.000055830487898954,
+  "price_change_percentage_24h": -0.47928,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 50000000000,
+  "max_supply": 5000000000,
+  "ath": 0.360077,
+  "ath_change_percentage": -96.77702,
+  "ath_date": "2023-10-03T18:55:08.022Z",
+  "atl": 0.00272146,
+  "atl_change_percentage": 326.43168,
+  "atl_date": "2023-10-31T04:59:37.280Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:03.114Z",
+  "platforms": {
+    "polygon": "0x4ec465d5db20a01bc8404dc84f33bb7a398b8335"
+  }
+}

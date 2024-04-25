@@ -1,0 +1,31 @@
+{
+  "id": "smash-cash",
+  "symbol": "smash",
+  "name": "Smash Cash",
+  "image": "https://assets.coingecko.com/coins/images/21286/large/30537055.png?1696520656",
+  "current_price": 0.00000975,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 9753.22,
+  "total_volume": 1.95,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.02816217,
+  "ath_change_percentage": -99.96537,
+  "ath_date": "2021-12-07T11:19:41.572Z",
+  "atl": 0.00000664,
+  "atl_change_percentage": 46.93168,
+  "atl_date": "2023-02-13T15:19:30.396Z",
+  "roi": null,
+  "last_updated": "2023-08-01T02:35:40.862Z",
+  "platforms": {
+    "bsc": "0x3d0e93bfcb8fb46331ea8c98b6ab8c575ab424c3"
+  }
+}

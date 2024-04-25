@@ -1,0 +1,31 @@
+{
+  "id": "echo-bot",
+  "symbol": "echo",
+  "name": "Echo Bot",
+  "image": "https://assets.coingecko.com/coins/images/31266/large/hd1qyGUA_200x200.jpg?1696530090",
+  "current_price": 0.00007186,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 71857,
+  "total_volume": 237.36,
+  "high_24h": 0.00007401,
+  "low_24h": 0.00007154,
+  "price_change_24h": -0.000002156573134278,
+  "price_change_percentage_24h": -2.91377,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00132465,
+  "ath_change_percentage": -94.57544,
+  "ath_date": "2023-08-17T07:35:31.841Z",
+  "atl": 0.00006819,
+  "atl_change_percentage": 5.38327,
+  "atl_date": "2024-04-13T21:38:56.001Z",
+  "roi": null,
+  "last_updated": "2024-04-24T23:45:50.230Z",
+  "platforms": {
+    "ethereum": "0x2b46578b7f06f2b373ad0e0c9b28f800dcc80bf3"
+  }
+}

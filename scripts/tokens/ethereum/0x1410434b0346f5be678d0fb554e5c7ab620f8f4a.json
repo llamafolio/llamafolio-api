@@ -1,0 +1,31 @@
+{
+  "id": "kan",
+  "symbol": "kan",
+  "name": "BitKan",
+  "image": "https://assets.coingecko.com/coins/images/4651/large/kan-token.png?1696505219",
+  "current_price": 0.00090853,
+  "market_cap": 4945916,
+  "market_cap_rank": 1803,
+  "fully_diluted_valuation": 9070712,
+  "total_volume": 336228,
+  "high_24h": 0.00093379,
+  "low_24h": 0.00089834,
+  "price_change_24h": -0.000022051893878409,
+  "price_change_percentage_24h": -2.36969,
+  "market_cap_change_24h": -129631.13824938517,
+  "market_cap_change_percentage_24h": -2.55403,
+  "circulating_supply": 5452621227.431,
+  "total_supply": 10000000000,
+  "max_supply": null,
+  "ath": 0.02442838,
+  "ath_change_percentage": -96.28211,
+  "ath_date": "2018-06-20T00:50:31.706Z",
+  "atl": 0.0006575,
+  "atl_change_percentage": 38.1329,
+  "atl_date": "2023-09-12T19:10:45.935Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:31.280Z",
+  "platforms": {
+    "ethereum": "0x1410434b0346f5be678d0fb554e5c7ab620f8f4a"
+  }
+}

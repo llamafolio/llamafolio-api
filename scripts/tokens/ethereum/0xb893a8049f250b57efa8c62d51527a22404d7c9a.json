@@ -1,0 +1,31 @@
+{
+  "id": "american-shiba",
+  "symbol": "ushiba",
+  "name": "American Shiba",
+  "image": "https://assets.coingecko.com/coins/images/15650/large/american_shiba.PNG?1696515282",
+  "current_price": 9.578e-12,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 957835,
+  "total_volume": 42.07,
+  "high_24h": 9.75e-12,
+  "low_24h": 9.528e-12,
+  "price_change_24h": -1.61004e-13,
+  "price_change_percentage_24h": -1.65313,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000000000000,
+  "max_supply": null,
+  "ath": 3.90776e-10,
+  "ath_change_percentage": -97.56161,
+  "ath_date": "2021-06-05T07:24:40.823Z",
+  "atl": 2.404e-12,
+  "atl_change_percentage": 296.35583,
+  "atl_date": "2022-12-19T16:41:15.420Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:46.154Z",
+  "platforms": {
+    "ethereum": "0xb893a8049f250b57efa8c62d51527a22404d7c9a"
+  }
+}

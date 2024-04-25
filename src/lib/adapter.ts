@@ -1,15 +1,15 @@
 import type { ClickHouseClient } from '@clickhouse/client'
 import {
-  type Adapter as DBAdapter,
   insertAdapters,
   selectAdapter,
   selectNonDuplicateAdaptersContracts,
+  type Adapter as DBAdapter,
 } from '@db/adapters'
 import { flattenContracts, insertAdaptersContracts } from '@db/contracts'
 import { sliceIntoChunks } from '@lib/array'
 import type { Cache } from '@lib/cache'
 import type { Category } from '@lib/category'
-import { type Chain, chainById, getRPCClient } from '@lib/chains'
+import { chainById, getRPCClient, type Chain } from '@lib/chains'
 import { fetchProtocolToParentMapping } from '@lib/protocols'
 import { resolveContractsTokens } from '@lib/token'
 import isEqual from 'lodash/isEqual'

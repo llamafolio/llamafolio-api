@@ -1,0 +1,31 @@
+{
+  "id": "dynamite-token",
+  "symbol": "dynmt",
+  "name": "Dynamite",
+  "image": "https://assets.coingecko.com/coins/images/8951/large/dynamite_logo.jpg?1696509098",
+  "current_price": 0.00308869,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2783.2,
+  "total_volume": 85506,
+  "high_24h": 0.00408872,
+  "low_24h": 0.00232297,
+  "price_change_24h": -0.000206146606772185,
+  "price_change_percentage_24h": -6.25666,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 900000,
+  "max_supply": null,
+  "ath": 100.31,
+  "ath_change_percentage": -99.99694,
+  "ath_date": "2019-08-17T18:53:54.188Z",
+  "atl": 1.0014e-8,
+  "atl_change_percentage": 30677170.72538,
+  "atl_date": "2022-04-13T20:36:44.084Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:50.910Z",
+  "platforms": {
+    "bsc": "0xb1ce906c610004e27e74415aa9bcc90e46366f90"
+  }
+}

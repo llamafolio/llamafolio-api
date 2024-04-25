@@ -1,0 +1,31 @@
+{
+  "id": "efinity",
+  "symbol": "efi",
+  "name": "Efinity",
+  "image": "https://assets.coingecko.com/coins/images/16558/large/efi-200px_%281%29.png?1696516119",
+  "current_price": 0.066661,
+  "market_cap": 5787204,
+  "market_cap_rank": 1721,
+  "fully_diluted_valuation": 133169071,
+  "total_volume": 171.4,
+  "high_24h": 0.080394,
+  "low_24h": 0.066444,
+  "price_change_24h": -0.013573718076578548,
+  "price_change_percentage_24h": -16.91747,
+  "market_cap_change_24h": -1192559.225329793,
+  "market_cap_change_percentage_24h": -17.08596,
+  "circulating_supply": 86915138.6140959,
+  "total_supply": 2000000000,
+  "max_supply": 2000000000,
+  "ath": 3.15,
+  "ath_change_percentage": -97.88393,
+  "ath_date": "2021-08-04T12:07:36.952Z",
+  "atl": 0.03850448,
+  "atl_change_percentage": 72.97712,
+  "atl_date": "2023-06-10T05:40:48.250Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:54.262Z",
+  "platforms": {
+    "ethereum": "0x656c00e1bcd96f256f224ad9112ff426ef053733"
+  }
+}

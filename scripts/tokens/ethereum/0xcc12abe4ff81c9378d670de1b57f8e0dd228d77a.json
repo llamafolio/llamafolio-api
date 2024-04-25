@@ -1,0 +1,31 @@
+{
+  "id": "aave-ren",
+  "symbol": "aren",
+  "name": "Aave REN",
+  "image": "https://assets.coingecko.com/coins/images/14249/large/aREN.382be386.png?1696513963",
+  "current_price": 0.065299,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 118454,
+  "total_volume": 0,
+  "high_24h": 0.071015,
+  "low_24h": 0.06472,
+  "price_change_24h": -0.005149550860178265,
+  "price_change_percentage_24h": -7.35221,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1814022.03540523,
+  "max_supply": null,
+  "ath": 1.29,
+  "ath_change_percentage": -94.96303,
+  "ath_date": "2021-10-02T20:07:44.357Z",
+  "atl": 0.04092285,
+  "atl_change_percentage": 58.86872,
+  "atl_date": "2023-10-19T16:00:01.895Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:33.401Z",
+  "platforms": {
+    "ethereum": "0xcc12abe4ff81c9378d670de1b57f8e0dd228d77a"
+  }
+}

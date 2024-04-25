@@ -1,0 +1,35 @@
+{
+  "id": "quant-network",
+  "symbol": "qnt",
+  "name": "Quant",
+  "image": "https://assets.coingecko.com/coins/images/3370/large/5ZOu7brX_400x400.jpg?1696504070",
+  "current_price": 106.86,
+  "market_cap": 1551665443,
+  "market_cap_rank": 70,
+  "fully_diluted_valuation": 1558953919,
+  "total_volume": 27383466,
+  "high_24h": 113.5,
+  "low_24h": 105.99,
+  "price_change_24h": -6.6489429574134675,
+  "price_change_percentage_24h": -5.85786,
+  "market_cap_change_24h": -107687344.28775954,
+  "market_cap_change_percentage_24h": -6.48972,
+  "circulating_supply": 14544176.164091088,
+  "total_supply": 14612493,
+  "max_supply": 14612493,
+  "ath": 427.42,
+  "ath_change_percentage": -74.99043,
+  "ath_date": "2021-09-11T09:15:00.668Z",
+  "atl": 0.215773,
+  "atl_change_percentage": 49441.10651,
+  "atl_date": "2018-08-23T00:00:00.000Z",
+  "roi": {
+    "times": 13.646558814572009,
+    "currency": "eth",
+    "percentage": 1364.6558814572008
+  },
+  "last_updated": "2024-04-25T09:02:30.489Z",
+  "platforms": {
+    "ethereum": "0x4a220e6096b25eadb88358cb44068a3248254675"
+  }
+}

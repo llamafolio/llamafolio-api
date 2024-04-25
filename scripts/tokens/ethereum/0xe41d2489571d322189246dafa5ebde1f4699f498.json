@@ -1,0 +1,35 @@
+{
+  "id": "0x",
+  "symbol": "zrx",
+  "name": "0x Protocol",
+  "image": "https://assets.coingecko.com/coins/images/863/large/0x.png?1696501996",
+  "current_price": 0.507633,
+  "market_cap": 430272637,
+  "market_cap_rank": 185,
+  "fully_diluted_valuation": 507698691,
+  "total_volume": 19525660,
+  "high_24h": 0.563745,
+  "low_24h": 0.505077,
+  "price_change_24h": -0.05099019420754325,
+  "price_change_percentage_24h": -9.12783,
+  "market_cap_change_24h": -43803720.04419041,
+  "market_cap_change_percentage_24h": -9.2398,
+  "circulating_supply": 847496054.8122635,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 2.5,
+  "ath_change_percentage": -79.66716,
+  "ath_date": "2018-01-13T00:00:00.000Z",
+  "atl": 0.120667,
+  "atl_change_percentage": 320.74526,
+  "atl_date": "2020-03-13T02:27:49.563Z",
+  "roi": {
+    "times": 9.575690494933491,
+    "currency": "usd",
+    "percentage": 957.5690494933492
+  },
+  "last_updated": "2024-04-25T09:01:57.299Z",
+  "platforms": {
+    "ethereum": "0xe41d2489571d322189246dafa5ebde1f4699f498"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "avoteo",
+  "symbol": "avo",
+  "name": "Avoteo",
+  "image": "https://assets.coingecko.com/coins/images/27659/large/photo_2022-10-06_13-03-48.jpg?1696526688",
+  "current_price": 0.00054554,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 327322,
+  "total_volume": 1.85,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 599999900,
+  "max_supply": 999999900,
+  "ath": 0.03030859,
+  "ath_change_percentage": -98.20006,
+  "ath_date": "2022-10-15T18:42:24.472Z",
+  "atl": 0.00020776,
+  "atl_change_percentage": 162.57946,
+  "atl_date": "2024-02-29T18:41:24.597Z",
+  "roi": null,
+  "last_updated": "2024-04-21T13:58:09.902Z",
+  "platforms": {
+    "bsc": "0xaed8bd0608ef3cc45290a8d0e4223ef4c92dd3dc"
+  }
+}

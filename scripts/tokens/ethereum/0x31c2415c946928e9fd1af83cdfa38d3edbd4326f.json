@@ -1,0 +1,31 @@
+{
+  "id": "madworld",
+  "symbol": "umad",
+  "name": "MADworld",
+  "image": "https://assets.coingecko.com/coins/images/20939/large/UMAD_.png?1696520328",
+  "current_price": 0.00037484,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3748401,
+  "total_volume": 1284.07,
+  "high_24h": 0.00039346,
+  "low_24h": 0.00037317,
+  "price_change_24h": -0.000018619565473054,
+  "price_change_percentage_24h": -4.73227,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.343916,
+  "ath_change_percentage": -99.89101,
+  "ath_date": "2022-02-17T04:56:20.980Z",
+  "atl": 0.00030693,
+  "atl_change_percentage": 22.12627,
+  "atl_date": "2024-02-04T20:34:54.042Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:01:34.331Z",
+  "platforms": {
+    "ethereum": "0x31c2415c946928e9fd1af83cdfa38d3edbd4326f"
+  }
+}

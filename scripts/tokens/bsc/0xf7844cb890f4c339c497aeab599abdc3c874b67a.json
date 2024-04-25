@@ -1,0 +1,31 @@
+{
+  "id": "nft-art-finance",
+  "symbol": "nftart",
+  "name": "NFT Art Finance",
+  "image": "https://assets.coingecko.com/coins/images/15027/large/nft-art-coingecko-logo.png?1696514688",
+  "current_price": 5.9163e-11,
+  "market_cap": 1474938,
+  "market_cap_rank": 2463,
+  "fully_diluted_valuation": 5916318,
+  "total_volume": 921.73,
+  "high_24h": 6.3618e-11,
+  "low_24h": 5.637e-11,
+  "price_change_24h": -1.059359e-12,
+  "price_change_percentage_24h": -1.75907,
+  "market_cap_change_24h": -29214.583301923238,
+  "market_cap_change_percentage_24h": -1.94226,
+  "circulating_supply": 24930005585016504,
+  "total_supply": 100000000000000000,
+  "max_supply": null,
+  "ath": 1.8252e-8,
+  "ath_change_percentage": -99.67585,
+  "ath_date": "2021-04-27T03:47:17.892Z",
+  "atl": 2.1703e-11,
+  "atl_change_percentage": 172.60954,
+  "atl_date": "2023-10-22T12:59:56.909Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:10.429Z",
+  "platforms": {
+    "bsc": "0xf7844cb890f4c339c497aeab599abdc3c874b67a"
+  }
+}

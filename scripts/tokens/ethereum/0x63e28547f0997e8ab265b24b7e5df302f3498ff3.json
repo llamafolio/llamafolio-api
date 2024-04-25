@@ -1,0 +1,31 @@
+{
+  "id": "flooring-protocol-microworldofwomen",
+  "symbol": "uwow",
+  "name": "FP μWorldOfWomen",
+  "image": "https://assets.coingecko.com/coins/images/34111/large/WOW.png?1703996347",
+  "current_price": 0.00127935,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 319838,
+  "total_volume": 1279.35,
+  "high_24h": 0.00128369,
+  "low_24h": 0.00125344,
+  "price_change_24h": 0.00001335,
+  "price_change_percentage_24h": 1.05458,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 250000000,
+  "max_supply": null,
+  "ath": 0.00323506,
+  "ath_change_percentage": -60.45359,
+  "ath_date": "2024-02-22T09:07:07.166Z",
+  "atl": 0.00111426,
+  "atl_change_percentage": 14.81609,
+  "atl_date": "2024-04-17T16:58:19.476Z",
+  "roi": null,
+  "last_updated": "2024-04-25T06:07:33.928Z",
+  "platforms": {
+    "ethereum": "0x63e28547f0997e8ab265b24b7e5df302f3498ff3"
+  }
+}

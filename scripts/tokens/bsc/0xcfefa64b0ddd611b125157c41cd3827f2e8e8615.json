@@ -1,0 +1,31 @@
+{
+  "id": "kickpad",
+  "symbol": "kpad",
+  "name": "KickPad",
+  "image": "https://assets.coingecko.com/coins/images/14531/large/kickpad_logo.jpg?1696514216",
+  "current_price": 0.0019245,
+  "market_cap": 109060,
+  "market_cap_rank": 3755,
+  "fully_diluted_valuation": 391740,
+  "total_volume": 22212,
+  "high_24h": 0.00198163,
+  "low_24h": 0.00191598,
+  "price_change_24h": -0.000040482259221815,
+  "price_change_percentage_24h": -2.06019,
+  "market_cap_change_24h": -2381.8545748918696,
+  "market_cap_change_percentage_24h": -2.1373,
+  "circulating_supply": 56728963,
+  "total_supply": 203768315,
+  "max_supply": 203768315,
+  "ath": 4.51,
+  "ath_change_percentage": -99.95733,
+  "ath_date": "2021-04-03T04:22:27.175Z",
+  "atl": 0.000618,
+  "atl_change_percentage": 211.19813,
+  "atl_date": "2023-10-15T16:24:07.066Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:14.569Z",
+  "platforms": {
+    "bsc": "0xcfefa64b0ddd611b125157c41cd3827f2e8e8615"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "hakka-finance",
+  "symbol": "hakka",
+  "name": "Hakka Finance",
+  "image": "https://assets.coingecko.com/coins/images/12163/large/Hakka-icon.png?1696512001",
+  "current_price": 0.00283473,
+  "market_cap": 828405,
+  "market_cap_rank": 2802,
+  "fully_diluted_valuation": 1540692,
+  "total_volume": 5.33,
+  "high_24h": 0.00286933,
+  "low_24h": 0.00281559,
+  "price_change_24h": -0.000013211972708314,
+  "price_change_percentage_24h": -0.46391,
+  "market_cap_change_24h": -2653.5265094339848,
+  "market_cap_change_percentage_24h": -0.31929,
+  "circulating_supply": 292487084.6022,
+  "total_supply": 543976146.90587,
+  "max_supply": 543976146.90587,
+  "ath": 1.14,
+  "ath_change_percentage": -99.75074,
+  "ath_date": "2020-09-01T07:08:43.791Z",
+  "atl": 0.00010318,
+  "atl_change_percentage": 2645.02293,
+  "atl_date": "2022-12-17T16:21:07.744Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:21.189Z",
+  "platforms": {
+    "ethereum": "0x0e29e5abbb5fd88e28b2d355774e73bd47de3bcd"
+  }
+}

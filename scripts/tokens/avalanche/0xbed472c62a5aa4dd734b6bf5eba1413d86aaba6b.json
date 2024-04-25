@@ -1,0 +1,31 @@
+{
+  "id": "man-man-man",
+  "symbol": "man",
+  "name": "MAN MAN MAN",
+  "image": "https://assets.coingecko.com/coins/images/33938/large/manmanman.jpeg?1703502918",
+  "current_price": 2.32119e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 16113.67,
+  "total_volume": 161.14,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 69420000000000,
+  "max_supply": 69420000000000,
+  "ath": 8.602e-9,
+  "ath_change_percentage": -97.30163,
+  "ath_date": "2023-12-25T14:55:40.380Z",
+  "atl": 1.94256e-10,
+  "atl_change_percentage": 19.49103,
+  "atl_date": "2024-04-18T08:24:37.038Z",
+  "roi": null,
+  "last_updated": "2024-04-22T06:30:29.649Z",
+  "platforms": {
+    "avalanche": "0xbed472c62a5aa4dd734b6bf5eba1413d86aaba6b"
+  }
+}

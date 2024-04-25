@@ -1,0 +1,31 @@
+{
+  "id": "speciex",
+  "symbol": "spex",
+  "name": "Speciex",
+  "image": "https://assets.coingecko.com/coins/images/29079/large/SPECIEX-LOGO.png?1696528045",
+  "current_price": 0.00442256,
+  "market_cap": 663361,
+  "market_cap_rank": 2915,
+  "fully_diluted_valuation": 6633834,
+  "total_volume": 21320,
+  "high_24h": 0.00442499,
+  "low_24h": 0.00279954,
+  "price_change_24h": 0.00162302,
+  "price_change_percentage_24h": 57.97435,
+  "market_cap_change_24h": 39564,
+  "market_cap_change_percentage_24h": 6.34247,
+  "circulating_supply": 149995000,
+  "total_supply": 1500000000,
+  "max_supply": 1500000000,
+  "ath": 0.01629199,
+  "ath_change_percentage": -72.9074,
+  "ath_date": "2023-06-20T17:57:41.272Z",
+  "atl": 0.00059936,
+  "atl_change_percentage": 636.44071,
+  "atl_date": "2023-08-28T13:33:05.250Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:50.520Z",
+  "platforms": {
+    "bsc": "0xf1b6460e7fa76e7afddfe20740c260b0ec6807a8"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "dohrnii",
+  "symbol": "dhn",
+  "name": "Dohrnii",
+  "image": "https://assets.coingecko.com/coins/images/24966/large/dhn.png?1696524119",
+  "current_price": 0.00139916,
+  "market_cap": 520489,
+  "market_cap_rank": 3046,
+  "fully_diluted_valuation": 520489,
+  "total_volume": 2.02,
+  "high_24h": 0.00141078,
+  "low_24h": 0.00138204,
+  "price_change_24h": -0.000004345250451661,
+  "price_change_percentage_24h": -0.3096,
+  "market_cap_change_24h": 1058.46,
+  "market_cap_change_percentage_24h": 0.20377,
+  "circulating_supply": 372000000,
+  "total_supply": 372000000,
+  "max_supply": 372000000,
+  "ath": 0.783515,
+  "ath_change_percentage": -99.82142,
+  "ath_date": "2022-05-27T15:49:50.778Z",
+  "atl": 0.00093096,
+  "atl_change_percentage": 50.29279,
+  "atl_date": "2024-03-16T12:06:13.586Z",
+  "roi": null,
+  "last_updated": "2024-04-25T04:53:49.091Z",
+  "platforms": {
+    "bsc": "0xff8bbc599ea030aa69d0298035dfe263740a95bc"
+  }
+}

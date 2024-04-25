@@ -1,0 +1,31 @@
+{
+  "id": "tribe-token-2",
+  "symbol": "tribe",
+  "name": "Tribe Token",
+  "image": "https://assets.coingecko.com/coins/images/33036/large/Tribe.jpg?1700403321",
+  "current_price": 0.00010312,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 103118,
+  "total_volume": 124.36,
+  "high_24h": 0.00010799,
+  "low_24h": 0.00010307,
+  "price_change_24h": -0.000003596582776394,
+  "price_change_percentage_24h": -3.37029,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00047806,
+  "ath_change_percentage": -78.43006,
+  "ath_date": "2023-11-19T20:20:39.895Z",
+  "atl": 0.00005459,
+  "atl_change_percentage": 88.8939,
+  "atl_date": "2024-02-06T06:25:06.002Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:11.921Z",
+  "platforms": {
+    "ethereum": "0xdeadface8503399df4b083ef42fa8e02fd39dead"
+  }
+}

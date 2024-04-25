@@ -1,0 +1,31 @@
+{
+  "id": "delta-theta",
+  "symbol": "dlta",
+  "name": "delta.theta",
+  "image": "https://assets.coingecko.com/coins/images/15697/large/logo-DT-square.png?1696515325",
+  "current_price": 0.00445831,
+  "market_cap": 445831,
+  "market_cap_rank": 3120,
+  "fully_diluted_valuation": 444740,
+  "total_volume": 19.81,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 100000000,
+  "total_supply": 99755226,
+  "max_supply": 99755226,
+  "ath": 0.497073,
+  "ath_change_percentage": -99.10309,
+  "ath_date": "2021-07-17T00:54:14.851Z",
+  "atl": 0.00164087,
+  "atl_change_percentage": 171.70383,
+  "atl_date": "2023-12-09T14:55:22.289Z",
+  "roi": null,
+  "last_updated": "2024-04-22T16:10:10.533Z",
+  "platforms": {
+    "bsc": "0x3a06212763caf64bf101daa4b0cebb0cd393fa1a"
+  }
+}

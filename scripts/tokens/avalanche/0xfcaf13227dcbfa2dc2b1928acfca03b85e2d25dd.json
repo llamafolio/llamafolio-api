@@ -1,0 +1,31 @@
+{
+  "id": "idia",
+  "symbol": "idia",
+  "name": "Impossible Finance Launchpad",
+  "image": "https://assets.coingecko.com/coins/images/17803/large/IDIA.png?1696517325",
+  "current_price": 0.078933,
+  "market_cap": 58686504,
+  "market_cap_rank": 631,
+  "fully_diluted_valuation": 78950153,
+  "total_volume": 187300,
+  "high_24h": 0.086685,
+  "low_24h": 0.073467,
+  "price_change_24h": 0.00226925,
+  "price_change_percentage_24h": 2.95999,
+  "market_cap_change_24h": 1612470,
+  "market_cap_change_percentage_24h": 2.82523,
+  "circulating_supply": 743336168.267233,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 3.51,
+  "ath_change_percentage": -97.712,
+  "ath_date": "2021-11-26T21:54:44.386Z",
+  "atl": 0.0088129,
+  "atl_change_percentage": 810.47266,
+  "atl_date": "2023-10-12T19:10:54.078Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:59.668Z",
+  "platforms": {
+    "avalanche": "0xfcaf13227dcbfa2dc2b1928acfca03b85e2d25dd"
+  }
+}

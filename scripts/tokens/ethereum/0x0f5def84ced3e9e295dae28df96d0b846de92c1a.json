@@ -1,0 +1,31 @@
+{
+  "id": "crypto-sdg",
+  "symbol": "sdg",
+  "name": "Crypto SDG",
+  "image": "https://assets.coingecko.com/coins/images/29816/large/SDG_token_Logo_200.png?1696528745",
+  "current_price": 0.0007307,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2952031789,
+  "total_volume": 11815.6,
+  "high_24h": 0.00073228,
+  "low_24h": 0.00072904,
+  "price_change_24h": -3.62429172317e-7,
+  "price_change_percentage_24h": -0.04958,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 4040000000000,
+  "max_supply": 4040000000000,
+  "ath": 0.03169317,
+  "ath_change_percentage": -97.69445,
+  "ath_date": "2024-03-05T04:18:45.279Z",
+  "atl": 0.00069986,
+  "atl_change_percentage": 4.40681,
+  "atl_date": "2024-03-15T03:00:25.268Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:06:23.763Z",
+  "platforms": {
+    "ethereum": "0x0f5def84ced3e9e295dae28df96d0b846de92c1a"
+  }
+}

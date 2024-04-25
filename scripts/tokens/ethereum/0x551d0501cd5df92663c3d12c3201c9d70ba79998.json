@@ -1,0 +1,31 @@
+{
+  "id": "all-your-base",
+  "symbol": "yobase",
+  "name": "All Your Base",
+  "image": "https://assets.coingecko.com/coins/images/33595/large/Group_48095820logo_cmc.png?1702476376",
+  "current_price": 0.00002695,
+  "market_cap": 565966,
+  "market_cap_rank": 3007,
+  "fully_diluted_valuation": 565966,
+  "total_volume": 151.57,
+  "high_24h": 0.00002729,
+  "low_24h": 0.0000268,
+  "price_change_24h": -3.36511692972e-7,
+  "price_change_percentage_24h": -1.23322,
+  "market_cap_change_24h": -20889.81216650887,
+  "market_cap_change_percentage_24h": -3.55961,
+  "circulating_supply": 21000000000,
+  "total_supply": 21000000000,
+  "max_supply": 21000000000,
+  "ath": 0.00006606,
+  "ath_change_percentage": -59.19954,
+  "ath_date": "2023-12-16T19:14:25.202Z",
+  "atl": 0.0000128,
+  "atl_change_percentage": 110.55315,
+  "atl_date": "2024-02-05T01:12:27.213Z",
+  "roi": null,
+  "last_updated": "2024-04-25T02:01:05.452Z",
+  "platforms": {
+    "ethereum": "0x551d0501cd5df92663c3d12c3201c9d70ba79998"
+  }
+}

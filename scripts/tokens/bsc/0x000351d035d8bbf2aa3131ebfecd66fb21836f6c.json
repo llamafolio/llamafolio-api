@@ -1,0 +1,31 @@
+{
+  "id": "scotty-beam",
+  "symbol": "scotty",
+  "name": "Scotty Beam",
+  "image": "https://assets.coingecko.com/coins/images/21755/large/scotty-logo-200.png?1710338981",
+  "current_price": 0.00396001,
+  "market_cap": 1894689,
+  "market_cap_rank": 2323,
+  "fully_diluted_valuation": 2970005,
+  "total_volume": 540083,
+  "high_24h": 0.00416624,
+  "low_24h": 0.0039353,
+  "price_change_24h": -0.000194159698642574,
+  "price_change_percentage_24h": -4.67385,
+  "market_cap_change_24h": -92489.91730067204,
+  "market_cap_change_percentage_24h": -4.65433,
+  "circulating_supply": 478455867.7282544,
+  "total_supply": 750000000,
+  "max_supply": 750000000,
+  "ath": 0.057971,
+  "ath_change_percentage": -93.17525,
+  "ath_date": "2021-12-23T22:23:01.889Z",
+  "atl": 0.00079494,
+  "atl_change_percentage": 397.69734,
+  "atl_date": "2022-08-29T10:35:46.029Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:37.391Z",
+  "platforms": {
+    "bsc": "0x000351d035d8bbf2aa3131ebfecd66fb21836f6c"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "stargate-finance",
+  "symbol": "stg",
+  "name": "Stargate Finance",
+  "image": "https://assets.coingecko.com/coins/images/24413/large/STG_LOGO.png?1696523595",
+  "current_price": 0.528678,
+  "market_cap": 107951744,
+  "market_cap_rank": 459,
+  "fully_diluted_valuation": 528272708,
+  "total_volume": 16361725,
+  "high_24h": 0.564851,
+  "low_24h": 0.52795,
+  "price_change_24h": -0.030848511134573875,
+  "price_change_percentage_24h": -5.51333,
+  "market_cap_change_24h": -6448311.668879673,
+  "market_cap_change_percentage_24h": -5.63663,
+  "circulating_supply": 204348515.727817,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 4.14,
+  "ath_change_percentage": -87.20738,
+  "ath_date": "2022-04-02T00:00:00.000Z",
+  "atl": 0.337788,
+  "atl_change_percentage": 56.8445,
+  "atl_date": "2022-08-19T00:00:00.000Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:25.307Z",
+  "platforms": {
+    "polygon": "0x2f6f07cdcf3588944bf4c42ac74ff24bf56e7590"
+  }
+}

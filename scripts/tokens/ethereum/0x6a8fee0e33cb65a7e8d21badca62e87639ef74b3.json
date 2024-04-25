@@ -1,0 +1,31 @@
+{
+  "id": "pdx-coin",
+  "symbol": "pdx",
+  "name": "PDX Coin",
+  "image": "https://assets.coingecko.com/coins/images/25095/large/vBi23nWw_400x400.jpg?1696524246",
+  "current_price": 191.77,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 958695437096,
+  "total_volume": 2576327,
+  "high_24h": 192.07,
+  "low_24h": 190.99,
+  "price_change_24h": 0.411015,
+  "price_change_percentage_24h": 0.21479,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 5000000000,
+  "max_supply": 5000000000,
+  "ath": 196.1,
+  "ath_change_percentage": -2.21866,
+  "ath_date": "2024-04-04T16:25:08.379Z",
+  "atl": 14.89,
+  "atl_change_percentage": 1187.60061,
+  "atl_date": "2022-05-20T18:04:59.830Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:52.800Z",
+  "platforms": {
+    "ethereum": "0x6a8fee0e33cb65a7e8d21badca62e87639ef74b3"
+  }
+}

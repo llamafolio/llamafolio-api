@@ -1,0 +1,31 @@
+{
+  "id": "capital-dao-starter-token",
+  "symbol": "cds",
+  "name": "Capital DAO Starter",
+  "image": "https://assets.coingecko.com/coins/images/20332/large/cds.png?1696519736",
+  "current_price": 0.00135474,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 11241900,
+  "total_volume": 250.36,
+  "high_24h": 0.00141195,
+  "low_24h": 0.00134483,
+  "price_change_24h": -0.000048509579401208,
+  "price_change_percentage_24h": -3.45694,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 8318169955,
+  "max_supply": 16000000000,
+  "ath": 0.02446354,
+  "ath_change_percentage": -94.48806,
+  "ath_date": "2021-11-15T05:34:01.740Z",
+  "atl": 0.00092951,
+  "atl_change_percentage": 45.06782,
+  "atl_date": "2023-10-11T05:41:24.640Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:41.956Z",
+  "platforms": {
+    "ethereum": "0x3c48ca59bf2699e51d4974d4b6d284ae52076e5e"
+  }
+}

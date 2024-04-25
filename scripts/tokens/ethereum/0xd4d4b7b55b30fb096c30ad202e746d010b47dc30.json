@@ -1,0 +1,31 @@
+{
+  "id": "alpha-bot-calls",
+  "symbol": "abc",
+  "name": "Alpha Bot Calls",
+  "image": "https://assets.coingecko.com/coins/images/31168/large/ABC_Token_CG.png?1696529996",
+  "current_price": 0.061539,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 61539,
+  "total_volume": 366.96,
+  "high_24h": 0.063711,
+  "low_24h": 0.06095,
+  "price_change_24h": -0.000943009812919754,
+  "price_change_percentage_24h": -1.50925,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 1.33,
+  "ath_change_percentage": -95.3807,
+  "ath_date": "2023-09-04T16:35:25.398Z",
+  "atl": 0.0127908,
+  "atl_change_percentage": 379.54158,
+  "atl_date": "2024-02-14T01:26:42.810Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:16.649Z",
+  "platforms": {
+    "ethereum": "0xd4d4b7b55b30fb096c30ad202e746d010b47dc30"
+  }
+}

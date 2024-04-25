@@ -1,0 +1,31 @@
+{
+  "id": "solidlizard-synthetic-usd",
+  "symbol": "slzusdc",
+  "name": "SolidLizard synthetic USD",
+  "image": "https://assets.coingecko.com/coins/images/29900/large/slzUSDC2.png?1696528829",
+  "current_price": 0.967562,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 967562,
+  "total_volume": 2.57,
+  "high_24h": 0.969215,
+  "low_24h": 0.964378,
+  "price_change_24h": -0.000491144990443115,
+  "price_change_percentage_24h": -0.05074,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 0.969215,
+  "ath_change_percentage": -0.17052,
+  "ath_date": "2024-04-25T08:26:35.532Z",
+  "atl": 0.964378,
+  "atl_change_percentage": 0.33012,
+  "atl_date": "2024-04-25T08:50:58.841Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:40.415Z",
+  "platforms": {
+    "arbitrum": "0x54355cc6913b26a15cca1f820cf17d362fa65db5"
+  }
+}

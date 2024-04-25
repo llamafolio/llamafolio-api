@@ -1,0 +1,31 @@
+{
+  "id": "earthfund",
+  "symbol": "1earth",
+  "name": "EarthFund",
+  "image": "https://assets.coingecko.com/coins/images/20822/large/earthfund.PNG?1696520215",
+  "current_price": 0.00181531,
+  "market_cap": 646210,
+  "market_cap_rank": 2932,
+  "fully_diluted_valuation": 1815320,
+  "total_volume": 25209,
+  "high_24h": 0.00185662,
+  "low_24h": 0.00173543,
+  "price_change_24h": -0.000031549242614658,
+  "price_change_percentage_24h": -1.70827,
+  "market_cap_change_24h": -11037.483781370567,
+  "market_cap_change_percentage_24h": -1.67935,
+  "circulating_supply": 355976000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.429622,
+  "ath_change_percentage": -99.57497,
+  "ath_date": "2021-11-24T03:55:50.332Z",
+  "atl": 0.00077543,
+  "atl_change_percentage": 135.48679,
+  "atl_date": "2022-11-21T22:05:19.763Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:50.344Z",
+  "platforms": {
+    "ethereum": "0x9e04f519b094f5f8210441e285f603f4d2b50084"
+  }
+}

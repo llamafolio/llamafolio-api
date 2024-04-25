@@ -1,0 +1,31 @@
+{
+  "id": "merge",
+  "symbol": "merge",
+  "name": "Merge",
+  "image": "https://assets.coingecko.com/coins/images/8769/large/Merge_Icon_Colored.png?1696508925",
+  "current_price": 0.00914881,
+  "market_cap": 792100,
+  "market_cap_rank": 2822,
+  "fully_diluted_valuation": 914881,
+  "total_volume": 136.05,
+  "high_24h": 0.00967947,
+  "low_24h": 0.00896964,
+  "price_change_24h": -0.000514431350307966,
+  "price_change_percentage_24h": -5.32359,
+  "market_cap_change_24h": -44088.43314149836,
+  "market_cap_change_percentage_24h": -5.27254,
+  "circulating_supply": 86579603.7045913,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 0.091276,
+  "ath_change_percentage": -89.97671,
+  "ath_date": "2021-08-31T06:07:56.916Z",
+  "atl": 0.00011377,
+  "atl_change_percentage": 7941.2095,
+  "atl_date": "2023-05-09T22:03:55.665Z",
+  "roi": null,
+  "last_updated": "2024-04-25T07:48:22.520Z",
+  "platforms": {
+    "bsc": "0x2d5c9167fdd5c068c8fcb8992e6af639b42fbf70"
+  }
+}

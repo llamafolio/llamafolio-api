@@ -1,0 +1,31 @@
+{
+  "id": "step-hero",
+  "symbol": "hero",
+  "name": "Step Hero",
+  "image": "https://assets.coingecko.com/coins/images/17700/large/stephero.PNG?1696517228",
+  "current_price": 0.00196088,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 196905,
+  "total_volume": 25752,
+  "high_24h": 0.00205156,
+  "low_24h": 0.00196231,
+  "price_change_24h": -0.000034754972750455,
+  "price_change_percentage_24h": -1.74155,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 3.14,
+  "ath_change_percentage": -99.93709,
+  "ath_date": "2021-08-26T01:42:29.038Z",
+  "atl": 0.00030133,
+  "atl_change_percentage": 555.36151,
+  "atl_date": "2023-06-30T13:55:01.320Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:38.639Z",
+  "platforms": {
+    "bsc": "0xe8176d414560cfe1bf82fd73b986823b89e4f545"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "trivian",
+  "symbol": "trivia",
+  "name": "Trivians",
+  "image": "https://assets.coingecko.com/coins/images/26303/large/trv-icon-full.png?1696525386",
+  "current_price": 0.00117962,
+  "market_cap": 302043,
+  "market_cap_rank": 3323,
+  "fully_diluted_valuation": 1181587,
+  "total_volume": 39199,
+  "high_24h": 0.00129539,
+  "low_24h": 0.00113357,
+  "price_change_24h": -0.000092310408443383,
+  "price_change_percentage_24h": -7.25752,
+  "market_cap_change_24h": -23576.11809402547,
+  "market_cap_change_percentage_24h": -7.2404,
+  "circulating_supply": 255624540.816,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.04093968,
+  "ath_change_percentage": -97.11168,
+  "ath_date": "2022-08-11T15:16:48.905Z",
+  "atl": 0.00048145,
+  "atl_change_percentage": 145.60521,
+  "atl_date": "2023-11-10T06:58:42.471Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:06:57.993Z",
+  "platforms": {
+    "bsc": "0xb465f3cb6aba6ee375e12918387de1eac2301b05"
+  }
+}

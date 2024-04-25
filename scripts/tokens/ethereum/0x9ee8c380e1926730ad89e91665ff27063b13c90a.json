@@ -1,0 +1,31 @@
+{
+  "id": "ca-htb",
+  "symbol": "ca",
+  "name": "Coupon Assets",
+  "image": "https://assets.coingecko.com/coins/images/32202/large/ca.jpg?1696746380",
+  "current_price": 0.543342,
+  "market_cap": 6739162,
+  "market_cap_rank": 1641,
+  "fully_diluted_valuation": 146831474,
+  "total_volume": 4386858,
+  "high_24h": 0.550208,
+  "low_24h": 0.539902,
+  "price_change_24h": -0.005492443408667835,
+  "price_change_percentage_24h": -1.00075,
+  "market_cap_change_24h": -55831.30658418033,
+  "market_cap_change_percentage_24h": -0.82165,
+  "circulating_supply": 12392259.501,
+  "total_supply": 270000000,
+  "max_supply": 270000000,
+  "ath": 0.714438,
+  "ath_change_percentage": -23.93376,
+  "ath_date": "2024-01-21T14:09:18.142Z",
+  "atl": 0.164931,
+  "atl_change_percentage": 229.49958,
+  "atl_date": "2023-10-14T02:36:47.768Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:31.059Z",
+  "platforms": {
+    "ethereum": "0x9ee8c380e1926730ad89e91665ff27063b13c90a"
+  }
+}

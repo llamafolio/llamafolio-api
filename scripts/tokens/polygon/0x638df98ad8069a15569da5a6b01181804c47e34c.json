@@ -1,0 +1,31 @@
+{
+  "id": "dafi-protocol",
+  "symbol": "dafi",
+  "name": "Dafi Protocol",
+  "image": "https://assets.coingecko.com/coins/images/14428/large/Dafi_Black_Icon.png?1696514118",
+  "current_price": 0.00319822,
+  "market_cap": 1808515,
+  "market_cap_rank": 2354,
+  "fully_diluted_valuation": 7197799,
+  "total_volume": 353916,
+  "high_24h": 0.00354113,
+  "low_24h": 0.00307421,
+  "price_change_24h": -0.000192249467216774,
+  "price_change_percentage_24h": -5.6703,
+  "market_cap_change_24h": -123578.42142113973,
+  "market_cap_change_percentage_24h": -6.39609,
+  "circulating_supply": 565333666.809,
+  "total_supply": 2250000000,
+  "max_supply": null,
+  "ath": 0.207531,
+  "ath_change_percentage": -98.45887,
+  "ath_date": "2021-03-19T18:14:59.084Z",
+  "atl": 0.00176219,
+  "atl_change_percentage": 81.49643,
+  "atl_date": "2023-01-18T00:37:19.656Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:36.725Z",
+  "platforms": {
+    "polygon": "0x638df98ad8069a15569da5a6b01181804c47e34c"
+  }
+}

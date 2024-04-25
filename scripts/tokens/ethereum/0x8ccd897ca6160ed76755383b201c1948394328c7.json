@@ -1,0 +1,31 @@
+{
+  "id": "balance-ai",
+  "symbol": "bai",
+  "name": "Balance AI",
+  "image": "https://assets.coingecko.com/coins/images/34732/large/Balance_AI.png?1705921540",
+  "current_price": 10.55,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 31307688,
+  "total_volume": 124741,
+  "high_24h": 11.08,
+  "low_24h": 10.47,
+  "price_change_24h": -0.35325438301988576,
+  "price_change_percentage_24h": -3.23972,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2967382,
+  "max_supply": 2967382,
+  "ath": 20.33,
+  "ath_change_percentage": -47.96967,
+  "ath_date": "2024-03-10T12:14:32.963Z",
+  "atl": 1.82,
+  "atl_change_percentage": 480.00444,
+  "atl_date": "2024-02-08T17:14:48.583Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:37.625Z",
+  "platforms": {
+    "ethereum": "0x8ccd897ca6160ed76755383b201c1948394328c7"
+  }
+}

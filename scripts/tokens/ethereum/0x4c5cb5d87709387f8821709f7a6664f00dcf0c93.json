@@ -1,0 +1,31 @@
+{
+  "id": "raft",
+  "symbol": "raft",
+  "name": "Raft",
+  "image": "https://assets.coingecko.com/coins/images/30915/large/Logomark_Transparent_Background_200x200.png?1696529760",
+  "current_price": 0.00041178,
+  "market_cap": 196430,
+  "market_cap_rank": 3506,
+  "fully_diluted_valuation": 1027030,
+  "total_volume": 6119.5,
+  "high_24h": 0.000431,
+  "low_24h": 0.00040168,
+  "price_change_24h": 0.00000885,
+  "price_change_percentage_24h": 2.19609,
+  "market_cap_change_24h": 3863.43,
+  "market_cap_change_percentage_24h": 2.00629,
+  "circulating_supply": 478150000,
+  "total_supply": 2500000000,
+  "max_supply": null,
+  "ath": 0.01318318,
+  "ath_change_percentage": -96.882,
+  "ath_date": "2023-10-11T12:04:46.341Z",
+  "atl": 0.00038988,
+  "atl_change_percentage": 5.4309,
+  "atl_date": "2024-04-21T21:16:27.111Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:32.794Z",
+  "platforms": {
+    "ethereum": "0x4c5cb5d87709387f8821709f7a6664f00dcf0c93"
+  }
+}

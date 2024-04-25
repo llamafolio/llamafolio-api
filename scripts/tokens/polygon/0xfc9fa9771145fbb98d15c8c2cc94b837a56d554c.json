@@ -1,0 +1,31 @@
+{
+  "id": "slingshot",
+  "symbol": "sling",
+  "name": "Slingshot",
+  "image": "https://assets.coingecko.com/coins/images/36111/large/apple-touch-icon.png?1710487288",
+  "current_price": 0.02125721,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 106336317,
+  "total_volume": 3253.14,
+  "high_24h": 0.0221154,
+  "low_24h": 0.02122052,
+  "price_change_24h": -0.000840923877087063,
+  "price_change_percentage_24h": -3.80541,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 5000000000,
+  "max_supply": 5000000000,
+  "ath": 0.02310756,
+  "ath_change_percentage": -7.96405,
+  "ath_date": "2024-04-19T12:31:03.339Z",
+  "atl": 0.00997851,
+  "atl_change_percentage": 113.13067,
+  "atl_date": "2024-03-16T01:50:36.008Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:38.147Z",
+  "platforms": {
+    "polygon": "0xfc9fa9771145fbb98d15c8c2cc94b837a56d554c"
+  }
+}

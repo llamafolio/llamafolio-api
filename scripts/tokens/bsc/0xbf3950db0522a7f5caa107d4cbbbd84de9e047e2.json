@@ -1,0 +1,31 @@
+{
+  "id": "jusd",
+  "symbol": "jusd",
+  "name": "JUSD",
+  "image": "https://assets.coingecko.com/coins/images/32302/large/200x200.png?1697186770",
+  "current_price": 1.001,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 50026140117,
+  "total_volume": 82364,
+  "high_24h": 1.003,
+  "low_24h": 0.998296,
+  "price_change_24h": 0.00005103,
+  "price_change_percentage_24h": 0.0051,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 50000000000,
+  "max_supply": null,
+  "ath": 1.029,
+  "ath_change_percentage": -2.87764,
+  "ath_date": "2024-03-11T07:30:34.617Z",
+  "atl": 0.950282,
+  "atl_change_percentage": 5.12088,
+  "atl_date": "2023-12-23T04:11:01.823Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:36.625Z",
+  "platforms": {
+    "bsc": "0xbf3950db0522a7f5caa107d4cbbbd84de9e047e2"
+  }
+}

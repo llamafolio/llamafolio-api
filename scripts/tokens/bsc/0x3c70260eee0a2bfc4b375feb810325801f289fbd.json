@@ -1,0 +1,31 @@
+{
+  "id": "omni-consumer-protocol",
+  "symbol": "ocp",
+  "name": "Omni Consumer Protocol",
+  "image": "https://assets.coingecko.com/coins/images/15243/large/ocp-200px.png?1696514897",
+  "current_price": 0.00928924,
+  "market_cap": 110635,
+  "market_cap_rank": 3749,
+  "fully_diluted_valuation": 929559,
+  "total_volume": 493.35,
+  "high_24h": 0.0094197,
+  "low_24h": 0.00920015,
+  "price_change_24h": -0.000059015702234195,
+  "price_change_percentage_24h": -0.6313,
+  "market_cap_change_24h": -402.47886385710444,
+  "market_cap_change_percentage_24h": -0.36247,
+  "circulating_supply": 11901824.931896757,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 0.162663,
+  "ath_change_percentage": -94.30443,
+  "ath_date": "2021-05-05T09:12:47.366Z",
+  "atl": 0.00723881,
+  "atl_change_percentage": 27.98506,
+  "atl_date": "2023-08-17T21:49:39.020Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:48.709Z",
+  "platforms": {
+    "bsc": "0x3c70260eee0a2bfc4b375feb810325801f289fbd"
+  }
+}

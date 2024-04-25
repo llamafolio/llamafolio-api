@@ -1,0 +1,31 @@
+{
+  "id": "karate-combat",
+  "symbol": "karate",
+  "name": "Karate Combat",
+  "image": "https://assets.coingecko.com/coins/images/30384/large/karate.jpg?1696529274",
+  "current_price": 0.0018856,
+  "market_cap": 17146074,
+  "market_cap_rank": 1181,
+  "fully_diluted_valuation": 207299046,
+  "total_volume": 378182,
+  "high_24h": 0.00210653,
+  "low_24h": 0.00188188,
+  "price_change_24h": -0.000217545761677005,
+  "price_change_percentage_24h": -10.34383,
+  "market_cap_change_24h": -2057175.1837726831,
+  "market_cap_change_percentage_24h": -10.71264,
+  "circulating_supply": 9098296196,
+  "total_supply": 110000000000,
+  "max_supply": null,
+  "ath": 0.00653664,
+  "ath_change_percentage": -71.07124,
+  "ath_date": "2024-02-09T22:04:56.254Z",
+  "atl": 0.00049919,
+  "atl_change_percentage": 278.8045,
+  "atl_date": "2023-11-04T16:10:05.217Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:55.798Z",
+  "platforms": {
+    "ethereum": "0x80008bcd713c38af90a9930288d446bc3bd2e684"
+  }
+}

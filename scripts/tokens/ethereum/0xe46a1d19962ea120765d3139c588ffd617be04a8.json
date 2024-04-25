@@ -1,0 +1,31 @@
+{
+  "id": "evereth-2",
+  "symbol": "eeth",
+  "name": "EverETH",
+  "image": "https://assets.coingecko.com/coins/images/34525/large/EETH_LOGO.png?1705303995",
+  "current_price": 0.00113947,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1139466,
+  "total_volume": 1.59,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00144518,
+  "ath_change_percentage": -21.15393,
+  "ath_date": "2024-03-14T15:31:26.837Z",
+  "atl": 0.00073278,
+  "atl_change_percentage": 55.49883,
+  "atl_date": "2024-01-25T23:31:12.484Z",
+  "roi": null,
+  "last_updated": "2024-04-23T01:12:04.282Z",
+  "platforms": {
+    "ethereum": "0xe46a1d19962ea120765d3139c588ffd617be04a8"
+  }
+}

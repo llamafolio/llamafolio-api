@@ -1,0 +1,31 @@
+{
+  "id": "zcore-2",
+  "symbol": "zcr",
+  "name": "ZCore",
+  "image": "https://assets.coingecko.com/coins/images/31008/large/Zcore.jpg?1696529845",
+  "current_price": 0.00006512,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 162859,
+  "total_volume": 191.07,
+  "high_24h": 0.0000689,
+  "low_24h": 0.00006434,
+  "price_change_24h": -0.000003693097320107,
+  "price_change_percentage_24h": -5.36692,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2500000000,
+  "max_supply": null,
+  "ath": 0.00021483,
+  "ath_change_percentage": -69.75154,
+  "ath_date": "2023-07-19T08:36:45.225Z",
+  "atl": 0.00000892,
+  "atl_change_percentage": 628.62936,
+  "atl_date": "2023-12-04T12:34:52.641Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:16:55.635Z",
+  "platforms": {
+    "bsc": "0x0e8fe6eed5342ea9189d9268d088821f0532fb74"
+  }
+}

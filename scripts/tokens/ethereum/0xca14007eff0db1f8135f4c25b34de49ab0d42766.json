@@ -1,0 +1,31 @@
+{
+  "id": "starknet",
+  "symbol": "strk",
+  "name": "Starknet",
+  "image": "https://assets.coingecko.com/coins/images/26433/large/starknet.png?1696525507",
+  "current_price": 1.16,
+  "market_cap": 841259796,
+  "market_cap_rank": 111,
+  "fully_diluted_valuation": 11555766427,
+  "total_volume": 108425661,
+  "high_24h": 1.36,
+  "low_24h": 1.15,
+  "price_change_24h": -0.17791691599226822,
+  "price_change_percentage_24h": -13.32336,
+  "market_cap_change_24h": -134767992.10605717,
+  "market_cap_change_percentage_24h": -13.8078,
+  "circulating_supply": 728000000,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 4.41,
+  "ath_change_percentage": -73.79876,
+  "ath_date": "2024-02-20T12:05:13.556Z",
+  "atl": 1.15,
+  "atl_change_percentage": 0.16788,
+  "atl_date": "2024-04-25T08:39:43.177Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:44.640Z",
+  "platforms": {
+    "ethereum": "0xca14007eff0db1f8135f4c25b34de49ab0d42766"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "xeno",
+  "symbol": "xeno",
+  "name": "Xeno",
+  "image": "https://assets.coingecko.com/coins/images/34702/large/tokenlogo200x200.jpg?1705861546",
+  "current_price": 0.00004012,
+  "market_cap": 401182,
+  "market_cap_rank": 3173,
+  "fully_diluted_valuation": 401182,
+  "total_volume": 3277.53,
+  "high_24h": 0.00004364,
+  "low_24h": 0.0000401,
+  "price_change_24h": -7.73347390324e-7,
+  "price_change_percentage_24h": -1.89121,
+  "market_cap_change_24h": -7835.785207768611,
+  "market_cap_change_percentage_24h": -1.91575,
+  "circulating_supply": 10000000000,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.00011714,
+  "ath_change_percentage": -65.70068,
+  "ath_date": "2024-03-18T15:08:50.067Z",
+  "atl": 0.00001209,
+  "atl_change_percentage": 232.38242,
+  "atl_date": "2024-02-12T07:35:56.374Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:50:07.964Z",
+  "platforms": {
+    "ethereum": "0x451fd37983d494bce294295f78a426832376b7df"
+  }
+}

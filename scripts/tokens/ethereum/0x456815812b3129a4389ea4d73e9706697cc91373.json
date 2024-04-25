@@ -1,0 +1,31 @@
+{
+  "id": "0xs",
+  "symbol": "$0xs",
+  "name": "0xS",
+  "image": "https://assets.coingecko.com/coins/images/31453/large/Logo200x200.png?1696530267",
+  "current_price": 0.00177801,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 177801,
+  "total_volume": 25.36,
+  "high_24h": 0.00187213,
+  "low_24h": 0.00177306,
+  "price_change_24h": -0.000071950101489231,
+  "price_change_percentage_24h": -3.88927,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.075804,
+  "ath_change_percentage": -97.65447,
+  "ath_date": "2023-08-28T10:35:33.203Z",
+  "atl": 0.0017207,
+  "atl_change_percentage": 3.33071,
+  "atl_date": "2024-04-20T01:08:50.843Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:02.304Z",
+  "platforms": {
+    "ethereum": "0x456815812b3129a4389ea4d73e9706697cc91373"
+  }
+}

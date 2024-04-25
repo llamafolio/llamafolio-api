@@ -1,0 +1,31 @@
+{
+  "id": "locgame",
+  "symbol": "$locg",
+  "name": "LOCG",
+  "image": "https://assets.coingecko.com/coins/images/15175/large/LOC_GAME.png?1696514830",
+  "current_price": 0.00606769,
+  "market_cap": 855449,
+  "market_cap_rank": 2767,
+  "fully_diluted_valuation": 909742,
+  "total_volume": 40195,
+  "high_24h": 0.00646378,
+  "low_24h": 0.00584158,
+  "price_change_24h": -0.000347401914228209,
+  "price_change_percentage_24h": -5.41539,
+  "market_cap_change_24h": -48526.39929429209,
+  "market_cap_change_percentage_24h": -5.36811,
+  "circulating_supply": 141048000,
+  "total_supply": 150000000,
+  "max_supply": null,
+  "ath": 0.669104,
+  "ath_change_percentage": -99.09383,
+  "ath_date": "2021-05-03T10:19:03.916Z",
+  "atl": 0.00387744,
+  "atl_change_percentage": 56.37223,
+  "atl_date": "2024-02-15T14:36:48.335Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:10.830Z",
+  "platforms": {
+    "ethereum": "0x60eb57d085c59932d5faa6c6026268a4386927d0"
+  }
+}

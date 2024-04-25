@@ -1,0 +1,31 @@
+{
+  "id": "rigel-protocol",
+  "symbol": "rgp",
+  "name": "Rigel Protocol",
+  "image": "https://assets.coingecko.com/coins/images/15837/large/A_qRYvB2_400x400.png?1696515455",
+  "current_price": 0.01560993,
+  "market_cap": 14048.57,
+  "market_cap_rank": 4186,
+  "fully_diluted_valuation": 78048,
+  "total_volume": 164.09,
+  "high_24h": 0.0159011,
+  "low_24h": 0.01552256,
+  "price_change_24h": -0.000157348378347947,
+  "price_change_percentage_24h": -0.99794,
+  "market_cap_change_24h": -154.85884398785674,
+  "market_cap_change_percentage_24h": -1.09029,
+  "circulating_supply": 900000,
+  "total_supply": 5000000,
+  "max_supply": null,
+  "ath": 6.88,
+  "ath_change_percentage": -99.77302,
+  "ath_date": "2021-05-27T04:55:58.374Z",
+  "atl": 0.0139383,
+  "atl_change_percentage": 11.99017,
+  "atl_date": "2024-03-05T20:40:35.133Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:21.727Z",
+  "platforms": {
+    "ethereum": "0x4af5ff1a60a6ef6c7c8f9c4e304cd9051fca3ec0"
+  }
+}

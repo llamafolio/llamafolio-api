@@ -1,0 +1,31 @@
+{
+  "id": "degen-knightsofdegen",
+  "symbol": "dgen",
+  "name": "DGEN",
+  "image": "https://assets.coingecko.com/coins/images/31294/large/dgen-new-200-200.png?1696530114",
+  "current_price": 0.00000641,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 6407.98,
+  "total_volume": 5.89,
+  "high_24h": 0.00000649,
+  "low_24h": 0.00000637,
+  "price_change_24h": -3.6881690362e-8,
+  "price_change_percentage_24h": -0.57226,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.01262591,
+  "ath_change_percentage": -99.94925,
+  "ath_date": "2024-04-11T04:02:16.817Z",
+  "atl": 0.00000637,
+  "atl_change_percentage": 0.54171,
+  "atl_date": "2024-04-25T05:30:45.646Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:59.501Z",
+  "platforms": {
+    "polygon": "0xdbb5da27ffcfebea8799a5832d4607714fc6aba8"
+  }
+}

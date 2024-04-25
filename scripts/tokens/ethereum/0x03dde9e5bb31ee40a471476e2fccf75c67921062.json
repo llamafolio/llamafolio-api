@@ -1,0 +1,31 @@
+{
+  "id": "eml-protocol",
+  "symbol": "eml",
+  "name": "EML Protocol",
+  "image": "https://assets.coingecko.com/coins/images/30950/large/EML_LOGO.png?1696529788",
+  "current_price": 0.21524,
+  "market_cap": 8605843,
+  "market_cap_rank": 1513,
+  "fully_diluted_valuation": 433049505,
+  "total_volume": 46091,
+  "high_24h": 0.247001,
+  "low_24h": 0.216281,
+  "price_change_24h": -0.02578607042072731,
+  "price_change_percentage_24h": -10.69847,
+  "market_cap_change_24h": -1066321.8883226495,
+  "market_cap_change_percentage_24h": -11.02464,
+  "circulating_supply": 39745310.123,
+  "total_supply": 2000000000,
+  "max_supply": 2000000000,
+  "ath": 0.998239,
+  "ath_change_percentage": -78.10224,
+  "ath_date": "2023-07-22T07:23:32.553Z",
+  "atl": 0.101391,
+  "atl_change_percentage": 115.59372,
+  "atl_date": "2024-02-04T07:40:41.948Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:23.476Z",
+  "platforms": {
+    "ethereum": "0x03dde9e5bb31ee40a471476e2fccf75c67921062"
+  }
+}

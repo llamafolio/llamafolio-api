@@ -1,0 +1,31 @@
+{
+  "id": "linktoa",
+  "symbol": "ltao",
+  "name": "LinkTao",
+  "image": "https://assets.coingecko.com/coins/images/35963/large/Tao.jpeg?1710258313",
+  "current_price": 0.00019812,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 19812.16,
+  "total_volume": 8.48,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.01594613,
+  "ath_change_percentage": -98.75756,
+  "ath_date": "2024-03-12T18:45:44.960Z",
+  "atl": 0.00018671,
+  "atl_change_percentage": 6.1102,
+  "atl_date": "2024-04-20T10:28:32.923Z",
+  "roi": null,
+  "last_updated": "2024-04-22T06:51:57.500Z",
+  "platforms": {
+    "ethereum": "0xbf7bc9e63635dc11b335d52b0349d0100a53a1a7"
+  }
+}

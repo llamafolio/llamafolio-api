@@ -1,0 +1,31 @@
+{
+  "id": "shieldtokencoin",
+  "symbol": "0stc",
+  "name": "ShieldTokenCoin",
+  "image": "https://assets.coingecko.com/coins/images/32866/large/ShieldTokenCoin200x200.png?1699670492",
+  "current_price": 1.97149e-7,
+  "market_cap": 1.76,
+  "market_cap_rank": 4303,
+  "fully_diluted_valuation": 169.39,
+  "total_volume": 0.00025201,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 8903460.875668602,
+  "total_supply": 859189748.753151,
+  "max_supply": 22000000,
+  "ath": 0.00290175,
+  "ath_change_percentage": -99.99321,
+  "ath_date": "2023-12-02T03:04:34.351Z",
+  "atl": 9.9831e-8,
+  "atl_change_percentage": 97.48369,
+  "atl_date": "2024-01-26T18:09:41.003Z",
+  "roi": null,
+  "last_updated": "2024-01-31T01:30:31.019Z",
+  "platforms": {
+    "bsc": "0x3fa52142b7836468aed78753e6325b2aee7ddafe"
+  }
+}

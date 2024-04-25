@@ -1,0 +1,31 @@
+{
+  "id": "guild-of-guardians",
+  "symbol": "gog",
+  "name": "Guild of Guardians",
+  "image": "https://assets.coingecko.com/coins/images/17362/large/V2QDNoLg_400x400.jpg?1696516913",
+  "current_price": 0.197144,
+  "market_cap": 112137661,
+  "market_cap_rank": 437,
+  "fully_diluted_valuation": 196869511,
+  "total_volume": 986856,
+  "high_24h": 0.234839,
+  "low_24h": 0.195869,
+  "price_change_24h": -0.03533274519098972,
+  "price_change_percentage_24h": -15.19842,
+  "market_cap_change_24h": -20564161.34557827,
+  "market_cap_change_percentage_24h": -15.49652,
+  "circulating_supply": 569604001.199,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 2.78,
+  "ath_change_percentage": -92.91001,
+  "ath_date": "2021-12-22T02:06:34.113Z",
+  "atl": 0.03799572,
+  "atl_change_percentage": 418.74784,
+  "atl_date": "2023-05-24T22:25:16.398Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:38.634Z",
+  "platforms": {
+    "ethereum": "0x9ab7bb7fdc60f4357ecfef43986818a2a3569c62"
+  }
+}

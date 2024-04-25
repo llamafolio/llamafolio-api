@@ -1,0 +1,31 @@
+{
+  "id": "basex",
+  "symbol": "bsx",
+  "name": "BaseX",
+  "image": "https://assets.coingecko.com/coins/images/31419/large/bsxlogo.png?1696530234",
+  "current_price": 0.192743,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1927430,
+  "total_volume": 11729.3,
+  "high_24h": 0.203655,
+  "low_24h": 0.191721,
+  "price_change_24h": -0.00797222631273592,
+  "price_change_percentage_24h": -3.97191,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 1.92,
+  "ath_change_percentage": -89.9743,
+  "ath_date": "2023-08-24T18:04:45.444Z",
+  "atl": 0.083027,
+  "atl_change_percentage": 131.46894,
+  "atl_date": "2024-03-20T05:29:23.356Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:55.905Z",
+  "platforms": {
+    "base": "0xd5046b976188eb40f6de40fb527f89c05b323385"
+  }
+}

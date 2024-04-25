@@ -1,0 +1,31 @@
+{
+  "id": "stellaswap-staked-dot",
+  "symbol": "stdot",
+  "name": "StellaSwap Staked DOT",
+  "image": "https://assets.coingecko.com/coins/images/33872/large/stDOT.png?1703132036",
+  "current_price": 7.2,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2101007,
+  "total_volume": 33814,
+  "high_24h": 7.91,
+  "low_24h": 7.16,
+  "price_change_24h": -0.581735904478732,
+  "price_change_percentage_24h": -7.47128,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 291411,
+  "max_supply": null,
+  "ath": 12,
+  "ath_change_percentage": -39.93924,
+  "ath_date": "2024-03-14T10:14:09.416Z",
+  "atl": 5.62,
+  "atl_change_percentage": 28.35237,
+  "atl_date": "2024-03-13T07:30:52.156Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:47.945Z",
+  "platforms": {
+    "moonbeam": "0xbc7e02c4178a7df7d3e564323a5c359dc96c4db4"
+  }
+}

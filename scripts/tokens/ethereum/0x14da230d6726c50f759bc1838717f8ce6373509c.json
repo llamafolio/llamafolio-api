@@ -1,0 +1,35 @@
+{
+  "id": "kambria",
+  "symbol": "kat",
+  "name": "Kambria",
+  "image": "https://assets.coingecko.com/coins/images/4784/large/kambria.png?1696505340",
+  "current_price": 0.00071377,
+  "market_cap": 1127073,
+  "market_cap_rank": 2624,
+  "fully_diluted_valuation": 1800498,
+  "total_volume": 3377.07,
+  "high_24h": 0.00081132,
+  "low_24h": 0.00069602,
+  "price_change_24h": -0.00009315432120172,
+  "price_change_percentage_24h": -11.54441,
+  "market_cap_change_24h": -149462.86898926808,
+  "market_cap_change_percentage_24h": -11.70847,
+  "circulating_supply": 1582989647.9764264,
+  "total_supply": 2528822981.9764266,
+  "max_supply": null,
+  "ath": 0.03524631,
+  "ath_change_percentage": -97.97653,
+  "ath_date": "2018-12-20T00:55:07.871Z",
+  "atl": 0.00000703,
+  "atl_change_percentage": 10051.35367,
+  "atl_date": "2022-04-13T08:44:31.626Z",
+  "roi": {
+    "times": -0.9643116571795901,
+    "currency": "usd",
+    "percentage": -96.431165717959
+  },
+  "last_updated": "2024-04-25T08:58:42.072Z",
+  "platforms": {
+    "ethereum": "0x14da230d6726c50f759bc1838717f8ce6373509c"
+  }
+}

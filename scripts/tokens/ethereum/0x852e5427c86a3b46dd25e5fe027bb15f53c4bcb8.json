@@ -1,0 +1,31 @@
+{
+  "id": "niifi",
+  "symbol": "niifi",
+  "name": "NiiFi",
+  "image": "https://assets.coingecko.com/coins/images/16033/large/niifi.PNG?1696515643",
+  "current_price": 0.00378858,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3367643,
+  "total_volume": 72.22,
+  "high_24h": 0.004104,
+  "low_24h": 0.00378578,
+  "price_change_24h": -0.000279007026901813,
+  "price_change_percentage_24h": -6.85927,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 888888888,
+  "max_supply": null,
+  "ath": 0.332432,
+  "ath_change_percentage": -98.86037,
+  "ath_date": "2021-06-03T07:04:09.450Z",
+  "atl": 0.00118012,
+  "atl_change_percentage": 221.02478,
+  "atl_date": "2023-08-23T04:09:46.238Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:35.143Z",
+  "platforms": {
+    "ethereum": "0x852e5427c86a3b46dd25e5fe027bb15f53c4bcb8"
+  }
+}

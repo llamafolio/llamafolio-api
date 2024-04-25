@@ -1,0 +1,31 @@
+{
+  "id": "ideachain",
+  "symbol": "ich",
+  "name": "IdeaChain",
+  "image": "https://assets.coingecko.com/coins/images/11053/large/4fJlFzca_400x400.jpg?1696510995",
+  "current_price": 0.00191525,
+  "market_cap": 103144,
+  "market_cap_rank": 3771,
+  "fully_diluted_valuation": 103144,
+  "total_volume": 14.08,
+  "high_24h": 0.136547,
+  "low_24h": 0.00191361,
+  "price_change_24h": -0.12733657111159782,
+  "price_change_percentage_24h": -98.5182,
+  "market_cap_change_24h": -6856132.532363308,
+  "market_cap_change_percentage_24h": -98.5179,
+  "circulating_supply": 53900000,
+  "total_supply": 53900000,
+  "max_supply": 55000000,
+  "ath": 16.14,
+  "ath_change_percentage": -99.98814,
+  "ath_date": "2021-02-20T09:39:00.087Z",
+  "atl": 0.00001753,
+  "atl_change_percentage": 10819.22147,
+  "atl_date": "2021-04-10T23:43:15.869Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:39.897Z",
+  "platforms": {
+    "ethereum": "0xf8483e2d6560585c02d46bf7b3186bf154a96166"
+  }
+}

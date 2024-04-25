@@ -1,0 +1,31 @@
+{
+  "id": "dgi-game",
+  "symbol": "dgi",
+  "name": "DGI Game",
+  "image": "https://assets.coingecko.com/coins/images/34658/large/DGI_Game.png?1705633633",
+  "current_price": 0.02309023,
+  "market_cap": 18926925,
+  "market_cap_rank": 1140,
+  "fully_diluted_valuation": 23114392,
+  "total_volume": 1094286,
+  "high_24h": 0.02716639,
+  "low_24h": 0.02278896,
+  "price_change_24h": -0.003642228766618225,
+  "price_change_percentage_24h": -13.62474,
+  "market_cap_change_24h": -2972509.381772995,
+  "market_cap_change_percentage_24h": -13.57345,
+  "circulating_supply": 818837228.96,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.079182,
+  "ath_change_percentage": -70.92768,
+  "ath_date": "2024-03-26T04:05:54.221Z",
+  "atl": 0.00220722,
+  "atl_change_percentage": 942.94284,
+  "atl_date": "2024-01-20T03:43:46.647Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:21.235Z",
+  "platforms": {
+    "ethereum": "0xe453c3409f8ad2b1fe1ed08e189634d359705a5b"
+  }
+}

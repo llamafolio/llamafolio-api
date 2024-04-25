@@ -1,0 +1,31 @@
+{
+  "id": "opendao",
+  "symbol": "sos",
+  "name": "OpenDAO",
+  "image": "https://assets.coingecko.com/coins/images/21956/large/fo42wXI6_400x400.jpg?1696521305",
+  "current_price": 2.8737e-8,
+  "market_cap": 1132940,
+  "market_cap_rank": 2620,
+  "fully_diluted_valuation": 2839774,
+  "total_volume": 620157,
+  "high_24h": 3.152e-8,
+  "low_24h": 2.8168e-8,
+  "price_change_24h": -2.553899555e-9,
+  "price_change_percentage_24h": -8.16177,
+  "market_cap_change_24h": -117121.48020828934,
+  "market_cap_change_percentage_24h": -9.36926,
+  "circulating_supply": 39895439517782.7,
+  "total_supply": 100000000000000,
+  "max_supply": 100000000000000,
+  "ath": 0.00001108,
+  "ath_change_percentage": -99.74461,
+  "ath_date": "2021-12-25T13:49:27.743Z",
+  "atl": 1.72e-8,
+  "atl_change_percentage": 64.55405,
+  "atl_date": "2023-11-03T20:21:00.922Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:19.566Z",
+  "platforms": {
+    "ethereum": "0x3b484b82567a09e2588a13d54d032153f0c0aee0"
+  }
+}

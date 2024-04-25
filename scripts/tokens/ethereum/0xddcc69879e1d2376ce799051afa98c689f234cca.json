@@ -1,0 +1,31 @@
+{
+  "id": "smartmoney",
+  "symbol": "smrt",
+  "name": "SmartMoney",
+  "image": "https://assets.coingecko.com/coins/images/35280/large/Smartmoney.jpeg?1708054880",
+  "current_price": 0.00265641,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2665521,
+  "total_volume": 14847.55,
+  "high_24h": 0.00300914,
+  "low_24h": 0.00263689,
+  "price_change_24h": -0.000348987941815336,
+  "price_change_percentage_24h": -11.61202,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.0110817,
+  "ath_change_percentage": -76.02881,
+  "ath_date": "2024-03-13T05:08:32.362Z",
+  "atl": 0.00041469,
+  "atl_change_percentage": 540.57508,
+  "atl_date": "2024-02-16T06:38:46.075Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:15.584Z",
+  "platforms": {
+    "ethereum": "0xddcc69879e1d2376ce799051afa98c689f234cca"
+  }
+}

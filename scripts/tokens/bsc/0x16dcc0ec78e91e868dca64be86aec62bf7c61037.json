@@ -1,0 +1,31 @@
+{
+  "id": "evereth",
+  "symbol": "evereth",
+  "name": "EverETH Reflect",
+  "image": "https://assets.coingecko.com/coins/images/18221/large/200x200.png?1696517718",
+  "current_price": 1.23e-9,
+  "market_cap": 463202,
+  "market_cap_rank": 3101,
+  "fully_diluted_valuation": 604165,
+  "total_volume": 33.48,
+  "high_24h": 1.253e-9,
+  "low_24h": 1.205e-9,
+  "price_change_24h": -3.061099e-12,
+  "price_change_percentage_24h": -0.24831,
+  "market_cap_change_24h": -3215.2857247007196,
+  "market_cap_change_percentage_24h": -0.68936,
+  "circulating_supply": 378155807202982.44,
+  "total_supply": 493236790028639,
+  "max_supply": 1000000000000000,
+  "ath": 2.29119e-7,
+  "ath_change_percentage": -99.46532,
+  "ath_date": "2021-10-30T06:31:38.790Z",
+  "atl": 1.49974e-10,
+  "atl_change_percentage": 716.84174,
+  "atl_date": "2023-10-15T13:07:38.989Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:25.934Z",
+  "platforms": {
+    "bsc": "0x16dcc0ec78e91e868dca64be86aec62bf7c61037"
+  }
+}

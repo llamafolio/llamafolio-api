@@ -1,0 +1,31 @@
+{
+  "id": "kumamon-finance",
+  "symbol": "kumamon",
+  "name": "Kumamon Finance",
+  "image": "https://assets.coingecko.com/coins/images/29391/large/kumamon200px.png?1696528342",
+  "current_price": 0.00000657,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 5446.15,
+  "total_volume": 64.98,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 829000000,
+  "max_supply": 1000000000,
+  "ath": 0.00043299,
+  "ath_change_percentage": -98.48276,
+  "ath_date": "2023-03-11T09:34:32.110Z",
+  "atl": 0.00000649,
+  "atl_change_percentage": 1.17366,
+  "atl_date": "2023-04-21T20:11:28.314Z",
+  "roi": null,
+  "last_updated": "2023-04-22T02:09:34.727Z",
+  "platforms": {
+    "bsc": "0x8ab7ef0eb25aad36dff0661f81fb81b144af5b87"
+  }
+}

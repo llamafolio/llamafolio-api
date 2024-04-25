@@ -1,0 +1,31 @@
+{
+  "id": "age-of-apes",
+  "symbol": "apes",
+  "name": "AGE OF APES",
+  "image": "https://assets.coingecko.com/coins/images/33498/large/1000050196.png?1704994792",
+  "current_price": 0.060158,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 6015796,
+  "total_volume": 23.89,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 3.4,
+  "ath_change_percentage": -98.22865,
+  "ath_date": "2023-12-30T03:01:22.563Z",
+  "atl": 0.01149993,
+  "atl_change_percentage": 423.11609,
+  "atl_date": "2024-04-05T09:48:35.109Z",
+  "roi": null,
+  "last_updated": "2024-04-20T06:19:55.583Z",
+  "platforms": {
+    "bsc": "0x7e2cfe1d55dfa63c8a1bf989c5335419d912e37a"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "bosagora",
+  "symbol": "boa",
+  "name": "BOSagora",
+  "image": "https://assets.coingecko.com/coins/images/9202/large/Picture1.png?1696509320",
+  "current_price": 0.0174419,
+  "market_cap": 7617767,
+  "market_cap_rank": 1565,
+  "fully_diluted_valuation": 15788046,
+  "total_volume": 190049,
+  "high_24h": 0.01849218,
+  "low_24h": 0.01708147,
+  "price_change_24h": -0.000780637512952556,
+  "price_change_percentage_24h": -4.28391,
+  "market_cap_change_24h": -355557.72538991366,
+  "market_cap_change_percentage_24h": -4.45934,
+  "circulating_supply": 437141769.4023,
+  "total_supply": 905989084.481459,
+  "max_supply": 4950000000,
+  "ath": 0.606288,
+  "ath_change_percentage": -97.14606,
+  "ath_date": "2021-03-28T15:11:46.457Z",
+  "atl": 0.00016749,
+  "atl_change_percentage": 10231.05162,
+  "atl_date": "2021-01-10T11:26:16.620Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:12.914Z",
+  "platforms": {
+    "ethereum": "0x746dda2ea243400d5a63e0700f190ab79f06489e"
+  }
+}

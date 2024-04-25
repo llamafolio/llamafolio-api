@@ -1,0 +1,31 @@
+{
+  "id": "hodl-token",
+  "symbol": "hodl",
+  "name": "HODL",
+  "image": "https://assets.coingecko.com/coins/images/15546/large/hodl.png?1696515187",
+  "current_price": 2.899e-9,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2902621,
+  "total_volume": 31335,
+  "high_24h": 2.915e-9,
+  "low_24h": 2.813e-9,
+  "price_change_24h": 4.3465e-11,
+  "price_change_percentage_24h": 1.52207,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": null,
+  "ath": 2.72061e-7,
+  "ath_change_percentage": -98.93219,
+  "ath_date": "2021-05-29T10:58:37.725Z",
+  "atl": 1.9561e-10,
+  "atl_change_percentage": 1385.13953,
+  "atl_date": "2021-05-17T13:03:42.849Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:01.106Z",
+  "platforms": {
+    "bsc": "0x0e9766df73973abcfedde700497c57110ee5c301"
+  }
+}

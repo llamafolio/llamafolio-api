@@ -1,0 +1,31 @@
+{
+  "id": "dkargo",
+  "symbol": "dka",
+  "name": "dKargo",
+  "image": "https://assets.coingecko.com/coins/images/11875/large/bVD0g0dlmrEOPIkt943KZIBZ086eCshyY0jIQFti4zxYdOlFltU8tKa6uJlcA14HvNjX4bc7dxdMvlpoW5NFMND85oG4aiiCbFRhI6eowDfKEBY3BoSVY0IrBbA9SFGIxh_IYrkNC5uNdG-roZ0_TlGO3098now6Tbzga0p4IDqVk6lnaX3TuRC7pgnAYWZM15RD-uEIHr3O_3OoIIWP-.jpg?1696511743",
+  "current_price": 0.03220359,
+  "market_cap": 119712446,
+  "market_cap_rank": 417,
+  "fully_diluted_valuation": 161066191,
+  "total_volume": 2392460,
+  "high_24h": 0.03411942,
+  "low_24h": 0.03106659,
+  "price_change_24h": -0.00062666990291553,
+  "price_change_percentage_24h": -1.90882,
+  "market_cap_change_24h": -1920831.031813234,
+  "market_cap_change_percentage_24h": -1.5792,
+  "circulating_supply": 3716250000,
+  "total_supply": 5000000000,
+  "max_supply": 5000000000,
+  "ath": 0.703797,
+  "ath_change_percentage": -95.44071,
+  "ath_date": "2021-03-16T03:34:23.945Z",
+  "atl": 0.02067481,
+  "atl_change_percentage": 55.20415,
+  "atl_date": "2021-02-01T14:18:25.997Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:47.523Z",
+  "platforms": {
+    "ethereum": "0x5dc60c4d5e75d22588fa17ffeb90a63e535efce0"
+  }
+}

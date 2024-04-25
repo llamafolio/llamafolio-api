@@ -1,0 +1,31 @@
+{
+  "id": "cadence-protocol",
+  "symbol": "cad",
+  "name": "Cadence Protocol",
+  "image": "https://assets.coingecko.com/coins/images/34323/large/CAD_200_200_transparent.png?1704646661",
+  "current_price": 0.301519,
+  "market_cap": 9297517,
+  "market_cap_rank": 1467,
+  "fully_diluted_valuation": 75292477,
+  "total_volume": 170340,
+  "high_24h": 0.311871,
+  "low_24h": 0.287559,
+  "price_change_24h": -0.007285788527438941,
+  "price_change_percentage_24h": -2.35935,
+  "market_cap_change_24h": -245497.32194864005,
+  "market_cap_change_percentage_24h": -2.57253,
+  "circulating_supply": 30871336,
+  "total_supply": 250000000,
+  "max_supply": 250000000,
+  "ath": 0.423123,
+  "ath_change_percentage": -28.73157,
+  "ath_date": "2024-03-26T23:11:14.025Z",
+  "atl": 0.097181,
+  "atl_change_percentage": 210.30163,
+  "atl_date": "2024-02-08T08:20:20.581Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:36.642Z",
+  "platforms": {
+    "ethereum": "0x912529007bc0d2a5464a6a211ebfe217dfb75dff"
+  }
+}

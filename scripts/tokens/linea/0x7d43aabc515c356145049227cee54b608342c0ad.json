@@ -1,0 +1,31 @@
+{
+  "id": "binance-usd-linea",
+  "symbol": "busd",
+  "name": "Binance USD (Linea)",
+  "image": "https://assets.coingecko.com/coins/images/31020/large/download_%2816%29.png?1696529856",
+  "current_price": 0.998212,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 52343,
+  "high_24h": 1.007,
+  "low_24h": 0.985421,
+  "price_change_24h": 0.00074967,
+  "price_change_percentage_24h": 0.07516,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.6,
+  "ath_change_percentage": -37.74367,
+  "ath_date": "2024-04-12T00:10:00.582Z",
+  "atl": 0.927422,
+  "atl_change_percentage": 7.63302,
+  "atl_date": "2023-08-17T21:48:34.256Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:25.344Z",
+  "platforms": {
+    "linea": "0x7d43aabc515c356145049227cee54b608342c0ad"
+  }
+}

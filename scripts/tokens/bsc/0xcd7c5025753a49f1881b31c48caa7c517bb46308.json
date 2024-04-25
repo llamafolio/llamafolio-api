@@ -1,0 +1,35 @@
+{
+  "id": "raven-protocol",
+  "symbol": "raven",
+  "name": "Raven Protocol",
+  "image": "https://assets.coingecko.com/coins/images/8673/large/Raven_Protocol.jpg?1696508841",
+  "current_price": 0.00125285,
+  "market_cap": 5537920,
+  "market_cap_rank": 1740,
+  "fully_diluted_valuation": 12482221,
+  "total_volume": 3583.9,
+  "high_24h": 0.00130483,
+  "low_24h": 0.00124779,
+  "price_change_24h": -0.000010440724843584,
+  "price_change_percentage_24h": -0.82647,
+  "market_cap_change_24h": -79129.33505898807,
+  "market_cap_change_percentage_24h": -1.40873,
+  "circulating_supply": 4436646536.73311,
+  "total_supply": 10000000000,
+  "max_supply": null,
+  "ath": 0.00454777,
+  "ath_change_percentage": -72.56264,
+  "ath_date": "2019-07-12T05:46:15.511Z",
+  "atl": 0.00006247,
+  "atl_change_percentage": 1897.5541,
+  "atl_date": "2020-03-16T10:24:56.322Z",
+  "roi": {
+    "times": -0.249791141286706,
+    "currency": "usd",
+    "percentage": -24.9791141286706
+  },
+  "last_updated": "2024-04-25T08:59:51.912Z",
+  "platforms": {
+    "bsc": "0xcd7c5025753a49f1881b31c48caa7c517bb46308"
+  }
+}

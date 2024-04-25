@@ -1,0 +1,31 @@
+{
+  "id": "snx-yvault",
+  "symbol": "yvsnx",
+  "name": "SNX yVault",
+  "image": "https://assets.coingecko.com/coins/images/28797/large/yvSNX-128-0xF29AE508698bDeF169B89834F76704C3B205aedf.png?1696527775",
+  "current_price": 3.24,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 402440,
+  "total_volume": 0,
+  "high_24h": 3.58,
+  "low_24h": 3.19,
+  "price_change_24h": -0.3083301966217711,
+  "price_change_percentage_24h": -8.76197,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 124172.911538271,
+  "max_supply": null,
+  "ath": 6.05,
+  "ath_change_percentage": -46.73897,
+  "ath_date": "2024-03-13T08:20:23.885Z",
+  "atl": 1.96,
+  "atl_change_percentage": 64.27702,
+  "atl_date": "2023-06-10T22:00:04.162Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:34.487Z",
+  "platforms": {
+    "ethereum": "0xf29ae508698bdef169b89834f76704c3b205aedf"
+  }
+}

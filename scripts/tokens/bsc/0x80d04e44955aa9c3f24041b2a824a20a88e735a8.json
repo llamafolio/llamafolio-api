@@ -1,0 +1,31 @@
+{
+  "id": "multiverse-capital",
+  "symbol": "mvc",
+  "name": "Multiverse Capital",
+  "image": "https://assets.coingecko.com/coins/images/21172/large/mvc.PNG?1696520548",
+  "current_price": 1.37249e-7,
+  "market_cap": 74976,
+  "market_cap_rank": 3872,
+  "fully_diluted_valuation": 127356,
+  "total_volume": 0.01417786,
+  "high_24h": 1.38368e-7,
+  "low_24h": 1.37353e-7,
+  "price_change_24h": -8.22555004e-10,
+  "price_change_percentage_24h": -0.59574,
+  "market_cap_change_24h": -370.08650410531845,
+  "market_cap_change_percentage_24h": -0.49118,
+  "circulating_supply": 545861747006.67883,
+  "total_supply": 927216558493.41,
+  "max_supply": null,
+  "ath": 0.00006531,
+  "ath_change_percentage": -99.78969,
+  "ath_date": "2021-12-16T22:28:40.637Z",
+  "atl": 1.9966e-8,
+  "atl_change_percentage": 587.93145,
+  "atl_date": "2023-06-14T09:54:14.684Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:55.869Z",
+  "platforms": {
+    "bsc": "0x80d04e44955aa9c3f24041b2a824a20a88e735a8"
+  }
+}

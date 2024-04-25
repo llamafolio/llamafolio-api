@@ -1,0 +1,31 @@
+{
+  "id": "zookeeper",
+  "symbol": "zoo",
+  "name": "ZooKeeper",
+  "image": "https://assets.coingecko.com/coins/images/18028/large/1mPofbU.png?1696517543",
+  "current_price": 0.00433508,
+  "market_cap": 2026315,
+  "market_cap_rank": 2289,
+  "fully_diluted_valuation": 2091709,
+  "total_volume": 3131.36,
+  "high_24h": 0.00478569,
+  "low_24h": 0.00432608,
+  "price_change_24h": -0.000434995144274533,
+  "price_change_percentage_24h": -9.11924,
+  "market_cap_change_24h": -191702.1878388652,
+  "market_cap_change_percentage_24h": -8.64295,
+  "circulating_supply": 464717008.176991,
+  "total_supply": 479714576.538759,
+  "max_supply": 470000000,
+  "ath": 0.39793,
+  "ath_change_percentage": -98.9091,
+  "ath_date": "2021-11-09T10:12:22.146Z",
+  "atl": 0.00194968,
+  "atl_change_percentage": 122.65327,
+  "atl_date": "2023-10-19T17:50:10.025Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:30.733Z",
+  "platforms": {
+    "avalanche": "0x1b88d7ad51626044ec62ef9803ea264da4442f32"
+  }
+}

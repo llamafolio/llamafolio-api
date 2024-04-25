@@ -1,0 +1,31 @@
+{
+  "id": "solchicks-token",
+  "symbol": "chicks",
+  "name": "SolChicks",
+  "image": "https://assets.coingecko.com/coins/images/20978/large/chicks.png?1696520364",
+  "current_price": 0.00007112,
+  "market_cap": 145104,
+  "market_cap_rank": 3649,
+  "fully_diluted_valuation": 704733,
+  "total_volume": 1542.43,
+  "high_24h": 0.00008471,
+  "low_24h": 0.00007016,
+  "price_change_24h": -0.000013068803894179,
+  "price_change_percentage_24h": -15.52394,
+  "market_cap_change_24h": -28607.614008277393,
+  "market_cap_change_percentage_24h": -16.46841,
+  "circulating_supply": 2058998084.38852,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.506873,
+  "ath_change_percentage": -99.98611,
+  "ath_date": "2021-12-14T04:38:31.234Z",
+  "atl": 0.00000549,
+  "atl_change_percentage": 1182.51996,
+  "atl_date": "2023-06-05T22:34:43.104Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:10.958Z",
+  "platforms": {
+    "bsc": "0xa91c7bc1e07996a188c1a5b1cfdff450389d8acf"
+  }
+}

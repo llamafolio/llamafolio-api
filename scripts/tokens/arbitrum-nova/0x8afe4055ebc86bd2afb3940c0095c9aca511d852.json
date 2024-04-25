@@ -1,0 +1,31 @@
+{
+  "id": "arbius",
+  "symbol": "aius",
+  "name": "Arbius",
+  "image": "https://assets.coingecko.com/coins/images/35246/large/arbius-200x-logo.png?1707987961",
+  "current_price": 132.84,
+  "market_cap": 11761316,
+  "market_cap_rank": 1359,
+  "fully_diluted_valuation": 132839258,
+  "total_volume": 1040410,
+  "high_24h": 151.64,
+  "low_24h": 122.82,
+  "price_change_24h": -7.395904634267907,
+  "price_change_percentage_24h": -5.27393,
+  "market_cap_change_24h": -565757.148381114,
+  "market_cap_change_percentage_24h": -4.58955,
+  "circulating_supply": 88537.9496724566,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 1086.22,
+  "ath_change_percentage": -87.82537,
+  "ath_date": "2024-02-19T02:54:38.495Z",
+  "atl": 36.77,
+  "atl_change_percentage": 259.67274,
+  "atl_date": "2024-03-22T11:05:54.938Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:38.635Z",
+  "platforms": {
+    "arbitrum-nova": "0x8afe4055ebc86bd2afb3940c0095c9aca511d852"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "thorswap",
+  "symbol": "thor",
+  "name": "THORSwap",
+  "image": "https://assets.coingecko.com/coins/images/19292/large/THORSwap_Logo-removebg-preview.png?1696518735",
+  "current_price": 0.222828,
+  "market_cap": 38931505,
+  "market_cap_rank": 793,
+  "fully_diluted_valuation": 94141288,
+  "total_volume": 50408,
+  "high_24h": 0.24422,
+  "low_24h": 0.222332,
+  "price_change_24h": -0.01639528925588474,
+  "price_change_percentage_24h": -6.85355,
+  "market_cap_change_24h": -3222813.453450389,
+  "market_cap_change_percentage_24h": -7.64527,
+  "circulating_supply": 174978008,
+  "total_supply": 423118882,
+  "max_supply": 423118882,
+  "ath": 3.05,
+  "ath_change_percentage": -92.70162,
+  "ath_date": "2021-11-06T09:21:45.214Z",
+  "atl": 0.067045,
+  "atl_change_percentage": 232.2649,
+  "atl_date": "2023-06-14T22:50:31.628Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:21.609Z",
+  "platforms": {
+    "ethereum": "0xa5f2211b9b8170f694421f2046281775e8468044"
+  }
+}

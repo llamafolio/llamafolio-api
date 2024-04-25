@@ -1,0 +1,31 @@
+{
+  "id": "zigzag-2",
+  "symbol": "zz",
+  "name": "ZigZag",
+  "image": "https://assets.coingecko.com/coins/images/26141/large/zig_zag.?1696525229",
+  "current_price": 0.03081319,
+  "market_cap": 1944887,
+  "market_cap_rank": 2311,
+  "fully_diluted_valuation": 3056322,
+  "total_volume": 115969,
+  "high_24h": 0.03108597,
+  "low_24h": 0.03000947,
+  "price_change_24h": 0.00003929,
+  "price_change_percentage_24h": 0.12768,
+  "market_cap_change_24h": -221.4792416919954,
+  "market_cap_change_percentage_24h": -0.01139,
+  "circulating_supply": 63634893.3563155,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 5.48,
+  "ath_change_percentage": -99.4402,
+  "ath_date": "2022-12-12T18:55:50.106Z",
+  "atl": 0.02019845,
+  "atl_change_percentage": 51.85655,
+  "atl_date": "2024-04-14T20:26:38.890Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:41.878Z",
+  "platforms": {
+    "ethereum": "0xc91a71a1ffa3d8b22ba615ba1b9c01b2bbbf55ad"
+  }
+}

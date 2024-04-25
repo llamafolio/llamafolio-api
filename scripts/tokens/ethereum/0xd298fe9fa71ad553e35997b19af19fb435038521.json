@@ -1,0 +1,31 @@
+{
+  "id": "frog-wif-hat",
+  "symbol": "fwif",
+  "name": "Frog Wif Hat",
+  "image": "https://assets.coingecko.com/coins/images/35583/large/Frog_Wif_Hat_Logo_200x200.png?1709202634",
+  "current_price": 0.00064098,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 640982,
+  "total_volume": 1460.47,
+  "high_24h": 0.0006702,
+  "low_24h": 0.0006365,
+  "price_change_24h": -0.000022407539582361,
+  "price_change_percentage_24h": -3.37774,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00570652,
+  "ath_change_percentage": -88.82585,
+  "ath_date": "2024-03-02T17:34:31.249Z",
+  "atl": 0.000595,
+  "atl_change_percentage": 7.16945,
+  "atl_date": "2024-04-22T15:14:43.975Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:40.811Z",
+  "platforms": {
+    "ethereum": "0xd298fe9fa71ad553e35997b19af19fb435038521"
+  }
+}

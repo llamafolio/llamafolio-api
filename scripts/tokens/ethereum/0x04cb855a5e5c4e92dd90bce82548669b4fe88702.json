@@ -1,0 +1,31 @@
+{
+  "id": "book-3",
+  "symbol": "book",
+  "name": "BOOK",
+  "image": "https://assets.coingecko.com/coins/images/33034/large/book_%281%29.jpg?1700403065",
+  "current_price": 0.00006562,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 6561.85,
+  "total_volume": 518.5,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.0033243,
+  "ath_change_percentage": -98.0261,
+  "ath_date": "2023-11-20T02:05:24.648Z",
+  "atl": 0.00005977,
+  "atl_change_percentage": 9.79397,
+  "atl_date": "2024-02-28T01:10:12.366Z",
+  "roi": null,
+  "last_updated": "2024-02-29T16:07:26.483Z",
+  "platforms": {
+    "ethereum": "0x04cb855a5e5c4e92dd90bce82548669b4fe88702"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "one",
+  "symbol": "one",
+  "name": "One",
+  "image": "https://assets.coingecko.com/coins/images/4960/large/Screenshot_39.png?1696505497",
+  "current_price": 0.00066082,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 8386274,
+  "total_volume": 3359561,
+  "high_24h": 0.00067377,
+  "low_24h": 0.00065006,
+  "price_change_24h": -0.000009772802691027,
+  "price_change_percentage_24h": -1.45735,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 12689379022,
+  "max_supply": null,
+  "ath": 0.02880021,
+  "ath_change_percentage": -97.71636,
+  "ath_date": "2018-07-10T13:27:59.491Z",
+  "atl": 0.00048136,
+  "atl_change_percentage": 36.6332,
+  "atl_date": "2022-09-29T09:14:29.728Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:38.243Z",
+  "platforms": {
+    "ethereum": "0x946551dd05c5abd7cc808927480225ce36d8c475"
+  }
+}

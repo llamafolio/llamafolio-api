@@ -1,0 +1,31 @@
+{
+  "id": "offshift",
+  "symbol": "xft",
+  "name": "Offshift",
+  "image": "https://assets.coingecko.com/coins/images/11977/large/CsBrPiA.png?1696511835",
+  "current_price": 0.668517,
+  "market_cap": 6494650,
+  "market_cap_rank": 1665,
+  "fully_diluted_valuation": 6911945,
+  "total_volume": 11758.53,
+  "high_24h": 0.734759,
+  "low_24h": 0.663305,
+  "price_change_24h": -0.06624271848276309,
+  "price_change_percentage_24h": -9.01556,
+  "market_cap_change_24h": -661054.2600297406,
+  "market_cap_change_percentage_24h": -9.23814,
+  "circulating_supply": 9727319.07075288,
+  "total_supply": 10352319.0707529,
+  "max_supply": 10000000,
+  "ath": 24.69,
+  "ath_change_percentage": -97.29517,
+  "ath_date": "2022-01-19T15:15:11.088Z",
+  "atl": 0.129858,
+  "atl_change_percentage": 414.22165,
+  "atl_date": "2023-10-13T07:20:35.644Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:54.350Z",
+  "platforms": {
+    "bsc": "0xe138c66982fd5c890c60b94fdba1747faf092c20"
+  }
+}

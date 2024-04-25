@@ -1,0 +1,31 @@
+{
+  "id": "bag",
+  "symbol": "bag",
+  "name": "Bag",
+  "image": "https://assets.coingecko.com/coins/images/35417/large/BAG-coingecko.png?1709393428",
+  "current_price": 0.00296098,
+  "market_cap": 7805564,
+  "market_cap_rank": 1556,
+  "fully_diluted_valuation": 7805564,
+  "total_volume": 81521,
+  "high_24h": 0.00319561,
+  "low_24h": 0.00295556,
+  "price_change_24h": -0.000188918544998638,
+  "price_change_percentage_24h": -5.99761,
+  "market_cap_change_24h": -510747.73464555293,
+  "market_cap_change_percentage_24h": -6.14152,
+  "circulating_supply": 2642321005.01089,
+  "total_supply": 2642321005.01089,
+  "max_supply": 8000000000,
+  "ath": 0.00620995,
+  "ath_change_percentage": -52.3607,
+  "ath_date": "2024-03-01T09:49:32.709Z",
+  "atl": 0.00251091,
+  "atl_change_percentage": 17.82102,
+  "atl_date": "2024-04-16T16:24:49.962Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:22.799Z",
+  "platforms": {
+    "polygon": "0x73b29199a8e4c146e893eb95f18dac41738a88c6"
+  }
+}

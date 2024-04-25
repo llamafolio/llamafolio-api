@@ -1,0 +1,31 @@
+{
+  "id": "slam-token",
+  "symbol": "slam",
+  "name": "Slam",
+  "image": "https://assets.coingecko.com/coins/images/15023/large/slam2-0-logo.png?1696514684",
+  "current_price": 0.12815,
+  "market_cap": 1668323,
+  "market_cap_rank": 2394,
+  "fully_diluted_valuation": 96753278151,
+  "total_volume": 61.82,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 345525634864.5933,
+  "total_supply": 754997597856,
+  "max_supply": 1000000000000,
+  "ath": 0.893592,
+  "ath_change_percentage": -85.65896,
+  "ath_date": "2022-05-05T12:54:54.738Z",
+  "atl": 0.00000105,
+  "atl_change_percentage": 12222842.0894,
+  "atl_date": "2021-04-26T23:04:04.375Z",
+  "roi": null,
+  "last_updated": "2023-07-31T03:56:14.497Z",
+  "platforms": {
+    "bsc": "0x000851476180bfc499ea68450a5327d21c9b050e"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "schrodinger",
+  "symbol": "meow",
+  "name": "Schrodinger",
+  "image": "https://assets.coingecko.com/coins/images/19649/large/kitty_dinger.png?1696519077",
+  "current_price": 5.86103e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 586103,
+  "total_volume": 312.93,
+  "high_24h": 6.03125e-7,
+  "low_24h": 5.84108e-7,
+  "price_change_24h": -1.7021691189e-8,
+  "price_change_percentage_24h": -2.82225,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000,
+  "max_supply": null,
+  "ath": 0.00001535,
+  "ath_change_percentage": -96.18238,
+  "ath_date": "2021-12-08T19:52:50.440Z",
+  "atl": 2.6965e-8,
+  "atl_change_percentage": 2073.60234,
+  "atl_date": "2023-11-06T04:26:26.440Z",
+  "roi": null,
+  "last_updated": "2024-04-24T23:18:51.839Z",
+  "platforms": {
+    "ethereum": "0x74d2d73b455540b037298c0e0925bc702aedbe4a"
+  }
+}

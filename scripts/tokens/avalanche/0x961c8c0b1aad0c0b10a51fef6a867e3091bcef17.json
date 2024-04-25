@@ -1,0 +1,31 @@
+{
+  "id": "defi-yield-protocol",
+  "symbol": "dyp",
+  "name": "Dypius [OLD]",
+  "image": "https://assets.coingecko.com/coins/images/13480/large/DYP-200x200px.png?1696513241",
+  "current_price": 0.505537,
+  "market_cap": 9789113,
+  "market_cap_rank": 1452,
+  "fully_diluted_valuation": 12599255,
+  "total_volume": 663953,
+  "high_24h": 0.542225,
+  "low_24h": 0.490916,
+  "price_change_24h": -0.019585241178961876,
+  "price_change_percentage_24h": -3.72965,
+  "market_cap_change_24h": -439790.2690525539,
+  "market_cap_change_percentage_24h": -4.29949,
+  "circulating_supply": 19395578.2950739,
+  "total_supply": 24963431,
+  "max_supply": 24963431,
+  "ath": 5.05,
+  "ath_change_percentage": -90.04908,
+  "ath_date": "2021-02-20T04:45:04.870Z",
+  "atl": 0.01681594,
+  "atl_change_percentage": 2887.7962,
+  "atl_date": "2023-10-10T23:10:44.892Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:20.277Z",
+  "platforms": {
+    "avalanche": "0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17"
+  }
+}

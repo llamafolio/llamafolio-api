@@ -1,0 +1,31 @@
+{
+  "id": "volumint",
+  "symbol": "vmint",
+  "name": "VoluMint",
+  "image": "https://assets.coingecko.com/coins/images/33745/large/volumint_200x200px_clearbg.png?1702924153",
+  "current_price": 0.03094033,
+  "market_cap": 18785703,
+  "market_cap_rank": 1144,
+  "fully_diluted_valuation": 30824149,
+  "total_volume": 612808,
+  "high_24h": 0.03586404,
+  "low_24h": 0.03003955,
+  "price_change_24h": -0.00388396958814817,
+  "price_change_percentage_24h": -11.15304,
+  "market_cap_change_24h": -2440895.9265851714,
+  "market_cap_change_percentage_24h": -11.49923,
+  "circulating_supply": 609447585.9646617,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.084504,
+  "ath_change_percentage": -63.62198,
+  "ath_date": "2024-03-25T10:41:51.644Z",
+  "atl": 0.00054939,
+  "atl_change_percentage": 5495.43607,
+  "atl_date": "2023-12-18T20:44:55.719Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:37.346Z",
+  "platforms": {
+    "ethereum": "0xd7b2c1a7f3c67fb0ea57a7ef29bc1f18d7be3195"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "tokensight",
+  "symbol": "tkst",
+  "name": "TokenSight",
+  "image": "https://assets.coingecko.com/coins/images/32514/large/token-coingecko.png?1698401758",
+  "current_price": 0.143187,
+  "market_cap": 4223046,
+  "market_cap_rank": 1875,
+  "fully_diluted_valuation": 14303794,
+  "total_volume": 37383,
+  "high_24h": 0.148237,
+  "low_24h": 0.142744,
+  "price_change_24h": -0.004273935926859679,
+  "price_change_percentage_24h": -2.89835,
+  "market_cap_change_24h": -118063.99203723483,
+  "market_cap_change_percentage_24h": -2.71967,
+  "circulating_supply": 29523957.04177894,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.961383,
+  "ath_change_percentage": -85.11247,
+  "ath_date": "2023-11-25T19:04:54.023Z",
+  "atl": 0.118597,
+  "atl_change_percentage": 20.68259,
+  "atl_date": "2023-10-28T16:19:43.868Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:19.490Z",
+  "platforms": {
+    "ethereum": "0x7cdbfc86a0bfa20f133748b0cf5cea5b787b182c"
+  }
+}

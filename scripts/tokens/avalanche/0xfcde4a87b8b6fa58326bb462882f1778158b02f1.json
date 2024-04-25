@@ -1,0 +1,31 @@
+{
+  "id": "wirex",
+  "symbol": "wxt",
+  "name": "WXT Token",
+  "image": "https://assets.coingecko.com/coins/images/8835/large/Wirex.jpg?1696508988",
+  "current_price": 0.00628487,
+  "market_cap": 14428591,
+  "market_cap_rank": 1268,
+  "fully_diluted_valuation": 62719370,
+  "total_volume": 1329644,
+  "high_24h": 0.00659427,
+  "low_24h": 0.00626788,
+  "price_change_24h": -0.000306548930339878,
+  "price_change_percentage_24h": -4.65073,
+  "market_cap_change_24h": -735389.5303708687,
+  "market_cap_change_percentage_24h": -4.84958,
+  "circulating_supply": 2300499975,
+  "total_supply": 10000000000,
+  "max_supply": null,
+  "ath": 0.03727112,
+  "ath_change_percentage": -83.15648,
+  "ath_date": "2021-04-18T16:09:59.656Z",
+  "atl": 0.00249444,
+  "atl_change_percentage": 151.67088,
+  "atl_date": "2023-06-10T20:24:30.043Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:11.753Z",
+  "platforms": {
+    "avalanche": "0xfcde4a87b8b6fa58326bb462882f1778158b02f1"
+  }
+}

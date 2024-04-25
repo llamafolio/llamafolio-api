@@ -1,0 +1,31 @@
+{
+  "id": "rabbit-finance",
+  "symbol": "rabbit",
+  "name": "Rabbit Finance",
+  "image": "https://assets.coingecko.com/coins/images/16240/large/Rabbit_Finance_Logo1.png?1696515840",
+  "current_price": 0.00056591,
+  "market_cap": 60176,
+  "market_cap_rank": 3937,
+  "fully_diluted_valuation": 101222,
+  "total_volume": 2086.51,
+  "high_24h": 0.00062186,
+  "low_24h": 0.00054031,
+  "price_change_24h": -0.000048983003815122,
+  "price_change_percentage_24h": -7.96609,
+  "market_cap_change_24h": -5261.361261718288,
+  "market_cap_change_percentage_24h": -8.0403,
+  "circulating_supply": 106449488.172247,
+  "total_supply": 179059185.289351,
+  "max_supply": 203000000,
+  "ath": 2.69,
+  "ath_change_percentage": -99.97899,
+  "ath_date": "2021-07-09T15:19:35.554Z",
+  "atl": 0.00005282,
+  "atl_change_percentage": 968.03295,
+  "atl_date": "2023-12-11T21:35:46.709Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:49.101Z",
+  "platforms": {
+    "bsc": "0x95a1199eba84ac5f19546519e287d43d2f0e1b41"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "chronicle",
+  "symbol": "xnl",
+  "name": "Chronicle",
+  "image": "https://assets.coingecko.com/coins/images/18413/large/xnl_logo.png?1696517903",
+  "current_price": 0.02148905,
+  "market_cap": 1032341,
+  "market_cap_rank": 2666,
+  "fully_diluted_valuation": 2148900,
+  "total_volume": 100050,
+  "high_24h": 0.02669771,
+  "low_24h": 0.01839181,
+  "price_change_24h": 0.00306883,
+  "price_change_percentage_24h": 16.66013,
+  "market_cap_change_24h": 147871,
+  "market_cap_change_percentage_24h": 16.71861,
+  "circulating_supply": 48040458.441968426,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 1.5,
+  "ath_change_percentage": -98.56044,
+  "ath_date": "2021-09-17T08:27:12.857Z",
+  "atl": 0.00571069,
+  "atl_change_percentage": 279.07801,
+  "atl_date": "2023-10-11T21:41:20.714Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:20.551Z",
+  "platforms": {
+    "bsc": "0x5f26fa0c2ee5d3c0323d861d0c503f31ac212662"
+  }
+}

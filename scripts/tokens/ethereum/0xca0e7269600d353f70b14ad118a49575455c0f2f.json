@@ -1,0 +1,31 @@
+{
+  "id": "coinfirm-amlt",
+  "symbol": "amlt",
+  "name": "AMLT Network",
+  "image": "https://assets.coingecko.com/coins/images/2703/large/amlt.png?1696503486",
+  "current_price": 0.00226649,
+  "market_cap": 761735,
+  "market_cap_rank": 2842,
+  "fully_diluted_valuation": 906597,
+  "total_volume": 577.37,
+  "high_24h": 0.00241155,
+  "low_24h": 0.00212032,
+  "price_change_24h": -0.00014313172442581,
+  "price_change_percentage_24h": -5.94,
+  "market_cap_change_24h": -48307.293951479835,
+  "market_cap_change_percentage_24h": -5.96355,
+  "circulating_supply": 336085292.77966714,
+  "total_supply": 400000000,
+  "max_supply": null,
+  "ath": 0.158216,
+  "ath_change_percentage": -98.56747,
+  "ath_date": "2021-04-19T08:21:03.075Z",
+  "atl": 0.00029496,
+  "atl_change_percentage": 668.40012,
+  "atl_date": "2019-11-22T17:04:23.125Z",
+  "roi": null,
+  "last_updated": "2024-04-25T05:47:55.189Z",
+  "platforms": {
+    "ethereum": "0xca0e7269600d353f70b14ad118a49575455c0f2f"
+  }
+}

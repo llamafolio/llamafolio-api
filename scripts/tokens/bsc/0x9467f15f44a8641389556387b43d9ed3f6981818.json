@@ -1,0 +1,31 @@
+{
+  "id": "wrapped-usdr",
+  "symbol": "wusdr",
+  "name": "Wrapped USDR",
+  "image": "https://assets.coingecko.com/coins/images/28800/large/wUSDRlogo.png?1696527777",
+  "current_price": 0.673497,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 4475502,
+  "total_volume": 1036.65,
+  "high_24h": 0.680358,
+  "low_24h": 0.671804,
+  "price_change_24h": -0.006861545014642645,
+  "price_change_percentage_24h": -1.00852,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 6631972.314347,
+  "max_supply": null,
+  "ath": 1.12,
+  "ath_change_percentage": -39.7104,
+  "ath_date": "2023-02-16T00:32:04.228Z",
+  "atl": 0.530735,
+  "atl_change_percentage": 27.15139,
+  "atl_date": "2023-10-11T15:44:33.406Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:35.980Z",
+  "platforms": {
+    "bsc": "0x9467f15f44a8641389556387b43d9ed3f6981818"
+  }
+}

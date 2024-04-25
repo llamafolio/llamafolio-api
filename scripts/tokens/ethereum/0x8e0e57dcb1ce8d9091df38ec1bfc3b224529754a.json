@@ -1,0 +1,31 @@
+{
+  "id": "moon-tropica",
+  "symbol": "cah",
+  "name": "Moon Tropica",
+  "image": "https://assets.coingecko.com/coins/images/28470/large/MTLOGO.png?1696527464",
+  "current_price": 26.15,
+  "market_cap": 70904168,
+  "market_cap_rank": 574,
+  "fully_diluted_valuation": 91564806,
+  "total_volume": 250248,
+  "high_24h": 28.81,
+  "low_24h": 25.79,
+  "price_change_24h": -2.07020001646967,
+  "price_change_percentage_24h": -7.33697,
+  "market_cap_change_24h": -5632624.253582835,
+  "market_cap_change_percentage_24h": -7.35937,
+  "circulating_supply": 2710261.70234093,
+  "total_supply": 3500000,
+  "max_supply": 3500000,
+  "ath": 53.6,
+  "ath_change_percentage": -51.19082,
+  "ath_date": "2024-03-15T01:54:38.316Z",
+  "atl": 0.136106,
+  "atl_change_percentage": 19121.36056,
+  "atl_date": "2023-01-04T14:14:45.644Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:46.044Z",
+  "platforms": {
+    "ethereum": "0x8e0e57dcb1ce8d9091df38ec1bfc3b224529754a"
+  }
+}

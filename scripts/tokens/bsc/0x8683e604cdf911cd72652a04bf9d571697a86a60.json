@@ -1,0 +1,35 @@
+{
+  "id": "blockchain-certified-data-token",
+  "symbol": "bcdt",
+  "name": "EvidenZ",
+  "image": "https://assets.coingecko.com/coins/images/2014/large/evidenz-512.png?1696502988",
+  "current_price": 0.0391744,
+  "market_cap": 1392309,
+  "market_cap_rank": 2489,
+  "fully_diluted_valuation": 1471416,
+  "total_volume": 35986,
+  "high_24h": 0.04169917,
+  "low_24h": 0.03486858,
+  "price_change_24h": 0.002596,
+  "price_change_percentage_24h": 7.09707,
+  "market_cap_change_24h": 82291,
+  "market_cap_change_percentage_24h": 6.28164,
+  "circulating_supply": 35486445.56307737,
+  "total_supply": 37502674.12335396,
+  "max_supply": null,
+  "ath": 0.454986,
+  "ath_change_percentage": -91.37666,
+  "ath_date": "2021-03-31T07:26:42.578Z",
+  "atl": 0.00256645,
+  "atl_change_percentage": 1428.76358,
+  "atl_date": "2018-11-25T00:00:00.000Z",
+  "roi": {
+    "times": -0.6735466283045011,
+    "currency": "usd",
+    "percentage": -67.35466283045011
+  },
+  "last_updated": "2024-04-25T09:01:47.552Z",
+  "platforms": {
+    "bsc": "0x8683e604cdf911cd72652a04bf9d571697a86a60"
+  }
+}

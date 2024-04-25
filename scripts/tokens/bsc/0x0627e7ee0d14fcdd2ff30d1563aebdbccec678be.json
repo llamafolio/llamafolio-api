@@ -1,0 +1,31 @@
+{
+  "id": "jackpotdoge",
+  "symbol": "jpd",
+  "name": "JackpotDoge",
+  "image": "https://assets.coingecko.com/coins/images/28001/large/62caad33f3c5f30014065a1d-image-p-1660157227220-File-name.png?1696527018",
+  "current_price": 0.00019966,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 19966.08,
+  "total_volume": 576.22,
+  "high_24h": 0.00019994,
+  "low_24h": 0.00019923,
+  "price_change_24h": 1.9206e-8,
+  "price_change_percentage_24h": 0.00962,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.00109233,
+  "ath_change_percentage": -81.7216,
+  "ath_date": "2022-10-31T10:40:09.649Z",
+  "atl": 0.00019626,
+  "atl_change_percentage": 1.73271,
+  "atl_date": "2024-03-22T14:01:43.548Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:09.819Z",
+  "platforms": {
+    "bsc": "0x0627e7ee0d14fcdd2ff30d1563aebdbccec678be"
+  }
+}

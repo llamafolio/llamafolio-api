@@ -1,0 +1,31 @@
+{
+  "id": "stake-link",
+  "symbol": "sdl",
+  "name": "stake.link",
+  "image": "https://assets.coingecko.com/coins/images/28406/large/stake.png?1696527404",
+  "current_price": 0.444249,
+  "market_cap": 6315839,
+  "market_cap_rank": 1680,
+  "fully_diluted_valuation": 44249804,
+  "total_volume": 19627.6,
+  "high_24h": 0.484634,
+  "low_24h": 0.438155,
+  "price_change_24h": -0.034013135651503656,
+  "price_change_percentage_24h": -7.11182,
+  "market_cap_change_24h": -527647.4030582216,
+  "market_cap_change_percentage_24h": -7.71021,
+  "circulating_supply": 14273145.03,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.989294,
+  "ath_change_percentage": -55.05184,
+  "ath_date": "2022-12-06T13:55:18.723Z",
+  "atl": 0.072039,
+  "atl_change_percentage": 517.25891,
+  "atl_date": "2023-05-21T09:53:23.810Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:18.663Z",
+  "platforms": {
+    "ethereum": "0xa95c5ebb86e0de73b4fb8c47a45b792cfea28c23"
+  }
+}

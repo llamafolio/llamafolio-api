@@ -1,0 +1,31 @@
+{
+  "id": "edu3labs",
+  "symbol": "nfe",
+  "name": "Edu3Labs",
+  "image": "https://assets.coingecko.com/coins/images/35925/large/nfe.jpeg?1710223860",
+  "current_price": 0.098506,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 88736610,
+  "total_volume": 537708,
+  "high_24h": 0.112853,
+  "low_24h": 0.09604,
+  "price_change_24h": -0.009093995486693152,
+  "price_change_percentage_24h": -8.45165,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 900000000,
+  "max_supply": null,
+  "ath": 0.342138,
+  "ath_change_percentage": -71.23445,
+  "ath_date": "2024-03-21T05:45:53.347Z",
+  "atl": 0.083545,
+  "atl_change_percentage": 17.80186,
+  "atl_date": "2024-03-19T12:22:04.036Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:24.139Z",
+  "platforms": {
+    "bsc": "0xf03ca04dd56d695a410f46f14fef4028b22fb79a"
+  }
+}

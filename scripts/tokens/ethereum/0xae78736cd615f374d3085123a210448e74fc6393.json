@@ -1,0 +1,31 @@
+{
+  "id": "rocket-pool-eth",
+  "symbol": "reth",
+  "name": "Rocket Pool ETH",
+  "image": "https://assets.coingecko.com/coins/images/20764/large/reth.png?1696520159",
+  "current_price": 3461.27,
+  "market_cap": 1788062950,
+  "market_cap_rank": 60,
+  "fully_diluted_valuation": 1788062950,
+  "total_volume": 50236942,
+  "high_24h": 3633.47,
+  "low_24h": 3439.42,
+  "price_change_24h": -128.41316840664285,
+  "price_change_percentage_24h": -3.57729,
+  "market_cap_change_24h": -73940299.20902967,
+  "market_cap_change_percentage_24h": -3.97101,
+  "circulating_supply": 517312.197707966,
+  "total_supply": 517312.197707966,
+  "max_supply": null,
+  "ath": 4814.31,
+  "ath_change_percentage": -27.93117,
+  "ath_date": "2021-12-01T08:03:50.749Z",
+  "atl": 887.26,
+  "atl_change_percentage": 291.04697,
+  "atl_date": "2022-06-18T20:55:45.957Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:51.116Z",
+  "platforms": {
+    "ethereum": "0xae78736cd615f374d3085123a210448e74fc6393"
+  }
+}

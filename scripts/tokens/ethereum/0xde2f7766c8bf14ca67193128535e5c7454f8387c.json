@@ -1,0 +1,35 @@
+{
+  "id": "metadium",
+  "symbol": "meta",
+  "name": "Metadium",
+  "image": "https://assets.coingecko.com/coins/images/5247/large/META_Logo_black.png?1696505751",
+  "current_price": 0.04159169,
+  "market_cap": 70505897,
+  "market_cap_rank": 575,
+  "fully_diluted_valuation": 82772406,
+  "total_volume": 5314506,
+  "high_24h": 0.04393312,
+  "low_24h": 0.04096097,
+  "price_change_24h": -0.002188474864744064,
+  "price_change_percentage_24h": -4.99878,
+  "market_cap_change_24h": -4666655.735982284,
+  "market_cap_change_percentage_24h": -6.20793,
+  "circulating_supply": 1703608720,
+  "total_supply": 2000000000,
+  "max_supply": 2000000000,
+  "ath": 0.452667,
+  "ath_change_percentage": -90.84631,
+  "ath_date": "2021-04-01T01:24:04.623Z",
+  "atl": 0.00295026,
+  "atl_change_percentage": 1304.47672,
+  "atl_date": "2020-03-13T02:24:18.338Z",
+  "roi": {
+    "times": -0.8875656366235559,
+    "currency": "eth",
+    "percentage": -88.75656366235559
+  },
+  "last_updated": "2024-04-25T08:59:29.703Z",
+  "platforms": {
+    "ethereum": "0xde2f7766c8bf14ca67193128535e5c7454f8387c"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "broovs-projects",
+  "symbol": "brs",
+  "name": "Broovs Projects",
+  "image": "https://assets.coingecko.com/coins/images/25020/large/OnV-HqI1_400x400.jpg?1696524172",
+  "current_price": 0.00004605,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 69080,
+  "total_volume": 14365.05,
+  "high_24h": 0.00004649,
+  "low_24h": 0.00004336,
+  "price_change_24h": -5.232045826e-9,
+  "price_change_percentage_24h": -0.01136,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1500000000,
+  "max_supply": null,
+  "ath": 0.01364496,
+  "ath_change_percentage": -99.66309,
+  "ath_date": "2022-04-20T11:10:07.162Z",
+  "atl": 0.00001379,
+  "atl_change_percentage": 233.46923,
+  "atl_date": "2024-01-27T11:48:39.427Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:19.026Z",
+  "platforms": {
+    "bsc": "0x98c6fd0281a9a0300cb88553bf386a3492bb70f7"
+  }
+}

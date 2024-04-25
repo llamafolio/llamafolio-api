@@ -1,0 +1,31 @@
+{
+  "id": "koi-3",
+  "symbol": "koi",
+  "name": "Koi",
+  "image": "https://assets.coingecko.com/coins/images/35766/large/Koi_logo.png?1709782399",
+  "current_price": 0.067642,
+  "market_cap": 33821233,
+  "market_cap_rank": 864,
+  "fully_diluted_valuation": 67642466,
+  "total_volume": 639604,
+  "high_24h": 0.074145,
+  "low_24h": 0.06694,
+  "price_change_24h": -0.004648103328790731,
+  "price_change_percentage_24h": -6.42975,
+  "market_cap_change_24h": -2527319.4951046705,
+  "market_cap_change_percentage_24h": -6.95301,
+  "circulating_supply": 500000000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.091699,
+  "ath_change_percentage": -26.7108,
+  "ath_date": "2024-04-22T23:41:53.636Z",
+  "atl": 0.02976094,
+  "atl_change_percentage": 125.81717,
+  "atl_date": "2024-03-20T06:33:48.717Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:44.575Z",
+  "platforms": {
+    "zksync-era": "0xa995ad25ce5eb76972ab356168f5e1d9257e4d05"
+  }
+}

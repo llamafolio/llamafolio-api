@@ -1,0 +1,31 @@
+{
+  "id": "red",
+  "symbol": "red",
+  "name": "Red",
+  "image": "https://assets.coingecko.com/coins/images/4523/large/red.png?1696505107",
+  "current_price": 0.00200689,
+  "market_cap": 245979,
+  "market_cap_rank": 3401,
+  "fully_diluted_valuation": 378429,
+  "total_volume": 40609,
+  "high_24h": 0.00337377,
+  "low_24h": 0.00173806,
+  "price_change_24h": 0.0002605,
+  "price_change_percentage_24h": 14.91642,
+  "market_cap_change_24h": 18598.12,
+  "market_cap_change_percentage_24h": 8.17928,
+  "circulating_supply": 130000009.3,
+  "total_supply": 200000000,
+  "max_supply": null,
+  "ath": 0.0462625,
+  "ath_change_percentage": -95.93208,
+  "ath_date": "2021-05-17T16:55:57.869Z",
+  "atl": 0.00056303,
+  "atl_change_percentage": 234.24979,
+  "atl_date": "2022-11-21T10:25:42.762Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:24.689Z",
+  "platforms": {
+    "ethereum": "0x76960dccd5a1fe799f7c29be9f19ceb4627aeb2f"
+  }
+}

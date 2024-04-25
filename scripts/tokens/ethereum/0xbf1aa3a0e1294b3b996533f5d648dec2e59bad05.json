@@ -1,0 +1,31 @@
+{
+  "id": "funarcade",
+  "symbol": "fat",
+  "name": "Funarcade",
+  "image": "https://assets.coingecko.com/coins/images/34767/large/FAT_logo_200x200.png?1705992218",
+  "current_price": 0.01273246,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1273246,
+  "total_volume": 68.29,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 1000000,
+  "ath": 0.02222133,
+  "ath_change_percentage": -42.70165,
+  "ath_date": "2024-03-05T13:40:13.763Z",
+  "atl": 0.01183235,
+  "atl_change_percentage": 7.60722,
+  "atl_date": "2024-04-19T02:31:47.024Z",
+  "roi": null,
+  "last_updated": "2024-04-23T21:29:21.383Z",
+  "platforms": {
+    "ethereum": "0xbf1aa3a0e1294b3b996533f5d648dec2e59bad05"
+  }
+}

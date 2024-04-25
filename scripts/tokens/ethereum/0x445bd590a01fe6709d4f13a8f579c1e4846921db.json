@@ -1,0 +1,31 @@
+{
+  "id": "dummy",
+  "symbol": "dummy",
+  "name": "DUMMY",
+  "image": "https://assets.coingecko.com/coins/images/30650/large/a3miYrC7_400x400-removebg-preview%281%29.png?1696529520",
+  "current_price": 1.22614e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 854586,
+  "total_volume": 69.89,
+  "high_24h": 1.24356e-7,
+  "low_24h": 1.21986e-7,
+  "price_change_24h": -6.8256916e-10,
+  "price_change_percentage_24h": -0.5536,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 6969696969696,
+  "max_supply": 6969696969696,
+  "ath": 4.49526e-7,
+  "ath_change_percentage": -72.72362,
+  "ath_date": "2023-06-11T20:18:41.351Z",
+  "atl": 7.9127e-8,
+  "atl_change_percentage": 54.95989,
+  "atl_date": "2023-11-17T16:50:10.840Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:36:59.106Z",
+  "platforms": {
+    "ethereum": "0x445bd590a01fe6709d4f13a8f579c1e4846921db"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "thales",
+  "symbol": "thales",
+  "name": "Thales",
+  "image": "https://assets.coingecko.com/coins/images/18388/large/CLVZJN_C_400x400.png?1696517879",
+  "current_price": 0.297449,
+  "market_cap": 15945030,
+  "market_cap_rank": 1220,
+  "fully_diluted_valuation": 28613291,
+  "total_volume": 21271,
+  "high_24h": 0.309139,
+  "low_24h": 0.295758,
+  "price_change_24h": -0.00982344489046294,
+  "price_change_percentage_24h": -3.19698,
+  "market_cap_change_24h": -597251.1004417501,
+  "market_cap_change_percentage_24h": -3.61045,
+  "circulating_supply": 53843851,
+  "total_supply": 96622572.3536203,
+  "max_supply": 100000000,
+  "ath": 3.75,
+  "ath_change_percentage": -92.10767,
+  "ath_date": "2021-09-16T04:45:25.758Z",
+  "atl": 0.120852,
+  "atl_change_percentage": 145.16962,
+  "atl_date": "2022-04-04T16:04:47.575Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:17.014Z",
+  "platforms": {
+    "ethereum": "0x8947da500eb47f82df21143d0c01a29862a8c3c5"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "libra-protocol",
+  "symbol": "lbr",
+  "name": "Libra Protocol",
+  "image": "https://assets.coingecko.com/coins/images/29389/large/Libra_Protocol.png?1696528340",
+  "current_price": 0.054831,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 27415,
+  "total_volume": 1.097,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 500000,
+  "max_supply": 500000,
+  "ath": 2.65,
+  "ath_change_percentage": -97.93142,
+  "ath_date": "2023-03-11T02:35:41.272Z",
+  "atl": 0.053799,
+  "atl_change_percentage": 1.9189,
+  "atl_date": "2023-05-17T14:37:14.157Z",
+  "roi": null,
+  "last_updated": "2023-05-17T19:27:58.364Z",
+  "platforms": {
+    "bsc": "0x566a9eeac9a589bf0825222bca083ecdb9c86c82"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "jesus",
+  "symbol": "raptor",
+  "name": "Jesus",
+  "image": "https://assets.coingecko.com/coins/images/30745/large/Favicon_%281%29.png?1696529615",
+  "current_price": 3.76078e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 249812,
+  "total_volume": 401.37,
+  "high_24h": 3.95733e-10,
+  "low_24h": 3.74315e-10,
+  "price_change_24h": -1.4868339e-11,
+  "price_change_percentage_24h": -3.80317,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 666444444444444,
+  "max_supply": 666444444444444,
+  "ath": 1.4253e-8,
+  "ath_change_percentage": -97.3701,
+  "ath_date": "2023-06-15T06:00:12.300Z",
+  "atl": 1.3813e-10,
+  "atl_change_percentage": 171.37068,
+  "atl_date": "2023-10-25T19:25:51.886Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:15.157Z",
+  "platforms": {
+    "ethereum": "0xd115a61a25c059c78cd34b97fab7ab25dfc84bc3"
+  }
+}

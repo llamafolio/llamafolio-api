@@ -1,0 +1,31 @@
+{
+  "id": "golden-token",
+  "symbol": "gold",
+  "name": "Golden",
+  "image": "https://assets.coingecko.com/coins/images/8939/large/4uf1Sim9_400x400.png?1696509087",
+  "current_price": 0.00566663,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 5666.63,
+  "total_volume": 117832,
+  "high_24h": 0.00616459,
+  "low_24h": 0.0046674,
+  "price_change_24h": -0.000076942829133696,
+  "price_change_percentage_24h": -1.33963,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000,
+  "max_supply": null,
+  "ath": 0.434887,
+  "ath_change_percentage": -98.79663,
+  "ath_date": "2019-07-25T21:35:29.241Z",
+  "atl": 0.00130835,
+  "atl_change_percentage": 299.99296,
+  "atl_date": "2022-06-18T20:55:48.522Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:05.745Z",
+  "platforms": {
+    "ethereum": "0x34d6a0f5c2f5d0082141fe73d93b9dd00ca7ce11"
+  }
+}

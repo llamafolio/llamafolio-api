@@ -1,0 +1,31 @@
+{
+  "id": "hamsters",
+  "symbol": "hams",
+  "name": "Hamsters",
+  "image": "https://assets.coingecko.com/coins/images/31055/large/hams_logo_s.png?1696529890",
+  "current_price": 0.00791082,
+  "market_cap": 79108,
+  "market_cap_rank": 3857,
+  "fully_diluted_valuation": 79108,
+  "total_volume": 95.6,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 10000000,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 3.31,
+  "ath_change_percentage": -99.76106,
+  "ath_date": "2023-07-22T01:04:59.634Z",
+  "atl": 0.00703635,
+  "atl_change_percentage": 12.42777,
+  "atl_date": "2024-02-27T05:26:39.449Z",
+  "roi": null,
+  "last_updated": "2024-04-22T16:38:52.469Z",
+  "platforms": {
+    "ethereum": "0x48c87cdacb6bb6bf6e5cd85d8ee5c847084c7410"
+  }
+}

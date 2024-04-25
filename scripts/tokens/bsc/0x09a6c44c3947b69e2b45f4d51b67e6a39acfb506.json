@@ -1,0 +1,31 @@
+{
+  "id": "unicrypt-2",
+  "symbol": "uncx",
+  "name": "UNCX Network",
+  "image": "https://assets.coingecko.com/coins/images/12871/large/uncx.png?1696512659",
+  "current_price": 301.52,
+  "market_cap": 10878655,
+  "market_cap_rank": 1392,
+  "fully_diluted_valuation": 14334207,
+  "total_volume": 1686.09,
+  "high_24h": 318.5,
+  "low_24h": 300.82,
+  "price_change_24h": -13.41711046885979,
+  "price_change_percentage_24h": -4.26019,
+  "market_cap_change_24h": -509872.8684271816,
+  "market_cap_change_percentage_24h": -4.47707,
+  "circulating_supply": 36163,
+  "total_supply": 47650,
+  "max_supply": null,
+  "ath": 1112.13,
+  "ath_change_percentage": -72.93992,
+  "ath_date": "2021-12-07T01:20:30.533Z",
+  "atl": 24.15,
+  "atl_change_percentage": 1146.27739,
+  "atl_date": "2020-12-11T10:09:04.718Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:04.663Z",
+  "platforms": {
+    "bsc": "0x09a6c44c3947b69e2b45f4d51b67e6a39acfb506"
+  }
+}

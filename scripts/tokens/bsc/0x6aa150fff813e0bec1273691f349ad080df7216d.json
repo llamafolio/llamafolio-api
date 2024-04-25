@@ -1,0 +1,31 @@
+{
+  "id": "ferma",
+  "symbol": "ferma",
+  "name": "Ferma",
+  "image": "https://assets.coingecko.com/coins/images/14482/large/ferma.png?1696514168",
+  "current_price": 0.120503,
+  "market_cap": 1322828,
+  "market_cap_rank": 2527,
+  "fully_diluted_valuation": 1322828,
+  "total_volume": 50700,
+  "high_24h": 0.247056,
+  "low_24h": 0.059698,
+  "price_change_24h": -0.1263898143298329,
+  "price_change_percentage_24h": -51.19208,
+  "market_cap_change_24h": -1394977.5928961444,
+  "market_cap_change_percentage_24h": -51.32734,
+  "circulating_supply": 11000000,
+  "total_supply": 11000000,
+  "max_supply": 11000000,
+  "ath": 0.450233,
+  "ath_change_percentage": -73.25046,
+  "ath_date": "2021-05-23T05:25:30.600Z",
+  "atl": 0.03538855,
+  "atl_change_percentage": 240.32295,
+  "atl_date": "2024-01-12T03:34:56.805Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:08.822Z",
+  "platforms": {
+    "bsc": "0x6aa150fff813e0bec1273691f349ad080df7216d"
+  }
+}

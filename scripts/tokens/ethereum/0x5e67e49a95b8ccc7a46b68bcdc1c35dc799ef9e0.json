@@ -1,0 +1,31 @@
+{
+  "id": "digifund",
+  "symbol": "dfund",
+  "name": "DigiFund V1",
+  "image": "https://assets.coingecko.com/coins/images/32951/large/photo_2023-11-08_13-27-36.jpg?1699935822",
+  "current_price": 0.0001756,
+  "market_cap": 17560.22,
+  "market_cap_rank": 4164,
+  "fully_diluted_valuation": 17560.22,
+  "total_volume": 83.54,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 100000000,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.01127033,
+  "ath_change_percentage": -98.44191,
+  "ath_date": "2023-11-14T04:44:37.908Z",
+  "atl": 0.00006502,
+  "atl_change_percentage": 170.05984,
+  "atl_date": "2023-11-30T08:50:42.743Z",
+  "roi": null,
+  "last_updated": "2024-02-09T22:14:07.140Z",
+  "platforms": {
+    "ethereum": "0x5e67e49a95b8ccc7a46b68bcdc1c35dc799ef9e0"
+  }
+}

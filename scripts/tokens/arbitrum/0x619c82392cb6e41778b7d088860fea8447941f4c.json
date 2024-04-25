@@ -1,0 +1,31 @@
+{
+  "id": "army-of-fortune-gem",
+  "symbol": "afg",
+  "name": "Army of Fortune Gem",
+  "image": "https://assets.coingecko.com/coins/images/35084/large/Token_GEM_AOFVERSE.png?1707317138",
+  "current_price": 0.01617096,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 15920709,
+  "total_volume": 113773,
+  "high_24h": 0.01804798,
+  "low_24h": 0.01544111,
+  "price_change_24h": -0.000564273469114907,
+  "price_change_percentage_24h": -3.37177,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.128729,
+  "ath_change_percentage": -87.36248,
+  "ath_date": "2024-02-16T20:09:56.841Z",
+  "atl": 0.01472245,
+  "atl_change_percentage": 10.49878,
+  "atl_date": "2024-04-10T13:21:50.544Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:32.296Z",
+  "platforms": {
+    "arbitrum": "0x619c82392cb6e41778b7d088860fea8447941f4c"
+  }
+}

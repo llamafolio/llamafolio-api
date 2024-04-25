@@ -1,0 +1,31 @@
+{
+  "id": "alkimi",
+  "symbol": "$ads",
+  "name": "Alkimi",
+  "image": "https://assets.coingecko.com/coins/images/17979/large/ADS.png?1706546465",
+  "current_price": 0.163848,
+  "market_cap": 29751931,
+  "market_cap_rank": 917,
+  "fully_diluted_valuation": 40981947,
+  "total_volume": 440528,
+  "high_24h": 0.177789,
+  "low_24h": 0.160509,
+  "price_change_24h": -0.006636770575076057,
+  "price_change_percentage_24h": -3.89288,
+  "market_cap_change_24h": -1194676.9341741838,
+  "market_cap_change_percentage_24h": -3.86045,
+  "circulating_supply": 181494127.44980904,
+  "total_supply": 250000000,
+  "max_supply": 250000000,
+  "ath": 0.888267,
+  "ath_change_percentage": -81.54762,
+  "ath_date": "2021-08-27T02:12:32.336Z",
+  "atl": 0.04261546,
+  "atl_change_percentage": 284.61738,
+  "atl_date": "2023-06-03T19:39:40.911Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:20.487Z",
+  "platforms": {
+    "ethereum": "0x3106a0a076bedae847652f42ef07fd58589e001f"
+  }
+}

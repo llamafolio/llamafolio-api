@@ -1,0 +1,31 @@
+{
+  "id": "s4fe",
+  "symbol": "s4f",
+  "name": "S4FE",
+  "image": "https://assets.coingecko.com/coins/images/7405/large/logo_%284%29.png?1696507681",
+  "current_price": 0.00005221,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 52208,
+  "total_volume": 1.9,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 4.27,
+  "ath_change_percentage": -99.99878,
+  "ath_date": "2019-02-25T15:12:39.817Z",
+  "atl": 0,
+  "atl_change_percentage": 5.7395474553147415e+32,
+  "atl_date": "2022-03-25T18:04:18.864Z",
+  "roi": null,
+  "last_updated": "2024-04-20T04:10:15.450Z",
+  "platforms": {
+    "bsc": "0x788d2780992222360f674cc12c36478870b8e6ed"
+  }
+}

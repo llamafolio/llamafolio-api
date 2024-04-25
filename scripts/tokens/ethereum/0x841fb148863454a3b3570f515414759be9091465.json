@@ -1,0 +1,31 @@
+{
+  "id": "shih-tzu",
+  "symbol": "shih",
+  "name": "Shih Tzu",
+  "image": "https://assets.coingecko.com/coins/images/15309/large/shit.PNG?1696514959",
+  "current_price": 6.87554e-10,
+  "market_cap": 687554,
+  "market_cap_rank": 2901,
+  "fully_diluted_valuation": 687554,
+  "total_volume": 906.88,
+  "high_24h": 7.20706e-10,
+  "low_24h": 6.84071e-10,
+  "price_change_24h": -3.1998675e-11,
+  "price_change_percentage_24h": -4.44702,
+  "market_cap_change_24h": -29945.158933621948,
+  "market_cap_change_percentage_24h": -4.17354,
+  "circulating_supply": 1000000000000000,
+  "total_supply": 1000000000000000,
+  "max_supply": 1000000000000000,
+  "ath": 2.06748e-7,
+  "ath_change_percentage": -99.66744,
+  "ath_date": "2021-05-11T13:24:51.118Z",
+  "atl": 4.1662e-11,
+  "atl_change_percentage": 1550.31713,
+  "atl_date": "2022-12-20T17:46:18.527Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:54:54.709Z",
+  "platforms": {
+    "ethereum": "0x841fb148863454a3b3570f515414759be9091465"
+  }
+}

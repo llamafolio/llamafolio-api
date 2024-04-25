@@ -1,0 +1,31 @@
+{
+  "id": "defi-world",
+  "symbol": "dwc",
+  "name": "Defi World",
+  "image": "https://assets.coingecko.com/coins/images/34154/large/Defi_Logo_Icon.png?1704210359",
+  "current_price": 1.36,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 13631976,
+  "total_volume": 14.77,
+  "high_24h": 1.37,
+  "low_24h": 1.33,
+  "price_change_24h": 0.02894433,
+  "price_change_percentage_24h": 2.16933,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 1.37,
+  "ath_change_percentage": 0,
+  "ath_date": "2024-04-25T09:02:28.268Z",
+  "atl": 1.33,
+  "atl_change_percentage": 2.42691,
+  "atl_date": "2024-04-25T02:52:35.376Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:41.449Z",
+  "platforms": {
+    "polygon": "0x96f0a7167ab7ba6e59ffb68707c9d1b049524b0f"
+  }
+}

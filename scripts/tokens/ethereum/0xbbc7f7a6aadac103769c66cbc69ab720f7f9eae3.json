@@ -1,0 +1,31 @@
+{
+  "id": "inx-token-2",
+  "symbol": "inx",
+  "name": "INX Token",
+  "image": "https://assets.coingecko.com/coins/images/29241/large/Tc8Z6xAG_400x400.jpg?1696528197",
+  "current_price": 0.269999,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 54000118,
+  "total_volume": 7139.57,
+  "high_24h": 0.30014,
+  "low_24h": 0.269433,
+  "price_change_24h": -0.000001405390609055,
+  "price_change_percentage_24h": -0.00052,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 200000000,
+  "max_supply": null,
+  "ath": 0.83,
+  "ath_change_percentage": -67.47089,
+  "ath_date": "2023-08-06T12:05:32.327Z",
+  "atl": 0.2,
+  "atl_change_percentage": 34.99581,
+  "atl_date": "2023-11-23T08:44:44.942Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:28.191Z",
+  "platforms": {
+    "ethereum": "0xbbc7f7a6aadac103769c66cbc69ab720f7f9eae3"
+  }
+}

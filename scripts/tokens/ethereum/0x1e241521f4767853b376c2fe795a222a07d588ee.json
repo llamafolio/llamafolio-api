@@ -1,0 +1,31 @@
+{
+  "id": "uni-terminal",
+  "symbol": "unit",
+  "name": "Uni Terminal",
+  "image": "https://assets.coingecko.com/coins/images/33458/large/Logo.png?1701925230",
+  "current_price": 0.193374,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1933736,
+  "total_volume": 100.4,
+  "high_24h": 0.202858,
+  "low_24h": 0.193037,
+  "price_change_24h": -0.007083017437649247,
+  "price_change_percentage_24h": -3.53344,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 7.33,
+  "ath_change_percentage": -97.36261,
+  "ath_date": "2023-12-10T19:25:12.135Z",
+  "atl": 0.191539,
+  "atl_change_percentage": 0.95784,
+  "atl_date": "2024-04-18T08:23:50.488Z",
+  "roi": null,
+  "last_updated": "2024-04-24T19:09:23.488Z",
+  "platforms": {
+    "ethereum": "0x1e241521f4767853b376c2fe795a222a07d588ee"
+  }
+}

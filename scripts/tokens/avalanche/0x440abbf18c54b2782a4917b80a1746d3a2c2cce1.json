@@ -1,0 +1,31 @@
+{
+  "id": "shibavax",
+  "symbol": "shibx",
+  "name": "Shibavax",
+  "image": "https://assets.coingecko.com/coins/images/17913/large/Logo-outline-HD200.png?1699832471",
+  "current_price": 0.00003247,
+  "market_cap": 315011,
+  "market_cap_rank": 3292,
+  "fully_diluted_valuation": 324693,
+  "total_volume": 32.97,
+  "high_24h": 0.00003456,
+  "low_24h": 0.00003247,
+  "price_change_24h": -0.000002092294207457,
+  "price_change_percentage_24h": -6.05381,
+  "market_cap_change_24h": -21614.02333006164,
+  "market_cap_change_percentage_24h": -6.42081,
+  "circulating_supply": 9701792020,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.00428638,
+  "ath_change_percentage": -99.2425,
+  "ath_date": "2021-08-25T03:53:08.268Z",
+  "atl": 0.00001709,
+  "atl_change_percentage": 89.95379,
+  "atl_date": "2022-06-19T05:32:51.548Z",
+  "roi": null,
+  "last_updated": "2024-04-24T23:07:34.059Z",
+  "platforms": {
+    "avalanche": "0x440abbf18c54b2782a4917b80a1746d3a2c2cce1"
+  }
+}

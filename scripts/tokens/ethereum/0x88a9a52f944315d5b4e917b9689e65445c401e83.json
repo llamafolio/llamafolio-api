@@ -1,0 +1,31 @@
+{
+  "id": "fear",
+  "symbol": "fear",
+  "name": "FEAR",
+  "image": "https://assets.coingecko.com/coins/images/15825/large/fear-logo-400-400.png?1696515443",
+  "current_price": 0.118218,
+  "market_cap": 2118664,
+  "market_cap_rank": 2267,
+  "fully_diluted_valuation": 4936574,
+  "total_volume": 531719,
+  "high_24h": 0.123258,
+  "low_24h": 0.118274,
+  "price_change_24h": -0.002677997599794244,
+  "price_change_percentage_24h": -2.21512,
+  "market_cap_change_24h": -47727.2335351659,
+  "market_cap_change_percentage_24h": -2.20308,
+  "circulating_supply": 17913501.0377506,
+  "total_supply": 41739201.6203306,
+  "max_supply": 65000000,
+  "ath": 3.88,
+  "ath_change_percentage": -96.95068,
+  "ath_date": "2021-11-29T16:09:00.148Z",
+  "atl": 0.054062,
+  "atl_change_percentage": 118.67345,
+  "atl_date": "2023-06-19T20:06:40.711Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:39.468Z",
+  "platforms": {
+    "ethereum": "0x88a9a52f944315d5b4e917b9689e65445c401e83"
+  }
+}

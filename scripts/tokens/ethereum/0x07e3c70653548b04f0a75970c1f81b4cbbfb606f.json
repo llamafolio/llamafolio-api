@@ -1,0 +1,35 @@
+{
+  "id": "agrello",
+  "symbol": "dlt",
+  "name": "Agrello",
+  "image": "https://assets.coingecko.com/coins/images/900/large/delta_200x200.png?1696502023",
+  "current_price": 0.00041605,
+  "market_cap": 34120,
+  "market_cap_rank": 4074,
+  "fully_diluted_valuation": 54199,
+  "total_volume": 0.00114282,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 82009794.39520605,
+  "total_supply": 130271020,
+  "max_supply": null,
+  "ath": 1.4,
+  "ath_change_percentage": -99.97031,
+  "ath_date": "2018-01-12T00:00:00.000Z",
+  "atl": 0.00002603,
+  "atl_change_percentage": 1498.55056,
+  "atl_date": "2023-08-25T23:41:18.799Z",
+  "roi": {
+    "times": -0.9992570570956274,
+    "currency": "usd",
+    "percentage": -99.92570570956273
+  },
+  "last_updated": "2024-04-19T09:58:13.483Z",
+  "platforms": {
+    "ethereum": "0x07e3c70653548b04f0a75970c1f81b4cbbfb606f"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "scarab-tools",
+  "symbol": "dung",
+  "name": "Scarab Tools",
+  "image": "https://assets.coingecko.com/coins/images/30706/large/scarab-cg.png?1696529577",
+  "current_price": 0.00654905,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1637262,
+  "total_volume": 50359,
+  "high_24h": 0.00860608,
+  "low_24h": 0.00653335,
+  "price_change_24h": -0.002011365035905711,
+  "price_change_percentage_24h": -23.49613,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 250000000,
+  "max_supply": 250000000,
+  "ath": 0.028005,
+  "ath_change_percentage": -76.61472,
+  "ath_date": "2023-06-25T07:09:33.027Z",
+  "atl": 0.00187251,
+  "atl_change_percentage": 249.74688,
+  "atl_date": "2023-10-06T13:06:43.999Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:55.290Z",
+  "platforms": {
+    "ethereum": "0x84412819ae69b10250d0d54d58f454018f1c8a42"
+  }
+}

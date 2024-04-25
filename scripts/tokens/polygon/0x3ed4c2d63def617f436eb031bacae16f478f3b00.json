@@ -1,0 +1,31 @@
+{
+  "id": "dpex",
+  "symbol": "dpex",
+  "name": "DPEX",
+  "image": "https://assets.coingecko.com/coins/images/31038/large/logo-ai.png?1696529873",
+  "current_price": 0.00015126,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 189076,
+  "total_volume": 52.68,
+  "high_24h": 0.00015195,
+  "low_24h": 0.00012124,
+  "price_change_24h": 0.00001958,
+  "price_change_percentage_24h": 14.8731,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1250000000,
+  "max_supply": 1250000000,
+  "ath": 0.00204634,
+  "ath_change_percentage": -92.60821,
+  "ath_date": "2023-07-22T10:18:38.321Z",
+  "atl": 0.00011057,
+  "atl_change_percentage": 36.79666,
+  "atl_date": "2024-04-18T16:49:44.497Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:37:05.473Z",
+  "platforms": {
+    "polygon": "0x3ed4c2d63def617f436eb031bacae16f478f3b00"
+  }
+}

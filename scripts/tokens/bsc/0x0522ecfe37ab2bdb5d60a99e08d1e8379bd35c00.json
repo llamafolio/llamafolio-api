@@ -1,0 +1,31 @@
+{
+  "id": "karastar-umy",
+  "symbol": "umy",
+  "name": "KaraStar UMY",
+  "image": "https://assets.coingecko.com/coins/images/21211/large/E3GB2FfQ_400x400.jpg?1696520586",
+  "current_price": 0.0003895,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 33.32,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.918506,
+  "ath_change_percentage": -99.95759,
+  "ath_date": "2021-12-09T13:53:38.729Z",
+  "atl": 0.00038467,
+  "atl_change_percentage": 1.25511,
+  "atl_date": "2023-07-24T15:15:48.064Z",
+  "roi": null,
+  "last_updated": "2023-08-03T10:30:17.112Z",
+  "platforms": {
+    "bsc": "0x0522ecfe37ab2bdb5d60a99e08d1e8379bd35c00"
+  }
+}

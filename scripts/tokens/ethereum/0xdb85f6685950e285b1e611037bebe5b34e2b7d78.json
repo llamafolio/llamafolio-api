@@ -1,0 +1,31 @@
+{
+  "id": "zano",
+  "symbol": "zano",
+  "name": "Zano",
+  "image": "https://assets.coingecko.com/coins/images/8370/large/zano.png?1696508563",
+  "current_price": 3.06,
+  "market_cap": 43434304,
+  "market_cap_rank": 750,
+  "fully_diluted_valuation": null,
+  "total_volume": 73388,
+  "high_24h": 3.2,
+  "low_24h": 3.05,
+  "price_change_24h": -0.11185870691966304,
+  "price_change_percentage_24h": -3.5226,
+  "market_cap_change_24h": -1414346.1156499535,
+  "market_cap_change_percentage_24h": -3.1536,
+  "circulating_supply": 14216901.94,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 4.81,
+  "ath_change_percentage": -36.77456,
+  "ath_date": "2021-05-20T20:30:40.905Z",
+  "atl": 0.146452,
+  "atl_change_percentage": 1978.32311,
+  "atl_date": "2019-12-16T19:21:13.626Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:42.522Z",
+  "platforms": {
+    "ethereum": "0xdb85f6685950e285b1e611037bebe5b34e2b7d78"
+  }
+}

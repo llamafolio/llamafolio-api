@@ -1,0 +1,31 @@
+{
+  "id": "games-for-a-living",
+  "symbol": "gfal",
+  "name": "Games for a Living",
+  "image": "https://assets.coingecko.com/coins/images/29430/large/GFAL-icon-200x200.png?1702552187",
+  "current_price": 0.02811806,
+  "market_cap": 44251696,
+  "market_cap_rank": 742,
+  "fully_diluted_valuation": 280499892,
+  "total_volume": 1753886,
+  "high_24h": 0.03063664,
+  "low_24h": 0.02804162,
+  "price_change_24h": -0.001850961701112482,
+  "price_change_percentage_24h": -6.17625,
+  "market_cap_change_24h": -3099618.453446932,
+  "market_cap_change_percentage_24h": -6.546,
+  "circulating_supply": 1577601167.8273811,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.04868205,
+  "ath_change_percentage": -42.13325,
+  "ath_date": "2023-12-04T00:31:12.003Z",
+  "atl": 0.00451028,
+  "atl_change_percentage": 524.5891,
+  "atl_date": "2023-04-13T14:31:28.185Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:31.564Z",
+  "platforms": {
+    "bsc": "0x47c454ca6be2f6def6f32b638c80f91c9c3c5949"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "automata",
+  "symbol": "ata",
+  "name": "Automata",
+  "image": "https://assets.coingecko.com/coins/images/15985/large/ATA.jpg?1696515598",
+  "current_price": 0.220277,
+  "market_cap": 106085648,
+  "market_cap_rank": 464,
+  "fully_diluted_valuation": 217165682,
+  "total_volume": 70671923,
+  "high_24h": 0.292814,
+  "low_24h": 0.216714,
+  "price_change_24h": -0.014356349455869805,
+  "price_change_percentage_24h": -6.11864,
+  "market_cap_change_24h": -8814187.2293773,
+  "market_cap_change_percentage_24h": -7.67119,
+  "circulating_supply": 488500979.25,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 2.36,
+  "ath_change_percentage": -90.82018,
+  "ath_date": "2021-06-07T06:04:15.523Z",
+  "atl": 0.063594,
+  "atl_change_percentage": 241.0747,
+  "atl_date": "2023-08-17T22:46:21.489Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:36.149Z",
+  "platforms": {
+    "bsc": "0xa2120b9e674d3fc3875f415a7df52e382f141225"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "codex-multichain",
+  "symbol": "codex",
+  "name": "Codex Multichain",
+  "image": "https://assets.coingecko.com/coins/images/33980/large/200x200.jpg?1703580135",
+  "current_price": 0.03181727,
+  "market_cap": 3181727,
+  "market_cap_rank": 2029,
+  "fully_diluted_valuation": 3181727,
+  "total_volume": 36165,
+  "high_24h": 0.03621134,
+  "low_24h": 0.03184157,
+  "price_change_24h": -0.00396839047728536,
+  "price_change_percentage_24h": -11.08933,
+  "market_cap_change_24h": -397734.4096908299,
+  "market_cap_change_percentage_24h": -11.11157,
+  "circulating_supply": 100000000,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.07168,
+  "ath_change_percentage": -55.54569,
+  "ath_date": "2024-04-09T12:06:43.979Z",
+  "atl": 0.00378852,
+  "atl_change_percentage": 741.0875,
+  "atl_date": "2023-12-28T18:30:13.709Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:50:06.106Z",
+  "platforms": {
+    "ethereum": "0xfd26e39807772251c3bb90fb1fcd9ce5b80c5c24"
+  }
+}

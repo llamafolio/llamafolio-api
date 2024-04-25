@@ -1,0 +1,31 @@
+{
+  "id": "krypton-token",
+  "symbol": "kgc",
+  "name": "Krypton Galaxy Coin",
+  "image": "https://assets.coingecko.com/coins/images/9152/large/krypton.PNG?1696509275",
+  "current_price": 0.00002334,
+  "market_cap": 20827,
+  "market_cap_rank": 4143,
+  "fully_diluted_valuation": 70033,
+  "total_volume": 12163.15,
+  "high_24h": 0.00002514,
+  "low_24h": 0.00002295,
+  "price_change_24h": 3.84267e-7,
+  "price_change_percentage_24h": 1.67418,
+  "market_cap_change_24h": 341.16,
+  "market_cap_change_percentage_24h": 1.66539,
+  "circulating_supply": 892147867,
+  "total_supply": 3000000000,
+  "max_supply": null,
+  "ath": 0.00544416,
+  "ath_change_percentage": -99.57235,
+  "ath_date": "2019-08-02T13:47:52.943Z",
+  "atl": 0.00001644,
+  "atl_change_percentage": 41.57976,
+  "atl_date": "2023-11-21T18:49:49.072Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:42.232Z",
+  "platforms": {
+    "ethereum": "0xa8262eb913fccea4c3f77fc95b8b4043b384cfbb"
+  }
+}

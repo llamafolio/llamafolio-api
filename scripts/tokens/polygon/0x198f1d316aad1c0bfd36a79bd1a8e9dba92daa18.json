@@ -1,0 +1,31 @@
+{
+  "id": "decats",
+  "symbol": "decats",
+  "name": "DeCats",
+  "image": "https://assets.coingecko.com/coins/images/33203/large/Decats_Logo_200_.png?1701076803",
+  "current_price": 16.2,
+  "market_cap": 161791,
+  "market_cap_rank": 3596,
+  "fully_diluted_valuation": 161791,
+  "total_volume": 27522,
+  "high_24h": 16.23,
+  "low_24h": 16.14,
+  "price_change_24h": 0.00172056,
+  "price_change_percentage_24h": 0.01062,
+  "market_cap_change_24h": -2.449607723916415,
+  "market_cap_change_percentage_24h": -0.00151,
+  "circulating_supply": 10000,
+  "total_supply": 10000,
+  "max_supply": 10000,
+  "ath": 114.92,
+  "ath_change_percentage": -85.9145,
+  "ath_date": "2023-12-12T00:41:32.186Z",
+  "atl": 16.13,
+  "atl_change_percentage": 0.32882,
+  "atl_date": "2024-04-22T17:29:55.883Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:28.887Z",
+  "platforms": {
+    "polygon": "0x198f1d316aad1c0bfd36a79bd1a8e9dba92daa18"
+  }
+}

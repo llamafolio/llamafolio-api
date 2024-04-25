@@ -1,0 +1,31 @@
+{
+  "id": "solarcoin",
+  "symbol": "slr",
+  "name": "Solarcoin",
+  "image": "https://assets.coingecko.com/coins/images/152/large/solarcoin.png?1696501524",
+  "current_price": 0.02489088,
+  "market_cap": 1610783,
+  "market_cap_rank": 2415,
+  "fully_diluted_valuation": 2438027221,
+  "total_volume": 399.18,
+  "high_24h": 0.02542654,
+  "low_24h": 0.02476625,
+  "price_change_24h": -0.000447877580883094,
+  "price_change_percentage_24h": -1.76756,
+  "market_cap_change_24h": -33117.66453969944,
+  "market_cap_change_percentage_24h": -2.01458,
+  "circulating_supply": 64813806.7821045,
+  "total_supply": 98100000000,
+  "max_supply": null,
+  "ath": 2.88,
+  "ath_change_percentage": -99.13514,
+  "ath_date": "2018-05-04T00:00:00.000Z",
+  "atl": 0.00000128,
+  "atl_change_percentage": 1945302.67483,
+  "atl_date": "2020-10-02T04:37:37.081Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:52.848Z",
+  "platforms": {
+    "ethereum": "0x4e9e4ab99cfc14b852f552f5fb3aa68617825b6c"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "ordinalsfi",
+  "symbol": "ordifi",
+  "name": "OrdinalsFi",
+  "image": "https://assets.coingecko.com/coins/images/33723/large/ordinalsfi200.png?1702885610",
+  "current_price": 0.00046814,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 46814,
+  "total_volume": 78.13,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.01192717,
+  "ath_change_percentage": -96.075,
+  "ath_date": "2023-12-18T18:45:01.352Z",
+  "atl": 0.00022784,
+  "atl_change_percentage": 105.47281,
+  "atl_date": "2024-02-05T03:11:01.056Z",
+  "roi": null,
+  "last_updated": "2024-04-24T01:01:31.483Z",
+  "platforms": {
+    "ethereum": "0x57ca1f39b0757b8610617e90fa9b2980ccebfece"
+  }
+}

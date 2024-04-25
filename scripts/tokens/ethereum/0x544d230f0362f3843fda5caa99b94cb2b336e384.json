@@ -1,0 +1,31 @@
+{
+  "id": "magnesium",
+  "symbol": "mag",
+  "name": "Magnesium",
+  "image": "https://assets.coingecko.com/coins/images/32056/large/WhatsApp_Image_2023-09-29_at_15.29.08.jpeg?1696530853",
+  "current_price": 8e-18,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2.523e-9,
+  "total_volume": 1342.52,
+  "high_24h": 8e-17,
+  "low_24h": 5e-18,
+  "price_change_24h": -7.2e-17,
+  "price_change_percentage_24h": -90.00487,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 420690000,
+  "max_supply": 420690000,
+  "ath": 0.00340211,
+  "ath_change_percentage": -100,
+  "ath_date": "2024-02-15T02:40:55.935Z",
+  "atl": 5e-18,
+  "atl_change_percentage": 20.27225,
+  "atl_date": "2024-04-25T08:38:34.493Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:25.766Z",
+  "platforms": {
+    "ethereum": "0x544d230f0362f3843fda5caa99b94cb2b336e384"
+  }
+}

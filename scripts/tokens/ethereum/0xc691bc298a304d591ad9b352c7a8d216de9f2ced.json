@@ -1,0 +1,31 @@
+{
+  "id": "polaris-share",
+  "symbol": "pola",
+  "name": "Polaris Share",
+  "image": "https://assets.coingecko.com/coins/images/13817/large/tHQrxdYQ_400x400.png?1696513563",
+  "current_price": 0.03435553,
+  "market_cap": 15257501,
+  "market_cap_rank": 1243,
+  "fully_diluted_valuation": 157418227,
+  "total_volume": 1172022,
+  "high_24h": 0.03708182,
+  "low_24h": 0.03399487,
+  "price_change_24h": -0.001573638141807908,
+  "price_change_percentage_24h": -4.37983,
+  "market_cap_change_24h": -624192.022601245,
+  "market_cap_change_percentage_24h": -3.93026,
+  "circulating_supply": 445847393.7273,
+  "total_supply": 4599999999,
+  "max_supply": 5000000000,
+  "ath": 0.522685,
+  "ath_change_percentage": -93.36125,
+  "ath_date": "2021-02-14T03:12:17.027Z",
+  "atl": 0.00785633,
+  "atl_change_percentage": 341.67937,
+  "atl_date": "2023-10-04T02:15:36.977Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:59.932Z",
+  "platforms": {
+    "ethereum": "0xc691bc298a304d591ad9b352c7a8d216de9f2ced"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "dibs-share",
+  "symbol": "dshare",
+  "name": "Dibs Share",
+  "image": "https://assets.coingecko.com/coins/images/22194/large/dshares.png?1696521538",
+  "current_price": 0.487685,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 29685,
+  "total_volume": 92.82,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 60870,
+  "max_supply": 70000,
+  "ath": 13206.26,
+  "ath_change_percentage": -99.99631,
+  "ath_date": "2022-01-03T10:05:22.575Z",
+  "atl": 0.485904,
+  "atl_change_percentage": 0.36661,
+  "atl_date": "2023-08-02T17:00:19.921Z",
+  "roi": null,
+  "last_updated": "2023-08-02T23:30:04.793Z",
+  "platforms": {
+    "bsc": "0x26d3163b165be95137cee97241e716b2791a7572"
+  }
+}

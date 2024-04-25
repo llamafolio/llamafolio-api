@@ -1,0 +1,31 @@
+{
+  "id": "staked-veth",
+  "symbol": "sveth",
+  "name": "Vector Reserve Staked vETH",
+  "image": "https://assets.coingecko.com/coins/images/35289/large/svETH200.png?1709593889",
+  "current_price": 3720.64,
+  "market_cap": 7539568,
+  "market_cap_rank": 1572,
+  "fully_diluted_valuation": 7449924,
+  "total_volume": 27.92,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 2002.32140782937,
+  "total_supply": 2002.32140782937,
+  "max_supply": null,
+  "ath": 4503.63,
+  "ath_change_percentage": -17.38564,
+  "ath_date": "2024-03-13T22:01:00.145Z",
+  "atl": 3006.72,
+  "atl_change_percentage": 23.74432,
+  "atl_date": "2024-02-18T16:44:33.153Z",
+  "roi": null,
+  "last_updated": "2024-04-13T08:14:43.451Z",
+  "platforms": {
+    "ethereum": "0x6733f0283711f225a447e759d859a70b0c0fd2bc"
+  }
+}

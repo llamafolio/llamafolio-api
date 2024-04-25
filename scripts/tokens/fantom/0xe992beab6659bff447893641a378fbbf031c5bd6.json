@@ -1,0 +1,31 @@
+{
+  "id": "wigoswap",
+  "symbol": "wigo",
+  "name": "WigoSwap",
+  "image": "https://assets.coingecko.com/coins/images/23603/large/wigo.png?1696522810",
+  "current_price": 0.0123797,
+  "market_cap": 20925034,
+  "market_cap_rank": 1092,
+  "fully_diluted_valuation": 22161881,
+  "total_volume": 246022,
+  "high_24h": 0.01397147,
+  "low_24h": 0.01236807,
+  "price_change_24h": -0.00118298900669229,
+  "price_change_percentage_24h": -8.72238,
+  "market_cap_change_24h": -2103537.239524856,
+  "market_cap_change_percentage_24h": -9.13447,
+  "circulating_supply": 1691142230.90297,
+  "total_supply": 1791103044.88633,
+  "max_supply": 2000000000,
+  "ath": 0.0285438,
+  "ath_change_percentage": -56.58274,
+  "ath_date": "2022-03-01T04:58:50.988Z",
+  "atl": 0.00018249,
+  "atl_change_percentage": 6691.11345,
+  "atl_date": "2022-09-14T07:58:57.260Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:34.170Z",
+  "platforms": {
+    "fantom": "0xe992beab6659bff447893641a378fbbf031c5bd6"
+  }
+}

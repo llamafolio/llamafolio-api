@@ -1,0 +1,31 @@
+{
+  "id": "africarare",
+  "symbol": "ubu",
+  "name": "Africarare",
+  "image": "https://assets.coingecko.com/coins/images/35377/large/Full_Vector_Token_Icon.jpg?1709147121",
+  "current_price": 0.060257,
+  "market_cap": 2585840,
+  "market_cap_rank": 2155,
+  "fully_diluted_valuation": 60259512,
+  "total_volume": 105336,
+  "high_24h": 0.060435,
+  "low_24h": 0.059198,
+  "price_change_24h": 0.00060941,
+  "price_change_percentage_24h": 1.02168,
+  "market_cap_change_24h": 26924,
+  "market_cap_change_percentage_24h": 1.05216,
+  "circulating_supply": 42911733.66333,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.091993,
+  "ath_change_percentage": -34.53493,
+  "ath_date": "2024-02-29T10:53:03.763Z",
+  "atl": 0.052205,
+  "atl_change_percentage": 15.36061,
+  "atl_date": "2024-03-11T06:14:55.339Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:04.971Z",
+  "platforms": {
+    "polygon": "0x78445485a8d5b3be765e3027bc336e3c272a23c9"
+  }
+}

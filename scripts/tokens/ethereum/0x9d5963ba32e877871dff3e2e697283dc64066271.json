@@ -1,0 +1,31 @@
+{
+  "id": "aga-rewards",
+  "symbol": "edc",
+  "name": "Edcoin",
+  "image": "https://assets.coingecko.com/coins/images/13872/large/EDCOIN-1.png?1696513617",
+  "current_price": 0.05467,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 16950.31,
+  "high_24h": 0.057395,
+  "low_24h": 0.054282,
+  "price_change_24h": -0.002487278507180044,
+  "price_change_percentage_24h": -4.35167,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.189443,
+  "ath_change_percentage": -71.26769,
+  "ath_date": "2021-03-20T13:23:47.173Z",
+  "atl": 0.03152763,
+  "atl_change_percentage": 72.64676,
+  "atl_date": "2022-11-09T22:11:20.969Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:36.942Z",
+  "platforms": {
+    "ethereum": "0x9d5963ba32e877871dff3e2e697283dc64066271"
+  }
+}

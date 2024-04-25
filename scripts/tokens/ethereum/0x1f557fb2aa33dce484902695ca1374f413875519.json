@@ -1,0 +1,31 @@
+{
+  "id": "vestate",
+  "symbol": "ves",
+  "name": "Vestate",
+  "image": "https://assets.coingecko.com/coins/images/35475/large/IMG_0759.png?1708772732",
+  "current_price": 0.02328196,
+  "market_cap": 3337765,
+  "market_cap_rank": 2001,
+  "fully_diluted_valuation": 11613658,
+  "total_volume": 256559,
+  "high_24h": 0.0265536,
+  "low_24h": 0.023216,
+  "price_change_24h": -0.00256097630392127,
+  "price_change_percentage_24h": -9.90977,
+  "market_cap_change_24h": -372195.78397667827,
+  "market_cap_change_percentage_24h": -10.03234,
+  "circulating_supply": 143700000,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 0.04646524,
+  "ath_change_percentage": -49.85859,
+  "ath_date": "2024-03-28T18:00:22.582Z",
+  "atl": 0.00798635,
+  "atl_change_percentage": 191.72702,
+  "atl_date": "2024-02-27T11:08:41.309Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:23.511Z",
+  "platforms": {
+    "ethereum": "0x1f557fb2aa33dce484902695ca1374f413875519"
+  }
+}

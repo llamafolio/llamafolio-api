@@ -1,0 +1,31 @@
+{
+  "id": "coinbot",
+  "symbol": "coinbt",
+  "name": "CoinBot",
+  "image": "https://assets.coingecko.com/coins/images/31234/large/1-removebg-preview_%282%29.png?1696530060",
+  "current_price": 0.955482,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 955482,
+  "total_volume": 42.8,
+  "high_24h": 0.989721,
+  "low_24h": 0.951623,
+  "price_change_24h": -0.026561941629945296,
+  "price_change_percentage_24h": -2.70476,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 8.73,
+  "ath_change_percentage": -89.04973,
+  "ath_date": "2023-08-20T06:45:35.187Z",
+  "atl": 0.490566,
+  "atl_change_percentage": 94.77142,
+  "atl_date": "2023-11-27T20:00:48.186Z",
+  "roi": null,
+  "last_updated": "2024-04-24T18:08:02.174Z",
+  "platforms": {
+    "ethereum": "0x6fa5e1c43b5a466cbd1cae7993b67c982400d481"
+  }
+}

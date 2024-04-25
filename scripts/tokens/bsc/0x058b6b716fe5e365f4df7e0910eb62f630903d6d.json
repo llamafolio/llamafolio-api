@@ -1,0 +1,31 @@
+{
+  "id": "kindness-for-the-soul",
+  "symbol": "kind",
+  "name": "Kindness For The Soul",
+  "image": "https://assets.coingecko.com/coins/images/32993/large/IMG_3398.png?1700528108",
+  "current_price": 3.08,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 677860,
+  "total_volume": 3910.19,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 220000,
+  "max_supply": 220000,
+  "ath": 114.39,
+  "ath_change_percentage": -97.30634,
+  "ath_date": "2023-12-12T07:14:16.640Z",
+  "atl": 3.06,
+  "atl_change_percentage": 0.80651,
+  "atl_date": "2024-02-05T01:00:42.601Z",
+  "roi": null,
+  "last_updated": "2024-02-05T05:00:28.317Z",
+  "platforms": {
+    "bsc": "0x058b6b716fe5e365f4df7e0910eb62f630903d6d"
+  }
+}

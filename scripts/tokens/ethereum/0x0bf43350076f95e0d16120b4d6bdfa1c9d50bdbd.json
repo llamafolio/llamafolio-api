@@ -1,0 +1,31 @@
+{
+  "id": "antfarm-governance-token",
+  "symbol": "agt",
+  "name": "Antfarm Governance Token",
+  "image": "https://assets.coingecko.com/coins/images/28822/large/AGT.png?1696527798",
+  "current_price": 0.03754822,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 153.73,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": 10000000,
+  "ath": 0.060763,
+  "ath_change_percentage": -38.20557,
+  "ath_date": "2024-03-15T07:46:06.018Z",
+  "atl": 0.03466522,
+  "atl_change_percentage": 8.31669,
+  "atl_date": "2024-04-19T02:44:15.839Z",
+  "roi": null,
+  "last_updated": "2024-04-19T08:12:16.809Z",
+  "platforms": {
+    "ethereum": "0x0bf43350076f95e0d16120b4d6bdfa1c9d50bdbd"
+  }
+}

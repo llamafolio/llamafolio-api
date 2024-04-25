@@ -1,0 +1,31 @@
+{
+  "id": "flame-2",
+  "symbol": "flame",
+  "name": "Flame",
+  "image": "https://assets.coingecko.com/coins/images/34280/large/20240104-164053.jpg?1704452348",
+  "current_price": 0.00136786,
+  "market_cap": 13730.43,
+  "market_cap_rank": 4191,
+  "fully_diluted_valuation": 1373043,
+  "total_volume": 175186,
+  "high_24h": 0.00154103,
+  "low_24h": 0.00134642,
+  "price_change_24h": -0.000133424505553753,
+  "price_change_percentage_24h": -8.88734,
+  "market_cap_change_24h": -1347.803305253321,
+  "market_cap_change_percentage_24h": -8.93874,
+  "circulating_supply": 10000000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.605516,
+  "ath_change_percentage": -99.77307,
+  "ath_date": "2024-01-28T13:22:04.468Z",
+  "atl": 0.00096189,
+  "atl_change_percentage": 42.85247,
+  "atl_date": "2024-04-19T21:26:59.451Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:12.709Z",
+  "platforms": {
+    "arbitrum": "0x4a7779abed707a9c7deadbbef5c15f3e52370a99"
+  }
+}

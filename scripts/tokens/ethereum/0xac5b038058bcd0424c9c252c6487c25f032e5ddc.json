@@ -1,0 +1,31 @@
+{
+  "id": "epik-protocol",
+  "symbol": "aiepk",
+  "name": "EpiK Protocol",
+  "image": "https://assets.coingecko.com/coins/images/15188/large/AIEPK_logo.png?1696514845",
+  "current_price": 0.01221503,
+  "market_cap": 1895037,
+  "market_cap_rank": 2327,
+  "fully_diluted_valuation": 4887046,
+  "total_volume": 199459,
+  "high_24h": 0.0139734,
+  "low_24h": 0.01153016,
+  "price_change_24h": -0.00153417578880247,
+  "price_change_percentage_24h": -11.15829,
+  "market_cap_change_24h": -236660.7544665467,
+  "market_cap_change_percentage_24h": -11.10198,
+  "circulating_supply": 155106966.82509318,
+  "total_supply": 400000000,
+  "max_supply": null,
+  "ath": 2.19,
+  "ath_change_percentage": -99.4416,
+  "ath_date": "2021-08-10T13:37:02.033Z",
+  "atl": 0.00349503,
+  "atl_change_percentage": 249.56417,
+  "atl_date": "2023-08-30T18:46:26.352Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:51.191Z",
+  "platforms": {
+    "ethereum": "0xac5b038058bcd0424c9c252c6487c25f032e5ddc"
+  }
+}

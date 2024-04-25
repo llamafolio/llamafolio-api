@@ -1,0 +1,31 @@
+{
+  "id": "hord",
+  "symbol": "hord",
+  "name": "Hord",
+  "image": "https://assets.coingecko.com/coins/images/14972/large/HORD_TOKEN_%281%29_1.png?1705414356",
+  "current_price": 0.01342284,
+  "market_cap": 3348935,
+  "market_cap_rank": 2000,
+  "fully_diluted_valuation": 4293961,
+  "total_volume": 69765,
+  "high_24h": 0.01505813,
+  "low_24h": 0.01325801,
+  "price_change_24h": -0.000371471774774411,
+  "price_change_percentage_24h": -2.69294,
+  "market_cap_change_24h": -106180.74575870391,
+  "market_cap_change_percentage_24h": -3.07315,
+  "circulating_supply": 249573582.711021,
+  "total_supply": 320000000,
+  "max_supply": 320000000,
+  "ath": 1.79,
+  "ath_change_percentage": -99.25338,
+  "ath_date": "2021-05-12T04:48:25.764Z",
+  "atl": 0.00803785,
+  "atl_change_percentage": 66.65042,
+  "atl_date": "2022-07-25T14:25:38.205Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:11.948Z",
+  "platforms": {
+    "ethereum": "0x43a96962254855f16b925556f9e97be436a43448"
+  }
+}

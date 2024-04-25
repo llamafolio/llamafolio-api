@@ -1,0 +1,31 @@
+{
+  "id": "valentine-floki",
+  "symbol": "toshe",
+  "name": "TOSHE",
+  "image": "https://assets.coingecko.com/coins/images/23311/large/TOSHE.png?1704856679",
+  "current_price": 6.987e-9,
+  "market_cap": 750821,
+  "market_cap_rank": 2848,
+  "fully_diluted_valuation": 757332,
+  "total_volume": 4602.59,
+  "high_24h": 7.291e-9,
+  "low_24h": 6.792e-9,
+  "price_change_24h": -1.4809888e-11,
+  "price_change_percentage_24h": -0.21151,
+  "market_cap_change_24h": -1591.444998347899,
+  "market_cap_change_percentage_24h": -0.21151,
+  "circulating_supply": 107458274118896,
+  "total_supply": 108390095522218.4,
+  "max_supply": 120000000000000,
+  "ath": 1.896e-8,
+  "ath_change_percentage": -62.93918,
+  "ath_date": "2024-03-29T06:07:44.422Z",
+  "atl": 4.592e-11,
+  "atl_change_percentage": 15202.10361,
+  "atl_date": "2022-06-17T00:49:53.605Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:18.694Z",
+  "platforms": {
+    "base": "0x00e57ec29ef2ba7df07ad10573011647b2366f6d"
+  }
+}

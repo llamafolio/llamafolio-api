@@ -1,0 +1,31 @@
+{
+  "id": "ubix-network",
+  "symbol": "ubx",
+  "name": "UBIX Network",
+  "image": "https://assets.coingecko.com/coins/images/13000/large/1.png?1696512789",
+  "current_price": 0.00002963,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 29747,
+  "total_volume": 282486,
+  "high_24h": 0.00003769,
+  "low_24h": 0.00002975,
+  "price_change_24h": -0.000008053259158885,
+  "price_change_percentage_24h": -21.36901,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000000,
+  "ath": 0.00510796,
+  "ath_change_percentage": -99.41684,
+  "ath_date": "2021-04-10T12:53:38.096Z",
+  "atl": 0.00000475,
+  "atl_change_percentage": 527.73299,
+  "atl_date": "2020-11-02T03:29:51.278Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:13.710Z",
+  "platforms": {
+    "ethereum": "0xf5b5efc906513b4344ebabcf47a04901f99f09f3"
+  }
+}

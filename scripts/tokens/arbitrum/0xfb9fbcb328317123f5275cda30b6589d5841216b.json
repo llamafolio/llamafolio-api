@@ -1,0 +1,31 @@
+{
+  "id": "antfarm-token",
+  "symbol": "atf",
+  "name": "Antfarm Token",
+  "image": "https://assets.coingecko.com/coins/images/28821/large/ATF.png?1696527797",
+  "current_price": 0.141528,
+  "market_cap": 1398084,
+  "market_cap_rank": 2483,
+  "fully_diluted_valuation": 1398084,
+  "total_volume": 328.92,
+  "high_24h": 0.153353,
+  "low_24h": 0.140989,
+  "price_change_24h": -0.010990869861910613,
+  "price_change_percentage_24h": -7.20622,
+  "market_cap_change_24h": -108720.63934501633,
+  "market_cap_change_percentage_24h": -7.21531,
+  "circulating_supply": 9878471.58222585,
+  "total_supply": 9878471.58222585,
+  "max_supply": 10000000,
+  "ath": 0.247867,
+  "ath_change_percentage": -43.01522,
+  "ath_date": "2024-03-14T05:02:55.794Z",
+  "atl": 0.094998,
+  "atl_change_percentage": 48.68368,
+  "atl_date": "2023-10-13T10:35:45.752Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:37.968Z",
+  "platforms": {
+    "arbitrum": "0xfb9fbcb328317123f5275cda30b6589d5841216b"
+  }
+}

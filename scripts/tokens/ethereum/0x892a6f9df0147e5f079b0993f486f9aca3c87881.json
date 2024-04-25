@@ -1,0 +1,31 @@
+{
+  "id": "xfund",
+  "symbol": "xfund",
+  "name": "xFUND",
+  "image": "https://assets.coingecko.com/coins/images/13770/large/xfund.png?1696513512",
+  "current_price": 398.98,
+  "market_cap": 3972317,
+  "market_cap_rank": 1911,
+  "fully_diluted_valuation": 3972367,
+  "total_volume": 42008,
+  "high_24h": 482.18,
+  "low_24h": 398.34,
+  "price_change_24h": -78.00487876891935,
+  "price_change_percentage_24h": -16.35365,
+  "market_cap_change_24h": -787984.6184123848,
+  "market_cap_change_percentage_24h": -16.55325,
+  "circulating_supply": 9970.875,
+  "total_supply": 9971,
+  "max_supply": 9971,
+  "ath": 10139.65,
+  "ath_change_percentage": -96.07146,
+  "ath_date": "2021-05-11T21:35:06.705Z",
+  "atl": 123.68,
+  "atl_change_percentage": 222.08393,
+  "atl_date": "2022-06-18T20:57:06.256Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:54:54.468Z",
+  "platforms": {
+    "ethereum": "0x892a6f9df0147e5f079b0993f486f9aca3c87881"
+  }
+}

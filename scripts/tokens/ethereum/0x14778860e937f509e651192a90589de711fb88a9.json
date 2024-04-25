@@ -1,0 +1,31 @@
+{
+  "id": "cyberconnect",
+  "symbol": "cyber",
+  "name": "CyberConnect",
+  "image": "https://assets.coingecko.com/coins/images/31274/large/cyberconnect.png?1696530098",
+  "current_price": 8.69,
+  "market_cap": 95790902,
+  "market_cap_rank": 486,
+  "fully_diluted_valuation": 867828433,
+  "total_volume": 16158454,
+  "high_24h": 9.4,
+  "low_24h": 8.68,
+  "price_change_24h": -0.6126954087316232,
+  "price_change_percentage_24h": -6.58815,
+  "market_cap_change_24h": -7082997.3498069495,
+  "market_cap_change_percentage_24h": -6.88513,
+  "circulating_supply": 11038000,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 15.79,
+  "ath_change_percentage": -44.95567,
+  "ath_date": "2023-09-01T22:25:07.435Z",
+  "atl": 3.54,
+  "atl_change_percentage": 145.61608,
+  "atl_date": "2023-08-26T01:10:37.972Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:57.059Z",
+  "platforms": {
+    "ethereum": "0x14778860e937f509e651192a90589de711fb88a9"
+  }
+}

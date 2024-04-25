@@ -1,0 +1,31 @@
+{
+  "id": "apis-finance",
+  "symbol": "bep-20",
+  "name": "Apis finance",
+  "image": "https://assets.coingecko.com/coins/images/32621/large/SketchPngb2d9c9cdf12d2e64d149663ff03d01b3055e670c941a4edb31e37fc5b910b39e.e00af046.png?1698759088",
+  "current_price": 0.074055,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 89876,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": 1000000000,
+  "ath": 0.082566,
+  "ath_change_percentage": -10.3075,
+  "ath_date": "2023-11-01T00:41:21.192Z",
+  "atl": 0.073427,
+  "atl_change_percentage": 0.85592,
+  "atl_date": "2023-11-02T16:30:05.670Z",
+  "roi": null,
+  "last_updated": "2023-11-02T18:00:02.265Z",
+  "platforms": {
+    "opbnb": "0xf464c09d7f20dc82c6756c65a1ff2e3addfd186b"
+  }
+}

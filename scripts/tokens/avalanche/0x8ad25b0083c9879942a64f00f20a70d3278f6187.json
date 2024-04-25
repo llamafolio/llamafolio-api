@@ -1,0 +1,31 @@
+{
+  "id": "meowcat-2",
+  "symbol": "meow",
+  "name": "Meowcat",
+  "image": "https://assets.coingecko.com/coins/images/36042/large/meow.png?1710400599",
+  "current_price": 0.074994,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 7333706,
+  "total_volume": 220571,
+  "high_24h": 0.091262,
+  "low_24h": 0.072953,
+  "price_change_24h": -0.015426060246242228,
+  "price_change_percentage_24h": -17.06048,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.203246,
+  "ath_change_percentage": -63.8646,
+  "ath_date": "2024-04-11T19:46:03.333Z",
+  "atl": 0.03174055,
+  "atl_change_percentage": 131.38826,
+  "atl_date": "2024-03-22T02:50:01.250Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:55.416Z",
+  "platforms": {
+    "avalanche": "0x8ad25b0083c9879942a64f00f20a70d3278f6187"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "ethereum-push-notification-service",
+  "symbol": "push",
+  "name": "Push Protocol",
+  "image": "https://assets.coingecko.com/coins/images/14769/large/aiOxYOJI_400x400.jpeg?1696514438",
+  "current_price": 0.223902,
+  "market_cap": 13473049,
+  "market_cap_rank": 1299,
+  "fully_diluted_valuation": 22319259,
+  "total_volume": 1054924,
+  "high_24h": 0.237686,
+  "low_24h": 0.223179,
+  "price_change_24h": -0.008442622300303737,
+  "price_change_percentage_24h": -3.63367,
+  "market_cap_change_24h": -546587.0227007214,
+  "market_cap_change_percentage_24h": -3.89872,
+  "circulating_supply": 60365125,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 8.73,
+  "ath_change_percentage": -97.43919,
+  "ath_date": "2021-04-14T01:56:51.489Z",
+  "atl": 0.168263,
+  "atl_change_percentage": 32.7996,
+  "atl_date": "2023-10-21T14:05:24.960Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:08.969Z",
+  "platforms": {
+    "ethereum": "0xf418588522d5dd018b425e472991e52ebbeeeeee"
+  }
+}

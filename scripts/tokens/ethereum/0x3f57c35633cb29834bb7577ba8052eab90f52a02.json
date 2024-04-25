@@ -1,0 +1,31 @@
+{
+  "id": "defender-bot",
+  "symbol": "dfndr",
+  "name": "Defender Bot",
+  "image": "https://assets.coingecko.com/coins/images/34816/large/defenderbott.png?1706173844",
+  "current_price": 0.09651,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 9650954,
+  "total_volume": 91525,
+  "high_24h": 0.117089,
+  "low_24h": 0.092548,
+  "price_change_24h": -0.02054655198564548,
+  "price_change_percentage_24h": -17.55274,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.299994,
+  "ath_change_percentage": -67.82949,
+  "ath_date": "2024-04-03T21:44:24.967Z",
+  "atl": 0.00204416,
+  "atl_change_percentage": 4621.23353,
+  "atl_date": "2024-02-03T16:22:09.363Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:06:30.503Z",
+  "platforms": {
+    "ethereum": "0x3f57c35633cb29834bb7577ba8052eab90f52a02"
+  }
+}

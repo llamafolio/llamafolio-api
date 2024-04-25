@@ -1,0 +1,35 @@
+{
+  "id": "sylo",
+  "symbol": "sylo",
+  "name": "Sylo",
+  "image": "https://assets.coingecko.com/coins/images/6430/large/SYLO.svg?1696506795",
+  "current_price": 0.00222689,
+  "market_cap": 9209024,
+  "market_cap_rank": 1476,
+  "fully_diluted_valuation": 22143627,
+  "total_volume": 1787637,
+  "high_24h": 0.00230335,
+  "low_24h": 0.00219908,
+  "price_change_24h": -0.000035005712523436,
+  "price_change_percentage_24h": -1.54763,
+  "market_cap_change_24h": -202865.31446022727,
+  "market_cap_change_percentage_24h": -2.15542,
+  "circulating_supply": 4158769592.391,
+  "total_supply": 10000000000,
+  "max_supply": null,
+  "ath": 0.01482212,
+  "ath_change_percentage": -85.06211,
+  "ath_date": "2021-05-06T09:46:08.483Z",
+  "atl": 0.00076816,
+  "atl_change_percentage": 188.23649,
+  "atl_date": "2021-01-05T00:42:25.527Z",
+  "roi": {
+    "times": -0.7440356812314947,
+    "currency": "usd",
+    "percentage": -74.40356812314947
+  },
+  "last_updated": "2024-04-25T08:59:59.633Z",
+  "platforms": {
+    "ethereum": "0xf293d23bf2cdc05411ca0eddd588eb1977e8dcd4"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "arbipad",
+  "symbol": "arbi",
+  "name": "ArbiPad",
+  "image": "https://assets.coingecko.com/coins/images/30275/large/ARBI_Logo.png?1696529181",
+  "current_price": 0.000205,
+  "market_cap": 1078487,
+  "market_cap_rank": 2644,
+  "fully_diluted_valuation": 2049966,
+  "total_volume": 106143,
+  "high_24h": 0.00020868,
+  "low_24h": 0.00020413,
+  "price_change_24h": -0.000003534343673225,
+  "price_change_percentage_24h": -1.69488,
+  "market_cap_change_24h": -17547.013843788067,
+  "market_cap_change_percentage_24h": -1.60096,
+  "circulating_supply": 5261000000,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.00174926,
+  "ath_change_percentage": -88.29015,
+  "ath_date": "2023-05-15T17:13:22.771Z",
+  "atl": 0.00006763,
+  "atl_change_percentage": 202.88116,
+  "atl_date": "2023-10-19T12:15:34.580Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:32.666Z",
+  "platforms": {
+    "arbitrum": "0x07dd5beaffb65b8ff2e575d500bdf324a05295dc"
+  }
+}

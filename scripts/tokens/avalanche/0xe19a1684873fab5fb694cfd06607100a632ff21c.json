@@ -1,0 +1,31 @@
+{
+  "id": "baklava",
+  "symbol": "bava",
+  "name": "Baklava",
+  "image": "https://assets.coingecko.com/coins/images/23780/large/200x200_BAVA_LOGO_%282%29.png?1696522980",
+  "current_price": 0.058083,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 38665899,
+  "total_volume": 184662,
+  "high_24h": 0.063385,
+  "low_24h": 0.056682,
+  "price_change_24h": -0.003857169769531113,
+  "price_change_percentage_24h": -6.22721,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 665696234.220249,
+  "max_supply": 1000000000,
+  "ath": 0.147726,
+  "ath_change_percentage": -60.80546,
+  "ath_date": "2023-12-26T02:46:44.668Z",
+  "atl": 0.01467485,
+  "atl_change_percentage": 294.55488,
+  "atl_date": "2023-12-01T16:11:10.781Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:47.425Z",
+  "platforms": {
+    "avalanche": "0xe19a1684873fab5fb694cfd06607100a632ff21c"
+  }
+}

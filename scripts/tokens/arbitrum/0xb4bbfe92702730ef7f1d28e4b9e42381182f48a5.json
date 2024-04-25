@@ -1,0 +1,31 @@
+{
+  "id": "hold-vip",
+  "symbol": "hold",
+  "name": "Hold VIP",
+  "image": "https://assets.coingecko.com/coins/images/30129/large/RteOSWQ__400x400.jpg?1696529050",
+  "current_price": 2.20446e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 7651.71,
+  "high_24h": 2.60334e-10,
+  "low_24h": 2.18522e-10,
+  "price_change_24h": -3.9115174e-11,
+  "price_change_percentage_24h": -15.06971,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 2.5326e-8,
+  "ath_change_percentage": -99.10488,
+  "ath_date": "2023-05-06T06:25:43.518Z",
+  "atl": 8.2857e-11,
+  "atl_change_percentage": 173.60418,
+  "atl_date": "2023-10-19T17:42:23.381Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:46.966Z",
+  "platforms": {
+    "arbitrum": "0xb4bbfe92702730ef7f1d28e4b9e42381182f48a5"
+  }
+}

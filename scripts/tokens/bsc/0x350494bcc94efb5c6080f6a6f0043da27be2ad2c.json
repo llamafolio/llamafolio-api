@@ -1,0 +1,31 @@
+{
+  "id": "dfs-mafia",
+  "symbol": "dfsm",
+  "name": "DFS Mafia V2",
+  "image": "https://assets.coingecko.com/coins/images/27931/large/dfsm.png?1696526950",
+  "current_price": 0.00000551,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2254613,
+  "total_volume": 752.74,
+  "high_24h": 0.00000556,
+  "low_24h": 0.00000542,
+  "price_change_24h": 4.8217e-8,
+  "price_change_percentage_24h": 0.88204,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 408333576938.643,
+  "max_supply": 408333576938.643,
+  "ath": 0.00001839,
+  "ath_change_percentage": -70.0706,
+  "ath_date": "2022-10-31T12:54:15.085Z",
+  "atl": 9.05105e-7,
+  "atl_change_percentage": 508.06117,
+  "atl_date": "2023-06-09T02:37:03.748Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:34.485Z",
+  "platforms": {
+    "bsc": "0x350494bcc94efb5c6080f6a6f0043da27be2ad2c"
+  }
+}

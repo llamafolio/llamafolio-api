@@ -1,0 +1,31 @@
+{
+  "id": "rand",
+  "symbol": "rnd",
+  "name": "Rand",
+  "image": "https://assets.coingecko.com/coins/images/33114/large/rnd_icon_200.png?1705089933",
+  "current_price": 0.131444,
+  "market_cap": 783421,
+  "market_cap_rank": 2826,
+  "fully_diluted_valuation": 26268619,
+  "total_volume": 85.49,
+  "high_24h": 0.131663,
+  "low_24h": 0.129997,
+  "price_change_24h": 0.00105398,
+  "price_change_percentage_24h": 0.80833,
+  "market_cap_change_24h": 5650.45,
+  "market_cap_change_percentage_24h": 0.72649,
+  "circulating_supply": 5964692.885025,
+  "total_supply": 200000000,
+  "max_supply": 200000000,
+  "ath": 0.222165,
+  "ath_change_percentage": -40.85691,
+  "ath_date": "2023-11-23T09:30:13.684Z",
+  "atl": 0.117156,
+  "atl_change_percentage": 12.15428,
+  "atl_date": "2024-04-13T19:49:23.531Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:22.286Z",
+  "platforms": {
+    "ethereum": "0x8be8b0dde627dd6be9a4b7fcadd04899aabdb2b1"
+  }
+}

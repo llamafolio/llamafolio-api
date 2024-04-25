@@ -1,0 +1,31 @@
+{
+  "id": "inu",
+  "symbol": "inu",
+  "name": "Inu.",
+  "image": "https://assets.coingecko.com/coins/images/26259/large/inulogo_200x200.png?1696525344",
+  "current_price": 1.303e-9,
+  "market_cap": 650350,
+  "market_cap_rank": 2928,
+  "fully_diluted_valuation": 650350,
+  "total_volume": 9084.6,
+  "high_24h": 1.538e-9,
+  "low_24h": 1.3e-9,
+  "price_change_24h": -2.31426843e-10,
+  "price_change_percentage_24h": -15.08238,
+  "market_cap_change_24h": -115509.91448778997,
+  "market_cap_change_percentage_24h": -15.08238,
+  "circulating_supply": 499120642144712.94,
+  "total_supply": 499120642144712.94,
+  "max_supply": 1000000000000000,
+  "ath": 3.392e-9,
+  "ath_change_percentage": -61.60742,
+  "ath_date": "2024-01-30T04:46:15.054Z",
+  "atl": 1.87047e-10,
+  "atl_change_percentage": 596.24577,
+  "atl_date": "2023-10-12T17:36:32.226Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:19.189Z",
+  "platforms": {
+    "ethereum": "0x050d94685c6b0477e1fc555888af6e2bb8dfbda5"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "lyfe-gold",
+  "symbol": "lgold",
+  "name": "Lyfe Gold",
+  "image": "https://assets.coingecko.com/coins/images/14938/large/LGOLD-Logo-200.png?1696514597",
+  "current_price": 61.47,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1229692,
+  "total_volume": 41738,
+  "high_24h": 61.49,
+  "low_24h": 58.51,
+  "price_change_24h": 0.839103,
+  "price_change_percentage_24h": 1.38403,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 20000,
+  "max_supply": null,
+  "ath": 68.52,
+  "ath_change_percentage": -10.28737,
+  "ath_date": "2021-05-23T16:02:25.647Z",
+  "atl": 45.33,
+  "atl_change_percentage": 35.61743,
+  "atl_date": "2022-12-29T13:44:53.518Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:44.735Z",
+  "platforms": {
+    "ethereum": "0x27778e14ce36d3b85e1effeb43816a17bbb7088a"
+  }
+}

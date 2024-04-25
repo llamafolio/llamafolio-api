@@ -1,0 +1,31 @@
+{
+  "id": "kondux-v2",
+  "symbol": "kndx",
+  "name": "KONDUX",
+  "image": "https://assets.coingecko.com/coins/images/28244/large/kndx.png?1696527247",
+  "current_price": 0.052055,
+  "market_cap": 28150507,
+  "market_cap_rank": 952,
+  "fully_diluted_valuation": 49109501,
+  "total_volume": 75662,
+  "high_24h": 0.054891,
+  "low_24h": 0.051497,
+  "price_change_24h": -0.001991770521224068,
+  "price_change_percentage_24h": -3.68525,
+  "market_cap_change_24h": -1148102.8466444649,
+  "market_cap_change_percentage_24h": -3.91863,
+  "circulating_supply": 540780817.3460163,
+  "total_supply": 943410209,
+  "max_supply": 1000000000,
+  "ath": 0.187098,
+  "ath_change_percentage": -72.19221,
+  "ath_date": "2024-03-11T11:09:13.853Z",
+  "atl": 0.0007596,
+  "atl_change_percentage": 6749.37971,
+  "atl_date": "2023-09-25T02:54:25.818Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:19.843Z",
+  "platforms": {
+    "ethereum": "0x7ca5af5ba3472af6049f63c1abc324475d44efc1"
+  }
+}

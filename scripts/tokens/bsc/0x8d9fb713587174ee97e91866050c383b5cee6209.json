@@ -1,0 +1,31 @@
+{
+  "id": "velhalla",
+  "symbol": "scar",
+  "name": "ScarQuest",
+  "image": "https://assets.coingecko.com/coins/images/20421/large/velhalla_DP.png?1696519829",
+  "current_price": 0.00186017,
+  "market_cap": 4416249,
+  "market_cap_rank": 1859,
+  "fully_diluted_valuation": 18504002,
+  "total_volume": 61215,
+  "high_24h": 0.00194272,
+  "low_24h": 0.00181425,
+  "price_change_24h": -0.000052429716818643,
+  "price_change_percentage_24h": -2.74128,
+  "market_cap_change_24h": -114448.84940670896,
+  "market_cap_change_percentage_24h": -2.52608,
+  "circulating_supply": 2374712306.656552,
+  "total_supply": 9950000000,
+  "max_supply": 9950000000,
+  "ath": 0.475949,
+  "ath_change_percentage": -99.60864,
+  "ath_date": "2021-11-16T17:23:16.339Z",
+  "atl": 0.00044823,
+  "atl_change_percentage": 315.56347,
+  "atl_date": "2023-10-10T18:40:13.573Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:44.887Z",
+  "platforms": {
+    "bsc": "0x8d9fb713587174ee97e91866050c383b5cee6209"
+  }
+}

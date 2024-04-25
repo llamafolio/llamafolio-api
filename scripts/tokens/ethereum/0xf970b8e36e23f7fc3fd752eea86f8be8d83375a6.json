@@ -1,0 +1,31 @@
+{
+  "id": "ripio-credit-network",
+  "symbol": "rcn",
+  "name": "Ripio Credit Network",
+  "image": "https://assets.coingecko.com/coins/images/1057/large/ripio-credit-network.png?1696502162",
+  "current_price": 0.00191651,
+  "market_cap": 1015050,
+  "market_cap_rank": 2678,
+  "fully_diluted_valuation": 1912016,
+  "total_volume": 588.43,
+  "high_24h": 0.00201467,
+  "low_24h": 0.00189789,
+  "price_change_24h": -0.000077726694011886,
+  "price_change_percentage_24h": -3.89757,
+  "market_cap_change_24h": -44665.27614675602,
+  "market_cap_change_percentage_24h": -4.21484,
+  "circulating_supply": 530848856.408,
+  "total_supply": 999942647,
+  "max_supply": null,
+  "ath": 0.525707,
+  "ath_change_percentage": -99.63573,
+  "ath_date": "2018-01-10T00:00:00.000Z",
+  "atl": 0.00003887,
+  "atl_change_percentage": 4827.17337,
+  "atl_date": "2017-10-28T00:00:00.000Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:01.626Z",
+  "platforms": {
+    "ethereum": "0xf970b8e36e23f7fc3fd752eea86f8be8d83375a6"
+  }
+}

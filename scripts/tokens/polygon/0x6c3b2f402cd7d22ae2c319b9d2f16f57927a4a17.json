@@ -1,0 +1,31 @@
+{
+  "id": "krown",
+  "symbol": "krw",
+  "name": "KROWN",
+  "image": "https://assets.coingecko.com/coins/images/16530/large/KRW_token_logo_200x200.png?1696516093",
+  "current_price": 0.00000288,
+  "market_cap": 34516,
+  "market_cap_rank": 4068,
+  "fully_diluted_valuation": 28795,
+  "total_volume": 130.86,
+  "high_24h": 0.00000293,
+  "low_24h": 0.00000286,
+  "price_change_24h": -1.8434279683e-8,
+  "price_change_percentage_24h": -0.63558,
+  "market_cap_change_24h": -333.8291155620027,
+  "market_cap_change_percentage_24h": -0.9579,
+  "circulating_supply": 11986951417,
+  "total_supply": 9999999000,
+  "max_supply": 10000000000,
+  "ath": 0.00509555,
+  "ath_change_percentage": -99.94348,
+  "ath_date": "2021-08-23T22:35:32.221Z",
+  "atl": 6.20666e-7,
+  "atl_change_percentage": 363.9954,
+  "atl_date": "2023-07-30T03:01:42.309Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:21.478Z",
+  "platforms": {
+    "polygon": "0x6c3b2f402cd7d22ae2c319b9d2f16f57927a4a17"
+  }
+}

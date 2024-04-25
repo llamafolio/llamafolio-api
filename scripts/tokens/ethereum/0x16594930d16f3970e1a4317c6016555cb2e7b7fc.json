@@ -1,0 +1,31 @@
+{
+  "id": "tokenbot",
+  "symbol": "tkb",
+  "name": "TokenBot",
+  "image": "https://assets.coingecko.com/coins/images/27106/large/tokenbot-logo-icon.png?1696526155",
+  "current_price": 0.00014269,
+  "market_cap": 102779,
+  "market_cap_rank": 3773,
+  "fully_diluted_valuation": 142449,
+  "total_volume": 52840,
+  "high_24h": 0.00015883,
+  "low_24h": 0.00012851,
+  "price_change_24h": 0.00000442,
+  "price_change_percentage_24h": 3.19314,
+  "market_cap_change_24h": 1881.52,
+  "market_cap_change_percentage_24h": 1.86479,
+  "circulating_supply": 721512006.815,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00439474,
+  "ath_change_percentage": -96.78449,
+  "ath_date": "2023-07-25T14:17:10.270Z",
+  "atl": 0.00010676,
+  "atl_change_percentage": 32.36826,
+  "atl_date": "2024-04-23T06:07:36.128Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:49.496Z",
+  "platforms": {
+    "ethereum": "0x16594930d16f3970e1a4317c6016555cb2e7b7fc"
+  }
+}

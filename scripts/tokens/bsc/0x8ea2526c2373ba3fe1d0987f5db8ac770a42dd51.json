@@ -1,0 +1,31 @@
+{
+  "id": "everid",
+  "symbol": "id",
+  "name": "Everest",
+  "image": "https://assets.coingecko.com/coins/images/5209/large/Everest.jpg?1696505719",
+  "current_price": 0.098352,
+  "market_cap": 11429628,
+  "market_cap_rank": 1375,
+  "fully_diluted_valuation": 78352205,
+  "total_volume": 87821,
+  "high_24h": 0.106309,
+  "low_24h": 0.09792,
+  "price_change_24h": -0.005545461142213187,
+  "price_change_percentage_24h": -5.33744,
+  "market_cap_change_24h": -714686.2954709604,
+  "market_cap_change_percentage_24h": -5.88495,
+  "circulating_supply": 116700000,
+  "total_supply": 800000000,
+  "max_supply": null,
+  "ath": 1.98,
+  "ath_change_percentage": -95.04819,
+  "ath_date": "2021-04-09T21:55:52.455Z",
+  "atl": 0.00808309,
+  "atl_change_percentage": 1112.17718,
+  "atl_date": "2023-09-08T03:41:18.131Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:20.566Z",
+  "platforms": {
+    "bsc": "0x8ea2526c2373ba3fe1d0987f5db8ac770a42dd51"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "jigstack",
+  "symbol": "stak",
+  "name": "Jigstack",
+  "image": "https://assets.coingecko.com/coins/images/14978/large/jigstack.PNG?1696514641",
+  "current_price": 0.0000119,
+  "market_cap": 20935,
+  "market_cap_rank": 4141,
+  "fully_diluted_valuation": 35697,
+  "total_volume": 0.00380839,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 1759068860.2176542,
+  "total_supply": 2999427228.87,
+  "max_supply": 3000000000,
+  "ath": 0.227105,
+  "ath_change_percentage": -99.99476,
+  "ath_date": "2021-04-26T22:28:31.593Z",
+  "atl": 0.00000868,
+  "atl_change_percentage": 37.17216,
+  "atl_date": "2024-02-02T03:21:56.073Z",
+  "roi": null,
+  "last_updated": "2024-04-23T22:43:48.916Z",
+  "platforms": {
+    "ethereum": "0x1f8a626883d7724dbd59ef51cbd4bf1cf2016d13"
+  }
+}

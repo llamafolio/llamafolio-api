@@ -1,0 +1,31 @@
+{
+  "id": "bent-finance",
+  "symbol": "bent",
+  "name": "Bent Finance",
+  "image": "https://assets.coingecko.com/coins/images/21274/large/bent-logo-200x200.png?1696520645",
+  "current_price": 0.03059398,
+  "market_cap": 215714,
+  "market_cap_rank": 3455,
+  "fully_diluted_valuation": 1529968,
+  "total_volume": 2588.74,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 7050863.24475527,
+  "total_supply": 50008799,
+  "max_supply": 100000000,
+  "ath": 15.98,
+  "ath_change_percentage": -99.8086,
+  "ath_date": "2021-12-19T17:41:05.429Z",
+  "atl": 0.02157076,
+  "atl_change_percentage": 41.83079,
+  "atl_date": "2024-04-13T21:38:10.325Z",
+  "roi": null,
+  "last_updated": "2024-04-22T04:44:20.320Z",
+  "platforms": {
+    "ethereum": "0x01597e397605bf280674bf292623460b4204c375"
+  }
+}

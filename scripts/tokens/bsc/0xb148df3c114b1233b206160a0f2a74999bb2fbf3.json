@@ -1,0 +1,31 @@
+{
+  "id": "dehealth",
+  "symbol": "dhlt",
+  "name": "DeHealth",
+  "image": "https://assets.coingecko.com/coins/images/24839/large/DeHealth_FB.png?1696523995",
+  "current_price": 0.00121273,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1212547,
+  "total_volume": 23692,
+  "high_24h": 0.00123165,
+  "low_24h": 0.0012089,
+  "price_change_24h": -0.000001414355516359,
+  "price_change_percentage_24h": -0.11649,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.04290181,
+  "ath_change_percentage": -97.17166,
+  "ath_date": "2022-09-12T10:15:00.466Z",
+  "atl": 0.00037799,
+  "atl_change_percentage": 221.01786,
+  "atl_date": "2023-09-20T15:24:56.028Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:55.973Z",
+  "platforms": {
+    "bsc": "0xb148df3c114b1233b206160a0f2a74999bb2fbf3"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "renbtc",
+  "symbol": "renbtc",
+  "name": "renBTC",
+  "image": "https://assets.coingecko.com/coins/images/11370/large/Bitcoin.jpg?1696511287",
+  "current_price": 63857,
+  "market_cap": 19407396,
+  "market_cap_rank": 1122,
+  "fully_diluted_valuation": 19407396,
+  "total_volume": 28803,
+  "high_24h": 67150,
+  "low_24h": 63413,
+  "price_change_24h": -3011.599308800978,
+  "price_change_percentage_24h": -4.50373,
+  "market_cap_change_24h": -992606.2803279161,
+  "market_cap_change_percentage_24h": -4.86572,
+  "circulating_supply": 304.49913669,
+  "total_supply": 304.49913669,
+  "max_supply": 304.49913669,
+  "ath": 74243,
+  "ath_change_percentage": -14.19357,
+  "ath_date": "2024-03-12T13:02:45.173Z",
+  "atl": 2235.69,
+  "atl_change_percentage": 2749.48844,
+  "atl_date": "2024-01-21T16:34:51.855Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:18.731Z",
+  "platforms": {
+    "polygon": "0xdbf31df14b66535af65aac99c32e9ea844e14501"
+  }
+}

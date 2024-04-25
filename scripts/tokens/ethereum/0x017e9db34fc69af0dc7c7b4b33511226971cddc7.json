@@ -1,0 +1,31 @@
+{
+  "id": "on-chain-dynamics",
+  "symbol": "ocd",
+  "name": "On-Chain Dynamics",
+  "image": "https://assets.coingecko.com/coins/images/31639/large/Screenshot_2023-09-01_010740.png?1696530455",
+  "current_price": 0.00640215,
+  "market_cap": 2604281,
+  "market_cap_rank": 2149,
+  "fully_diluted_valuation": 6402155,
+  "total_volume": 31094,
+  "high_24h": 0.00670153,
+  "low_24h": 0.00633331,
+  "price_change_24h": -0.000217192058910619,
+  "price_change_percentage_24h": -3.28117,
+  "market_cap_change_24h": -81969.62408230407,
+  "market_cap_change_percentage_24h": -3.05145,
+  "circulating_supply": 406782000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.01714212,
+  "ath_change_percentage": -62.60705,
+  "ath_date": "2023-11-08T15:34:32.267Z",
+  "atl": 0.00237621,
+  "atl_change_percentage": 169.75501,
+  "atl_date": "2023-09-12T23:09:50.876Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:49:53.405Z",
+  "platforms": {
+    "ethereum": "0x017e9db34fc69af0dc7c7b4b33511226971cddc7"
+  }
+}

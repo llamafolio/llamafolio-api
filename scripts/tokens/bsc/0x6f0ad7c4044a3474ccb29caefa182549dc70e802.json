@@ -1,0 +1,31 @@
+{
+  "id": "social-ai",
+  "symbol": "socialai",
+  "name": "Social AI",
+  "image": "https://assets.coingecko.com/coins/images/29278/large/photo_2023-03-02_13.38.53.jpeg?1696528231",
+  "current_price": 0.00031285,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 31285,
+  "total_volume": 78.06,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.00853606,
+  "ath_change_percentage": -96.33491,
+  "ath_date": "2023-03-09T18:33:28.634Z",
+  "atl": 0.00029834,
+  "atl_change_percentage": 4.86464,
+  "atl_date": "2023-05-12T19:30:57.528Z",
+  "roi": null,
+  "last_updated": "2023-05-18T12:00:34.516Z",
+  "platforms": {
+    "bsc": "0x6f0ad7c4044a3474ccb29caefa182549dc70e802"
+  }
+}

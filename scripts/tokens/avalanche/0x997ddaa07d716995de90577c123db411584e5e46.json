@@ -1,0 +1,31 @@
+{
+  "id": "defi-kingdoms",
+  "symbol": "jewel",
+  "name": "DeFi Kingdoms",
+  "image": "https://assets.coingecko.com/coins/images/18570/large/jewel_token_x2.png?1702076846",
+  "current_price": 0.148094,
+  "market_cap": 16908244,
+  "market_cap_rank": 1194,
+  "fully_diluted_valuation": 18004826,
+  "total_volume": 46818,
+  "high_24h": 0.166238,
+  "low_24h": 0.147161,
+  "price_change_24h": -0.018144118203906406,
+  "price_change_percentage_24h": -10.91456,
+  "market_cap_change_24h": -2087912.349200774,
+  "market_cap_change_percentage_24h": -10.99124,
+  "circulating_supply": 114069199.112573,
+  "total_supply": 121467136.483508,
+  "max_supply": 125000000,
+  "ath": 22.52,
+  "ath_change_percentage": -99.34111,
+  "ath_date": "2022-01-05T08:03:35.714Z",
+  "atl": 0.082308,
+  "atl_change_percentage": 80.27778,
+  "atl_date": "2023-08-17T21:55:51.162Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:05.226Z",
+  "platforms": {
+    "avalanche": "0x997ddaa07d716995de90577c123db411584e5e46"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "aga-carbon-rewards",
+  "symbol": "acar",
+  "name": "AGA Carbon Rewards",
+  "image": "https://assets.coingecko.com/coins/images/16729/large/acr128.png?1696516303",
+  "current_price": 1.94,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1943105453,
+  "total_volume": 5.25,
+  "high_24h": 1.96,
+  "low_24h": 1.94,
+  "price_change_24h": -0.007505442654971883,
+  "price_change_percentage_24h": -0.38477,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 20.47,
+  "ath_change_percentage": -90.50744,
+  "ath_date": "2021-07-28T20:08:48.477Z",
+  "atl": 1.87,
+  "atl_change_percentage": 3.69414,
+  "atl_date": "2024-04-13T21:02:24.241Z",
+  "roi": null,
+  "last_updated": "2024-04-25T07:00:51.600Z",
+  "platforms": {
+    "polygon": "0xcbce9f77921c2e90522d438df4c5582f4c617768"
+  }
+}

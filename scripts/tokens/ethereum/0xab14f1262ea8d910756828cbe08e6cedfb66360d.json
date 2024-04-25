@@ -1,0 +1,31 @@
+{
+  "id": "toro",
+  "symbol": "toro",
+  "name": "TORO",
+  "image": "https://assets.coingecko.com/coins/images/34442/large/T_coin.png?1704874974",
+  "current_price": 0.00801828,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 801828,
+  "total_volume": 12003.43,
+  "high_24h": 0.01039303,
+  "low_24h": 0.00761275,
+  "price_change_24h": -0.002298246567415445,
+  "price_change_percentage_24h": -22.27733,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.01460757,
+  "ath_change_percentage": -45.10872,
+  "ath_date": "2024-04-20T16:29:33.394Z",
+  "atl": 0.00201634,
+  "atl_change_percentage": 297.66582,
+  "atl_date": "2024-02-11T15:15:46.551Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:15.594Z",
+  "platforms": {
+    "ethereum": "0xab14f1262ea8d910756828cbe08e6cedfb66360d"
+  }
+}

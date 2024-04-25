@@ -1,0 +1,31 @@
+{
+  "id": "mobifi",
+  "symbol": "mofi",
+  "name": "MobiFi",
+  "image": "https://assets.coingecko.com/coins/images/14697/large/MOFI_Coin_Green_200x200.png?1696514369",
+  "current_price": 0.00368301,
+  "market_cap": 321130,
+  "market_cap_rank": 3283,
+  "fully_diluted_valuation": 524298,
+  "total_volume": 22830,
+  "high_24h": 0.00376621,
+  "low_24h": 0.00363372,
+  "price_change_24h": -0.000079406952463744,
+  "price_change_percentage_24h": -2.11053,
+  "market_cap_change_24h": -7214.673406663933,
+  "market_cap_change_percentage_24h": -2.19728,
+  "circulating_supply": 87280579.342527,
+  "total_supply": 142500000,
+  "max_supply": null,
+  "ath": 0.469067,
+  "ath_change_percentage": -99.21562,
+  "ath_date": "2021-05-12T19:48:41.478Z",
+  "atl": 0.00167864,
+  "atl_change_percentage": 119.18206,
+  "atl_date": "2023-11-23T10:40:23.312Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:30.296Z",
+  "platforms": {
+    "ethereum": "0xb2dbf14d0b47ed3ba02bdb7c954e05a72deb7544"
+  }
+}

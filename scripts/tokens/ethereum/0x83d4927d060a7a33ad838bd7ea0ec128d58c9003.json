@@ -1,0 +1,31 @@
+{
+  "id": "funded",
+  "symbol": "funded",
+  "name": "Funded",
+  "image": "https://assets.coingecko.com/coins/images/32736/large/1000003263.png?1708427223",
+  "current_price": 1.2,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1194658,
+  "total_volume": 1444.97,
+  "high_24h": 1.27,
+  "low_24h": 1.18,
+  "price_change_24h": -0.05664466138544988,
+  "price_change_percentage_24h": -4.51061,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 3.91,
+  "ath_change_percentage": -69.41884,
+  "ath_date": "2023-11-22T19:41:25.085Z",
+  "atl": 0.62475,
+  "atl_change_percentage": 91.22175,
+  "atl_date": "2024-01-09T20:41:06.908Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:47.776Z",
+  "platforms": {
+    "ethereum": "0x83d4927d060a7a33ad838bd7ea0ec128d58c9003"
+  }
+}

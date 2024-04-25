@@ -1,0 +1,31 @@
+{
+  "id": "metatrace",
+  "symbol": "trc",
+  "name": "MetaTrace",
+  "image": "https://assets.coingecko.com/coins/images/31427/large/Metatrace.png?1696530242",
+  "current_price": 0.0452218,
+  "market_cap": 6319023,
+  "market_cap_rank": 1679,
+  "fully_diluted_valuation": 225305740,
+  "total_volume": 471200,
+  "high_24h": 0.04917991,
+  "low_24h": 0.04474923,
+  "price_change_24h": -0.003470012570570669,
+  "price_change_percentage_24h": -7.12648,
+  "market_cap_change_24h": -513474.46638298593,
+  "market_cap_change_percentage_24h": -7.51518,
+  "circulating_supply": 140188702.6,
+  "total_supply": 4998450000,
+  "max_supply": 4998450000,
+  "ath": 0.132465,
+  "ath_change_percentage": -65.95802,
+  "ath_date": "2023-09-16T02:23:40.121Z",
+  "atl": 0.01740094,
+  "atl_change_percentage": 159.14594,
+  "atl_date": "2023-09-08T23:44:37.238Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:01.409Z",
+  "platforms": {
+    "polygon": "0x40d9fc77027a281d85de1fa660c887e645ae26c3"
+  }
+}

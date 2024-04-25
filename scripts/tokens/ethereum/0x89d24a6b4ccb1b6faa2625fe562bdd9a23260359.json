@@ -1,0 +1,31 @@
+{
+  "id": "sai",
+  "symbol": "sai",
+  "name": "Sai",
+  "image": "https://assets.coingecko.com/coins/images/1442/large/dai.png?1696502492",
+  "current_price": 16.2,
+  "market_cap": 43785495,
+  "market_cap_rank": 748,
+  "fully_diluted_valuation": 43785495,
+  "total_volume": 465.95,
+  "high_24h": 17.13,
+  "low_24h": 16.17,
+  "price_change_24h": -0.8226526195599853,
+  "price_change_percentage_24h": -4.83129,
+  "market_cap_change_24h": -2276648.0102253184,
+  "market_cap_change_percentage_24h": -4.94256,
+  "circulating_supply": 2703966.80547574,
+  "total_supply": 2703966.80547574,
+  "max_supply": 2703966.80547574,
+  "ath": 25.31,
+  "ath_change_percentage": -36.04949,
+  "ath_date": "2021-05-14T17:24:02.613Z",
+  "atl": 0.92687,
+  "atl_change_percentage": 1646.19775,
+  "atl_date": "2020-05-10T00:45:07.739Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:22.788Z",
+  "platforms": {
+    "ethereum": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+  }
+}

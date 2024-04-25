@@ -1,0 +1,31 @@
+{
+  "id": "mainframe",
+  "symbol": "mft",
+  "name": "Mainframe",
+  "image": "https://assets.coingecko.com/coins/images/3293/large/Mainframe_Token_Logo.png?1696504003",
+  "current_price": 0.00790312,
+  "market_cap": 73014485,
+  "market_cap_rank": 563,
+  "fully_diluted_valuation": 77786264,
+  "total_volume": 73.1,
+  "high_24h": 0.00803005,
+  "low_24h": 0.00766778,
+  "price_change_24h": -0.000077612393311449,
+  "price_change_percentage_24h": -0.9725,
+  "market_cap_change_24h": -1959676.9554077238,
+  "market_cap_change_percentage_24h": -2.6138,
+  "circulating_supply": 9386552598.643353,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.060271,
+  "ath_change_percentage": -87.09392,
+  "ath_date": "2023-05-30T15:22:02.815Z",
+  "atl": 0.00039058,
+  "atl_change_percentage": 1891.5545,
+  "atl_date": "2020-03-13T02:24:16.179Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:42.102Z",
+  "platforms": {
+    "ethereum": "0xdf2c7238198ad8b389666574f2d8bc411a4b7428"
+  }
+}

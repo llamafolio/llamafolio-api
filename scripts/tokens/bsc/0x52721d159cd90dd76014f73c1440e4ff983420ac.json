@@ -1,0 +1,31 @@
+{
+  "id": "troll-face",
+  "symbol": "troll",
+  "name": "Troll Face",
+  "image": "https://assets.coingecko.com/coins/images/30246/large/photo_2023-05-04_16-06-17.jpg?1696529155",
+  "current_price": 2.4005e-8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 47895169,
+  "total_volume": 80031,
+  "high_24h": 2.8509e-8,
+  "low_24h": 2.377e-8,
+  "price_change_24h": -4.499583651e-9,
+  "price_change_percentage_24h": -15.78554,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2008091900000000,
+  "max_supply": 2008091900000000,
+  "ath": 1.07663e-7,
+  "ath_change_percentage": -77.79418,
+  "ath_date": "2024-03-03T03:01:15.564Z",
+  "atl": 1.50501e-10,
+  "atl_change_percentage": 15785.32527,
+  "atl_date": "2023-07-03T00:24:57.721Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:23.382Z",
+  "platforms": {
+    "bsc": "0x52721d159cd90dd76014f73c1440e4ff983420ac"
+  }
+}

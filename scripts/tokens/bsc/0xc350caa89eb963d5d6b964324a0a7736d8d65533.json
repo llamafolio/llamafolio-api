@@ -1,0 +1,31 @@
+{
+  "id": "infinitee",
+  "symbol": "inftee",
+  "name": "Infinitee",
+  "image": "https://assets.coingecko.com/coins/images/17010/large/infinitee_logo.png?1696516575",
+  "current_price": 0.00011202,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 5454.98,
+  "total_volume": 43.36,
+  "high_24h": 0.00011344,
+  "low_24h": 0.00011039,
+  "price_change_24h": 1.70181e-7,
+  "price_change_percentage_24h": 0.15216,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 48698035,
+  "max_supply": null,
+  "ath": 0.03194577,
+  "ath_change_percentage": -99.64935,
+  "ath_date": "2021-07-24T17:17:29.094Z",
+  "atl": 0.00008368,
+  "atl_change_percentage": 33.86922,
+  "atl_date": "2024-01-10T21:20:15.848Z",
+  "roi": null,
+  "last_updated": "2024-04-25T04:43:16.810Z",
+  "platforms": {
+    "bsc": "0xc350caa89eb963d5d6b964324a0a7736d8d65533"
+  }
+}

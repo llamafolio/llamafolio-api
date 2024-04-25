@@ -1,0 +1,31 @@
+{
+  "id": "moonscape",
+  "symbol": "mscp",
+  "name": "Moonscape",
+  "image": "https://assets.coingecko.com/coins/images/21142/large/14522.png?1696520520",
+  "current_price": 0.00023674,
+  "market_cap": 213454,
+  "market_cap_rank": 3458,
+  "fully_diluted_valuation": 263045,
+  "total_volume": 12.87,
+  "high_24h": 0.0016953,
+  "low_24h": 0.00023631,
+  "price_change_24h": -0.001458555280342363,
+  "price_change_percentage_24h": -86.03543,
+  "market_cap_change_24h": -1315083.2882643407,
+  "market_cap_change_percentage_24h": -86.03543,
+  "circulating_supply": 901634175.9468,
+  "total_supply": 1111111111,
+  "max_supply": 1111111111,
+  "ath": 0.02095289,
+  "ath_change_percentage": -98.87013,
+  "ath_date": "2021-12-03T04:55:42.061Z",
+  "atl": 0.00014756,
+  "atl_change_percentage": 60.44084,
+  "atl_date": "2023-11-30T02:01:34.084Z",
+  "roi": null,
+  "last_updated": "2024-04-25T04:02:45.229Z",
+  "platforms": {
+    "bsc": "0x27d72484f1910f5d0226afa4e03742c9cd2b297a"
+  }
+}

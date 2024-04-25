@@ -1,0 +1,31 @@
+{
+  "id": "crossswap",
+  "symbol": "cswap",
+  "name": "CrossSwap",
+  "image": "https://assets.coingecko.com/coins/images/18002/large/cross.png?1696517518",
+  "current_price": 0.01372759,
+  "market_cap": 273928,
+  "market_cap_rank": 3359,
+  "fully_diluted_valuation": 273928,
+  "total_volume": 50.99,
+  "high_24h": 0.0139116,
+  "low_24h": 0.01338003,
+  "price_change_24h": 0.0000505,
+  "price_change_percentage_24h": 0.36921,
+  "market_cap_change_24h": 679.46,
+  "market_cap_change_percentage_24h": 0.24866,
+  "circulating_supply": 20000000,
+  "total_supply": 20000000,
+  "max_supply": 500000000,
+  "ath": 0.986981,
+  "ath_change_percentage": -98.61217,
+  "ath_date": "2021-11-10T08:14:50.558Z",
+  "atl": 0.0039956,
+  "atl_change_percentage": 242.81808,
+  "atl_date": "2023-07-07T00:04:32.958Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:29.483Z",
+  "platforms": {
+    "ethereum": "0xe0b0c16038845bed3fcf70304d3e167df81ce225"
+  }
+}

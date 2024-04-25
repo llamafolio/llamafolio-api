@@ -1,0 +1,31 @@
+{
+  "id": "aave-v3-wmatic",
+  "symbol": "awmatic",
+  "name": "Aave v3 WMATIC",
+  "image": "https://assets.coingecko.com/coins/images/32922/large/wmatic.png?1699825896",
+  "current_price": 0.706063,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 0,
+  "high_24h": 0.757694,
+  "low_24h": 0.69828,
+  "price_change_24h": -0.050960000000000005,
+  "price_change_percentage_24h": -6.78833,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.28,
+  "ath_change_percentage": -45.52324,
+  "ath_date": "2024-03-13T13:15:25.315Z",
+  "atl": 0.6081,
+  "atl_change_percentage": 15.06989,
+  "atl_date": "2024-04-13T20:55:28.120Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:32.654Z",
+  "platforms": {
+    "polygon": "0x6d80113e533a2c0fe82eabd35f1875dcea89ea97"
+  }
+}

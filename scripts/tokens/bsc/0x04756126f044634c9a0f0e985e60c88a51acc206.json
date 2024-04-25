@@ -1,0 +1,31 @@
+{
+  "id": "carbon-browser",
+  "symbol": "csix",
+  "name": "Carbon Browser",
+  "image": "https://assets.coingecko.com/coins/images/28905/large/csix.png?1696527881",
+  "current_price": 0.055302,
+  "market_cap": 21862230,
+  "market_cap_rank": 1065,
+  "fully_diluted_valuation": 52002725,
+  "total_volume": 1046062,
+  "high_24h": 0.057127,
+  "low_24h": 0.054325,
+  "price_change_24h": -0.001275333581322438,
+  "price_change_percentage_24h": -2.25416,
+  "market_cap_change_24h": -456985.6604308821,
+  "market_cap_change_percentage_24h": -2.0475,
+  "circulating_supply": 394874061.46,
+  "total_supply": 939269545.9482358,
+  "max_supply": 1000000000,
+  "ath": 0.427301,
+  "ath_change_percentage": -87.02932,
+  "ath_date": "2023-02-19T19:00:05.225Z",
+  "atl": 0.01055773,
+  "atl_change_percentage": 424.95936,
+  "atl_date": "2023-06-13T16:25:38.959Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:54.206Z",
+  "platforms": {
+    "bsc": "0x04756126f044634c9a0f0e985e60c88a51acc206"
+  }
+}

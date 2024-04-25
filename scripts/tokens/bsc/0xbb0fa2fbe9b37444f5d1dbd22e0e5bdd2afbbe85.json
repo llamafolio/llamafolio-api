@@ -1,0 +1,31 @@
+{
+  "id": "usd-mars",
+  "symbol": "usdm",
+  "name": "USD Mars",
+  "image": "https://assets.coingecko.com/coins/images/21252/large/WeChat_Image_20211230181747.jpg?1696520625",
+  "current_price": 1.004,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 28996510,
+  "total_volume": 105.12,
+  "high_24h": 1.016,
+  "low_24h": 0.991996,
+  "price_change_24h": -0.004321621657922936,
+  "price_change_percentage_24h": -0.42856,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 28878385,
+  "max_supply": 28878385,
+  "ath": 19.18,
+  "ath_change_percentage": -94.76468,
+  "ath_date": "2021-12-06T09:42:51.984Z",
+  "atl": 0.217447,
+  "atl_change_percentage": 361.76413,
+  "atl_date": "2022-05-16T06:32:13.527Z",
+  "roi": null,
+  "last_updated": "2024-04-25T05:48:31.081Z",
+  "platforms": {
+    "bsc": "0xbb0fa2fbe9b37444f5d1dbd22e0e5bdd2afbbe85"
+  }
+}

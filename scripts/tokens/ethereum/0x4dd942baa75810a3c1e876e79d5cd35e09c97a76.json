@@ -1,0 +1,31 @@
+{
+  "id": "dash-2-trade",
+  "symbol": "d2t",
+  "name": "Dash 2 Trade",
+  "image": "https://assets.coingecko.com/coins/images/28707/large/logo.png?1696527689",
+  "current_price": 0.00355433,
+  "market_cap": 1328288,
+  "market_cap_rank": 2522,
+  "fully_diluted_valuation": 3556327,
+  "total_volume": 83912,
+  "high_24h": 0.00366555,
+  "low_24h": 0.00341145,
+  "price_change_24h": -0.000060087262556123,
+  "price_change_percentage_24h": -1.66243,
+  "market_cap_change_24h": -18204.615198687185,
+  "market_cap_change_percentage_24h": -1.352,
+  "circulating_supply": 373500000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.053805,
+  "ath_change_percentage": -93.38605,
+  "ath_date": "2023-03-06T07:15:35.022Z",
+  "atl": 0.00341145,
+  "atl_change_percentage": 4.31395,
+  "atl_date": "2024-04-24T21:10:34.758Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:58.675Z",
+  "platforms": {
+    "ethereum": "0x4dd942baa75810a3c1e876e79d5cd35e09c97a76"
+  }
+}

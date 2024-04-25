@@ -1,0 +1,31 @@
+{
+  "id": "nafter",
+  "symbol": "naft",
+  "name": "Nafter",
+  "image": "https://assets.coingecko.com/coins/images/15493/large/Nafter_White_logo_1_200x200.png?1696515137",
+  "current_price": 0.0007533,
+  "market_cap": 330634,
+  "market_cap_rank": 3268,
+  "fully_diluted_valuation": 749398,
+  "total_volume": 14061.37,
+  "high_24h": 0.00076978,
+  "low_24h": 0.00073609,
+  "price_change_24h": -0.000012046610078257,
+  "price_change_percentage_24h": -1.57401,
+  "market_cap_change_24h": -7177.621035143384,
+  "market_cap_change_percentage_24h": -2.12474,
+  "circulating_supply": 441199428.9214712,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.365373,
+  "ath_change_percentage": -99.79498,
+  "ath_date": "2021-05-15T11:01:11.103Z",
+  "atl": 0.00040542,
+  "atl_change_percentage": 84.76581,
+  "atl_date": "2023-09-02T23:00:11.259Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:32.786Z",
+  "platforms": {
+    "bsc": "0xd7730681b1dc8f6f969166b29d8a5ea8568616a3"
+  }
+}

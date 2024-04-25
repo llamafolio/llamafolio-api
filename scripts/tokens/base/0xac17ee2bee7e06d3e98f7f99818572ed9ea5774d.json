@@ -1,0 +1,31 @@
+{
+  "id": "earn-finance",
+  "symbol": "earnfi",
+  "name": "EARN FINANCE",
+  "image": "https://assets.coingecko.com/coins/images/35876/large/1000180299.jpg?1709981866",
+  "current_price": 0.00158487,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 15848.69,
+  "total_volume": 176.33,
+  "high_24h": 0.00163116,
+  "low_24h": 0.00156507,
+  "price_change_24h": 5.08933e-7,
+  "price_change_percentage_24h": 0.03212,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.752357,
+  "ath_change_percentage": -99.78935,
+  "ath_date": "2024-03-26T03:24:39.887Z",
+  "atl": 0.00108183,
+  "atl_change_percentage": 46.49902,
+  "atl_date": "2024-04-16T02:38:05.920Z",
+  "roi": null,
+  "last_updated": "2024-04-25T07:33:06.887Z",
+  "platforms": {
+    "base": "0xac17ee2bee7e06d3e98f7f99818572ed9ea5774d"
+  }
+}

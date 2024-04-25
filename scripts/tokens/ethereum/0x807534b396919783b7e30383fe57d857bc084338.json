@@ -1,0 +1,31 @@
+{
+  "id": "test-2",
+  "symbol": "test",
+  "name": "Test",
+  "image": "https://assets.coingecko.com/coins/images/31188/large/IMG_6480.png?1696530015",
+  "current_price": 0.00008782,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 87471,
+  "total_volume": 7.83,
+  "high_24h": 0.00008835,
+  "low_24h": 0.00008727,
+  "price_change_24h": -1.63628179288e-7,
+  "price_change_percentage_24h": -0.18598,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.0019406,
+  "ath_change_percentage": -95.49259,
+  "ath_date": "2023-08-04T12:21:33.351Z",
+  "atl": 0.000016,
+  "atl_change_percentage": 446.67129,
+  "atl_date": "2023-12-10T03:48:04.191Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:40.876Z",
+  "platforms": {
+    "ethereum": "0x807534b396919783b7e30383fe57d857bc084338"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "connex",
+  "symbol": "conx",
+  "name": "Connex",
+  "image": "https://assets.coingecko.com/coins/images/31779/large/conx-cg.png?1696530597",
+  "current_price": 25.56,
+  "market_cap": 29406461,
+  "market_cap_rank": 926,
+  "fully_diluted_valuation": 2557083596,
+  "total_volume": 163516,
+  "high_24h": 26.68,
+  "low_24h": 25.45,
+  "price_change_24h": -1.0291332582590869,
+  "price_change_percentage_24h": -3.87034,
+  "market_cap_change_24h": -1199645.4766442925,
+  "market_cap_change_percentage_24h": -3.91963,
+  "circulating_supply": 1150000,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 29.47,
+  "ath_change_percentage": -13.27122,
+  "ath_date": "2024-03-14T07:03:27.641Z",
+  "atl": 0.599067,
+  "atl_change_percentage": 4166.52263,
+  "atl_date": "2023-09-15T23:02:31.691Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:52.043Z",
+  "platforms": {
+    "bsc": "0x1b2128abc4119474d16bb0a04200b63b0e68a971"
+  }
+}

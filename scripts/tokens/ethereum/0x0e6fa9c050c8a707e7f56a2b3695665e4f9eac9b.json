@@ -1,0 +1,31 @@
+{
+  "id": "robo-inu-finance",
+  "symbol": "rbif",
+  "name": "Robo Inu Finance",
+  "image": "https://assets.coingecko.com/coins/images/20821/large/O68Gs5SE_400x400.jpg?1696520214",
+  "current_price": 9.1402e-11,
+  "market_cap": 5289570,
+  "market_cap_rank": 1768,
+  "fully_diluted_valuation": 9140215,
+  "total_volume": 350.08,
+  "high_24h": 9.7341e-11,
+  "low_24h": 9.1557e-11,
+  "price_change_24h": -4.944484e-12,
+  "price_change_percentage_24h": -5.13197,
+  "market_cap_change_24h": -286144.3604028905,
+  "market_cap_change_percentage_24h": -5.13198,
+  "circulating_supply": 57871397236933890,
+  "total_supply": 100000000000000000,
+  "max_supply": 100000000000000000,
+  "ath": 9.41968e-10,
+  "ath_change_percentage": -90.22658,
+  "ath_date": "2022-01-16T01:50:35.886Z",
+  "atl": 3.131e-13,
+  "atl_change_percentage": 29303.52526,
+  "atl_date": "2023-07-06T02:02:16.822Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:49:52.398Z",
+  "platforms": {
+    "ethereum": "0x0e6fa9c050c8a707e7f56a2b3695665e4f9eac9b"
+  }
+}

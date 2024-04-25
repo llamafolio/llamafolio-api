@@ -1,0 +1,31 @@
+{
+  "id": "hifi-finance",
+  "symbol": "hifi",
+  "name": "Hifi Finance",
+  "image": "https://assets.coingecko.com/coins/images/28712/large/hft.png?1696527693",
+  "current_price": 0.758309,
+  "market_cap": 93833379,
+  "market_cap_rank": 489,
+  "fully_diluted_valuation": 107095318,
+  "total_volume": 8832688,
+  "high_24h": 0.854406,
+  "low_24h": 0.755789,
+  "price_change_24h": -0.0849487332013581,
+  "price_change_percentage_24h": -10.07388,
+  "market_cap_change_24h": -10634291.834437877,
+  "market_cap_change_percentage_24h": -10.17951,
+  "circulating_supply": 123733309.074678,
+  "total_supply": 141221154.853312,
+  "max_supply": null,
+  "ath": 2.63,
+  "ath_change_percentage": -71.06461,
+  "ath_date": "2023-09-16T16:00:16.674Z",
+  "atl": 0.251847,
+  "atl_change_percentage": 201.72798,
+  "atl_date": "2023-06-15T09:19:33.390Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:32.189Z",
+  "platforms": {
+    "ethereum": "0x4b9278b94a1112cad404048903b8d343a810b07e"
+  }
+}

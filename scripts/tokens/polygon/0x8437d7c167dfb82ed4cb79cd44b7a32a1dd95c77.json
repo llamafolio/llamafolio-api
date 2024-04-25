@@ -1,0 +1,31 @@
+{
+  "id": "aave-v3-ageur",
+  "symbol": "aageur",
+  "name": "Aave v3 agEUR",
+  "image": "https://assets.coingecko.com/coins/images/32925/large/eur.png?1699826217",
+  "current_price": 1.073,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 0,
+  "high_24h": 1.073,
+  "low_24h": 1.068,
+  "price_change_24h": 0.00429,
+  "price_change_percentage_24h": 0.40152,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.11,
+  "ath_change_percentage": -3.67783,
+  "ath_date": "2023-12-28T09:45:03.490Z",
+  "atl": 1.061,
+  "atl_change_percentage": 1.14845,
+  "atl_date": "2024-04-16T06:30:19.240Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:31.110Z",
+  "platforms": {
+    "polygon": "0x8437d7c167dfb82ed4cb79cd44b7a32a1dd95c77"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "echoes",
+  "symbol": "echoes",
+  "name": "Echoes",
+  "image": "https://assets.coingecko.com/coins/images/30994/large/logosmallcircle.png?1696529832",
+  "current_price": 2.68317e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 78228,
+  "total_volume": 725.29,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 291550000000,
+  "max_supply": 343000000000,
+  "ath": 0.00001862,
+  "ath_change_percentage": -98.55898,
+  "ath_date": "2023-07-20T17:38:07.633Z",
+  "atl": 1.80024e-7,
+  "atl_change_percentage": 49.04463,
+  "atl_date": "2024-01-06T12:55:48.009Z",
+  "roi": null,
+  "last_updated": "2024-03-31T22:52:53.746Z",
+  "platforms": {
+    "ethereum": "0xf07ebf00aa847bbb0057b92cb469747e2c7c8a4f"
+  }
+}

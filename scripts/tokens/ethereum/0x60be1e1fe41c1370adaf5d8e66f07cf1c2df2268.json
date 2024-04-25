@@ -1,0 +1,31 @@
+{
+  "id": "perion",
+  "symbol": "perc",
+  "name": "Perion",
+  "image": "https://assets.coingecko.com/coins/images/23302/large/PERC.png?1696522520",
+  "current_price": 0.374187,
+  "market_cap": 10684017,
+  "market_cap_rank": 1401,
+  "fully_diluted_valuation": 37401670,
+  "total_volume": 200491,
+  "high_24h": 0.427781,
+  "low_24h": 0.37212,
+  "price_change_24h": -0.049592513145884254,
+  "price_change_percentage_24h": -11.70244,
+  "market_cap_change_24h": -1408236.0066652354,
+  "market_cap_change_percentage_24h": -11.64577,
+  "circulating_supply": 28565615.949657302,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 1.14,
+  "ath_change_percentage": -67.2773,
+  "ath_date": "2022-02-07T20:29:52.488Z",
+  "atl": 0.064342,
+  "atl_change_percentage": 482.04784,
+  "atl_date": "2023-01-21T10:16:15.885Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:24.732Z",
+  "platforms": {
+    "ethereum": "0x60be1e1fe41c1370adaf5d8e66f07cf1c2df2268"
+  }
+}

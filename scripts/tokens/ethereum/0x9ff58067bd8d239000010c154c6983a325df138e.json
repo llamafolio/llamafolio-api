@@ -1,0 +1,31 @@
+{
+  "id": "propchain",
+  "symbol": "propc",
+  "name": "Propchain",
+  "image": "https://assets.coingecko.com/coins/images/30451/large/prop_%281%29.png?1702322253",
+  "current_price": 3.04,
+  "market_cap": 52163390,
+  "market_cap_rank": 673,
+  "fully_diluted_valuation": 258120810,
+  "total_volume": 1018407,
+  "high_24h": 3.19,
+  "low_24h": 2.95,
+  "price_change_24h": -0.07890449084604123,
+  "price_change_percentage_24h": -2.5332,
+  "market_cap_change_24h": -1014424.972649768,
+  "market_cap_change_percentage_24h": -1.90761,
+  "circulating_supply": 17160953.273650087,
+  "total_supply": 84917776.9999994,
+  "max_supply": 100000000,
+  "ath": 5.38,
+  "ath_change_percentage": -43.35006,
+  "ath_date": "2024-03-27T22:14:41.084Z",
+  "atl": 1.027,
+  "atl_change_percentage": 196.78629,
+  "atl_date": "2023-05-28T08:02:58.359Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:24.893Z",
+  "platforms": {
+    "ethereum": "0x9ff58067bd8d239000010c154c6983a325df138e"
+  }
+}

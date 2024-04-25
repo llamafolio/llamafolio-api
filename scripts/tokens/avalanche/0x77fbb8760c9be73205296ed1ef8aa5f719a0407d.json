@@ -1,0 +1,31 @@
+{
+  "id": "penguin404",
+  "symbol": "penguin",
+  "name": "Penguin404",
+  "image": "https://assets.coingecko.com/coins/images/35332/large/RCtfNV99_400x400.jpg?1708270295",
+  "current_price": 6.88,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 61105,
+  "total_volume": 25.93,
+  "high_24h": 7.29,
+  "low_24h": 6.82,
+  "price_change_24h": -0.36860855719851227,
+  "price_change_percentage_24h": -5.08873,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 8888,
+  "max_supply": null,
+  "ath": 125.08,
+  "ath_change_percentage": -94.50358,
+  "ath_date": "2024-02-18T17:10:06.329Z",
+  "atl": 6.82,
+  "atl_change_percentage": 0.84206,
+  "atl_date": "2024-04-24T19:08:47.986Z",
+  "roi": null,
+  "last_updated": "2024-04-24T21:01:41.786Z",
+  "platforms": {
+    "avalanche": "0x77fbb8760c9be73205296ed1ef8aa5f719a0407d"
+  }
+}

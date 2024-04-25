@@ -1,0 +1,31 @@
+{
+  "id": "bit-game-verse-token",
+  "symbol": "bgvt",
+  "name": "Bit Game Verse Token",
+  "image": "https://assets.coingecko.com/coins/images/27975/large/bgvt.png?1696526993",
+  "current_price": 0.00001549,
+  "market_cap": 854472,
+  "market_cap_rank": 2768,
+  "fully_diluted_valuation": 862132,
+  "total_volume": 7.32,
+  "high_24h": 0.00001553,
+  "low_24h": 0.00000902,
+  "price_change_24h": 0.00000643,
+  "price_change_percentage_24h": 70.97645,
+  "market_cap_change_24h": 353630,
+  "market_cap_change_percentage_24h": 70.60695,
+  "circulating_supply": 55214045947.7999,
+  "total_supply": 55709027327.2254,
+  "max_supply": 55709091502,
+  "ath": 0.00045066,
+  "ath_change_percentage": -96.56536,
+  "ath_date": "2022-11-09T08:35:56.091Z",
+  "atl": 0.0000028,
+  "atl_change_percentage": 452.47983,
+  "atl_date": "2023-12-09T11:39:53.646Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:55.407Z",
+  "platforms": {
+    "bsc": "0xa03110800894b3ccf8723d991d80875561f96777"
+  }
+}

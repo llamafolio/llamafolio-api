@@ -1,0 +1,31 @@
+{
+  "id": "octopus-protocol",
+  "symbol": "ops",
+  "name": "Octopus Protocol",
+  "image": "https://assets.coingecko.com/coins/images/16383/large/ops_logo.jpg?1696515981",
+  "current_price": 0.00101227,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 152400,
+  "total_volume": 11845.23,
+  "high_24h": 0.001184,
+  "low_24h": 0.00101101,
+  "price_change_24h": -0.000148932785885496,
+  "price_change_percentage_24h": -12.8257,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 150000000,
+  "max_supply": null,
+  "ath": 1.044,
+  "ath_change_percentage": -99.90295,
+  "ath_date": "2021-06-16T22:17:29.375Z",
+  "atl": 0.00017054,
+  "atl_change_percentage": 493.90128,
+  "atl_date": "2021-09-20T08:04:18.900Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:38.193Z",
+  "platforms": {
+    "bsc": "0xdf0121a3ba5c10816ea2943c722650c4a4b0dbe6"
+  }
+}

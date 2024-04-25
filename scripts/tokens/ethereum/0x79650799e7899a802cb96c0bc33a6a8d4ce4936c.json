@@ -1,0 +1,31 @@
+{
+  "id": "aichain",
+  "symbol": "ait",
+  "name": "AICHAIN",
+  "image": "https://assets.coingecko.com/coins/images/2525/large/aichain.png?1696503338",
+  "current_price": 0.00301067,
+  "market_cap": 1883177,
+  "market_cap_rank": 2333,
+  "fully_diluted_valuation": 6316060,
+  "total_volume": 6163.1,
+  "high_24h": 0.0031582,
+  "low_24h": 0.00270481,
+  "price_change_24h": -0.000106914151620514,
+  "price_change_percentage_24h": -3.42939,
+  "market_cap_change_24h": -71152.07694346085,
+  "market_cap_change_percentage_24h": -3.64074,
+  "circulating_supply": 626129651.927164,
+  "total_supply": 2100000000,
+  "max_supply": null,
+  "ath": 0.119074,
+  "ath_change_percentage": -97.47414,
+  "ath_date": "2018-01-28T00:00:00.000Z",
+  "atl": 0.00040842,
+  "atl_change_percentage": 636.40501,
+  "atl_date": "2020-03-13T02:24:43.205Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:31.997Z",
+  "platforms": {
+    "ethereum": "0x79650799e7899a802cb96c0bc33a6a8d4ce4936c"
+  }
+}

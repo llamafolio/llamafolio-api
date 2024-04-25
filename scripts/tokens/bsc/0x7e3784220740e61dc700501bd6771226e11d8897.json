@@ -1,0 +1,31 @@
+{
+  "id": "cyber-arena",
+  "symbol": "cat",
+  "name": "Cyber Arena",
+  "image": "https://assets.coingecko.com/coins/images/30589/large/Coin-200x200_%281%29.png?1696529457",
+  "current_price": 0.00093427,
+  "market_cap": 1325747,
+  "market_cap_rank": 2525,
+  "fully_diluted_valuation": 4668123,
+  "total_volume": 52864,
+  "high_24h": 0.00097908,
+  "low_24h": 0.00092421,
+  "price_change_24h": -0.000044809737034229,
+  "price_change_percentage_24h": -4.57672,
+  "market_cap_change_24h": -66367.77754328307,
+  "market_cap_change_percentage_24h": -4.76741,
+  "circulating_supply": 1420000000,
+  "total_supply": 5000000000,
+  "max_supply": 5000000000,
+  "ath": 0.00421376,
+  "ath_change_percentage": -77.83605,
+  "ath_date": "2023-12-03T10:05:10.358Z",
+  "atl": 0.00049456,
+  "atl_change_percentage": 88.8422,
+  "atl_date": "2023-11-22T17:15:01.898Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:16.714Z",
+  "platforms": {
+    "bsc": "0x7e3784220740e61dc700501bd6771226e11d8897"
+  }
+}

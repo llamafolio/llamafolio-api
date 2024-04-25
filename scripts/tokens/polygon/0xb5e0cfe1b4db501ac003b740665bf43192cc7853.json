@@ -1,0 +1,31 @@
+{
+  "id": "ghost-by-mcafee",
+  "symbol": "ghost",
+  "name": "Ghost",
+  "image": "https://assets.coingecko.com/coins/images/11339/large/mxpD9xS.png?1696511260",
+  "current_price": 0.077739,
+  "market_cap": 1942618,
+  "market_cap_rank": 2312,
+  "fully_diluted_valuation": 1942618,
+  "total_volume": 5333.61,
+  "high_24h": 0.083138,
+  "low_24h": 0.075521,
+  "price_change_24h": -0.004945554028568097,
+  "price_change_percentage_24h": -5.98125,
+  "market_cap_change_24h": -135360.43318128516,
+  "market_cap_change_percentage_24h": -6.51404,
+  "circulating_supply": 25108792.1102874,
+  "total_supply": 25108792.1102874,
+  "max_supply": 55000000,
+  "ath": 2.11,
+  "ath_change_percentage": -96.3381,
+  "ath_date": "2020-06-08T12:04:40.120Z",
+  "atl": 0.00040785,
+  "atl_change_percentage": 18869.87671,
+  "atl_date": "2022-04-14T12:11:37.974Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:50.153Z",
+  "platforms": {
+    "polygon": "0xb5e0cfe1b4db501ac003b740665bf43192cc7853"
+  }
+}

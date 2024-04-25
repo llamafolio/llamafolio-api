@@ -1,0 +1,31 @@
+{
+  "id": "liquidifty",
+  "symbol": "lqt",
+  "name": "Lifty",
+  "image": "https://assets.coingecko.com/coins/images/16384/large/ktQzdAe.png?1696515982",
+  "current_price": 0.00627416,
+  "market_cap": 249808,
+  "market_cap_rank": 3399,
+  "fully_diluted_valuation": 309877,
+  "total_volume": 1148.18,
+  "high_24h": 0.00620668,
+  "low_24h": 0.00512146,
+  "price_change_24h": 0.00115269,
+  "price_change_percentage_24h": 22.50712,
+  "market_cap_change_24h": 48620,
+  "market_cap_change_percentage_24h": 24.1663,
+  "circulating_supply": 40307500,
+  "total_supply": 50000000,
+  "max_supply": null,
+  "ath": 1.51,
+  "ath_change_percentage": -99.58916,
+  "ath_date": "2021-08-25T19:13:37.029Z",
+  "atl": 0.00311971,
+  "atl_change_percentage": 98.65181,
+  "atl_date": "2023-10-14T11:55:35.350Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:01.880Z",
+  "platforms": {
+    "bsc": "0xbd2c43da85d007b0b3cd856fd55c299578d832bc"
+  }
+}

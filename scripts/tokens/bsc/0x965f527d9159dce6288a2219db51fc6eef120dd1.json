@@ -1,0 +1,31 @@
+{
+  "id": "biswap",
+  "symbol": "bsw",
+  "name": "Biswap",
+  "image": "https://assets.coingecko.com/coins/images/16845/large/biswap.png?1696516413",
+  "current_price": 0.081236,
+  "market_cap": 40509415,
+  "market_cap_rank": 781,
+  "fully_diluted_valuation": 46835321,
+  "total_volume": 5388964,
+  "high_24h": 0.087311,
+  "low_24h": 0.080496,
+  "price_change_24h": -0.005541015055174819,
+  "price_change_percentage_24h": -6.38536,
+  "market_cap_change_24h": -2848602.6333887577,
+  "market_cap_change_percentage_24h": -6.56996,
+  "circulating_supply": 498978200,
+  "total_supply": 576898100,
+  "max_supply": 700000000,
+  "ath": 2.1,
+  "ath_change_percentage": -96.12462,
+  "ath_date": "2021-12-08T06:55:12.754Z",
+  "atl": 0.057151,
+  "atl_change_percentage": 42.14324,
+  "atl_date": "2023-10-12T06:30:37.978Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:40.054Z",
+  "platforms": {
+    "bsc": "0x965f527d9159dce6288a2219db51fc6eef120dd1"
+  }
+}

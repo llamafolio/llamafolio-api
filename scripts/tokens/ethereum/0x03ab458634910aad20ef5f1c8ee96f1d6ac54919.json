@@ -1,0 +1,31 @@
+{
+  "id": "rai",
+  "symbol": "rai",
+  "name": "Rai Reflex Index",
+  "image": "https://assets.coingecko.com/coins/images/14004/large/RAI-logo-coin.png?1696513733",
+  "current_price": 2.79,
+  "market_cap": 4766661,
+  "market_cap_rank": 1819,
+  "fully_diluted_valuation": 4766661,
+  "total_volume": 142502,
+  "high_24h": 2.84,
+  "low_24h": 2.78,
+  "price_change_24h": -0.02753310963472977,
+  "price_change_percentage_24h": -0.97841,
+  "market_cap_change_24h": -39406.69813579321,
+  "market_cap_change_percentage_24h": -0.81994,
+  "circulating_supply": 1703495.30567581,
+  "total_supply": 1703495.30567581,
+  "max_supply": null,
+  "ath": 4.19,
+  "ath_change_percentage": -33.44235,
+  "ath_date": "2021-02-18T04:39:01.957Z",
+  "atl": 2.44,
+  "atl_change_percentage": 14.49218,
+  "atl_date": "2023-10-08T05:56:39.127Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:49.923Z",
+  "platforms": {
+    "ethereum": "0x03ab458634910aad20ef5f1c8ee96f1d6ac54919"
+  }
+}

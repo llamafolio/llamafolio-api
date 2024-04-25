@@ -1,0 +1,31 @@
+{
+  "id": "little-ugly-duck",
+  "symbol": "lud",
+  "name": "Little Ugly Duck",
+  "image": "https://assets.coingecko.com/coins/images/17764/large/whitelogo200x200.png?1696517290",
+  "current_price": 0,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 687395,
+  "total_volume": 4.1,
+  "high_24h": 0,
+  "low_24h": 0,
+  "price_change_24h": 0,
+  "price_change_percentage_24h": 0.80356,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1e+25,
+  "max_supply": null,
+  "ath": 2e-18,
+  "ath_change_percentage": -95.79725,
+  "ath_date": "2021-08-18T04:11:19.945Z",
+  "atl": 0,
+  "atl_change_percentage": 176.15018,
+  "atl_date": "2022-06-15T09:01:46.725Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:15.841Z",
+  "platforms": {
+    "bsc": "0xde009cb3371825bafb80a01004c58f8166ee13d5"
+  }
+}

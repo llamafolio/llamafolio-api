@@ -1,0 +1,31 @@
+{
+  "id": "defidollar-dao",
+  "symbol": "dfd",
+  "name": "DefiDollar DAO",
+  "image": "https://assets.coingecko.com/coins/images/12959/large/DFD.jpg?1696512747",
+  "current_price": 0.00266823,
+  "market_cap": 58348,
+  "market_cap_rank": 3943,
+  "fully_diluted_valuation": 266823,
+  "total_volume": 0.21747,
+  "high_24h": 0.00270308,
+  "low_24h": 0.00265095,
+  "price_change_24h": -0.000015855996195832,
+  "price_change_percentage_24h": -0.59074,
+  "market_cap_change_24h": -311.71749909604114,
+  "market_cap_change_percentage_24h": -0.5314,
+  "circulating_supply": 21867781.965180006,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 2.55,
+  "ath_change_percentage": -99.89537,
+  "ath_date": "2020-11-03T15:19:23.103Z",
+  "atl": 0.00049718,
+  "atl_change_percentage": 436.67058,
+  "atl_date": "2023-06-06T19:25:53.277Z",
+  "roi": null,
+  "last_updated": "2024-04-25T03:18:01.355Z",
+  "platforms": {
+    "bsc": "0x9899a98b222fcb2f3dbee7df45d943093a4ff9ff"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "rainmaker-games",
+  "symbol": "rain",
+  "name": "Rainmaker Games",
+  "image": "https://assets.coingecko.com/coins/images/21485/large/Final-Flip-Rain-Makers-44-1.png?1696520845",
+  "current_price": 0.00171662,
+  "market_cap": 760701,
+  "market_cap_rank": 2836,
+  "fully_diluted_valuation": 1711461,
+  "total_volume": 3127390,
+  "high_24h": 0.00194907,
+  "low_24h": 0.00163722,
+  "price_change_24h": -0.000061975474959349,
+  "price_change_percentage_24h": -3.48452,
+  "market_cap_change_24h": -33782.39159041643,
+  "market_cap_change_percentage_24h": -4.25212,
+  "circulating_supply": 444474338.7919175,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 1.37,
+  "ath_change_percentage": -99.87426,
+  "ath_date": "2022-01-03T12:36:47.216Z",
+  "atl": 0.00076817,
+  "atl_change_percentage": 124.56298,
+  "atl_date": "2023-06-16T01:50:24.796Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:30.997Z",
+  "platforms": {
+    "ethereum": "0x71fc1f555a39e0b698653ab0b475488ec3c34d57"
+  }
+}

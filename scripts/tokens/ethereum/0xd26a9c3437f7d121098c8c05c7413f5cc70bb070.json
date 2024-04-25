@@ -1,0 +1,31 @@
+{
+  "id": "azuma-coin",
+  "symbol": "azum",
+  "name": "Azuma Coin",
+  "image": "https://assets.coingecko.com/coins/images/10483/large/WDncHJ5.png?1696510473",
+  "current_price": 0.00012132,
+  "market_cap": 16845.15,
+  "market_cap_rank": 4171,
+  "fully_diluted_valuation": 60661,
+  "total_volume": 3.6,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 138845739.00108376,
+  "total_supply": 500000000,
+  "max_supply": null,
+  "ath": 0.086043,
+  "ath_change_percentage": -99.859,
+  "ath_date": "2020-01-28T08:02:38.802Z",
+  "atl": 3.85569e-7,
+  "atl_change_percentage": 31365.86117,
+  "atl_date": "2022-04-26T16:07:36.315Z",
+  "roi": null,
+  "last_updated": "2024-02-02T19:07:54.070Z",
+  "platforms": {
+    "ethereum": "0xd26a9c3437f7d121098c8c05c7413f5cc70bb070"
+  }
+}

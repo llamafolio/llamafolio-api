@@ -1,0 +1,31 @@
+{
+  "id": "level",
+  "symbol": "lvl",
+  "name": "Level",
+  "image": "https://assets.coingecko.com/coins/images/28628/large/Token.png?1696527613",
+  "current_price": 0.243036,
+  "market_cap": 4192089,
+  "market_cap_rank": 1882,
+  "fully_diluted_valuation": 11254221,
+  "total_volume": 66647,
+  "high_24h": 0.244465,
+  "low_24h": 0.240022,
+  "price_change_24h": -0.000736515458517051,
+  "price_change_percentage_24h": -0.30213,
+  "market_cap_change_24h": -1423078.7678738493,
+  "market_cap_change_percentage_24h": -25.34348,
+  "circulating_supply": 17250169,
+  "total_supply": 46310370.9918278,
+  "max_supply": 50000000,
+  "ath": 11.03,
+  "ath_change_percentage": -97.79508,
+  "ath_date": "2023-04-14T12:13:52.309Z",
+  "atl": 0.073401,
+  "atl_change_percentage": 231.21047,
+  "atl_date": "2023-01-07T12:31:13.764Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:27.192Z",
+  "platforms": {
+    "bsc": "0xb64e280e9d1b5dbec4accedb2257a87b400db149"
+  }
+}

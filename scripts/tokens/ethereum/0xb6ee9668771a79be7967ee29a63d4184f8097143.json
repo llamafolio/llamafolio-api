@@ -1,0 +1,35 @@
+{
+  "id": "cargox",
+  "symbol": "cxo",
+  "name": "CargoX",
+  "image": "https://assets.coingecko.com/coins/images/2580/large/cargox.png?1696503384",
+  "current_price": 0.106501,
+  "market_cap": 17776295,
+  "market_cap_rank": 1160,
+  "fully_diluted_valuation": 22876380,
+  "total_volume": 149.22,
+  "high_24h": 0.128951,
+  "low_24h": 0.106343,
+  "price_change_24h": -0.021593370253562907,
+  "price_change_percentage_24h": -16.85736,
+  "market_cap_change_24h": -5167484.004833464,
+  "market_cap_change_percentage_24h": -22.52238,
+  "circulating_supply": 167160147.72525844,
+  "total_supply": 215119016,
+  "max_supply": null,
+  "ath": 0.523279,
+  "ath_change_percentage": -79.63368,
+  "ath_date": "2023-11-08T08:30:23.947Z",
+  "atl": 0.00003988,
+  "atl_change_percentage": 267151.34969,
+  "atl_date": "2020-01-01T01:02:55.491Z",
+  "roi": {
+    "times": -0.660244947666833,
+    "currency": "eth",
+    "percentage": -66.0244947666833
+  },
+  "last_updated": "2024-04-25T08:59:57.081Z",
+  "platforms": {
+    "ethereum": "0xb6ee9668771a79be7967ee29a63d4184f8097143"
+  }
+}

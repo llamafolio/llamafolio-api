@@ -1,0 +1,31 @@
+{
+  "id": "the-blox-project",
+  "symbol": "blox",
+  "name": "The Blox Project",
+  "image": "https://assets.coingecko.com/coins/images/32397/large/blox.png?1698054451",
+  "current_price": 0.00255275,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 255275,
+  "total_volume": 97,
+  "high_24h": 0.00264427,
+  "low_24h": 0.00255214,
+  "price_change_24h": -0.000072133330052633,
+  "price_change_percentage_24h": -2.74806,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 0.04778707,
+  "ath_change_percentage": -94.65808,
+  "ath_date": "2023-11-08T19:34:59.130Z",
+  "atl": 0.00233693,
+  "atl_change_percentage": 9.23479,
+  "atl_date": "2024-04-19T02:44:25.407Z",
+  "roi": null,
+  "last_updated": "2024-04-24T18:12:17.320Z",
+  "platforms": {
+    "ethereum": "0x320ed4c7243e35a00f9ca30a1ae60929d15eae37"
+  }
+}

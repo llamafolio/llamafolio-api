@@ -1,0 +1,31 @@
+{
+  "id": "solidus-aitech",
+  "symbol": "aitech",
+  "name": "Solidus Ai Tech",
+  "image": "https://assets.coingecko.com/coins/images/22114/large/CMC_200x200_AITECH.png?1696521456",
+  "current_price": 0.201664,
+  "market_cap": 111729601,
+  "market_cap_rank": 442,
+  "fully_diluted_valuation": 402348129,
+  "total_volume": 6321384,
+  "high_24h": 0.224736,
+  "low_24h": 0.200275,
+  "price_change_24h": -0.023072531464138513,
+  "price_change_percentage_24h": -10.26649,
+  "market_cap_change_24h": -13100688.125188977,
+  "market_cap_change_percentage_24h": -10.4948,
+  "circulating_supply": 553375009,
+  "total_supply": 1992752130,
+  "max_supply": 2000000000,
+  "ath": 0.493943,
+  "ath_change_percentage": -58.91079,
+  "ath_date": "2024-03-13T05:09:55.639Z",
+  "atl": 0.01243728,
+  "atl_change_percentage": 1531.84658,
+  "atl_date": "2023-09-28T11:05:15.077Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:30.955Z",
+  "platforms": {
+    "bsc": "0x2d060ef4d6bf7f9e5edde373ab735513c0e4f944"
+  }
+}

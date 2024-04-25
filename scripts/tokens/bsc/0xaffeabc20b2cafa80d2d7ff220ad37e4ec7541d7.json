@@ -1,0 +1,31 @@
+{
+  "id": "links",
+  "symbol": "links",
+  "name": "Links",
+  "image": "https://assets.coingecko.com/coins/images/21351/large/getlinks-coin.png?1696520716",
+  "current_price": 0.00670382,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1408914,
+  "total_volume": 2439.37,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 210165840,
+  "max_supply": 250000000,
+  "ath": 0.084214,
+  "ath_change_percentage": -92.03959,
+  "ath_date": "2023-07-10T08:41:44.185Z",
+  "atl": 0.00499916,
+  "atl_change_percentage": 34.09886,
+  "atl_date": "2023-07-14T14:04:44.091Z",
+  "roi": null,
+  "last_updated": "2023-08-16T16:30:26.607Z",
+  "platforms": {
+    "bsc": "0xaffeabc20b2cafa80d2d7ff220ad37e4ec7541d7"
+  }
+}

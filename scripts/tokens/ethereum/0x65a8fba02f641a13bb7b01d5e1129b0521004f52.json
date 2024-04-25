@@ -1,0 +1,31 @@
+{
+  "id": "amasa",
+  "symbol": "amas",
+  "name": "Amasa",
+  "image": "https://assets.coingecko.com/coins/images/18799/large/agmqWjv8_400x400.png?1696518261",
+  "current_price": 0.00699952,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1399903,
+  "total_volume": 1399.9,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 200000000,
+  "max_supply": null,
+  "ath": 0.39854,
+  "ath_change_percentage": -98.24371,
+  "ath_date": "2021-12-24T19:32:44.281Z",
+  "atl": 0.00053979,
+  "atl_change_percentage": 1196.71411,
+  "atl_date": "2023-11-11T02:31:40.872Z",
+  "roi": null,
+  "last_updated": "2024-04-22T07:54:01.265Z",
+  "platforms": {
+    "ethereum": "0x65a8fba02f641a13bb7b01d5e1129b0521004f52"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "yusd-stablecoin",
+  "symbol": "yusd",
+  "name": "YUSD Stablecoin",
+  "image": "https://assets.coingecko.com/coins/images/25024/large/1_oJ0F2Zf6CuAhLP0zOboo6w.png?1696524176",
+  "current_price": 0.995474,
+  "market_cap": 11836962,
+  "market_cap_rank": 1350,
+  "fully_diluted_valuation": 11836962,
+  "total_volume": 24.62,
+  "high_24h": 0.99902,
+  "low_24h": 0.992995,
+  "price_change_24h": 0.00039295,
+  "price_change_percentage_24h": 0.03949,
+  "market_cap_change_24h": -9816.788666291162,
+  "market_cap_change_percentage_24h": -0.08286,
+  "circulating_supply": 11890774.331642,
+  "total_supply": 11890774.331642,
+  "max_supply": null,
+  "ath": 4.17,
+  "ath_change_percentage": -76.14774,
+  "ath_date": "2023-04-23T12:46:10.492Z",
+  "atl": 0.076939,
+  "atl_change_percentage": 1193.84612,
+  "atl_date": "2024-02-26T03:50:44.907Z",
+  "roi": null,
+  "last_updated": "2024-04-25T07:08:11.467Z",
+  "platforms": {
+    "avalanche": "0x111111111111ed1d73f860f57b2798b683f2d325"
+  }
+}

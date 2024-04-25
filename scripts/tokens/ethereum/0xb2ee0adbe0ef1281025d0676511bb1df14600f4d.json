@@ -1,0 +1,31 @@
+{
+  "id": "fore-protocol",
+  "symbol": "fore",
+  "name": "FORE Protocol",
+  "image": "https://assets.coingecko.com/coins/images/31001/large/EXCHANGE_LOGO_FORE.png?1696529839",
+  "current_price": 0.01905216,
+  "market_cap": 2432819,
+  "market_cap_rank": 2185,
+  "fully_diluted_valuation": 19011290,
+  "total_volume": 95428,
+  "high_24h": 0.01917898,
+  "low_24h": 0.01849074,
+  "price_change_24h": -0.000059712576584263,
+  "price_change_percentage_24h": -0.31244,
+  "market_cap_change_24h": -5144.729898238555,
+  "market_cap_change_percentage_24h": -0.21103,
+  "circulating_supply": 127967083.34,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.220816,
+  "ath_change_percentage": -91.37743,
+  "ath_date": "2023-12-01T13:23:19.978Z",
+  "atl": 0.01849074,
+  "atl_change_percentage": 2.97026,
+  "atl_date": "2024-04-24T18:12:22.873Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:58.900Z",
+  "platforms": {
+    "ethereum": "0xb2ee0adbe0ef1281025d0676511bb1df14600f4d"
+  }
+}

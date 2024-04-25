@@ -1,0 +1,31 @@
+{
+  "id": "metavault-dao",
+  "symbol": "mvd",
+  "name": "Metavault DAO",
+  "image": "https://assets.coingecko.com/coins/images/23899/large/MVD_Coin-simple.png?1696523099",
+  "current_price": 5.19,
+  "market_cap": 1075371,
+  "market_cap_rank": 2647,
+  "fully_diluted_valuation": 1123060,
+  "total_volume": 12.26,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 207005,
+  "total_supply": 216185,
+  "max_supply": null,
+  "ath": 15.09,
+  "ath_change_percentage": -65.56979,
+  "ath_date": "2023-04-13T09:33:13.730Z",
+  "atl": 0.823653,
+  "atl_change_percentage": 530.71489,
+  "atl_date": "2022-05-19T16:37:27.957Z",
+  "roi": null,
+  "last_updated": "2024-04-20T13:47:51.897Z",
+  "platforms": {
+    "arbitrum": "0x15a808ed3846d25e88ae868de79f1bcb1ac382b5"
+  }
+}

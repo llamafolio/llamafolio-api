@@ -1,0 +1,31 @@
+{
+  "id": "lynex",
+  "symbol": "lynx",
+  "name": "Lynex",
+  "image": "https://assets.coingecko.com/coins/images/34874/large/LogoCircular_200x200.png?1706462851",
+  "current_price": 0.268571,
+  "market_cap": 9020789,
+  "market_cap_rank": 1490,
+  "fully_diluted_valuation": 39599871,
+  "total_volume": 732745,
+  "high_24h": 0.283471,
+  "low_24h": 0.268085,
+  "price_change_24h": -0.014219610299456176,
+  "price_change_percentage_24h": -5.02832,
+  "market_cap_change_24h": -207737.93560541794,
+  "market_cap_change_percentage_24h": -2.25104,
+  "circulating_supply": 33670651.1972647,
+  "total_supply": 147808962.495598,
+  "max_supply": null,
+  "ath": 0.484584,
+  "ath_change_percentage": -44.65894,
+  "ath_date": "2024-03-29T19:41:15.563Z",
+  "atl": 0.071037,
+  "atl_change_percentage": 277.51177,
+  "atl_date": "2024-02-24T16:48:37.963Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:40.592Z",
+  "platforms": {
+    "linea": ""
+  }
+}

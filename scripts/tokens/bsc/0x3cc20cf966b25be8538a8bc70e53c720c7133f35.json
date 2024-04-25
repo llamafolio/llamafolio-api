@@ -1,0 +1,31 @@
+{
+  "id": "genesis-wink",
+  "symbol": "gwink",
+  "name": "Genesis Wink",
+  "image": "https://assets.coingecko.com/coins/images/28772/large/g_3d.png?1696527751",
+  "current_price": 0.00101206,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 50603,
+  "total_volume": 8.14,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 50000000,
+  "max_supply": 50000000,
+  "ath": 0.0119788,
+  "ath_change_percentage": -91.55123,
+  "ath_date": "2023-01-19T07:22:41.709Z",
+  "atl": 0.00100877,
+  "atl_change_percentage": 0.32656,
+  "atl_date": "2023-05-16T00:51:38.343Z",
+  "roi": null,
+  "last_updated": "2023-05-16T03:37:49.684Z",
+  "platforms": {
+    "bsc": "0x3cc20cf966b25be8538a8bc70e53c720c7133f35"
+  }
+}

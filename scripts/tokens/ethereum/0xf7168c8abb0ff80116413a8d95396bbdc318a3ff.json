@@ -1,0 +1,31 @@
+{
+  "id": "kek",
+  "symbol": "keke",
+  "name": "KEK",
+  "image": "https://assets.coingecko.com/coins/images/30172/large/KEKE.png?1696529092",
+  "current_price": 3.1315e-8,
+  "market_cap": 2394512,
+  "market_cap_rank": 2191,
+  "fully_diluted_valuation": 2436547,
+  "total_volume": 357110,
+  "high_24h": 3.2712e-8,
+  "low_24h": 3.0416e-8,
+  "price_change_24h": -1.263032049e-9,
+  "price_change_percentage_24h": -3.87692,
+  "market_cap_change_24h": -108305.22860934446,
+  "market_cap_change_percentage_24h": -4.32733,
+  "circulating_supply": 76435976159860.66,
+  "total_supply": 77777777777777,
+  "max_supply": 77777777777777,
+  "ath": 1.80363e-7,
+  "ath_change_percentage": -82.59183,
+  "ath_date": "2023-05-16T15:41:14.869Z",
+  "atl": 5.609e-9,
+  "atl_change_percentage": 459.73649,
+  "atl_date": "2023-11-28T16:35:52.651Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:57.428Z",
+  "platforms": {
+    "ethereum": "0xf7168c8abb0ff80116413a8d95396bbdc318a3ff"
+  }
+}

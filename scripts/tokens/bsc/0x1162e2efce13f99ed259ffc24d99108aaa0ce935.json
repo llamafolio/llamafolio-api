@@ -1,0 +1,31 @@
+{
+  "id": "clucoin",
+  "symbol": "clu",
+  "name": "CluCoin",
+  "image": "https://assets.coingecko.com/coins/images/15685/large/CoinGecko.png?1696515314",
+  "current_price": 5.19991e-10,
+  "market_cap": 154388,
+  "market_cap_rank": 3620,
+  "fully_diluted_valuation": 519991,
+  "total_volume": 4.51,
+  "high_24h": 5.21035e-10,
+  "low_24h": 5.18852e-10,
+  "price_change_24h": -5.6402e-14,
+  "price_change_percentage_24h": -0.01085,
+  "market_cap_change_24h": -16.74601884916774,
+  "market_cap_change_percentage_24h": -0.01085,
+  "circulating_supply": 296905990618046.25,
+  "total_supply": 1000000000000000,
+  "max_supply": null,
+  "ath": 3.87253e-7,
+  "ath_change_percentage": -99.86572,
+  "ath_date": "2021-05-22T04:15:07.408Z",
+  "atl": 1.49889e-10,
+  "atl_change_percentage": 246.9182,
+  "atl_date": "2023-12-25T20:55:51.923Z",
+  "roi": null,
+  "last_updated": "2024-04-25T03:53:28.184Z",
+  "platforms": {
+    "bsc": "0x1162e2efce13f99ed259ffc24d99108aaa0ce935"
+  }
+}

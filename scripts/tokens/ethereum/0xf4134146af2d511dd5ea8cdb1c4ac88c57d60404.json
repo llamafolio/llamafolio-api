@@ -1,0 +1,31 @@
+{
+  "id": "suncontract",
+  "symbol": "snc",
+  "name": "SunContract",
+  "image": "https://assets.coingecko.com/coins/images/1166/large/suncontract.png?1696502255",
+  "current_price": 0.061897,
+  "market_cap": 7586423,
+  "market_cap_rank": 1567,
+  "fully_diluted_valuation": 7586423,
+  "total_volume": 486473,
+  "high_24h": 0.063011,
+  "low_24h": 0.060574,
+  "price_change_24h": -0.000898378405536138,
+  "price_change_percentage_24h": -1.43064,
+  "market_cap_change_24h": -119408.99867308978,
+  "market_cap_change_percentage_24h": -1.54959,
+  "circulating_supply": 122707503,
+  "total_supply": 122707503,
+  "max_supply": null,
+  "ath": 0.664222,
+  "ath_change_percentage": -90.6935,
+  "ath_date": "2018-01-08T00:00:00.000Z",
+  "atl": 0.002099,
+  "atl_change_percentage": 2845.01095,
+  "atl_date": "2023-09-22T14:25:03.580Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:31.916Z",
+  "platforms": {
+    "ethereum": "0xf4134146af2d511dd5ea8cdb1c4ac88c57d60404"
+  }
+}

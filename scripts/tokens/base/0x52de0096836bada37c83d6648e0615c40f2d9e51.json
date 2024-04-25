@@ -1,0 +1,31 @@
+{
+  "id": "baby-brett",
+  "symbol": "babybrett",
+  "name": "Baby Brett",
+  "image": "https://assets.coingecko.com/coins/images/35913/large/BB200.png?1710183575",
+  "current_price": 3.9692e-8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 396918,
+  "total_volume": 22994,
+  "high_24h": 6.8653e-8,
+  "low_24h": 3.5374e-8,
+  "price_change_24h": -8.65099085e-9,
+  "price_change_percentage_24h": -17.89508,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000000000,
+  "max_supply": 10000000000000,
+  "ath": 2.92623e-7,
+  "ath_change_percentage": -86.46357,
+  "ath_date": "2024-03-16T00:21:19.639Z",
+  "atl": 1.1763e-8,
+  "atl_change_percentage": 236.73898,
+  "atl_date": "2024-04-20T06:19:27.689Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:54.554Z",
+  "platforms": {
+    "base": "0x52de0096836bada37c83d6648e0615c40f2d9e51"
+  }
+}

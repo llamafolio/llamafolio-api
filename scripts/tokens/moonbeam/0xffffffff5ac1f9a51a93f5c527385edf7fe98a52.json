@@ -1,0 +1,31 @@
+{
+  "id": "interbtc",
+  "symbol": "ibtc",
+  "name": "interBTC",
+  "image": "https://assets.coingecko.com/coins/images/26217/large/interBTC_for_Exchanges.png?1696525302",
+  "current_price": 64220,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 38952,
+  "high_24h": 67160,
+  "low_24h": 63866,
+  "price_change_24h": -2863.01634958708,
+  "price_change_percentage_24h": -4.26787,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 90621,
+  "ath_change_percentage": -29.00199,
+  "ath_date": "2023-07-16T15:30:46.413Z",
+  "atl": 13992.39,
+  "atl_change_percentage": 359.81691,
+  "atl_date": "2023-05-08T07:43:21.525Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:27.037Z",
+  "platforms": {
+    "moonbeam": "0xffffffff5ac1f9a51a93f5c527385edf7fe98a52"
+  }
+}

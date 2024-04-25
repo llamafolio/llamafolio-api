@@ -1,0 +1,31 @@
+{
+  "id": "aviator",
+  "symbol": "avi",
+  "name": "Aviator",
+  "image": "https://assets.coingecko.com/coins/images/31024/large/avi-200x200png.png?1711119363",
+  "current_price": 0.00353524,
+  "market_cap": 23724668,
+  "market_cap_rank": 1030,
+  "fully_diluted_valuation": 32652769,
+  "total_volume": 183598,
+  "high_24h": 0.00385939,
+  "low_24h": 0.00346271,
+  "price_change_24h": -0.000182739600549858,
+  "price_change_percentage_24h": -4.91502,
+  "market_cap_change_24h": -1251108.7745255977,
+  "market_cap_change_percentage_24h": -5.00929,
+  "circulating_supply": 6715829313.317408,
+  "total_supply": 9243139929.22603,
+  "max_supply": 10000000000,
+  "ath": 0.00741462,
+  "ath_change_percentage": -52.34569,
+  "ath_date": "2024-03-25T16:44:50.833Z",
+  "atl": 0.00003032,
+  "atl_change_percentage": 11554.30329,
+  "atl_date": "2023-08-04T10:24:12.401Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:35.902Z",
+  "platforms": {
+    "ethereum": "0xd2bdaaf2b9cc6981fd273dcb7c04023bfbe0a7fe"
+  }
+}

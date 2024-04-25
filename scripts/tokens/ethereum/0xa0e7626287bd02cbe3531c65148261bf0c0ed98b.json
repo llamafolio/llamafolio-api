@@ -1,0 +1,31 @@
+{
+  "id": "shill-guard-token",
+  "symbol": "sgt",
+  "name": "Shill Guard Token",
+  "image": "https://assets.coingecko.com/coins/images/33176/large/SHILL_GUARD_TOKEN_SGT_LOGO.png?1700923841",
+  "current_price": 0.00931303,
+  "market_cap": 821182,
+  "market_cap_rank": 2803,
+  "fully_diluted_valuation": 821182,
+  "total_volume": 2773.05,
+  "high_24h": 0.01011167,
+  "low_24h": 0.00927748,
+  "price_change_24h": -0.000678934077018753,
+  "price_change_percentage_24h": -6.7948,
+  "market_cap_change_24h": -61452.76686117402,
+  "market_cap_change_percentage_24h": -6.96242,
+  "circulating_supply": 88175655,
+  "total_supply": 88175655,
+  "max_supply": 100000000,
+  "ath": 0.01433868,
+  "ath_change_percentage": -35.04959,
+  "ath_date": "2024-04-17T19:20:14.423Z",
+  "atl": 0.00057242,
+  "atl_change_percentage": 1526.95391,
+  "atl_date": "2023-11-25T14:54:40.996Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:02:31.497Z",
+  "platforms": {
+    "ethereum": "0xa0e7626287bd02cbe3531c65148261bf0c0ed98b"
+  }
+}

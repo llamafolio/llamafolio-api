@@ -1,0 +1,31 @@
+{
+  "id": "musk-gold",
+  "symbol": "musk",
+  "name": "MUSK Gold",
+  "image": "https://assets.coingecko.com/coins/images/21696/large/musk-icon-200x200.png?1696521051",
+  "current_price": 0.00208871,
+  "market_cap": 72104,
+  "market_cap_rank": 3888,
+  "fully_diluted_valuation": 1442086,
+  "total_volume": 98.53,
+  "high_24h": 0.00213587,
+  "low_24h": 0.00208025,
+  "price_change_24h": -0.00002203844950178,
+  "price_change_percentage_24h": -1.04411,
+  "market_cap_change_24h": -941.6325107192533,
+  "market_cap_change_percentage_24h": -1.2891,
+  "circulating_supply": 34521000,
+  "total_supply": 690420000,
+  "max_supply": null,
+  "ath": 0.860859,
+  "ath_change_percentage": -99.75737,
+  "ath_date": "2022-01-20T18:59:14.771Z",
+  "atl": 0.00073449,
+  "atl_change_percentage": 184.37618,
+  "atl_date": "2024-04-03T09:29:45.074Z",
+  "roi": null,
+  "last_updated": "2024-04-24T15:02:19.460Z",
+  "platforms": {
+    "ethereum": "0x6069c9223e8a5da1ec49ac5525d4bb757af72cd8"
+  }
+}

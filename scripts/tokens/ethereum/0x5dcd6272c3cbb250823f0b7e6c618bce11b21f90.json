@@ -1,0 +1,31 @@
+{
+  "id": "pear-swap",
+  "symbol": "pear",
+  "name": "Pear Swap",
+  "image": "https://assets.coingecko.com/coins/images/30409/large/9zYlZj3H_400x400.jpg?1696529298",
+  "current_price": 0.01870561,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1870561,
+  "total_volume": 7766.99,
+  "high_24h": 0.02061187,
+  "low_24h": 0.01866078,
+  "price_change_24h": -0.001702598420319047,
+  "price_change_percentage_24h": -8.34272,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.186578,
+  "ath_change_percentage": -89.97435,
+  "ath_date": "2023-11-29T00:35:38.683Z",
+  "atl": 0.00272725,
+  "atl_change_percentage": 585.87862,
+  "atl_date": "2023-06-21T13:24:03.717Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:55.381Z",
+  "platforms": {
+    "ethereum": "0x5dcd6272c3cbb250823f0b7e6c618bce11b21f90"
+  }
+}

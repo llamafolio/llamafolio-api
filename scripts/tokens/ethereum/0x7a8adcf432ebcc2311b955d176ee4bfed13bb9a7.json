@@ -1,0 +1,31 @@
+{
+  "id": "mandox-2",
+  "symbol": "mandox",
+  "name": "MandoX",
+  "image": "https://assets.coingecko.com/coins/images/24968/large/NmqN8g7.png?1696524121",
+  "current_price": 5.7121e-8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2857050,
+  "total_volume": 31142,
+  "high_24h": 5.797e-8,
+  "low_24h": 5.6981e-8,
+  "price_change_24h": -1.89277522e-10,
+  "price_change_percentage_24h": -0.33027,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 50000000000000,
+  "max_supply": null,
+  "ath": 0.00001087,
+  "ath_change_percentage": -99.47434,
+  "ath_date": "2023-10-25T16:36:01.324Z",
+  "atl": 5.6688e-8,
+  "atl_change_percentage": 0.76407,
+  "atl_date": "2024-04-19T08:18:50.195Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:25.217Z",
+  "platforms": {
+    "ethereum": "0x7a8adcf432ebcc2311b955d176ee4bfed13bb9a7"
+  }
+}

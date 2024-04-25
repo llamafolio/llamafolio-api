@@ -1,0 +1,31 @@
+{
+  "id": "inflation-hedging-coin",
+  "symbol": "ihc",
+  "name": "Inflation Hedging Coin",
+  "image": "https://assets.coingecko.com/coins/images/18835/large/imgonline-com-ua-Resize-QspvgKzsspQpANbd.png?1696518296",
+  "current_price": 0.00001889,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 18695582,
+  "total_volume": 3230.15,
+  "high_24h": 0.00001873,
+  "low_24h": 0.0000181,
+  "price_change_24h": 5.64183e-7,
+  "price_change_percentage_24h": 3.07834,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000,
+  "max_supply": 1000000000000,
+  "ath": 0.00261277,
+  "ath_change_percentage": -99.2854,
+  "ath_date": "2021-10-08T16:39:24.969Z",
+  "atl": 0.00001666,
+  "atl_change_percentage": 12.07556,
+  "atl_date": "2024-04-13T20:30:51.594Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:27.597Z",
+  "platforms": {
+    "bsc": "0x86a53fcd199212fea44fa7e16eb1f28812be911d"
+  }
+}

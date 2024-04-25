@@ -1,0 +1,31 @@
+{
+  "id": "undead-blocks",
+  "symbol": "undead",
+  "name": "Undead Blocks",
+  "image": "https://assets.coingecko.com/coins/images/25382/large/AB0Uemhlw6jR.png?1696524515",
+  "current_price": 0.123289,
+  "market_cap": 1849342,
+  "market_cap_rank": 2347,
+  "fully_diluted_valuation": 61644743,
+  "total_volume": 1.24,
+  "high_24h": 0.124167,
+  "low_24h": 0.121528,
+  "price_change_24h": 0.00167064,
+  "price_change_percentage_24h": 1.37367,
+  "market_cap_change_24h": 21360,
+  "market_cap_change_percentage_24h": 1.16851,
+  "circulating_supply": 15000000,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 2.18,
+  "ath_change_percentage": -94.33879,
+  "ath_date": "2022-05-04T16:28:40.364Z",
+  "atl": 0.051563,
+  "atl_change_percentage": 139.1031,
+  "atl_date": "2023-10-14T03:15:43.801Z",
+  "roi": null,
+  "last_updated": "2024-04-25T01:26:23.202Z",
+  "platforms": {
+    "ethereum": "0x310c8f00b9de3c31ab95ea68feb6c877538f7947"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "istable",
+  "symbol": "i-stable",
+  "name": "iStable",
+  "image": "https://assets.coingecko.com/coins/images/28843/large/I-STABLE-05.png?1696527819",
+  "current_price": 0.00015698,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 15698.35,
+  "total_volume": 0.867538,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.00229482,
+  "ath_change_percentage": -93.15922,
+  "ath_date": "2023-01-27T12:41:24.442Z",
+  "atl": 0.00015278,
+  "atl_change_percentage": 2.75362,
+  "atl_date": "2023-05-12T19:30:49.821Z",
+  "roi": null,
+  "last_updated": "2023-05-16T23:30:28.270Z",
+  "platforms": {
+    "bsc": "0x0573780eb18d5c847d89e745e94149b9e9d0cde8"
+  }
+}

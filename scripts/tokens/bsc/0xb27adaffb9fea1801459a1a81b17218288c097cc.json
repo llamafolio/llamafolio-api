@@ -1,0 +1,31 @@
+{
+  "id": "poocoin",
+  "symbol": "poocoin",
+  "name": "PooCoin",
+  "image": "https://assets.coingecko.com/coins/images/14855/large/w4_9ayk3_400x400.png?1696514521",
+  "current_price": 0.430384,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2682309,
+  "total_volume": 1318.4,
+  "high_24h": 0.437785,
+  "low_24h": 0.419749,
+  "price_change_24h": 0.00119996,
+  "price_change_percentage_24h": 0.27959,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 6224790,
+  "max_supply": null,
+  "ath": 14.26,
+  "ath_change_percentage": -96.9903,
+  "ath_date": "2021-05-12T13:39:09.333Z",
+  "atl": 0.00013808,
+  "atl_change_percentage": 310762.39714,
+  "atl_date": "2021-10-16T15:00:09.363Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:12.653Z",
+  "platforms": {
+    "bsc": "0xb27adaffb9fea1801459a1a81b17218288c097cc"
+  }
+}

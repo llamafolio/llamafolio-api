@@ -1,0 +1,31 @@
+{
+  "id": "alphacoin",
+  "symbol": "alpha",
+  "name": "Alpha Coin",
+  "image": "https://assets.coingecko.com/coins/images/22199/large/logo2023.png?1696521542",
+  "current_price": 0.118544,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 591833082,
+  "total_volume": 373.29,
+  "high_24h": 0.12946,
+  "low_24h": 0.11786,
+  "price_change_24h": -0.008486146001697253,
+  "price_change_percentage_24h": -6.68042,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 4975999999,
+  "max_supply": 10000000000,
+  "ath": 0.222556,
+  "ath_change_percentage": -46.63235,
+  "ath_date": "2023-12-17T12:32:12.520Z",
+  "atl": 0.00009363,
+  "atl_change_percentage": 126749.12015,
+  "atl_date": "2022-02-20T21:44:11.746Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:35.134Z",
+  "platforms": {
+    "ethereum": "0x138c2f1123cf3f82e4596d097c118eac6684940b"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "hudi",
+  "symbol": "hudi",
+  "name": "Hudi",
+  "image": "https://assets.coingecko.com/coins/images/18454/large/coin_200x200.png?1696517941",
+  "current_price": 0.134883,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 9363573,
+  "total_volume": 4670.38,
+  "high_24h": 0.136563,
+  "low_24h": 0.121172,
+  "price_change_24h": 0.01364604,
+  "price_change_percentage_24h": 11.25568,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 69420000,
+  "max_supply": 69420000,
+  "ath": 4.76,
+  "ath_change_percentage": -97.17805,
+  "ath_date": "2021-11-08T12:14:33.356Z",
+  "atl": 0.068549,
+  "atl_change_percentage": 96.05393,
+  "atl_date": "2023-11-01T17:58:24.562Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:17.028Z",
+  "platforms": {
+    "bsc": "0x83d8ea5a4650b68cd2b57846783d86df940f7458"
+  }
+}

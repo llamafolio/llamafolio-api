@@ -1,0 +1,31 @@
+{
+  "id": "arpa",
+  "symbol": "arpa",
+  "name": "ARPA",
+  "image": "https://assets.coingecko.com/coins/images/8506/large/9u0a23XY_400x400.jpg?1696508685",
+  "current_price": 0.070576,
+  "market_cap": 69216164,
+  "market_cap_rank": 582,
+  "fully_diluted_valuation": 140944725,
+  "total_volume": 13196261,
+  "high_24h": 0.077904,
+  "low_24h": 0.069857,
+  "price_change_24h": -0.005980820767561999,
+  "price_change_percentage_24h": -7.81222,
+  "market_cap_change_24h": -6178704.4295755625,
+  "market_cap_change_percentage_24h": -8.19513,
+  "circulating_supply": 982174603.2857143,
+  "total_supply": 2000000000,
+  "max_supply": 2000000000,
+  "ath": 0.268622,
+  "ath_change_percentage": -73.75975,
+  "ath_date": "2021-11-03T13:31:39.876Z",
+  "atl": 0.00339441,
+  "atl_change_percentage": 1976.56484,
+  "atl_date": "2020-03-13T02:24:16.336Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:50.990Z",
+  "platforms": {
+    "ethereum": "0xba50933c268f567bdc86e1ac131be072c6b0b71a"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "imov",
+  "symbol": "imt",
+  "name": "IMOV",
+  "image": "https://assets.coingecko.com/coins/images/26558/large/IMOV.png?1696525631",
+  "current_price": 0.00444421,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 444421,
+  "total_volume": 18.59,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 1.16,
+  "ath_change_percentage": -99.616,
+  "ath_date": "2023-05-24T15:32:35.608Z",
+  "atl": 0.00260221,
+  "atl_change_percentage": 70.78618,
+  "atl_date": "2023-04-07T10:24:34.041Z",
+  "roi": null,
+  "last_updated": "2024-04-21T22:52:12.115Z",
+  "platforms": {
+    "bsc": "0x7b8779e01d117ec7e220f8299a6f93672e8eae23"
+  }
+}

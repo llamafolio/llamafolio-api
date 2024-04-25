@@ -1,0 +1,31 @@
+{
+  "id": "gascoin",
+  "symbol": "gcn",
+  "name": "Gascoin",
+  "image": "https://assets.coingecko.com/coins/images/31901/large/GAS_LOGO.jpg?1696530712",
+  "current_price": 79.98,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 7749982964,
+  "total_volume": 0.984753,
+  "high_24h": 80.23,
+  "low_24h": 79.24,
+  "price_change_24h": -0.02499674257533968,
+  "price_change_percentage_24h": -0.03124,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 96875000,
+  "max_supply": 125000000,
+  "ath": 81.25,
+  "ath_change_percentage": -1.57273,
+  "ath_date": "2024-01-03T12:02:46.287Z",
+  "atl": 7.1,
+  "atl_change_percentage": 1026.17084,
+  "atl_date": "2024-02-26T16:23:03.778Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:35.956Z",
+  "platforms": {
+    "polygon": "0xf4c7da5d8f3b5190d6176bd240613e59665b3153"
+  }
+}

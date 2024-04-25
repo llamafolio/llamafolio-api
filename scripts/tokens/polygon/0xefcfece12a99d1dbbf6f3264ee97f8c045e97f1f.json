@@ -1,0 +1,31 @@
+{
+  "id": "the-unfettered-souls",
+  "symbol": "souls",
+  "name": "The Unfettered Ecosystem",
+  "image": "https://assets.coingecko.com/coins/images/30591/large/un.jpg?1696529459",
+  "current_price": 0.00398812,
+  "market_cap": 3292267,
+  "market_cap_rank": 2008,
+  "fully_diluted_valuation": 8948956,
+  "total_volume": 115654,
+  "high_24h": 0.00415883,
+  "low_24h": 0.00369758,
+  "price_change_24h": -0.000135056444830894,
+  "price_change_percentage_24h": -3.27555,
+  "market_cap_change_24h": -120432.12539940188,
+  "market_cap_change_percentage_24h": -3.52894,
+  "circulating_supply": 827761480,
+  "total_supply": 2250000000,
+  "max_supply": 2250000000,
+  "ath": 0.01236085,
+  "ath_change_percentage": -67.77315,
+  "ath_date": "2023-12-23T07:19:51.636Z",
+  "atl": 0.00037244,
+  "atl_change_percentage": 969.56158,
+  "atl_date": "2024-02-23T12:44:37.605Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:15.712Z",
+  "platforms": {
+    "polygon": "0xefcfece12a99d1dbbf6f3264ee97f8c045e97f1f"
+  }
+}

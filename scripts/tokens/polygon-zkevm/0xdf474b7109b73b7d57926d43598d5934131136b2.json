@@ -1,0 +1,35 @@
+{
+  "id": "ankr",
+  "symbol": "ankr",
+  "name": "Ankr Network",
+  "image": "https://assets.coingecko.com/coins/images/4324/large/U85xTl2.png?1696504928",
+  "current_price": 0.050653,
+  "market_cap": 506714755,
+  "market_cap_rank": 162,
+  "fully_diluted_valuation": 506714755,
+  "total_volume": 39396827,
+  "high_24h": 0.054704,
+  "low_24h": 0.04964947,
+  "price_change_24h": -0.003108810397848952,
+  "price_change_percentage_24h": -5.78253,
+  "market_cap_change_24h": -32454122.586773098,
+  "market_cap_change_percentage_24h": -6.01929,
+  "circulating_supply": 10000000000,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.213513,
+  "ath_change_percentage": -76.26775,
+  "ath_date": "2021-04-16T19:44:04.474Z",
+  "atl": 0.00070728,
+  "atl_change_percentage": 7064.25031,
+  "atl_date": "2020-03-13T02:24:03.563Z",
+  "roi": {
+    "times": 6.674741673775009,
+    "currency": "usd",
+    "percentage": 667.4741673775009
+  },
+  "last_updated": "2024-04-25T09:02:23.716Z",
+  "platforms": {
+    "polygon-zkevm": "0xdf474b7109b73b7d57926d43598d5934131136b2"
+  }
+}

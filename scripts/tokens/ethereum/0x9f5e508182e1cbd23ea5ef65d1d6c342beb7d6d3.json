@@ -1,0 +1,31 @@
+{
+  "id": "jones",
+  "symbol": "$jones",
+  "name": "$JONES",
+  "image": "https://assets.coingecko.com/coins/images/34588/large/ALEX_JONES_LOGO_200px_CoinGecko.jpg?1705425283",
+  "current_price": 1.57027e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 108349,
+  "total_volume": 16.4,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 690000000000,
+  "max_supply": 690000000000,
+  "ath": 8.38122e-7,
+  "ath_change_percentage": -81.2644,
+  "ath_date": "2024-01-17T13:44:33.372Z",
+  "atl": 9.2046e-8,
+  "atl_change_percentage": 70.59578,
+  "atl_date": "2024-04-19T02:31:44.352Z",
+  "roi": null,
+  "last_updated": "2024-04-24T02:30:39.821Z",
+  "platforms": {
+    "ethereum": "0x9f5e508182e1cbd23ea5ef65d1d6c342beb7d6d3"
+  }
+}

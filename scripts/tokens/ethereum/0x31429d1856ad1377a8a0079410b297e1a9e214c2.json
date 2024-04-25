@@ -1,0 +1,31 @@
+{
+  "id": "angle-protocol",
+  "symbol": "angle",
+  "name": "ANGLE",
+  "image": "https://assets.coingecko.com/coins/images/19060/large/ANGLE_Token-light.png?1696518509",
+  "current_price": 0.123418,
+  "market_cap": 24849153,
+  "market_cap_rank": 1008,
+  "fully_diluted_valuation": 123334814,
+  "total_volume": 177445,
+  "high_24h": 0.137344,
+  "low_24h": 0.123115,
+  "price_change_24h": -0.013875687934815308,
+  "price_change_percentage_24h": -10.10656,
+  "market_cap_change_24h": -2839348.7919800133,
+  "market_cap_change_percentage_24h": -10.25461,
+  "circulating_supply": 201477201.56345758,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 2.33,
+  "ath_change_percentage": -94.70751,
+  "ath_date": "2021-11-04T02:18:52.138Z",
+  "atl": 0.02334822,
+  "atl_change_percentage": 428.44507,
+  "atl_date": "2022-12-16T16:15:20.255Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:56.963Z",
+  "platforms": {
+    "ethereum": "0x31429d1856ad1377a8a0079410b297e1a9e214c2"
+  }
+}

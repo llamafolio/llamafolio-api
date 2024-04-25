@@ -1,0 +1,31 @@
+{
+  "id": "starship-2",
+  "symbol": "starship",
+  "name": "Starship",
+  "image": "https://assets.coingecko.com/coins/images/33736/large/b3523c31-f785-45e4-9913-9a1fc3c6635f-25496154.jpg?1702902645",
+  "current_price": 2.22072e-13,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 93262,
+  "total_volume": 63.29,
+  "high_24h": 2.61849e-13,
+  "low_24h": 1.95012e-13,
+  "price_change_24h": 1.49e-15,
+  "price_change_percentage_24h": 0.67537,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 420000000000000000,
+  "max_supply": 420000000000000000,
+  "ath": 7.989e-12,
+  "ath_change_percentage": -97.21858,
+  "ath_date": "2023-12-19T07:54:23.934Z",
+  "atl": 8.3592e-14,
+  "atl_change_percentage": 165.83103,
+  "atl_date": "2024-02-23T12:35:44.476Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:47.710Z",
+  "platforms": {
+    "bsc": "0x9731b59a10833ef635b2d0fb6f87716876a2d5e1"
+  }
+}

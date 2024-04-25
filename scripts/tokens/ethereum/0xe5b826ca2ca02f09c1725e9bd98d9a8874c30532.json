@@ -1,0 +1,35 @@
+{
+  "id": "zeon",
+  "symbol": "zeon",
+  "name": "ZEON Network",
+  "image": "https://assets.coingecko.com/coins/images/4247/large/XZqXYc2j_400x400.jpg?1696504861",
+  "current_price": 0.00030878,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 15446915,
+  "total_volume": 79635,
+  "high_24h": 0.00030969,
+  "low_24h": 0.00030549,
+  "price_change_24h": 0.00000218,
+  "price_change_percentage_24h": 0.71097,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 50000000000,
+  "max_supply": null,
+  "ath": 0.03338713,
+  "ath_change_percentage": -99.0749,
+  "ath_date": "2022-01-13T13:40:33.594Z",
+  "atl": 1.04385e-7,
+  "atl_change_percentage": 295791.46905,
+  "atl_date": "2021-05-18T18:55:30.550Z",
+  "roi": {
+    "times": -0.3824484010063042,
+    "currency": "usd",
+    "percentage": -38.24484010063042
+  },
+  "last_updated": "2024-04-25T09:14:53.614Z",
+  "platforms": {
+    "ethereum": "0xe5b826ca2ca02f09c1725e9bd98d9a8874c30532"
+  }
+}

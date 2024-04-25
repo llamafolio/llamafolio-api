@@ -1,0 +1,31 @@
+{
+  "id": "cia",
+  "symbol": "cia",
+  "name": "CIA",
+  "image": "https://assets.coingecko.com/coins/images/21569/large/Untitled-design-24.png?1696520929",
+  "current_price": 0.00000411,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 408796,
+  "total_volume": 1286.54,
+  "high_24h": 0.0000044,
+  "low_24h": 0.00000408,
+  "price_change_24h": -2.4414538636e-7,
+  "price_change_percentage_24h": -5.61088,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000000,
+  "max_supply": null,
+  "ath": 0.00004557,
+  "ath_change_percentage": -91.03019,
+  "ath_date": "2022-01-05T17:15:04.467Z",
+  "atl": 0.00000114,
+  "atl_change_percentage": 258.4162,
+  "atl_date": "2023-09-07T15:31:24.850Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:47.694Z",
+  "platforms": {
+    "ethereum": "0x52f4d5ee6c91e01be67ca1f64b11ed0ee370817d"
+  }
+}

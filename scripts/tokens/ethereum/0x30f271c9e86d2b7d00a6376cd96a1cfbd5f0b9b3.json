@@ -1,0 +1,31 @@
+{
+  "id": "decentr",
+  "symbol": "dec",
+  "name": "Decentr",
+  "image": "https://assets.coingecko.com/coins/images/11816/large/Decentr.png?1696511689",
+  "current_price": 0.00997517,
+  "market_cap": 1117678,
+  "market_cap_rank": 2626,
+  "fully_diluted_valuation": 2055166,
+  "total_volume": 144385,
+  "high_24h": 0.0119052,
+  "low_24h": 0.00995406,
+  "price_change_24h": -0.000159386391100483,
+  "price_change_percentage_24h": -1.5727,
+  "market_cap_change_24h": 23385,
+  "market_cap_change_percentage_24h": 2.13702,
+  "circulating_supply": 108767633.45027654,
+  "total_supply": 200000000,
+  "max_supply": 1000000000,
+  "ath": 0.610172,
+  "ath_change_percentage": -98.31599,
+  "ath_date": "2021-02-11T17:27:37.390Z",
+  "atl": 0.00150046,
+  "atl_change_percentage": 584.81361,
+  "atl_date": "2022-12-24T14:36:27.541Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:37.468Z",
+  "platforms": {
+    "ethereum": "0x30f271c9e86d2b7d00a6376cd96a1cfbd5f0b9b3"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "soccer-crypto",
+  "symbol": "sot",
+  "name": "Soccer Crypto",
+  "image": "https://assets.coingecko.com/coins/images/28339/large/wYXOL79.png?1696527345",
+  "current_price": 0.00008775,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 6458.05,
+  "total_volume": 65.8,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 73600000,
+  "max_supply": 1000000000,
+  "ath": 0.02795918,
+  "ath_change_percentage": -99.68617,
+  "ath_date": "2022-12-01T06:43:46.929Z",
+  "atl": 0.00008195,
+  "atl_change_percentage": 7.06925,
+  "atl_date": "2023-05-14T12:26:04.623Z",
+  "roi": null,
+  "last_updated": "2023-05-18T01:30:19.166Z",
+  "platforms": {
+    "bsc": "0xde1a0f6c7078c5da0a6236eeb04261f4699905c5"
+  }
+}

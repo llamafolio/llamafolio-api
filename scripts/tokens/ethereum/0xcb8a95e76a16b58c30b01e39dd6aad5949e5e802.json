@@ -1,0 +1,31 @@
+{
+  "id": "tetris-2",
+  "symbol": "tetris",
+  "name": "Tetris",
+  "image": "https://assets.coingecko.com/coins/images/31100/large/tetris.jpeg?1696529931",
+  "current_price": 0.00082398,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 82398,
+  "total_volume": 17.14,
+  "high_24h": 0.00082748,
+  "low_24h": 0.00081693,
+  "price_change_24h": 0.00000553,
+  "price_change_percentage_24h": 0.67543,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 0.0304029,
+  "ath_change_percentage": -97.28981,
+  "ath_date": "2023-07-27T22:16:06.345Z",
+  "atl": 0.00012211,
+  "atl_change_percentage": 574.79686,
+  "atl_date": "2023-10-23T00:46:46.722Z",
+  "roi": null,
+  "last_updated": "2024-04-25T04:55:52.670Z",
+  "platforms": {
+    "ethereum": "0xcb8a95e76a16b58c30b01e39dd6aad5949e5e802"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "dfyn-network",
+  "symbol": "dfyn",
+  "name": "Dfyn Network",
+  "image": "https://assets.coingecko.com/coins/images/15368/large/SgqhfWz4_400x400_%281%29.jpg?1696515016",
+  "current_price": 0.02437128,
+  "market_cap": 4713244,
+  "market_cap_rank": 1825,
+  "fully_diluted_valuation": 4855153,
+  "total_volume": 70891,
+  "high_24h": 0.02455186,
+  "low_24h": 0.02348792,
+  "price_change_24h": 0.00066909,
+  "price_change_percentage_24h": 2.82289,
+  "market_cap_change_24h": 146053,
+  "market_cap_change_percentage_24h": 3.19788,
+  "circulating_supply": 192488455,
+  "total_supply": 198284007,
+  "max_supply": null,
+  "ath": 8.38,
+  "ath_change_percentage": -99.70958,
+  "ath_date": "2021-05-16T13:03:25.239Z",
+  "atl": 0.01068526,
+  "atl_change_percentage": 127.82029,
+  "atl_date": "2023-10-20T05:40:28.980Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:12.645Z",
+  "platforms": {
+    "ethereum": "0x9695e0114e12c0d3a3636fab5a18e6b737529023"
+  }
+}

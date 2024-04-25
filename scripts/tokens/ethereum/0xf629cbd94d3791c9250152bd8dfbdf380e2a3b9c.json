@@ -1,0 +1,31 @@
+{
+  "id": "enjincoin",
+  "symbol": "enj",
+  "name": "Enjin Coin",
+  "image": "https://assets.coingecko.com/coins/images/1102/large/Symbol_Only_-_Purple.png?1709725966",
+  "current_price": 0.328373,
+  "market_cap": 473899354,
+  "market_cap_rank": 170,
+  "fully_diluted_valuation": 591788405,
+  "total_volume": 26696617,
+  "high_24h": 0.358901,
+  "low_24h": 0.324766,
+  "price_change_24h": -0.02326919611458589,
+  "price_change_percentage_24h": -6.61729,
+  "market_cap_change_24h": -34495993.343660295,
+  "market_cap_change_percentage_24h": -6.78527,
+  "circulating_supply": 1441704462.81779,
+  "total_supply": 1800348486.83708,
+  "max_supply": null,
+  "ath": 4.82,
+  "ath_change_percentage": -93.17754,
+  "ath_date": "2021-11-25T09:53:41.955Z",
+  "atl": 0.01865964,
+  "atl_change_percentage": 1662.07626,
+  "atl_date": "2017-11-12T00:00:00.000Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:44.419Z",
+  "platforms": {
+    "ethereum": "0xf629cbd94d3791c9250152bd8dfbdf380e2a3b9c"
+  }
+}

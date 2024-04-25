@@ -1,0 +1,31 @@
+{
+  "id": "espento-usd",
+  "symbol": "eusd",
+  "name": "Espento USD",
+  "image": "https://assets.coingecko.com/coins/images/32148/large/espentoEusd.png?1696596921",
+  "current_price": 0.864628,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 50314,
+  "high_24h": 0.899919,
+  "low_24h": 0.858458,
+  "price_change_24h": -0.03075914354641518,
+  "price_change_percentage_24h": -3.43529,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.55,
+  "ath_change_percentage": -44.08367,
+  "ath_date": "2023-10-12T14:29:17.502Z",
+  "atl": 0.519793,
+  "atl_change_percentage": 66.34092,
+  "atl_date": "2024-01-23T14:25:20.105Z",
+  "roi": null,
+  "last_updated": "2024-04-25T04:17:49.796Z",
+  "platforms": {
+    "bsc": "0x417e99871cdc1a48cc313be8b586667d54b46494"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "don-t-buy-inu",
+  "symbol": "dbi",
+  "name": "Don't Buy Inu",
+  "image": "https://assets.coingecko.com/coins/images/28058/large/1Artboard_1_%282%29.png?1696527070",
+  "current_price": 0.00133182,
+  "market_cap": 1895232,
+  "market_cap_rank": 2325,
+  "fully_diluted_valuation": 1895232,
+  "total_volume": 29853,
+  "high_24h": 0.00140319,
+  "low_24h": 0.00114851,
+  "price_change_24h": -0.000064340951314801,
+  "price_change_percentage_24h": -4.60843,
+  "market_cap_change_24h": -91778.02532194229,
+  "market_cap_change_percentage_24h": -4.6189,
+  "circulating_supply": 1423043587,
+  "total_supply": 1423043587,
+  "max_supply": 2000000000,
+  "ath": 0.02460158,
+  "ath_change_percentage": -94.59302,
+  "ath_date": "2023-03-09T14:41:00.432Z",
+  "atl": 0.00067063,
+  "atl_change_percentage": 98.34975,
+  "atl_date": "2022-11-09T18:39:56.515Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:18.223Z",
+  "platforms": {
+    "ethereum": "0x2de509bf0014ddf697b220be628213034d320ece"
+  }
+}

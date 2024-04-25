@@ -1,0 +1,31 @@
+{
+  "id": "swapz-app",
+  "symbol": "swapz",
+  "name": "SWAPZ.app",
+  "image": "https://assets.coingecko.com/coins/images/16811/large/EWV5xQB.jpeg?1696516381",
+  "current_price": 0.00094821,
+  "market_cap": 177742,
+  "market_cap_rank": 3548,
+  "fully_diluted_valuation": 274199,
+  "total_volume": 210.01,
+  "high_24h": 0.00098275,
+  "low_24h": 0.00093412,
+  "price_change_24h": -0.000014689798575053,
+  "price_change_percentage_24h": -1.52558,
+  "market_cap_change_24h": 60.18,
+  "market_cap_change_percentage_24h": 0.03387,
+  "circulating_supply": 187513406.047312,
+  "total_supply": 289273663.66,
+  "max_supply": null,
+  "ath": 0.131942,
+  "ath_change_percentage": -99.28366,
+  "ath_date": "2021-11-15T04:32:37.894Z",
+  "atl": 0.0003698,
+  "atl_change_percentage": 155.5895,
+  "atl_date": "2023-10-13T05:55:14.185Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:53.197Z",
+  "platforms": {
+    "bsc": "0xd522a1dce1ca4b138dda042a78672307eb124cc2"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "tate",
+  "symbol": "tate",
+  "name": "TATE",
+  "image": "https://assets.coingecko.com/coins/images/30034/large/Tate_logo_Coingecko.png?1696528957",
+  "current_price": 1.357e-9,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 71315,
+  "high_24h": 2.183e-9,
+  "low_24h": 1.348e-9,
+  "price_change_24h": -1.78694414e-10,
+  "price_change_percentage_24h": -11.63549,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": 333,
+  "ath": 1.2239e-8,
+  "ath_change_percentage": -88.96409,
+  "ath_date": "2023-05-06T20:05:52.583Z",
+  "atl": 1.42762e-10,
+  "atl_change_percentage": 846.14596,
+  "atl_date": "2023-10-19T11:05:45.942Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:47.550Z",
+  "platforms": {
+    "ethereum": "0xa589d8868607b8d79ee4288ce192796051263b64"
+  }
+}

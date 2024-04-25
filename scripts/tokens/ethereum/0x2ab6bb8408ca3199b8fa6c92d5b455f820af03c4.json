@@ -1,0 +1,35 @@
+{
+  "id": "te-food",
+  "symbol": "tone",
+  "name": "TE-FOOD",
+  "image": "https://assets.coingecko.com/coins/images/2325/large/tec.png?1696503214",
+  "current_price": 0.00103946,
+  "market_cap": 630781,
+  "market_cap_rank": 2944,
+  "fully_diluted_valuation": 1039462,
+  "total_volume": 9817.04,
+  "high_24h": 0.00132745,
+  "low_24h": 0.00097025,
+  "price_change_24h": -0.000149174885655007,
+  "price_change_percentage_24h": -12.55008,
+  "market_cap_change_24h": -90267.7114823499,
+  "market_cap_change_percentage_24h": -12.51896,
+  "circulating_supply": 606833705.779344,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.119071,
+  "ath_change_percentage": -99.12588,
+  "ath_date": "2021-05-05T23:38:34.460Z",
+  "atl": 0.00037893,
+  "atl_change_percentage": 174.67649,
+  "atl_date": "2020-10-17T07:56:37.024Z",
+  "roi": {
+    "times": -0.9792107618291046,
+    "currency": "usd",
+    "percentage": -97.92107618291047
+  },
+  "last_updated": "2024-04-25T09:02:01.523Z",
+  "platforms": {
+    "ethereum": "0x2ab6bb8408ca3199b8fa6c92d5b455f820af03c4"
+  }
+}

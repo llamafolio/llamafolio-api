@@ -1,0 +1,31 @@
+{
+  "id": "hmx",
+  "symbol": "hmx",
+  "name": "HMX",
+  "image": "https://assets.coingecko.com/coins/images/31206/large/HMXlogo_CG.png?1696530033",
+  "current_price": 6.79,
+  "market_cap": 10806112,
+  "market_cap_rank": 1393,
+  "fully_diluted_valuation": 67742728,
+  "total_volume": 161629,
+  "high_24h": 7.49,
+  "low_24h": 6.49,
+  "price_change_24h": -0.6491982125241833,
+  "price_change_percentage_24h": -8.72157,
+  "market_cap_change_24h": -1029129.0058994088,
+  "market_cap_change_percentage_24h": -8.69546,
+  "circulating_supply": 1595169.31818154,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 19.87,
+  "ath_change_percentage": -65.85542,
+  "ath_date": "2023-08-15T12:30:19.089Z",
+  "atl": 4.71,
+  "atl_change_percentage": 43.89251,
+  "atl_date": "2023-10-17T06:19:26.185Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:39.835Z",
+  "platforms": {
+    "arbitrum": "0x83d6c8c06ac276465e4c92e7ac8c23740f435140"
+  }
+}

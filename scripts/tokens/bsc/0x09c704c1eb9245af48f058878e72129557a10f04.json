@@ -1,0 +1,31 @@
+{
+  "id": "sweep-token",
+  "symbol": "sweep",
+  "name": "Sweep Token",
+  "image": "https://assets.coingecko.com/coins/images/27848/large/sweep200.png?1696526867",
+  "current_price": 7.21e-12,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 720299,
+  "total_volume": 40.76,
+  "high_24h": 1.0839e-11,
+  "low_24h": 6.845e-12,
+  "price_change_24h": -3.617992e-12,
+  "price_change_percentage_24h": -33.41473,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000000000000,
+  "max_supply": 100000000000000000,
+  "ath": 1.09677e-10,
+  "ath_change_percentage": -93.44476,
+  "ath_date": "2023-02-19T04:49:23.519Z",
+  "atl": 1.476e-12,
+  "atl_change_percentage": 387.08739,
+  "atl_date": "2023-08-07T14:24:52.854Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:13.504Z",
+  "platforms": {
+    "bsc": "0x09c704c1eb9245af48f058878e72129557a10f04"
+  }
+}

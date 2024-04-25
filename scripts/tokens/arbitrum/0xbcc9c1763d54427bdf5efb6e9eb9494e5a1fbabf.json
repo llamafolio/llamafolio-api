@@ -1,0 +1,31 @@
+{
+  "id": "honor-world-token",
+  "symbol": "hwt",
+  "name": "Honor World Token",
+  "image": "https://assets.coingecko.com/coins/images/28559/large/hwt.png?1696527549",
+  "current_price": 0.00220803,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 883213,
+  "total_volume": 118.03,
+  "high_24h": 0.00229478,
+  "low_24h": 0.00218568,
+  "price_change_24h": -0.000059754505933157,
+  "price_change_percentage_24h": -2.63493,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 400000000,
+  "max_supply": 1000000000,
+  "ath": 0.58841,
+  "ath_change_percentage": -99.62603,
+  "ath_date": "2022-12-25T06:33:43.306Z",
+  "atl": 0.00202821,
+  "atl_change_percentage": 8.49262,
+  "atl_date": "2024-04-19T02:52:17.704Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:07:47.251Z",
+  "platforms": {
+    "arbitrum": "0xbcc9c1763d54427bdf5efb6e9eb9494e5a1fbabf"
+  }
+}

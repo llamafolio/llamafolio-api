@@ -1,0 +1,31 @@
+{
+  "id": "unity-network",
+  "symbol": "unt",
+  "name": "Unity Network",
+  "image": "https://assets.coingecko.com/coins/images/17143/large/unity.PNG?1696516702",
+  "current_price": 0.01476294,
+  "market_cap": 118297,
+  "market_cap_rank": 3725,
+  "fully_diluted_valuation": 147378,
+  "total_volume": 148.97,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 8013086.367395546,
+  "total_supply": 9983000,
+  "max_supply": null,
+  "ath": 0.23704,
+  "ath_change_percentage": -93.77197,
+  "ath_date": "2021-11-16T12:35:12.205Z",
+  "atl": 0.00786387,
+  "atl_change_percentage": 87.73124,
+  "atl_date": "2022-06-14T01:56:35.987Z",
+  "roi": null,
+  "last_updated": "2024-04-21T02:33:25.842Z",
+  "platforms": {
+    "ethereum": "0x8d610e20481f4c4f3acb87bba9c46bef7795fdfe"
+  }
+}

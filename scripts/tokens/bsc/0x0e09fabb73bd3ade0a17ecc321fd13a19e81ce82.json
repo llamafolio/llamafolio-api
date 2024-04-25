@@ -1,0 +1,31 @@
+{
+  "id": "pancakeswap-token",
+  "symbol": "cake",
+  "name": "PancakeSwap",
+  "image": "https://assets.coingecko.com/coins/images/12632/large/pancakeswap-cake-logo_%281%29.png?1696512440",
+  "current_price": 2.87,
+  "market_cap": 727630898,
+  "market_cap_rank": 123,
+  "fully_diluted_valuation": 1100695582,
+  "total_volume": 69758891,
+  "high_24h": 3.07,
+  "low_24h": 2.85,
+  "price_change_24h": -0.13851021147217146,
+  "price_change_percentage_24h": -4.60429,
+  "market_cap_change_24h": -34241675.42707074,
+  "market_cap_change_percentage_24h": -4.49441,
+  "circulating_supply": 254014250.020645,
+  "total_supply": 384250261.145396,
+  "max_supply": 450000000,
+  "ath": 43.96,
+  "ath_change_percentage": -93.48572,
+  "ath_date": "2021-04-30T10:08:22.934Z",
+  "atl": 0.194441,
+  "atl_change_percentage": 1372.93276,
+  "atl_date": "2020-11-03T14:29:34.165Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:46.466Z",
+  "platforms": {
+    "bsc": "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82"
+  }
+}

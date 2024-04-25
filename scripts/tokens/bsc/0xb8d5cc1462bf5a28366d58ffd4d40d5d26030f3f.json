@@ -1,0 +1,31 @@
+{
+  "id": "green-block-capital",
+  "symbol": "gbc",
+  "name": "Green Block Capital",
+  "image": "https://assets.coingecko.com/coins/images/35010/large/1000003276.jpg?1707102172",
+  "current_price": 0.00072561,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 15237.73,
+  "total_volume": 1.42,
+  "high_24h": 0.00074425,
+  "low_24h": 0.00071681,
+  "price_change_24h": -0.000018645109205527,
+  "price_change_percentage_24h": -2.50522,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 21000000,
+  "max_supply": 21000000,
+  "ath": 0.03931187,
+  "ath_change_percentage": -98.15423,
+  "ath_date": "2024-02-06T04:29:40.320Z",
+  "atl": 0.00062471,
+  "atl_change_percentage": 16.1502,
+  "atl_date": "2024-04-17T16:46:30.064Z",
+  "roi": null,
+  "last_updated": "2024-04-24T19:40:50.817Z",
+  "platforms": {
+    "bsc": "0xb8d5cc1462bf5a28366d58ffd4d40d5d26030f3f"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "stella-fantasy-token",
+  "symbol": "sfty",
+  "name": "Stella Fantasy Token",
+  "image": "https://assets.coingecko.com/coins/images/29717/large/Token_Logo_SFTY.png?1696528648",
+  "current_price": 0.00461498,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 4615275,
+  "total_volume": 10998.99,
+  "high_24h": 0.00470329,
+  "low_24h": 0.00460545,
+  "price_change_24h": -0.000053582576108032,
+  "price_change_percentage_24h": -1.14773,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.144022,
+  "ath_change_percentage": -96.79485,
+  "ath_date": "2023-04-06T08:30:13.449Z",
+  "atl": 0.00357466,
+  "atl_change_percentage": 29.13459,
+  "atl_date": "2024-03-27T21:11:53.841Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:23.518Z",
+  "platforms": {
+    "bsc": "0xe9d6d6d7cde5c7d45927f8c37460d932e612c902"
+  }
+}

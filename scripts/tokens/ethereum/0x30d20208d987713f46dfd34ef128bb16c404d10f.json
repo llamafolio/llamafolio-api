@@ -1,0 +1,31 @@
+{
+  "id": "stader",
+  "symbol": "sd",
+  "name": "Stader",
+  "image": "https://assets.coingecko.com/coins/images/20658/large/SD_Token_Logo.png?1696520060",
+  "current_price": 0.752205,
+  "market_cap": 28277236,
+  "market_cap_rank": 947,
+  "fully_diluted_valuation": 112650393,
+  "total_volume": 1274055,
+  "high_24h": 0.783435,
+  "low_24h": 0.742585,
+  "price_change_24h": 0.00020735,
+  "price_change_percentage_24h": 0.02757,
+  "market_cap_change_24h": -15836.30411529541,
+  "market_cap_change_percentage_24h": -0.05597,
+  "circulating_supply": 37652645.7555757,
+  "total_supply": 150000000,
+  "max_supply": 150000000,
+  "ath": 30.17,
+  "ath_change_percentage": -97.51749,
+  "ath_date": "2022-03-15T14:33:38.024Z",
+  "atl": 0.23682,
+  "atl_change_percentage": 216.22149,
+  "atl_date": "2022-10-25T03:59:33.118Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:50.858Z",
+  "platforms": {
+    "ethereum": "0x30d20208d987713f46dfd34ef128bb16c404d10f"
+  }
+}

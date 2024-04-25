@@ -1,0 +1,31 @@
+{
+  "id": "hololoot",
+  "symbol": "hol",
+  "name": "Hololoot",
+  "image": "https://assets.coingecko.com/coins/images/21538/large/hol.PNG?1696520897",
+  "current_price": 0.00145667,
+  "market_cap": 73040,
+  "market_cap_rank": 3881,
+  "fully_diluted_valuation": 145575,
+  "total_volume": 19.73,
+  "high_24h": 0.00149324,
+  "low_24h": 0.00144462,
+  "price_change_24h": -0.000036353758603,
+  "price_change_percentage_24h": -2.43492,
+  "market_cap_change_24h": -1910.327477649873,
+  "market_cap_change_percentage_24h": -2.54879,
+  "circulating_supply": 50173607.62170962,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.902678,
+  "ath_change_percentage": -99.83917,
+  "ath_date": "2022-01-05T18:03:35.676Z",
+  "atl": 0.00035457,
+  "atl_change_percentage": 309.44262,
+  "atl_date": "2024-02-27T13:50:35.646Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:24.973Z",
+  "platforms": {
+    "bsc": "0xa797fa4bda7c5a4b3afe73573b9d2ab942365c6f"
+  }
+}

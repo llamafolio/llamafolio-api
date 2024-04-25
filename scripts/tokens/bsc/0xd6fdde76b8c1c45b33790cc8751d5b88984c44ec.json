@@ -1,0 +1,31 @@
+{
+  "id": "strikecoin",
+  "symbol": "strx",
+  "name": "StrikeX",
+  "image": "https://assets.coingecko.com/coins/images/15839/large/StrikeX-Icon-200px.png?1696515456",
+  "current_price": 0.074867,
+  "market_cap": 61952182,
+  "market_cap_rank": 615,
+  "fully_diluted_valuation": 65638711,
+  "total_volume": 643812,
+  "high_24h": 0.07559,
+  "low_24h": 0.072682,
+  "price_change_24h": 0.00189273,
+  "price_change_percentage_24h": 2.5937,
+  "market_cap_change_24h": 843135,
+  "market_cap_change_percentage_24h": 1.37972,
+  "circulating_supply": 837005190.41396,
+  "total_supply": 886812043,
+  "max_supply": 1000000000,
+  "ath": 0.332212,
+  "ath_change_percentage": -77.72341,
+  "ath_date": "2021-11-22T18:51:17.895Z",
+  "atl": 0.00002651,
+  "atl_change_percentage": 279064.76224,
+  "atl_date": "2021-11-22T06:39:24.500Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:59.698Z",
+  "platforms": {
+    "bsc": "0xd6fdde76b8c1c45b33790cc8751d5b88984c44ec"
+  }
+}

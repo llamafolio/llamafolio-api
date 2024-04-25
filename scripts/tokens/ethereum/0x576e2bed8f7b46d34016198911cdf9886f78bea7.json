@@ -1,0 +1,31 @@
+{
+  "id": "maga",
+  "symbol": "trump",
+  "name": "MAGA",
+  "image": "https://assets.coingecko.com/coins/images/31498/large/Maga-Trump-Logo-200px.png?1696530309",
+  "current_price": 5.57,
+  "market_cap": 258090175,
+  "market_cap_rank": 247,
+  "fully_diluted_valuation": 258089374,
+  "total_volume": 3880554,
+  "high_24h": 6.32,
+  "low_24h": 5.54,
+  "price_change_24h": -0.42974297687577323,
+  "price_change_percentage_24h": -7.16718,
+  "market_cap_change_24h": -21209677.39110917,
+  "market_cap_change_percentage_24h": -7.59387,
+  "circulating_supply": 46502515,
+  "total_supply": 46502370.5672917,
+  "max_supply": 47000000,
+  "ath": 11.63,
+  "ath_change_percentage": -52.38599,
+  "ath_date": "2024-03-04T08:40:30.937Z",
+  "atl": 0.01135796,
+  "atl_change_percentage": 48657.82821,
+  "atl_date": "2023-10-14T06:05:44.420Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:43.467Z",
+  "platforms": {
+    "ethereum": "0x576e2bed8f7b46d34016198911cdf9886f78bea7"
+  }
+}

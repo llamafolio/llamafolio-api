@@ -1,0 +1,31 @@
+{
+  "id": "pigcoin-2",
+  "symbol": "pig",
+  "name": "Pigcoin",
+  "image": "https://assets.coingecko.com/coins/images/35425/large/pigcoin_200.png?1708544734",
+  "current_price": 0.00001137,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 33946744,
+  "total_volume": 142770171,
+  "high_24h": 0.00001436,
+  "low_24h": 0.0000111,
+  "price_change_24h": -0.000002880615111654,
+  "price_change_percentage_24h": -20.21993,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 3000000000000,
+  "max_supply": 3000000000000,
+  "ath": 0.00031484,
+  "ath_change_percentage": -96.41743,
+  "ath_date": "2024-04-01T15:46:42.694Z",
+  "atl": 0.0000111,
+  "atl_change_percentage": 1.64442,
+  "atl_date": "2024-04-25T03:25:01.704Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:48.710Z",
+  "platforms": {
+    "polygon": "0xe9bc9ad74cca887aff32ba09a121b1256fc9f052"
+  }
+}

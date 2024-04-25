@@ -1,0 +1,31 @@
+{
+  "id": "zoomer",
+  "symbol": "zoomer",
+  "name": "Zoomer",
+  "image": "https://assets.coingecko.com/coins/images/30894/large/zoooooooooomer.jpg?1696529740",
+  "current_price": 0.00002019,
+  "market_cap": 1369378,
+  "market_cap_rank": 2495,
+  "fully_diluted_valuation": 1369378,
+  "total_volume": 37801,
+  "high_24h": 0.00002472,
+  "low_24h": 0.00001928,
+  "price_change_24h": -0.000003968077959717,
+  "price_change_percentage_24h": -16.42759,
+  "market_cap_change_24h": -295572.39191531343,
+  "market_cap_change_percentage_24h": -17.75263,
+  "circulating_supply": 69000000000,
+  "total_supply": 69000000000,
+  "max_supply": 69000000000,
+  "ath": 0.00009555,
+  "ath_change_percentage": -79.20074,
+  "ath_date": "2024-03-01T14:26:55.197Z",
+  "atl": 0.00000497,
+  "atl_change_percentage": 300.0289,
+  "atl_date": "2023-11-16T10:01:25.142Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:59.521Z",
+  "platforms": {
+    "arbitrum-nova": "0xb962150760f9a3bb00e3e9cf48297ee20ada4a33"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "plastichero",
+  "symbol": "pth",
+  "name": "PlasticHero",
+  "image": "https://assets.coingecko.com/coins/images/32771/large/Ticker_%282%29.png?1699343244",
+  "current_price": 0.165304,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 887705,
+  "high_24h": 0.166351,
+  "low_24h": 0.162805,
+  "price_change_24h": 0.00174725,
+  "price_change_percentage_24h": 1.06828,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.171126,
+  "ath_change_percentage": -3.35008,
+  "ath_date": "2024-03-20T17:18:35.256Z",
+  "atl": 0.04720362,
+  "atl_change_percentage": 250.38284,
+  "atl_date": "2023-11-10T05:43:40.748Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:07.521Z",
+  "platforms": {
+    "ethereum": "0x8ab98330473101309db94b625f9997366a518223"
+  }
+}

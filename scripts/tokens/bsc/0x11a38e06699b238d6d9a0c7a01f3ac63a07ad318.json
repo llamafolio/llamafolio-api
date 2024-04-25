@@ -1,0 +1,31 @@
+{
+  "id": "usdfi",
+  "symbol": "usdfi",
+  "name": "USDFI",
+  "image": "https://assets.coingecko.com/coins/images/31149/large/USDFI_200.png?1696529977",
+  "current_price": 0.68619,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 483.41,
+  "high_24h": 1.5,
+  "low_24h": 0.66806,
+  "price_change_24h": 0.00212142,
+  "price_change_percentage_24h": 0.31012,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.5,
+  "ath_change_percentage": -54.26066,
+  "ath_date": "2024-04-25T00:31:30.225Z",
+  "atl": 0.42826,
+  "atl_change_percentage": 59.78041,
+  "atl_date": "2024-03-06T13:47:41.516Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:33.041Z",
+  "platforms": {
+    "bsc": "0x11a38e06699b238d6d9a0c7a01f3ac63a07ad318"
+  }
+}

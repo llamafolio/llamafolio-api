@@ -1,0 +1,31 @@
+{
+  "id": "buckhath-coin",
+  "symbol": "bhig",
+  "name": "BuckHath Coin",
+  "image": "https://assets.coingecko.com/coins/images/7821/large/logstex.PNG?1585121237",
+  "current_price": 0.065678,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 13135501,
+  "total_volume": 1061.46,
+  "high_24h": 0.078507,
+  "low_24h": 0.064626,
+  "price_change_24h": -0.01282350233908508,
+  "price_change_percentage_24h": -16.33546,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 200000000,
+  "max_supply": null,
+  "ath": 0.703224,
+  "ath_change_percentage": -90.66051,
+  "ath_date": "2020-01-17T09:12:43.792Z",
+  "atl": 0.00028544,
+  "atl_change_percentage": 22909.27985,
+  "atl_date": "2019-09-15T00:00:00.000Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:53:52.465Z",
+  "platforms": {
+    "ethereum": "0x996229d0c6a485c7f4b52e092eaa907cb2def5c6"
+  }
+}

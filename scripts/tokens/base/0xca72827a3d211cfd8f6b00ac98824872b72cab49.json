@@ -1,0 +1,31 @@
+{
+  "id": "cygnus-finance-global-usd",
+  "symbol": "cgusd",
+  "name": "Cygnus Finance Global USD",
+  "image": "https://assets.coingecko.com/coins/images/35628/large/cgUSD.png?1709291316",
+  "current_price": 0.998727,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 411.49,
+  "high_24h": 1.007,
+  "low_24h": 0.973933,
+  "price_change_24h": 0.01684633,
+  "price_change_percentage_24h": 1.71572,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.007,
+  "ath_change_percentage": -0.64223,
+  "ath_date": "2024-04-25T05:43:40.041Z",
+  "atl": 0.973933,
+  "atl_change_percentage": 2.74843,
+  "atl_date": "2024-04-25T02:53:00.507Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:09.164Z",
+  "platforms": {
+    "base": "0xca72827a3d211cfd8f6b00ac98824872b72cab49"
+  }
+}

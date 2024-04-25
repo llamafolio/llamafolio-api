@@ -1,0 +1,31 @@
+{
+  "id": "neutra-finance",
+  "symbol": "neu",
+  "name": "Neutra Finance",
+  "image": "https://assets.coingecko.com/coins/images/28813/large/NEU_Token_logo.png?1696527789",
+  "current_price": 0.14307,
+  "market_cap": 283125,
+  "market_cap_rank": 3342,
+  "fully_diluted_valuation": 852503,
+  "total_volume": 324.67,
+  "high_24h": 0.150469,
+  "low_24h": 0.142637,
+  "price_change_24h": -0.006044314486700231,
+  "price_change_percentage_24h": -4.05348,
+  "market_cap_change_24h": -12522.410121959401,
+  "market_cap_change_percentage_24h": -4.23558,
+  "circulating_supply": 1982695.56246671,
+  "total_supply": 5969985.51260626,
+  "max_supply": 6000000,
+  "ath": 3.43,
+  "ath_change_percentage": -95.82571,
+  "ath_date": "2023-02-08T04:26:26.771Z",
+  "atl": 0.133695,
+  "atl_change_percentage": 7.01165,
+  "atl_date": "2024-04-19T02:52:29.962Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:33.791Z",
+  "platforms": {
+    "arbitrum": "0x6609be1547166d1c4605f3a243fdcff467e600c3"
+  }
+}

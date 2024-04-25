@@ -1,0 +1,31 @@
+{
+  "id": "gmx",
+  "symbol": "gmx",
+  "name": "GMX",
+  "image": "https://assets.coingecko.com/coins/images/18323/large/arbit.png?1696517814",
+  "current_price": 26.84,
+  "market_cap": 253983919,
+  "market_cap_rank": 249,
+  "fully_diluted_valuation": 253983919,
+  "total_volume": 24905983,
+  "high_24h": 28.77,
+  "low_24h": 26.46,
+  "price_change_24h": -1.8755506355943332,
+  "price_change_percentage_24h": -6.53185,
+  "market_cap_change_24h": -18555076.1407381,
+  "market_cap_change_percentage_24h": -6.80823,
+  "circulating_supply": 9462974.70625729,
+  "total_supply": 9462974.70625729,
+  "max_supply": 13250000,
+  "ath": 91.07,
+  "ath_change_percentage": -70.51231,
+  "ath_date": "2023-04-18T10:00:25.680Z",
+  "atl": 11.53,
+  "atl_change_percentage": 132.83509,
+  "atl_date": "2022-06-15T09:30:22.146Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:51.557Z",
+  "platforms": {
+    "arbitrum": "0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "ore-token",
+  "symbol": "ore",
+  "name": "ORE",
+  "image": "https://assets.coingecko.com/coins/images/19047/large/12752.png?1696518498",
+  "current_price": 4.0316e-11,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 153308,
+  "total_volume": 874.36,
+  "high_24h": 4.2418e-11,
+  "low_24h": 3.9774e-11,
+  "price_change_24h": -1.361438e-12,
+  "price_change_percentage_24h": -3.26662,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 3802663275180760,
+  "max_supply": null,
+  "ath": 1.184e-8,
+  "ath_change_percentage": -99.66084,
+  "ath_date": "2021-11-18T08:19:38.875Z",
+  "atl": 2.476e-11,
+  "atl_change_percentage": 62.17805,
+  "atl_date": "2024-03-05T20:45:28.401Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:48.058Z",
+  "platforms": {
+    "bsc": "0x8e2d8f40818fbaba663db6a24fb9b527fc7100be"
+  }
+}

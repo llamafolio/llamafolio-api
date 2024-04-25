@@ -1,0 +1,31 @@
+{
+  "id": "bitvalley",
+  "symbol": "bitv",
+  "name": "BitValley",
+  "image": "https://assets.coingecko.com/coins/images/22825/large/Screenshot-2022-01-19-at-17-00-20.png?1696522126",
+  "current_price": 0.00001225,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 122486,
+  "total_volume": 482.74,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": null,
+  "ath": 0.00015667,
+  "ath_change_percentage": -92.18207,
+  "ath_date": "2022-01-20T08:05:09.580Z",
+  "atl": 0.00001219,
+  "atl_change_percentage": 0.44651,
+  "atl_date": "2023-07-24T15:14:59.887Z",
+  "roi": null,
+  "last_updated": "2023-08-03T10:30:07.095Z",
+  "platforms": {
+    "bsc": "0xdd8b490001d081ed065239644dae8d1a77b8a91f"
+  }
+}

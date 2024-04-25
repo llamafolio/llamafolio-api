@@ -1,0 +1,31 @@
+{
+  "id": "aave-amm-uniwbtcusdc",
+  "symbol": "aammuniwbtcusdc",
+  "name": "Aave AMM UniWBTCUSDC",
+  "image": "https://assets.coingecko.com/coins/images/17255/large/aAmmUniWBTCUSDC.png?1696516811",
+  "current_price": 90161362157623,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1273.27,
+  "total_volume": 0,
+  "high_24h": 92538846668844,
+  "low_24h": 89370158886013,
+  "price_change_24h": -2086101042280.9531,
+  "price_change_percentage_24h": -2.27218,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1.412207e-11,
+  "max_supply": null,
+  "ath": 96030979050088,
+  "ath_change_percentage": -6.28211,
+  "ath_date": "2024-04-08T16:55:16.077Z",
+  "atl": 32826283695800,
+  "atl_change_percentage": 174.16508,
+  "atl_date": "2022-11-22T10:00:10.174Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:31.796Z",
+  "platforms": {
+    "ethereum": "0x2365a4890ed8965e564b7e2d27c38ba67fec4c6f"
+  }
+}

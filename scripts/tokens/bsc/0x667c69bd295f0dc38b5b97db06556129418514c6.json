@@ -1,0 +1,31 @@
+{
+  "id": "busdx",
+  "symbol": "rspn",
+  "name": "Respan",
+  "image": "https://assets.coingecko.com/coins/images/20980/large/respan.jpeg?1705288309",
+  "current_price": 0.00001409,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 28173,
+  "total_volume": 5.89,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 2000000000,
+  "max_supply": null,
+  "ath": 0.00722658,
+  "ath_change_percentage": -99.80507,
+  "ath_date": "2021-11-29T18:11:57.295Z",
+  "atl": 0.00001281,
+  "atl_change_percentage": 9.99358,
+  "atl_date": "2024-04-13T20:12:52.855Z",
+  "roi": null,
+  "last_updated": "2024-04-21T14:06:42.444Z",
+  "platforms": {
+    "bsc": "0x667c69bd295f0dc38b5b97db06556129418514c6"
+  }
+}

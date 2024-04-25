@@ -1,0 +1,31 @@
+{
+  "id": "metahero",
+  "symbol": "hero",
+  "name": "Metahero",
+  "image": "https://assets.coingecko.com/coins/images/16911/large/AVATAR2.png?1696516482",
+  "current_price": 0.00446775,
+  "market_cap": 35164061,
+  "market_cap_rank": 841,
+  "fully_diluted_valuation": 43657566,
+  "total_volume": 1305088,
+  "high_24h": 0.00456703,
+  "low_24h": 0.00440846,
+  "price_change_24h": -0.000043030561530763,
+  "price_change_percentage_24h": -0.95395,
+  "market_cap_change_24h": -349667.94520404935,
+  "market_cap_change_percentage_24h": -0.9846,
+  "circulating_supply": 7866213223.2,
+  "total_supply": 9766213274.19587,
+  "max_supply": 10000000000,
+  "ath": 0.252021,
+  "ath_change_percentage": -98.22723,
+  "ath_date": "2021-12-02T00:09:05.991Z",
+  "atl": 0.00209516,
+  "atl_change_percentage": 113.24174,
+  "atl_date": "2022-09-21T21:55:09.447Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:39.605Z",
+  "platforms": {
+    "bsc": "0xd40bedb44c081d2935eeba6ef5a3c8a31a1bbe13"
+  }
+}

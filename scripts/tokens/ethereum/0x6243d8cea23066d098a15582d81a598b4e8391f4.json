@@ -1,0 +1,31 @@
+{
+  "id": "reflexer-ungovernance-token",
+  "symbol": "flx",
+  "name": "Reflexer Ungovernance",
+  "image": "https://assets.coingecko.com/coins/images/14123/large/EAfYdwgd_400x400.jpg?1696513843",
+  "current_price": 5.48,
+  "market_cap": 4928601,
+  "market_cap_rank": 1804,
+  "fully_diluted_valuation": 5335191,
+  "total_volume": 57632,
+  "high_24h": 5.84,
+  "low_24h": 5.33,
+  "price_change_24h": -0.20563965178133614,
+  "price_change_percentage_24h": -3.61873,
+  "market_cap_change_24h": -204145.9032349568,
+  "market_cap_change_percentage_24h": -3.97732,
+  "circulating_supply": 898499.711155394,
+  "total_supply": 972622.296129312,
+  "max_supply": 972622.296129312,
+  "ath": 1839.79,
+  "ath_change_percentage": -99.70327,
+  "ath_date": "2021-04-15T20:14:47.371Z",
+  "atl": 4.74,
+  "atl_change_percentage": 15.26671,
+  "atl_date": "2024-04-19T02:31:45.771Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:27.395Z",
+  "platforms": {
+    "ethereum": "0x6243d8cea23066d098a15582d81a598b4e8391f4"
+  }
+}

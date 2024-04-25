@@ -1,0 +1,31 @@
+{
+  "id": "colony",
+  "symbol": "cly",
+  "name": "Colony",
+  "image": "https://assets.coingecko.com/coins/images/21358/large/colony.PNG?1696520723",
+  "current_price": 0.18895,
+  "market_cap": 19623135,
+  "market_cap_rank": 1117,
+  "fully_diluted_valuation": 28226016,
+  "total_volume": 185244,
+  "high_24h": 0.218533,
+  "low_24h": 0.188092,
+  "price_change_24h": -0.02958330268016404,
+  "price_change_percentage_24h": -13.53719,
+  "market_cap_change_24h": -3052209.1279555745,
+  "market_cap_change_percentage_24h": -13.46048,
+  "circulating_supply": 104282171.399526,
+  "total_supply": 150000000,
+  "max_supply": 150000000,
+  "ath": 2.77,
+  "ath_change_percentage": -93.16998,
+  "ath_date": "2021-12-12T21:53:15.397Z",
+  "atl": 0.03141388,
+  "atl_change_percentage": 501.63139,
+  "atl_date": "2022-12-15T13:03:34.460Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:29.163Z",
+  "platforms": {
+    "avalanche": "0xec3492a2508ddf4fdc0cd76f31f340b30d1793e6"
+  }
+}

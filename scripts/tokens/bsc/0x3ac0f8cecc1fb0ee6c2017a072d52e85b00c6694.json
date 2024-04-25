@@ -1,0 +1,31 @@
+{
+  "id": "kingspeed",
+  "symbol": "ksc",
+  "name": "KingSpeed",
+  "image": "https://assets.coingecko.com/coins/images/21246/large/attachment.png?1696520619",
+  "current_price": 0.00183539,
+  "market_cap": 96420,
+  "market_cap_rank": 3790,
+  "fully_diluted_valuation": 367047,
+  "total_volume": 13.72,
+  "high_24h": 0.00183852,
+  "low_24h": 0.00183453,
+  "price_change_24h": -3.0105499184e-7,
+  "price_change_percentage_24h": -0.0164,
+  "market_cap_change_24h": 37930,
+  "market_cap_change_percentage_24h": 64.84879,
+  "circulating_supply": 52538088,
+  "total_supply": 200000000,
+  "max_supply": 200000000,
+  "ath": 0.260963,
+  "ath_change_percentage": -99.29699,
+  "ath_date": "2021-12-06T06:14:08.998Z",
+  "atl": 0.00005832,
+  "atl_change_percentage": 3045.53971,
+  "atl_date": "2022-01-27T10:15:34.490Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:30.461Z",
+  "platforms": {
+    "bsc": "0x3ac0f8cecc1fb0ee6c2017a072d52e85b00c6694"
+  }
+}

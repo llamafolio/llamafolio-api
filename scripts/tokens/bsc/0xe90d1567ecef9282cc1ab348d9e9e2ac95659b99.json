@@ -1,0 +1,31 @@
+{
+  "id": "coinxpad",
+  "symbol": "cxpad",
+  "name": "CoinxPad",
+  "image": "https://assets.coingecko.com/coins/images/18626/large/cxpad.png?1696518098",
+  "current_price": 0.00000741,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 740873,
+  "total_volume": 20.14,
+  "high_24h": 0.00000751,
+  "low_24h": 0.00000724,
+  "price_change_24h": 2.0369e-8,
+  "price_change_percentage_24h": 0.27568,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000000,
+  "max_supply": null,
+  "ath": 0.00043832,
+  "ath_change_percentage": -98.30974,
+  "ath_date": "2021-11-24T23:08:50.673Z",
+  "atl": 0.00000364,
+  "atl_change_percentage": 103.61224,
+  "atl_date": "2023-06-13T01:08:30.682Z",
+  "roi": null,
+  "last_updated": "2024-04-25T04:04:18.855Z",
+  "platforms": {
+    "bsc": "0xe90d1567ecef9282cc1ab348d9e9e2ac95659b99"
+  }
+}

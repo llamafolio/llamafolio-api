@@ -1,0 +1,31 @@
+{
+  "id": "aurora",
+  "symbol": "aoa",
+  "name": "Aurora Chain",
+  "image": "https://assets.coingecko.com/coins/images/4755/large/aurora-logo.png?1696505314",
+  "current_price": 0.00012385,
+  "market_cap": 538156,
+  "market_cap_rank": 3028,
+  "fully_diluted_valuation": 1238502,
+  "total_volume": 2799.03,
+  "high_24h": 0.00012387,
+  "low_24h": 0.0000616,
+  "price_change_24h": 0.00006204,
+  "price_change_percentage_24h": 100.35862,
+  "market_cap_change_24h": 269560,
+  "market_cap_change_percentage_24h": 100.35862,
+  "circulating_supply": 4345218905,
+  "total_supply": 10000000000,
+  "max_supply": null,
+  "ath": 0.061044,
+  "ath_change_percentage": -99.79746,
+  "ath_date": "2018-07-18T16:31:09.095Z",
+  "atl": 0.00005898,
+  "atl_change_percentage": 109.62184,
+  "atl_date": "2023-08-29T20:00:53.875Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:16.975Z",
+  "platforms": {
+    "ethereum": "0x9ab165d795019b6d8b3e971dda91071421305e5a"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "zeniq",
+  "symbol": "zeniq",
+  "name": "ZENIQ",
+  "image": "https://assets.coingecko.com/coins/images/29284/large/zeniq.png?1696528236",
+  "current_price": 0.02921423,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2587337,
+  "total_volume": 154093,
+  "high_24h": 0.03195825,
+  "low_24h": 0.02693901,
+  "price_change_24h": 0.00160712,
+  "price_change_percentage_24h": 5.8214,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 88500000,
+  "max_supply": null,
+  "ath": 0.194092,
+  "ath_change_percentage": -84.97328,
+  "ath_date": "2023-03-02T12:14:21.059Z",
+  "atl": 0.01899682,
+  "atl_change_percentage": 53.52946,
+  "atl_date": "2023-08-09T20:20:41.298Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:16:05.993Z",
+  "platforms": {
+    "bsc": "0x5b52bfb8062ce664d74bbcd4cd6dc7df53fd7233"
+  }
+}

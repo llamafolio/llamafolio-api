@@ -1,0 +1,31 @@
+{
+  "id": "movez",
+  "symbol": "movez",
+  "name": "MoveZ",
+  "image": "https://assets.coingecko.com/coins/images/25661/large/JYwFw77.png?1696524789",
+  "current_price": 0.00053287,
+  "market_cap": 207880,
+  "market_cap_rank": 3472,
+  "fully_diluted_valuation": 2665129,
+  "total_volume": 230134,
+  "high_24h": 0.00056871,
+  "low_24h": 0.00052797,
+  "price_change_24h": -0.000035840709141851,
+  "price_change_percentage_24h": -6.30213,
+  "market_cap_change_24h": -14279.368392866454,
+  "market_cap_change_percentage_24h": -6.42753,
+  "circulating_supply": 390000000,
+  "total_supply": 5000000000,
+  "max_supply": null,
+  "ath": 0.04790956,
+  "ath_change_percentage": -98.88825,
+  "ath_date": "2022-06-21T17:50:28.585Z",
+  "atl": 0.00044189,
+  "atl_change_percentage": 20.53644,
+  "atl_date": "2024-04-13T21:59:55.206Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:45.475Z",
+  "platforms": {
+    "bsc": "0x039cd22cb49084142d55fcd4b6096a4f51ffb3b4"
+  }
+}

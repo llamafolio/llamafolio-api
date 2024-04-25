@@ -1,0 +1,31 @@
+{
+  "id": "0xgambit",
+  "symbol": "0xg",
+  "name": "0xgambit",
+  "image": "https://assets.coingecko.com/coins/images/32579/large/logo.png?1698558743",
+  "current_price": 0.00163431,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 16343.13,
+  "total_volume": 29.29,
+  "high_24h": 0.00165418,
+  "low_24h": 0.00163204,
+  "price_change_24h": 0.00000123,
+  "price_change_percentage_24h": 0.07503,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.075779,
+  "ath_change_percentage": -97.84331,
+  "ath_date": "2023-11-12T05:54:38.171Z",
+  "atl": 0.00116986,
+  "atl_change_percentage": 39.70189,
+  "atl_date": "2024-01-25T05:24:45.689Z",
+  "roi": null,
+  "last_updated": "2024-04-25T04:18:05.098Z",
+  "platforms": {
+    "ethereum": "0x5df2aa6d903410b2a747c90dbf2de0de7b15ac60"
+  }
+}

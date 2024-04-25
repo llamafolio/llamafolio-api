@@ -1,0 +1,31 @@
+{
+  "id": "shill-token",
+  "symbol": "shill",
+  "name": "SHILL Token",
+  "image": "https://assets.coingecko.com/coins/images/18176/large/SHILL_Logo.png?1696517676",
+  "current_price": 0.00726737,
+  "market_cap": 2593443,
+  "market_cap_rank": 2154,
+  "fully_diluted_valuation": 7263042,
+  "total_volume": 534807,
+  "high_24h": 0.00763992,
+  "low_24h": 0.00706204,
+  "price_change_24h": -0.000323724002165938,
+  "price_change_percentage_24h": -4.26452,
+  "market_cap_change_24h": -118509.98461597692,
+  "market_cap_change_percentage_24h": -4.36991,
+  "circulating_supply": 357073943.67,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 1.91,
+  "ath_change_percentage": -99.61911,
+  "ath_date": "2021-11-09T12:59:20.864Z",
+  "atl": 0.0051595,
+  "atl_change_percentage": 40.65112,
+  "atl_date": "2023-10-23T18:16:46.569Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:40.565Z",
+  "platforms": {
+    "bsc": "0xfb9c339b4bace4fe63ccc1dd9a3c3c531441d5fe"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "golcoin",
+  "symbol": "golc",
+  "name": "GOLCOIN",
+  "image": "https://assets.coingecko.com/coins/images/27341/large/logo_in_the_middle_.png?1696526388",
+  "current_price": 0.02679912,
+  "market_cap": 31875,
+  "market_cap_rank": 4088,
+  "fully_diluted_valuation": 1810598,
+  "total_volume": 23591,
+  "high_24h": 0.0305952,
+  "low_24h": 0.02610975,
+  "price_change_24h": 0.00056769,
+  "price_change_percentage_24h": 2.16416,
+  "market_cap_change_24h": 292.92,
+  "market_cap_change_percentage_24h": 0.92748,
+  "circulating_supply": 1187223,
+  "total_supply": 67437224,
+  "max_supply": 290000000,
+  "ath": 74.86,
+  "ath_change_percentage": -99.96414,
+  "ath_date": "2022-10-05T11:05:46.920Z",
+  "atl": 0.01997421,
+  "atl_change_percentage": 34.39853,
+  "atl_date": "2024-04-13T23:20:55.650Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:23.377Z",
+  "platforms": {
+    "ethereum": "0x095797fd4297fb79883cc912a5ba6313b15c445d"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "cropto-corn-token",
+  "symbol": "croc",
+  "name": "Cropto Corn Token",
+  "image": "https://assets.coingecko.com/coins/images/35189/large/CROC_IMG.jpeg?1707816120",
+  "current_price": 0.221756,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 44795,
+  "total_volume": 20546,
+  "high_24h": 0.222825,
+  "low_24h": 0.215893,
+  "price_change_24h": 0.00458568,
+  "price_change_percentage_24h": 2.11155,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 202000,
+  "max_supply": null,
+  "ath": 0.248792,
+  "ath_change_percentage": -10.46029,
+  "ath_date": "2024-02-18T18:57:08.946Z",
+  "atl": 0.201976,
+  "atl_change_percentage": 10.29413,
+  "atl_date": "2024-03-26T12:31:33.980Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:47.656Z",
+  "platforms": {
+    "polygon": "0x0735fa49eb7d9ddf3e4d9a9f01229627f67632a1"
+  }
+}

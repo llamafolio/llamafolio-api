@@ -1,0 +1,31 @@
+{
+  "id": "acquire-fi",
+  "symbol": "acq",
+  "name": "Acquire.Fi",
+  "image": "https://assets.coingecko.com/coins/images/27199/large/ACQisotypeSept2022_1000x1000px.png?1696526248",
+  "current_price": 0.02701476,
+  "market_cap": 7450745,
+  "market_cap_rank": 1581,
+  "fully_diluted_valuation": 7973591,
+  "total_volume": 345590,
+  "high_24h": 0.02937499,
+  "low_24h": 0.0263935,
+  "price_change_24h": -0.001263071449450665,
+  "price_change_percentage_24h": -4.46665,
+  "market_cap_change_24h": -516457.3352785697,
+  "market_cap_change_percentage_24h": -6.48229,
+  "circulating_supply": 280328351.31,
+  "total_supply": 300000000,
+  "max_supply": 300000000,
+  "ath": 0.29658,
+  "ath_change_percentage": -90.91915,
+  "ath_date": "2022-09-28T15:06:46.762Z",
+  "atl": 0.00419819,
+  "atl_change_percentage": 541.51352,
+  "atl_date": "2023-09-12T02:05:43.444Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:53.232Z",
+  "platforms": {
+    "ethereum": "0x4bdcb66b968060d9390c1d12bd29734496205581"
+  }
+}

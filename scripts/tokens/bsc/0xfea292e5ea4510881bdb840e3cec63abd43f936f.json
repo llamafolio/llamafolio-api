@@ -1,0 +1,31 @@
+{
+  "id": "cornucopias",
+  "symbol": "copi",
+  "name": "Cornucopias",
+  "image": "https://assets.coingecko.com/coins/images/21452/large/g56WwJDA_400x400.jpg?1696520814",
+  "current_price": 0.064119,
+  "market_cap": 55920105,
+  "market_cap_rank": 649,
+  "fully_diluted_valuation": 246797265,
+  "total_volume": 558274,
+  "high_24h": 0.06669,
+  "low_24h": 0.062232,
+  "price_change_24h": -0.00221097568026743,
+  "price_change_percentage_24h": -3.33329,
+  "market_cap_change_24h": -1575335.0833001882,
+  "market_cap_change_percentage_24h": -2.73993,
+  "circulating_supply": 870079348,
+  "total_supply": 3840000000,
+  "max_supply": 3840000000,
+  "ath": 0.134868,
+  "ath_change_percentage": -52.41107,
+  "ath_date": "2023-12-16T04:00:06.405Z",
+  "atl": 0.01021501,
+  "atl_change_percentage": 528.31126,
+  "atl_date": "2022-09-16T11:16:17.309Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:46.885Z",
+  "platforms": {
+    "bsc": "0xfea292e5ea4510881bdb840e3cec63abd43f936f"
+  }
+}

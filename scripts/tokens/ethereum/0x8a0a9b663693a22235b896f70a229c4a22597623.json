@@ -1,0 +1,31 @@
+{
+  "id": "scalia-infrastructure",
+  "symbol": "scale",
+  "name": "Scalia Infrastructure",
+  "image": "https://assets.coingecko.com/coins/images/35653/large/Scalia_Infrastructure.png?1709380021",
+  "current_price": 0.074513,
+  "market_cap": 7138777,
+  "market_cap_rank": 1609,
+  "fully_diluted_valuation": 7433169,
+  "total_volume": 195136,
+  "high_24h": 0.092981,
+  "low_24h": 0.074332,
+  "price_change_24h": -0.0176207839819459,
+  "price_change_percentage_24h": -19.1252,
+  "market_cap_change_24h": -1713125.7092295932,
+  "market_cap_change_percentage_24h": -19.35319,
+  "circulating_supply": 96039478,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.746693,
+  "ath_change_percentage": -90.03085,
+  "ath_date": "2024-04-01T16:43:43.470Z",
+  "atl": 0.00826031,
+  "atl_change_percentage": 801.16485,
+  "atl_date": "2024-04-13T19:43:50.119Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:03.079Z",
+  "platforms": {
+    "ethereum": "0x8a0a9b663693a22235b896f70a229c4a22597623"
+  }
+}

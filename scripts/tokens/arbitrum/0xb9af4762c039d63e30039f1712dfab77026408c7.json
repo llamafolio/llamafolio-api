@@ -1,0 +1,31 @@
+{
+  "id": "bullbear-ai",
+  "symbol": "aibb",
+  "name": "BullBear AI",
+  "image": "https://assets.coingecko.com/coins/images/30096/large/ICON_200.png?1696529020",
+  "current_price": 4.88201e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 50967,
+  "high_24h": 5.17121e-10,
+  "low_24h": 4.23158e-10,
+  "price_change_24h": 4.4246e-11,
+  "price_change_percentage_24h": 9.96623,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 9.599e-9,
+  "ath_change_percentage": -94.904,
+  "ath_date": "2023-07-16T18:44:28.459Z",
+  "atl": 1.18085e-10,
+  "atl_change_percentage": 314.23289,
+  "atl_date": "2023-10-05T15:26:25.864Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:06.402Z",
+  "platforms": {
+    "arbitrum": "0xb9af4762c039d63e30039f1712dfab77026408c7"
+  }
+}

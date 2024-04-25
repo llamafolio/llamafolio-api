@@ -1,0 +1,31 @@
+{
+  "id": "plotx",
+  "symbol": "plot",
+  "name": "PlotX",
+  "image": "https://assets.coingecko.com/coins/images/12795/large/PlotX.png?1696512589",
+  "current_price": 0.00673476,
+  "market_cap": 707147,
+  "market_cap_rank": 2869,
+  "fully_diluted_valuation": 1355134,
+  "total_volume": 94200,
+  "high_24h": 0.00710068,
+  "low_24h": 0.00655568,
+  "price_change_24h": -0.000228456041870417,
+  "price_change_percentage_24h": -3.2809,
+  "market_cap_change_24h": -19573.955924815033,
+  "market_cap_change_percentage_24h": -2.69346,
+  "circulating_supply": 104365579,
+  "total_supply": 200000000,
+  "max_supply": 200000000,
+  "ath": 0.376907,
+  "ath_change_percentage": -98.20972,
+  "ath_date": "2021-03-19T19:54:20.949Z",
+  "atl": 0.00424207,
+  "atl_change_percentage": 59.06663,
+  "atl_date": "2023-05-22T01:20:15.009Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:02.793Z",
+  "platforms": {
+    "polygon": "0xe82808eaa78339b06a691fd92e1be79671cad8d3"
+  }
+}

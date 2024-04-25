@@ -1,0 +1,31 @@
+{
+  "id": "collateral-network",
+  "symbol": "colt",
+  "name": "Collateral Network",
+  "image": "https://assets.coingecko.com/coins/images/29770/large/IMG_20230407_101929_020.png?1696528701",
+  "current_price": 0.00057188,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 799654,
+  "total_volume": 86292,
+  "high_24h": 0.00070107,
+  "low_24h": 0.00053672,
+  "price_change_24h": -0.000033191345384741,
+  "price_change_percentage_24h": -5.48552,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1400000000,
+  "max_supply": 1400000000,
+  "ath": 0.03166453,
+  "ath_change_percentage": -98.20559,
+  "ath_date": "2023-11-03T23:00:16.942Z",
+  "atl": 0.00050682,
+  "atl_change_percentage": 12.10922,
+  "atl_date": "2024-04-13T21:36:48.866Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:22.121Z",
+  "platforms": {
+    "ethereum": "0x1a3cbda3853494acab67648ee59afeb7ec3e9334"
+  }
+}

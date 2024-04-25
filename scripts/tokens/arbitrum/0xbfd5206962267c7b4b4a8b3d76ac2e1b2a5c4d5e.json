@@ -1,0 +1,31 @@
+{
+  "id": "osaka-protocol",
+  "symbol": "osak",
+  "name": "Osaka Protocol",
+  "image": "https://assets.coingecko.com/coins/images/30911/large/osak_logo.png?1696529756",
+  "current_price": 3.13386e-7,
+  "market_cap": 238442409,
+  "market_cap_rank": 266,
+  "fully_diluted_valuation": 238442409,
+  "total_volume": 145807,
+  "high_24h": 3.36101e-7,
+  "low_24h": 3.12814e-7,
+  "price_change_24h": -2.05641163e-8,
+  "price_change_percentage_24h": -6.15783,
+  "market_cap_change_24h": -15924688.650770932,
+  "market_cap_change_percentage_24h": -6.26051,
+  "circulating_supply": 761500000000000,
+  "total_supply": 761500000000000,
+  "max_supply": 1000000000000000,
+  "ath": 4.37636e-7,
+  "ath_change_percentage": -28.46034,
+  "ath_date": "2024-03-07T00:15:21.505Z",
+  "atl": 1.2854e-8,
+  "atl_change_percentage": 2335.62348,
+  "atl_date": "2023-07-07T22:32:20.214Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:43.803Z",
+  "platforms": {
+    "arbitrum": "0xbfd5206962267c7b4b4a8b3d76ac2e1b2a5c4d5e"
+  }
+}

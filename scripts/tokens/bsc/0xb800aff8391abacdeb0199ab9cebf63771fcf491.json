@@ -1,0 +1,31 @@
+{
+  "id": "novax",
+  "symbol": "novax",
+  "name": "NovaX",
+  "image": "https://assets.coingecko.com/coins/images/31973/large/Logo_NovaX.png?1696530778",
+  "current_price": 0.918634,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 13779513,
+  "total_volume": 119511,
+  "high_24h": 1.19,
+  "low_24h": 0.917788,
+  "price_change_24h": -0.08120175770960669,
+  "price_change_percentage_24h": -8.12151,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 15000000,
+  "max_supply": 15000000,
+  "ath": 6,
+  "ath_change_percentage": -84.69985,
+  "ath_date": "2023-11-05T04:18:57.813Z",
+  "atl": 0.917788,
+  "atl_change_percentage": 0.09219,
+  "atl_date": "2024-04-25T08:58:51.531Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:51.913Z",
+  "platforms": {
+    "bsc": "0xb800aff8391abacdeb0199ab9cebf63771fcf491"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "social-good-project",
+  "symbol": "sg",
+  "name": "SocialGood",
+  "image": "https://assets.coingecko.com/coins/images/3948/large/logo_200.png?1696504592",
+  "current_price": 0.02675909,
+  "market_cap": 632939,
+  "market_cap_rank": 2943,
+  "fully_diluted_valuation": 725861,
+  "total_volume": 270.38,
+  "high_24h": 0.02910922,
+  "low_24h": 0.02641975,
+  "price_change_24h": -0.001849442302302898,
+  "price_change_percentage_24h": -6.46465,
+  "market_cap_change_24h": -43667.76075074158,
+  "market_cap_change_percentage_24h": -6.45394,
+  "circulating_supply": 23653216.79322289,
+  "total_supply": 27125752.73,
+  "max_supply": null,
+  "ath": 8.71,
+  "ath_change_percentage": -99.69278,
+  "ath_date": "2021-01-17T20:08:01.355Z",
+  "atl": 0.00946215,
+  "atl_change_percentage": 182.92436,
+  "atl_date": "2023-12-27T12:31:21.629Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:55.135Z",
+  "platforms": {
+    "polygon": "0x79375c41d88f839f551457145066096c5c8944bc"
+  }
+}

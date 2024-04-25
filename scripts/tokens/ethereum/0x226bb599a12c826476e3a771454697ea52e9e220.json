@@ -1,0 +1,35 @@
+{
+  "id": "propy",
+  "symbol": "pro",
+  "name": "Propy",
+  "image": "https://assets.coingecko.com/coins/images/869/large/propy.png?1696502002",
+  "current_price": 2.97,
+  "market_cap": 171895485,
+  "market_cap_rank": 326,
+  "fully_diluted_valuation": 296900872,
+  "total_volume": 9060989,
+  "high_24h": 3.35,
+  "low_24h": 2.87,
+  "price_change_24h": 0.084083,
+  "price_change_percentage_24h": 2.90969,
+  "market_cap_change_24h": 4608334,
+  "market_cap_change_percentage_24h": 2.75474,
+  "circulating_supply": 57896591.39105386,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 5.15,
+  "ath_change_percentage": -42.22795,
+  "ath_date": "2018-01-05T00:00:00.000Z",
+  "atl": 0.0303544,
+  "atl_change_percentage": 9707.36617,
+  "atl_date": "2020-03-13T02:24:40.087Z",
+  "roi": {
+    "times": 1.973851933642977,
+    "currency": "usd",
+    "percentage": 197.3851933642977
+  },
+  "last_updated": "2024-04-25T08:56:07.345Z",
+  "platforms": {
+    "ethereum": "0x226bb599a12c826476e3a771454697ea52e9e220"
+  }
+}

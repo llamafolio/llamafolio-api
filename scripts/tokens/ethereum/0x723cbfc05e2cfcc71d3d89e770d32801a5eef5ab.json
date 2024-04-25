@@ -1,0 +1,31 @@
+{
+  "id": "bitcoin-pro",
+  "symbol": "btcp",
+  "name": "Bitcoin Pro",
+  "image": "https://assets.coingecko.com/coins/images/3545/large/DSiD9ZhWsAE_8cS.png?1696504231",
+  "current_price": 26.58,
+  "market_cap": 3425705,
+  "market_cap_rank": 1985,
+  "fully_diluted_valuation": 55759694,
+  "total_volume": 5826.91,
+  "high_24h": 26.84,
+  "low_24h": 26.46,
+  "price_change_24h": -0.13061974638879548,
+  "price_change_percentage_24h": -0.48894,
+  "market_cap_change_24h": 767764,
+  "market_cap_change_percentage_24h": 28.88564,
+  "circulating_supply": 129017.57755135,
+  "total_supply": 2100000,
+  "max_supply": null,
+  "ath": 1209.85,
+  "ath_change_percentage": -97.80416,
+  "ath_date": "2020-02-15T22:17:50.667Z",
+  "atl": 0.00004772,
+  "atl_change_percentage": 55670433.37892,
+  "atl_date": "2019-04-03T00:00:00.000Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:51:19.992Z",
+  "platforms": {
+    "ethereum": "0x723cbfc05e2cfcc71d3d89e770d32801a5eef5ab"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "ring-ai",
+  "symbol": "ring",
+  "name": "Ring AI",
+  "image": "https://assets.coingecko.com/coins/images/35995/large/Logo_PP_200x200_circle.png?1710315842",
+  "current_price": 0.246145,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 24245098,
+  "total_volume": 247216,
+  "high_24h": 0.279157,
+  "low_24h": 0.239769,
+  "price_change_24h": -0.023770719259175534,
+  "price_change_percentage_24h": -8.80672,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.87041,
+  "ath_change_percentage": -71.58529,
+  "ath_date": "2024-04-04T04:14:17.468Z",
+  "atl": 0.03831742,
+  "atl_change_percentage": 545.46206,
+  "atl_date": "2024-03-18T19:05:58.783Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:57.688Z",
+  "platforms": {
+    "ethereum": "0xc092a137df3cf2b9e5971ba1874d26487c12626d"
+  }
+}

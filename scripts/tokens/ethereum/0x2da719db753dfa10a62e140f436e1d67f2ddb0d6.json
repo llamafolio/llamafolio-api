@@ -1,0 +1,31 @@
+{
+  "id": "cere-network",
+  "symbol": "cere",
+  "name": "Cere Network",
+  "image": "https://assets.coingecko.com/coins/images/20008/large/cere.png?1696519430",
+  "current_price": 0.00585036,
+  "market_cap": 38619055,
+  "market_cap_rank": 797,
+  "fully_diluted_valuation": 58505039,
+  "total_volume": 996269,
+  "high_24h": 0.00620821,
+  "low_24h": 0.00577206,
+  "price_change_24h": -0.00020796462525928,
+  "price_change_percentage_24h": -3.43271,
+  "market_cap_change_24h": -1303470.185152486,
+  "market_cap_change_percentage_24h": -3.265,
+  "circulating_supply": 6600979225.769589,
+  "total_supply": 10000000000,
+  "max_supply": null,
+  "ath": 0.47126,
+  "ath_change_percentage": -98.76222,
+  "ath_date": "2021-11-08T14:02:41.811Z",
+  "atl": 0.00296106,
+  "atl_change_percentage": 96.99603,
+  "atl_date": "2023-09-13T04:31:42.661Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:45.083Z",
+  "platforms": {
+    "ethereum": "0x2da719db753dfa10a62e140f436e1d67f2ddb0d6"
+  }
+}

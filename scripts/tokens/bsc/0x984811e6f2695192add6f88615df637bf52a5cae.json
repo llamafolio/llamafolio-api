@@ -1,0 +1,31 @@
+{
+  "id": "hoppy",
+  "symbol": "hop",
+  "name": "HOPPY",
+  "image": "https://assets.coingecko.com/coins/images/16844/large/TOKEN-ICON-T.png?1696516412",
+  "current_price": 3.997e-9,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 399693,
+  "total_volume": 0.445848,
+  "high_24h": 4.004e-9,
+  "low_24h": 3.904e-9,
+  "price_change_24h": -2.165285e-12,
+  "price_change_percentage_24h": -0.05414,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000000000,
+  "max_supply": null,
+  "ath": 1.61741e-7,
+  "ath_change_percentage": -97.52881,
+  "ath_date": "2021-11-18T21:15:57.880Z",
+  "atl": 1.293e-9,
+  "atl_change_percentage": 209.13047,
+  "atl_date": "2022-09-21T20:44:33.528Z",
+  "roi": null,
+  "last_updated": "2024-04-24T20:49:22.356Z",
+  "platforms": {
+    "bsc": "0x984811e6f2695192add6f88615df637bf52a5cae"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "aave-dai",
+  "symbol": "adai",
+  "name": "Aave DAI",
+  "image": "https://assets.coingecko.com/coins/images/14242/large/aDAI.84b6c41f.png?1696513957",
+  "current_price": 1.001,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 1969167,
+  "high_24h": 1.005,
+  "low_24h": 0.993989,
+  "price_change_24h": 0.00416527,
+  "price_change_percentage_24h": 0.41736,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 0,
+  "max_supply": null,
+  "ath": 1.12,
+  "ath_change_percentage": -10.32756,
+  "ath_date": "2021-05-19T13:01:14.562Z",
+  "atl": 0.880518,
+  "atl_change_percentage": 13.81569,
+  "atl_date": "2023-03-11T08:00:08.566Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:33.716Z",
+  "platforms": {
+    "fantom": "0x82e64f49ed5ec1bc6e43dad4fc8af9bb3a2312ee"
+  }
+}

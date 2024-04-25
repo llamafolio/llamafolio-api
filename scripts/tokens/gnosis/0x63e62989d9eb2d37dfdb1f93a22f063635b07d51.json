@@ -1,0 +1,31 @@
+{
+  "id": "minerva-wallet",
+  "symbol": "miva",
+  "name": "Minerva Wallet",
+  "image": "https://assets.coingecko.com/coins/images/14732/large/MIVA-Token_200x200.png?1696514401",
+  "current_price": 0.00285929,
+  "market_cap": 36687,
+  "market_cap_rank": 4057,
+  "fully_diluted_valuation": 2863174,
+  "total_volume": 29.55,
+  "high_24h": 0.00290945,
+  "low_24h": 0.00284976,
+  "price_change_24h": -0.000016809803638279,
+  "price_change_percentage_24h": -0.58447,
+  "market_cap_change_24h": -157.66093030569755,
+  "market_cap_change_percentage_24h": -0.42791,
+  "circulating_supply": 12813260.1724405,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.576706,
+  "ath_change_percentage": -99.5042,
+  "ath_date": "2021-04-14T02:16:34.953Z",
+  "atl": 0.00275607,
+  "atl_change_percentage": 3.74523,
+  "atl_date": "2023-07-04T22:19:56.047Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:30.151Z",
+  "platforms": {
+    "gnosis": "0x63e62989d9eb2d37dfdb1f93a22f063635b07d51"
+  }
+}

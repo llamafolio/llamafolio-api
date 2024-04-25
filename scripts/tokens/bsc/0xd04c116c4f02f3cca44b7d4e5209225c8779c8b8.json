@@ -1,0 +1,31 @@
+{
+  "id": "bunnypark-game",
+  "symbol": "bg",
+  "name": "BunnyPark Game",
+  "image": "https://assets.coingecko.com/coins/images/21422/large/BG_TOKEN.png?1696520786",
+  "current_price": 0.00000911,
+  "market_cap": 9070.23,
+  "market_cap_rank": 4222,
+  "fully_diluted_valuation": 9112.04,
+  "total_volume": 14.05,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 995410700.8389,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00838662,
+  "ath_change_percentage": -99.89135,
+  "ath_date": "2022-01-01T07:59:16.694Z",
+  "atl": 0.00000905,
+  "atl_change_percentage": 0.71199,
+  "atl_date": "2023-08-03T07:30:10.325Z",
+  "roi": null,
+  "last_updated": "2023-08-03T10:30:08.412Z",
+  "platforms": {
+    "bsc": "0xd04c116c4f02f3cca44b7d4e5209225c8779c8b8"
+  }
+}

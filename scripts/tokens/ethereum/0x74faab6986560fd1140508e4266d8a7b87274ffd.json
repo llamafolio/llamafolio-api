@@ -1,0 +1,31 @@
+{
+  "id": "hyperdao",
+  "symbol": "hdao",
+  "name": "HyperDAO",
+  "image": "https://assets.coingecko.com/coins/images/10780/large/B7-ppPfE_400x400.png?1696510742",
+  "current_price": 0.00019007,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 950372,
+  "total_volume": 15.01,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 5000000000,
+  "max_supply": null,
+  "ath": 0.199294,
+  "ath_change_percentage": -99.90463,
+  "ath_date": "2021-12-01T12:38:46.629Z",
+  "atl": 0.00000999,
+  "atl_change_percentage": 1802.64586,
+  "atl_date": "2023-11-23T01:30:23.223Z",
+  "roi": null,
+  "last_updated": "2024-04-19T07:59:19.398Z",
+  "platforms": {
+    "ethereum": "0x74faab6986560fd1140508e4266d8a7b87274ffd"
+  }
+}

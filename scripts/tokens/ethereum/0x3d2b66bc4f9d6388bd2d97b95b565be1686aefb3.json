@@ -1,0 +1,31 @@
+{
+  "id": "lambo-0fcbf0f7-1a8f-470d-ba09-797d5e95d836",
+  "symbol": "lambo",
+  "name": "$LAMBO",
+  "image": "https://assets.coingecko.com/coins/images/30126/large/IMG_20230502_225617_622.png?1696529048",
+  "current_price": 0.00000592,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 403761,
+  "total_volume": 6945.33,
+  "high_24h": 0.00000674,
+  "low_24h": 0.00000585,
+  "price_change_24h": -7.65994354887e-7,
+  "price_change_percentage_24h": -11.46206,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 69000000000,
+  "max_supply": 69000000000,
+  "ath": 0.00447756,
+  "ath_change_percentage": -99.86805,
+  "ath_date": "2024-03-19T22:42:11.794Z",
+  "atl": 3.9951e-7,
+  "atl_change_percentage": 1378.88567,
+  "atl_date": "2024-03-28T16:46:26.570Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:56.209Z",
+  "platforms": {
+    "ethereum": "0x3d2b66bc4f9d6388bd2d97b95b565be1686aefb3"
+  }
+}

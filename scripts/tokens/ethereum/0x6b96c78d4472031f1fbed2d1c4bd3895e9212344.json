@@ -1,0 +1,31 @@
+{
+  "id": "taox",
+  "symbol": "taox",
+  "name": "TAOx",
+  "image": "https://assets.coingecko.com/coins/images/35842/large/logo-taox.jpeg?1709889951",
+  "current_price": 0.00252775,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 252775,
+  "total_volume": 816.21,
+  "high_24h": 0.00266411,
+  "low_24h": 0.0025147,
+  "price_change_24h": -0.000106032164150601,
+  "price_change_percentage_24h": -4.02585,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.088505,
+  "ath_change_percentage": -97.14395,
+  "ath_date": "2024-03-10T16:39:59.219Z",
+  "atl": 0.00213992,
+  "atl_change_percentage": 18.12373,
+  "atl_date": "2024-04-05T12:40:30.487Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:16.126Z",
+  "platforms": {
+    "ethereum": "0x6b96c78d4472031f1fbed2d1c4bd3895e9212344"
+  }
+}

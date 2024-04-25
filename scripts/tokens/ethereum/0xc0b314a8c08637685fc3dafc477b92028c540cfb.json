@@ -1,0 +1,31 @@
+{
+  "id": "wombat-exchange",
+  "symbol": "wom",
+  "name": "Wombat Exchange",
+  "image": "https://assets.coingecko.com/coins/images/26946/large/Wombat_Token.png?1696526001",
+  "current_price": 0.0360256,
+  "market_cap": 5319300,
+  "market_cap_rank": 1763,
+  "fully_diluted_valuation": 35898875,
+  "total_volume": 68925,
+  "high_24h": 0.03649599,
+  "low_24h": 0.03583763,
+  "price_change_24h": 0.00010028,
+  "price_change_percentage_24h": 0.27914,
+  "market_cap_change_24h": -13898.669003482908,
+  "market_cap_change_percentage_24h": -0.26061,
+  "circulating_supply": 148174572.176967,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 1.084,
+  "ath_change_percentage": -96.68342,
+  "ath_date": "2022-09-05T00:01:31.938Z",
+  "atl": 0.02524921,
+  "atl_change_percentage": 42.41511,
+  "atl_date": "2024-01-31T09:09:40.182Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:34.958Z",
+  "platforms": {
+    "ethereum": "0xc0b314a8c08637685fc3dafc477b92028c540cfb"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "kelp-dao-restaked-eth",
+  "symbol": "rseth",
+  "name": "Kelp DAO Restaked ETH",
+  "image": "https://assets.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
+  "current_price": 3094.51,
+  "market_cap": 773755096,
+  "market_cap_rank": 115,
+  "fully_diluted_valuation": 773755096,
+  "total_volume": 31227884,
+  "high_24h": 3282.3,
+  "low_24h": 3070.29,
+  "price_change_24h": -150.37379354269524,
+  "price_change_percentage_24h": -4.63418,
+  "market_cap_change_24h": -38012428.38751221,
+  "market_cap_change_percentage_24h": -4.68267,
+  "circulating_supply": 250041.309308394,
+  "total_supply": 250041.309308394,
+  "max_supply": null,
+  "ath": 4033.48,
+  "ath_change_percentage": -22.89784,
+  "ath_date": "2024-03-13T08:55:33.936Z",
+  "atl": 2069.62,
+  "atl_change_percentage": 50.26384,
+  "atl_date": "2024-01-23T14:25:53.609Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:10.317Z",
+  "platforms": {
+    "ethereum": "0xa1290d69c65a6fe4df752f95823fae25cb99e5a7"
+  }
+}

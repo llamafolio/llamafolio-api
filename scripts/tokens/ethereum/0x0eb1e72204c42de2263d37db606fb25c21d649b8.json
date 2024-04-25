@@ -1,0 +1,31 @@
+{
+  "id": "astro-x",
+  "symbol": "astrox",
+  "name": "Astro-X",
+  "image": "https://assets.coingecko.com/coins/images/34465/large/logo_astro_x-01.png?1704965967",
+  "current_price": 0.00068712,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 68712,
+  "total_volume": 3664.24,
+  "high_24h": 0.00077228,
+  "low_24h": 0.00067321,
+  "price_change_24h": -0.000081526496848638,
+  "price_change_percentage_24h": -10.6065,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.00134074,
+  "ath_change_percentage": -48.7506,
+  "ath_date": "2024-03-08T07:55:14.035Z",
+  "atl": 0.00016172,
+  "atl_change_percentage": 324.87791,
+  "atl_date": "2024-01-25T23:20:06.111Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:12.727Z",
+  "platforms": {
+    "ethereum": "0x0eb1e72204c42de2263d37db606fb25c21d649b8"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "b-cube-ai",
+  "symbol": "bcube",
+  "name": "B-cube.ai",
+  "image": "https://assets.coingecko.com/coins/images/15948/large/bcube.PNG?1696515560",
+  "current_price": 0.162845,
+  "market_cap": 3282738,
+  "market_cap_rank": 2012,
+  "fully_diluted_valuation": 8073420,
+  "total_volume": 5406.78,
+  "high_24h": 0.17018,
+  "low_24h": 0.159923,
+  "price_change_24h": -0.007314872273878809,
+  "price_change_percentage_24h": -4.29883,
+  "market_cap_change_24h": -155757.27779251942,
+  "market_cap_change_percentage_24h": -4.52981,
+  "circulating_supply": 20177509.70408596,
+  "total_supply": 49623660.9,
+  "max_supply": null,
+  "ath": 0.894308,
+  "ath_change_percentage": -81.77847,
+  "ath_date": "2024-02-18T06:20:59.263Z",
+  "atl": 0.0009136,
+  "atl_change_percentage": 17736.74458,
+  "atl_date": "2022-04-13T20:30:04.618Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:33.942Z",
+  "platforms": {
+    "ethereum": "0x93c9175e26f57d2888c7df8b470c9eea5c0b0a93"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "chainflip",
+  "symbol": "flip",
+  "name": "Chainflip",
+  "image": "https://assets.coingecko.com/coins/images/25576/large/kdt_AgmT_400x400.png?1696524709",
+  "current_price": 3.25,
+  "market_cap": 82547229,
+  "market_cap_rank": 525,
+  "fully_diluted_valuation": 299384290,
+  "total_volume": 4442987,
+  "high_24h": 3.24,
+  "low_24h": 2.57,
+  "price_change_24h": 0.613228,
+  "price_change_percentage_24h": 23.26862,
+  "market_cap_change_24h": 13862217,
+  "market_cap_change_percentage_24h": 20.1823,
+  "circulating_supply": 25608898.1654974,
+  "total_supply": 92878972.0629169,
+  "max_supply": null,
+  "ath": 9.48,
+  "ath_change_percentage": -65.90577,
+  "ath_date": "2024-03-07T22:35:19.897Z",
+  "atl": 2.16,
+  "atl_change_percentage": 49.2792,
+  "atl_date": "2023-11-23T12:29:50.056Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:41.198Z",
+  "platforms": {
+    "ethereum": "0x826180541412d574cf1336d22c0c0a287822678a"
+  }
+}

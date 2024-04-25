@@ -1,0 +1,31 @@
+{
+  "id": "hifluf",
+  "symbol": "hifluf",
+  "name": "hiFLUF",
+  "image": "https://assets.coingecko.com/coins/images/28602/large/hifluf.png?1696527588",
+  "current_price": 0.00148745,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 20824,
+  "total_volume": 154118,
+  "high_24h": 0.00153984,
+  "low_24h": 0.00142843,
+  "price_change_24h": 0.00005472,
+  "price_change_percentage_24h": 3.8192,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 14000000,
+  "max_supply": 40000000,
+  "ath": 0.00796463,
+  "ath_change_percentage": -81.33662,
+  "ath_date": "2022-12-30T07:14:00.223Z",
+  "atl": 0.00128235,
+  "atl_change_percentage": 15.91781,
+  "atl_date": "2023-10-21T07:59:07.682Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:57.845Z",
+  "platforms": {
+    "ethereum": "0x79c9e0410b6615e7ba9dd69614b0519325a2b047"
+  }
+}

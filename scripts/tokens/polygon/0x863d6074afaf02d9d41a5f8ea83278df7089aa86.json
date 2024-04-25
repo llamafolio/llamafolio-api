@@ -1,0 +1,31 @@
+{
+  "id": "cryptoblades",
+  "symbol": "skill",
+  "name": "CryptoBlades",
+  "image": "https://assets.coingecko.com/coins/images/15334/large/cryptoblade.PNG?1696514982",
+  "current_price": 0.656448,
+  "market_cap": 658590,
+  "market_cap_rank": 2918,
+  "fully_diluted_valuation": 658590,
+  "total_volume": 339639,
+  "high_24h": 0.690356,
+  "low_24h": 0.658072,
+  "price_change_24h": -0.01670278178671192,
+  "price_change_percentage_24h": -2.48128,
+  "market_cap_change_24h": -22175.07346985268,
+  "market_cap_change_percentage_24h": -3.25738,
+  "circulating_supply": 1000000,
+  "total_supply": 1000000,
+  "max_supply": null,
+  "ath": 184.46,
+  "ath_change_percentage": -99.64438,
+  "ath_date": "2021-07-24T04:31:53.859Z",
+  "atl": 0.317778,
+  "atl_change_percentage": 106.42272,
+  "atl_date": "2023-09-25T17:05:10.091Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:15.271Z",
+  "platforms": {
+    "polygon": "0x863d6074afaf02d9d41a5f8ea83278df7089aa86"
+  }
+}

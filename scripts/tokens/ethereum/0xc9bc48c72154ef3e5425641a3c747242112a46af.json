@@ -1,0 +1,31 @@
+{
+  "id": "aave-rai",
+  "symbol": "arai",
+  "name": "Aave RAI",
+  "image": "https://assets.coingecko.com/coins/images/17245/large/aRAI_2x.png?1696516802",
+  "current_price": 2.83,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 221885,
+  "total_volume": 0,
+  "high_24h": 2.85,
+  "low_24h": 2.75,
+  "price_change_24h": 0.01391748,
+  "price_change_percentage_24h": 0.4972,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 78349.4529176329,
+  "max_supply": null,
+  "ath": 3.17,
+  "ath_change_percentage": -10.94086,
+  "ath_date": "2022-05-13T03:08:37.161Z",
+  "atl": 2.45,
+  "atl_change_percentage": 15.23502,
+  "atl_date": "2023-10-08T06:00:00.535Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:33.779Z",
+  "platforms": {
+    "ethereum": "0xc9bc48c72154ef3e5425641a3c747242112a46af"
+  }
+}

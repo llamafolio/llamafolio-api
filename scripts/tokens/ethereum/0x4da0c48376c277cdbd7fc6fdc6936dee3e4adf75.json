@@ -1,0 +1,31 @@
+{
+  "id": "epik-prime",
+  "symbol": "epik",
+  "name": "Epik Prime",
+  "image": "https://assets.coingecko.com/coins/images/17907/large/EPIK_Prime_LOGO.jpg?1696517427",
+  "current_price": 0.01364143,
+  "market_cap": 14383729,
+  "market_cap_rank": 1270,
+  "fully_diluted_valuation": 27319274,
+  "total_volume": 361091,
+  "high_24h": 0.01388555,
+  "low_24h": 0.01346681,
+  "price_change_24h": -0.00017439564781814,
+  "price_change_percentage_24h": -1.26229,
+  "market_cap_change_24h": -261322.45556792617,
+  "market_cap_change_percentage_24h": -1.78437,
+  "circulating_supply": 1053009615,
+  "total_supply": 2000000000,
+  "max_supply": 2000000000,
+  "ath": 0.865706,
+  "ath_change_percentage": -98.42707,
+  "ath_date": "2021-11-17T16:51:56.923Z",
+  "atl": 0.00327249,
+  "atl_change_percentage": 316.1019,
+  "atl_date": "2023-09-28T01:00:25.977Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:03.877Z",
+  "platforms": {
+    "ethereum": "0x4da0c48376c277cdbd7fc6fdc6936dee3e4adf75"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "polar",
+  "symbol": "polar",
+  "name": "POLAR",
+  "image": "https://assets.coingecko.com/coins/images/22682/large/lZqXDw8a_400x400.png?1696521993",
+  "current_price": 0.00002746,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 27.46,
+  "total_volume": 7.51,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 9.2,
+  "ath_change_percentage": -99.9997,
+  "ath_date": "2022-01-21T19:09:13.378Z",
+  "atl": 0.00001585,
+  "atl_change_percentage": 73.21509,
+  "atl_date": "2023-09-25T00:25:16.416Z",
+  "roi": null,
+  "last_updated": "2024-04-15T02:37:27.204Z",
+  "platforms": {
+    "avalanche": "0x6c1c0319d8ddcb0ffe1a68c5b3829fd361587db4"
+  }
+}

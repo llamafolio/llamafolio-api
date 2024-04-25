@@ -1,0 +1,31 @@
+{
+  "id": "tech",
+  "symbol": "tech",
+  "name": "TECH",
+  "image": "https://assets.coingecko.com/coins/images/35785/large/TECH_COIN_-_200x200.png?1710943527",
+  "current_price": 0.00009708,
+  "market_cap": 6358706,
+  "market_cap_rank": 1675,
+  "fully_diluted_valuation": 6358706,
+  "total_volume": 204201,
+  "high_24h": 0.00011324,
+  "low_24h": 0.0000932,
+  "price_change_24h": -0.000016157622094547,
+  "price_change_percentage_24h": -14.2686,
+  "market_cap_change_24h": -1033073.996679022,
+  "market_cap_change_percentage_24h": -13.97598,
+  "circulating_supply": 65243689180.86705,
+  "total_supply": 65243689180.86705,
+  "max_supply": 69420000000,
+  "ath": 0.00071068,
+  "ath_change_percentage": -86.27534,
+  "ath_date": "2024-03-11T22:16:30.400Z",
+  "atl": 0.0000932,
+  "atl_change_percentage": 4.65545,
+  "atl_date": "2024-04-24T17:24:55.609Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:32.566Z",
+  "platforms": {
+    "avalanche": "0x5ac04b69bde6f67c0bd5d6ba6fd5d816548b066a"
+  }
+}

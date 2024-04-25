@@ -1,0 +1,31 @@
+{
+  "id": "nagaya",
+  "symbol": "ngy",
+  "name": "NAGAYA",
+  "image": "https://assets.coingecko.com/coins/images/34255/large/Logo_Coin_Nagaya_-_Nagaya_x_Latoken_%282%29.png?1704343648",
+  "current_price": 1.002,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 50318026,
+  "total_volume": 31295,
+  "high_24h": 1.036,
+  "low_24h": 0.899633,
+  "price_change_24h": -0.000688601703215275,
+  "price_change_percentage_24h": -0.06865,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 50000000,
+  "max_supply": 50000000,
+  "ath": 3.6,
+  "ath_change_percentage": -72.07474,
+  "ath_date": "2024-02-29T05:33:52.360Z",
+  "atl": 0.659992,
+  "atl_change_percentage": 52.53059,
+  "atl_date": "2024-04-19T07:27:11.433Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:48.837Z",
+  "platforms": {
+    "bsc": "0x48c9473e28d0d76e9691149c9c0816e6b030ac62"
+  }
+}

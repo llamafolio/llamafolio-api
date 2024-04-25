@@ -1,0 +1,35 @@
+{
+  "id": "bittwatt",
+  "symbol": "bwt",
+  "name": "Bittwatt",
+  "image": "https://assets.coingecko.com/coins/images/4777/large/bittwatt.png?1547274101",
+  "current_price": 0.00626113,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2120019,
+  "total_volume": 106.15,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 338600000,
+  "max_supply": null,
+  "ath": 0.050798,
+  "ath_change_percentage": -87.67446,
+  "ath_date": "2018-09-23T11:38:02.430Z",
+  "atl": 0.00008165,
+  "atl_change_percentage": 7568.16661,
+  "atl_date": "2019-10-09T00:00:00.000Z",
+  "roi": {
+    "times": -0.9652159405363011,
+    "currency": "usd",
+    "percentage": -96.52159405363011
+  },
+  "last_updated": "2021-04-13T09:04:46.754Z",
+  "platforms": {
+    "ethereum": "0xca3ea3061d638e02113aa960340c98343b5acd62"
+  }
+}

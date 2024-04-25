@@ -1,0 +1,31 @@
+{
+  "id": "bao-finance-v2",
+  "symbol": "bao",
+  "name": "Bao Finance V2",
+  "image": "https://assets.coingecko.com/coins/images/28287/large/bao-logo-mark-full-color-rgb-900px-w-72ppi.png?1696527286",
+  "current_price": 0.0006908,
+  "market_cap": 366464,
+  "market_cap_rank": 3216,
+  "fully_diluted_valuation": 958597,
+  "total_volume": 216.59,
+  "high_24h": 0.00069478,
+  "low_24h": 0.00068565,
+  "price_change_24h": 0.00000256,
+  "price_change_percentage_24h": 0.37136,
+  "market_cap_change_24h": -489.91433110414073,
+  "market_cap_change_percentage_24h": -0.13351,
+  "circulating_supply": 530495216.57044816,
+  "total_supply": 1387670551.46713,
+  "max_supply": 2500000000,
+  "ath": 63.59,
+  "ath_change_percentage": -99.99891,
+  "ath_date": "2022-11-24T07:25:18.159Z",
+  "atl": 0.00033392,
+  "atl_change_percentage": 106.8727,
+  "atl_date": "2023-11-19T11:05:52.979Z",
+  "roi": null,
+  "last_updated": "2024-04-25T05:33:26.426Z",
+  "platforms": {
+    "ethereum": "0xce391315b414d4c7555956120461d21808a69f3a"
+  }
+}

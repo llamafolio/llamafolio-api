@@ -1,0 +1,31 @@
+{
+  "id": "ait-protocol",
+  "symbol": "ait",
+  "name": "AIT Protocol",
+  "image": "https://assets.coingecko.com/coins/images/33962/large/ait-logo-200x200.png?1703567800",
+  "current_price": 0.343292,
+  "market_cap": 28773796,
+  "market_cap_rank": 940,
+  "fully_diluted_valuation": 343534982,
+  "total_volume": 741397,
+  "high_24h": 0.377118,
+  "low_24h": 0.331606,
+  "price_change_24h": -0.029141607729447017,
+  "price_change_percentage_24h": -7.82465,
+  "market_cap_change_24h": -2257207.671906259,
+  "market_cap_change_percentage_24h": -7.27404,
+  "circulating_supply": 83757979.58953358,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 1.2,
+  "ath_change_percentage": -71.33273,
+  "ath_date": "2024-03-11T12:25:14.289Z",
+  "atl": 0.079395,
+  "atl_change_percentage": 334.52596,
+  "atl_date": "2023-12-27T02:14:27.969Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:57.604Z",
+  "platforms": {
+    "ethereum": "0x89d584a1edb3a70b3b07963f9a3ea5399e38b136"
+  }
+}

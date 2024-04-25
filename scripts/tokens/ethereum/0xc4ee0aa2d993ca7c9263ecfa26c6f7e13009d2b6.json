@@ -1,0 +1,31 @@
+{
+  "id": "hoichi",
+  "symbol": "hoichi",
+  "name": "Hoichi",
+  "image": "https://assets.coingecko.com/coins/images/27227/large/3dBs4VvW_400x400.jpeg?1696526278",
+  "current_price": 0.00000428,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1576547,
+  "total_volume": 45970,
+  "high_24h": 0.00000532,
+  "low_24h": 0.00000419,
+  "price_change_24h": -8.89846958591e-7,
+  "price_change_percentage_24h": -17.19789,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 369369369369,
+  "max_supply": 369369369369,
+  "ath": 0.00002456,
+  "ath_change_percentage": -82.62265,
+  "ath_date": "2023-02-28T01:24:41.112Z",
+  "atl": 0.00000107,
+  "atl_change_percentage": 299.84121,
+  "atl_date": "2022-11-22T07:05:46.396Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:03.024Z",
+  "platforms": {
+    "ethereum": "0xc4ee0aa2d993ca7c9263ecfa26c6f7e13009d2b6"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "id": "akropolis",
+  "symbol": "akro",
+  "name": "Akropolis",
+  "image": "https://assets.coingecko.com/coins/images/3328/large/Akropolis.png?1696504034",
+  "current_price": 0.00725419,
+  "market_cap": 725967,
+  "market_cap_rank": 2863,
+  "fully_diluted_valuation": 36298336,
+  "total_volume": 6548930,
+  "high_24h": 0.00786058,
+  "low_24h": 0.00701258,
+  "price_change_24h": -0.00058551872425669,
+  "price_change_percentage_24h": -7.46863,
+  "market_cap_change_24h": -59952.75503474893,
+  "market_cap_change_percentage_24h": -7.62836,
+  "circulating_supply": 100000000,
+  "total_supply": 5000000000,
+  "max_supply": 5000000000,
+  "ath": 0.087404,
+  "ath_change_percentage": -91.7037,
+  "ath_date": "2021-04-01T03:40:21.817Z",
+  "atl": 0.0005311,
+  "atl_change_percentage": 1265.34187,
+  "atl_date": "2020-01-20T23:58:51.966Z",
+  "roi": {
+    "times": -0.10717721373552061,
+    "currency": "usd",
+    "percentage": -10.717721373552061
+  },
+  "last_updated": "2024-04-25T09:04:33.682Z",
+  "platforms": {
+    "ethereum": "0x8ab7404063ec4dbcfd4598215992dc3f8ec853d7"
+  }
+}

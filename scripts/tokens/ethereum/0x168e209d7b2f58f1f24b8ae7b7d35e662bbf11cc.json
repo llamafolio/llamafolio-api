@@ -1,0 +1,31 @@
+{
+  "id": "cryptogpt-token",
+  "symbol": "lai",
+  "name": "LayerAI",
+  "image": "https://assets.coingecko.com/coins/images/29223/large/Favicon_200x200px.png?1696528181",
+  "current_price": 0.03239911,
+  "market_cap": 10248154,
+  "market_cap_rank": 1427,
+  "fully_diluted_valuation": 96680702,
+  "total_volume": 3932938,
+  "high_24h": 0.03671987,
+  "low_24h": 0.03184999,
+  "price_change_24h": -0.004320757597148582,
+  "price_change_percentage_24h": -11.76681,
+  "market_cap_change_24h": -1464954.4156556185,
+  "market_cap_change_percentage_24h": -12.50696,
+  "circulating_supply": 318000000,
+  "total_supply": 3000000000,
+  "max_supply": 3000000000,
+  "ath": 0.147463,
+  "ath_change_percentage": -78.33786,
+  "ath_date": "2023-03-17T03:45:36.015Z",
+  "atl": 0.00606092,
+  "atl_change_percentage": 427.04183,
+  "atl_date": "2023-10-15T01:19:41.592Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:05.192Z",
+  "platforms": {
+    "ethereum": "0x168e209d7b2f58f1f24b8ae7b7d35e662bbf11cc"
+  }
+}

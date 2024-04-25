@@ -1,0 +1,31 @@
+{
+  "id": "universal-eth",
+  "symbol": "unieth",
+  "name": "Universal ETH",
+  "image": "https://assets.coingecko.com/coins/images/28477/large/uniETH_200.png?1696527471",
+  "current_price": 3316.73,
+  "market_cap": 146697979,
+  "market_cap_rank": 371,
+  "fully_diluted_valuation": 146697979,
+  "total_volume": 5976.61,
+  "high_24h": 3478.82,
+  "low_24h": 3299.77,
+  "price_change_24h": -128.20132822289452,
+  "price_change_percentage_24h": -3.72145,
+  "market_cap_change_24h": -5526549.033533722,
+  "market_cap_change_percentage_24h": -3.63052,
+  "circulating_supply": 44229.7199408213,
+  "total_supply": 44229.7199408213,
+  "max_supply": null,
+  "ath": 4682.56,
+  "ath_change_percentage": -29.11452,
+  "ath_date": "2024-04-05T10:43:06.940Z",
+  "atl": 1997,
+  "atl_change_percentage": 66.21175,
+  "atl_date": "2023-11-18T07:13:29.135Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:47:21.192Z",
+  "platforms": {
+    "ethereum": "0xf1376bcef0f78459c0ed0ba5ddce976f1ddf51f4"
+  }
+}

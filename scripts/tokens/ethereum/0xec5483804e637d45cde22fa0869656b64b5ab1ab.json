@@ -1,0 +1,31 @@
+{
+  "id": "acent",
+  "symbol": "ace",
+  "name": "Acent",
+  "image": "https://assets.coingecko.com/coins/images/15211/large/acent-logo.png?1696514867",
+  "current_price": 0.00639812,
+  "market_cap": 763612,
+  "market_cap_rank": 2837,
+  "fully_diluted_valuation": 12777806,
+  "total_volume": 110462,
+  "high_24h": 0.00674917,
+  "low_24h": 0.00638451,
+  "price_change_24h": -0.000345266680109549,
+  "price_change_percentage_24h": -5.12008,
+  "market_cap_change_24h": -42042.02649622597,
+  "market_cap_change_percentage_24h": -5.21837,
+  "circulating_supply": 119521619.032219,
+  "total_supply": 2000000000,
+  "max_supply": null,
+  "ath": 0.827492,
+  "ath_change_percentage": -99.22746,
+  "ath_date": "2021-05-10T00:04:42.155Z",
+  "atl": 0.00232961,
+  "atl_change_percentage": 174.41086,
+  "atl_date": "2023-10-17T04:00:00.582Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:30.013Z",
+  "platforms": {
+    "ethereum": "0xec5483804e637d45cde22fa0869656b64b5ab1ab"
+  }
+}

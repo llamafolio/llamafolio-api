@@ -1,0 +1,31 @@
+{
+  "id": "peach-inu-bsc",
+  "symbol": "peach",
+  "name": "Peach Inu (BSC)",
+  "image": "https://assets.coingecko.com/coins/images/29786/large/20230410_202521.png?1696528716",
+  "current_price": 4.64e-12,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 92.47,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 5000000000000000,
+  "max_supply": 5000000000000000,
+  "ath": 8.5766e-11,
+  "ath_change_percentage": -94.5902,
+  "ath_date": "2023-04-12T08:32:01.299Z",
+  "atl": 4.075e-12,
+  "atl_change_percentage": 13.84562,
+  "atl_date": "2023-05-12T06:26:33.612Z",
+  "roi": null,
+  "last_updated": "2023-05-18T12:32:25.769Z",
+  "platforms": {
+    "bsc": "0x2a374d02e244aaa175b38ba1ba9ee443d20e7e41"
+  }
+}

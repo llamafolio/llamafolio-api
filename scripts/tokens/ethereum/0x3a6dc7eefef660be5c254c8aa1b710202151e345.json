@@ -1,0 +1,31 @@
+{
+  "id": "dparrot",
+  "symbol": "parrot",
+  "name": "dPARROT",
+  "image": "https://assets.coingecko.com/coins/images/31601/large/coingecko.jpg?1696530417",
+  "current_price": 6.187e-8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 61808,
+  "total_volume": 8.15,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 999000000000,
+  "max_supply": 0,
+  "ath": 2.29654e-7,
+  "ath_change_percentage": -73.05928,
+  "ath_date": "2023-09-06T12:29:39.645Z",
+  "atl": 5.0711e-8,
+  "atl_change_percentage": 22.00538,
+  "atl_date": "2023-10-13T03:45:41.903Z",
+  "roi": null,
+  "last_updated": "2023-11-27T03:12:10.550Z",
+  "platforms": {
+    "ethereum": "0x3a6dc7eefef660be5c254c8aa1b710202151e345"
+  }
+}

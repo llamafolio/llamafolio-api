@@ -1,0 +1,31 @@
+{
+  "id": "the-mars",
+  "symbol": "mrst",
+  "name": "Mars Token",
+  "image": "https://assets.coingecko.com/coins/images/27230/large/MRST.png?1696526281",
+  "current_price": 0.00186445,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1442043,
+  "total_volume": 25808,
+  "high_24h": 0.0020311,
+  "low_24h": 0.0018199,
+  "price_change_24h": -0.000139030791577835,
+  "price_change_percentage_24h": -6.93947,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 776248440,
+  "max_supply": null,
+  "ath": 0.119817,
+  "ath_change_percentage": -98.4484,
+  "ath_date": "2022-11-09T10:54:20.555Z",
+  "atl": 0.00174125,
+  "atl_change_percentage": 6.76626,
+  "atl_date": "2024-04-19T22:50:54.985Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:24.583Z",
+  "platforms": {
+    "polygon": "0x411bc96881a62572ff33c9d8ce60df99e3d96cd8"
+  }
+}

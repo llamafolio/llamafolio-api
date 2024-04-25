@@ -1,0 +1,31 @@
+{
+  "id": "aastoken",
+  "symbol": "aast",
+  "name": "AASToken",
+  "image": "https://assets.coingecko.com/coins/images/35717/large/IMG_8288.JPG.jpg?1709630759",
+  "current_price": 1.91,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 818739,
+  "high_24h": 1.97,
+  "low_24h": 1.52,
+  "price_change_24h": -0.061450211734436655,
+  "price_change_percentage_24h": -3.12094,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": null,
+  "ath": 3.19,
+  "ath_change_percentage": -39.32068,
+  "ath_date": "2024-03-06T05:44:46.300Z",
+  "atl": 0.807259,
+  "atl_change_percentage": 139.82937,
+  "atl_date": "2024-03-08T15:36:34.433Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:38.929Z",
+  "platforms": {
+    "bsc": "0xb1e998b346dddacd06f01db50645be52dafb93db"
+  }
+}

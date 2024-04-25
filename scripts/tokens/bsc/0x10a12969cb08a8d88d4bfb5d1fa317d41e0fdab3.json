@@ -1,0 +1,31 @@
+{
+  "id": "metagods",
+  "symbol": "mgod",
+  "name": "MetaGods",
+  "image": "https://assets.coingecko.com/coins/images/21666/large/n9xlniyOphEZp40cR7OnXO1p5H8kI8rLGn6vbx8AaVGiYi250HIeNISTx7eMHU-Ym5XRc9nFPmNXfRZmr3QglH1Svte4Tisu2EZPU3JVFKlPLLnQwDXhodgYcSt0Xb33kyrA_yqFEZnMw1q5qi-4KgdHd4bHv7MKNz2rF3MuA_RWdylgpB3xdUoaxoiMLqzlVbEatJYnDQyhqvh.jpg?1696521023",
+  "current_price": 0.00168664,
+  "market_cap": 23779,
+  "market_cap_rank": 4132,
+  "fully_diluted_valuation": 841417,
+  "total_volume": 253.04,
+  "high_24h": 0.00171808,
+  "low_24h": 0.00167381,
+  "price_change_24h": -0.000008412706089533,
+  "price_change_percentage_24h": -0.49631,
+  "market_cap_change_24h": -109.35150378832623,
+  "market_cap_change_percentage_24h": -0.45776,
+  "circulating_supply": 14130465.7,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 1.64,
+  "ath_change_percentage": -99.8972,
+  "ath_date": "2022-01-13T15:17:31.668Z",
+  "atl": 0.00080238,
+  "atl_change_percentage": 110.20408,
+  "atl_date": "2023-10-20T12:31:32.382Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:41.001Z",
+  "platforms": {
+    "bsc": "0x10a12969cb08a8d88d4bfb5d1fa317d41e0fdab3"
+  }
+}

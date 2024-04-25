@@ -1,0 +1,31 @@
+{
+  "id": "zeemcoin",
+  "symbol": "zeem",
+  "name": "Zeemcoin",
+  "image": "https://assets.coingecko.com/coins/images/30336/large/Logo_reducido_Zeemcoin_-_Color.png?1696529237",
+  "current_price": 0.00316974,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 316951,
+  "total_volume": 20.6,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 99992557,
+  "max_supply": 100000000,
+  "ath": 0.069203,
+  "ath_change_percentage": -95.41964,
+  "ath_date": "2023-05-15T13:28:34.267Z",
+  "atl": 0.00313363,
+  "atl_change_percentage": 1.15257,
+  "atl_date": "2024-03-26T19:25:07.973Z",
+  "roi": null,
+  "last_updated": "2024-03-27T07:42:40.291Z",
+  "platforms": {
+    "polygon": "0x4ca7bf91e4384d7c7a48ed4c04b555f350eb6719"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "ipor",
+  "symbol": "ipor",
+  "name": "IPOR",
+  "image": "https://assets.coingecko.com/coins/images/28373/large/IPOR-token-200x200.png?1696527376",
+  "current_price": 0.755981,
+  "market_cap": 12284589,
+  "market_cap_rank": 1328,
+  "fully_diluted_valuation": 75548488,
+  "total_volume": 60804,
+  "high_24h": 0.817827,
+  "low_24h": 0.747274,
+  "price_change_24h": -0.05884628469417874,
+  "price_change_percentage_24h": -7.22193,
+  "market_cap_change_24h": -950008.5738319643,
+  "market_cap_change_percentage_24h": -7.17822,
+  "circulating_supply": 16260535.7208886,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 8.09,
+  "ath_change_percentage": -90.65307,
+  "ath_date": "2023-02-04T17:24:36.265Z",
+  "atl": 0.316697,
+  "atl_change_percentage": 138.73057,
+  "atl_date": "2024-02-05T01:12:00.342Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:19.320Z",
+  "platforms": {
+    "ethereum": "0x1e4746dc744503b53b4a082cb3607b169a289090"
+  }
+}

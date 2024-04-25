@@ -1,0 +1,31 @@
+{
+  "id": "cryptotanks",
+  "symbol": "tank",
+  "name": "CryptoTanks",
+  "image": "https://assets.coingecko.com/coins/images/21966/large/LN-MRxWg_400x400.jpg?1696521314",
+  "current_price": 0.00384632,
+  "market_cap": 355188,
+  "market_cap_rank": 3235,
+  "fully_diluted_valuation": 383987,
+  "total_volume": 1400.45,
+  "high_24h": 0.00443418,
+  "low_24h": 0.00383715,
+  "price_change_24h": -0.000285808811124786,
+  "price_change_percentage_24h": -6.91675,
+  "market_cap_change_24h": -26786.830297095934,
+  "market_cap_change_percentage_24h": -7.01273,
+  "circulating_supply": 92500000,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 1.3,
+  "ath_change_percentage": -99.70368,
+  "ath_date": "2022-02-10T19:03:04.303Z",
+  "atl": 0.00088023,
+  "atl_change_percentage": 336.57976,
+  "atl_date": "2024-03-01T07:04:21.244Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:10.230Z",
+  "platforms": {
+    "bsc": "0x4444a19c8bb86e9bdbc023709a363bbce91af33e"
+  }
+}

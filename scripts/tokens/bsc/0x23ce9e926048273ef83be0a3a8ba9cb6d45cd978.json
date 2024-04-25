@@ -1,0 +1,31 @@
+{
+  "id": "mines-of-dalarnia",
+  "symbol": "dar",
+  "name": "Mines of Dalarnia",
+  "image": "https://assets.coingecko.com/coins/images/19837/large/dar.png?1696519259",
+  "current_price": 0.159778,
+  "market_cap": 88933250,
+  "market_cap_rank": 503,
+  "fully_diluted_valuation": 127672687,
+  "total_volume": 16792240,
+  "high_24h": 0.178458,
+  "low_24h": 0.158187,
+  "price_change_24h": -0.015761898076957964,
+  "price_change_percentage_24h": -8.97909,
+  "market_cap_change_24h": -9239446.20923096,
+  "market_cap_change_percentage_24h": -9.41142,
+  "circulating_supply": 557257796.888503,
+  "total_supply": 800000000,
+  "max_supply": 800000000,
+  "ath": 6.38,
+  "ath_change_percentage": -97.4937,
+  "ath_date": "2021-11-04T09:00:47.053Z",
+  "atl": 0.076025,
+  "atl_change_percentage": 110.48435,
+  "atl_date": "2023-10-19T02:55:36.764Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:37.676Z",
+  "platforms": {
+    "bsc": "0x23ce9e926048273ef83be0a3a8ba9cb6d45cd978"
+  }
+}

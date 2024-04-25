@@ -1,0 +1,31 @@
+{
+  "id": "catcoin-token",
+  "symbol": "cats",
+  "name": "CatCoin Token",
+  "image": "https://assets.coingecko.com/coins/images/23569/large/17318.png?1696522778",
+  "current_price": 1.025e-9,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1026336,
+  "total_volume": 10173.51,
+  "high_24h": 1.198e-9,
+  "low_24h": 5.85452e-10,
+  "price_change_24h": 4.38022e-10,
+  "price_change_percentage_24h": 74.61045,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": 1000000000000000,
+  "ath": 6.8324e-8,
+  "ath_change_percentage": -98.50255,
+  "ath_date": "2022-02-24T02:51:13.538Z",
+  "atl": 2.07553e-10,
+  "atl_change_percentage": 392.9459,
+  "atl_date": "2022-02-14T21:35:59.006Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:06.012Z",
+  "platforms": {
+    "bsc": "0x2f0c6e147974bfbf7da557b88643d74c324053a2"
+  }
+}

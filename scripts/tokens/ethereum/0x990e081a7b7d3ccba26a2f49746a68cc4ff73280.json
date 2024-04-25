@@ -1,0 +1,35 @@
+{
+  "id": "kstarcoin",
+  "symbol": "ksc",
+  "name": "KStarCoin",
+  "image": "https://assets.coingecko.com/coins/images/1630/large/ksc.png?1696502658",
+  "current_price": 0.00006677,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 30051,
+  "total_volume": 821.28,
+  "high_24h": 0.00007838,
+  "low_24h": 0.0000625,
+  "price_change_24h": -0.000002243933246053,
+  "price_change_percentage_24h": -3.25165,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 450000000,
+  "max_supply": null,
+  "ath": 0.330274,
+  "ath_change_percentage": -99.97976,
+  "ath_date": "2021-04-09T05:05:06.788Z",
+  "atl": 0.00004924,
+  "atl_change_percentage": 35.72668,
+  "atl_date": "2024-04-19T05:22:05.901Z",
+  "roi": {
+    "times": -0.998664696184155,
+    "currency": "usd",
+    "percentage": -99.86646961841551
+  },
+  "last_updated": "2024-04-25T09:13:42.313Z",
+  "platforms": {
+    "ethereum": "0x990e081a7b7d3ccba26a2f49746a68cc4ff73280"
+  }
+}

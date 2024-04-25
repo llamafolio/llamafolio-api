@@ -1,0 +1,31 @@
+{
+  "id": "zenland",
+  "symbol": "zenf",
+  "name": "Zenland",
+  "image": "https://assets.coingecko.com/coins/images/29477/large/tokenicon200px.png?1696528421",
+  "current_price": 0.00739747,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1479494,
+  "total_volume": 10.22,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 200000000,
+  "max_supply": 200000000,
+  "ath": 0.04456777,
+  "ath_change_percentage": -83.40175,
+  "ath_date": "2024-01-23T01:10:52.131Z",
+  "atl": 0.00197128,
+  "atl_change_percentage": 275.26196,
+  "atl_date": "2024-01-27T11:45:06.590Z",
+  "roi": null,
+  "last_updated": "2024-04-22T11:52:55.716Z",
+  "platforms": {
+    "bsc": "0x382ec3f9f2e79b03abf0127f3aa985b148cef6d7"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "kyber-network-crystal",
+  "symbol": "knc",
+  "name": "Kyber Network Crystal",
+  "image": "https://assets.coingecko.com/coins/images/14899/large/RwdVsGcw_400x400.jpg?1696514562",
+  "current_price": 0.58478,
+  "market_cap": 99493765,
+  "market_cap_rank": 480,
+  "fully_diluted_valuation": 139621125,
+  "total_volume": 14375074,
+  "high_24h": 0.649574,
+  "low_24h": 0.584288,
+  "price_change_24h": -0.0607745714695388,
+  "price_change_percentage_24h": -9.41432,
+  "market_cap_change_24h": -10729991.327041924,
+  "market_cap_change_percentage_24h": -9.73474,
+  "circulating_supply": 170152851.23024455,
+  "total_supply": 238778103.264837,
+  "max_supply": 252301550,
+  "ath": 5.7,
+  "ath_change_percentage": -89.70713,
+  "ath_date": "2022-04-29T00:29:36.976Z",
+  "atl": 0.447874,
+  "atl_change_percentage": 30.88275,
+  "atl_date": "2023-06-10T04:31:08.299Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:40.828Z",
+  "platforms": {
+    "fantom": "0x1e1085efaa63edfe74aad7c05a28eae4ef917c3f"
+  }
+}

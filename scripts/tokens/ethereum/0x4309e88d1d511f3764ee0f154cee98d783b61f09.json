@@ -1,0 +1,31 @@
+{
+  "id": "onchain-ai",
+  "symbol": "ocai",
+  "name": "Onchain AI",
+  "image": "https://assets.coingecko.com/coins/images/31191/large/onchain_200.jpeg?1696530019",
+  "current_price": 0.0056584,
+  "market_cap": 509120,
+  "market_cap_rank": 3055,
+  "fully_diluted_valuation": 565689,
+  "total_volume": 138331,
+  "high_24h": 0.00569968,
+  "low_24h": 0.00413165,
+  "price_change_24h": 0.00140313,
+  "price_change_percentage_24h": 32.97385,
+  "market_cap_change_24h": 130595,
+  "market_cap_change_percentage_24h": 34.50104,
+  "circulating_supply": 90000000,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.082139,
+  "ath_change_percentage": -93.11654,
+  "ath_date": "2023-12-07T18:50:54.575Z",
+  "atl": 0.00413165,
+  "atl_change_percentage": 36.84535,
+  "atl_date": "2024-04-24T16:42:05.323Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:01.132Z",
+  "platforms": {
+    "ethereum": "0x4309e88d1d511f3764ee0f154cee98d783b61f09"
+  }
+}

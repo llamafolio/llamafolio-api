@@ -1,0 +1,31 @@
+{
+  "id": "electric-vehicle-direct-currency",
+  "symbol": "evdc",
+  "name": "Electric Vehicle Direct Currency",
+  "image": "https://assets.coingecko.com/coins/images/17406/large/EVDC-01-1-2.png?1696516954",
+  "current_price": 0.00003289,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 6593002,
+  "total_volume": 41160,
+  "high_24h": 0.00003373,
+  "low_24h": 0.00003269,
+  "price_change_24h": 2.03164e-7,
+  "price_change_percentage_24h": 0.62148,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 200000000000,
+  "max_supply": null,
+  "ath": 0.0003842,
+  "ath_change_percentage": -91.43557,
+  "ath_date": "2021-09-26T20:32:47.412Z",
+  "atl": 1.88e-16,
+  "atl_change_percentage": 17518805798552.352,
+  "atl_date": "2021-09-30T17:56:00.882Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:30.696Z",
+  "platforms": {
+    "bsc": "0x93749e69560efe1ad6661903e47df538492c50a4"
+  }
+}

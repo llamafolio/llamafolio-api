@@ -1,0 +1,31 @@
+{
+  "id": "yam-2",
+  "symbol": "yam",
+  "name": "YAM",
+  "image": "https://assets.coingecko.com/coins/images/12530/large/YAM-icon.png?1696512343",
+  "current_price": 0.089508,
+  "market_cap": 1327665,
+  "market_cap_rank": 2523,
+  "fully_diluted_valuation": 1361218,
+  "total_volume": 4538.26,
+  "high_24h": 0.092625,
+  "low_24h": 0.086443,
+  "price_change_24h": -0.001129864364618719,
+  "price_change_percentage_24h": -1.24656,
+  "market_cap_change_24h": -37905.492902754806,
+  "market_cap_change_percentage_24h": -2.7758,
+  "circulating_supply": 14790447.225200657,
+  "total_supply": 15164231.3125922,
+  "max_supply": 15164231.3125922,
+  "ath": 41.4,
+  "ath_change_percentage": -99.7805,
+  "ath_date": "2020-09-19T08:42:45.898Z",
+  "atl": 0.04578625,
+  "atl_change_percentage": 98.4808,
+  "atl_date": "2023-10-12T10:42:15.046Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:05.719Z",
+  "platforms": {
+    "ethereum": "0x0aacfbec6a24756c20d41914f2caba817c0d8521"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "shackleford",
+  "symbol": "shack",
+  "name": "Shackleford",
+  "image": "https://assets.coingecko.com/coins/images/34213/large/ShacklefordTokenLogo--200x200.png?1704277276",
+  "current_price": 0.06175,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 61750,
+  "total_volume": 3844.33,
+  "high_24h": 0.062058,
+  "low_24h": 0.061659,
+  "price_change_24h": -0.000027151371777452,
+  "price_change_percentage_24h": -0.04395,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 0.34689,
+  "ath_change_percentage": -82.1991,
+  "ath_date": "2024-01-03T12:12:17.189Z",
+  "atl": 0.01582605,
+  "atl_change_percentage": 290.17691,
+  "atl_date": "2024-01-30T03:30:35.822Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:25.044Z",
+  "platforms": {
+    "bsc": "0x1f6c1516bdeba1a01643b792eb12d68cec8658ba"
+  }
+}

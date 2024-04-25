@@ -1,0 +1,31 @@
+{
+  "id": "iris-token-2",
+  "symbol": "iris",
+  "name": "Iris",
+  "image": "https://assets.coingecko.com/coins/images/18361/large/hermes.PNG?1696517854",
+  "current_price": 0.00701818,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 5069.35,
+  "total_volume": 1.21,
+  "high_24h": 0.00705282,
+  "low_24h": 0.00691421,
+  "price_change_24h": 0.00000522,
+  "price_change_percentage_24h": 0.0745,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 722318,
+  "max_supply": null,
+  "ath": 4.12,
+  "ath_change_percentage": -99.82981,
+  "ath_date": "2022-02-09T16:28:45.805Z",
+  "atl": 0.00423039,
+  "atl_change_percentage": 65.89901,
+  "atl_date": "2022-11-10T00:45:02.327Z",
+  "roi": null,
+  "last_updated": "2024-04-25T03:13:07.240Z",
+  "platforms": {
+    "polygon": "0xdab35042e63e93cc8556c9bae482e5415b5ac4b1"
+  }
+}

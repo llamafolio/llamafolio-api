@@ -1,0 +1,31 @@
+{
+  "id": "agrinode",
+  "symbol": "agn",
+  "name": "AgriNode",
+  "image": "https://assets.coingecko.com/coins/images/28727/large/IMG_20230110_070430_486_%281%29.png?1696527707",
+  "current_price": 0.00039993,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1475727,
+  "total_volume": 2.44,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 3690000000,
+  "max_supply": 3690000000,
+  "ath": 0.698274,
+  "ath_change_percentage": -99.94273,
+  "ath_date": "2023-01-15T10:51:51.169Z",
+  "atl": 0.00016383,
+  "atl_change_percentage": 144.10454,
+  "atl_date": "2023-04-19T09:33:24.439Z",
+  "roi": null,
+  "last_updated": "2023-05-17T23:00:27.510Z",
+  "platforms": {
+    "ethereum": "0xedc1004886d010751f74ec0ad223819f9f3b1910"
+  }
+}

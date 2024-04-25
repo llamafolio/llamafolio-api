@@ -1,0 +1,31 @@
+{
+  "id": "smudge-lord",
+  "symbol": "smudge",
+  "name": "Smudge Lord",
+  "image": "https://assets.coingecko.com/coins/images/30268/large/logo-A.png?1696529175",
+  "current_price": 1.089e-9,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 458203,
+  "total_volume": 3441.93,
+  "high_24h": 1.118e-9,
+  "low_24h": 1.07e-9,
+  "price_change_24h": -1.6597205e-11,
+  "price_change_percentage_24h": -1.50097,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 420690000000000,
+  "max_supply": 420690000000000,
+  "ath": 1.8782e-8,
+  "ath_change_percentage": -94.22323,
+  "ath_date": "2023-05-17T18:31:48.802Z",
+  "atl": 3.58176e-10,
+  "atl_change_percentage": 202.91822,
+  "atl_date": "2023-09-11T19:59:28.961Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:43.641Z",
+  "platforms": {
+    "ethereum": "0x516e2758b044433371076a48127b8cfa7b0bdb43"
+  }
+}

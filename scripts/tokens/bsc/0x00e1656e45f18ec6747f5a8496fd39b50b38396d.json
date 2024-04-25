@@ -1,0 +1,31 @@
+{
+  "id": "bomber-coin",
+  "symbol": "bcoin",
+  "name": "BombCrypto",
+  "image": "https://assets.coingecko.com/coins/images/18567/large/bcoin.png?1696518045",
+  "current_price": 0.03383885,
+  "market_cap": 2471098,
+  "market_cap_rank": 2181,
+  "fully_diluted_valuation": 3335284,
+  "total_volume": 130663,
+  "high_24h": 0.03993824,
+  "low_24h": 0.03335284,
+  "price_change_24h": -0.00547206252353083,
+  "price_change_percentage_24h": -13.91996,
+  "market_cap_change_24h": -442243.64598169643,
+  "market_cap_change_percentage_24h": -15.17995,
+  "circulating_supply": 74089572.6274308,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 8.77,
+  "ath_change_percentage": -99.61961,
+  "ath_date": "2021-11-29T00:43:41.100Z",
+  "atl": 0.00116154,
+  "atl_change_percentage": 2770.5651,
+  "atl_date": "2023-11-02T16:34:19.288Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:13.709Z",
+  "platforms": {
+    "bsc": "0x00e1656e45f18ec6747f5a8496fd39b50b38396d"
+  }
+}

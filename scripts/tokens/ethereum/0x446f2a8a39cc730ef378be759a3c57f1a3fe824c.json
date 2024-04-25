@@ -1,0 +1,31 @@
+{
+  "id": "nanobyte",
+  "symbol": "nbt",
+  "name": "NanoByte",
+  "image": "https://assets.coingecko.com/coins/images/23698/large/WpcmdLW.png?1696522899",
+  "current_price": 0.00212728,
+  "market_cap": 2740078,
+  "market_cap_rank": 2117,
+  "fully_diluted_valuation": 21200164,
+  "total_volume": 57377,
+  "high_24h": 0.00219411,
+  "low_24h": 0.00206592,
+  "price_change_24h": 0.00000192,
+  "price_change_percentage_24h": 0.09054,
+  "market_cap_change_24h": 2161.98,
+  "market_cap_change_percentage_24h": 0.07896,
+  "circulating_supply": 1289900918.3212829,
+  "total_supply": 9980050000,
+  "max_supply": 9980050000,
+  "ath": 0.057054,
+  "ath_change_percentage": -96.27597,
+  "ath_date": "2022-03-10T02:14:49.780Z",
+  "atl": 0.00155205,
+  "atl_change_percentage": 36.89659,
+  "atl_date": "2024-02-06T22:00:05.626Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:16.862Z",
+  "platforms": {
+    "ethereum": "0x446f2a8a39cc730ef378be759a3c57f1a3fe824c"
+  }
+}

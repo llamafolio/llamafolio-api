@@ -1,0 +1,31 @@
+{
+  "id": "spyro",
+  "symbol": "spyro",
+  "name": "SPYRO",
+  "image": "https://assets.coingecko.com/coins/images/35203/large/IMG_8253.jpeg?1707843227",
+  "current_price": 3.00666e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 299886,
+  "total_volume": 6364.64,
+  "high_24h": 3.24916e-7,
+  "low_24h": 2.98069e-7,
+  "price_change_24h": -2.082136001e-8,
+  "price_change_percentage_24h": -6.47656,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000,
+  "max_supply": 1000000000000,
+  "ath": 0.00001399,
+  "ath_change_percentage": -97.85514,
+  "ath_date": "2024-02-15T12:18:37.233Z",
+  "atl": 1.97464e-7,
+  "atl_change_percentage": 51.93196,
+  "atl_date": "2024-02-24T02:25:30.065Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:20.554Z",
+  "platforms": {
+    "ethereum": "0x6d7497751656618fc38cfb5478994a20f7e235df"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "digits-dao",
+  "symbol": "digits",
+  "name": "Digits DAO",
+  "image": "https://assets.coingecko.com/coins/images/23551/large/Logo-Digits-DAO-Icon-01.jpg?1696522758",
+  "current_price": 0.00850777,
+  "market_cap": 6727411,
+  "market_cap_rank": 1644,
+  "fully_diluted_valuation": 8507770,
+  "total_volume": 94.8,
+  "high_24h": 0.00855419,
+  "low_24h": 0.00846324,
+  "price_change_24h": -0.000018890386564297,
+  "price_change_percentage_24h": -0.22154,
+  "market_cap_change_24h": -8069.880788769573,
+  "market_cap_change_percentage_24h": -0.11981,
+  "circulating_supply": 790737270.422632,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.01765585,
+  "ath_change_percentage": -52.06552,
+  "ath_date": "2023-01-31T18:55:50.946Z",
+  "atl": 0.00287218,
+  "atl_change_percentage": 194.66282,
+  "atl_date": "2023-01-02T03:56:45.660Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:51:15.075Z",
+  "platforms": {
+    "ethereum": "0xbe56ab825fd35678a32dc35bc4eb17e238e1404f"
+  }
+}

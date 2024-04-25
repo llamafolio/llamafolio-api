@@ -1,0 +1,31 @@
+{
+  "id": "bfg-token",
+  "symbol": "bfg",
+  "name": "BetFury",
+  "image": "https://assets.coingecko.com/coins/images/18108/large/bfg.png?1696517612",
+  "current_price": 0.0160422,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 80308633,
+  "total_volume": 37563,
+  "high_24h": 0.01614232,
+  "low_24h": 0.01558577,
+  "price_change_24h": 0.00034788,
+  "price_change_percentage_24h": 2.21658,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 4999999999.5,
+  "max_supply": null,
+  "ath": 0.0378077,
+  "ath_change_percentage": -57.53654,
+  "ath_date": "2023-09-23T15:41:24.658Z",
+  "atl": 0.01019117,
+  "atl_change_percentage": 57.53301,
+  "atl_date": "2022-11-12T07:05:42.795Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:10.036Z",
+  "platforms": {
+    "bsc": "0xbb46693ebbea1ac2070e59b4d043b47e2e095f86"
+  }
+}

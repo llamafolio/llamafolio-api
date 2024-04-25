@@ -1,0 +1,31 @@
+{
+  "id": "family-guy",
+  "symbol": "guy",
+  "name": "Family Guy",
+  "image": "https://assets.coingecko.com/coins/images/30435/large/photo_2023-05-16_18-24-10_%281%29.png?1696529323",
+  "current_price": 7.0614e-8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 70349,
+  "total_volume": 513.33,
+  "high_24h": 7.5623e-8,
+  "low_24h": 7.018e-8,
+  "price_change_24h": -4.09451233e-9,
+  "price_change_percentage_24h": -5.48065,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000,
+  "max_supply": 1000000000000,
+  "ath": 0.00000246,
+  "ath_change_percentage": -97.1431,
+  "ath_date": "2023-05-20T23:40:03.879Z",
+  "atl": 1.2207e-8,
+  "atl_change_percentage": 476.27684,
+  "atl_date": "2023-09-25T00:34:44.438Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:08.280Z",
+  "platforms": {
+    "ethereum": "0x4743a7a193cdf202035e9bc6830a07f1607630c4"
+  }
+}

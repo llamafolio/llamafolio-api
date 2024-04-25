@@ -1,0 +1,31 @@
+{
+  "id": "swapdex",
+  "symbol": "sdxb",
+  "name": "SwapDEX",
+  "image": "https://assets.coingecko.com/coins/images/13717/large/sdx.png?1696513462",
+  "current_price": 0.00242934,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 53149,
+  "total_volume": 407.76,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 21878021.0875786,
+  "max_supply": null,
+  "ath": 0.428671,
+  "ath_change_percentage": -99.43329,
+  "ath_date": "2021-04-02T09:47:15.819Z",
+  "atl": 0.00002767,
+  "atl_change_percentage": 8679.61547,
+  "atl_date": "2022-02-11T22:30:37.047Z",
+  "roi": null,
+  "last_updated": "2023-08-01T20:44:09.073Z",
+  "platforms": {
+    "bsc": "0xa4d92138537bb0bbeaeab095381be422d785e7c4"
+  }
+}

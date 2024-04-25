@@ -1,0 +1,31 @@
+{
+  "id": "fame-mma",
+  "symbol": "fame",
+  "name": "Fame MMA",
+  "image": "https://assets.coingecko.com/coins/images/25267/large/FJTwuXxE_400x400.jpg?1696524407",
+  "current_price": 0.00052089,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 5160793,
+  "total_volume": 336281,
+  "high_24h": 0.00054722,
+  "low_24h": 0.00049781,
+  "price_change_24h": -0.000014191083818257,
+  "price_change_percentage_24h": -2.65212,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 9909194788.618801,
+  "max_supply": null,
+  "ath": 0.550455,
+  "ath_change_percentage": -99.90659,
+  "ath_date": "2022-04-29T16:23:03.615Z",
+  "atl": 0.0003786,
+  "atl_change_percentage": 35.80829,
+  "atl_date": "2024-01-12T19:56:02.666Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:31.690Z",
+  "platforms": {
+    "bsc": "0x28ce223853d123b52c74439b10b43366d73fd3b5"
+  }
+}

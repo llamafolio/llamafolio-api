@@ -1,0 +1,31 @@
+{
+  "id": "coinary-token",
+  "symbol": "cyt",
+  "name": "Coinary",
+  "image": "https://assets.coingecko.com/coins/images/17622/large/CYT-LOGO-1.png?1696517154",
+  "current_price": 0.00160836,
+  "market_cap": 342233,
+  "market_cap_rank": 3251,
+  "fully_diluted_valuation": 512971,
+  "total_volume": 204.4,
+  "high_24h": 0.00163128,
+  "low_24h": 0.00157695,
+  "price_change_24h": 0.0000078,
+  "price_change_percentage_24h": 0.48757,
+  "market_cap_change_24h": -555.5505701553193,
+  "market_cap_change_percentage_24h": -0.16207,
+  "circulating_supply": 213547586.7512549,
+  "total_supply": 320084762,
+  "max_supply": 1000000000,
+  "ath": 0.697399,
+  "ath_change_percentage": -99.76961,
+  "ath_date": "2021-08-19T15:49:10.077Z",
+  "atl": 0.00094735,
+  "atl_change_percentage": 69.60157,
+  "atl_date": "2024-03-06T03:21:45.336Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:27.669Z",
+  "platforms": {
+    "bsc": "0xd9025e25bb6cf39f8c926a704039d2dd51088063"
+  }
+}

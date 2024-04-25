@@ -1,0 +1,31 @@
+{
+  "id": "vecrv-dao-yvault",
+  "symbol": "yve-crvdao",
+  "name": "veCRV-DAO yVault",
+  "image": "https://assets.coingecko.com/coins/images/13065/large/yearn_veCRV.png?1696512854",
+  "current_price": 0.647197,
+  "market_cap": 13267302,
+  "market_cap_rank": 1303,
+  "fully_diluted_valuation": 13267302,
+  "total_volume": 751.33,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 20499621.2977499,
+  "total_supply": 20499621.2977499,
+  "max_supply": null,
+  "ath": 3.59,
+  "ath_change_percentage": -81.97719,
+  "ath_date": "2021-05-08T16:55:08.528Z",
+  "atl": 0.383154,
+  "atl_change_percentage": 68.91301,
+  "atl_date": "2022-06-18T20:51:10.436Z",
+  "roi": null,
+  "last_updated": "2024-04-23T22:17:37.526Z",
+  "platforms": {
+    "ethereum": "0xc5bddf9843308380375a611c18b50fb9341f502a"
+  }
+}

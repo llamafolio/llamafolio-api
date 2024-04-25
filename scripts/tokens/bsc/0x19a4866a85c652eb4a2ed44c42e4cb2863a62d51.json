@@ -1,0 +1,31 @@
+{
+  "id": "hodooi-com",
+  "symbol": "hod",
+  "name": "HoDooi.com",
+  "image": "https://assets.coingecko.com/coins/images/16301/large/Monogram_2x-100.jpg?1696515903",
+  "current_price": 0.00352829,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3519785,
+  "total_volume": 107145,
+  "high_24h": 0.00371183,
+  "low_24h": 0.00340739,
+  "price_change_24h": -0.000043093066963273,
+  "price_change_percentage_24h": -1.20662,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.212983,
+  "ath_change_percentage": -98.34748,
+  "ath_date": "2021-12-05T23:01:27.470Z",
+  "atl": 0.00113114,
+  "atl_change_percentage": 211.15559,
+  "atl_date": "2023-10-05T23:36:35.140Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:57.784Z",
+  "platforms": {
+    "bsc": "0x19a4866a85c652eb4a2ed44c42e4cb2863a62d51"
+  }
+}

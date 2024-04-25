@@ -1,0 +1,31 @@
+{
+  "id": "normie-2",
+  "symbol": "normie",
+  "name": "NORMIE",
+  "image": "https://assets.coingecko.com/coins/images/35880/large/NORMIEsite.png?1709983341",
+  "current_price": 0.072167,
+  "market_cap": 71019618,
+  "market_cap_rank": 573,
+  "fully_diluted_valuation": 71019618,
+  "total_volume": 9993675,
+  "high_24h": 0.097582,
+  "low_24h": 0.068669,
+  "price_change_24h": -0.015519073356775284,
+  "price_change_percentage_24h": -17.69839,
+  "market_cap_change_24h": -14255333.142374367,
+  "market_cap_change_percentage_24h": -16.71691,
+  "circulating_supply": 975579803.1959337,
+  "total_supply": 975579803.1959337,
+  "max_supply": 1000000000,
+  "ath": 0.219147,
+  "ath_change_percentage": -66.73196,
+  "ath_date": "2024-03-26T00:49:27.134Z",
+  "atl": 0.00172954,
+  "atl_change_percentage": 4115.3313,
+  "atl_date": "2024-03-11T04:31:55.330Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:38.085Z",
+  "platforms": {
+    "base": "0x7f12d13b34f5f4f0a9449c16bcd42f0da47af200"
+  }
+}

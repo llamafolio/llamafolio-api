@@ -1,0 +1,31 @@
+{
+  "id": "metabrands",
+  "symbol": "mage",
+  "name": "MetaBrands",
+  "image": "https://assets.coingecko.com/coins/images/21244/large/MAGE-CG.png?1696520617",
+  "current_price": 0.04830681,
+  "market_cap": 706844,
+  "market_cap_rank": 2881,
+  "fully_diluted_valuation": 4025165,
+  "total_volume": 86.95,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 14632395.677389149,
+  "total_supply": 83325000,
+  "max_supply": 100000000,
+  "ath": 0.619236,
+  "ath_change_percentage": -92.19896,
+  "ath_date": "2021-12-19T15:04:11.157Z",
+  "atl": 0.00210653,
+  "atl_change_percentage": 2193.19503,
+  "atl_date": "2023-10-27T23:03:18.171Z",
+  "roi": null,
+  "last_updated": "2024-04-21T06:03:38.889Z",
+  "platforms": {
+    "avalanche": "0x921f99719eb6c01b4b8f0ba7973a7c24891e740a"
+  }
+}

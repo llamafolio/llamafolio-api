@@ -1,0 +1,31 @@
+{
+  "id": "moda-dao",
+  "symbol": "moda",
+  "name": "MODA DAO",
+  "image": "https://assets.coingecko.com/coins/images/20870/large/ModaDAO__logomark-primary_3x.png?1696520264",
+  "current_price": 0.106888,
+  "market_cap": 561392,
+  "market_cap_rank": 3009,
+  "fully_diluted_valuation": 561392,
+  "total_volume": 23989,
+  "high_24h": 0.116781,
+  "low_24h": 0.106716,
+  "price_change_24h": -0.009464542416866851,
+  "price_change_percentage_24h": -8.13438,
+  "market_cap_change_24h": -49562.69473733578,
+  "market_cap_change_percentage_24h": -8.11234,
+  "circulating_supply": 5255920.55832726,
+  "total_supply": 5255920.55832726,
+  "max_supply": 10000000,
+  "ath": 8.58,
+  "ath_change_percentage": -98.75358,
+  "ath_date": "2021-12-01T06:45:59.242Z",
+  "atl": 0.106793,
+  "atl_change_percentage": 0.15367,
+  "atl_date": "2024-04-25T04:26:31.316Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:19.865Z",
+  "platforms": {
+    "fantom": "0x6496994241804d7fe2b032901931e03bcd82301f"
+  }
+}

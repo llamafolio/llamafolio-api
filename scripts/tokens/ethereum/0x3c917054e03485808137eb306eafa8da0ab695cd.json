@@ -1,0 +1,31 @@
+{
+  "id": "klaycity-orb",
+  "symbol": "orb",
+  "name": "Orbcity",
+  "image": "https://assets.coingecko.com/coins/images/24332/large/OrbCity_Logo.png?1713409621",
+  "current_price": 0.053096,
+  "market_cap": 12383404,
+  "market_cap_rank": 1327,
+  "fully_diluted_valuation": 53427963,
+  "total_volume": 2027489,
+  "high_24h": 0.056986,
+  "low_24h": 0.04954698,
+  "price_change_24h": -0.003514305408417351,
+  "price_change_percentage_24h": -6.20791,
+  "market_cap_change_24h": -728848.3406823259,
+  "market_cap_change_percentage_24h": -5.55853,
+  "circulating_supply": 231777578.76,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.652722,
+  "ath_change_percentage": -91.79866,
+  "ath_date": "2022-03-22T00:14:11.917Z",
+  "atl": 0.02396998,
+  "atl_change_percentage": 123.32916,
+  "atl_date": "2022-11-25T15:30:29.661Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:25.668Z",
+  "platforms": {
+    "ethereum": "0x3c917054e03485808137eb306eafa8da0ab695cd"
+  }
+}

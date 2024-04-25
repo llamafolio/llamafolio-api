@@ -1,0 +1,31 @@
+{
+  "id": "peepo",
+  "symbol": "peepo",
+  "name": "Peepo",
+  "image": "https://assets.coingecko.com/coins/images/30006/large/20230425_175833.png?1696528931",
+  "current_price": 3.6652e-8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 922795,
+  "high_24h": 4.2971e-8,
+  "low_24h": 2.6811e-8,
+  "price_change_24h": -3.533070197e-9,
+  "price_change_percentage_24h": -8.79205,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 69420000000000,
+  "max_supply": 69420000000000,
+  "ath": 3.36391e-7,
+  "ath_change_percentage": -88.59533,
+  "ath_date": "2023-05-05T11:21:30.440Z",
+  "atl": 1.097e-9,
+  "atl_change_percentage": 3396.84273,
+  "atl_date": "2023-10-24T04:36:34.637Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:18.628Z",
+  "platforms": {
+    "ethereum": "0xaada04204e9e1099daf67cf3d5d137e84e41cf41"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "worldcoin-wld",
+  "symbol": "wld",
+  "name": "Worldcoin",
+  "image": "https://assets.coingecko.com/coins/images/31069/large/worldcoin.jpeg?1696529903",
+  "current_price": 4.75,
+  "market_cap": 924514917,
+  "market_cap_rank": 102,
+  "fully_diluted_valuation": 47404273157,
+  "total_volume": 252928226,
+  "high_24h": 5.51,
+  "low_24h": 4.74,
+  "price_change_24h": -0.6894001865649919,
+  "price_change_percentage_24h": -12.67981,
+  "market_cap_change_24h": -135087584.61712265,
+  "market_cap_change_percentage_24h": -12.74889,
+  "circulating_supply": 195027759.107066,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 11.74,
+  "ath_change_percentage": -59.58941,
+  "ath_date": "2024-03-10T00:10:42.330Z",
+  "atl": 0.973104,
+  "atl_change_percentage": 387.55858,
+  "atl_date": "2023-09-13T07:36:44.064Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:24.266Z",
+  "platforms": {
+    "ethereum": "0x163f8c2467924be0ae7b5347228cabf260318753"
+  }
+}

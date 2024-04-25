@@ -1,0 +1,31 @@
+{
+  "id": "baby-grok",
+  "symbol": "babygrok",
+  "name": "Baby Grok",
+  "image": "https://assets.coingecko.com/coins/images/32972/large/photo_2023-11-10_15-50-54.jpg?1700064075",
+  "current_price": 1.2626e-11,
+  "market_cap": 5248648,
+  "market_cap_rank": 1773,
+  "fully_diluted_valuation": 5248648,
+  "total_volume": 968297,
+  "high_24h": 1.3594e-11,
+  "low_24h": 1.234e-11,
+  "price_change_24h": -6.79708e-13,
+  "price_change_percentage_24h": -5.10822,
+  "market_cap_change_24h": -328798.3062392697,
+  "market_cap_change_percentage_24h": -5.89514,
+  "circulating_supply": 420000000000000000,
+  "total_supply": 420000000000000000,
+  "max_supply": 420000000000000000,
+  "ath": 1.83081e-10,
+  "ath_change_percentage": -93.08287,
+  "ath_date": "2023-12-15T05:35:22.455Z",
+  "atl": 1.198e-12,
+  "atl_change_percentage": 957.08497,
+  "atl_date": "2023-11-18T11:44:56.048Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:32.182Z",
+  "platforms": {
+    "bsc": "0x88da9901b3a02fe24e498e1ed683d2310383e295"
+  }
+}

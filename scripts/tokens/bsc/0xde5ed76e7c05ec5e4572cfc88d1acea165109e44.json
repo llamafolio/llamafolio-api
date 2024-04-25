@@ -1,0 +1,31 @@
+{
+  "id": "deus-finance-2",
+  "symbol": "deus",
+  "name": "DEUS Finance",
+  "image": "https://assets.coingecko.com/coins/images/18778/large/Black_Background_200x200.png?1696518242",
+  "current_price": 31.13,
+  "market_cap": 4226036,
+  "market_cap_rank": 1873,
+  "fully_diluted_valuation": 9373367,
+  "total_volume": 34744,
+  "high_24h": 31.86,
+  "low_24h": 30.75,
+  "price_change_24h": 0.176787,
+  "price_change_percentage_24h": 0.57118,
+  "market_cap_change_24h": 13916.79,
+  "market_cap_change_percentage_24h": 0.3304,
+  "circulating_supply": 136158.431599017,
+  "total_supply": 302000,
+  "max_supply": 800000,
+  "ath": 1128.68,
+  "ath_change_percentage": -97.21505,
+  "ath_date": "2022-04-02T07:21:01.965Z",
+  "atl": 20.23,
+  "atl_change_percentage": 55.3473,
+  "atl_date": "2023-10-17T13:40:16.245Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:23.838Z",
+  "platforms": {
+    "bsc": "0xde5ed76e7c05ec5e4572cfc88d1acea165109e44"
+  }
+}

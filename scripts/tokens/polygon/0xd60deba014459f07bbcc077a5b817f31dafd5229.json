@@ -1,0 +1,31 @@
+{
+  "id": "croatian-ff-fan-token",
+  "symbol": "vatreni",
+  "name": "Croatian FF Fan Token",
+  "image": "https://assets.coingecko.com/coins/images/28295/large/Vatreni.png?1696527294",
+  "current_price": 0.494366,
+  "market_cap": 569426,
+  "market_cap_rank": 3003,
+  "fully_diluted_valuation": 14839210,
+  "total_volume": 24061,
+  "high_24h": 0.539003,
+  "low_24h": 0.492594,
+  "price_change_24h": -0.03750453230381978,
+  "price_change_percentage_24h": -7.05144,
+  "market_cap_change_24h": -42601.610297802836,
+  "market_cap_change_percentage_24h": -6.96073,
+  "circulating_supply": 1151192.66186792,
+  "total_supply": 30000000,
+  "max_supply": 30000000,
+  "ath": 1.001,
+  "ath_change_percentage": -50.63434,
+  "ath_date": "2022-11-27T17:25:53.148Z",
+  "atl": 0.174289,
+  "atl_change_percentage": 183.41523,
+  "atl_date": "2024-01-12T02:24:01.430Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:16.715Z",
+  "platforms": {
+    "polygon": "0xd60deba014459f07bbcc077a5b817f31dafd5229"
+  }
+}

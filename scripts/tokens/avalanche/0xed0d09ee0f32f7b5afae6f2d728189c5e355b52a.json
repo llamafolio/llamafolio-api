@@ -1,0 +1,31 @@
+{
+  "id": "lizard",
+  "symbol": "lizard",
+  "name": "Lizard",
+  "image": "https://assets.coingecko.com/coins/images/34663/large/LIZARD_LOGO_Final_3_BLK_BG_%281%29.png?1705652961",
+  "current_price": 0.00036572,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 153087,
+  "total_volume": 1833.25,
+  "high_24h": 0.00037412,
+  "low_24h": 0.0003384,
+  "price_change_24h": 0.00002391,
+  "price_change_percentage_24h": 6.99559,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 420000000,
+  "max_supply": 420000000,
+  "ath": 0.02354687,
+  "ath_change_percentage": -98.44899,
+  "ath_date": "2024-01-25T19:06:51.375Z",
+  "atl": 0.00024395,
+  "atl_change_percentage": 49.7076,
+  "atl_date": "2024-04-17T12:24:17.400Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:40.665Z",
+  "platforms": {
+    "avalanche": "0xed0d09ee0f32f7b5afae6f2d728189c5e355b52a"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "seigniorage-shares",
+  "symbol": "share",
+  "name": "Seigniorage Shares",
+  "image": "https://assets.coingecko.com/coins/images/12306/large/logo_%281%29.png?1696512136",
+  "current_price": 0.0101211,
+  "market_cap": 196205,
+  "market_cap_rank": 3507,
+  "fully_diluted_valuation": 212347,
+  "total_volume": 11007.8,
+  "high_24h": 0.01146903,
+  "low_24h": 0.00915013,
+  "price_change_24h": 0.00071203,
+  "price_change_percentage_24h": 7.56751,
+  "market_cap_change_24h": 13581.05,
+  "market_cap_change_percentage_24h": 7.43663,
+  "circulating_supply": 19403624.67,
+  "total_supply": 21000000,
+  "max_supply": 21000000,
+  "ath": 2.95,
+  "ath_change_percentage": -99.65753,
+  "ath_date": "2020-09-02T05:22:59.927Z",
+  "atl": 0.00132146,
+  "atl_change_percentage": 665.72241,
+  "atl_date": "2020-11-17T08:37:02.825Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:22.652Z",
+  "platforms": {
+    "ethereum": "0x39795344cbcc76cc3fb94b9d1b15c23c2070c66d"
+  }
+}

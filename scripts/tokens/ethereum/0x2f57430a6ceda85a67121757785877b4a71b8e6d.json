@@ -1,0 +1,31 @@
+{
+  "id": "defiplaza",
+  "symbol": "dfp2",
+  "name": "DefiPlaza",
+  "image": "https://assets.coingecko.com/coins/images/19552/large/profile-round.png?1696518985",
+  "current_price": 0.04306213,
+  "market_cap": 2856620,
+  "market_cap_rank": 2089,
+  "fully_diluted_valuation": 2867433,
+  "total_volume": 7494.71,
+  "high_24h": 0.04694394,
+  "low_24h": 0.04298302,
+  "price_change_24h": -0.002812343145686063,
+  "price_change_percentage_24h": -6.13052,
+  "market_cap_change_24h": -192158.1178010772,
+  "market_cap_change_percentage_24h": -6.30279,
+  "circulating_supply": 66416477.9817339,
+  "total_supply": 66667889.9817339,
+  "max_supply": 67941915,
+  "ath": 0.782959,
+  "ath_change_percentage": -94.50327,
+  "ath_date": "2021-11-17T02:20:57.137Z",
+  "atl": 0.01004331,
+  "atl_change_percentage": 328.51522,
+  "atl_date": "2022-06-19T05:43:59.257Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:45.984Z",
+  "platforms": {
+    "ethereum": "0x2f57430a6ceda85a67121757785877b4a71b8e6d"
+  }
+}

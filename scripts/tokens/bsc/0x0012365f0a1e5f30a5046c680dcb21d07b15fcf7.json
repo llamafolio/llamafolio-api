@@ -1,0 +1,31 @@
+{
+  "id": "gym-network",
+  "symbol": "gymnet",
+  "name": "Gym Network",
+  "image": "https://assets.coingecko.com/coins/images/24654/large/Blue.png?1696523824",
+  "current_price": 0.0175785,
+  "market_cap": 2200059,
+  "market_cap_rank": 2240,
+  "fully_diluted_valuation": 9286926,
+  "total_volume": 333514,
+  "high_24h": 0.01814711,
+  "low_24h": 0.01744923,
+  "price_change_24h": -0.000282084108668888,
+  "price_change_percentage_24h": -1.57937,
+  "market_cap_change_24h": -32163.852149433456,
+  "market_cap_change_percentage_24h": -1.44089,
+  "circulating_supply": 124800793.56112957,
+  "total_supply": 526811335.325829,
+  "max_supply": 594000000,
+  "ath": 1.9,
+  "ath_change_percentage": -99.06911,
+  "ath_date": "2022-04-14T04:31:09.608Z",
+  "atl": 0.01675587,
+  "atl_change_percentage": 5.5087,
+  "atl_date": "2023-04-21T18:53:11.935Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:57.871Z",
+  "platforms": {
+    "bsc": "0x0012365f0a1e5f30a5046c680dcb21d07b15fcf7"
+  }
+}

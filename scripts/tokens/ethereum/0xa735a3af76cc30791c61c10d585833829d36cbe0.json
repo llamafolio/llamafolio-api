@@ -1,0 +1,31 @@
+{
+  "id": "imgnai",
+  "symbol": "imgnai",
+  "name": "Image Generation AI",
+  "image": "https://assets.coingecko.com/coins/images/28666/large/imgnai-200x200.png?1698476572",
+  "current_price": 0.01880546,
+  "market_cap": 14586770,
+  "market_cap_rank": 1261,
+  "fully_diluted_valuation": 18768522,
+  "total_volume": 208294,
+  "high_24h": 0.02006078,
+  "low_24h": 0.01869817,
+  "price_change_24h": -0.000995734891169053,
+  "price_change_percentage_24h": -5.02866,
+  "market_cap_change_24h": -810730.1156500578,
+  "market_cap_change_percentage_24h": -5.26534,
+  "circulating_supply": 777193333.2,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.057374,
+  "ath_change_percentage": -67.27408,
+  "ath_date": "2023-11-20T01:20:16.376Z",
+  "atl": 0.00043988,
+  "atl_change_percentage": 4168.43002,
+  "atl_date": "2023-01-06T11:09:37.224Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:19.603Z",
+  "platforms": {
+    "ethereum": "0xa735a3af76cc30791c61c10d585833829d36cbe0"
+  }
+}

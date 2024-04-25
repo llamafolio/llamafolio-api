@@ -1,0 +1,35 @@
+{
+  "id": "smart-mfg",
+  "symbol": "mfg",
+  "name": "Smart MFG",
+  "image": "https://assets.coingecko.com/coins/images/1842/large/Smart_MFG_Cropped_Logo.png?1696502841",
+  "current_price": 0.0006258,
+  "market_cap": 241201,
+  "market_cap_rank": 3408,
+  "fully_diluted_valuation": 543481,
+  "total_volume": 187.74,
+  "high_24h": 0.0006258,
+  "low_24h": 0.00062241,
+  "price_change_24h": 0.00000184,
+  "price_change_percentage_24h": 0.29487,
+  "market_cap_change_24h": 1305.01,
+  "market_cap_change_percentage_24h": 0.54399,
+  "circulating_supply": 385428426.417475,
+  "total_supply": 868459135.741433,
+  "max_supply": null,
+  "ath": 0.131262,
+  "ath_change_percentage": -99.52324,
+  "ath_date": "2022-01-03T22:38:21.151Z",
+  "atl": 0.00002877,
+  "atl_change_percentage": 2075.43275,
+  "atl_date": "2020-03-20T06:04:32.003Z",
+  "roi": {
+    "times": -0.9947850048769221,
+    "currency": "usd",
+    "percentage": -99.47850048769222
+  },
+  "last_updated": "2024-04-24T10:23:13.924Z",
+  "platforms": {
+    "ethereum": "0x6710c63432a2de02954fc0f851db07146a6c0312"
+  }
+}

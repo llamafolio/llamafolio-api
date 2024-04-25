@@ -1,0 +1,31 @@
+{
+  "id": "bnb-diamond",
+  "symbol": "bnbd",
+  "name": "BNB Diamond",
+  "image": "https://assets.coingecko.com/coins/images/15354/large/J6gLEc0.png?1696515004",
+  "current_price": 3e-18,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 0.00347686,
+  "total_volume": 0,
+  "high_24h": 3e-18,
+  "low_24h": 3e-18,
+  "price_change_24h": 0,
+  "price_change_percentage_24h": 0,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": null,
+  "ath": 3.91122e-7,
+  "ath_change_percentage": -100,
+  "ath_date": "2021-05-11T08:48:41.653Z",
+  "atl": 3e-18,
+  "atl_change_percentage": 0.03808,
+  "atl_date": "2021-11-27T06:14:32.707Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:09.672Z",
+  "platforms": {
+    "bsc": "0x3c730718c97a77562866b5d29b33228c019eac68"
+  }
+}

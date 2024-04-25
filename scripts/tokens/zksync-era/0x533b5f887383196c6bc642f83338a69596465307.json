@@ -1,0 +1,31 @@
+{
+  "id": "snark-launch",
+  "symbol": "$snrk",
+  "name": "Snark Launch",
+  "image": "https://assets.coingecko.com/coins/images/29957/large/IMG_20230422_160407_790.jpg?1696528883",
+  "current_price": 0.00094881,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 84.86,
+  "high_24h": 0.00100492,
+  "low_24h": 0.00094258,
+  "price_change_24h": -0.000044256637525289,
+  "price_change_percentage_24h": -4.45657,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 50000000,
+  "max_supply": 13285904,
+  "ath": 0.055215,
+  "ath_change_percentage": -98.29098,
+  "ath_date": "2023-05-01T07:53:40.028Z",
+  "atl": 0.00094258,
+  "atl_change_percentage": 0.11096,
+  "atl_date": "2024-04-25T08:47:35.296Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:54.961Z",
+  "platforms": {
+    "zksync-era": "0x533b5f887383196c6bc642f83338a69596465307"
+  }
+}

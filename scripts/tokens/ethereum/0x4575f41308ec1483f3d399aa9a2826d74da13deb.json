@@ -1,0 +1,31 @@
+{
+  "id": "orchid-protocol",
+  "symbol": "oxt",
+  "name": "Orchid Protocol",
+  "image": "https://assets.coingecko.com/coins/images/3916/large/download_%285%29.png?1696504574",
+  "current_price": 0.107497,
+  "market_cap": 63420965,
+  "market_cap_rank": 609,
+  "fully_diluted_valuation": 107212459,
+  "total_volume": 4371296,
+  "high_24h": 0.11811,
+  "low_24h": 0.106347,
+  "price_change_24h": -0.00859970772287394,
+  "price_change_percentage_24h": -7.40736,
+  "market_cap_change_24h": -5247661.121920459,
+  "market_cap_change_percentage_24h": -7.64201,
+  "circulating_supply": 591544728.9516798,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 1.026,
+  "ath_change_percentage": -89.51289,
+  "ath_date": "2021-04-05T12:20:25.133Z",
+  "atl": 0.04665814,
+  "atl_change_percentage": 130.55243,
+  "atl_date": "2023-06-15T13:05:42.374Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:52.946Z",
+  "platforms": {
+    "ethereum": "0x4575f41308ec1483f3d399aa9a2826d74da13deb"
+  }
+}

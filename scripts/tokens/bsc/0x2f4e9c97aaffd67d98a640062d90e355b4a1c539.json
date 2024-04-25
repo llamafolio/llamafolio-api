@@ -1,0 +1,31 @@
+{
+  "id": "afrostar",
+  "symbol": "afro",
+  "name": "Afrostar",
+  "image": "https://assets.coingecko.com/coins/images/19784/large/afrostar.PNG?1696519206",
+  "current_price": 1.769e-9,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1768550,
+  "total_volume": 20.05,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": null,
+  "ath": 6.852e-8,
+  "ath_change_percentage": -97.41891,
+  "ath_date": "2021-11-02T20:34:28.456Z",
+  "atl": 1.675e-9,
+  "atl_change_percentage": 5.60232,
+  "atl_date": "2023-06-28T19:46:15.177Z",
+  "roi": null,
+  "last_updated": "2023-08-03T10:30:04.221Z",
+  "platforms": {
+    "bsc": "0x2f4e9c97aaffd67d98a640062d90e355b4a1c539"
+  }
+}

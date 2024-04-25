@@ -1,0 +1,31 @@
+{
+  "id": "schwiftai",
+  "symbol": "swai",
+  "name": "SchwiftAI",
+  "image": "https://assets.coingecko.com/coins/images/29301/large/SchwiftAI.png?1696528253",
+  "current_price": 0.00001467,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1466.76,
+  "total_volume": 2454.18,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.00730579,
+  "ath_change_percentage": -99.79923,
+  "ath_date": "2023-03-09T15:25:44.422Z",
+  "atl": 0.00001457,
+  "atl_change_percentage": 0.69357,
+  "atl_date": "2023-07-04T01:20:41.376Z",
+  "roi": null,
+  "last_updated": "2023-07-04T03:57:17.399Z",
+  "platforms": {
+    "ethereum": "0x3540dfcad7cf102a2e44aa0e2132fab1c89d7eae"
+  }
+}

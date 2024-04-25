@@ -1,0 +1,31 @@
+{
+  "id": "binance-peg-bitcoin-cash",
+  "symbol": "bch",
+  "name": "Binance-Peg Bitcoin Cash",
+  "image": "https://assets.coingecko.com/coins/images/15774/large/bitcoin-cash-circle.png?1696515398",
+  "current_price": 475.05,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 171562,
+  "high_24h": 513.01,
+  "low_24h": 472.32,
+  "price_change_24h": -31.064339072924724,
+  "price_change_percentage_24h": -6.13778,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 808.45,
+  "ath_change_percentage": -41.30596,
+  "ath_date": "2021-05-27T19:56:02.493Z",
+  "atl": 1.002,
+  "atl_change_percentage": 47244.15365,
+  "atl_date": "2021-06-22T09:09:45.014Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:42.573Z",
+  "platforms": {
+    "bsc": "0x8ff795a6f4d97e7887c79bea79aba5cc76444adf"
+  }
+}

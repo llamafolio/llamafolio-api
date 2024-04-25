@@ -1,0 +1,31 @@
+{
+  "id": "vimverse",
+  "symbol": "vim",
+  "name": "Vimverse",
+  "image": "https://assets.coingecko.com/coins/images/33675/large/Vim_Logo_Red.png?1702715232",
+  "current_price": 1.95,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 23.16,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 78.21,
+  "ath_change_percentage": -97.50837,
+  "ath_date": "2023-12-16T12:51:24.862Z",
+  "atl": 1.89,
+  "atl_change_percentage": 2.89376,
+  "atl_date": "2024-03-27T13:45:51.546Z",
+  "roi": null,
+  "last_updated": "2024-03-28T13:32:36.995Z",
+  "platforms": {
+    "arbitrum": "0xac6e188a5a1ba58c0b3e54767f407502366f5426"
+  }
+}

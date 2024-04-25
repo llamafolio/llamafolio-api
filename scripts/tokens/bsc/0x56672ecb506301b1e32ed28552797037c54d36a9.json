@@ -1,0 +1,31 @@
+{
+  "id": "bismuth",
+  "symbol": "bis",
+  "name": "Bismuth",
+  "image": "https://assets.coingecko.com/coins/images/974/large/bis200px.png?1696502089",
+  "current_price": 0.02042936,
+  "market_cap": 61730,
+  "market_cap_rank": 3931,
+  "fully_diluted_valuation": null,
+  "total_volume": 1473.71,
+  "high_24h": 0.03768243,
+  "low_24h": 0.01988747,
+  "price_change_24h": -0.015047150885384244,
+  "price_change_percentage_24h": -42.4144,
+  "market_cap_change_24h": -45690.73967851491,
+  "market_cap_change_percentage_24h": -42.53435,
+  "circulating_supply": 3021634,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 8.94,
+  "ath_change_percentage": -99.77159,
+  "ath_date": "2018-01-12T00:00:00.000Z",
+  "atl": 0.00114665,
+  "atl_change_percentage": 1681.65677,
+  "atl_date": "2023-11-29T12:59:44.530Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:57.500Z",
+  "platforms": {
+    "bsc": "0x56672ecb506301b1e32ed28552797037c54d36a9"
+  }
+}

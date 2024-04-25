@@ -1,0 +1,31 @@
+{
+  "id": "wowswap",
+  "symbol": "wow",
+  "name": "WOWswap",
+  "image": "https://assets.coingecko.com/coins/images/14101/large/Group-423.png?1696513823",
+  "current_price": 0.150337,
+  "market_cap": 98793,
+  "market_cap_rank": 3787,
+  "fully_diluted_valuation": 150447,
+  "total_volume": 20.63,
+  "high_24h": 0.1522,
+  "low_24h": 0.147543,
+  "price_change_24h": 0.00087528,
+  "price_change_percentage_24h": 0.58562,
+  "market_cap_change_24h": 647,
+  "market_cap_change_percentage_24h": 0.65922,
+  "circulating_supply": 656666,
+  "total_supply": 1000000,
+  "max_supply": null,
+  "ath": 70,
+  "ath_change_percentage": -99.786,
+  "ath_date": "2021-04-12T17:30:39.122Z",
+  "atl": 0.03299755,
+  "atl_change_percentage": 353.97413,
+  "atl_date": "2024-02-15T12:56:21.207Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:51.167Z",
+  "platforms": {
+    "ethereum": "0x3405a1bd46b85c5c029483fbecf2f3e611026e45"
+  }
+}

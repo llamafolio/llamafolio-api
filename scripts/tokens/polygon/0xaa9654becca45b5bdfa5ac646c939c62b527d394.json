@@ -1,0 +1,31 @@
+{
+  "id": "dinoswap",
+  "symbol": "dino",
+  "name": "DinoSwap",
+  "image": "https://assets.coingecko.com/coins/images/17103/large/DINO.png?1696516664",
+  "current_price": 0.00093392,
+  "market_cap": 145197,
+  "market_cap_rank": 3648,
+  "fully_diluted_valuation": 163121,
+  "total_volume": 160.94,
+  "high_24h": 0.0009567,
+  "low_24h": 0.00092932,
+  "price_change_24h": -0.000018782357237337,
+  "price_change_percentage_24h": -1.97148,
+  "market_cap_change_24h": -2920.108423118945,
+  "market_cap_change_percentage_24h": -1.97148,
+  "circulating_supply": 155470816.906519,
+  "total_supply": 174662682.00856,
+  "max_supply": null,
+  "ath": 4.39,
+  "ath_change_percentage": -99.97872,
+  "ath_date": "2021-08-02T19:18:41.462Z",
+  "atl": 0.00038539,
+  "atl_change_percentage": 142.48266,
+  "atl_date": "2022-12-27T05:21:26.143Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:50:30.489Z",
+  "platforms": {
+    "polygon": "0xaa9654becca45b5bdfa5ac646c939c62b527d394"
+  }
+}

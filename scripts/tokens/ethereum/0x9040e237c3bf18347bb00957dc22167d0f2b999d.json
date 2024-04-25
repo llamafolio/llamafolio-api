@@ -1,0 +1,31 @@
+{
+  "id": "standard-protocol",
+  "symbol": "stnd",
+  "name": "Standard Protocol",
+  "image": "https://assets.coingecko.com/coins/images/15100/large/STND_logo_black_bg.png?1696514758",
+  "current_price": 0.03533753,
+  "market_cap": 3209642,
+  "market_cap_rank": 2023,
+  "fully_diluted_valuation": 3528051,
+  "total_volume": 344217,
+  "high_24h": 0.03856188,
+  "low_24h": 0.03448922,
+  "price_change_24h": 0.00011659,
+  "price_change_percentage_24h": 0.33104,
+  "market_cap_change_24h": 22633,
+  "market_cap_change_percentage_24h": 0.71016,
+  "circulating_supply": 90974950,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 3.06,
+  "ath_change_percentage": -98.845,
+  "ath_date": "2021-05-14T15:00:55.747Z",
+  "atl": 0.0058725,
+  "atl_change_percentage": 502.45136,
+  "atl_date": "2023-08-06T08:01:49.246Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:33.698Z",
+  "platforms": {
+    "ethereum": "0x9040e237c3bf18347bb00957dc22167d0f2b999d"
+  }
+}

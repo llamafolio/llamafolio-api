@@ -1,0 +1,31 @@
+{
+  "id": "wecan",
+  "symbol": "wecan",
+  "name": "Wecan",
+  "image": "https://assets.coingecko.com/coins/images/32150/large/Wecan_W_logo_RGB.png?1702947005",
+  "current_price": 0.00346261,
+  "market_cap": 5957722,
+  "market_cap_rank": 1708,
+  "fully_diluted_valuation": 6918581,
+  "total_volume": 11188.03,
+  "high_24h": 0.00362831,
+  "low_24h": 0.00334516,
+  "price_change_24h": -0.000105514577120025,
+  "price_change_percentage_24h": -2.95715,
+  "market_cap_change_24h": -187063.60078571457,
+  "market_cap_change_percentage_24h": -3.04427,
+  "circulating_supply": 1722238063.8726473,
+  "total_supply": 2000000000,
+  "max_supply": 19000000000,
+  "ath": 0.01387676,
+  "ath_change_percentage": -75.13897,
+  "ath_date": "2023-12-21T17:00:45.281Z",
+  "atl": 0.00265042,
+  "atl_change_percentage": 30.16445,
+  "atl_date": "2024-04-13T22:15:59.356Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:03.755Z",
+  "platforms": {
+    "ethereum": "0xea60cd69f2b9fd6eb067bddbbf86a5bdeffbbc55"
+  }
+}

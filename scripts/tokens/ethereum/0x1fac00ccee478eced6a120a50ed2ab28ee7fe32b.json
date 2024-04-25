@@ -1,0 +1,31 @@
+{
+  "id": "antimatter",
+  "symbol": "tune",
+  "name": "Bitune",
+  "image": "https://assets.coingecko.com/coins/images/14112/large/bittune.png?1704793548",
+  "current_price": 0.056898,
+  "market_cap": 1887993,
+  "market_cap_rank": 2332,
+  "fully_diluted_valuation": 5687649,
+  "total_volume": 40765,
+  "high_24h": 0.071396,
+  "low_24h": 0.056002,
+  "price_change_24h": -0.014334774728281253,
+  "price_change_percentage_24h": -20.12376,
+  "market_cap_change_24h": -471779.8568392219,
+  "market_cap_change_percentage_24h": -19.9926,
+  "circulating_supply": 33194608.20917096,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 6.05,
+  "ath_change_percentage": -99.05887,
+  "ath_date": "2021-04-08T22:44:36.228Z",
+  "atl": 1.55258e-13,
+  "atl_change_percentage": 36648670281720.64,
+  "atl_date": "2021-07-23T17:36:57.982Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:52.491Z",
+  "platforms": {
+    "ethereum": "0x1fac00ccee478eced6a120a50ed2ab28ee7fe32b"
+  }
+}

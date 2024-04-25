@@ -1,0 +1,31 @@
+{
+  "id": "bitbook-token",
+  "symbol": "bbt",
+  "name": "BitBook",
+  "image": "https://assets.coingecko.com/coins/images/15965/large/bitbook.PNG?1696515576",
+  "current_price": 0.00116259,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 96277,
+  "high_24h": 0.00117843,
+  "low_24h": 0.00113034,
+  "price_change_24h": 0.00000483,
+  "price_change_percentage_24h": 0.4172,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.02333279,
+  "ath_change_percentage": -95.02182,
+  "ath_date": "2021-06-05T00:51:43.646Z",
+  "atl": 0.00025463,
+  "atl_change_percentage": 356.17865,
+  "atl_date": "2023-03-09T21:09:45.026Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:05.615Z",
+  "platforms": {
+    "bsc": "0xd48474e7444727bf500a32d5abe01943f3a59a64"
+  }
+}

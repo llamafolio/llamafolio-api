@@ -1,0 +1,31 @@
+{
+  "id": "force-protocol",
+  "symbol": "for",
+  "name": "ForTube",
+  "image": "https://assets.coingecko.com/coins/images/8242/large/for.png?1606195375",
+  "current_price": 0.02072706,
+  "market_cap": 11654201,
+  "market_cap_rank": 1362,
+  "fully_diluted_valuation": 20673814,
+  "total_volume": 4211636,
+  "high_24h": 0.02264349,
+  "low_24h": 0.02059702,
+  "price_change_24h": -0.001881883651312255,
+  "price_change_percentage_24h": -8.32362,
+  "market_cap_change_24h": -1078152.2594127879,
+  "market_cap_change_percentage_24h": -8.46782,
+  "circulating_supply": 563718021.2274377,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.167203,
+  "ath_change_percentage": -87.66331,
+  "ath_date": "2021-04-12T08:04:58.059Z",
+  "atl": 0.01018611,
+  "atl_change_percentage": 102.50471,
+  "atl_date": "2019-12-31T20:56:06.754Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:40.158Z",
+  "platforms": {
+    "ethereum": "0x1fcdce58959f536621d76f5b7ffb955baa5a672f"
+  }
+}

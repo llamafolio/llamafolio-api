@@ -1,0 +1,31 @@
+{
+  "id": "mai-ethereum",
+  "symbol": "mimatic",
+  "name": "MAI (Ethereum)",
+  "image": "https://assets.coingecko.com/coins/images/35521/large/mimatic-red.png?1709007081",
+  "current_price": 1.012,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 11330559,
+  "total_volume": 9185.45,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 11200130,
+  "max_supply": null,
+  "ath": 2.73,
+  "ath_change_percentage": -62.92192,
+  "ath_date": "2024-04-13T01:59:56.112Z",
+  "atl": 0.703118,
+  "atl_change_percentage": 43.87994,
+  "atl_date": "2024-03-27T14:07:06.080Z",
+  "roi": null,
+  "last_updated": "2024-04-22T11:49:31.049Z",
+  "platforms": {
+    "ethereum": "0x8d6cebd76f18e1558d4db88138e2defb3909fad6"
+  }
+}

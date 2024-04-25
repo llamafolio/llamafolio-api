@@ -1,0 +1,31 @@
+{
+  "id": "sifu-vision-2",
+  "symbol": "sifu",
+  "name": "Sifu Vision",
+  "image": "https://assets.coingecko.com/coins/images/35601/large/quewxQN.png?1709267056",
+  "current_price": 99.21,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 99116689,
+  "total_volume": 2977.54,
+  "high_24h": 99.5,
+  "low_24h": 99.12,
+  "price_change_24h": -0.1684863616043515,
+  "price_change_percentage_24h": -0.16954,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 101.22,
+  "ath_change_percentage": -2.07659,
+  "ath_date": "2024-04-23T05:43:38.511Z",
+  "atl": 97.71,
+  "atl_change_percentage": 1.44439,
+  "atl_date": "2024-04-20T16:18:44.649Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:41.843Z",
+  "platforms": {
+    "ethereum": "0x8dd09822e83313adca54c75696ae80c5429697ff"
+  }
+}

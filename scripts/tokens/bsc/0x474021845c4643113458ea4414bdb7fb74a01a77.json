@@ -1,0 +1,31 @@
+{
+  "id": "uno-re",
+  "symbol": "uno",
+  "name": "Uno Re",
+  "image": "https://assets.coingecko.com/coins/images/15073/large/c0vbqVE.png?1696514732",
+  "current_price": 0.04720015,
+  "market_cap": 3848155,
+  "market_cap_rank": 1927,
+  "fully_diluted_valuation": 18019890,
+  "total_volume": 531480,
+  "high_24h": 0.052017,
+  "low_24h": 0.04687954,
+  "price_change_24h": -0.004817226052981655,
+  "price_change_percentage_24h": -9.2608,
+  "market_cap_change_24h": -396426.5501825181,
+  "market_cap_change_percentage_24h": -9.33959,
+  "circulating_supply": 81705560,
+  "total_supply": 382605499,
+  "max_supply": 384649206,
+  "ath": 1.24,
+  "ath_change_percentage": -96.20747,
+  "ath_date": "2021-06-03T23:39:26.475Z",
+  "atl": 0.02893603,
+  "atl_change_percentage": 62.83296,
+  "atl_date": "2023-11-15T01:39:58.140Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:07.994Z",
+  "platforms": {
+    "bsc": "0x474021845c4643113458ea4414bdb7fb74a01a77"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "reboot",
+  "symbol": "gg",
+  "name": "Reboot",
+  "image": "https://assets.coingecko.com/coins/images/31228/large/gg_cyan_black_square.png?1703749951",
+  "current_price": 0.05948,
+  "market_cap": 9880207,
+  "market_cap_rank": 1444,
+  "fully_diluted_valuation": 60044469,
+  "total_volume": 331661,
+  "high_24h": 0.068231,
+  "low_24h": 0.057454,
+  "price_change_24h": -0.005182783366999844,
+  "price_change_percentage_24h": -8.01513,
+  "market_cap_change_24h": -729003.5519140102,
+  "market_cap_change_percentage_24h": -6.87142,
+  "circulating_supply": 164548165,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.720782,
+  "ath_change_percentage": -91.63549,
+  "ath_date": "2023-12-29T10:48:44.391Z",
+  "atl": 0.02654626,
+  "atl_change_percentage": 127.11264,
+  "atl_date": "2024-04-18T06:44:38.018Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:40.379Z",
+  "platforms": {
+    "arbitrum": "0x000000000026839b3f4181f2cf69336af6153b99"
+  }
+}

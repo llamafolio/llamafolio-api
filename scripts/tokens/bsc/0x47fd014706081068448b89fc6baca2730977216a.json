@@ -1,0 +1,31 @@
+{
+  "id": "pepe-the-frog",
+  "symbol": "pepebnb",
+  "name": "Pepe the Frog",
+  "image": "https://assets.coingecko.com/coins/images/29893/large/pepenewlogo.PNG?1696528817",
+  "current_price": 0.00000115,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 482663,
+  "total_volume": 9667.69,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 420000000000,
+  "max_supply": 420000000000,
+  "ath": 0.00003152,
+  "ath_change_percentage": -96.35404,
+  "ath_date": "2023-05-09T13:57:45.270Z",
+  "atl": 4.054e-8,
+  "atl_change_percentage": 2734.70693,
+  "atl_date": "2023-04-26T18:34:19.906Z",
+  "roi": null,
+  "last_updated": "2023-06-01T19:00:25.116Z",
+  "platforms": {
+    "bsc": "0x47fd014706081068448b89fc6baca2730977216a"
+  }
+}

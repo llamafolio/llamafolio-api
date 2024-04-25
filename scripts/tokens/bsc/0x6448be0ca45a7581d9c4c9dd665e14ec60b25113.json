@@ -1,0 +1,31 @@
+{
+  "id": "biokript",
+  "symbol": "bkpt",
+  "name": "Biokript",
+  "image": "https://assets.coingecko.com/coins/images/30887/large/dNuo9C5F_400x400.jpg?1696529734",
+  "current_price": 0.00153834,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 770102,
+  "total_volume": 10.09,
+  "high_24h": 0.0015505,
+  "low_24h": 0.00150459,
+  "price_change_24h": 0.00002057,
+  "price_change_percentage_24h": 1.35538,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 500000000,
+  "max_supply": null,
+  "ath": 0.00779156,
+  "ath_change_percentage": -80.28123,
+  "ath_date": "2023-07-10T02:58:11.037Z",
+  "atl": 0.00010506,
+  "atl_change_percentage": 1362.34618,
+  "atl_date": "2023-07-10T02:07:18.258Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:30.276Z",
+  "platforms": {
+    "bsc": "0x6448be0ca45a7581d9c4c9dd665e14ec60b25113"
+  }
+}

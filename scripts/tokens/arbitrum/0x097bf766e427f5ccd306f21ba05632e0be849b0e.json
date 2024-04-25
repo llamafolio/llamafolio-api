@@ -1,0 +1,31 @@
+{
+  "id": "stableusd",
+  "symbol": "usds",
+  "name": "USDS Classic",
+  "image": "https://assets.coingecko.com/coins/images/7596/large/USDS_Classic_Standard.png?1702476175",
+  "current_price": null,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 182145,
+  "total_volume": 0.748764,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 161366.454154,
+  "max_supply": null,
+  "ath": 9.89,
+  "ath_change_percentage": 0,
+  "ath_date": "2022-11-30T00:50:29.878Z",
+  "atl": 0.050091,
+  "atl_change_percentage": 0,
+  "atl_date": "2022-12-09T03:14:52.169Z",
+  "roi": null,
+  "last_updated": "2023-09-29T01:52:59.601Z",
+  "platforms": {
+    "arbitrum": "0x097bf766e427f5ccd306f21ba05632e0be849b0e"
+  }
+}

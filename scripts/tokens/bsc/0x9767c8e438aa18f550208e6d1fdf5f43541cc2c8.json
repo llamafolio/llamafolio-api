@@ -1,0 +1,31 @@
+{
+  "id": "mangoman-intelligent",
+  "symbol": "mmit",
+  "name": "MangoMan Intelligent",
+  "image": "https://assets.coingecko.com/coins/images/26687/large/Mr._B.png?1696525761",
+  "current_price": 4.2116e-8,
+  "market_cap": 7650262,
+  "market_cap_rank": 1562,
+  "fully_diluted_valuation": 88189939,
+  "total_volume": 1806625,
+  "high_24h": 4.3307e-8,
+  "low_24h": 4.1934e-8,
+  "price_change_24h": -7.78958915e-10,
+  "price_change_percentage_24h": -1.81597,
+  "market_cap_change_24h": -178254.3809529608,
+  "market_cap_change_percentage_24h": -2.27699,
+  "circulating_supply": 182169869254210.2,
+  "total_supply": 2099999999999980,
+  "max_supply": 2099999999999980,
+  "ath": 8.05934e-7,
+  "ath_change_percentage": -94.78538,
+  "ath_date": "2023-04-22T21:25:34.686Z",
+  "atl": 2.269e-9,
+  "atl_change_percentage": 1751.92276,
+  "atl_date": "2023-06-14T20:46:01.755Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:01.453Z",
+  "platforms": {
+    "bsc": "0x9767c8e438aa18f550208e6d1fdf5f43541cc2c8"
+  }
+}

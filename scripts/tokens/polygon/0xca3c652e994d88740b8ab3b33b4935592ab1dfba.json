@@ -1,0 +1,31 @@
+{
+  "id": "niko-2",
+  "symbol": "nko",
+  "name": "Niko",
+  "image": "https://assets.coingecko.com/coins/images/33834/large/resized200.png?1703107281",
+  "current_price": 0.00052726,
+  "market_cap": 237267,
+  "market_cap_rank": 3416,
+  "fully_diluted_valuation": 1581779,
+  "total_volume": 7771.62,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 449999990,
+  "total_supply": 3000000000,
+  "max_supply": 3000000000,
+  "ath": 0.059627,
+  "ath_change_percentage": -99.11573,
+  "ath_date": "2024-04-14T23:29:06.338Z",
+  "atl": 0.00023421,
+  "atl_change_percentage": 125.11908,
+  "atl_date": "2024-04-17T21:05:22.002Z",
+  "roi": null,
+  "last_updated": "2024-04-19T23:00:21.584Z",
+  "platforms": {
+    "polygon": "0xca3c652e994d88740b8ab3b33b4935592ab1dfba"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "beep-coin",
+  "symbol": "beep",
+  "name": "BEEP Coin",
+  "image": "https://assets.coingecko.com/coins/images/30566/large/green.png?1696529437",
+  "current_price": 1.8097e-8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 74809,
+  "total_volume": 1123.66,
+  "high_24h": 2.0161e-8,
+  "low_24h": 1.8053e-8,
+  "price_change_24h": -8.40720991e-10,
+  "price_change_percentage_24h": -4.43944,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 4143742959754,
+  "max_supply": 4143742959754,
+  "ath": 9.63228e-7,
+  "ath_change_percentage": -98.12123,
+  "ath_date": "2023-06-16T17:53:30.262Z",
+  "atl": 1.4122e-8,
+  "atl_change_percentage": 28.1491,
+  "atl_date": "2024-01-01T23:37:14.861Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:54.893Z",
+  "platforms": {
+    "ethereum": "0x9a0df129e798438a8ad995368bd82baa7eee8913"
+  }
+}

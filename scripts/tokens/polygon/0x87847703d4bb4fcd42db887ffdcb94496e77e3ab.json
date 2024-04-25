@@ -1,0 +1,31 @@
+{
+  "id": "hypersign-identity-token",
+  "symbol": "hid",
+  "name": "Hypersign Identity",
+  "image": "https://assets.coingecko.com/coins/images/16158/large/hypersign.png?1696515762",
+  "current_price": 0.056187,
+  "market_cap": 1910382,
+  "market_cap_rank": 2320,
+  "fully_diluted_valuation": 2809385,
+  "total_volume": 35142,
+  "high_24h": 0.060636,
+  "low_24h": 0.056097,
+  "price_change_24h": -0.003330421229929708,
+  "price_change_percentage_24h": -5.59571,
+  "market_cap_change_24h": -107156.30068390048,
+  "market_cap_change_percentage_24h": -5.31124,
+  "circulating_supply": 34000000,
+  "total_supply": 50000000,
+  "max_supply": 50000000,
+  "ath": 0.764958,
+  "ath_change_percentage": -92.6549,
+  "ath_date": "2021-10-10T13:29:35.433Z",
+  "atl": 0.00843469,
+  "atl_change_percentage": 566.14153,
+  "atl_date": "2023-09-02T16:14:26.304Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:41.648Z",
+  "platforms": {
+    "polygon": "0x87847703d4bb4fcd42db887ffdcb94496e77e3ab"
+  }
+}

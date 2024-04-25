@@ -1,0 +1,31 @@
+{
+  "id": "hermez-network-token",
+  "symbol": "hez",
+  "name": "Hermez Network",
+  "image": "https://assets.coingecko.com/coins/images/12826/large/hermez_logo.png?1696512617",
+  "current_price": 4.23,
+  "market_cap": 70431810,
+  "market_cap_rank": 576,
+  "fully_diluted_valuation": 46711038,
+  "total_volume": 64938,
+  "high_24h": 4.34,
+  "low_24h": 3.92,
+  "price_change_24h": -0.06794012121396076,
+  "price_change_percentage_24h": -1.5819,
+  "market_cap_change_24h": -1756545.127295941,
+  "market_cap_change_percentage_24h": -2.43328,
+  "circulating_supply": 16706072.3885572,
+  "total_supply": 11079624.2183702,
+  "max_supply": 11079624.2183702,
+  "ath": 10.3,
+  "ath_change_percentage": -58.96299,
+  "ath_date": "2021-12-26T21:51:13.032Z",
+  "atl": 1.81,
+  "atl_change_percentage": 133.66875,
+  "atl_date": "2020-10-16T09:35:16.795Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:35.016Z",
+  "platforms": {
+    "ethereum": "0xeef9f339514298c6a857efcfc1a762af84438dee"
+  }
+}

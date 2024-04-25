@@ -1,0 +1,31 @@
+{
+  "id": "unlimited-network-token",
+  "symbol": "uwu",
+  "name": "Unlimited Network Token",
+  "image": "https://assets.coingecko.com/coins/images/30829/large/_UWU_new_logo.png?1696529682",
+  "current_price": 0.00652205,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 14870.82,
+  "total_volume": 6.15,
+  "high_24h": 0.00656592,
+  "low_24h": 0.00650863,
+  "price_change_24h": -0.000025392359195393,
+  "price_change_percentage_24h": -0.38782,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2280083,
+  "max_supply": 25000000,
+  "ath": 0.670363,
+  "ath_change_percentage": -99.02709,
+  "ath_date": "2023-08-11T14:35:06.153Z",
+  "atl": 0.00547236,
+  "atl_change_percentage": 19.18181,
+  "atl_date": "2024-04-18T23:43:33.742Z",
+  "roi": null,
+  "last_updated": "2024-04-25T02:46:50.186Z",
+  "platforms": {
+    "arbitrum": "0x05d35769a222affd6185e20f3f3676abde56c25f"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "alterna-network",
+  "symbol": "altn",
+  "name": "Alterna Network",
+  "image": "https://assets.coingecko.com/coins/images/30087/large/alternalogo.png?1696529011",
+  "current_price": 0.00075192,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 751924,
+  "total_volume": 51713,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00129823,
+  "ath_change_percentage": -42.08068,
+  "ath_date": "2023-05-09T09:23:04.120Z",
+  "atl": 0.00022295,
+  "atl_change_percentage": 237.26692,
+  "atl_date": "2023-05-12T11:10:44.755Z",
+  "roi": null,
+  "last_updated": "2023-05-18T20:30:02.751Z",
+  "platforms": {
+    "bsc": "0xc841780c34c17190bceeefb6d986aaca4fb95e31"
+  }
+}

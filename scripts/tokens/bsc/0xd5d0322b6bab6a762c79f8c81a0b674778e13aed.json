@@ -1,0 +1,31 @@
+{
+  "id": "binance-peg-firo",
+  "symbol": "firo",
+  "name": "Binance-Peg Firo",
+  "image": "https://assets.coingecko.com/coins/images/20128/large/firocoingecko.png?1696519544",
+  "current_price": 1.68,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1176628,
+  "total_volume": 93252,
+  "high_24h": 1.84,
+  "low_24h": 1.65,
+  "price_change_24h": -0.14561548551766124,
+  "price_change_percentage_24h": -7.96758,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 700000,
+  "max_supply": 700000,
+  "ath": 9.48,
+  "ath_change_percentage": -82.38448,
+  "ath_date": "2021-11-10T09:09:25.910Z",
+  "atl": 1.24,
+  "atl_change_percentage": 34.3589,
+  "atl_date": "2023-06-10T06:28:55.355Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:49.859Z",
+  "platforms": {
+    "bsc": "0xd5d0322b6bab6a762c79f8c81a0b674778e13aed"
+  }
+}

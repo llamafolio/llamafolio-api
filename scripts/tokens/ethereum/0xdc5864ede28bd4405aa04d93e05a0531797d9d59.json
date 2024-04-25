@@ -1,0 +1,31 @@
+{
+  "id": "falcon-token",
+  "symbol": "fnt",
+  "name": "Falcon Project",
+  "image": "https://assets.coingecko.com/coins/images/11579/large/falcon_ava_black.png?1696511476",
+  "current_price": 0.00001109,
+  "market_cap": 154460,
+  "market_cap_rank": 3618,
+  "fully_diluted_valuation": 943061,
+  "total_volume": 14.98,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 13921742366.824633,
+  "total_supply": 85000000000,
+  "max_supply": null,
+  "ath": 0.006536,
+  "ath_change_percentage": -99.83025,
+  "ath_date": "2021-02-19T18:29:18.280Z",
+  "atl": 0.00001019,
+  "atl_change_percentage": 8.85356,
+  "atl_date": "2024-02-09T01:11:10.135Z",
+  "roi": null,
+  "last_updated": "2024-04-05T10:14:26.166Z",
+  "platforms": {
+    "ethereum": "0xdc5864ede28bd4405aa04d93e05a0531797d9d59"
+  }
+}

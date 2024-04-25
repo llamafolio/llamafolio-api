@@ -1,0 +1,31 @@
+{
+  "id": "pepe-ceo-bsc",
+  "symbol": "pepe ceo",
+  "name": "Pepe CEO BSC",
+  "image": "https://assets.coingecko.com/coins/images/30678/large/IMG_20230529_212005_413.png?1696529547",
+  "current_price": 1.41052e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 3.49,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 420000000000000,
+  "max_supply": 420000000000000,
+  "ath": 3.68404e-10,
+  "ath_change_percentage": -61.7126,
+  "ath_date": "2023-06-09T12:56:29.823Z",
+  "atl": 1.39173e-10,
+  "atl_change_percentage": 1.35042,
+  "atl_date": "2023-08-01T04:56:52.860Z",
+  "roi": null,
+  "last_updated": "2023-08-02T22:00:39.598Z",
+  "platforms": {
+    "bsc": "0xadfaed188291ae479f458ee2d3f88fe7e8cc712f"
+  }
+}

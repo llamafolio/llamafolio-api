@@ -1,0 +1,31 @@
+{
+  "id": "o3-swap",
+  "symbol": "o3",
+  "name": "O3 Swap",
+  "image": "https://assets.coingecko.com/coins/images/15460/large/o3.png?1696515107",
+  "current_price": 0.03776583,
+  "market_cap": 1339064,
+  "market_cap_rank": 2514,
+  "fully_diluted_valuation": 1569638,
+  "total_volume": 373384,
+  "high_24h": 0.03887875,
+  "low_24h": 0.03649308,
+  "price_change_24h": -0.000824284378463325,
+  "price_change_percentage_24h": -2.136,
+  "market_cap_change_24h": -38469.71330950409,
+  "market_cap_change_percentage_24h": -2.79265,
+  "circulating_supply": 35725691.640542015,
+  "total_supply": 41877314.4492868,
+  "max_supply": 100000000,
+  "ath": 14.87,
+  "ath_change_percentage": -99.74074,
+  "ath_date": "2021-06-19T16:51:08.306Z",
+  "atl": 0.02518998,
+  "atl_change_percentage": 53.07912,
+  "atl_date": "2023-09-12T23:46:36.744Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:02.691Z",
+  "platforms": {
+    "arbitrum": "0xee9801669c6138e84bd50deb500827b776777d28"
+  }
+}

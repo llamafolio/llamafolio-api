@@ -1,0 +1,31 @@
+{
+  "id": "paraswap",
+  "symbol": "psp",
+  "name": "ParaSwap",
+  "image": "https://assets.coingecko.com/coins/images/20403/large/ep7GqM19_400x400.jpg?1696519812",
+  "current_price": 0.03516381,
+  "market_cap": 43984570,
+  "market_cap_rank": 745,
+  "fully_diluted_valuation": 63041006,
+  "total_volume": 497771,
+  "high_24h": 0.0372274,
+  "low_24h": 0.03472008,
+  "price_change_24h": 0.00015597,
+  "price_change_percentage_24h": 0.44552,
+  "market_cap_change_24h": -70905.5048410967,
+  "market_cap_change_percentage_24h": -0.16095,
+  "circulating_supply": 1255884560.1449187,
+  "total_supply": 1800000000,
+  "max_supply": 2000000000,
+  "ath": 2.1,
+  "ath_change_percentage": -98.33225,
+  "ath_date": "2021-11-15T13:01:54.681Z",
+  "atl": 0.01798528,
+  "atl_change_percentage": 94.7164,
+  "atl_date": "2022-08-29T14:30:16.203Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:42.202Z",
+  "platforms": {
+    "ethereum": "0xcafe001067cdef266afb7eb5a286dcfd277f3de5"
+  }
+}

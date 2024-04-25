@@ -1,0 +1,31 @@
+{
+  "id": "mozaic",
+  "symbol": "moz",
+  "name": "Mozaic",
+  "image": "https://assets.coingecko.com/coins/images/30100/large/Main_Logo_1-200x200jpg.jpg?1696529024",
+  "current_price": 0.03222767,
+  "market_cap": 2999107,
+  "market_cap_rank": 2063,
+  "fully_diluted_valuation": 29572958,
+  "total_volume": 59.22,
+  "high_24h": 0.04795278,
+  "low_24h": 0.02676058,
+  "price_change_24h": 0.0054512,
+  "price_change_percentage_24h": 20.35816,
+  "market_cap_change_24h": 505474,
+  "market_cap_change_percentage_24h": 20.27059,
+  "circulating_supply": 93182631.5998625,
+  "total_supply": 918835533.760967,
+  "max_supply": 1000000000,
+  "ath": 0.207574,
+  "ath_change_percentage": -84.4874,
+  "ath_date": "2024-01-12T13:50:05.314Z",
+  "atl": 0.00385085,
+  "atl_change_percentage": 736.18166,
+  "atl_date": "2023-10-12T22:01:25.097Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:02.966Z",
+  "platforms": {
+    "arbitrum": "0x20547341e58fb558637fa15379c92e11f7b7f710"
+  }
+}

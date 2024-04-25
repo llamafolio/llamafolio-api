@@ -1,0 +1,31 @@
+{
+  "id": "hnb-protocol",
+  "symbol": "hnb",
+  "name": "HNB Protocol",
+  "image": "https://assets.coingecko.com/coins/images/26182/large/newhnblogo.png?1696525269",
+  "current_price": 0.00274099,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 4111488,
+  "total_volume": 13775.45,
+  "high_24h": 0.0051165,
+  "low_24h": 0.00272675,
+  "price_change_24h": -0.00233716730113715,
+  "price_change_percentage_24h": -46.0239,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1500000000,
+  "max_supply": 1500000000,
+  "ath": 0.00739872,
+  "ath_change_percentage": -62.95441,
+  "ath_date": "2024-04-11T08:29:40.686Z",
+  "atl": 0.00272675,
+  "atl_change_percentage": 0.51897,
+  "atl_date": "2024-04-25T08:57:48.692Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:19.941Z",
+  "platforms": {
+    "ethereum": "0x6e0615a03ed9527a6013fcd5b556e36ef4dab1ff"
+  }
+}

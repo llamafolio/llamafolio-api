@@ -1,0 +1,31 @@
+{
+  "id": "cook",
+  "symbol": "cook",
+  "name": "Cook",
+  "image": "https://assets.coingecko.com/coins/images/14603/large/logo-200x200.jpg?1696514281",
+  "current_price": 0.00027435,
+  "market_cap": 540963,
+  "market_cap_rank": 3025,
+  "fully_diluted_valuation": 2741503,
+  "total_volume": 57763,
+  "high_24h": 0.00028654,
+  "low_24h": 0.00027018,
+  "price_change_24h": 0.00000242,
+  "price_change_percentage_24h": 0.88975,
+  "market_cap_change_24h": 4339.02,
+  "market_cap_change_percentage_24h": 0.80858,
+  "circulating_supply": 1973233859.21983,
+  "total_supply": 10000000000,
+  "max_supply": null,
+  "ath": 0.376119,
+  "ath_change_percentage": -99.92728,
+  "ath_date": "2021-03-31T17:22:49.398Z",
+  "atl": 9.03e-12,
+  "atl_change_percentage": 3028988927.57755,
+  "atl_date": "2024-04-19T07:41:58.015Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:50.952Z",
+  "platforms": {
+    "avalanche": "0x637afeff75ca669ff92e4570b14d6399a658902f"
+  }
+}

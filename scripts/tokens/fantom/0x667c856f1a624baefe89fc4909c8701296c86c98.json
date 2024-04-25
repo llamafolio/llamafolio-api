@@ -1,0 +1,31 @@
+{
+  "id": "oni-token",
+  "symbol": "oni",
+  "name": "ONINO",
+  "image": "https://assets.coingecko.com/coins/images/9405/large/Oni_Round.png?1696509502",
+  "current_price": 0.23526,
+  "market_cap": 8415745,
+  "market_cap_rank": 1525,
+  "fully_diluted_valuation": 23444546,
+  "total_volume": 52876,
+  "high_24h": 0.246641,
+  "low_24h": 0.230909,
+  "price_change_24h": -0.010862323115297392,
+  "price_change_percentage_24h": -4.41339,
+  "market_cap_change_24h": -65871.52278799936,
+  "market_cap_change_percentage_24h": -0.77664,
+  "circulating_supply": 35896386.9621994,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 0.728541,
+  "ath_change_percentage": -67.816,
+  "ath_date": "2024-03-05T08:20:17.964Z",
+  "atl": 0.01652379,
+  "atl_change_percentage": 1319.00582,
+  "atl_date": "2022-12-23T10:46:25.262Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:54.859Z",
+  "platforms": {
+    "fantom": "0x667c856f1a624baefe89fc4909c8701296c86c98"
+  }
+}

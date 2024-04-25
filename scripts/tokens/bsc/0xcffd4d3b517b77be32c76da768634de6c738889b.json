@@ -1,0 +1,31 @@
+{
+  "id": "espl-arena",
+  "symbol": "arena",
+  "name": "ESPL Arena",
+  "image": "https://assets.coingecko.com/coins/images/28728/large/200x200_Logo.png?1696527708",
+  "current_price": 0.00014151,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 141506,
+  "total_volume": 0.749337,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.063176,
+  "ath_change_percentage": -99.77601,
+  "ath_date": "2023-02-05T10:13:10.098Z",
+  "atl": 0.00014151,
+  "atl_change_percentage": 0,
+  "atl_date": "2023-05-18T13:00:17.927Z",
+  "roi": null,
+  "last_updated": "2023-05-18T13:00:17.927Z",
+  "platforms": {
+    "bsc": "0xcffd4d3b517b77be32c76da768634de6c738889b"
+  }
+}

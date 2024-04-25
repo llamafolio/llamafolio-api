@@ -1,0 +1,31 @@
+{
+  "id": "extradna",
+  "symbol": "xdna",
+  "name": "extraDNA",
+  "image": "https://assets.coingecko.com/coins/images/12667/large/Logo_coin_black.png?1696512473",
+  "current_price": 0.00001172,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 117230,
+  "total_volume": 0.01147603,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": null,
+  "ath": 0.00178578,
+  "ath_change_percentage": -99.34354,
+  "ath_date": "2021-04-08T07:04:26.809Z",
+  "atl": 0.000005,
+  "atl_change_percentage": 134.4921,
+  "atl_date": "2022-12-05T20:45:28.887Z",
+  "roi": null,
+  "last_updated": "2024-04-23T17:39:10.116Z",
+  "platforms": {
+    "ethereum": "0x8e57c27761ebbd381b0f9d09bb92ceb51a358abb"
+  }
+}

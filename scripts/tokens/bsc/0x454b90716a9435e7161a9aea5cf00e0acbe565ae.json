@@ -1,0 +1,31 @@
+{
+  "id": "source-protocol",
+  "symbol": "srcx",
+  "name": "Source Protocol",
+  "image": "https://assets.coingecko.com/coins/images/25898/large/80368b_7b0a30441d7c4134a35067553ef6de3e_mv2_%281%29.png?1696524979",
+  "current_price": 0.00783458,
+  "market_cap": 2295073,
+  "market_cap_rank": 2215,
+  "fully_diluted_valuation": 2308144,
+  "total_volume": 9642.72,
+  "high_24h": 0.007854,
+  "low_24h": 0.00781775,
+  "price_change_24h": 0.00000464,
+  "price_change_percentage_24h": 0.0592,
+  "market_cap_change_24h": -1169.6979260793887,
+  "market_cap_change_percentage_24h": -0.05094,
+  "circulating_supply": 293290755.885937,
+  "total_supply": 294961187,
+  "max_supply": 500000000,
+  "ath": 0.03543541,
+  "ath_change_percentage": -77.91096,
+  "ath_date": "2023-10-24T13:51:51.718Z",
+  "atl": 0.00071586,
+  "atl_change_percentage": 993.41524,
+  "atl_date": "2023-04-30T06:43:45.937Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:59.556Z",
+  "platforms": {
+    "bsc": "0x454b90716a9435e7161a9aea5cf00e0acbe565ae"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "openocean",
+  "symbol": "ooe",
+  "name": "OpenOcean",
+  "image": "https://assets.coingecko.com/coins/images/17014/large/ooe_log.png?1696516578",
+  "current_price": 0.01618619,
+  "market_cap": 8168840,
+  "market_cap_rank": 1539,
+  "fully_diluted_valuation": 16191121,
+  "total_volume": 283816,
+  "high_24h": 0.016372,
+  "low_24h": 0.01556295,
+  "price_change_24h": -0.000119206843255303,
+  "price_change_percentage_24h": -0.73109,
+  "market_cap_change_24h": -35773.97299289331,
+  "market_cap_change_percentage_24h": -0.43602,
+  "circulating_supply": 504525932,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 1.034,
+  "ath_change_percentage": -98.45157,
+  "ath_date": "2021-09-03T04:15:36.111Z",
+  "atl": 0.00845285,
+  "atl_change_percentage": 89.34421,
+  "atl_date": "2023-10-19T16:50:41.877Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:50.869Z",
+  "platforms": {
+    "arbitrum": "0xdcbf4cb83d27c408b30dd7f39bfcabd7176b1ba3"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "flokita",
+  "symbol": "flokita",
+  "name": "Flokita",
+  "image": "https://assets.coingecko.com/coins/images/36060/large/FLOKITA.png?1710405113",
+  "current_price": 0.00002523,
+  "market_cap": 2360348,
+  "market_cap_rank": 2199,
+  "fully_diluted_valuation": 2473052,
+  "total_volume": 465592,
+  "high_24h": 0.00002799,
+  "low_24h": 0.00002499,
+  "price_change_24h": -0.00000220992263693,
+  "price_change_percentage_24h": -8.05285,
+  "market_cap_change_24h": -198568.76213506283,
+  "market_cap_change_percentage_24h": -7.75988,
+  "circulating_supply": 93533445148.79451,
+  "total_supply": 97999537637.52684,
+  "max_supply": 100000000000,
+  "ath": 0.00009355,
+  "ath_change_percentage": -73.02014,
+  "ath_date": "2024-03-15T16:50:51.053Z",
+  "atl": 0.00001602,
+  "atl_change_percentage": 57.51328,
+  "atl_date": "2024-04-13T20:45:07.837Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:07.031Z",
+  "platforms": {
+    "bsc": "0xdc8c8221b8e27dfda87a6d56dc5899a65087b6f4"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "encrypt",
+  "symbol": "$encr",
+  "name": "ENCRYPT",
+  "image": "https://assets.coingecko.com/coins/images/34271/large/IMG_20240105_001606_962.png?1704391325",
+  "current_price": 0.00642143,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 642143,
+  "total_volume": 8485.73,
+  "high_24h": 0.00713044,
+  "low_24h": 0.00639709,
+  "price_change_24h": -0.000256044313530288,
+  "price_change_percentage_24h": -3.83445,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.04764108,
+  "ath_change_percentage": -86.52123,
+  "ath_date": "2024-02-26T01:14:46.469Z",
+  "atl": 0.00412659,
+  "atl_change_percentage": 55.61097,
+  "atl_date": "2024-01-05T16:19:13.778Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:14.228Z",
+  "platforms": {
+    "ethereum": "0x3a429a151ad985e678a834f9db057163181f58e8"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "idefiyieldprotocol",
+  "symbol": "idyp",
+  "name": "iDypius",
+  "image": "https://assets.coingecko.com/coins/images/21976/large/iDYP-200x200px.png?1696521324",
+  "current_price": 0.00209862,
+  "market_cap": 337732,
+  "market_cap_rank": 3257,
+  "fully_diluted_valuation": 628649,
+  "total_volume": 17855.71,
+  "high_24h": 0.00228205,
+  "low_24h": 0.00204106,
+  "price_change_24h": -0.000178176713524019,
+  "price_change_percentage_24h": -7.82578,
+  "market_cap_change_24h": -29313.339177897433,
+  "market_cap_change_percentage_24h": -7.98629,
+  "circulating_supply": 161170510.934044,
+  "total_supply": 300000000,
+  "max_supply": 300000000,
+  "ath": 0.98075,
+  "ath_change_percentage": -99.78619,
+  "ath_date": "2021-12-31T23:36:24.715Z",
+  "atl": 0.00040808,
+  "atl_change_percentage": 413.86711,
+  "atl_date": "2023-10-23T22:43:25.048Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:23.978Z",
+  "platforms": {
+    "ethereum": "0xbd100d061e120b2c67a24453cf6368e63f1be056"
+  }
+}

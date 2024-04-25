@@ -1,0 +1,31 @@
+{
+  "id": "openeden-tbill",
+  "symbol": "tbill",
+  "name": "OpenEden TBILL",
+  "image": "https://assets.coingecko.com/coins/images/30576/large/OE_Logo_200x200_Transparent.png?1696529441",
+  "current_price": 1.052,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 0,
+  "high_24h": 1.052,
+  "low_24h": 1.052,
+  "price_change_24h": 0.0000498,
+  "price_change_percentage_24h": 0.00474,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.052,
+  "ath_change_percentage": -0.01022,
+  "ath_date": "2024-04-25T00:25:29.716Z",
+  "atl": 1.025,
+  "atl_change_percentage": 2.61923,
+  "atl_date": "2023-10-24T06:00:01.768Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:31.746Z",
+  "platforms": {
+    "ethereum": "0xdd50c053c096cb04a3e3362e2b622529ec5f2e8a"
+  }
+}

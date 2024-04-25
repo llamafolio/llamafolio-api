@@ -1,0 +1,35 @@
+{
+  "id": "cotrader",
+  "symbol": "cot",
+  "name": "CoTrader",
+  "image": "https://assets.coingecko.com/coins/images/4205/large/logo_black.png?1696504825",
+  "current_price": 0.000017,
+  "market_cap": 321143,
+  "market_cap_rank": 3282,
+  "fully_diluted_valuation": 340076,
+  "total_volume": 15.87,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 18886520618.311684,
+  "total_supply": 20000000000,
+  "max_supply": null,
+  "ath": 0.00168041,
+  "ath_change_percentage": -98.98812,
+  "ath_date": "2021-03-29T03:46:34.074Z",
+  "atl": 3.24908e-13,
+  "atl_change_percentage": 5233417623.00701,
+  "atl_date": "2021-12-14T21:29:09.388Z",
+  "roi": {
+    "times": -0.9926066267843562,
+    "currency": "eth",
+    "percentage": -99.26066267843562
+  },
+  "last_updated": "2024-04-22T10:11:04.328Z",
+  "platforms": {
+    "ethereum": "0x5c872500c00565505f3624ab435c222e558e9ff8"
+  }
+}

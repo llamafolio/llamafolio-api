@@ -1,0 +1,31 @@
+{
+  "id": "shiba-inu-wormhole",
+  "symbol": "shib",
+  "name": "Shiba Inu (Wormhole)",
+  "image": "https://assets.coingecko.com/coins/images/22983/large/SHIB_wh_small.png?1696522280",
+  "current_price": 0.00002534,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 5293.07,
+  "high_24h": 0.00002849,
+  "low_24h": 0.00002513,
+  "price_change_24h": -0.000001893613687619,
+  "price_change_percentage_24h": -6.95268,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.00018672,
+  "ath_change_percentage": -86.4273,
+  "ath_date": "2023-12-16T20:40:00.228Z",
+  "atl": 0.0000051,
+  "atl_change_percentage": 396.67501,
+  "atl_date": "2024-01-23T07:14:32.481Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:31.515Z",
+  "platforms": {
+    "bsc": "0xb1547683da678f2e1f003a780143ec10af8a832b"
+  }
+}

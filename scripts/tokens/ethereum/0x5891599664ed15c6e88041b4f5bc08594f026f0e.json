@@ -1,0 +1,31 @@
+{
+  "id": "jpgoldcoin",
+  "symbol": "jpgc",
+  "name": "JPGoldCoin",
+  "image": "https://assets.coingecko.com/coins/images/27321/large/JPGC_LOGO-_Coingecko.png?1696526370",
+  "current_price": 0.0052805,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3960372,
+  "total_volume": 0.00359074,
+  "high_24h": 0.00535731,
+  "low_24h": 0.0052805,
+  "price_change_24h": -0.000076809842220965,
+  "price_change_percentage_24h": -1.43374,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 750000000,
+  "max_supply": 750000000,
+  "ath": 0.733759,
+  "ath_change_percentage": -99.28035,
+  "ath_date": "2022-09-24T15:38:30.846Z",
+  "atl": 0.00055141,
+  "atl_change_percentage": 857.62847,
+  "atl_date": "2024-01-03T19:23:02.954Z",
+  "roi": null,
+  "last_updated": "2024-04-24T20:00:47.590Z",
+  "platforms": {
+    "ethereum": "0x5891599664ed15c6e88041b4f5bc08594f026f0e"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "open-dollar-governance",
+  "symbol": "odg",
+  "name": "Open Dollar Governance",
+  "image": "https://assets.coingecko.com/coins/images/34689/large/ODG_Token_200_x_200.png?1705853107",
+  "current_price": 4.35,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 43536092,
+  "total_volume": 840.76,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": null,
+  "ath": 4.36,
+  "ath_change_percentage": -0.19036,
+  "ath_date": "2024-04-24T01:48:45.844Z",
+  "atl": 1.54,
+  "atl_change_percentage": 182.24563,
+  "atl_date": "2024-01-25T15:33:59.052Z",
+  "roi": null,
+  "last_updated": "2024-04-24T01:59:37.816Z",
+  "platforms": {
+    "arbitrum": "0x000d636bd52bfc1b3a699165ef5aa340bea8939c"
+  }
+}

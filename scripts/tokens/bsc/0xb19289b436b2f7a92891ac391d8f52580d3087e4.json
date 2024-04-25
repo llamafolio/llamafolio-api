@@ -1,0 +1,31 @@
+{
+  "id": "project-oasis",
+  "symbol": "oasis",
+  "name": "ProjectOasis",
+  "image": "https://assets.coingecko.com/coins/images/18755/large/Oasis_Logo_1.2%28scaled%29.png?1696518220",
+  "current_price": 0.02214795,
+  "market_cap": 87598,
+  "market_cap_rank": 3822,
+  "fully_diluted_valuation": 310071,
+  "total_volume": 4.98,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 3955109.78,
+  "total_supply": 14000000,
+  "max_supply": 14000000,
+  "ath": 8.69,
+  "ath_change_percentage": -99.7451,
+  "ath_date": "2021-11-14T22:55:41.304Z",
+  "atl": 0.0099507,
+  "atl_change_percentage": 122.57696,
+  "atl_date": "2023-10-14T20:32:25.602Z",
+  "roi": null,
+  "last_updated": "2024-04-23T00:01:00.947Z",
+  "platforms": {
+    "bsc": "0xb19289b436b2f7a92891ac391d8f52580d3087e4"
+  }
+}

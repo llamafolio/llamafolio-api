@@ -1,0 +1,31 @@
+{
+  "id": "dexit-finance",
+  "symbol": "dxt",
+  "name": "Dexit Network",
+  "image": "https://assets.coingecko.com/coins/images/17611/large/Dexit_Logo.png?1696517143",
+  "current_price": 0.00003579,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 178893,
+  "total_volume": 0.00705768,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 4998876543,
+  "max_supply": 4998876543,
+  "ath": 0.00911677,
+  "ath_change_percentage": -99.60746,
+  "ath_date": "2021-09-14T16:34:12.583Z",
+  "atl": 0.00002585,
+  "atl_change_percentage": 38.46548,
+  "atl_date": "2023-10-12T17:25:42.961Z",
+  "roi": null,
+  "last_updated": "2024-04-20T23:59:12.164Z",
+  "platforms": {
+    "bsc": "0x2b2ff80c489dad868318a19fd6f258889a026da5"
+  }
+}

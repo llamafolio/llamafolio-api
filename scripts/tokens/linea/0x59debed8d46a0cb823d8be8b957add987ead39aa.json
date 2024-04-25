@@ -1,0 +1,31 @@
+{
+  "id": "quack-token",
+  "symbol": "quack",
+  "name": "Quack Token",
+  "image": "https://assets.coingecko.com/coins/images/31436/large/0x639C0D019C257966C4907bD4E68E3F349bB58109.png?1696530251",
+  "current_price": 0.00041038,
+  "market_cap": 316771,
+  "market_cap_rank": 3289,
+  "fully_diluted_valuation": 3917236,
+  "total_volume": 20607,
+  "high_24h": 0.00057846,
+  "low_24h": 0.00036294,
+  "price_change_24h": -0.00003725545674274,
+  "price_change_percentage_24h": -8.32271,
+  "market_cap_change_24h": -15960.726102640328,
+  "market_cap_change_percentage_24h": -4.79687,
+  "circulating_supply": 771332843,
+  "total_supply": 9538405409,
+  "max_supply": 10000000000,
+  "ath": 0.00462185,
+  "ath_change_percentage": -91.12085,
+  "ath_date": "2023-08-27T02:28:36.768Z",
+  "atl": 0.00002861,
+  "atl_change_percentage": 1334.39089,
+  "atl_date": "2024-02-01T22:32:32.637Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:39.658Z",
+  "platforms": {
+    "linea": "0x59debed8d46a0cb823d8be8b957add987ead39aa"
+  }
+}

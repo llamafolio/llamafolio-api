@@ -1,0 +1,31 @@
+{
+  "id": "dega",
+  "symbol": "dega",
+  "name": "Dega",
+  "image": "https://assets.coingecko.com/coins/images/33486/large/Dega_%28Custom%29.jpg?1702028860",
+  "current_price": 0.00213331,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2133308,
+  "total_volume": 934.06,
+  "high_24h": 0.00215368,
+  "low_24h": 0.00209171,
+  "price_change_24h": 0.00001394,
+  "price_change_percentage_24h": 0.65777,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00488292,
+  "ath_change_percentage": -56.35316,
+  "ath_date": "2024-03-14T00:21:44.867Z",
+  "atl": 0.00059606,
+  "atl_change_percentage": 257.55754,
+  "atl_date": "2023-12-08T10:00:09.522Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:41.031Z",
+  "platforms": {
+    "bsc": "0xb2c40b797cc80debd08a4ab26d1bc2f2317b6c7c"
+  }
+}

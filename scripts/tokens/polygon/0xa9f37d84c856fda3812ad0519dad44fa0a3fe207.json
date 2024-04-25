@@ -1,0 +1,31 @@
+{
+  "id": "melon",
+  "symbol": "mln",
+  "name": "Enzyme",
+  "image": "https://assets.coingecko.com/coins/images/605/large/Enzyme_Icon_Secondary.png?1696501803",
+  "current_price": 21.57,
+  "market_cap": 31313687,
+  "market_cap_rank": 896,
+  "fully_diluted_valuation": 57483859,
+  "total_volume": 2753016,
+  "high_24h": 22.95,
+  "low_24h": 21.13,
+  "price_change_24h": -1.1725455492519075,
+  "price_change_percentage_24h": -5.15566,
+  "market_cap_change_24h": -1950791.7402584217,
+  "market_cap_change_percentage_24h": -5.86449,
+  "circulating_supply": 1453963.5545523514,
+  "total_supply": 2669102.39366573,
+  "max_supply": 2669102.39366573,
+  "ath": 258.26,
+  "ath_change_percentage": -91.6777,
+  "ath_date": "2018-01-04T00:00:00.000Z",
+  "atl": 1.79,
+  "atl_change_percentage": 1099.61442,
+  "atl_date": "2020-03-13T02:24:22.336Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:06.555Z",
+  "platforms": {
+    "polygon": "0xa9f37d84c856fda3812ad0519dad44fa0a3fe207"
+  }
+}

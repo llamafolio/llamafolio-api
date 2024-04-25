@@ -1,0 +1,31 @@
+{
+  "id": "treasure-under-sea",
+  "symbol": "tus",
+  "name": "Treasure Under Sea",
+  "image": "https://assets.coingecko.com/coins/images/20012/large/img-tus.png?1696519433",
+  "current_price": 0.00002111,
+  "market_cap": 56577,
+  "market_cap_rank": 3954,
+  "fully_diluted_valuation": 1266.58,
+  "total_volume": 8.38,
+  "high_24h": 0.00002352,
+  "low_24h": 0.00002111,
+  "price_change_24h": -0.000002275087983175,
+  "price_change_percentage_24h": -9.72757,
+  "market_cap_change_24h": -6193.367752706952,
+  "market_cap_change_percentage_24h": -9.86673,
+  "circulating_supply": 2680134353.68478,
+  "total_supply": 60000000,
+  "max_supply": null,
+  "ath": 0.391002,
+  "ath_change_percentage": -99.99458,
+  "ath_date": "2022-02-01T08:36:32.066Z",
+  "atl": 0.00000442,
+  "atl_change_percentage": 378.73701,
+  "atl_date": "2023-10-19T13:06:21.258Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:33.655Z",
+  "platforms": {
+    "avalanche": "0xf693248f96fe03422fea95ac0afbbbc4a8fdd172"
+  }
+}

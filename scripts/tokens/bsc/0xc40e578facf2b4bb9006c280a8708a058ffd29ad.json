@@ -1,0 +1,31 @@
+{
+  "id": "elon404",
+  "symbol": "elon404",
+  "name": "Elon404",
+  "image": "https://assets.coingecko.com/coins/images/35399/large/elon_404.png?1708494451",
+  "current_price": 1.58989e-13,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 66775,
+  "total_volume": 69.76,
+  "high_24h": 1.61282e-13,
+  "low_24h": 1.54231e-13,
+  "price_change_24h": 5.26e-16,
+  "price_change_percentage_24h": 0.33224,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 420000000000000000,
+  "max_supply": 420000000000000000,
+  "ath": 8.02256e-13,
+  "ath_change_percentage": -80.20024,
+  "ath_date": "2024-02-21T10:33:48.880Z",
+  "atl": 1.32401e-13,
+  "atl_change_percentage": 19.97204,
+  "atl_date": "2024-03-05T20:45:15.311Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:28.662Z",
+  "platforms": {
+    "bsc": "0xc40e578facf2b4bb9006c280a8708a058ffd29ad"
+  }
+}

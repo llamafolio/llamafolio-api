@@ -1,0 +1,31 @@
+{
+  "id": "insula",
+  "symbol": "isla",
+  "name": "Insula",
+  "image": "https://assets.coingecko.com/coins/images/10884/large/isla.PNG?1696510837",
+  "current_price": 0.11108,
+  "market_cap": 101303,
+  "market_cap_rank": 3776,
+  "fully_diluted_valuation": 106821,
+  "total_volume": 19.5,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 911987.399299998,
+  "total_supply": 961663.001377198,
+  "max_supply": null,
+  "ath": 3.1,
+  "ath_change_percentage": -96.41178,
+  "ath_date": "2020-07-26T03:33:09.440Z",
+  "atl": 0.00259618,
+  "atl_change_percentage": 4178.57845,
+  "atl_date": "2020-10-19T16:33:21.682Z",
+  "roi": null,
+  "last_updated": "2024-04-22T15:32:00.153Z",
+  "platforms": {
+    "ethereum": "0x697ef32b4a3f5a4c39de1cb7563f24ca7bfc5947"
+  }
+}

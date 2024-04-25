@@ -1,0 +1,31 @@
+{
+  "id": "catecoin",
+  "symbol": "cate",
+  "name": "CateCoin",
+  "image": "https://assets.coingecko.com/coins/images/15364/large/logo.png?1696515013",
+  "current_price": 4.00862e-7,
+  "market_cap": 13780566,
+  "market_cap_rank": 1290,
+  "fully_diluted_valuation": 40084688,
+  "total_volume": 160158,
+  "high_24h": 4.09125e-7,
+  "low_24h": 3.96917e-7,
+  "price_change_24h": -5.193088939e-9,
+  "price_change_percentage_24h": -1.27891,
+  "market_cap_change_24h": -190996.65087368526,
+  "market_cap_change_percentage_24h": -1.36704,
+  "circulating_supply": 34378628154281.39,
+  "total_supply": 100000000000000,
+  "max_supply": 100000000000000,
+  "ath": 0.00001176,
+  "ath_change_percentage": -96.59053,
+  "ath_date": "2021-11-10T00:29:31.177Z",
+  "atl": 3.0238e-11,
+  "atl_change_percentage": 1325550.80127,
+  "atl_date": "2021-09-18T12:03:09.544Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:17.710Z",
+  "platforms": {
+    "bsc": "0xe4fae3faa8300810c835970b9187c268f55d998f"
+  }
+}

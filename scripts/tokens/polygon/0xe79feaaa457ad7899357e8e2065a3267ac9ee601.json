@@ -1,0 +1,35 @@
+{
+  "id": "chimaera",
+  "symbol": "wchi",
+  "name": "XAYA",
+  "image": "https://assets.coingecko.com/coins/images/2091/large/xaya200x200.png?1696503058",
+  "current_price": 0.068072,
+  "market_cap": 3922318,
+  "market_cap_rank": 1922,
+  "fully_diluted_valuation": 5263571,
+  "total_volume": 13170.04,
+  "high_24h": 0.069626,
+  "low_24h": 0.067823,
+  "price_change_24h": -0.001304198943920712,
+  "price_change_percentage_24h": -1.87991,
+  "market_cap_change_24h": -81523.3675330719,
+  "market_cap_change_percentage_24h": -2.03613,
+  "circulating_supply": 57605492.9624409,
+  "total_supply": 77303932,
+  "max_supply": null,
+  "ath": 0.766229,
+  "ath_change_percentage": -91.10976,
+  "ath_date": "2021-11-09T21:29:14.649Z",
+  "atl": 0.00152533,
+  "atl_change_percentage": 4365.90495,
+  "atl_date": "2020-08-19T17:25:27.515Z",
+  "roi": {
+    "times": -0.9466807285564535,
+    "currency": "btc",
+    "percentage": -94.66807285564535
+  },
+  "last_updated": "2024-04-25T08:58:25.949Z",
+  "platforms": {
+    "polygon": "0xe79feaaa457ad7899357e8e2065a3267ac9ee601"
+  }
+}

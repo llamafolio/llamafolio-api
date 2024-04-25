@@ -1,0 +1,31 @@
+{
+  "id": "88mph",
+  "symbol": "mph",
+  "name": "88mph",
+  "image": "https://assets.coingecko.com/coins/images/13137/large/yfU-_Tcj_400x400.png?1696512923",
+  "current_price": 0.551943,
+  "market_cap": 703817,
+  "market_cap_rank": 2887,
+  "fully_diluted_valuation": 869957,
+  "total_volume": 22470,
+  "high_24h": 0.570167,
+  "low_24h": 0.534204,
+  "price_change_24h": -0.009837480342008376,
+  "price_change_percentage_24h": -1.75113,
+  "market_cap_change_24h": -13369.456086403341,
+  "market_cap_change_percentage_24h": -1.86415,
+  "circulating_supply": 1277064.773273517,
+  "total_supply": 1578523.91149846,
+  "max_supply": 1888888,
+  "ath": 236.5,
+  "ath_change_percentage": -99.76684,
+  "ath_date": "2021-02-12T21:31:39.114Z",
+  "atl": 0.435363,
+  "atl_change_percentage": 26.65856,
+  "atl_date": "2023-11-19T20:20:38.807Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:44.681Z",
+  "platforms": {
+    "ethereum": "0x8888801af4d980682e47f1a9036e589479e835c5"
+  }
+}

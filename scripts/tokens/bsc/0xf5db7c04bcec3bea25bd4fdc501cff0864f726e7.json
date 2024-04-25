@@ -1,0 +1,31 @@
+{
+  "id": "xenify-bysl",
+  "symbol": "bysl",
+  "name": "bYSL",
+  "image": "https://assets.coingecko.com/coins/images/34514/large/YSL-Light_200px.png?1705288756",
+  "current_price": 0.177168,
+  "market_cap": 16464.83,
+  "market_cap_rank": 4176,
+  "fully_diluted_valuation": 16420.71,
+  "total_volume": 35.43,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 92684.2082666933,
+  "total_supply": 92684.2082666933,
+  "max_supply": 139021,
+  "ath": 1.15,
+  "ath_change_percentage": -84.65363,
+  "ath_date": "2024-01-23T16:24:34.876Z",
+  "atl": 0.099845,
+  "atl_change_percentage": 77.44355,
+  "atl_date": "2024-02-13T23:33:53.437Z",
+  "roi": null,
+  "last_updated": "2024-04-03T13:34:05.363Z",
+  "platforms": {
+    "bsc": "0xf5db7c04bcec3bea25bd4fdc501cff0864f726e7"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "decentralized-advertising",
+  "symbol": "dad",
+  "name": "DAD",
+  "image": "https://assets.coingecko.com/coins/images/9833/large/q_Vt0ajV_400x400.jpg?1696509888",
+  "current_price": 0.00889611,
+  "market_cap": 5925585,
+  "market_cap_rank": 1710,
+  "fully_diluted_valuation": 8877282,
+  "total_volume": 164307,
+  "high_24h": 0.00905448,
+  "low_24h": 0.007933,
+  "price_change_24h": -0.000152530012900156,
+  "price_change_percentage_24h": -1.68567,
+  "market_cap_change_24h": -60271.078013912775,
+  "market_cap_change_percentage_24h": -1.00689,
+  "circulating_supply": 667499912,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.65039,
+  "ath_change_percentage": -98.63461,
+  "ath_date": "2020-02-12T00:12:35.676Z",
+  "atl": 0.00743282,
+  "atl_change_percentage": 19.47477,
+  "atl_date": "2024-04-13T20:26:04.251Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:34.557Z",
+  "platforms": {
+    "ethereum": "0x5b322514ff727253292637d9054301600c2c81e8"
+  }
+}

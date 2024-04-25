@@ -1,0 +1,31 @@
+{
+  "id": "idle",
+  "symbol": "idle",
+  "name": "IDLE",
+  "image": "https://assets.coingecko.com/coins/images/13286/large/image.png?1696513058",
+  "current_price": 0.225145,
+  "market_cap": 1878128,
+  "market_cap_rank": 2318,
+  "fully_diluted_valuation": 2934547,
+  "total_volume": 170.62,
+  "high_24h": 0.238946,
+  "low_24h": 0.225255,
+  "price_change_24h": -0.013057365050826691,
+  "price_change_percentage_24h": -5.48162,
+  "market_cap_change_24h": -103738.59334319574,
+  "market_cap_change_percentage_24h": -5.23439,
+  "circulating_supply": 8320081.256116572,
+  "total_supply": 13000000,
+  "max_supply": 13000000,
+  "ath": 30.65,
+  "ath_change_percentage": -99.26343,
+  "ath_date": "2021-02-13T23:18:42.455Z",
+  "atl": 0.13052,
+  "atl_change_percentage": 72.94998,
+  "atl_date": "2023-10-03T21:00:49.405Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:15.435Z",
+  "platforms": {
+    "polygon": "0xc25351811983818c9fe6d8c580531819c8ade90f"
+  }
+}

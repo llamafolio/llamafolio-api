@@ -1,0 +1,31 @@
+{
+  "id": "mancium",
+  "symbol": "manc",
+  "name": "Mancium",
+  "image": "https://assets.coingecko.com/coins/images/25084/large/IKpuMYuGaMHEE0nrDUwpf6DqLQ5zTfZ1sak6ZqeIe2snV4GqQbh4Eic6hHcPl_OpBmlhcrRJ5kqoGzwB1CezMiDYnwR6rDT08_l8zb3-y3aPhTv7_0x5g4IO9JpQXDViEIqTZ7gYzTXqkcP6MH_uCFxQF-l-ohR0-FdT8O-ZTmNUKm--OuqEf9DVa-miAFp4t2pN-kcJ5Jv8woPj51yk-zna8c.jpg?1696524235",
+  "current_price": 0.817511,
+  "market_cap": 8181167,
+  "market_cap_rank": 1536,
+  "fully_diluted_valuation": 81811669,
+  "total_volume": 17949.08,
+  "high_24h": 0.822367,
+  "low_24h": 0.802662,
+  "price_change_24h": 0.00209989,
+  "price_change_percentage_24h": 0.25752,
+  "market_cap_change_24h": 1434.42,
+  "market_cap_change_percentage_24h": 0.01754,
+  "circulating_supply": 10000000,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 8.33,
+  "ath_change_percentage": -90.24613,
+  "ath_date": "2022-08-31T11:38:22.784Z",
+  "atl": 0.146635,
+  "atl_change_percentage": 454.20728,
+  "atl_date": "2022-06-17T06:27:11.643Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:09.531Z",
+  "platforms": {
+    "ethereum": "0xe0c05ec44775e4ad62cdc2eecdf337aa7a143363"
+  }
+}

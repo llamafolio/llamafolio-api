@@ -1,0 +1,31 @@
+{
+  "id": "strips-finance",
+  "symbol": "strp",
+  "name": "Strips Finance",
+  "image": "https://assets.coingecko.com/coins/images/18327/large/Logo-Strips-200-x-200px---without-words.png?1696517818",
+  "current_price": 1.094,
+  "market_cap": 33140562,
+  "market_cap_rank": 870,
+  "fully_diluted_valuation": 109437612,
+  "total_volume": 22278,
+  "high_24h": 1.1,
+  "low_24h": 1.074,
+  "price_change_24h": 0.01837378,
+  "price_change_percentage_24h": 1.70809,
+  "market_cap_change_24h": 439126,
+  "market_cap_change_percentage_24h": 1.34283,
+  "circulating_supply": 30282606.5751297,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 9.71,
+  "ath_change_percentage": -88.7343,
+  "ath_date": "2021-10-15T00:18:59.582Z",
+  "atl": 0.147201,
+  "atl_change_percentage": 643.49526,
+  "atl_date": "2024-03-11T22:49:48.504Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:41.722Z",
+  "platforms": {
+    "arbitrum": "0x326c33fd1113c1f29b35b4407f3d6312a8518431"
+  }
+}

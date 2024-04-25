@@ -1,0 +1,31 @@
+{
+  "id": "zkera-finance",
+  "symbol": "zke",
+  "name": "zkEra Finance",
+  "image": "https://assets.coingecko.com/coins/images/33928/large/zke.png?1703409212",
+  "current_price": 0.174847,
+  "market_cap": 302706,
+  "market_cap_rank": 3318,
+  "fully_diluted_valuation": 302706,
+  "total_volume": 218.3,
+  "high_24h": 0.185336,
+  "low_24h": 0.173954,
+  "price_change_24h": -0.008745485636077662,
+  "price_change_percentage_24h": -4.76354,
+  "market_cap_change_24h": -40230.94593750505,
+  "market_cap_change_percentage_24h": -11.7313,
+  "circulating_supply": 1731346.1514,
+  "total_supply": 1731346.1514,
+  "max_supply": 50000000,
+  "ath": 0.572916,
+  "ath_change_percentage": -69.4813,
+  "ath_date": "2023-12-29T05:14:55.978Z",
+  "atl": 0.131094,
+  "atl_change_percentage": 33.37535,
+  "atl_date": "2024-03-08T14:11:22.253Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:44.355Z",
+  "platforms": {
+    "bsc": "0x747c8de898c595bdd74a9be3c28d5ac90acd1092"
+  }
+}

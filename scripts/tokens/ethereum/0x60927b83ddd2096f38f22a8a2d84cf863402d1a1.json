@@ -1,0 +1,31 @@
+{
+  "id": "eternal-ai",
+  "symbol": "mind",
+  "name": "Eternal AI",
+  "image": "https://assets.coingecko.com/coins/images/33340/large/download.png?1701525697",
+  "current_price": 0.00917878,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 91788,
+  "total_volume": 1554.94,
+  "high_24h": 0.00935251,
+  "low_24h": 0.00895259,
+  "price_change_24h": 0.00017213,
+  "price_change_percentage_24h": 1.9111,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.574343,
+  "ath_change_percentage": -98.40186,
+  "ath_date": "2023-12-08T02:19:46.249Z",
+  "atl": 0.00618529,
+  "atl_change_percentage": 48.39684,
+  "atl_date": "2024-04-16T04:51:30.218Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:06:24.407Z",
+  "platforms": {
+    "ethereum": "0x60927b83ddd2096f38f22a8a2d84cf863402d1a1"
+  }
+}

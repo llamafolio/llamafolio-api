@@ -1,0 +1,31 @@
+{
+  "id": "fold",
+  "symbol": "$fld",
+  "name": "Fold",
+  "image": "https://assets.coingecko.com/coins/images/33541/large/FLD_200x.png?1702379502",
+  "current_price": 0.00281366,
+  "market_cap": 2268495,
+  "market_cap_rank": 2223,
+  "fully_diluted_valuation": 7507726,
+  "total_volume": 6295.64,
+  "high_24h": 0.0031451,
+  "low_24h": 0.00283097,
+  "price_change_24h": -0.000315050847229055,
+  "price_change_percentage_24h": -10.06968,
+  "market_cap_change_24h": -239891.7342449734,
+  "market_cap_change_percentage_24h": -9.56359,
+  "circulating_supply": 801314263.5551528,
+  "total_supply": 2652000000,
+  "max_supply": 2652000000,
+  "ath": 0.00856556,
+  "ath_change_percentage": -66.8967,
+  "ath_date": "2024-03-14T09:34:27.859Z",
+  "atl": 0.00234152,
+  "atl_change_percentage": 21.09576,
+  "atl_date": "2024-04-14T00:43:57.512Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:33.286Z",
+  "platforms": {
+    "avalanche": "0x88f89be3e9b1dc1c5f208696fb9cabfcc684bd5f"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "5ire",
+  "symbol": "5ire",
+  "name": "5ire",
+  "image": "https://assets.coingecko.com/coins/images/25246/large/16919.png?1696524387",
+  "current_price": 0.094081,
+  "market_cap": 4058808,
+  "market_cap_rank": 1897,
+  "fully_diluted_valuation": 140434396,
+  "total_volume": 823805,
+  "high_24h": 0.099397,
+  "low_24h": 0.093348,
+  "price_change_24h": -0.002131441355080602,
+  "price_change_percentage_24h": -2.21536,
+  "market_cap_change_24h": -109670.35723077739,
+  "market_cap_change_percentage_24h": -2.63094,
+  "circulating_supply": 43352707.490143456,
+  "total_supply": 1500000000,
+  "max_supply": 1500000000,
+  "ath": 0.467009,
+  "ath_change_percentage": -79.86918,
+  "ath_date": "2023-12-18T17:15:04.299Z",
+  "atl": 0.093348,
+  "atl_change_percentage": 0.71183,
+  "atl_date": "2024-04-25T08:02:46.645Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:27.808Z",
+  "platforms": {
+    "ethereum": "0x3bd7d4f524d09f4e331577247a048d56e4b67a7f"
+  }
+}

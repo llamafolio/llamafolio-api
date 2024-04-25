@@ -1,0 +1,31 @@
+{
+  "id": "rhinofi",
+  "symbol": "dvf",
+  "name": "Rhino.fi",
+  "image": "https://assets.coingecko.com/coins/images/16414/large/rhinologo.png?1697736807",
+  "current_price": 0.587952,
+  "market_cap": 8833808,
+  "market_cap_rank": 1497,
+  "fully_diluted_valuation": 58690883,
+  "total_volume": 8834.69,
+  "high_24h": 0.588053,
+  "low_24h": 0.576954,
+  "price_change_24h": 0.00356718,
+  "price_change_percentage_24h": 0.61042,
+  "market_cap_change_24h": 95862,
+  "market_cap_change_percentage_24h": 1.09708,
+  "circulating_supply": 15051414,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 18.3,
+  "ath_change_percentage": -96.79081,
+  "ath_date": "2021-11-26T03:11:47.605Z",
+  "atl": 0.46845,
+  "atl_change_percentage": 25.33773,
+  "atl_date": "2023-10-17T03:16:32.030Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:34.093Z",
+  "platforms": {
+    "arbitrum": "0xa7aa2921618e3d63da433829d448b58c9445a4c3"
+  }
+}

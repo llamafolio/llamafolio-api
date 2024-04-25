@@ -1,0 +1,31 @@
+{
+  "id": "contract-dev-ai",
+  "symbol": "0xdev",
+  "name": "DEVAI",
+  "image": "https://assets.coingecko.com/coins/images/33294/large/DevAi.jpg?1702294618",
+  "current_price": 1.9,
+  "market_cap": 1617611,
+  "market_cap_rank": 2412,
+  "fully_diluted_valuation": 1873126,
+  "total_volume": 168542,
+  "high_24h": 2.32,
+  "low_24h": 1.84,
+  "price_change_24h": 0.051933,
+  "price_change_percentage_24h": 2.80873,
+  "market_cap_change_24h": 60892,
+  "market_cap_change_percentage_24h": 3.91153,
+  "circulating_supply": 851978.4628650006,
+  "total_supply": 986555,
+  "max_supply": 1000000,
+  "ath": 21.48,
+  "ath_change_percentage": -91.14095,
+  "ath_date": "2024-03-13T00:59:25.234Z",
+  "atl": 0.357204,
+  "atl_change_percentage": 432.77554,
+  "atl_date": "2023-12-02T02:24:49.837Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:13.394Z",
+  "platforms": {
+    "ethereum": "0xf7498c98789957f4ee53b3e37ff5b7ef8a6cfc7b"
+  }
+}

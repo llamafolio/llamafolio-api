@@ -1,0 +1,31 @@
+{
+  "id": "jaiho-crypto",
+  "symbol": "jaiho",
+  "name": "Jaiho Crypto",
+  "image": "https://assets.coingecko.com/coins/images/20311/large/jaiho.PNG?1696519714",
+  "current_price": 0.00077292,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 386458,
+  "total_volume": 1.34,
+  "high_24h": 0.00077395,
+  "low_24h": 0.00077219,
+  "price_change_24h": 5.099e-8,
+  "price_change_percentage_24h": 0.0066,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 0.0117602,
+  "ath_change_percentage": -93.4277,
+  "ath_date": "2021-11-14T07:42:51.627Z",
+  "atl": 0.00017856,
+  "atl_change_percentage": 332.86085,
+  "atl_date": "2022-07-06T22:09:50.589Z",
+  "roi": null,
+  "last_updated": "2024-04-24T12:03:09.602Z",
+  "platforms": {
+    "bsc": "0x2fd2799e83a723b19026a979899dfb70bbf6bf6b"
+  }
+}

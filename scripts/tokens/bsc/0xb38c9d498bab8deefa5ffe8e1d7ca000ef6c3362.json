@@ -1,0 +1,31 @@
+{
+  "id": "hectic-turkey",
+  "symbol": "hect",
+  "name": "Hectic Turkey",
+  "image": "https://assets.coingecko.com/coins/images/35682/large/IMG_7660.PNG?1709526061",
+  "current_price": 1.6091e-8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 141280,
+  "total_volume": 234.05,
+  "high_24h": 1.6351e-8,
+  "low_24h": 1.5594e-8,
+  "price_change_24h": 4.376e-11,
+  "price_change_percentage_24h": 0.27269,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 8800000000000,
+  "max_supply": 8800000000000,
+  "ath": 1.96459e-7,
+  "ath_change_percentage": -91.81207,
+  "ath_date": "2024-03-13T11:45:44.328Z",
+  "atl": 1.3614e-8,
+  "atl_change_percentage": 18.16113,
+  "atl_date": "2024-04-17T16:10:36.155Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:30.136Z",
+  "platforms": {
+    "bsc": "0xb38c9d498bab8deefa5ffe8e1d7ca000ef6c3362"
+  }
+}

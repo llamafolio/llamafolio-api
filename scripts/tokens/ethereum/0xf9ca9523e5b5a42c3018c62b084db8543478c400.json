@@ -1,0 +1,31 @@
+{
+  "id": "data-lake",
+  "symbol": "lake",
+  "name": "Data Lake",
+  "image": "https://assets.coingecko.com/coins/images/29279/large/VWlCfLlX_400x400.jpeg?1696528232",
+  "current_price": 0.01565026,
+  "market_cap": 14879758,
+  "market_cap_rank": 1250,
+  "fully_diluted_valuation": 39646875,
+  "total_volume": 222330,
+  "high_24h": 0.01716972,
+  "low_24h": 0.01372385,
+  "price_change_24h": -0.00113515201712824,
+  "price_change_percentage_24h": -6.76273,
+  "market_cap_change_24h": -861756.3919957839,
+  "market_cap_change_percentage_24h": -5.47442,
+  "circulating_supply": 938268014.4403,
+  "total_supply": 2500000000,
+  "max_supply": 7500000000,
+  "ath": 0.04781821,
+  "ath_change_percentage": -66.73219,
+  "ath_date": "2024-02-29T01:09:45.073Z",
+  "atl": 0.00104157,
+  "atl_change_percentage": 1427.31911,
+  "atl_date": "2023-11-03T02:11:01.051Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:34.426Z",
+  "platforms": {
+    "ethereum": "0xf9ca9523e5b5a42c3018c62b084db8543478c400"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "fantaverse",
+  "symbol": "ut",
+  "name": "Fantaverse",
+  "image": "https://assets.coingecko.com/coins/images/29539/large/ut.png?1696528481",
+  "current_price": 0.00689853,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 49661436,
+  "total_volume": 79718,
+  "high_24h": 0.00719854,
+  "low_24h": 0.00679813,
+  "price_change_24h": 2.82007e-7,
+  "price_change_percentage_24h": 0.00409,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 7200000000,
+  "max_supply": null,
+  "ath": 0.300986,
+  "ath_change_percentage": -97.70847,
+  "ath_date": "2023-03-23T15:59:29.224Z",
+  "atl": 0.0043015,
+  "atl_change_percentage": 60.34379,
+  "atl_date": "2024-03-02T01:40:07.029Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:05.221Z",
+  "platforms": {
+    "bsc": "0x39dc1f91fee49c03a0db558254707116101518bf"
+  }
+}

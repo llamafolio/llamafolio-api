@@ -1,0 +1,31 @@
+{
+  "id": "onx-finance",
+  "symbol": "onx",
+  "name": "OnX Finance",
+  "image": "https://assets.coingecko.com/coins/images/13445/large/onxlogo-1.png?1696513209",
+  "current_price": 0.01298887,
+  "market_cap": 128291,
+  "market_cap_rank": 3704,
+  "fully_diluted_valuation": 128616,
+  "total_volume": 11527.53,
+  "high_24h": 0.01434302,
+  "low_24h": 0.01208825,
+  "price_change_24h": -0.001240176233637976,
+  "price_change_percentage_24h": -8.71581,
+  "market_cap_change_24h": -12569.20079434634,
+  "market_cap_change_percentage_24h": -8.92317,
+  "circulating_supply": 9883242.32294274,
+  "total_supply": 9908242.32294274,
+  "max_supply": 9908242.32294274,
+  "ath": 7.47,
+  "ath_change_percentage": -99.82595,
+  "ath_date": "2021-02-19T16:41:04.359Z",
+  "atl": 0.00548433,
+  "atl_change_percentage": 136.94137,
+  "atl_date": "2023-08-21T17:50:22.105Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:01.265Z",
+  "platforms": {
+    "polygon": "0xeb94a5e2c643403e29fa1d7197e7e0708b09ad84"
+  }
+}

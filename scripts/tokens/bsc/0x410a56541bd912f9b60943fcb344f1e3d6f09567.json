@@ -1,0 +1,31 @@
+{
+  "id": "minto",
+  "symbol": "btcmt",
+  "name": "Minto",
+  "image": "https://assets.coingecko.com/coins/images/21819/large/MNVvqe2n_400x400.png?1696521171",
+  "current_price": 0.679387,
+  "market_cap": 3949019,
+  "market_cap_rank": 1917,
+  "fully_diluted_valuation": 7057256,
+  "total_volume": 84224,
+  "high_24h": 0.679023,
+  "low_24h": 0.659538,
+  "price_change_24h": 0.01168404,
+  "price_change_percentage_24h": 1.74989,
+  "market_cap_change_24h": 93833,
+  "market_cap_change_percentage_24h": 2.43395,
+  "circulating_supply": 5819513.90476296,
+  "total_supply": 10400000,
+  "max_supply": null,
+  "ath": 2.37,
+  "ath_change_percentage": -71.30722,
+  "ath_date": "2021-12-22T03:02:02.054Z",
+  "atl": 0.391186,
+  "atl_change_percentage": 73.54604,
+  "atl_date": "2022-11-15T21:41:03.697Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:50.735Z",
+  "platforms": {
+    "bsc": "0x410a56541bd912f9b60943fcb344f1e3d6f09567"
+  }
+}

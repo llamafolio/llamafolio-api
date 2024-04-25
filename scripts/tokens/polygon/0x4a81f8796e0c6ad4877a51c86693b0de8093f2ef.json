@@ -1,0 +1,31 @@
+{
+  "id": "iron-finance",
+  "symbol": "ice",
+  "name": "Iron Finance",
+  "image": "https://assets.coingecko.com/coins/images/17024/large/ice_logo.jpg?1696516587",
+  "current_price": 0.00000463,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 5.22,
+  "high_24h": 0.00000475,
+  "low_24h": 0.00000462,
+  "price_change_24h": -8.3743737034e-8,
+  "price_change_percentage_24h": -1.77547,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 28.7,
+  "ath_change_percentage": -99.99998,
+  "ath_date": "2021-07-12T16:57:10.127Z",
+  "atl": 0.00000354,
+  "atl_change_percentage": 30.7919,
+  "atl_date": "2023-10-06T10:42:16.152Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:33.178Z",
+  "platforms": {
+    "polygon": "0x4a81f8796e0c6ad4877a51c86693b0de8093f2ef"
+  }
+}

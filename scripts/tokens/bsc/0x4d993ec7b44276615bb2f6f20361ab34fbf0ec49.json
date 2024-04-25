@@ -1,0 +1,31 @@
+{
+  "id": "brandpad-finance",
+  "symbol": "brand",
+  "name": "BrandPad Finance",
+  "image": "https://assets.coingecko.com/coins/images/19532/large/brandpad.PNG?1696518966",
+  "current_price": 0.00501052,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 942479,
+  "total_volume": 1940.03,
+  "high_24h": 0.00552774,
+  "low_24h": 0.00493181,
+  "price_change_24h": -0.00051013964893636,
+  "price_change_percentage_24h": -9.24055,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 188100000,
+  "max_supply": 188100000,
+  "ath": 0.275267,
+  "ath_change_percentage": -98.17976,
+  "ath_date": "2021-11-28T23:49:53.127Z",
+  "atl": 0.00139898,
+  "atl_change_percentage": 258.15466,
+  "atl_date": "2022-10-14T12:43:08.027Z",
+  "roi": null,
+  "last_updated": "2024-04-24T20:22:29.622Z",
+  "platforms": {
+    "bsc": "0x4d993ec7b44276615bb2f6f20361ab34fbf0ec49"
+  }
+}

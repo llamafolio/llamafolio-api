@@ -1,0 +1,31 @@
+{
+  "id": "kaka-nft-world",
+  "symbol": "kaka",
+  "name": "KAKA NFT World",
+  "image": "https://assets.coingecko.com/coins/images/20877/large/10768.png?1696520270",
+  "current_price": 0.0010857,
+  "market_cap": 89171,
+  "market_cap_rank": 3817,
+  "fully_diluted_valuation": 108241,
+  "total_volume": 26705,
+  "high_24h": 0.00109514,
+  "low_24h": 0.00106708,
+  "price_change_24h": 0.00000348,
+  "price_change_percentage_24h": 0.32183,
+  "market_cap_change_24h": 377.84,
+  "market_cap_change_percentage_24h": 0.42552,
+  "circulating_supply": 82382000,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 4.98,
+  "ath_change_percentage": -99.97818,
+  "ath_date": "2021-11-26T00:10:11.571Z",
+  "atl": 0.00037962,
+  "atl_change_percentage": 186.15915,
+  "atl_date": "2023-11-12T15:00:49.641Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:46.934Z",
+  "platforms": {
+    "bsc": "0x26a1bdfa3bb86b2744c4a42ebfdd205761d13a8a"
+  }
+}

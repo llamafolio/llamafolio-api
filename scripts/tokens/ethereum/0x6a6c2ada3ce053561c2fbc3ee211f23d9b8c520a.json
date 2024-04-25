@@ -1,0 +1,31 @@
+{
+  "id": "tontoken",
+  "symbol": "ton",
+  "name": "TON Community",
+  "image": "https://assets.coingecko.com/coins/images/12334/large/ton.jpg?1696512162",
+  "current_price": 0.02600904,
+  "market_cap": 6966287,
+  "market_cap_rank": 1622,
+  "fully_diluted_valuation": 10392737,
+  "total_volume": 24628,
+  "high_24h": 0.02747988,
+  "low_24h": 0.02497968,
+  "price_change_24h": -0.000498845654096018,
+  "price_change_percentage_24h": -1.88188,
+  "market_cap_change_24h": -143348.6185771674,
+  "market_cap_change_percentage_24h": -2.01626,
+  "circulating_supply": 268121355.45057216,
+  "total_supply": 400000000,
+  "max_supply": null,
+  "ath": 0.104949,
+  "ath_change_percentage": -75.23951,
+  "ath_date": "2020-09-03T11:39:39.843Z",
+  "atl": 0.00331783,
+  "atl_change_percentage": 683.22269,
+  "atl_date": "2021-08-10T08:15:01.356Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:28.795Z",
+  "platforms": {
+    "ethereum": "0x6a6c2ada3ce053561c2fbc3ee211f23d9b8c520a"
+  }
+}

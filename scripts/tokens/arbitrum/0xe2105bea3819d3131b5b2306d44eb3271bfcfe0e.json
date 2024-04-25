@@ -1,0 +1,31 @@
+{
+  "id": "fief",
+  "symbol": "fief",
+  "name": "Fief",
+  "image": "https://assets.coingecko.com/coins/images/23710/large/61f837d2703b649ab0213d45_Black_logo_-_no_background-p-500.png?1696522910",
+  "current_price": 0.01725023,
+  "market_cap": 2948101,
+  "market_cap_rank": 2073,
+  "fully_diluted_valuation": 8625113,
+  "total_volume": 103.5,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 171140986.0764873,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 0.364116,
+  "ath_change_percentage": -95.26243,
+  "ath_date": "2023-06-12T01:05:35.553Z",
+  "atl": 0.00030476,
+  "atl_change_percentage": 5560.27201,
+  "atl_date": "2022-11-28T15:50:29.822Z",
+  "roi": null,
+  "last_updated": "2024-03-31T23:19:52.608Z",
+  "platforms": {
+    "arbitrum": "0xe2105bea3819d3131b5b2306d44eb3271bfcfe0e"
+  }
+}

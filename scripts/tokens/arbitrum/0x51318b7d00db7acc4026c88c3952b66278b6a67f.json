@@ -1,0 +1,31 @@
+{
+  "id": "plutusdao",
+  "symbol": "pls",
+  "name": "PlutusDAO",
+  "image": "https://assets.coingecko.com/coins/images/25326/large/M6nUndNU_400x400.jpg?1696524461",
+  "current_price": 0.03325994,
+  "market_cap": 357179,
+  "market_cap_rank": 3230,
+  "fully_diluted_valuation": 3298047,
+  "total_volume": 5197.3,
+  "high_24h": 0.0345339,
+  "low_24h": 0.03294526,
+  "price_change_24h": -0.000519213849136738,
+  "price_change_percentage_24h": -1.53708,
+  "market_cap_change_24h": -9288.982778502745,
+  "market_cap_change_percentage_24h": -2.53474,
+  "circulating_supply": 10830000,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 1.42,
+  "ath_change_percentage": -97.64882,
+  "ath_date": "2023-03-21T15:53:52.991Z",
+  "atl": 0.00004317,
+  "atl_change_percentage": 76982.83777,
+  "atl_date": "2023-10-09T20:05:26.660Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:02.623Z",
+  "platforms": {
+    "arbitrum": "0x51318b7d00db7acc4026c88c3952b66278b6a67f"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "chainlink",
+  "symbol": "link",
+  "name": "Chainlink",
+  "image": "https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009",
+  "current_price": 14.72,
+  "market_cap": 8646903552,
+  "market_cap_rank": 18,
+  "fully_diluted_valuation": 14728162110,
+  "total_volume": 508487378,
+  "high_24h": 15.62,
+  "low_24h": 14.37,
+  "price_change_24h": -0.6604303311172881,
+  "price_change_percentage_24h": -4.29273,
+  "market_cap_change_24h": -403148107.3760929,
+  "market_cap_change_percentage_24h": -4.45465,
+  "circulating_supply": 587099971.3083414,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 52.7,
+  "ath_change_percentage": -72.04989,
+  "ath_date": "2021-05-10T00:13:57.214Z",
+  "atl": 0.148183,
+  "atl_change_percentage": 9839.56021,
+  "atl_date": "2017-11-29T00:00:00.000Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:41.348Z",
+  "platforms": {
+    "arbitrum": "0xf97f4df75117a78c1a5a0dbb814af92458539fb4"
+  }
+}

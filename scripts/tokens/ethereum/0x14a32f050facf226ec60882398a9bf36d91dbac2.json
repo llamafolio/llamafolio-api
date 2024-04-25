@@ -1,0 +1,31 @@
+{
+  "id": "kyoko",
+  "symbol": "kyoko",
+  "name": "Kyoko",
+  "image": "https://assets.coingecko.com/coins/images/24454/large/kyoko.png?1696523634",
+  "current_price": 0.00189391,
+  "market_cap": 1186583,
+  "market_cap_rank": 2588,
+  "fully_diluted_valuation": 1893907,
+  "total_volume": 82.38,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 626526666,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.266593,
+  "ath_change_percentage": -99.28959,
+  "ath_date": "2022-04-10T15:49:27.360Z",
+  "atl": 0.00073722,
+  "atl_change_percentage": 156.89774,
+  "atl_date": "2023-06-15T15:24:58.690Z",
+  "roi": null,
+  "last_updated": "2024-04-01T01:28:55.473Z",
+  "platforms": {
+    "ethereum": "0x14a32f050facf226ec60882398a9bf36d91dbac2"
+  }
+}

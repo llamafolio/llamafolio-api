@@ -1,0 +1,31 @@
+{
+  "id": "arbdoge-ai",
+  "symbol": "aidoge",
+  "name": "ArbDoge AI",
+  "image": "https://assets.coingecko.com/coins/images/29852/large/photo_2023-04-18_14-25-28.jpg?1696528778",
+  "current_price": 4.21479e-10,
+  "market_cap": 79038017,
+  "market_cap_rank": 537,
+  "fully_diluted_valuation": 79038023,
+  "total_volume": 16160029,
+  "high_24h": 4.94705e-10,
+  "low_24h": 4.19971e-10,
+  "price_change_24h": -6.5137939e-11,
+  "price_change_percentage_24h": -13.38589,
+  "market_cap_change_24h": -12819397.130877152,
+  "market_cap_change_percentage_24h": -13.95576,
+  "circulating_supply": 188164819927241000,
+  "total_supply": 188164832848409000,
+  "max_supply": 210000000000000000,
+  "ath": 1.118e-9,
+  "ath_change_percentage": -62.36242,
+  "ath_date": "2023-05-01T01:35:38.530Z",
+  "atl": 4.7681e-11,
+  "atl_change_percentage": 782.81789,
+  "atl_date": "2023-09-14T02:40:44.398Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:38.683Z",
+  "platforms": {
+    "arbitrum": "0x09e18590e8f76b6cf471b3cd75fe1a1a9d2b2c2b"
+  }
+}

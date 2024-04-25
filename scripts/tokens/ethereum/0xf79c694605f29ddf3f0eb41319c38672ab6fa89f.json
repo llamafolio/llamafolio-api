@@ -1,0 +1,31 @@
+{
+  "id": "mackerel",
+  "symbol": "macks",
+  "name": "Mackerel",
+  "image": "https://assets.coingecko.com/coins/images/33270/large/3vQdHnYS_400x400.jpg?1701326383",
+  "current_price": 0.00151164,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 31744,
+  "total_volume": 485.98,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 21000000,
+  "max_supply": 21000000,
+  "ath": 0.00320702,
+  "ath_change_percentage": -52.86479,
+  "ath_date": "2023-11-30T09:30:01.167Z",
+  "atl": 0.0014788,
+  "atl_change_percentage": 2.22066,
+  "atl_date": "2023-12-05T08:44:53.331Z",
+  "roi": null,
+  "last_updated": "2023-12-08T16:14:35.100Z",
+  "platforms": {
+    "ethereum": "0xf79c694605f29ddf3f0eb41319c38672ab6fa89f"
+  }
+}

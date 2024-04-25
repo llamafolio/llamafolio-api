@@ -1,0 +1,31 @@
+{
+  "id": "pepe-le-pew-coin",
+  "symbol": "$plpc",
+  "name": "Pepe Le Pew Coin",
+  "image": "https://assets.coingecko.com/coins/images/30876/large/plpc.png?1696529724",
+  "current_price": 9.08309e-10,
+  "market_cap": 100101,
+  "market_cap_rank": 3779,
+  "fully_diluted_valuation": 146572,
+  "total_volume": 20.16,
+  "high_24h": 9.20731e-10,
+  "low_24h": 9.02871e-10,
+  "price_change_24h": -1.2421929e-11,
+  "price_change_percentage_24h": -1.34914,
+  "market_cap_change_24h": -3033.457733323783,
+  "market_cap_change_percentage_24h": -2.94127,
+  "circulating_supply": 110205878304323.72,
+  "total_supply": 161367815483840,
+  "max_supply": 165165125165230,
+  "ath": 6.282e-9,
+  "ath_change_percentage": -85.54013,
+  "ath_date": "2023-07-03T15:17:23.143Z",
+  "atl": 5.98826e-10,
+  "atl_change_percentage": 51.68166,
+  "atl_date": "2023-10-20T07:40:45.779Z",
+  "roi": null,
+  "last_updated": "2024-04-25T02:04:25.760Z",
+  "platforms": {
+    "ethereum": "0xa34ee6108fe427f91edce0d6520d9fec0e64f67b"
+  }
+}

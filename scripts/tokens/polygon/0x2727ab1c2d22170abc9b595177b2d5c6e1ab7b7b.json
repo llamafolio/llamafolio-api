@@ -1,0 +1,31 @@
+{
+  "id": "cartesi",
+  "symbol": "ctsi",
+  "name": "Cartesi",
+  "image": "https://assets.coingecko.com/coins/images/11038/large/Cartesi_Logo.png?1696510982",
+  "current_price": 0.19739,
+  "market_cap": 154951074,
+  "market_cap_rank": 354,
+  "fully_diluted_valuation": 197176642,
+  "total_volume": 8978115,
+  "high_24h": 0.223833,
+  "low_24h": 0.193679,
+  "price_change_24h": -0.0241423954836206,
+  "price_change_percentage_24h": -10.89791,
+  "market_cap_change_24h": -19435452.58674124,
+  "market_cap_change_percentage_24h": -11.14504,
+  "circulating_supply": 785849038.8305247,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 1.74,
+  "ath_change_percentage": -88.68889,
+  "ath_date": "2021-05-09T00:43:41.306Z",
+  "atl": 0.02670608,
+  "atl_change_percentage": 638.72856,
+  "atl_date": "2020-05-10T04:49:27.744Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:43.507Z",
+  "platforms": {
+    "polygon": "0x2727ab1c2d22170abc9b595177b2d5c6e1ab7b7b"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "dex-game",
+  "symbol": "dxgm",
+  "name": "DexGame",
+  "image": "https://assets.coingecko.com/coins/images/21084/large/dxgm-token.png?1696520466",
+  "current_price": 0.00098207,
+  "market_cap": 936610,
+  "market_cap_rank": 2724,
+  "fully_diluted_valuation": 980292,
+  "total_volume": 24596,
+  "high_24h": 0.00109635,
+  "low_24h": 0.0009718,
+  "price_change_24h": -0.000070285128967836,
+  "price_change_percentage_24h": -6.67883,
+  "market_cap_change_24h": -99886.15122375055,
+  "market_cap_change_percentage_24h": -9.63691,
+  "circulating_supply": 955439623.990003,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.04727275,
+  "ath_change_percentage": -97.94253,
+  "ath_date": "2022-08-17T13:30:48.176Z",
+  "atl": 0.00095214,
+  "atl_change_percentage": 2.15155,
+  "atl_date": "2024-04-17T14:39:34.393Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:02.297Z",
+  "platforms": {
+    "ethereum": "0x66f73d0fd4161cfad4302dc145ff994375c13475"
+  }
+}

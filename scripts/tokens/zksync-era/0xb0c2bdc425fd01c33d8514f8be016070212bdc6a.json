@@ -1,0 +1,31 @@
+{
+  "id": "long-mao",
+  "symbol": "lmao",
+  "name": "Long Mao",
+  "image": "https://assets.coingecko.com/coins/images/35213/large/rsz_longmaopfpp.png?1707898201",
+  "current_price": 0.00250176,
+  "market_cap": 2218069,
+  "market_cap_rank": 2238,
+  "fully_diluted_valuation": 2218069,
+  "total_volume": 34551,
+  "high_24h": 0.00267484,
+  "low_24h": 0.00243098,
+  "price_change_24h": 0.00005911,
+  "price_change_percentage_24h": 2.41973,
+  "market_cap_change_24h": 52403,
+  "market_cap_change_percentage_24h": 2.41973,
+  "circulating_supply": 886603253.009671,
+  "total_supply": 886603253.009671,
+  "max_supply": 1000000000,
+  "ath": 0.00544452,
+  "ath_change_percentage": -53.98703,
+  "ath_date": "2024-03-06T23:44:42.933Z",
+  "atl": 0.000304,
+  "atl_change_percentage": 724.06636,
+  "atl_date": "2024-02-23T11:59:28.904Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:51:57.070Z",
+  "platforms": {
+    "zksync-era": "0xb0c2bdc425fd01c33d8514f8be016070212bdc6a"
+  }
+}

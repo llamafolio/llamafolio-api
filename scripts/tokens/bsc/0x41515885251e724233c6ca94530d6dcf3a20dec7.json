@@ -1,0 +1,31 @@
+{
+  "id": "halo-network",
+  "symbol": "ho",
+  "name": "HALO Network",
+  "image": "https://assets.coingecko.com/coins/images/17407/large/HALO_logo.png?1696516955",
+  "current_price": 0.01492291,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 1231.34,
+  "high_24h": 0.01578569,
+  "low_24h": 0.0148869,
+  "price_change_24h": -0.000843259545201366,
+  "price_change_percentage_24h": -5.34854,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 8.38,
+  "ath_change_percentage": -99.82212,
+  "ath_date": "2022-02-25T04:39:38.929Z",
+  "atl": 0.01489486,
+  "atl_change_percentage": 0.1235,
+  "atl_date": "2024-04-25T04:19:28.632Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:16:30.335Z",
+  "platforms": {
+    "bsc": "0x41515885251e724233c6ca94530d6dcf3a20dec7"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "mute",
+  "symbol": "mute",
+  "name": "Mute",
+  "image": "https://assets.coingecko.com/coins/images/14331/large/MUTE.png?1696514019",
+  "current_price": 0.844023,
+  "market_cap": 33809777,
+  "market_cap_rank": 865,
+  "fully_diluted_valuation": 33809777,
+  "total_volume": 131286,
+  "high_24h": 0.920845,
+  "low_24h": 0.839499,
+  "price_change_24h": -0.0713226876631784,
+  "price_change_percentage_24h": -7.79188,
+  "market_cap_change_24h": -2837909.1217339635,
+  "market_cap_change_percentage_24h": -7.74376,
+  "circulating_supply": 40000000,
+  "total_supply": 40000000,
+  "max_supply": 40000000,
+  "ath": 3.14,
+  "ath_change_percentage": -73.08152,
+  "ath_date": "2022-01-02T05:59:36.044Z",
+  "atl": 0.108787,
+  "atl_change_percentage": 676.94545,
+  "atl_date": "2022-06-18T20:13:51.424Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:09.178Z",
+  "platforms": {
+    "zksync-era": "0x0e97c7a0f8b2c9885c8ac9fc6136e829cbc21d42"
+  }
+}

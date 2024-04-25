@@ -1,0 +1,31 @@
+{
+  "id": "astroswap",
+  "symbol": "astro",
+  "name": "AstroSwap",
+  "image": "https://assets.coingecko.com/coins/images/18816/large/astro.png?1696518278",
+  "current_price": 0.00052498,
+  "market_cap": 225078,
+  "market_cap_rank": 3437,
+  "fully_diluted_valuation": 5253141,
+  "total_volume": 23589,
+  "high_24h": 0.00053099,
+  "low_24h": 0.00052215,
+  "price_change_24h": -0.000005416623711851,
+  "price_change_percentage_24h": -1.02125,
+  "market_cap_change_24h": -2105.096923603385,
+  "market_cap_change_percentage_24h": -0.92661,
+  "circulating_supply": 428462821,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.522928,
+  "ath_change_percentage": -99.89947,
+  "ath_date": "2021-10-28T17:37:59.505Z",
+  "atl": 0.00033817,
+  "atl_change_percentage": 55.45118,
+  "atl_date": "2023-10-14T02:35:59.718Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:23.657Z",
+  "platforms": {
+    "bsc": "0x72eb7ca07399ec402c5b7aa6a65752b6a1dc0c27"
+  }
+}

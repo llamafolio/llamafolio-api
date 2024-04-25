@@ -1,0 +1,31 @@
+{
+  "id": "ispolink",
+  "symbol": "isp",
+  "name": "Ispolink",
+  "image": "https://assets.coingecko.com/coins/images/15283/large/isolink.PNG?1696514934",
+  "current_price": 0.00272665,
+  "market_cap": 8245603,
+  "market_cap_rank": 1532,
+  "fully_diluted_valuation": 27410859,
+  "total_volume": 839784,
+  "high_24h": 0.00303322,
+  "low_24h": 0.00274109,
+  "price_change_24h": -0.000300144941256639,
+  "price_change_percentage_24h": -9.91628,
+  "market_cap_change_24h": -874856.3059313102,
+  "market_cap_change_percentage_24h": -9.59224,
+  "circulating_supply": 3008152161.4522066,
+  "total_supply": 10000000000,
+  "max_supply": null,
+  "ath": 0.01830029,
+  "ath_change_percentage": -84.93635,
+  "ath_date": "2021-11-08T10:39:28.445Z",
+  "atl": 0.00036921,
+  "atl_change_percentage": 646.63681,
+  "atl_date": "2023-10-15T22:56:41.769Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:18.333Z",
+  "platforms": {
+    "bsc": "0xd2e7b964770fcf51df088a5f0bb2d33a3c60cccf"
+  }
+}

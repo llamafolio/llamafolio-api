@@ -1,0 +1,31 @@
+{
+  "id": "aave-xsushi",
+  "symbol": "axsushi",
+  "name": "Aave XSUSHI",
+  "image": "https://assets.coingecko.com/coins/images/17256/large/aXSUSHI_2x.png?1696516812",
+  "current_price": 1.33,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 577212,
+  "total_volume": 0,
+  "high_24h": 1.48,
+  "low_24h": 1.32,
+  "price_change_24h": -0.10614869284836548,
+  "price_change_percentage_24h": -7.43474,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 433844.183942435,
+  "max_supply": null,
+  "ath": 18.78,
+  "ath_change_percentage": -92.9638,
+  "ath_date": "2021-09-16T13:00:02.791Z",
+  "atl": 0.715522,
+  "atl_change_percentage": 84.7031,
+  "atl_date": "2023-10-12T17:07:00.378Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:33.175Z",
+  "platforms": {
+    "ethereum": "0xf256cc7847e919fac9b808cc216cac87ccf2f47a"
+  }
+}

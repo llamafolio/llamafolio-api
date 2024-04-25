@@ -1,0 +1,31 @@
+{
+  "id": "juice",
+  "symbol": "$juice",
+  "name": "Juice",
+  "image": "https://assets.coingecko.com/coins/images/35942/large/juiceCG.png?1710233232",
+  "current_price": 0.324062,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3234994,
+  "total_volume": 410661,
+  "high_24h": 0.348573,
+  "low_24h": 0.322201,
+  "price_change_24h": -0.01969442998286325,
+  "price_change_percentage_24h": -5.72919,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.588044,
+  "ath_change_percentage": -45.02978,
+  "ath_date": "2024-03-14T08:09:34.872Z",
+  "atl": 0.215099,
+  "atl_change_percentage": 50.27896,
+  "atl_date": "2024-03-29T20:49:50.644Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:02.606Z",
+  "platforms": {
+    "ethereum": "0xde5d2530a877871f6f0fc240b9fce117246dadae"
+  }
+}

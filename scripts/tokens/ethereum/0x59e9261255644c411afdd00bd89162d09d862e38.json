@@ -1,0 +1,31 @@
+{
+  "id": "etha-lend",
+  "symbol": "etha",
+  "name": "ETHA Lend",
+  "image": "https://assets.coingecko.com/coins/images/14141/large/etha_logo200x200.png?1696513861",
+  "current_price": 0.0091584,
+  "market_cap": 72428,
+  "market_cap_rank": 3884,
+  "fully_diluted_valuation": 274764,
+  "total_volume": 57076,
+  "high_24h": 0.0098995,
+  "low_24h": 0.00877082,
+  "price_change_24h": -0.000588707972624419,
+  "price_change_percentage_24h": -6.03982,
+  "market_cap_change_24h": -4799.78341679521,
+  "market_cap_change_percentage_24h": -6.21509,
+  "circulating_supply": 7908034.300443784,
+  "total_supply": 30000000,
+  "max_supply": 30000000,
+  "ath": 5.66,
+  "ath_change_percentage": -99.83751,
+  "ath_date": "2021-03-07T03:42:40.741Z",
+  "atl": 0.00354725,
+  "atl_change_percentage": 159.24531,
+  "atl_date": "2023-11-24T10:51:00.774Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:23.273Z",
+  "platforms": {
+    "ethereum": "0x59e9261255644c411afdd00bd89162d09d862e38"
+  }
+}

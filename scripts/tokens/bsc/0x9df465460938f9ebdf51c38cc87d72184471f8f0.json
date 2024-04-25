@@ -1,0 +1,31 @@
+{
+  "id": "genopets",
+  "symbol": "gene",
+  "name": "Genopets",
+  "image": "https://assets.coingecko.com/coins/images/20360/large/gene-token.png?1696519768",
+  "current_price": 0.238702,
+  "market_cap": 10745639,
+  "market_cap_rank": 1395,
+  "fully_diluted_valuation": 23844284,
+  "total_volume": 38331,
+  "high_24h": 0.258874,
+  "low_24h": 0.23854,
+  "price_change_24h": -0.014344660105968077,
+  "price_change_percentage_24h": -5.66877,
+  "market_cap_change_24h": -658019.4252228457,
+  "market_cap_change_percentage_24h": -5.77025,
+  "circulating_supply": 45065891,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 37.83,
+  "ath_change_percentage": -99.36912,
+  "ath_date": "2021-11-30T08:53:29.047Z",
+  "atl": 0.134544,
+  "atl_change_percentage": 77.36612,
+  "atl_date": "2023-10-26T11:16:13.000Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:12.305Z",
+  "platforms": {
+    "bsc": "0x9df465460938f9ebdf51c38cc87d72184471f8f0"
+  }
+}

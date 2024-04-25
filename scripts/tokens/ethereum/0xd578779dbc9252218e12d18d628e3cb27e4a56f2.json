@@ -1,0 +1,31 @@
+{
+  "id": "britto",
+  "symbol": "brt",
+  "name": "Britto",
+  "image": "https://assets.coingecko.com/coins/images/22830/large/britto-coin-logo.jpg?1696522131",
+  "current_price": 3.11,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1373471637,
+  "total_volume": 71362,
+  "high_24h": 3.14,
+  "low_24h": 3.09,
+  "price_change_24h": 0.00092667,
+  "price_change_percentage_24h": 0.02976,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 441000000,
+  "max_supply": null,
+  "ath": 4.97,
+  "ath_change_percentage": -37.2923,
+  "ath_date": "2023-09-06T19:15:03.009Z",
+  "atl": 0.370286,
+  "atl_change_percentage": 741.09542,
+  "atl_date": "2023-12-14T18:00:02.232Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:53.084Z",
+  "platforms": {
+    "ethereum": "0xd578779dbc9252218e12d18d628e3cb27e4a56f2"
+  }
+}

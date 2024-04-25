@@ -1,0 +1,31 @@
+{
+  "id": "bitstarters",
+  "symbol": "bits",
+  "name": "BitStarters",
+  "image": "https://assets.coingecko.com/coins/images/34074/large/BitStarters_LOGO.jpg?1703906674",
+  "current_price": 0.01398447,
+  "market_cap": 146846,
+  "market_cap_rank": 3640,
+  "fully_diluted_valuation": 1202664,
+  "total_volume": 218532,
+  "high_24h": 0.01529764,
+  "low_24h": 0.01349157,
+  "price_change_24h": -0.000965039536437892,
+  "price_change_percentage_24h": -6.45533,
+  "market_cap_change_24h": -11253.551145619393,
+  "market_cap_change_percentage_24h": -7.11801,
+  "circulating_supply": 10500659.067986075,
+  "total_supply": 86000000,
+  "max_supply": 100000000,
+  "ath": 0.04347096,
+  "ath_change_percentage": -67.89334,
+  "ath_date": "2024-02-18T09:34:56.547Z",
+  "atl": 0.00575964,
+  "atl_change_percentage": 142.32554,
+  "atl_date": "2024-01-12T22:33:41.491Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:29.559Z",
+  "platforms": {
+    "polygon": "0x5f5f7ca63a9d2c5200bc03ca3335a975d8f771d9"
+  }
+}

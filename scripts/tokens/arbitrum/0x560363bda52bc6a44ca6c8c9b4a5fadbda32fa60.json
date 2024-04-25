@@ -1,0 +1,31 @@
+{
+  "id": "seedify-fund",
+  "symbol": "sfund",
+  "name": "Seedify.fund",
+  "image": "https://assets.coingecko.com/coins/images/14614/large/Favicon_Icon.png?1696514292",
+  "current_price": 2.82,
+  "market_cap": 179347463,
+  "market_cap_rank": 317,
+  "fully_diluted_valuation": 282294424,
+  "total_volume": 6316405,
+  "high_24h": 3.02,
+  "low_24h": 2.82,
+  "price_change_24h": -0.17575438807422028,
+  "price_change_percentage_24h": -5.87007,
+  "market_cap_change_24h": -10846521.60896653,
+  "market_cap_change_percentage_24h": -5.70287,
+  "circulating_supply": 63532059.88,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 16.79,
+  "ath_change_percentage": -83.16142,
+  "ath_date": "2021-11-29T02:21:05.988Z",
+  "atl": 0.294604,
+  "atl_change_percentage": 859.62521,
+  "atl_date": "2021-07-20T05:41:21.428Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:56:00.193Z",
+  "platforms": {
+    "arbitrum": "0x560363bda52bc6a44ca6c8c9b4a5fadbda32fa60"
+  }
+}

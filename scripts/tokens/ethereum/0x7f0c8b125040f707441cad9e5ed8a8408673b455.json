@@ -1,0 +1,31 @@
+{
+  "id": "csp-dao-network",
+  "symbol": "nebo",
+  "name": "CSP DAO Network",
+  "image": "https://assets.coingecko.com/coins/images/13436/large/csp_dao.png?1696513200",
+  "current_price": 2.85,
+  "market_cap": 3375329,
+  "market_cap_rank": 1995,
+  "fully_diluted_valuation": 6421920,
+  "total_volume": 288.27,
+  "high_24h": 2.96,
+  "low_24h": 2.83,
+  "price_change_24h": -0.10897022521048205,
+  "price_change_percentage_24h": -3.6775,
+  "market_cap_change_24h": -205665.6785747367,
+  "market_cap_change_percentage_24h": -5.74326,
+  "circulating_supply": 1182588.6669523907,
+  "total_supply": 2250000,
+  "max_supply": 2250000,
+  "ath": 35.29,
+  "ath_change_percentage": -91.91239,
+  "ath_date": "2021-04-13T16:32:54.966Z",
+  "atl": 0.757782,
+  "atl_change_percentage": 276.64985,
+  "atl_date": "2023-09-25T00:31:29.443Z",
+  "roi": null,
+  "last_updated": "2024-04-25T04:50:01.319Z",
+  "platforms": {
+    "ethereum": "0x7f0c8b125040f707441cad9e5ed8a8408673b455"
+  }
+}

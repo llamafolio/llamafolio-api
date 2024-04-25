@@ -1,0 +1,31 @@
+{
+  "id": "worldtoken",
+  "symbol": "world",
+  "name": "WorldToken",
+  "image": "https://assets.coingecko.com/coins/images/33182/large/photo_2023-11-23_15-08-30.jpg?1700926259",
+  "current_price": 0.179686,
+  "market_cap": 48141,
+  "market_cap_rank": 3998,
+  "fully_diluted_valuation": 3773406,
+  "total_volume": 50575,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 267915.39,
+  "total_supply": 21000000,
+  "max_supply": null,
+  "ath": 1.35,
+  "ath_change_percentage": -86.65478,
+  "ath_date": "2023-11-28T00:11:29.948Z",
+  "atl": 0.070189,
+  "atl_change_percentage": 156.00463,
+  "atl_date": "2024-04-10T22:38:05.858Z",
+  "roi": null,
+  "last_updated": "2024-04-11T16:31:10.988Z",
+  "platforms": {
+    "polygon": "0x63062d0f51fc65d4493c85df0863f631fe2a26b6"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "pegazus-finance",
+  "symbol": "peg",
+  "name": "Pegazus Finance",
+  "image": "https://assets.coingecko.com/coins/images/15610/large/Pegazus.png?1696515245",
+  "current_price": 2.46506e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 206708,
+  "total_volume": 0.421955,
+  "high_24h": 2.47469e-10,
+  "low_24h": 2.39687e-10,
+  "price_change_24h": -8.52748e-13,
+  "price_change_percentage_24h": -0.34474,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 838551159025335,
+  "max_supply": null,
+  "ath": 1.7639e-8,
+  "ath_change_percentage": -98.60806,
+  "ath_date": "2021-05-25T01:37:36.553Z",
+  "atl": 2.596e-12,
+  "atl_change_percentage": 9356.65456,
+  "atl_date": "2021-11-20T21:39:12.663Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:30.554Z",
+  "platforms": {
+    "bsc": "0xd585f9c5953ca97da3551f20725a274c9e442ff3"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "cryptomines-reborn",
+  "symbol": "crux",
+  "name": "CryptoMines Reborn",
+  "image": "https://assets.coingecko.com/coins/images/24538/large/Webp.net-resizeimage_%281%29.png?1696523716",
+  "current_price": 0.098534,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 492669,
+  "total_volume": 1.76,
+  "high_24h": 0.098786,
+  "low_24h": 0.09761,
+  "price_change_24h": 0.00092347,
+  "price_change_percentage_24h": 0.94608,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 5000000,
+  "max_supply": 5000000,
+  "ath": 57.83,
+  "ath_change_percentage": -99.82963,
+  "ath_date": "2022-03-30T21:14:18.047Z",
+  "atl": 0.03675948,
+  "atl_change_percentage": 168.0499,
+  "atl_date": "2023-10-20T01:48:33.214Z",
+  "roi": null,
+  "last_updated": "2024-04-24T10:25:47.173Z",
+  "platforms": {
+    "bsc": "0xe0191fefdd0d2b39b1a2e4e029ccda8a481b7995"
+  }
+}

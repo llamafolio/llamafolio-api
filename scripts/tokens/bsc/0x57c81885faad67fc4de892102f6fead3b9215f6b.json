@@ -1,0 +1,31 @@
+{
+  "id": "zenith-chain",
+  "symbol": "zenith",
+  "name": "Zenith Chain",
+  "image": "https://assets.coingecko.com/coins/images/21266/large/Jqtp-OVG_400x400.png?1696520637",
+  "current_price": 0.00193162,
+  "market_cap": 48213,
+  "market_cap_rank": 3997,
+  "fully_diluted_valuation": 19316.15,
+  "total_volume": 95.87,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 24959978.37,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 1.32,
+  "ath_change_percentage": -99.85374,
+  "ath_date": "2021-12-07T00:45:01.234Z",
+  "atl": 0.00044217,
+  "atl_change_percentage": 336.84795,
+  "atl_date": "2024-03-13T12:42:58.604Z",
+  "roi": null,
+  "last_updated": "2024-04-23T15:09:11.369Z",
+  "platforms": {
+    "bsc": "0x57c81885faad67fc4de892102f6fead3b9215f6b"
+  }
+}

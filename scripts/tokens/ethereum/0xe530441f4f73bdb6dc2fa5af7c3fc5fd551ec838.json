@@ -1,0 +1,31 @@
+{
+  "id": "gsenetwork",
+  "symbol": "gse",
+  "name": "GSENetwork",
+  "image": "https://assets.coingecko.com/coins/images/4776/large/gsenetwork.png?1696505333",
+  "current_price": 0.0000401,
+  "market_cap": 801411,
+  "market_cap_rank": 2818,
+  "fully_diluted_valuation": 4007053,
+  "total_volume": 4868.89,
+  "high_24h": 0.00004494,
+  "low_24h": 0.00003828,
+  "price_change_24h": -5.37373819187e-7,
+  "price_change_percentage_24h": -1.32248,
+  "market_cap_change_24h": -10818.420839304803,
+  "market_cap_change_percentage_24h": -1.33194,
+  "circulating_supply": 19999999805,
+  "total_supply": 100000000000,
+  "max_supply": null,
+  "ath": 0.04353479,
+  "ath_change_percentage": -99.90796,
+  "ath_date": "2018-06-30T06:09:39.140Z",
+  "atl": 0.00000226,
+  "atl_change_percentage": 1670.49878,
+  "atl_date": "2020-06-30T09:18:54.760Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:40.980Z",
+  "platforms": {
+    "ethereum": "0xe530441f4f73bdb6dc2fa5af7c3fc5fd551ec838"
+  }
+}

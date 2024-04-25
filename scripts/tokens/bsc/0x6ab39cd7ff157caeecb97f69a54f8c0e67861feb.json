@@ -1,0 +1,31 @@
+{
+  "id": "nyandoge-international",
+  "symbol": "nyandoge",
+  "name": "NyanDOGE International",
+  "image": "https://assets.coingecko.com/coins/images/33143/large/NyanDOGEInternational200x200.png?1700850039",
+  "current_price": 0.00000166,
+  "market_cap": 2282.46,
+  "market_cap_rank": 4268,
+  "fully_diluted_valuation": 1656593,
+  "total_volume": 2.17,
+  "high_24h": 0.00000167,
+  "low_24h": 0.00000149,
+  "price_change_24h": 1.56588e-7,
+  "price_change_percentage_24h": 10.39564,
+  "market_cap_change_24h": 211.34,
+  "market_cap_change_percentage_24h": 10.20434,
+  "circulating_supply": 1377800875.3113554,
+  "total_supply": 1000000000000,
+  "max_supply": 1000000000000,
+  "ath": 0.00004302,
+  "ath_change_percentage": -96.14879,
+  "ath_date": "2023-11-27T23:51:49.382Z",
+  "atl": 0.00000149,
+  "atl_change_percentage": 11.36573,
+  "atl_date": "2024-04-24T07:36:52.370Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:52.392Z",
+  "platforms": {
+    "bsc": "0x6ab39cd7ff157caeecb97f69a54f8c0e67861feb"
+  }
+}

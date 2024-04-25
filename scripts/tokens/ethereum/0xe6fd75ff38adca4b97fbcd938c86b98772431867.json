@@ -1,0 +1,35 @@
+{
+  "id": "elastos",
+  "symbol": "ela",
+  "name": "Elastos",
+  "image": "https://assets.coingecko.com/coins/images/2780/large/Elastos.png?1696503549",
+  "current_price": 3.36,
+  "market_cap": 72617817,
+  "market_cap_rank": 565,
+  "fully_diluted_valuation": 85293156,
+  "total_volume": 639619,
+  "high_24h": 3.6,
+  "low_24h": 3.28,
+  "price_change_24h": -0.24731216821836677,
+  "price_change_percentage_24h": -6.86492,
+  "market_cap_change_24h": -6557261.03336212,
+  "market_cap_change_percentage_24h": -8.28198,
+  "circulating_supply": 21457696,
+  "total_supply": 25203107,
+  "max_supply": 28219999,
+  "ath": 89.14,
+  "ath_change_percentage": -96.19896,
+  "ath_date": "2018-02-24T00:00:00.000Z",
+  "atl": 0.793867,
+  "atl_change_percentage": 326.81942,
+  "atl_date": "2023-01-07T20:03:27.692Z",
+  "roi": {
+    "times": -0.9579555532360636,
+    "currency": "btc",
+    "percentage": -95.79555532360637
+  },
+  "last_updated": "2024-04-25T08:59:35.981Z",
+  "platforms": {
+    "ethereum": "0xe6fd75ff38adca4b97fbcd938c86b98772431867"
+  }
+}

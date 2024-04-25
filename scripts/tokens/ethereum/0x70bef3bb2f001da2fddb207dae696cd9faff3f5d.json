@@ -1,0 +1,31 @@
+{
+  "id": "ninja-squad",
+  "symbol": "nst",
+  "name": "Ninja Squad",
+  "image": "https://assets.coingecko.com/coins/images/22248/large/nst-logo-200x200.png?1711559985",
+  "current_price": 3.98,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 7965064,
+  "total_volume": 302569,
+  "high_24h": 4.47,
+  "low_24h": 3.9,
+  "price_change_24h": -0.1309912047129962,
+  "price_change_percentage_24h": -3.18441,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2000001,
+  "max_supply": 2000001,
+  "ath": 7.25,
+  "ath_change_percentage": -44.95373,
+  "ath_date": "2024-04-09T23:06:08.678Z",
+  "atl": 0.04543746,
+  "atl_change_percentage": 8677.48377,
+  "atl_date": "2023-09-11T19:55:09.286Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:39.271Z",
+  "platforms": {
+    "ethereum": "0x70bef3bb2f001da2fddb207dae696cd9faff3f5d"
+  }
+}

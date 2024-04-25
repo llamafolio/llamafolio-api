@@ -1,0 +1,31 @@
+{
+  "id": "ufo-gaming",
+  "symbol": "ufo",
+  "name": "UFO Gaming",
+  "image": "https://assets.coingecko.com/coins/images/16801/large/ufo.png?1696516371",
+  "current_price": 9.22035e-7,
+  "market_cap": 23749508,
+  "market_cap_rank": 1027,
+  "fully_diluted_valuation": 23749508,
+  "total_volume": 496737,
+  "high_24h": 9.73347e-7,
+  "low_24h": 9.18564e-7,
+  "price_change_24h": -5.1311623937e-8,
+  "price_change_percentage_24h": -5.27167,
+  "market_cap_change_24h": -1251906.4556357712,
+  "market_cap_change_percentage_24h": -5.00734,
+  "circulating_supply": 25757575757575,
+  "total_supply": 25757575757575,
+  "max_supply": 25757575757575,
+  "ath": 0.00005569,
+  "ath_change_percentage": -98.34572,
+  "ath_date": "2021-11-25T13:49:41.018Z",
+  "atl": 3.5011e-7,
+  "atl_change_percentage": 163.12722,
+  "atl_date": "2021-07-20T11:27:13.554Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:52.775Z",
+  "platforms": {
+    "ethereum": "0x249e38ea4102d0cf8264d3701f1a0e39c4f2dc3b"
+  }
+}

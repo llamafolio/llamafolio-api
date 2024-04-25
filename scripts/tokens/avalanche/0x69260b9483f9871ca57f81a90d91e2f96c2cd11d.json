@@ -1,0 +1,31 @@
+{
+  "id": "gogopool",
+  "symbol": "ggp",
+  "name": "GoGoPool",
+  "image": "https://assets.coingecko.com/coins/images/30267/large/GGP_logo_square.png?1696529174",
+  "current_price": 9.37,
+  "market_cap": 32720225,
+  "market_cap_rank": 874,
+  "fully_diluted_valuation": 176907784,
+  "total_volume": 82737,
+  "high_24h": 9.35,
+  "low_24h": 8.49,
+  "price_change_24h": 0.272745,
+  "price_change_percentage_24h": 2.99927,
+  "market_cap_change_24h": 952790,
+  "market_cap_change_percentage_24h": 2.99927,
+  "circulating_supply": 3493340.12893945,
+  "total_supply": 18887372.1955304,
+  "max_supply": 22500000,
+  "ath": 19.66,
+  "ath_change_percentage": -53.71161,
+  "ath_date": "2024-02-14T15:04:20.749Z",
+  "atl": 1.49,
+  "atl_change_percentage": 511.01469,
+  "atl_date": "2023-06-10T07:06:26.503Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:17.905Z",
+  "platforms": {
+    "avalanche": "0x69260b9483f9871ca57f81a90d91e2f96c2cd11d"
+  }
+}

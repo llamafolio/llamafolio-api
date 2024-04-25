@@ -1,0 +1,31 @@
+{
+  "id": "openfabric",
+  "symbol": "ofn",
+  "name": "Openfabric AI",
+  "image": "https://assets.coingecko.com/coins/images/32171/large/IMG_20231005_191903_018.jpg?1696741847",
+  "current_price": 0.5873,
+  "market_cap": 36141777,
+  "market_cap_rank": 829,
+  "fully_diluted_valuation": 293598420,
+  "total_volume": 1455147,
+  "high_24h": 0.642725,
+  "low_24h": 0.572872,
+  "price_change_24h": -0.05488271967802982,
+  "price_change_percentage_24h": -8.54628,
+  "market_cap_change_24h": -3304036.1147121415,
+  "market_cap_change_percentage_24h": -8.37614,
+  "circulating_supply": 61549678.2529843,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 0.910048,
+  "ath_change_percentage": -35.09741,
+  "ath_date": "2024-03-14T01:04:40.231Z",
+  "atl": 0.10014,
+  "atl_change_percentage": 489.81903,
+  "atl_date": "2023-11-07T17:09:40.414Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:56.233Z",
+  "platforms": {
+    "bsc": "0x8899ec96ed8c96b5c86c23c3f069c3def75b6d97"
+  }
+}

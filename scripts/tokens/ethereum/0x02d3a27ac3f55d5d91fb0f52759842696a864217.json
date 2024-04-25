@@ -1,0 +1,31 @@
+{
+  "id": "charged-particles",
+  "symbol": "ionx",
+  "name": "Charged Particles",
+  "image": "https://assets.coingecko.com/coins/images/15836/large/DrKjSQMH_400x400.png?1696515454",
+  "current_price": 0.01354383,
+  "market_cap": 1084597,
+  "market_cap_rank": 2641,
+  "fully_diluted_valuation": 1357816,
+  "total_volume": 509813,
+  "high_24h": 0.01806196,
+  "low_24h": 0.01353573,
+  "price_change_24h": -0.001798561831293028,
+  "price_change_percentage_24h": -11.72283,
+  "market_cap_change_24h": -137103.4886699356,
+  "market_cap_change_percentage_24h": -11.22235,
+  "circulating_supply": 79878024,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 2.75,
+  "ath_change_percentage": -99.5016,
+  "ath_date": "2021-08-29T16:45:57.410Z",
+  "atl": 0.01077001,
+  "atl_change_percentage": 27.43137,
+  "atl_date": "2023-10-19T12:50:52.083Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:17.994Z",
+  "platforms": {
+    "ethereum": "0x02d3a27ac3f55d5d91fb0f52759842696a864217"
+  }
+}

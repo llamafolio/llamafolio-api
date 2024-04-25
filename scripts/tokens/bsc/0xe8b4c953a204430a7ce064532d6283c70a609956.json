@@ -1,0 +1,31 @@
+{
+  "id": "apedoge",
+  "symbol": "aped",
+  "name": "Apedoge",
+  "image": "https://assets.coingecko.com/coins/images/27899/large/photo_2022-10-20_14-01-21.jpg?1696526920",
+  "current_price": 0.00003397,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 33968,
+  "total_volume": 0,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00037214,
+  "ath_change_percentage": -90.87221,
+  "ath_date": "2022-10-21T04:03:53.015Z",
+  "atl": 0.00002132,
+  "atl_change_percentage": 59.292,
+  "atl_date": "2022-12-24T21:54:56.441Z",
+  "roi": null,
+  "last_updated": "2024-04-24T00:58:23.636Z",
+  "platforms": {
+    "bsc": "0xe8b4c953a204430a7ce064532d6283c70a609956"
+  }
+}

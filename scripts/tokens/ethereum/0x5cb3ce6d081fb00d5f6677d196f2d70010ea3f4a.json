@@ -1,0 +1,31 @@
+{
+  "id": "busy-dao",
+  "symbol": "busy",
+  "name": "Busy",
+  "image": "https://assets.coingecko.com/coins/images/14966/large/busy.PNG?1696514627",
+  "current_price": 0.00079032,
+  "market_cap": 201927,
+  "market_cap_rank": 3485,
+  "fully_diluted_valuation": 201927,
+  "total_volume": 11495.58,
+  "high_24h": 0.00093466,
+  "low_24h": 0.00075126,
+  "price_change_24h": -0.000134530431943935,
+  "price_change_percentage_24h": -14.54622,
+  "market_cap_change_24h": -33782.90419893124,
+  "market_cap_change_percentage_24h": -14.33243,
+  "circulating_supply": 255000000,
+  "total_supply": 255000000,
+  "max_supply": null,
+  "ath": 0.746078,
+  "ath_change_percentage": -99.89347,
+  "ath_date": "2021-05-09T00:49:31.700Z",
+  "atl": 0.00066721,
+  "atl_change_percentage": 19.12289,
+  "atl_date": "2023-09-05T09:22:54.274Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:33.750Z",
+  "platforms": {
+    "ethereum": "0x5cb3ce6d081fb00d5f6677d196f2d70010ea3f4a"
+  }
+}

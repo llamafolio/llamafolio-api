@@ -1,0 +1,35 @@
+{
+  "id": "blox",
+  "symbol": "cdt",
+  "name": "Blox",
+  "image": "https://assets.coingecko.com/coins/images/1231/large/Blox_Staking_Logo_2.png?1696502308",
+  "current_price": 0.346854,
+  "market_cap": 233899368,
+  "market_cap_rank": 269,
+  "fully_diluted_valuation": 346733746,
+  "total_volume": 256626,
+  "high_24h": 0.37912,
+  "low_24h": 0.285327,
+  "price_change_24h": -0.000895452960520127,
+  "price_change_percentage_24h": -0.2575,
+  "market_cap_change_24h": -973604.3937365711,
+  "market_cap_change_percentage_24h": -0.41452,
+  "circulating_supply": 674579184.17,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 1.025,
+  "ath_change_percentage": -69.16964,
+  "ath_date": "2024-03-25T22:43:58.453Z",
+  "atl": 0.00164788,
+  "atl_change_percentage": 19080.50311,
+  "atl_date": "2020-03-13T02:24:15.284Z",
+  "roi": {
+    "times": -0.3242602235094242,
+    "currency": "eth",
+    "percentage": -32.42602235094242
+  },
+  "last_updated": "2024-04-25T08:53:50.575Z",
+  "platforms": {
+    "ethereum": "0x177d39ac676ed1c67a2b268ad7f1e58826e5b0af"
+  }
+}

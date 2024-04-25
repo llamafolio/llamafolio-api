@@ -1,0 +1,31 @@
+{
+  "id": "interfinex-bills",
+  "symbol": "ifex",
+  "name": "Interfinex Bills",
+  "image": "https://assets.coingecko.com/coins/images/13346/large/U6uYZry.png?1696513113",
+  "current_price": 0.00008666,
+  "market_cap": 113595,
+  "market_cap_rank": 3740,
+  "fully_diluted_valuation": 181992,
+  "total_volume": 299.07,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 1310767500,
+  "total_supply": 2100000000,
+  "max_supply": 2100000000,
+  "ath": 0.00264737,
+  "ath_change_percentage": -96.72645,
+  "ath_date": "2020-12-11T14:37:39.114Z",
+  "atl": 0.00001087,
+  "atl_change_percentage": 697.04017,
+  "atl_date": "2022-09-29T16:46:41.764Z",
+  "roi": null,
+  "last_updated": "2024-03-27T03:01:27.419Z",
+  "platforms": {
+    "ethereum": "0xa891cf72aeda692570928efe1a832342e9783cdc"
+  }
+}

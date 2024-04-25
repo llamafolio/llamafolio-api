@@ -1,0 +1,31 @@
+{
+  "id": "centurion-invest",
+  "symbol": "cix",
+  "name": "Centurion Invest",
+  "image": "https://assets.coingecko.com/coins/images/28483/large/PHOTO-2022-05-27-11-34-42.jpg?1696527476",
+  "current_price": 0.00596671,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 14318625,
+  "total_volume": 33078,
+  "high_24h": 0.00641457,
+  "low_24h": 0.00587641,
+  "price_change_24h": 0.00007973,
+  "price_change_percentage_24h": 1.35435,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2400000000,
+  "max_supply": 2400000000,
+  "ath": 0.04601013,
+  "ath_change_percentage": -87.0286,
+  "ath_date": "2022-12-27T15:35:08.474Z",
+  "atl": 0.00209898,
+  "atl_change_percentage": 184.33598,
+  "atl_date": "2024-01-28T18:20:03.233Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:02.609Z",
+  "platforms": {
+    "ethereum": "0x6d60a8dfb16d09f67d46fcd36a0cd310078257ca"
+  }
+}

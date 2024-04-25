@@ -1,0 +1,31 @@
+{
+  "id": "mummy-finance",
+  "symbol": "mmy",
+  "name": "Mummy Finance",
+  "image": "https://assets.coingecko.com/coins/images/28547/large/Logo_MMY.png?1696527538",
+  "current_price": 0.615798,
+  "market_cap": 1907448,
+  "market_cap_rank": 2322,
+  "fully_diluted_valuation": 1907451,
+  "total_volume": 21520,
+  "high_24h": 0.657306,
+  "low_24h": 0.586626,
+  "price_change_24h": -0.040805528632877786,
+  "price_change_percentage_24h": -6.21464,
+  "market_cap_change_24h": -125772.26743786433,
+  "market_cap_change_percentage_24h": -6.18587,
+  "circulating_supply": 3083897.67399983,
+  "total_supply": 3083903,
+  "max_supply": 10000000,
+  "ath": 9.85,
+  "ath_change_percentage": -93.74588,
+  "ath_date": "2023-02-04T15:29:37.756Z",
+  "atl": 0.279804,
+  "atl_change_percentage": 120.06956,
+  "atl_date": "2023-10-20T05:05:59.166Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:33.815Z",
+  "platforms": {
+    "fantom": "0x01e77288b38b416f972428d562454fb329350bac"
+  }
+}

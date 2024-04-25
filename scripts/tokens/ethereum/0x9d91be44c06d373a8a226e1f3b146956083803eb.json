@@ -1,0 +1,31 @@
+{
+  "id": "aave-knc-v1",
+  "symbol": "aknc",
+  "name": "Aave KNC v1",
+  "image": "https://assets.coingecko.com/coins/images/11727/large/aKNC.png?1696511608",
+  "current_price": 0.597286,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 40269,
+  "total_volume": 0,
+  "high_24h": 0.649875,
+  "low_24h": 0.590223,
+  "price_change_24h": -0.04765608200265248,
+  "price_change_percentage_24h": -7.43511,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 67419.1921842557,
+  "max_supply": null,
+  "ath": 5.71,
+  "ath_change_percentage": -89.60298,
+  "ath_date": "2022-04-29T04:01:58.310Z",
+  "atl": 0.450217,
+  "atl_change_percentage": 31.78172,
+  "atl_date": "2023-01-02T02:00:06.397Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:33.076Z",
+  "platforms": {
+    "ethereum": "0x9d91be44c06d373a8a226e1f3b146956083803eb"
+  }
+}

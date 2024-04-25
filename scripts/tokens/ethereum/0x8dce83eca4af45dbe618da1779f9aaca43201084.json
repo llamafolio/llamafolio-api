@@ -1,0 +1,31 @@
+{
+  "id": "alphakek-ai",
+  "symbol": "aikek",
+  "name": "AlphaKEK.AI",
+  "image": "https://assets.coingecko.com/coins/images/35445/large/alphakek_-_Copy.png?1708620097",
+  "current_price": 0.00761802,
+  "market_cap": 1845201,
+  "market_cap_rank": 2348,
+  "fully_diluted_valuation": 1845201,
+  "total_volume": 15105.17,
+  "high_24h": 0.00884728,
+  "low_24h": 0.00755361,
+  "price_change_24h": -0.0009872508969403,
+  "price_change_percentage_24h": -11.47263,
+  "market_cap_change_24h": -244177.94742583483,
+  "market_cap_change_percentage_24h": -11.68663,
+  "circulating_supply": 242884187.28767118,
+  "total_supply": 242884187.28767118,
+  "max_supply": 256000000,
+  "ath": 0.0362996,
+  "ath_change_percentage": -79.04582,
+  "ath_date": "2024-03-06T19:05:11.413Z",
+  "atl": 0.00203331,
+  "atl_change_percentage": 274.08363,
+  "atl_date": "2024-02-23T07:34:40.183Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:03.924Z",
+  "platforms": {
+    "ethereum": "0x8dce83eca4af45dbe618da1779f9aaca43201084"
+  }
+}

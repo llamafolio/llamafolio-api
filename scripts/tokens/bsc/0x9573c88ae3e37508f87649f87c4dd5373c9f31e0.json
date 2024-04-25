@@ -1,0 +1,31 @@
+{
+  "id": "monsta-infinite",
+  "symbol": "moni",
+  "name": "Monsta Infinite",
+  "image": "https://assets.coingecko.com/coins/images/18396/large/moni.png?1696517887",
+  "current_price": 0.01585418,
+  "market_cap": 585817,
+  "market_cap_rank": 2985,
+  "fully_diluted_valuation": 4289874,
+  "total_volume": 425014,
+  "high_24h": 0.01646865,
+  "low_24h": 0.01557501,
+  "price_change_24h": -0.00054103950641236,
+  "price_change_percentage_24h": -3.29998,
+  "market_cap_change_24h": -19503.15454099537,
+  "market_cap_change_percentage_24h": -3.22196,
+  "circulating_supply": 36870683.49184209,
+  "total_supply": 270000000,
+  "max_supply": 270000000,
+  "ath": 4.87,
+  "ath_change_percentage": -99.67368,
+  "ath_date": "2021-10-09T17:19:38.905Z",
+  "atl": 0.00547332,
+  "atl_change_percentage": 190.21879,
+  "atl_date": "2023-09-21T14:00:19.243Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:33.118Z",
+  "platforms": {
+    "bsc": "0x9573c88ae3e37508f87649f87c4dd5373c9f31e0"
+  }
+}

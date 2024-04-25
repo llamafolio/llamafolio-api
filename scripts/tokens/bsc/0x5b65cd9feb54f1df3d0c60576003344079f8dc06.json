@@ -1,0 +1,31 @@
+{
+  "id": "uniwhale",
+  "symbol": "unw",
+  "name": "Uniwhale",
+  "image": "https://assets.coingecko.com/coins/images/29531/large/token-256x256.png?1696528473",
+  "current_price": 0.00626173,
+  "market_cap": 52366,
+  "market_cap_rank": 3982,
+  "fully_diluted_valuation": 55742,
+  "total_volume": 378.57,
+  "high_24h": 0.00647037,
+  "low_24h": 0.00600719,
+  "price_change_24h": 0.00012233,
+  "price_change_percentage_24h": 1.99253,
+  "market_cap_change_24h": 956.55,
+  "market_cap_change_percentage_24h": 1.86066,
+  "circulating_supply": 8372963.98,
+  "total_supply": 8912762,
+  "max_supply": 100000000,
+  "ath": 0.984857,
+  "ath_change_percentage": -99.36589,
+  "ath_date": "2023-03-27T14:05:42.712Z",
+  "atl": 0.00425492,
+  "atl_change_percentage": 46.77256,
+  "atl_date": "2023-10-19T18:40:18.716Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:49.131Z",
+  "platforms": {
+    "bsc": "0x5b65cd9feb54f1df3d0c60576003344079f8dc06"
+  }
+}

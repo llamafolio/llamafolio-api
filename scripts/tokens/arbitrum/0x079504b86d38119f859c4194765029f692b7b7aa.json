@@ -1,0 +1,31 @@
+{
+  "id": "lyra-finance",
+  "symbol": "lyra",
+  "name": "Lyra Finance",
+  "image": "https://assets.coingecko.com/coins/images/21490/large/Add-a-heading-26.png?1696520850",
+  "current_price": 0.105875,
+  "market_cap": 85239673,
+  "market_cap_rank": 516,
+  "fully_diluted_valuation": 105805361,
+  "total_volume": 67583,
+  "high_24h": 0.110898,
+  "low_24h": 0.1038,
+  "price_change_24h": -0.003147983875920663,
+  "price_change_percentage_24h": -2.88745,
+  "market_cap_change_24h": -2556330.285582021,
+  "market_cap_change_percentage_24h": -2.91167,
+  "circulating_supply": 805627162.927891,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.677963,
+  "ath_change_percentage": -84.39277,
+  "ath_date": "2021-12-18T05:18:54.016Z",
+  "atl": 0.03389914,
+  "atl_change_percentage": 212.13562,
+  "atl_date": "2022-06-18T20:52:17.800Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:55.677Z",
+  "platforms": {
+    "arbitrum": "0x079504b86d38119f859c4194765029f692b7b7aa"
+  }
+}

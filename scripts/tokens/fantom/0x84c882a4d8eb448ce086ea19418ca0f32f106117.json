@@ -1,0 +1,31 @@
+{
+  "id": "bifrost",
+  "symbol": "bfc",
+  "name": "Bifrost",
+  "image": "https://assets.coingecko.com/coins/images/4639/large/BFC_Symbol.png?1696505208",
+  "current_price": 0.064589,
+  "market_cap": 90047995,
+  "market_cap_rank": 502,
+  "fully_diluted_valuation": 153303283,
+  "total_volume": 791529,
+  "high_24h": 0.068683,
+  "low_24h": 0.064222,
+  "price_change_24h": -0.003985166631758741,
+  "price_change_percentage_24h": -5.81148,
+  "market_cap_change_24h": -5456001.044974223,
+  "market_cap_change_percentage_24h": -5.71285,
+  "circulating_supply": 1391269925.66298,
+  "total_supply": 2368584074,
+  "max_supply": null,
+  "ath": 0.778815,
+  "ath_change_percentage": -91.72102,
+  "ath_date": "2021-08-19T00:15:06.996Z",
+  "atl": 0.01634183,
+  "atl_change_percentage": 294.55792,
+  "atl_date": "2021-01-03T05:20:35.561Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:59.234Z",
+  "platforms": {
+    "fantom": "0x84c882a4d8eb448ce086ea19418ca0f32f106117"
+  }
+}

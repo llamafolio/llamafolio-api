@@ -1,0 +1,31 @@
+{
+  "id": "apexcoin-global",
+  "symbol": "acx",
+  "name": "Apex Coin",
+  "image": "https://assets.coingecko.com/coins/images/31409/large/apexlogo-2.png?1696530224",
+  "current_price": 0.03015335,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 0.147479,
+  "high_24h": 0.03056234,
+  "low_24h": 0.03019246,
+  "price_change_24h": -0.000241250675054237,
+  "price_change_percentage_24h": -0.79373,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.885302,
+  "ath_change_percentage": -96.594,
+  "ath_date": "2023-09-01T04:59:57.703Z",
+  "atl": 0.0100407,
+  "atl_change_percentage": 200.3111,
+  "atl_date": "2023-10-05T00:21:12.863Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:37.563Z",
+  "platforms": {
+    "bsc": "0x5829e758859b74426b0b2447e82e19ad8e68e87a"
+  }
+}

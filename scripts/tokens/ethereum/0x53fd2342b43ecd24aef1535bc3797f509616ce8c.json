@@ -1,0 +1,31 @@
+{
+  "id": "anarchy",
+  "symbol": "anarchy",
+  "name": "Anarchy",
+  "image": "https://assets.coingecko.com/coins/images/26583/large/90EWu8yp_400x400.jpg?1696525658",
+  "current_price": 0.02272526,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 113626,
+  "total_volume": 26.95,
+  "high_24h": 0.02282778,
+  "low_24h": 0.0225639,
+  "price_change_24h": 0.00012363,
+  "price_change_percentage_24h": 0.54701,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 5000000,
+  "max_supply": 5000000,
+  "ath": 0.730939,
+  "ath_change_percentage": -96.89095,
+  "ath_date": "2022-07-28T17:36:31.305Z",
+  "atl": 0.00262067,
+  "atl_change_percentage": 767.15337,
+  "atl_date": "2022-11-25T07:12:41.310Z",
+  "roi": null,
+  "last_updated": "2024-04-25T07:28:36.317Z",
+  "platforms": {
+    "ethereum": "0x53fd2342b43ecd24aef1535bc3797f509616ce8c"
+  }
+}

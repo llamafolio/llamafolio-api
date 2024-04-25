@@ -1,0 +1,31 @@
+{
+  "id": "ether-1",
+  "symbol": "etho",
+  "name": "Etho Protocol",
+  "image": "https://assets.coingecko.com/coins/images/5194/large/IconOnly_Transparent_NoBuffer_resized.png?1713297055",
+  "current_price": 0.00994897,
+  "market_cap": 573477,
+  "market_cap_rank": 3000,
+  "fully_diluted_valuation": null,
+  "total_volume": 47954,
+  "high_24h": 0.01121397,
+  "low_24h": 0.00883957,
+  "price_change_24h": -0.001238582016863193,
+  "price_change_percentage_24h": -11.07107,
+  "market_cap_change_24h": -72590.44071557408,
+  "market_cap_change_percentage_24h": -11.23574,
+  "circulating_supply": 57640086,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.302848,
+  "ath_change_percentage": -96.71476,
+  "ath_date": "2021-06-04T10:07:38.601Z",
+  "atl": 0.00065048,
+  "atl_change_percentage": 1429.53677,
+  "atl_date": "2023-09-26T22:09:18.917Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:52.772Z",
+  "platforms": {
+    "gnosis": "0xb17d999e840e0c1b157ca5ab8039bd958b5fa317"
+  }
+}

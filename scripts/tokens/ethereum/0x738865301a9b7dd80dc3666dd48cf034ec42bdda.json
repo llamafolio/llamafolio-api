@@ -1,0 +1,31 @@
+{
+  "id": "agoras-currency-of-tau",
+  "symbol": "agrs",
+  "name": "Agoras: Currency of Tau",
+  "image": "https://assets.coingecko.com/coins/images/399/large/agrs.png?1696501692",
+  "current_price": 3.88,
+  "market_cap": 69920090,
+  "market_cap_rank": 578,
+  "fully_diluted_valuation": 163146876,
+  "total_volume": 223304,
+  "high_24h": 4.09,
+  "low_24h": 3.8,
+  "price_change_24h": -0.09529873879542494,
+  "price_change_percentage_24h": -2.39816,
+  "market_cap_change_24h": -1683922.4646763355,
+  "market_cap_change_percentage_24h": -2.35172,
+  "circulating_supply": 18000000,
+  "total_supply": 42000000,
+  "max_supply": null,
+  "ath": 38.86,
+  "ath_change_percentage": -89.93504,
+  "ath_date": "2020-05-13T06:35:22.924Z",
+  "atl": 0.0263893,
+  "atl_change_percentage": 14721.09083,
+  "atl_date": "2022-12-29T10:15:20.234Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:43.049Z",
+  "platforms": {
+    "ethereum": "0x738865301a9b7dd80dc3666dd48cf034ec42bdda"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "lonelyfans",
+  "symbol": "lof",
+  "name": "LonelyFans",
+  "image": "https://assets.coingecko.com/coins/images/21317/large/lof.png?1696520685",
+  "current_price": 0.0010114,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1011398,
+  "total_volume": 382.9,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.0033202,
+  "ath_change_percentage": -69.53804,
+  "ath_date": "2021-12-15T19:13:17.142Z",
+  "atl": 0.0008994,
+  "atl_change_percentage": 12.45284,
+  "atl_date": "2023-06-07T22:56:35.038Z",
+  "roi": null,
+  "last_updated": "2023-08-01T06:48:37.220Z",
+  "platforms": {
+    "bsc": "0xe702c303173f90094ce8c9c6ca3f198eca0e027c"
+  }
+}

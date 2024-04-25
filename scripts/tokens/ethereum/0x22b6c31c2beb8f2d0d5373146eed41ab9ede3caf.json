@@ -1,0 +1,31 @@
+{
+  "id": "cocktailbar",
+  "symbol": "coc",
+  "name": "The Cocktailbar",
+  "image": "https://assets.coingecko.com/coins/images/13121/large/Cocktail_Bar_logo_%281%29_%281%29.png?1696512909",
+  "current_price": 30.83,
+  "market_cap": 1541736,
+  "market_cap_rank": 2439,
+  "fully_diluted_valuation": 1541736,
+  "total_volume": 24527,
+  "high_24h": 35.62,
+  "low_24h": 30.49,
+  "price_change_24h": -4.3314109708873865,
+  "price_change_percentage_24h": -12.317,
+  "market_cap_change_24h": -217346.4746738451,
+  "market_cap_change_percentage_24h": -12.35567,
+  "circulating_supply": 50000,
+  "total_supply": 50000,
+  "max_supply": 50000,
+  "ath": 787.22,
+  "ath_change_percentage": -96.08307,
+  "ath_date": "2021-11-15T21:15:56.513Z",
+  "atl": 0.70932,
+  "atl_change_percentage": 4247.08294,
+  "atl_date": "2021-02-01T21:19:10.402Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:39.465Z",
+  "platforms": {
+    "ethereum": "0x22b6c31c2beb8f2d0d5373146eed41ab9ede3caf"
+  }
+}

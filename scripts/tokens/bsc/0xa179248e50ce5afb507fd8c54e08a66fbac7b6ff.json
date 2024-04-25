@@ -1,0 +1,31 @@
+{
+  "id": "freedom-jobs-business",
+  "symbol": "$fjb",
+  "name": "Freedom. Jobs. Business",
+  "image": "https://assets.coingecko.com/coins/images/21300/large/FJB_150.png?1696520669",
+  "current_price": 0.00000227,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 90606,
+  "total_volume": 25.55,
+  "high_24h": 0.00000233,
+  "low_24h": 0.00000218,
+  "price_change_24h": -2.2819097768e-8,
+  "price_change_percentage_24h": -0.99736,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 40000000000,
+  "max_supply": 40000000000,
+  "ath": 0.0048875,
+  "ath_change_percentage": -99.9538,
+  "ath_date": "2021-12-28T18:04:37.914Z",
+  "atl": 7.35122e-7,
+  "atl_change_percentage": 207.13287,
+  "atl_date": "2024-03-18T01:40:00.323Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:26.655Z",
+  "platforms": {
+    "bsc": "0xa179248e50ce5afb507fd8c54e08a66fbac7b6ff"
+  }
+}

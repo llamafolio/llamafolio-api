@@ -1,0 +1,31 @@
+{
+  "id": "lucha",
+  "symbol": "lucha",
+  "name": "Lucha",
+  "image": "https://assets.coingecko.com/coins/images/22794/large/lucha.png?1696522097",
+  "current_price": 0.02235176,
+  "market_cap": 278931,
+  "market_cap_rank": 3350,
+  "fully_diluted_valuation": 278931,
+  "total_volume": 527.61,
+  "high_24h": 0.02288285,
+  "low_24h": 0.02160024,
+  "price_change_24h": -0.000217991171819518,
+  "price_change_percentage_24h": -0.96586,
+  "market_cap_change_24h": -1659.378841085767,
+  "market_cap_change_percentage_24h": -0.59139,
+  "circulating_supply": 12365470,
+  "total_supply": 12365470,
+  "max_supply": 100000000,
+  "ath": 0.858782,
+  "ath_change_percentage": -97.37288,
+  "ath_date": "2022-01-31T21:28:29.551Z",
+  "atl": 0.01497036,
+  "atl_change_percentage": 50.70605,
+  "atl_date": "2023-10-12T17:10:21.001Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:46.689Z",
+  "platforms": {
+    "polygon": "0x6749441fdc8650b5b5a854ed255c82ef361f1596"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "savings-dai",
+  "symbol": "sdai",
+  "name": "Savings Dai",
+  "image": "https://assets.coingecko.com/coins/images/32254/large/sdai.png?1697015278",
+  "current_price": 1.079,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1364475682,
+  "total_volume": 23060596,
+  "high_24h": 1.08,
+  "low_24h": 1.069,
+  "price_change_24h": 0.00305148,
+  "price_change_percentage_24h": 0.28354,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1264289551.84839,
+  "max_supply": null,
+  "ath": 1.093,
+  "ath_change_percentage": -1.38138,
+  "ath_date": "2024-04-13T22:39:19.236Z",
+  "atl": 0.186576,
+  "atl_change_percentage": 477.5009,
+  "atl_date": "2023-11-10T20:10:32.383Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:06.228Z",
+  "platforms": {
+    "ethereum": "0x83f20f44975d03b1b09e64809b757c47f942beea"
+  }
+}

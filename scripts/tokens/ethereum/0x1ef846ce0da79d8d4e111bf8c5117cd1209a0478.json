@@ -1,0 +1,31 @@
+{
+  "id": "ethereum-inu",
+  "symbol": "ethinu",
+  "name": "Ethereum Inu",
+  "image": "https://assets.coingecko.com/coins/images/34875/large/1000024435.jpg?1706496056",
+  "current_price": 0.00003461,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 34614,
+  "total_volume": 34.61,
+  "high_24h": 0.00003487,
+  "low_24h": 0.00003408,
+  "price_change_24h": -1.9952294187e-7,
+  "price_change_percentage_24h": -0.57312,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00026426,
+  "ath_change_percentage": -86.9017,
+  "ath_date": "2024-01-29T05:35:03.814Z",
+  "atl": 0.00002301,
+  "atl_change_percentage": 50.4299,
+  "atl_date": "2024-02-19T17:26:51.325Z",
+  "roi": null,
+  "last_updated": "2024-04-25T05:53:49.420Z",
+  "platforms": {
+    "ethereum": "0x1ef846ce0da79d8d4e111bf8c5117cd1209a0478"
+  }
+}

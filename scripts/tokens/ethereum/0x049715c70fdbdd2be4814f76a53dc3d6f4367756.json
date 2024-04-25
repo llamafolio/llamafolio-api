@@ -1,0 +1,31 @@
+{
+  "id": "nezuko",
+  "symbol": "nezuko",
+  "name": "Nezuko",
+  "image": "https://assets.coingecko.com/coins/images/30014/large/Nezuko_Logo.png?1696528938",
+  "current_price": 4.67197e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 51152,
+  "total_volume": 76.71,
+  "high_24h": 4.69366e-7,
+  "low_24h": 4.63958e-7,
+  "price_change_24h": 1.161e-9,
+  "price_change_percentage_24h": 0.24919,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 110000000000,
+  "max_supply": 110000000000,
+  "ath": 0.00003677,
+  "ath_change_percentage": -98.73546,
+  "ath_date": "2023-05-01T18:24:40.553Z",
+  "atl": 1.90102e-7,
+  "atl_change_percentage": 144.61428,
+  "atl_date": "2023-10-12T17:35:30.560Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:47.539Z",
+  "platforms": {
+    "ethereum": "0x049715c70fdbdd2be4814f76a53dc3d6f4367756"
+  }
+}

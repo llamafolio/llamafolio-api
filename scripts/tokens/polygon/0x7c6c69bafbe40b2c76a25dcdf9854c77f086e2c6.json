@@ -1,0 +1,31 @@
+{
+  "id": "oval3",
+  "symbol": "ovl3",
+  "name": "OVAL3",
+  "image": "https://assets.coingecko.com/coins/images/34001/large/512_512_icon.jpg?1703601480",
+  "current_price": 0.00902887,
+  "market_cap": 432605,
+  "market_cap_rank": 3139,
+  "fully_diluted_valuation": 9017020,
+  "total_volume": 37340,
+  "high_24h": 0.01010835,
+  "low_24h": 0.00795027,
+  "price_change_24h": 0.00094017,
+  "price_change_percentage_24h": 11.62328,
+  "market_cap_change_24h": 48899,
+  "market_cap_change_percentage_24h": 12.7439,
+  "circulating_supply": 47976543,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.086595,
+  "ath_change_percentage": -89.60092,
+  "ath_date": "2023-12-27T10:52:23.828Z",
+  "atl": 0.00579969,
+  "atl_change_percentage": 55.26836,
+  "atl_date": "2024-04-13T06:41:29.186Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:32.967Z",
+  "platforms": {
+    "polygon": "0x7c6c69bafbe40b2c76a25dcdf9854c77f086e2c6"
+  }
+}

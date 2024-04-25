@@ -1,0 +1,31 @@
+{
+  "id": "produce-ai",
+  "symbol": "prai",
+  "name": "Produce AI",
+  "image": "https://assets.coingecko.com/coins/images/35817/large/200_logo.png?1709885406",
+  "current_price": 0.01070925,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1066214,
+  "total_volume": 2525.31,
+  "high_24h": 0.01149633,
+  "low_24h": 0.01066214,
+  "price_change_24h": -0.000713687491782387,
+  "price_change_percentage_24h": -6.24784,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.174904,
+  "ath_change_percentage": -93.87708,
+  "ath_date": "2024-03-10T20:04:43.094Z",
+  "atl": 0.00992948,
+  "atl_change_percentage": 7.85313,
+  "atl_date": "2024-04-02T21:30:08.401Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:06:33.128Z",
+  "platforms": {
+    "ethereum": "0x0e6d98de664a28a32b584c72e606ff7dea898dc6"
+  }
+}

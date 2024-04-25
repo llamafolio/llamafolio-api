@@ -1,0 +1,31 @@
+{
+  "id": "the-crypto-prophecies",
+  "symbol": "tcp",
+  "name": "The Crypto Prophecies",
+  "image": "https://assets.coingecko.com/coins/images/15054/large/tcp.PNG?1696514713",
+  "current_price": 0.00087746,
+  "market_cap": 102369,
+  "market_cap_rank": 3774,
+  "fully_diluted_valuation": 210408,
+  "total_volume": 8089.57,
+  "high_24h": 0.00090922,
+  "low_24h": 0.00087686,
+  "price_change_24h": -0.000015451162255973,
+  "price_change_percentage_24h": -1.73042,
+  "market_cap_change_24h": -1945.1032360154204,
+  "market_cap_change_percentage_24h": -1.86466,
+  "circulating_supply": 116782511,
+  "total_supply": 240032395,
+  "max_supply": 250000000,
+  "ath": 0.544589,
+  "ath_change_percentage": -99.83874,
+  "ath_date": "2021-10-31T10:55:15.545Z",
+  "atl": 0.00036001,
+  "atl_change_percentage": 143.9424,
+  "atl_date": "2023-07-21T09:22:42.970Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:14.315Z",
+  "platforms": {
+    "ethereum": "0x06576eb3b212d605b797dc15523d9dc9f4f66db4"
+  }
+}

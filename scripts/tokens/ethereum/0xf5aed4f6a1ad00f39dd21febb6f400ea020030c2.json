@@ -1,0 +1,31 @@
+{
+  "id": "hodless-bot",
+  "symbol": "hbot",
+  "name": "Hodless Bot",
+  "image": "https://assets.coingecko.com/coins/images/32489/large/logo-200-200.png?1698476298",
+  "current_price": 0.00975036,
+  "market_cap": 92628,
+  "market_cap_rank": 3805,
+  "fully_diluted_valuation": 97504,
+  "total_volume": 406.57,
+  "high_24h": 0.0102356,
+  "low_24h": 0.00970044,
+  "price_change_24h": -0.000366862800792889,
+  "price_change_percentage_24h": -3.62612,
+  "market_cap_change_24h": -2150.0197266860923,
+  "market_cap_change_percentage_24h": -2.26847,
+  "circulating_supply": 9500000,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.148684,
+  "ath_change_percentage": -93.40381,
+  "ath_date": "2023-11-11T03:44:38.253Z",
+  "atl": 0.0053759,
+  "atl_change_percentage": 82.43387,
+  "atl_date": "2023-10-28T19:04:57.064Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:52:23.994Z",
+  "platforms": {
+    "ethereum": "0xf5aed4f6a1ad00f39dd21febb6f400ea020030c2"
+  }
+}

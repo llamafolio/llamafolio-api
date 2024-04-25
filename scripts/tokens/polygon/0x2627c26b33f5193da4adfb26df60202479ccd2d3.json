@@ -1,0 +1,31 @@
+{
+  "id": "crypto-gladiator-shards",
+  "symbol": "cgl",
+  "name": "Crypto Gladiator League",
+  "image": "https://assets.coingecko.com/coins/images/18291/large/Scalable.png?1696517783",
+  "current_price": 0.00519527,
+  "market_cap": 11544590,
+  "market_cap_rank": 1367,
+  "fully_diluted_valuation": 16174084,
+  "total_volume": 527587,
+  "high_24h": 0.00547048,
+  "low_24h": 0.00518682,
+  "price_change_24h": -0.000237851228302909,
+  "price_change_percentage_24h": -4.3778,
+  "market_cap_change_24h": -553551.0495798141,
+  "market_cap_change_percentage_24h": -4.57551,
+  "circulating_supply": 2212689621,
+  "total_supply": 3100000000,
+  "max_supply": null,
+  "ath": 0.595285,
+  "ath_change_percentage": -99.12277,
+  "ath_date": "2021-09-17T02:14:30.526Z",
+  "atl": 0.00500515,
+  "atl_change_percentage": 4.33291,
+  "atl_date": "2024-04-13T22:25:29.574Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:55.440Z",
+  "platforms": {
+    "polygon": "0x2627c26b33f5193da4adfb26df60202479ccd2d3"
+  }
+}

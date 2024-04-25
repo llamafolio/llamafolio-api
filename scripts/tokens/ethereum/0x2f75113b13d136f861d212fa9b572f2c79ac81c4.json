@@ -1,0 +1,31 @@
+{
+  "id": "ekta-2",
+  "symbol": "ekta",
+  "name": "Ekta",
+  "image": "https://assets.coingecko.com/coins/images/22350/large/token.jpg?1696521693",
+  "current_price": 0.00340659,
+  "market_cap": 764299,
+  "market_cap_rank": 2841,
+  "fully_diluted_valuation": 1388115,
+  "total_volume": 12052.49,
+  "high_24h": 0.00378824,
+  "low_24h": 0.00334825,
+  "price_change_24h": -0.000373127411700915,
+  "price_change_percentage_24h": -9.87185,
+  "market_cap_change_24h": -85199.22307311324,
+  "market_cap_change_percentage_24h": -10.02935,
+  "circulating_supply": 224160557.87181,
+  "total_supply": 407118596,
+  "max_supply": null,
+  "ath": 5.92,
+  "ath_change_percentage": -99.94248,
+  "ath_date": "2022-02-18T12:34:11.856Z",
+  "atl": 0.00101759,
+  "atl_change_percentage": 234.64606,
+  "atl_date": "2023-10-15T09:39:00.229Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:54.517Z",
+  "platforms": {
+    "ethereum": "0x2f75113b13d136f861d212fa9b572f2c79ac81c4"
+  }
+}

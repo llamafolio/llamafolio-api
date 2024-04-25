@@ -1,0 +1,31 @@
+{
+  "id": "agritech",
+  "symbol": "agt",
+  "name": "Agritech",
+  "image": "https://assets.coingecko.com/coins/images/30052/large/Agritech_Final_200x200_.png?1696528974",
+  "current_price": 0.00639886,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 6398860,
+  "total_volume": 1411.62,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00641779,
+  "ath_change_percentage": -0.29494,
+  "ath_date": "2023-05-18T10:00:02.176Z",
+  "atl": 0.00457807,
+  "atl_change_percentage": 39.77214,
+  "atl_date": "2023-05-02T21:32:14.470Z",
+  "roi": null,
+  "last_updated": "2023-05-18T12:32:56.980Z",
+  "platforms": {
+    "bsc": "0xa9e22e82d5a497c764a9fcd566bc8df933b74fbe"
+  }
+}

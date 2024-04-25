@@ -1,0 +1,35 @@
+{
+  "id": "kick",
+  "symbol": "kick",
+  "name": "Kick",
+  "image": "https://assets.coingecko.com/coins/images/981/large/kick.png?1696502094",
+  "current_price": 0.02194584,
+  "market_cap": 2664256,
+  "market_cap_rank": 2133,
+  "fully_diluted_valuation": 2664256,
+  "total_volume": 190760,
+  "high_24h": 0.02291344,
+  "low_24h": 0.02152876,
+  "price_change_24h": -0.000359622095444313,
+  "price_change_percentage_24h": -1.61226,
+  "market_cap_change_24h": -65923.87055848632,
+  "market_cap_change_percentage_24h": -2.41463,
+  "circulating_supply": 121740942.712028,
+  "total_supply": 121740942.712028,
+  "max_supply": null,
+  "ath": 0.188833,
+  "ath_change_percentage": -88.39857,
+  "ath_date": "2018-01-05T00:00:00.000Z",
+  "atl": 9.9819e-8,
+  "atl_change_percentage": 21946892.03659,
+  "atl_date": "2020-12-25T07:17:33.340Z",
+  "roi": {
+    "times": -0.7256769586240229,
+    "currency": "usd",
+    "percentage": -72.56769586240229
+  },
+  "last_updated": "2024-04-25T08:57:38.910Z",
+  "platforms": {
+    "bsc": "0x824a50df33ac1b41afc52f4194e2e8356c17c3ac"
+  }
+}

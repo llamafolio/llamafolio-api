@@ -1,0 +1,31 @@
+{
+  "id": "bottos",
+  "symbol": "bto",
+  "name": "Bottos",
+  "image": "https://assets.coingecko.com/coins/images/2048/large/bottos.png?1696503016",
+  "current_price": 0.00079518,
+  "market_cap": 434162,
+  "market_cap_rank": 3156,
+  "fully_diluted_valuation": 795183,
+  "total_volume": 19182.58,
+  "high_24h": 0.00084906,
+  "low_24h": 0.00073133,
+  "price_change_24h": -0.000024519928824686,
+  "price_change_percentage_24h": -2.99132,
+  "market_cap_change_24h": -13498.093312361278,
+  "market_cap_change_percentage_24h": -3.01525,
+  "circulating_supply": 545990153.26,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.377044,
+  "ath_change_percentage": -99.78927,
+  "ath_date": "2018-05-02T23:43:12.358Z",
+  "atl": 0.00025662,
+  "atl_change_percentage": 209.62284,
+  "atl_date": "2022-11-29T04:45:40.370Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:02.313Z",
+  "platforms": {
+    "ethereum": "0x36905fc93280f52362a1cbab151f25dc46742fb5"
+  }
+}

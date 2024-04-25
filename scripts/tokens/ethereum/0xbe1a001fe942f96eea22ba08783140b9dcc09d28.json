@@ -1,0 +1,31 @@
+{
+  "id": "beta-finance",
+  "symbol": "beta",
+  "name": "Beta Finance",
+  "image": "https://assets.coingecko.com/coins/images/18715/large/beta_finance.jpg?1696518183",
+  "current_price": 0.073872,
+  "market_cap": 58861978,
+  "market_cap_rank": 629,
+  "fully_diluted_valuation": 73717089,
+  "total_volume": 3288083,
+  "high_24h": 0.080693,
+  "low_24h": 0.073676,
+  "price_change_24h": -0.006470873828984577,
+  "price_change_percentage_24h": -8.05408,
+  "market_cap_change_24h": -5206938.369716115,
+  "market_cap_change_percentage_24h": -8.12709,
+  "circulating_supply": 798484848,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 3.45,
+  "ath_change_percentage": -97.8437,
+  "ath_date": "2021-10-10T00:00:00.000Z",
+  "atl": 0.05586,
+  "atl_change_percentage": 33.25451,
+  "atl_date": "2023-10-09T16:49:56.479Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:55.555Z",
+  "platforms": {
+    "ethereum": "0xbe1a001fe942f96eea22ba08783140b9dcc09d28"
+  }
+}

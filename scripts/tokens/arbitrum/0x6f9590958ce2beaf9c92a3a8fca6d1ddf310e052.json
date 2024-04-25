@@ -1,0 +1,31 @@
+{
+  "id": "gas-turbo",
+  "symbol": "gast",
+  "name": "Gas Turbo",
+  "image": "https://assets.coingecko.com/coins/images/35348/large/Xg34kjR0_400x400.png?1708321178",
+  "current_price": 0.244943,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 5143811,
+  "total_volume": 34285,
+  "high_24h": 0.252306,
+  "low_24h": 0.226328,
+  "price_change_24h": 0.01645786,
+  "price_change_percentage_24h": 7.20302,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 21000000,
+  "max_supply": 21000000,
+  "ath": 0.348782,
+  "ath_change_percentage": -29.97923,
+  "ath_date": "2024-04-07T22:38:34.268Z",
+  "atl": 0.118051,
+  "atl_change_percentage": 106.87613,
+  "atl_date": "2024-03-20T11:03:54.258Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:47.773Z",
+  "platforms": {
+    "arbitrum": "0x6f9590958ce2beaf9c92a3a8fca6d1ddf310e052"
+  }
+}

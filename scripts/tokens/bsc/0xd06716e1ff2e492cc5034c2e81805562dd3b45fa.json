@@ -1,0 +1,31 @@
+{
+  "id": "magpie",
+  "symbol": "mgp",
+  "name": "Magpie",
+  "image": "https://assets.coingecko.com/coins/images/27972/large/MagpieLogo.png?1696526991",
+  "current_price": 0.092177,
+  "market_cap": 34851014,
+  "market_cap_rank": 846,
+  "fully_diluted_valuation": 92179801,
+  "total_volume": 119756,
+  "high_24h": 0.100856,
+  "low_24h": 0.091842,
+  "price_change_24h": -0.007392127209335409,
+  "price_change_percentage_24h": -7.42412,
+  "market_cap_change_24h": -2885512.3300451413,
+  "market_cap_change_percentage_24h": -7.64647,
+  "circulating_supply": 378076477.594332,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.125973,
+  "ath_change_percentage": -26.79883,
+  "ath_date": "2024-01-30T12:26:34.512Z",
+  "atl": 0.00789301,
+  "atl_change_percentage": 1068.29802,
+  "atl_date": "2023-02-12T05:35:40.870Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:33.448Z",
+  "platforms": {
+    "bsc": "0xd06716e1ff2e492cc5034c2e81805562dd3b45fa"
+  }
+}

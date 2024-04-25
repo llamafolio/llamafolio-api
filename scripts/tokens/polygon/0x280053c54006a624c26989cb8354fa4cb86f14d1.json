@@ -1,0 +1,35 @@
+{
+  "id": "morpheus-labs",
+  "symbol": "mind",
+  "name": "Morpheus Labs",
+  "image": "https://assets.coingecko.com/coins/images/3164/large/mitx.png?1696503886",
+  "current_price": 0.00429107,
+  "market_cap": 7342119,
+  "market_cap_rank": 1587,
+  "fully_diluted_valuation": 8937077,
+  "total_volume": 178986,
+  "high_24h": 0.00468426,
+  "low_24h": 0.00390327,
+  "price_change_24h": 0.00025758,
+  "price_change_percentage_24h": 6.38603,
+  "market_cap_change_24h": 386522,
+  "market_cap_change_percentage_24h": 5.55699,
+  "circulating_supply": 1725222929.04115,
+  "total_supply": 2100000000,
+  "max_supply": 2100000000,
+  "ath": 0.198979,
+  "ath_change_percentage": -97.87192,
+  "ath_date": "2021-04-02T09:52:15.325Z",
+  "atl": 0.00182958,
+  "atl_change_percentage": 131.44306,
+  "atl_date": "2022-12-28T23:45:24.729Z",
+  "roi": {
+    "times": -0.989060297372142,
+    "currency": "eth",
+    "percentage": -98.9060297372142
+  },
+  "last_updated": "2024-04-25T09:00:05.762Z",
+  "platforms": {
+    "polygon": "0x280053c54006a624c26989cb8354fa4cb86f14d1"
+  }
+}

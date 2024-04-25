@@ -1,0 +1,31 @@
+{
+  "id": "linear",
+  "symbol": "lina",
+  "name": "Linear",
+  "image": "https://assets.coingecko.com/coins/images/12509/large/1649227343-linalogo200px.png?1696512324",
+  "current_price": 0.00798777,
+  "market_cap": 48570726,
+  "market_cap_rank": 702,
+  "fully_diluted_valuation": 79530867,
+  "total_volume": 7393380,
+  "high_24h": 0.00883457,
+  "low_24h": 0.00791523,
+  "price_change_24h": -0.000749650861751113,
+  "price_change_percentage_24h": -8.57977,
+  "market_cap_change_24h": -5096702.755726948,
+  "market_cap_change_percentage_24h": -9.49683,
+  "circulating_supply": 6107154072.69694,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.298899,
+  "ath_change_percentage": -97.33588,
+  "ath_date": "2021-03-18T11:19:58.139Z",
+  "atl": 0.00471791,
+  "atl_change_percentage": 68.78322,
+  "atl_date": "2022-12-30T07:40:18.516Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:52.196Z",
+  "platforms": {
+    "ethereum": "0x3e9bc21c9b189c09df3ef1b824798658d5011937"
+  }
+}

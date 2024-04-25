@@ -1,0 +1,31 @@
+{
+  "id": "flooring-protocol-microdegods",
+  "symbol": "udegods",
+  "name": "FP μDeGods",
+  "image": "https://assets.coingecko.com/coins/images/32765/large/degods_%281%29.png?1699332561",
+  "current_price": 0.00508437,
+  "market_cap": 4250534,
+  "market_cap_rank": 1869,
+  "fully_diluted_valuation": 4250534,
+  "total_volume": 84163,
+  "high_24h": 0.00536249,
+  "low_24h": 0.00508916,
+  "price_change_24h": -0.000212641411057782,
+  "price_change_percentage_24h": -4.01437,
+  "market_cap_change_24h": -183065.23169949744,
+  "market_cap_change_percentage_24h": -4.12904,
+  "circulating_supply": 836000000,
+  "total_supply": 836000000,
+  "max_supply": 10000000000,
+  "ath": 0.01067837,
+  "ath_change_percentage": -52.29387,
+  "ath_date": "2024-02-27T22:40:05.386Z",
+  "atl": 0.002877,
+  "atl_change_percentage": 77.06748,
+  "atl_date": "2024-03-17T07:24:38.930Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:48:07.682Z",
+  "platforms": {
+    "ethereum": "0x83f5b9c25cc8fce0a7d4a1bda904bf13cfcdd9da"
+  }
+}

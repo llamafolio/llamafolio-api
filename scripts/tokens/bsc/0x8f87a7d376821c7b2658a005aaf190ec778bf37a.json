@@ -1,0 +1,31 @@
+{
+  "id": "granary",
+  "symbol": "grain",
+  "name": "Granary",
+  "image": "https://assets.coingecko.com/coins/images/29740/large/Grain.png?1696528670",
+  "current_price": 0.01022026,
+  "market_cap": 2385397,
+  "market_cap_rank": 2194,
+  "fully_diluted_valuation": 2385397,
+  "total_volume": 1909.58,
+  "high_24h": 0.0105069,
+  "low_24h": 0.0101939,
+  "price_change_24h": -0.000205687551355301,
+  "price_change_percentage_24h": -1.97284,
+  "market_cap_change_24h": -57011.46655510878,
+  "market_cap_change_percentage_24h": -2.33423,
+  "circulating_supply": 233665295.813469,
+  "total_supply": 233665295.813469,
+  "max_supply": 800000000,
+  "ath": 0.06669,
+  "ath_change_percentage": -84.68519,
+  "ath_date": "2023-04-18T11:52:07.259Z",
+  "atl": 0.00555566,
+  "atl_change_percentage": 83.83907,
+  "atl_date": "2024-03-04T11:27:43.827Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:33.210Z",
+  "platforms": {
+    "bsc": "0x8f87a7d376821c7b2658a005aaf190ec778bf37a"
+  }
+}

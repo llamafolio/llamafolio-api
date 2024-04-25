@@ -1,0 +1,31 @@
+{
+  "id": "generational-wealth",
+  "symbol": "gen",
+  "name": "Generational Wealth",
+  "image": "https://assets.coingecko.com/coins/images/30419/large/ethericon200x200.png?1696529307",
+  "current_price": 9.10198e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 381472,
+  "total_volume": 74.12,
+  "high_24h": 9.49668e-10,
+  "low_24h": 9.04604e-10,
+  "price_change_24h": -3.5486478e-11,
+  "price_change_percentage_24h": -3.75246,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 420690000000000,
+  "max_supply": 420690000000000,
+  "ath": 6.8585e-8,
+  "ath_change_percentage": -98.67788,
+  "ath_date": "2023-05-18T14:53:37.443Z",
+  "atl": 3.89504e-10,
+  "atl_change_percentage": 132.80327,
+  "atl_date": "2023-10-14T01:45:40.683Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:03.552Z",
+  "platforms": {
+    "ethereum": "0xcae3faa4b6cf660aef18474074949ba0948bc025"
+  }
+}

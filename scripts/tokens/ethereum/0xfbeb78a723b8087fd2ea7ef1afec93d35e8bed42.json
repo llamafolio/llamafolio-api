@@ -1,0 +1,31 @@
+{
+  "id": "uni-yvault",
+  "symbol": "yvuni",
+  "name": "UNI yVault",
+  "image": "https://assets.coingecko.com/coins/images/28781/large/yvUNI-128-0xFBEB78a723b8087fD2ea7Ef1afEc93d35E8Bed42.png?1696527760",
+  "current_price": 7.94,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 161386,
+  "total_volume": 0,
+  "high_24h": 8.35,
+  "low_24h": 7.73,
+  "price_change_24h": -0.36049319714673445,
+  "price_change_percentage_24h": -4.37554,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 20376.1341743879,
+  "max_supply": null,
+  "ath": 16.85,
+  "ath_change_percentage": -52.99012,
+  "ath_date": "2024-03-06T12:35:21.427Z",
+  "atl": 3.83,
+  "atl_change_percentage": 106.82348,
+  "atl_date": "2023-06-10T07:00:06.040Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:46.032Z",
+  "platforms": {
+    "ethereum": "0xfbeb78a723b8087fd2ea7ef1afec93d35e8bed42"
+  }
+}

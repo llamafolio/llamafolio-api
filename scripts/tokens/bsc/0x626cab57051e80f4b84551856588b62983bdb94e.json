@@ -1,0 +1,31 @@
+{
+  "id": "rabbitking",
+  "symbol": "rb",
+  "name": "RabbitKing",
+  "image": "https://assets.coingecko.com/coins/images/28994/large/rabbit.JPG?1696527966",
+  "current_price": 5.92091e-10,
+  "market_cap": 26230,
+  "market_cap_rank": 4114,
+  "fully_diluted_valuation": 26230,
+  "total_volume": 982.45,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 44300000000000,
+  "total_supply": 44300000000000,
+  "max_supply": 100000000000000,
+  "ath": 9.3814e-8,
+  "ath_change_percentage": -99.36887,
+  "ath_date": "2023-02-28T06:32:38.321Z",
+  "atl": 3.08638e-10,
+  "atl_change_percentage": 91.83977,
+  "atl_date": "2023-03-24T15:32:35.042Z",
+  "roi": null,
+  "last_updated": "2023-05-18T20:00:14.540Z",
+  "platforms": {
+    "bsc": "0x626cab57051e80f4b84551856588b62983bdb94e"
+  }
+}

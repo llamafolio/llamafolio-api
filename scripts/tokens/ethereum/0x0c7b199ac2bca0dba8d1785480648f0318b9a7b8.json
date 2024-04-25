@@ -1,0 +1,31 @@
+{
+  "id": "ordibot",
+  "symbol": "ordibot",
+  "name": "OrdiBot",
+  "image": "https://assets.coingecko.com/coins/images/33462/large/OIG_%281%29.png?1701927925",
+  "current_price": 0.00001929,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 19287936119799,
+  "total_volume": 38.02,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000000,
+  "max_supply": 1000000000000000000,
+  "ath": 0.00075582,
+  "ath_change_percentage": -97.44807,
+  "ath_date": "2023-12-07T06:29:45.720Z",
+  "atl": 0.00001582,
+  "atl_change_percentage": 21.95457,
+  "atl_date": "2024-02-01T07:09:30.348Z",
+  "roi": null,
+  "last_updated": "2024-04-23T09:08:20.413Z",
+  "platforms": {
+    "ethereum": "0x0c7b199ac2bca0dba8d1785480648f0318b9a7b8"
+  }
+}

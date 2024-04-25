@@ -1,0 +1,31 @@
+{
+  "id": "dodo-2",
+  "symbol": "dodo",
+  "name": "DODO",
+  "image": "https://assets.coingecko.com/coins/images/35955/large/listings.png?1710252222",
+  "current_price": 0.600373,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 6003727,
+  "total_volume": 635050,
+  "high_24h": 0.863239,
+  "low_24h": 0.493152,
+  "price_change_24h": 0.02214164,
+  "price_change_percentage_24h": 3.8292,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 2.02,
+  "ath_change_percentage": -70.3196,
+  "ath_date": "2024-04-01T21:16:06.048Z",
+  "atl": 0.118025,
+  "atl_change_percentage": 408.68075,
+  "atl_date": "2024-03-30T11:50:07.888Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:15.642Z",
+  "platforms": {
+    "ethereum": "0x747e550a7b848ace786c3cfe754aa78febc8a022"
+  }
+}

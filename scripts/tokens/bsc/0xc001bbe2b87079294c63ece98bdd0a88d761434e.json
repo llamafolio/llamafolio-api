@@ -1,0 +1,31 @@
+{
+  "id": "evergrowcoin",
+  "symbol": "egc",
+  "name": "EverGrow Coin",
+  "image": "https://assets.coingecko.com/coins/images/18645/large/cmc_egc_200x200_circ.png?1696518116",
+  "current_price": 1.01846e-7,
+  "market_cap": 47377531,
+  "market_cap_rank": 715,
+  "fully_diluted_valuation": 47377531,
+  "total_volume": 24861,
+  "high_24h": 1.04408e-7,
+  "low_24h": 9.9833e-8,
+  "price_change_24h": -4.86768602e-10,
+  "price_change_percentage_24h": -0.47567,
+  "market_cap_change_24h": -322172.38961353153,
+  "market_cap_change_percentage_24h": -0.67542,
+  "circulating_supply": 464846384206124,
+  "total_supply": 464846384206124,
+  "max_supply": 1000000000000000,
+  "ath": 0.00000337,
+  "ath_change_percentage": -96.98648,
+  "ath_date": "2021-11-01T10:24:26.737Z",
+  "atl": 4.056e-9,
+  "atl_change_percentage": 2404.29123,
+  "atl_date": "2021-09-27T14:58:23.898Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:55.699Z",
+  "platforms": {
+    "bsc": "0xc001bbe2b87079294c63ece98bdd0a88d761434e"
+  }
+}

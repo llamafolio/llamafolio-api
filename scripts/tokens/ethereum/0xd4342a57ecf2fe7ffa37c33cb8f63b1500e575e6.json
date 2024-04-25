@@ -1,0 +1,31 @@
+{
+  "id": "apron",
+  "symbol": "apn",
+  "name": "Apron",
+  "image": "https://assets.coingecko.com/coins/images/14916/large/1_GOjoDhGzzpqnMPGpHGeWhg.png?1696514578",
+  "current_price": 0.00155417,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1549117,
+  "total_volume": 25666,
+  "high_24h": 0.00181574,
+  "low_24h": 0.00153481,
+  "price_change_24h": -0.000113067429393013,
+  "price_change_percentage_24h": -6.78173,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.816284,
+  "ath_change_percentage": -99.81198,
+  "ath_date": "2021-04-21T10:00:31.522Z",
+  "atl": 0.00058459,
+  "atl_change_percentage": 162.54268,
+  "atl_date": "2023-07-14T09:39:26.425Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:03.342Z",
+  "platforms": {
+    "ethereum": "0xd4342a57ecf2fe7ffa37c33cb8f63b1500e575e6"
+  }
+}

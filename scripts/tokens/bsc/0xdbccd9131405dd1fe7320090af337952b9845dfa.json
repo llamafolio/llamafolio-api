@@ -1,0 +1,31 @@
+{
+  "id": "starbots",
+  "symbol": "bot",
+  "name": "Starbots",
+  "image": "https://assets.coingecko.com/coins/images/21823/large/coin_%286%29.png?1696521174",
+  "current_price": 0.00042541,
+  "market_cap": 12241.72,
+  "market_cap_rank": 4197,
+  "fully_diluted_valuation": 85081,
+  "total_volume": 21.27,
+  "high_24h": 0.00044709,
+  "low_24h": 0.00041854,
+  "price_change_24h": -0.000020141463424188,
+  "price_change_percentage_24h": -4.52062,
+  "market_cap_change_24h": -464.01575324491023,
+  "market_cap_change_percentage_24h": -3.65202,
+  "circulating_supply": 28776588.4791955,
+  "total_supply": 200000000,
+  "max_supply": 200000000,
+  "ath": 0.232307,
+  "ath_change_percentage": -99.81688,
+  "ath_date": "2022-01-14T00:33:10.693Z",
+  "atl": 0.00006736,
+  "atl_change_percentage": 531.58129,
+  "atl_date": "2023-09-27T18:10:13.553Z",
+  "roi": null,
+  "last_updated": "2024-04-25T02:16:23.846Z",
+  "platforms": {
+    "bsc": "0xdbccd9131405dd1fe7320090af337952b9845dfa"
+  }
+}

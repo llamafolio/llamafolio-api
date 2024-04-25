@@ -1,0 +1,31 @@
+{
+  "id": "catex-token",
+  "symbol": "catt",
+  "name": "Catex",
+  "image": "https://assets.coingecko.com/coins/images/6353/large/catex.png?1696506725",
+  "current_price": 0.00009503,
+  "market_cap": 285.09,
+  "market_cap_rank": 4291,
+  "fully_diluted_valuation": 180960,
+  "total_volume": 1.022,
+  "high_24h": 0.000096,
+  "low_24h": 0.00009481,
+  "price_change_24h": -9.47922517148e-7,
+  "price_change_percentage_24h": -0.98764,
+  "market_cap_change_24h": -2.8437675514425678,
+  "market_cap_change_percentage_24h": -0.98764,
+  "circulating_supply": 3000000,
+  "total_supply": 1904234281,
+  "max_supply": null,
+  "ath": 0.01598819,
+  "ath_change_percentage": -99.40576,
+  "ath_date": "2021-02-01T00:31:50.789Z",
+  "atl": 0.00001767,
+  "atl_change_percentage": 437.80217,
+  "atl_date": "2020-09-08T10:41:38.766Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:34.783Z",
+  "platforms": {
+    "ethereum": "0x6e605c269e0c92e70beeb85486f1fc550f9380bd"
+  }
+}

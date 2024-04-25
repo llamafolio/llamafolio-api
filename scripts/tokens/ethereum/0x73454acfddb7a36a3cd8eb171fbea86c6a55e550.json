@@ -1,0 +1,31 @@
+{
+  "id": "buildai",
+  "symbol": "build",
+  "name": "BuildAI",
+  "image": "https://assets.coingecko.com/coins/images/35460/large/no-bg-1.png?1714009122",
+  "current_price": 0.233802,
+  "market_cap": 2072710,
+  "market_cap_rank": 2274,
+  "fully_diluted_valuation": 2338021,
+  "total_volume": 41483,
+  "high_24h": 0.27574,
+  "low_24h": 0.221339,
+  "price_change_24h": -0.012372398477896064,
+  "price_change_percentage_24h": -5.02586,
+  "market_cap_change_24h": -109684.158158198,
+  "market_cap_change_percentage_24h": -5.02586,
+  "circulating_supply": 8865230,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 1.14,
+  "ath_change_percentage": -79.46585,
+  "ath_date": "2024-03-21T03:36:00.141Z",
+  "atl": 0.157318,
+  "atl_change_percentage": 48.74685,
+  "atl_date": "2024-03-06T10:10:24.235Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:53:03.323Z",
+  "platforms": {
+    "ethereum": "0x73454acfddb7a36a3cd8eb171fbea86c6a55e550"
+  }
+}

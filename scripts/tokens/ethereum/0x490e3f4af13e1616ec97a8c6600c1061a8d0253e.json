@@ -1,0 +1,31 @@
+{
+  "id": "terran-coin",
+  "symbol": "trr",
+  "name": "Terran Coin",
+  "image": "https://assets.coingecko.com/coins/images/15351/large/TERRAN-500px.png?1696515000",
+  "current_price": 0.02136749,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 213677390,
+  "total_volume": 9999.01,
+  "high_24h": 0.02137811,
+  "low_24h": 0.02003617,
+  "price_change_24h": 0.00108605,
+  "price_change_percentage_24h": 5.3549,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": null,
+  "ath": 4.78,
+  "ath_change_percentage": -99.55258,
+  "ath_date": "2022-10-07T07:32:13.521Z",
+  "atl": 0.00599643,
+  "atl_change_percentage": 256.33757,
+  "atl_date": "2023-10-04T13:50:37.862Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:45.352Z",
+  "platforms": {
+    "ethereum": "0x490e3f4af13e1616ec97a8c6600c1061a8d0253e"
+  }
+}

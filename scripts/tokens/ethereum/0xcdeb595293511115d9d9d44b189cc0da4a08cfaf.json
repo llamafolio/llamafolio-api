@@ -1,0 +1,31 @@
+{
+  "id": "jellyfish-mobile",
+  "symbol": "jfish",
+  "name": "Jellyfish Mobile",
+  "image": "https://assets.coingecko.com/coins/images/31879/large/jelly-fish-mix-white_%282%29.png?1696530691",
+  "current_price": 0.0476986,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 47543686,
+  "total_volume": 378599,
+  "high_24h": 0.053315,
+  "low_24h": 0.04697129,
+  "price_change_24h": -0.004490975541635696,
+  "price_change_percentage_24h": -8.60512,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.094434,
+  "ath_change_percentage": -49.5718,
+  "ath_date": "2024-03-10T16:13:17.640Z",
+  "atl": 0.0221499,
+  "atl_change_percentage": 114.99636,
+  "atl_date": "2024-01-24T05:43:08.868Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:06.277Z",
+  "platforms": {
+    "ethereum": "0xcdeb595293511115d9d9d44b189cc0da4a08cfaf"
+  }
+}

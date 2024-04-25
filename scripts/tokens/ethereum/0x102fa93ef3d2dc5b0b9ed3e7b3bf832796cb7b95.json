@@ -1,0 +1,31 @@
+{
+  "id": "boss-blockchain",
+  "symbol": "bbc",
+  "name": "Boss Blockchain",
+  "image": "https://assets.coingecko.com/coins/images/34400/large/Safeimagekit-resized-img_%2820%29.png?1704788308",
+  "current_price": 0.00011894,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 11894.09,
+  "total_volume": 159.84,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.02379538,
+  "ath_change_percentage": -99.50015,
+  "ath_date": "2024-01-10T23:34:18.909Z",
+  "atl": 0.00006529,
+  "atl_change_percentage": 82.18373,
+  "atl_date": "2024-02-05T07:28:11.601Z",
+  "roi": null,
+  "last_updated": "2024-04-22T21:19:31.957Z",
+  "platforms": {
+    "ethereum": "0x102fa93ef3d2dc5b0b9ed3e7b3bf832796cb7b95"
+  }
+}

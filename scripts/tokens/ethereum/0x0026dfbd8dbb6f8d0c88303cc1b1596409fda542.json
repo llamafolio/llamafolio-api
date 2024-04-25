@@ -1,0 +1,31 @@
+{
+  "id": "sanshu",
+  "symbol": "sanshu!",
+  "name": "SANSHU!",
+  "image": "https://assets.coingecko.com/coins/images/35739/large/blobid0.png?1710233593",
+  "current_price": 0.00639015,
+  "market_cap": 6390150,
+  "market_cap_rank": 1673,
+  "fully_diluted_valuation": 6390150,
+  "total_volume": 715.6,
+  "high_24h": 0.00657283,
+  "low_24h": 0.00632404,
+  "price_change_24h": -0.000182682334215201,
+  "price_change_percentage_24h": -2.77935,
+  "market_cap_change_24h": -182682.3342152005,
+  "market_cap_change_percentage_24h": -2.77935,
+  "circulating_supply": 1000000000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.01269526,
+  "ath_change_percentage": -49.66509,
+  "ath_date": "2024-03-06T10:05:16.411Z",
+  "atl": 0.00423916,
+  "atl_change_percentage": 50.74095,
+  "atl_date": "2024-03-20T05:29:36.858Z",
+  "roi": null,
+  "last_updated": "2024-04-25T00:43:12.636Z",
+  "platforms": {
+    "ethereum": "0x0026dfbd8dbb6f8d0c88303cc1b1596409fda542"
+  }
+}

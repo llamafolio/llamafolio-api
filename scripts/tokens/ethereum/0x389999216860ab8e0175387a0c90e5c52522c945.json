@@ -1,0 +1,31 @@
+{
+  "id": "feg-token",
+  "symbol": "feg",
+  "name": "FEG (OLD)",
+  "image": "https://assets.coingecko.com/coins/images/13878/large/F-Icon-FEG-200x200-288dpi-01_%281%29.png?1696513622",
+  "current_price": 5.67488e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 18977784,
+  "total_volume": 110.04,
+  "high_24h": 6.02176e-10,
+  "low_24h": 5.60848e-10,
+  "price_change_24h": -2.6920471e-11,
+  "price_change_percentage_24h": -4.52895,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 33625098591188900,
+  "max_supply": 100000000000000000,
+  "ath": 0.00075137,
+  "ath_change_percentage": -99.99992,
+  "ath_date": "2023-03-30T12:55:44.504Z",
+  "atl": 8.068e-12,
+  "atl_change_percentage": 6895.87787,
+  "atl_date": "2021-02-12T09:35:04.295Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:40.769Z",
+  "platforms": {
+    "ethereum": "0x389999216860ab8e0175387a0c90e5c52522c945"
+  }
+}

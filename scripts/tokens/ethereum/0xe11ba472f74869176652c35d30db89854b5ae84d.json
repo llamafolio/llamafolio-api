@@ -1,0 +1,31 @@
+{
+  "id": "hegic-yvault",
+  "symbol": "yvhegic",
+  "name": "HEGIC yVault",
+  "image": "https://assets.coingecko.com/coins/images/28798/large/yvHEGIC-128-0xe11ba472F74869176652C35D30dB89854b5ae84D.png?1696527776",
+  "current_price": 0.01972876,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3878.81,
+  "total_volume": 0,
+  "high_24h": 0.02109349,
+  "low_24h": 0.01960253,
+  "price_change_24h": -0.000904811041840925,
+  "price_change_percentage_24h": -4.38774,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 196413.972107128,
+  "max_supply": null,
+  "ath": 0.04076656,
+  "ath_change_percentage": -51.60552,
+  "ath_date": "2023-02-05T02:00:07.026Z",
+  "atl": 0.00818115,
+  "atl_change_percentage": 141.14893,
+  "atl_date": "2023-09-23T06:07:00.835Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:05:52.396Z",
+  "platforms": {
+    "ethereum": "0xe11ba472f74869176652c35d30db89854b5ae84d"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "hyperbc",
+  "symbol": "hbt",
+  "name": "HyperBC",
+  "image": "https://assets.coingecko.com/coins/images/32003/large/hbt_%281%29.png?1696530803",
+  "current_price": 0.00026694,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 130996,
+  "total_volume": 74336,
+  "high_24h": 0.00027991,
+  "low_24h": 0.00025499,
+  "price_change_24h": -0.000010067914397633,
+  "price_change_percentage_24h": -3.63451,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 492468192,
+  "max_supply": null,
+  "ath": 0.00183145,
+  "ath_change_percentage": -85.42717,
+  "ath_date": "2023-11-21T01:39:14.135Z",
+  "atl": 0.00010696,
+  "atl_change_percentage": 149.51941,
+  "atl_date": "2024-03-28T05:22:38.000Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:41.425Z",
+  "platforms": {
+    "ethereum": "0x32fd949e1953b21b7a8232ef4259cd708b4e0847"
+  }
+}

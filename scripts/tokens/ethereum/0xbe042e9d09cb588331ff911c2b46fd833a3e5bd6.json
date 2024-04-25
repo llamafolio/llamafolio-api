@@ -1,0 +1,31 @@
+{
+  "id": "pepe-token",
+  "symbol": "pepe",
+  "name": "Pepe Token",
+  "image": "https://assets.coingecko.com/coins/images/31482/large/photo_2023-08-25_07-54-16.jpg?1696530294",
+  "current_price": 0.00123096,
+  "market_cap": 1112745,
+  "market_cap_rank": 2631,
+  "fully_diluted_valuation": 1112745,
+  "total_volume": 387349,
+  "high_24h": 0.0013831,
+  "low_24h": 0.00114947,
+  "price_change_24h": -0.000134513095753477,
+  "price_change_percentage_24h": -9.85103,
+  "market_cap_change_24h": -123948.22025838285,
+  "market_cap_change_percentage_24h": -10.02255,
+  "circulating_supply": 904090982,
+  "total_supply": 904090982,
+  "max_supply": 1000000000,
+  "ath": 0.02967233,
+  "ath_change_percentage": -95.82975,
+  "ath_date": "2023-08-29T02:14:47.645Z",
+  "atl": 0.00114947,
+  "atl_change_percentage": 7.6507,
+  "atl_date": "2024-04-25T03:12:17.766Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:56:56.087Z",
+  "platforms": {
+    "ethereum": "0xbe042e9d09cb588331ff911c2b46fd833a3e5bd6"
+  }
+}

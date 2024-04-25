@@ -1,0 +1,31 @@
+{
+  "id": "smurfsinu",
+  "symbol": "smurf",
+  "name": "SmurfsINU",
+  "image": "https://assets.coingecko.com/coins/images/26804/large/200x200.png?1696525865",
+  "current_price": 2.38769e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 238769,
+  "total_volume": 0.128065,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": 1000000000000000,
+  "ath": 2.44847e-10,
+  "ath_change_percentage": -2.48221,
+  "ath_date": "2024-04-14T23:30:47.231Z",
+  "atl": 2.35191e-10,
+  "atl_change_percentage": 1.5214,
+  "atl_date": "2024-04-19T14:31:46.131Z",
+  "roi": null,
+  "last_updated": "2024-04-23T18:51:28.974Z",
+  "platforms": {
+    "bsc": "0x75afa9915b2210cd6329e820af0365e932bc1dd5"
+  }
+}

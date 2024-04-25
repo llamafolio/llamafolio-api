@@ -1,0 +1,31 @@
+{
+  "id": "richquack",
+  "symbol": "quack",
+  "name": "Rich Quack",
+  "image": "https://assets.coingecko.com/coins/images/16356/large/57198446-0-Get-Rich-Quick-Gober.png?1696515955",
+  "current_price": 1.191e-9,
+  "market_cap": 51116792,
+  "market_cap_rank": 683,
+  "fully_diluted_valuation": 117033724,
+  "total_volume": 821166,
+  "high_24h": 1.247e-9,
+  "low_24h": 1.169e-9,
+  "price_change_24h": -1.2752291e-11,
+  "price_change_percentage_24h": -1.05917,
+  "market_cap_change_24h": -1473701.0473781303,
+  "market_cap_change_percentage_24h": -2.80222,
+  "circulating_supply": 43676976427468940,
+  "total_supply": 100000000000000000,
+  "max_supply": 100000000000000000,
+  "ath": 1.5463e-8,
+  "ath_change_percentage": -92.38163,
+  "ath_date": "2021-11-07T08:19:24.759Z",
+  "atl": 1.2017e-11,
+  "atl_change_percentage": 9703.39264,
+  "atl_date": "2021-10-06T13:37:28.994Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:42.783Z",
+  "platforms": {
+    "bsc": "0xd74b782e05aa25c50e7330af541d46e18f36661c"
+  }
+}

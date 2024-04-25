@@ -1,0 +1,31 @@
+{
+  "id": "talentido",
+  "symbol": "tal",
+  "name": "TalentIDO",
+  "image": "https://assets.coingecko.com/coins/images/31596/large/Coin_logo_1.png?1696530413",
+  "current_price": 0.00055859,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 4466941,
+  "total_volume": 0.109398,
+  "high_24h": 0.00056071,
+  "low_24h": 0.0005569,
+  "price_change_24h": -0.000002080279051024,
+  "price_change_percentage_24h": -0.37104,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 8000000000,
+  "max_supply": 8000000000,
+  "ath": 0.00880326,
+  "ath_change_percentage": -93.65726,
+  "ath_date": "2024-03-30T00:14:29.973Z",
+  "atl": 0.00000536,
+  "atl_change_percentage": 10318.07541,
+  "atl_date": "2023-09-18T03:33:54.463Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:47.899Z",
+  "platforms": {
+    "bsc": "0xcd883a18f8d33cf823d13cf2c6787c913d09e640"
+  }
+}

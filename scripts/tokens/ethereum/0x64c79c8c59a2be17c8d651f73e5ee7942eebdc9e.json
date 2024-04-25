@@ -1,0 +1,31 @@
+{
+  "id": "elon-cat",
+  "symbol": "schrodinge",
+  "name": "Elon Cat",
+  "image": "https://assets.coingecko.com/coins/images/31893/large/png_%285%29_%281%29.png?1696530704",
+  "current_price": 0.00025052,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 105216,
+  "total_volume": 104.15,
+  "high_24h": 0.0002589,
+  "low_24h": 0.00025052,
+  "price_change_24h": -0.000007570676542166,
+  "price_change_percentage_24h": -2.93339,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 420000000,
+  "max_supply": 420000000,
+  "ath": 0.00055681,
+  "ath_change_percentage": -55.00867,
+  "ath_date": "2023-09-25T11:39:49.482Z",
+  "atl": 0.00003166,
+  "atl_change_percentage": 691.33934,
+  "atl_date": "2023-10-20T00:55:58.071Z",
+  "roi": null,
+  "last_updated": "2024-04-24T16:30:33.756Z",
+  "platforms": {
+    "ethereum": "0x64c79c8c59a2be17c8d651f73e5ee7942eebdc9e"
+  }
+}

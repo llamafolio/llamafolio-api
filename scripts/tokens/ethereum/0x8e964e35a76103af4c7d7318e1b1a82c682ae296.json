@@ -1,0 +1,31 @@
+{
+  "id": "fellaz",
+  "symbol": "flz",
+  "name": "Fellaz",
+  "image": "https://assets.coingecko.com/coins/images/26169/large/NUERy1Wy_400x400.png?1696525257",
+  "current_price": 1.87,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3743856825,
+  "total_volume": 1074835,
+  "high_24h": 1.93,
+  "low_24h": 1.84,
+  "price_change_24h": -0.04426987276296113,
+  "price_change_percentage_24h": -2.31001,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2000000000,
+  "max_supply": null,
+  "ath": 5.7,
+  "ath_change_percentage": -67.14551,
+  "ath_date": "2023-03-31T01:05:59.574Z",
+  "atl": 0.463038,
+  "atl_change_percentage": 304.30956,
+  "atl_date": "2022-06-27T16:56:40.515Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:01.902Z",
+  "platforms": {
+    "ethereum": "0x8e964e35a76103af4c7d7318e1b1a82c682ae296"
+  }
+}

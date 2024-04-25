@@ -1,0 +1,31 @@
+{
+  "id": "origen-defi",
+  "symbol": "origen",
+  "name": "Origen DEFI",
+  "image": "https://assets.coingecko.com/coins/images/29561/large/200x200.png?1696528501",
+  "current_price": 0.0004199,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 20995,
+  "total_volume": 1.43,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 50000000,
+  "max_supply": 50000000,
+  "ath": 0.00804437,
+  "ath_change_percentage": -94.78024,
+  "ath_date": "2023-03-25T06:32:43.812Z",
+  "atl": 0.00040696,
+  "atl_change_percentage": 3.18011,
+  "atl_date": "2023-05-11T18:45:40.858Z",
+  "roi": null,
+  "last_updated": "2023-05-18T13:00:34.433Z",
+  "platforms": {
+    "bsc": "0x20dd734594dadc69df313cd143b34a70a3d9214e"
+  }
+}

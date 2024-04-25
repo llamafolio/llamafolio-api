@@ -1,0 +1,31 @@
+{
+  "id": "ebox",
+  "symbol": "ebox",
+  "name": "Ebox",
+  "image": "https://assets.coingecko.com/coins/images/14528/large/ebox.png?1696514213",
+  "current_price": 0.00858579,
+  "market_cap": 255649,
+  "market_cap_rank": 3385,
+  "fully_diluted_valuation": 556024,
+  "total_volume": 2.54,
+  "high_24h": 0.00868663,
+  "low_24h": 0.00835951,
+  "price_change_24h": 0.00005537,
+  "price_change_percentage_24h": 0.64909,
+  "market_cap_change_24h": 196.12,
+  "market_cap_change_percentage_24h": 0.07677,
+  "circulating_supply": 29867203.2430843,
+  "total_supply": 64959676.053,
+  "max_supply": null,
+  "ath": 1.063,
+  "ath_change_percentage": -99.19435,
+  "ath_date": "2021-03-28T19:18:46.624Z",
+  "atl": 0.00268919,
+  "atl_change_percentage": 218.57396,
+  "atl_date": "2023-09-05T03:14:44.017Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:02.092Z",
+  "platforms": {
+    "polygon": "0xb41c43fabd22a6c6ea135e975769e9051f9ee8ad"
+  }
+}

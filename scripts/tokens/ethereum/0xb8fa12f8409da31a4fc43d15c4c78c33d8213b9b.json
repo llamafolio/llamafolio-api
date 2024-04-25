@@ -1,0 +1,31 @@
+{
+  "id": "calicoin",
+  "symbol": "cali",
+  "name": "CaliCoin",
+  "image": "https://assets.coingecko.com/coins/images/14998/large/cropped-Logo-transparent-background-1.png?1696514662",
+  "current_price": 0.01430405,
+  "market_cap": 428736,
+  "market_cap_rank": 3148,
+  "fully_diluted_valuation": 1429120,
+  "total_volume": 66493,
+  "high_24h": 0.01430859,
+  "low_24h": 0.0142298,
+  "price_change_24h": 0.00004308,
+  "price_change_percentage_24h": 0.30207,
+  "market_cap_change_24h": 1279.62,
+  "market_cap_change_percentage_24h": 0.29936,
+  "circulating_supply": 30000000,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 0.03934282,
+  "ath_change_percentage": -63.7073,
+  "ath_date": "2021-11-10T14:32:10.351Z",
+  "atl": 0.00954944,
+  "atl_change_percentage": 49.52258,
+  "atl_date": "2023-05-09T16:13:11.794Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:24.123Z",
+  "platforms": {
+    "ethereum": "0xb8fa12f8409da31a4fc43d15c4c78c33d8213b9b"
+  }
+}

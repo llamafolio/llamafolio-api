@@ -1,0 +1,31 @@
+{
+  "id": "oraidex",
+  "symbol": "oraix",
+  "name": "OraiDEX",
+  "image": "https://assets.coingecko.com/coins/images/28104/large/oraix.png?1696527113",
+  "current_price": 0.01071168,
+  "market_cap": 4688239,
+  "market_cap_rank": 1829,
+  "fully_diluted_valuation": 7947476,
+  "total_volume": 253051,
+  "high_24h": 0.01133329,
+  "low_24h": 0.01068902,
+  "price_change_24h": -0.000563164965458158,
+  "price_change_percentage_24h": -4.99488,
+  "market_cap_change_24h": -254588.2577970894,
+  "market_cap_change_percentage_24h": -5.15066,
+  "circulating_supply": 438173084.582957,
+  "total_supply": 742788451.582957,
+  "max_supply": 749999978.999989,
+  "ath": 0.02820891,
+  "ath_change_percentage": -61.98024,
+  "ath_date": "2023-02-07T12:08:59.768Z",
+  "atl": 0.00300627,
+  "atl_change_percentage": 256.75357,
+  "atl_date": "2022-11-21T04:21:36.826Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:50.589Z",
+  "platforms": {
+    "ethereum": "0x2d869ae129e308f94cc47e66eaefb448cee0d03e"
+  }
+}

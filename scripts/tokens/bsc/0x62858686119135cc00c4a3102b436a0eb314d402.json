@@ -1,0 +1,31 @@
+{
+  "id": "metavpad",
+  "symbol": "metav",
+  "name": "MetaVPad",
+  "image": "https://assets.coingecko.com/coins/images/21397/large/metav.png?1696520761",
+  "current_price": 0.00516043,
+  "market_cap": 1133916,
+  "market_cap_rank": 2618,
+  "fully_diluted_valuation": 9818705,
+  "total_volume": 3570.3,
+  "high_24h": 0.00633884,
+  "low_24h": 0.00505412,
+  "price_change_24h": 0.00010631,
+  "price_change_percentage_24h": 2.10337,
+  "market_cap_change_24h": -23627.5408735713,
+  "market_cap_change_percentage_24h": -2.04118,
+  "circulating_supply": 220000000,
+  "total_supply": 1905004927.12351,
+  "max_supply": 5000000000,
+  "ath": 0.480879,
+  "ath_change_percentage": -98.92799,
+  "ath_date": "2021-12-22T03:26:46.372Z",
+  "atl": 0.00099547,
+  "atl_change_percentage": 417.85513,
+  "atl_date": "2022-07-21T23:54:56.862Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:51.780Z",
+  "platforms": {
+    "bsc": "0x62858686119135cc00c4a3102b436a0eb314d402"
+  }
+}

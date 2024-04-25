@@ -1,0 +1,31 @@
+{
+  "id": "supermarioporsche911inu",
+  "symbol": "silkroad",
+  "name": "SuperMarioPorsche911Inu",
+  "image": "https://assets.coingecko.com/coins/images/31649/large/smp911i_logo400x400_%283%29.jpg?1696530464",
+  "current_price": 1.37243e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 106343,
+  "total_volume": 531.13,
+  "high_24h": 1.45553e-10,
+  "low_24h": 1.36346e-10,
+  "price_change_24h": -6.622916e-12,
+  "price_change_percentage_24h": -4.60354,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 777777777777777,
+  "max_supply": 777777777777777,
+  "ath": 9.999e-10,
+  "ath_change_percentage": -86.32593,
+  "ath_date": "2023-10-27T01:36:21.454Z",
+  "atl": 4.2593e-11,
+  "atl_change_percentage": 221.00946,
+  "atl_date": "2023-09-24T21:44:34.630Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:43.991Z",
+  "platforms": {
+    "ethereum": "0x1142866f451d9d5281c5c8349a332bd338e552a1"
+  }
+}

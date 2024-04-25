@@ -1,0 +1,35 @@
+{
+  "id": "neon-exchange",
+  "symbol": "nex",
+  "name": "Nash",
+  "image": "https://assets.coingecko.com/coins/images/3246/large/Nash_M.png?1696503962",
+  "current_price": 0.146252,
+  "market_cap": 6176017,
+  "market_cap_rank": 1691,
+  "fully_diluted_valuation": 7305735,
+  "total_volume": 7104.1,
+  "high_24h": 0.151242,
+  "low_24h": 0.129226,
+  "price_change_24h": -0.004550842694801855,
+  "price_change_percentage_24h": -3.01773,
+  "market_cap_change_24h": -204362.07322132587,
+  "market_cap_change_percentage_24h": -3.20298,
+  "circulating_supply": 42268279,
+  "total_supply": 50000000,
+  "max_supply": null,
+  "ath": 3.31,
+  "ath_change_percentage": -95.67168,
+  "ath_date": "2019-08-06T07:12:22.970Z",
+  "atl": 0,
+  "atl_change_percentage": 1.6723663916707163e+46,
+  "atl_date": "2021-08-09T06:34:21.401Z",
+  "roi": {
+    "times": -0.8537475302343177,
+    "currency": "usd",
+    "percentage": -85.37475302343177
+  },
+  "last_updated": "2024-04-25T08:58:14.202Z",
+  "platforms": {
+    "polygon": "0xa486c6bc102f409180ccb8a94ba045d39f8fc7cb"
+  }
+}

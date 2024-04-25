@@ -1,0 +1,31 @@
+{
+  "id": "avante",
+  "symbol": "axt",
+  "name": "Avante",
+  "image": "https://assets.coingecko.com/coins/images/33667/large/logo.png.png?1702693688",
+  "current_price": 0.02054898,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 513724,
+  "total_volume": 470.7,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 25000000,
+  "max_supply": 25000000,
+  "ath": 0.067083,
+  "ath_change_percentage": -69.36763,
+  "ath_date": "2023-12-26T08:15:26.592Z",
+  "atl": 0.0002471,
+  "atl_change_percentage": 8216.12337,
+  "atl_date": "2024-01-06T10:54:38.448Z",
+  "roi": null,
+  "last_updated": "2024-04-03T01:31:07.715Z",
+  "platforms": {
+    "ethereum": "0x5c1ac4e697a2814812a284509e1f1b8aa34a25f3"
+  }
+}

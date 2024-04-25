@@ -1,0 +1,31 @@
+{
+  "id": "concentrator",
+  "symbol": "ctr",
+  "name": "Concentrator",
+  "image": "https://assets.coingecko.com/coins/images/26364/large/%E6%9C%AA%E5%91%BD%E5%90%8D%E7%9A%84%E8%AE%BE%E8%AE%A1.jpg?1696525441",
+  "current_price": 0.668435,
+  "market_cap": 758499,
+  "market_cap_rank": 2840,
+  "fully_diluted_valuation": 3342173,
+  "total_volume": 1978.48,
+  "high_24h": 0.711912,
+  "low_24h": 0.667953,
+  "price_change_24h": -0.03536397356206389,
+  "price_change_percentage_24h": -5.02473,
+  "market_cap_change_24h": -40240.23208539991,
+  "market_cap_change_percentage_24h": -5.03797,
+  "circulating_supply": 1134739.1930839631,
+  "total_supply": 5000000,
+  "max_supply": 5000000,
+  "ath": 3.63,
+  "ath_change_percentage": -81.48937,
+  "ath_date": "2023-02-04T18:09:04.828Z",
+  "atl": 0.367903,
+  "atl_change_percentage": 82.84015,
+  "atl_date": "2023-01-06T13:43:27.836Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:32.706Z",
+  "platforms": {
+    "ethereum": "0xb3ad645db386d7f6d753b2b9c3f4b853da6890b8"
+  }
+}

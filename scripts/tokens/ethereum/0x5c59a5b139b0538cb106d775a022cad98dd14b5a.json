@@ -1,0 +1,31 @@
+{
+  "id": "xreators",
+  "symbol": "ort",
+  "name": "XREATORS",
+  "image": "https://assets.coingecko.com/coins/images/25678/large/XREATORS_ORT_Logo.png?1696524806",
+  "current_price": 0.00413503,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 39259,
+  "total_volume": 3822.07,
+  "high_24h": 0.00470008,
+  "low_24h": 0.00389875,
+  "price_change_24h": -0.000290307714505281,
+  "price_change_percentage_24h": -6.56013,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 9500000,
+  "max_supply": 500000000,
+  "ath": 0.371233,
+  "ath_change_percentage": -98.88687,
+  "ath_date": "2022-07-17T14:36:21.422Z",
+  "atl": 0.002935,
+  "atl_change_percentage": 40.79462,
+  "atl_date": "2023-11-09T06:20:44.433Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:16:51.335Z",
+  "platforms": {
+    "ethereum": "0x5c59a5b139b0538cb106d775a022cad98dd14b5a"
+  }
+}

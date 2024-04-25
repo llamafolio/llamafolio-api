@@ -1,0 +1,31 @@
+{
+  "id": "swerve-dao",
+  "symbol": "swrv",
+  "name": "Swerve",
+  "image": "https://assets.coingecko.com/coins/images/12361/large/swerve.png?1696512186",
+  "current_price": 0.01741514,
+  "market_cap": 319418,
+  "market_cap_rank": 3286,
+  "fully_diluted_valuation": 369695,
+  "total_volume": 13470.92,
+  "high_24h": 0.01826465,
+  "low_24h": 0.01731845,
+  "price_change_24h": -0.000074502086208763,
+  "price_change_percentage_24h": -0.42598,
+  "market_cap_change_24h": -2055.0067226818646,
+  "market_cap_change_percentage_24h": -0.63925,
+  "circulating_supply": 18335863.74753677,
+  "total_supply": 21221953.480362,
+  "max_supply": 33000000,
+  "ath": 39.04,
+  "ath_change_percentage": -99.95537,
+  "ath_date": "2020-09-05T09:40:13.172Z",
+  "atl": 0.0123236,
+  "atl_change_percentage": 41.38483,
+  "atl_date": "2023-10-15T00:11:41.017Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:24.281Z",
+  "platforms": {
+    "ethereum": "0xb8baa0e4287890a5f79863ab62b7f175cecbd433"
+  }
+}

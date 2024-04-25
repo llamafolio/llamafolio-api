@@ -1,0 +1,31 @@
+{
+  "id": "spintop",
+  "symbol": "spin",
+  "name": "Spintop",
+  "image": "https://assets.coingecko.com/coins/images/21209/large/51683048395_1cb5de34ca_o.png?1696520584",
+  "current_price": 0.01058718,
+  "market_cap": 2984737,
+  "market_cap_rank": 2066,
+  "fully_diluted_valuation": 6053914,
+  "total_volume": 54897,
+  "high_24h": 0.01067887,
+  "low_24h": 0.01023214,
+  "price_change_24h": 0.00009505,
+  "price_change_percentage_24h": 0.90589,
+  "market_cap_change_24h": 43284,
+  "market_cap_change_percentage_24h": 1.47153,
+  "circulating_supply": 282993982.086805,
+  "total_supply": 573994063,
+  "max_supply": 1000000000,
+  "ath": 0.645127,
+  "ath_change_percentage": -98.37079,
+  "ath_date": "2021-12-24T01:08:38.035Z",
+  "atl": 0.00342915,
+  "atl_change_percentage": 206.50394,
+  "atl_date": "2023-11-22T11:55:03.111Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:38.319Z",
+  "platforms": {
+    "bsc": "0x6aa217312960a21adbde1478dc8cbcf828110a67"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "gogocoin",
+  "symbol": "gogo",
+  "name": "GOGOcoin",
+  "image": "https://assets.coingecko.com/coins/images/21341/large/gogo.png?1696520708",
+  "current_price": 0.00067241,
+  "market_cap": 12710.05,
+  "market_cap_rank": 4194,
+  "fully_diluted_valuation": 67235,
+  "total_volume": 110.28,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 18902103,
+  "total_supply": 99990875,
+  "max_supply": 100000000,
+  "ath": 0.829272,
+  "ath_change_percentage": -99.91892,
+  "ath_date": "2021-12-08T19:38:29.521Z",
+  "atl": 0.00051824,
+  "atl_change_percentage": 29.74992,
+  "atl_date": "2024-02-08T02:31:35.628Z",
+  "roi": null,
+  "last_updated": "2024-04-03T14:01:47.461Z",
+  "platforms": {
+    "polygon": "0xdd2af2e723547088d3846841fbdcc6a8093313d6"
+  }
+}

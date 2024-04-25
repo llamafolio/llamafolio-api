@@ -1,0 +1,31 @@
+{
+  "id": "decentralized-etf",
+  "symbol": "detf",
+  "name": "Decentralized ETF",
+  "image": "https://assets.coingecko.com/coins/images/24232/large/DETF.png?1697123799",
+  "current_price": 0.07985,
+  "market_cap": 8001296,
+  "market_cap_rank": 1551,
+  "fully_diluted_valuation": 8001296,
+  "total_volume": 331364,
+  "high_24h": 0.084405,
+  "low_24h": 0.079733,
+  "price_change_24h": -0.003167907072793436,
+  "price_change_percentage_24h": -3.81592,
+  "market_cap_change_24h": -292730.33145177085,
+  "market_cap_change_percentage_24h": -3.52941,
+  "circulating_supply": 100000000,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.190554,
+  "ath_change_percentage": -57.9411,
+  "ath_date": "2024-03-28T09:26:59.298Z",
+  "atl": 0.0049024,
+  "atl_change_percentage": 1534.80913,
+  "atl_date": "2023-10-03T15:45:46.899Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:40.223Z",
+  "platforms": {
+    "ethereum": "0x5516ac1aaca7bb2fd5b7bdde1549ef1ea242953d"
+  }
+}

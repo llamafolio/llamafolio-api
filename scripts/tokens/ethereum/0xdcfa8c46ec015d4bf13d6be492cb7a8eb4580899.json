@@ -1,0 +1,31 @@
+{
+  "id": "impactmarket",
+  "symbol": "pact",
+  "name": "impactMarket",
+  "image": "https://assets.coingecko.com/coins/images/21907/large/PACT_Token_Ticker_Blue_2x.png?1696521258",
+  "current_price": 0.00019627,
+  "market_cap": 1014281,
+  "market_cap_rank": 2682,
+  "fully_diluted_valuation": 1954721,
+  "total_volume": 2984.76,
+  "high_24h": 0.00021854,
+  "low_24h": 0.00019423,
+  "price_change_24h": -0.000018821605527672,
+  "price_change_percentage_24h": -8.75048,
+  "market_cap_change_24h": -107852.8575321458,
+  "market_cap_change_percentage_24h": -9.61141,
+  "circulating_supply": 5188877871.01005,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.02083137,
+  "ath_change_percentage": -99.05972,
+  "ath_date": "2021-12-26T23:18:17.586Z",
+  "atl": 0.00000701,
+  "atl_change_percentage": 2696.17071,
+  "atl_date": "2023-12-28T03:20:11.019Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:12.842Z",
+  "platforms": {
+    "ethereum": "0xdcfa8c46ec015d4bf13d6be492cb7a8eb4580899"
+  }
+}

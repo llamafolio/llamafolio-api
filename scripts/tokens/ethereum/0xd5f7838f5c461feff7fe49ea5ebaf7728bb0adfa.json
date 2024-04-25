@@ -1,0 +1,31 @@
+{
+  "id": "mantle-staked-ether",
+  "symbol": "meth",
+  "name": "Mantle Staked Ether",
+  "image": "https://assets.coingecko.com/coins/images/33345/large/symbol_transparent_bg.png?1701697066",
+  "current_price": 3201.55,
+  "market_cap": 1541749946,
+  "market_cap_rank": 71,
+  "fully_diluted_valuation": 1541749946,
+  "total_volume": 5897034,
+  "high_24h": 3364.83,
+  "low_24h": 3177.38,
+  "price_change_24h": -123.83781969993379,
+  "price_change_percentage_24h": -3.72401,
+  "market_cap_change_24h": -63585468.318139315,
+  "market_cap_change_percentage_24h": -3.96088,
+  "circulating_supply": 482508.350173867,
+  "total_supply": 482508.350173867,
+  "max_supply": null,
+  "ath": 4729.53,
+  "ath_change_percentage": -31.92677,
+  "ath_date": "2024-03-27T05:26:27.333Z",
+  "atl": 2142.02,
+  "atl_change_percentage": 50.30428,
+  "atl_date": "2023-12-18T10:41:32.686Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:38.086Z",
+  "platforms": {
+    "ethereum": "0xd5f7838f5c461feff7fe49ea5ebaf7728bb0adfa"
+  }
+}

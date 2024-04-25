@@ -1,0 +1,31 @@
+{
+  "id": "newtowngaming",
+  "symbol": "ntg",
+  "name": "NEWTOWNGAMING",
+  "image": "https://assets.coingecko.com/coins/images/26778/large/IMG_20220809_093430_348.jpg?1696525841",
+  "current_price": 0.00020989,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 0.02098946,
+  "total_volume": 84.05,
+  "high_24h": 0.00021128,
+  "low_24h": 0.00020954,
+  "price_change_24h": -1.4711394657e-8,
+  "price_change_percentage_24h": -0.00701,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100,
+  "max_supply": 100,
+  "ath": 0.00021361,
+  "ath_change_percentage": -1.73704,
+  "ath_date": "2024-02-29T05:00:37.863Z",
+  "atl": 0.00020637,
+  "atl_change_percentage": 1.70598,
+  "atl_date": "2024-03-22T14:01:48.675Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:56:07.069Z",
+  "platforms": {
+    "bsc": "0xa896928209881bcf9fc363210473bb10eb0c0a10"
+  }
+}

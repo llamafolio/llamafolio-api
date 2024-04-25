@@ -1,0 +1,31 @@
+{
+  "id": "emoji-erc20",
+  "symbol": "$emoji",
+  "name": "emoji ERC20",
+  "image": "https://assets.coingecko.com/coins/images/34635/large/8CC1B5C8-A5E2-45E0-BDEE-404DE38B7C8C.jpeg?1705852614",
+  "current_price": 0.00005585,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 55847,
+  "total_volume": 95.01,
+  "high_24h": 0.00005898,
+  "low_24h": 0.00005564,
+  "price_change_24h": -0.000002416668786146,
+  "price_change_percentage_24h": -4.1478,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00024864,
+  "ath_change_percentage": -77.53899,
+  "ath_date": "2024-01-20T15:29:38.492Z",
+  "atl": 0.0000261,
+  "atl_change_percentage": 114.00971,
+  "atl_date": "2024-04-02T11:32:51.950Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:56.336Z",
+  "platforms": {
+    "ethereum": "0xf12ccd17759367cf139776710b47b00c43d1ac2b"
+  }
+}

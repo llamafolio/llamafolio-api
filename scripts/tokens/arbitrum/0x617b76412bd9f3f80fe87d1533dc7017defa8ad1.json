@@ -1,0 +1,31 @@
+{
+  "id": "xrender",
+  "symbol": "xrai",
+  "name": "XRender",
+  "image": "https://assets.coingecko.com/coins/images/32364/large/image_2023-10-14_16-00-43.png?1698029814",
+  "current_price": 0.00000872,
+  "market_cap": 17149.59,
+  "market_cap_rank": 4167,
+  "fully_diluted_valuation": 173180,
+  "total_volume": 59243,
+  "high_24h": 0.00000897,
+  "low_24h": 0.00000858,
+  "price_change_24h": -1.93806727648e-7,
+  "price_change_percentage_24h": -2.17501,
+  "market_cap_change_24h": -342.29869564384717,
+  "market_cap_change_percentage_24h": -1.9569,
+  "circulating_supply": 1967418700,
+  "total_supply": 19867418700,
+  "max_supply": 19867418700,
+  "ath": 0.00031099,
+  "ath_change_percentage": -97.18635,
+  "ath_date": "2023-11-16T14:21:15.626Z",
+  "atl": 0.00000858,
+  "atl_change_percentage": 1.97301,
+  "atl_date": "2024-04-25T07:07:02.270Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:01.114Z",
+  "platforms": {
+    "arbitrum": "0x617b76412bd9f3f80fe87d1533dc7017defa8ad1"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "feyorra",
+  "symbol": "fey",
+  "name": "Feyorra",
+  "image": "https://assets.coingecko.com/coins/images/13689/large/1_XiKKk5_400x400.jpg?1696513436",
+  "current_price": 0.00657302,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 110.49,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.03419437,
+  "ath_change_percentage": -80.77747,
+  "ath_date": "2021-04-21T16:12:33.171Z",
+  "atl": 0.00055638,
+  "atl_change_percentage": 1081.39541,
+  "atl_date": "2021-07-05T21:36:49.989Z",
+  "roi": null,
+  "last_updated": "2024-03-30T09:29:44.652Z",
+  "platforms": {
+    "ethereum": "0xe8e06a5613dc86d459bc8fb989e173bb8b256072"
+  }
+}

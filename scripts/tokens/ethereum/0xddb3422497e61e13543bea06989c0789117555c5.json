@@ -1,0 +1,35 @@
+{
+  "id": "coti",
+  "symbol": "coti",
+  "name": "COTI",
+  "image": "https://assets.coingecko.com/coins/images/2962/large/Coti.png?1696503705",
+  "current_price": 0.119969,
+  "market_cap": 188347047,
+  "market_cap_rank": 311,
+  "fully_diluted_valuation": 239529782,
+  "total_volume": 14654071,
+  "high_24h": 0.134726,
+  "low_24h": 0.119807,
+  "price_change_24h": -0.013784415189438556,
+  "price_change_percentage_24h": -10.30582,
+  "market_cap_change_24h": -22265253.77940482,
+  "market_cap_change_percentage_24h": -10.57168,
+  "circulating_supply": 1572639906.36,
+  "total_supply": 2000000000,
+  "max_supply": 2000000000,
+  "ath": 0.668634,
+  "ath_change_percentage": -82.04895,
+  "ath_date": "2021-09-29T11:39:21.397Z",
+  "atl": 0.00556342,
+  "atl_change_percentage": 2057.43081,
+  "atl_date": "2019-11-07T10:29:26.372Z",
+  "roi": {
+    "times": 0.845680509421683,
+    "currency": "usd",
+    "percentage": 84.56805094216831
+  },
+  "last_updated": "2024-04-25T08:55:25.715Z",
+  "platforms": {
+    "ethereum": "0xddb3422497e61e13543bea06989c0789117555c5"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "h2finance",
+  "symbol": "yfih2",
+  "name": "H2Finance",
+  "image": "https://assets.coingecko.com/coins/images/23077/large/wnzHxD5M_400x400.jpg?1696522367",
+  "current_price": 0.957377,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 23936,
+  "total_volume": 4.49,
+  "high_24h": 1.18,
+  "low_24h": 0.918336,
+  "price_change_24h": 0.0202261,
+  "price_change_percentage_24h": 2.15826,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 25000,
+  "max_supply": 25000,
+  "ath": 13.92,
+  "ath_change_percentage": -93.14295,
+  "ath_date": "2022-01-26T07:16:30.123Z",
+  "atl": 0.199621,
+  "atl_change_percentage": 378.08954,
+  "atl_date": "2023-08-28T08:43:32.262Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:22.108Z",
+  "platforms": {
+    "bsc": "0xdcb624c870d73cdd0b3345762977cb14de598cd0"
+  }
+}

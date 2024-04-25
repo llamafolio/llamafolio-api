@@ -1,0 +1,31 @@
+{
+  "id": "davidcoin",
+  "symbol": "dc",
+  "name": "DavidCoin",
+  "image": "https://assets.coingecko.com/coins/images/24964/large/dc.png?1696524118",
+  "current_price": 0.00000141,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1409.49,
+  "total_volume": 3793.07,
+  "high_24h": 0.00000141,
+  "low_24h": 0.00000141,
+  "price_change_24h": -6.21187447e-10,
+  "price_change_percentage_24h": -0.04405,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00041535,
+  "ath_change_percentage": -99.66065,
+  "ath_date": "2022-04-26T00:02:52.639Z",
+  "atl": 1.01868e-7,
+  "atl_change_percentage": 1283.64287,
+  "atl_date": "2023-08-08T06:40:05.478Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:22.193Z",
+  "platforms": {
+    "bsc": "0x94df6e5bc05b6eb9eb65c918902f6f4b8edd8833"
+  }
+}

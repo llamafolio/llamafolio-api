@@ -1,0 +1,31 @@
+{
+  "id": "boss",
+  "symbol": "boss",
+  "name": "Boss",
+  "image": "https://assets.coingecko.com/coins/images/17927/large/XL7jo4j.png?1696517447",
+  "current_price": 3.35e-9,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3349961,
+  "total_volume": 38399,
+  "high_24h": 3.385e-9,
+  "low_24h": 3.257e-9,
+  "price_change_24h": 9.0327e-11,
+  "price_change_percentage_24h": 2.7711,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": null,
+  "ath": 5.8486e-8,
+  "ath_change_percentage": -94.29498,
+  "ath_date": "2021-11-09T13:47:51.726Z",
+  "atl": 1.587e-9,
+  "atl_change_percentage": 110.23735,
+  "atl_date": "2023-12-11T09:54:14.131Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:43.752Z",
+  "platforms": {
+    "bsc": "0x49324d59327fb799813b902db55b2a118d601547"
+  }
+}

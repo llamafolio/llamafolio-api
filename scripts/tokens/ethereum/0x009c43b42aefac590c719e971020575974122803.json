@@ -1,0 +1,35 @@
+{
+  "id": "bibox-token",
+  "symbol": "bix",
+  "name": "Bibox",
+  "image": "https://assets.coingecko.com/coins/images/1441/large/bibox-token.png?1696502491",
+  "current_price": 0.00490957,
+  "market_cap": 576379,
+  "market_cap_rank": 2994,
+  "fully_diluted_valuation": 1315476,
+  "total_volume": 7.05,
+  "high_24h": 0.00496821,
+  "low_24h": 0.00489924,
+  "price_change_24h": -0.000054023219491017,
+  "price_change_percentage_24h": -1.08839,
+  "market_cap_change_24h": -6061.699334040051,
+  "market_cap_change_percentage_24h": -1.04074,
+  "circulating_supply": 117399166,
+  "total_supply": 267941449,
+  "max_supply": null,
+  "ath": 1.77,
+  "ath_change_percentage": -99.72317,
+  "ath_date": "2018-06-09T22:39:43.939Z",
+  "atl": 0.00130892,
+  "atl_change_percentage": 275.08659,
+  "atl_date": "2023-07-02T06:30:32.190Z",
+  "roi": {
+    "times": -0.9711201955530374,
+    "currency": "usd",
+    "percentage": -97.11201955530375
+  },
+  "last_updated": "2024-04-25T04:20:10.601Z",
+  "platforms": {
+    "ethereum": "0x009c43b42aefac590c719e971020575974122803"
+  }
+}

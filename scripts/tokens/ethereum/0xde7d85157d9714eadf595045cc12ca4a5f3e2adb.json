@@ -1,0 +1,35 @@
+{
+  "id": "stp-network",
+  "symbol": "stpt",
+  "name": "STP",
+  "image": "https://assets.coingecko.com/coins/images/8713/large/STP.png?1696508875",
+  "current_price": 0.055404,
+  "market_cap": 107788362,
+  "market_cap_rank": 461,
+  "fully_diluted_valuation": 107788362,
+  "total_volume": 2681657,
+  "high_24h": 0.061734,
+  "low_24h": 0.054959,
+  "price_change_24h": -0.005609923375203281,
+  "price_change_percentage_24h": -9.19447,
+  "market_cap_change_24h": -11296217.085476488,
+  "market_cap_change_percentage_24h": -9.48588,
+  "circulating_supply": 1942420283.02707,
+  "total_supply": 1942420283.02707,
+  "max_supply": 1942420283.02707,
+  "ath": 0.270085,
+  "ath_change_percentage": -79.44562,
+  "ath_date": "2021-10-06T08:03:37.704Z",
+  "atl": 0.00646736,
+  "atl_change_percentage": 758.37714,
+  "atl_date": "2019-10-01T00:00:00.000Z",
+  "roi": {
+    "times": 4.540418250707344,
+    "currency": "usd",
+    "percentage": 454.0418250707344
+  },
+  "last_updated": "2024-04-25T08:55:46.271Z",
+  "platforms": {
+    "ethereum": "0xde7d85157d9714eadf595045cc12ca4a5f3e2adb"
+  }
+}

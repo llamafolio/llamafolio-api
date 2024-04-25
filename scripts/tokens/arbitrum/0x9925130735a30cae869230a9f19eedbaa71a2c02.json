@@ -1,0 +1,31 @@
+{
+  "id": "horny-hyenas",
+  "symbol": "horny",
+  "name": "Horny Hyenas",
+  "image": "https://assets.coingecko.com/coins/images/28979/large/horny.png?1696527952",
+  "current_price": 11.82,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 82370,
+  "total_volume": 0.263876,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 6969,
+  "max_supply": 6969,
+  "ath": 12.47,
+  "ath_change_percentage": -5.19324,
+  "ath_date": "2023-02-08T01:17:39.711Z",
+  "atl": 11.55,
+  "atl_change_percentage": 2.33521,
+  "atl_date": "2023-02-22T17:03:34.401Z",
+  "roi": null,
+  "last_updated": "2023-02-22T23:30:08.978Z",
+  "platforms": {
+    "arbitrum": "0x9925130735a30cae869230a9f19eedbaa71a2c02"
+  }
+}

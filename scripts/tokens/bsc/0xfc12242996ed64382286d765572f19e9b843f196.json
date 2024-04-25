@@ -1,0 +1,31 @@
+{
+  "id": "wallet-defi",
+  "symbol": "wdf",
+  "name": "Wallet Defi",
+  "image": "https://assets.coingecko.com/coins/images/28430/large/WDF_200x200.png?1696527427",
+  "current_price": 0.39356,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 15.63,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000,
+  "max_supply": 100000,
+  "ath": 3.83,
+  "ath_change_percentage": -89.73705,
+  "ath_date": "2022-12-09T02:54:58.348Z",
+  "atl": 0.33602,
+  "atl_change_percentage": 17.12397,
+  "atl_date": "2022-12-17T02:27:42.348Z",
+  "roi": null,
+  "last_updated": "2023-05-18T13:00:46.438Z",
+  "platforms": {
+    "bsc": "0xfc12242996ed64382286d765572f19e9b843f196"
+  }
+}

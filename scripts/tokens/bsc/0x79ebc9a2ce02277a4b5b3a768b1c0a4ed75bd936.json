@@ -1,0 +1,31 @@
+{
+  "id": "catgirl",
+  "symbol": "catgirl",
+  "name": "Catgirl",
+  "image": "https://assets.coingecko.com/coins/images/16472/large/catgirl-200x200.png?1696516067",
+  "current_price": 6.10175e-10,
+  "market_cap": 21699300,
+  "market_cap_rank": 1070,
+  "fully_diluted_valuation": 22375354,
+  "total_volume": 2421462,
+  "high_24h": 6.11275e-10,
+  "low_24h": 5.87235e-10,
+  "price_change_24h": 8.555e-12,
+  "price_change_percentage_24h": 1.42192,
+  "market_cap_change_24h": 325780,
+  "market_cap_change_percentage_24h": 1.52422,
+  "circulating_supply": 35672679218361412,
+  "total_supply": 36784082007099700,
+  "max_supply": 100000000000000000,
+  "ath": 2.2635e-8,
+  "ath_change_percentage": -97.30472,
+  "ath_date": "2021-11-01T20:05:01.678Z",
+  "atl": 1e-18,
+  "atl_change_percentage": 97946907130.90253,
+  "atl_date": "2021-10-14T08:37:38.658Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:19.793Z",
+  "platforms": {
+    "bsc": "0x79ebc9a2ce02277a4b5b3a768b1c0a4ed75bd936"
+  }
+}

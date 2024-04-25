@@ -1,0 +1,31 @@
+{
+  "id": "quick-intel",
+  "symbol": "qkntl",
+  "name": "Quick Intel",
+  "image": "https://assets.coingecko.com/coins/images/29605/large/IMG_6589D0616DF1-1.jpeg?1696528542",
+  "current_price": 0.066235,
+  "market_cap": 5288942,
+  "market_cap_rank": 1770,
+  "fully_diluted_valuation": 5291711,
+  "total_volume": 11169.7,
+  "high_24h": 0.068141,
+  "low_24h": 0.063605,
+  "price_change_24h": -0.001370425697012151,
+  "price_change_percentage_24h": -2.02709,
+  "market_cap_change_24h": -119588.28837053478,
+  "market_cap_change_percentage_24h": -2.2111,
+  "circulating_supply": 79958146.2609351,
+  "total_supply": 80000000,
+  "max_supply": 100000000,
+  "ath": 0.149149,
+  "ath_change_percentage": -55.59267,
+  "ath_date": "2024-03-12T17:39:33.985Z",
+  "atl": 2.93849e-7,
+  "atl_change_percentage": 22539655.3152,
+  "atl_date": "2023-04-28T15:21:35.895Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:49.676Z",
+  "platforms": {
+    "arbitrum": "0xbcd4d5ac29e06e4973a1ddcd782cd035d04bc0b7"
+  }
+}

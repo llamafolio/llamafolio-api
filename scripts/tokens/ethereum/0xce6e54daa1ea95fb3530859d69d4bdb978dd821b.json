@@ -1,0 +1,31 @@
+{
+  "id": "ordibank",
+  "symbol": "orbk",
+  "name": "Ordibank",
+  "image": "https://assets.coingecko.com/coins/images/35736/large/obank_light_200x200.png?1710247386",
+  "current_price": 0.02069446,
+  "market_cap": 5728534,
+  "market_cap_rank": 1725,
+  "fully_diluted_valuation": 20761612,
+  "total_volume": 571935,
+  "high_24h": 0.02424975,
+  "low_24h": 0.01972037,
+  "price_change_24h": -0.002527823666160976,
+  "price_change_percentage_24h": -10.88534,
+  "market_cap_change_24h": -687940.387262716,
+  "market_cap_change_percentage_24h": -10.72147,
+  "circulating_supply": 275919530.1094852,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.12457,
+  "ath_change_percentage": -83.32116,
+  "ath_date": "2024-03-13T17:07:23.907Z",
+  "atl": 0.01972037,
+  "atl_change_percentage": 5.35692,
+  "atl_date": "2024-04-24T23:30:02.120Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:23.189Z",
+  "platforms": {
+    "ethereum": "0xce6e54daa1ea95fb3530859d69d4bdb978dd821b"
+  }
+}

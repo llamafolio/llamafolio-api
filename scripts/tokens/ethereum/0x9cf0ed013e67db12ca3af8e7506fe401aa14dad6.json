@@ -1,0 +1,31 @@
+{
+  "id": "spectre-ai",
+  "symbol": "spectre",
+  "name": "Spectre AI",
+  "image": "https://assets.coingecko.com/coins/images/33066/large/Spectre.png?1710264243",
+  "current_price": 2.29,
+  "market_cap": 21588411,
+  "market_cap_rank": 1074,
+  "fully_diluted_valuation": 22867419,
+  "total_volume": 158411,
+  "high_24h": 2.62,
+  "low_24h": 2.18,
+  "price_change_24h": -0.24484214264949333,
+  "price_change_percentage_24h": -9.66553,
+  "market_cap_change_24h": -2282476.2483467124,
+  "market_cap_change_percentage_24h": -9.56176,
+  "circulating_supply": 9434239.90889037,
+  "total_supply": 9993172.3319914,
+  "max_supply": 10000000,
+  "ath": 3.4,
+  "ath_change_percentage": -35.92002,
+  "ath_date": "2024-04-08T18:48:45.162Z",
+  "atl": 0.02880028,
+  "atl_change_percentage": 7468.35346,
+  "atl_date": "2023-12-30T18:30:08.880Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:50:05.029Z",
+  "platforms": {
+    "ethereum": "0x9cf0ed013e67db12ca3af8e7506fe401aa14dad6"
+  }
+}

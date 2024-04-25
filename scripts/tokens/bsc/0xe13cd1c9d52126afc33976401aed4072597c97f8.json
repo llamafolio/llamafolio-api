@@ -1,0 +1,31 @@
+{
+  "id": "ordinal-hodl",
+  "symbol": "hodl",
+  "name": "Ordinal HODL",
+  "image": "https://assets.coingecko.com/coins/images/35285/large/200_x_200.jpg?1709644211",
+  "current_price": 0.00753649,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 615.63,
+  "high_24h": 0.00768999,
+  "low_24h": 0.00739385,
+  "price_change_24h": -0.000012257896871935,
+  "price_change_percentage_24h": -0.16238,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 21000000,
+  "max_supply": null,
+  "ath": 0.03207746,
+  "ath_change_percentage": -76.55495,
+  "ath_date": "2024-03-28T11:45:05.764Z",
+  "atl": 0.00653923,
+  "atl_change_percentage": 15.00707,
+  "atl_date": "2024-04-17T16:08:35.531Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:33.063Z",
+  "platforms": {
+    "bsc": "0xe13cd1c9d52126afc33976401aed4072597c97f8"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "steakhut-finance",
+  "symbol": "steak",
+  "name": "SteakHut Finance",
+  "image": "https://assets.coingecko.com/coins/images/25688/large/logo_400.png?1696524815",
+  "current_price": 0.480678,
+  "market_cap": 963388,
+  "market_cap_rank": 2709,
+  "fully_diluted_valuation": 2400289,
+  "total_volume": 7884.56,
+  "high_24h": 0.538221,
+  "low_24h": 0.479668,
+  "price_change_24h": -0.05523951257261123,
+  "price_change_percentage_24h": -10.30747,
+  "market_cap_change_24h": 963388,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 2006816.1924397007,
+  "total_supply": 4999998,
+  "max_supply": 5000000,
+  "ath": 2.35,
+  "ath_change_percentage": -79.46594,
+  "ath_date": "2023-12-06T08:29:28.856Z",
+  "atl": 0.0473401,
+  "atl_change_percentage": 917.98525,
+  "atl_date": "2022-11-25T07:35:55.939Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:26.260Z",
+  "platforms": {
+    "avalanche": "0xb279f8dd152b99ec1d84a489d32c35bc0c7f5674"
+  }
+}

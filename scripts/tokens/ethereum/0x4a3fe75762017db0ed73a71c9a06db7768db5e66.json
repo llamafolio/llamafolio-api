@@ -1,0 +1,31 @@
+{
+  "id": "comp-yvault",
+  "symbol": "yvcomp",
+  "name": "COMP yVault",
+  "image": "https://assets.coingecko.com/coins/images/28786/large/yvCOMP-128-0x4A3FE75762017DB0eD73a71C9A06db7768DB5e66.png?1696527765",
+  "current_price": 48.44,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 12741.71,
+  "total_volume": 0,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 263.051229229676,
+  "max_supply": null,
+  "ath": 49.12,
+  "ath_change_percentage": -1.39546,
+  "ath_date": "2023-01-20T08:00:01.713Z",
+  "atl": 48.39,
+  "atl_change_percentage": 0.1075,
+  "atl_date": "2023-01-20T12:07:00.671Z",
+  "roi": null,
+  "last_updated": "2023-01-20T15:00:09.303Z",
+  "platforms": {
+    "ethereum": "0x4a3fe75762017db0ed73a71c9a06db7768db5e66"
+  }
+}

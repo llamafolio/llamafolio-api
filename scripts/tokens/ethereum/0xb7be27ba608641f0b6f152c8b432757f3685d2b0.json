@@ -1,0 +1,31 @@
+{
+  "id": "flooring-protocol-micromeebits",
+  "symbol": "u⚇",
+  "name": "FP μMeebits",
+  "image": "https://assets.coingecko.com/coins/images/32769/large/meebits_logo.d8ecd01f_%281%29.png?1699337785",
+  "current_price": 0.00174997,
+  "market_cap": 176977,
+  "market_cap_rank": 3552,
+  "fully_diluted_valuation": 176977,
+  "total_volume": 1767.47,
+  "high_24h": 0.00179829,
+  "low_24h": 0.0017369,
+  "price_change_24h": -0.000017019789318947,
+  "price_change_percentage_24h": -0.96321,
+  "market_cap_change_24h": -1733.592197810649,
+  "market_cap_change_percentage_24h": -0.97006,
+  "circulating_supply": 101000000,
+  "total_supply": 101000000,
+  "max_supply": 20000000000,
+  "ath": 0.00443181,
+  "ath_change_percentage": -60.46218,
+  "ath_date": "2024-03-04T02:45:23.252Z",
+  "atl": 0.00149526,
+  "atl_change_percentage": 17.1868,
+  "atl_date": "2024-04-13T21:32:14.558Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:46.925Z",
+  "platforms": {
+    "ethereum": "0xb7be27ba608641f0b6f152c8b432757f3685d2b0"
+  }
+}

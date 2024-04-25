@@ -1,0 +1,31 @@
+{
+  "id": "settled-ethxy-token",
+  "symbol": "sexy",
+  "name": "Settled EthXY Token",
+  "image": "https://assets.coingecko.com/coins/images/33032/large/logo-circle.png?1700348518",
+  "current_price": 0.930643,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 532902,
+  "high_24h": 1.051,
+  "low_24h": 0.909961,
+  "price_change_24h": -0.08866867221972273,
+  "price_change_percentage_24h": -8.69887,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 13844256,
+  "max_supply": null,
+  "ath": 3.12,
+  "ath_change_percentage": -70.09212,
+  "ath_date": "2024-03-28T06:02:25.552Z",
+  "atl": 0.187427,
+  "atl_change_percentage": 398.01692,
+  "atl_date": "2023-11-29T22:05:49.230Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:40.449Z",
+  "platforms": {
+    "ethereum": "0xc52fafdc900cb92ae01e6e4f8979af7f436e2eb2"
+  }
+}

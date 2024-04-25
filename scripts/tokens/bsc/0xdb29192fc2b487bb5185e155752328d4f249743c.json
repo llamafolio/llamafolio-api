@@ -1,0 +1,31 @@
+{
+  "id": "ultra-nft",
+  "symbol": "unft",
+  "name": "Ultra NFT",
+  "image": "https://assets.coingecko.com/coins/images/15506/large/VkZQUF7q_400x400.jpg?1696515149",
+  "current_price": 4.55635e-13,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 455.63,
+  "total_volume": 0,
+  "high_24h": 4.55635e-13,
+  "low_24h": 4.55635e-13,
+  "price_change_24h": 0,
+  "price_change_percentage_24h": 0,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": null,
+  "ath": 1.8592e-8,
+  "ath_change_percentage": -99.99755,
+  "ath_date": "2021-05-17T20:02:40.550Z",
+  "atl": 4.55635e-13,
+  "atl_change_percentage": 0,
+  "atl_date": "2021-09-23T13:36:19.064Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:30.091Z",
+  "platforms": {
+    "bsc": "0xdb29192fc2b487bb5185e155752328d4f249743c"
+  }
+}

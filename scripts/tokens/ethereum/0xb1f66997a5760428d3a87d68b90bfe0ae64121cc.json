@@ -1,0 +1,31 @@
+{
+  "id": "lua-token",
+  "symbol": "lua",
+  "name": "LuaSwap",
+  "image": "https://assets.coingecko.com/coins/images/12627/large/Screenshot_2020-09-28_at_6.24.59_PM.jpg?1696512435",
+  "current_price": 0.03893794,
+  "market_cap": 8448501,
+  "market_cap_rank": 1523,
+  "fully_diluted_valuation": 10796409,
+  "total_volume": 7595.91,
+  "high_24h": 0.0406356,
+  "low_24h": 0.03889129,
+  "price_change_24h": -0.00163105480413496,
+  "price_change_percentage_24h": -4.02045,
+  "market_cap_change_24h": -353895.599336626,
+  "market_cap_change_percentage_24h": -4.02045,
+  "circulating_supply": 216973456.95524815,
+  "total_supply": 277272189.978308,
+  "max_supply": 500000000,
+  "ath": 2.44,
+  "ath_change_percentage": -98.40322,
+  "ath_date": "2020-09-29T20:30:48.178Z",
+  "atl": 0.00224724,
+  "atl_change_percentage": 1636.21921,
+  "atl_date": "2022-12-24T14:34:55.056Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:45:46.356Z",
+  "platforms": {
+    "ethereum": "0xb1f66997a5760428d3a87d68b90bfe0ae64121cc"
+  }
+}

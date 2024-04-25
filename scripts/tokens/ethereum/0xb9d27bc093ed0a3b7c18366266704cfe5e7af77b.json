@@ -1,0 +1,31 @@
+{
+  "id": "carbify",
+  "symbol": "cby",
+  "name": "Carbify",
+  "image": "https://assets.coingecko.com/coins/images/29892/large/Carbify_logo.png?1696528816",
+  "current_price": 3.42,
+  "market_cap": 33684281,
+  "market_cap_rank": 862,
+  "fully_diluted_valuation": 171157693,
+  "total_volume": 78144,
+  "high_24h": 3.55,
+  "low_24h": 3.39,
+  "price_change_24h": -0.12516713371878652,
+  "price_change_percentage_24h": -3.52892,
+  "market_cap_change_24h": -1187529.4209443778,
+  "market_cap_change_percentage_24h": -3.40541,
+  "circulating_supply": 9840130.518449128,
+  "total_supply": 50000000,
+  "max_supply": 50000000,
+  "ath": 4.36,
+  "ath_change_percentage": -21.1294,
+  "ath_date": "2024-04-03T15:35:26.775Z",
+  "atl": 0.247788,
+  "atl_change_percentage": 1287.71637,
+  "atl_date": "2023-07-20T16:08:03.000Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:49.738Z",
+  "platforms": {
+    "ethereum": "0xb9d27bc093ed0a3b7c18366266704cfe5e7af77b"
+  }
+}

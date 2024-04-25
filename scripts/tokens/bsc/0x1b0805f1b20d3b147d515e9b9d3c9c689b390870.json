@@ -1,0 +1,31 @@
+{
+  "id": "neutrinos",
+  "symbol": "neutr",
+  "name": "Neutrinos",
+  "image": "https://assets.coingecko.com/coins/images/29886/large/QLDnycl.png?1696528811",
+  "current_price": 0.00007359,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 21990,
+  "total_volume": 699.21,
+  "high_24h": 0.00010183,
+  "low_24h": 0.00006048,
+  "price_change_24h": -0.00001923769952503,
+  "price_change_percentage_24h": -20.72364,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 300000000,
+  "max_supply": null,
+  "ath": 0.01796852,
+  "ath_change_percentage": -99.59145,
+  "ath_date": "2023-04-25T11:12:20.170Z",
+  "atl": 0.00003445,
+  "atl_change_percentage": 113.07096,
+  "atl_date": "2024-03-23T02:45:38.456Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:37.213Z",
+  "platforms": {
+    "bsc": "0x1b0805f1b20d3b147d515e9b9d3c9c689b390870"
+  }
+}

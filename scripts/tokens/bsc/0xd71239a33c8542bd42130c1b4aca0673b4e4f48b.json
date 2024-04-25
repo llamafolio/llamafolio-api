@@ -1,0 +1,31 @@
+{
+  "id": "legend-of-fantasy-war",
+  "symbol": "lfw",
+  "name": "Linked Finance World",
+  "image": "https://assets.coingecko.com/coins/images/19570/large/LFW_New_logo.png?1696519002",
+  "current_price": 0.01022768,
+  "market_cap": 166413,
+  "market_cap_rank": 3586,
+  "fully_diluted_valuation": 2018791,
+  "total_volume": 89143,
+  "high_24h": 0.01191131,
+  "low_24h": 0.00995456,
+  "price_change_24h": -0.001569098623856598,
+  "price_change_percentage_24h": -13.30107,
+  "market_cap_change_24h": -27597.146819045767,
+  "market_cap_change_percentage_24h": -14.22459,
+  "circulating_supply": 16486407.699761294,
+  "total_supply": 200000000,
+  "max_supply": null,
+  "ath": 3.16,
+  "ath_change_percentage": -99.67614,
+  "ath_date": "2021-11-16T14:37:07.478Z",
+  "atl": 0.00534879,
+  "atl_change_percentage": 91.57951,
+  "atl_date": "2022-12-17T16:45:06.275Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:16.047Z",
+  "platforms": {
+    "bsc": "0xd71239a33c8542bd42130c1b4aca0673b4e4f48b"
+  }
+}

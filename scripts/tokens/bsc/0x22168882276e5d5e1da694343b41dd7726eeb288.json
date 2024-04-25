@@ -1,0 +1,31 @@
+{
+  "id": "wall-street-bets-dapp",
+  "symbol": "wsb",
+  "name": "WallStreetBets DApp",
+  "image": "https://assets.coingecko.com/coins/images/15093/large/Pe1mrDu.png?1696514751",
+  "current_price": 0.00020843,
+  "market_cap": 207888,
+  "market_cap_rank": 3471,
+  "fully_diluted_valuation": 207888,
+  "total_volume": 332.65,
+  "high_24h": 0.00021092,
+  "low_24h": 0.00020485,
+  "price_change_24h": 4.041e-7,
+  "price_change_percentage_24h": 0.19425,
+  "market_cap_change_24h": -189.54904777777847,
+  "market_cap_change_percentage_24h": -0.0911,
+  "circulating_supply": 1000000000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.224723,
+  "ath_change_percentage": -99.90749,
+  "ath_date": "2021-05-05T14:00:57.257Z",
+  "atl": 9.6107e-8,
+  "atl_change_percentage": 216208.00767,
+  "atl_date": "2023-05-09T11:25:17.008Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:56.244Z",
+  "platforms": {
+    "bsc": "0x22168882276e5d5e1da694343b41dd7726eeb288"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "newpepe",
+  "symbol": "pepe",
+  "name": "NEWPEPE",
+  "image": "https://assets.coingecko.com/coins/images/31729/large/photo_2023-09-12_02-04-48_%282%29.jpg?1696530549",
+  "current_price": 4.00413e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 168450,
+  "total_volume": 214.97,
+  "high_24h": 4.19535e-10,
+  "low_24h": 3.98235e-10,
+  "price_change_24h": -1.5704446e-11,
+  "price_change_percentage_24h": -3.77404,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 420690000000000,
+  "max_supply": 420690000000000,
+  "ath": 7.326e-9,
+  "ath_change_percentage": -94.5343,
+  "ath_date": "2023-11-17T21:31:38.552Z",
+  "atl": 1.44354e-10,
+  "atl_change_percentage": 177.38273,
+  "atl_date": "2023-11-17T17:11:00.046Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:01.440Z",
+  "platforms": {
+    "ethereum": "0xa57ed6e54be8125bbe45d6ca330e45ebb71ef11e"
+  }
+}

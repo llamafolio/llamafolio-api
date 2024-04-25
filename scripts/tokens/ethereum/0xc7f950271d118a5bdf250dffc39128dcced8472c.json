@@ -1,0 +1,31 @@
+{
+  "id": "chainback",
+  "symbol": "archive",
+  "name": "Chainback",
+  "image": "https://assets.coingecko.com/coins/images/30580/large/Chainback-glyph-logo-200.png?1696529444",
+  "current_price": 0.00465467,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 4637179,
+  "total_volume": 18430.77,
+  "high_24h": 0.00508639,
+  "low_24h": 0.00462607,
+  "price_change_24h": -0.000431717909508546,
+  "price_change_percentage_24h": -8.4877,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.01225305,
+  "ath_change_percentage": -62.1549,
+  "ath_date": "2024-03-31T08:25:27.511Z",
+  "atl": 0.00011404,
+  "atl_change_percentage": 3966.10104,
+  "atl_date": "2023-08-31T21:14:21.430Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:03.781Z",
+  "platforms": {
+    "ethereum": "0xc7f950271d118a5bdf250dffc39128dcced8472c"
+  }
+}

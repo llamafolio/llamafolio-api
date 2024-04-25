@@ -1,0 +1,31 @@
+{
+  "id": "apm-coin",
+  "symbol": "apm",
+  "name": "apM Coin",
+  "image": "https://assets.coingecko.com/coins/images/10069/large/PvDCvh5h_400x400.png?1696510100",
+  "current_price": 0.00568765,
+  "market_cap": 2059421,
+  "market_cap_rank": 2278,
+  "fully_diluted_valuation": 10314889,
+  "total_volume": 381801,
+  "high_24h": 0.0059515,
+  "low_24h": 0.00558616,
+  "price_change_24h": -0.000237618890385655,
+  "price_change_percentage_24h": -4.01026,
+  "market_cap_change_24h": -80122.82595143374,
+  "market_cap_change_percentage_24h": -3.74486,
+  "circulating_supply": 361875000,
+  "total_supply": 1812500000,
+  "max_supply": null,
+  "ath": 1.066,
+  "ath_change_percentage": -99.46626,
+  "ath_date": "2020-03-05T03:12:19.381Z",
+  "atl": 0.00504328,
+  "atl_change_percentage": 12.84272,
+  "atl_date": "2023-09-27T03:14:32.942Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:42.671Z",
+  "platforms": {
+    "ethereum": "0xc8c424b91d8ce0137bab4b832b7f7d154156ba6c"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "id": "zebi",
+  "symbol": "zco",
+  "name": "Zebi",
+  "image": "https://assets.coingecko.com/coins/images/2756/large/zebi.png?1696503529",
+  "current_price": 0.00014396,
+  "market_cap": 71962,
+  "market_cap_rank": 3889,
+  "fully_diluted_valuation": 71962,
+  "total_volume": 32.2,
+  "high_24h": 0.00014433,
+  "low_24h": 0.00014367,
+  "price_change_24h": -5.4942448647e-8,
+  "price_change_percentage_24h": -0.03815,
+  "market_cap_change_24h": -62.53935098645161,
+  "market_cap_change_percentage_24h": -0.08683,
+  "circulating_supply": 500000000,
+  "total_supply": 500000000,
+  "max_supply": null,
+  "ath": 0.225077,
+  "ath_change_percentage": -99.93604,
+  "ath_date": "2018-05-06T07:32:59.951Z",
+  "atl": 0.0000086,
+  "atl_change_percentage": 1573.93778,
+  "atl_date": "2023-11-03T05:11:13.246Z",
+  "roi": {
+    "times": -0.9986202721878956,
+    "currency": "eth",
+    "percentage": -99.86202721878956
+  },
+  "last_updated": "2024-04-25T08:58:34.896Z",
+  "platforms": {
+    "ethereum": "0x2008e3057bd734e10ad13c9eae45ff132abc1722"
+  }
+}

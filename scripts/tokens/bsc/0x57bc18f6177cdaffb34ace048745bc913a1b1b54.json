@@ -1,0 +1,31 @@
+{
+  "id": "bit-hotel",
+  "symbol": "bth",
+  "name": "Bit Hotel",
+  "image": "https://assets.coingecko.com/coins/images/20363/large/BIT_HOTEL_LOGO.png?1696519771",
+  "current_price": 0.00112064,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1121223,
+  "total_volume": 773.23,
+  "high_24h": 0.00113325,
+  "low_24h": 0.00110889,
+  "price_change_24h": -0.00001007005274265,
+  "price_change_percentage_24h": -0.89059,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.26103,
+  "ath_change_percentage": -99.56976,
+  "ath_date": "2021-12-30T03:08:51.067Z",
+  "atl": 0.00107337,
+  "atl_change_percentage": 4.628,
+  "atl_date": "2024-02-28T17:35:56.575Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:36.733Z",
+  "platforms": {
+    "bsc": "0x57bc18f6177cdaffb34ace048745bc913a1b1b54"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "azmask",
+  "symbol": "azm",
+  "name": "AZMASK",
+  "image": "https://assets.coingecko.com/coins/images/34776/large/photo_2024-01-22_22-48-37.jpg?1706003485",
+  "current_price": 1.26408e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 1.26,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 8000000000000,
+  "max_supply": null,
+  "ath": 0.00000204,
+  "ath_change_percentage": -93.80364,
+  "ath_date": "2024-01-24T23:56:33.380Z",
+  "atl": 1.03845e-7,
+  "atl_change_percentage": 21.72811,
+  "atl_date": "2024-04-13T21:54:46.724Z",
+  "roi": null,
+  "last_updated": "2024-04-23T06:59:54.349Z",
+  "platforms": {
+    "bsc": "0x50807408d351bff16202387b603984f4de981209"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "vana-world",
+  "symbol": "vana",
+  "name": "NIRVANA",
+  "image": "https://assets.coingecko.com/coins/images/32469/large/vana.jpg?1698259899",
+  "current_price": 0.110115,
+  "market_cap": 71618,
+  "market_cap_rank": 3890,
+  "fully_diluted_valuation": 110063626,
+  "total_volume": 3693208,
+  "high_24h": 0.121071,
+  "low_24h": 0.100077,
+  "price_change_24h": -0.010540055680029,
+  "price_change_percentage_24h": -8.7357,
+  "market_cap_change_24h": -6923.621329099449,
+  "market_cap_change_percentage_24h": -8.81526,
+  "circulating_supply": 650693.2,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 1.72,
+  "ath_change_percentage": -93.60711,
+  "ath_date": "2024-03-11T07:52:41.995Z",
+  "atl": 0.03373734,
+  "atl_change_percentage": 226.75383,
+  "atl_date": "2024-04-11T16:45:30.148Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:08.273Z",
+  "platforms": {
+    "ethereum": "0xbc391e78b0ea0d1db04890732742494e7fbfc118"
+  }
+}

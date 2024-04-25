@@ -1,0 +1,31 @@
+{
+  "id": "bitcoinsov",
+  "symbol": "bsov",
+  "name": "BitcoinSoV",
+  "image": "https://assets.coingecko.com/coins/images/9205/large/bsov.png?1696509323",
+  "current_price": 0.02315194,
+  "market_cap": 85829,
+  "market_cap_rank": 3830,
+  "fully_diluted_valuation": 484773,
+  "total_volume": 110.55,
+  "high_24h": 0.02363177,
+  "low_24h": 0.02289214,
+  "price_change_24h": -0.000303064983443482,
+  "price_change_percentage_24h": -1.29211,
+  "market_cap_change_24h": -1123.5252986990672,
+  "market_cap_change_percentage_24h": -1.29211,
+  "circulating_supply": 3707209.21280105,
+  "total_supply": 20938751,
+  "max_supply": null,
+  "ath": 0.309388,
+  "ath_change_percentage": -92.55397,
+  "ath_date": "2021-03-14T21:09:48.423Z",
+  "atl": 0.00044268,
+  "atl_change_percentage": 5104.004,
+  "atl_date": "2019-11-26T23:27:17.514Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:49.993Z",
+  "platforms": {
+    "ethereum": "0x26946ada5ecb57f3a1f91605050ce45c482c9eb1"
+  }
+}

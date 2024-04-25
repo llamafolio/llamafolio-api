@@ -1,0 +1,31 @@
+{
+  "id": "hanchain",
+  "symbol": "han",
+  "name": "HanChain",
+  "image": "https://assets.coingecko.com/coins/images/27374/large/logo_200.png?1696526418",
+  "current_price": 0.03750594,
+  "market_cap": 1580781,
+  "market_cap_rank": 2422,
+  "fully_diluted_valuation": 56258912,
+  "total_volume": 706210,
+  "high_24h": 0.04350473,
+  "low_24h": 0.03757582,
+  "price_change_24h": -0.005645775068482427,
+  "price_change_percentage_24h": -13.08355,
+  "market_cap_change_24h": -225133.97719888645,
+  "market_cap_change_percentage_24h": -12.46648,
+  "circulating_supply": 42147469.4751829,
+  "total_supply": 1500000000,
+  "max_supply": 1500000000,
+  "ath": 26.97,
+  "ath_change_percentage": -99.86057,
+  "ath_date": "2022-12-22T19:13:48.886Z",
+  "atl": 0.00324207,
+  "atl_change_percentage": 1059.99519,
+  "atl_date": "2023-05-24T06:24:29.811Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:31.293Z",
+  "platforms": {
+    "ethereum": "0x0c90c57aaf95a3a87eadda6ec3974c99d786511f"
+  }
+}

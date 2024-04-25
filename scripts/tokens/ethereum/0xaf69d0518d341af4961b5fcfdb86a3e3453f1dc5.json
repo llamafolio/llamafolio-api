@@ -1,0 +1,31 @@
+{
+  "id": "longchenchen",
+  "symbol": "long",
+  "name": "Longchenchen",
+  "image": "https://assets.coingecko.com/coins/images/33505/large/longerc20.jpg?1702039017",
+  "current_price": 0.00000231,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 15911.96,
+  "total_volume": 70.73,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 6900000000,
+  "max_supply": 6900000000,
+  "ath": 0.00018789,
+  "ath_change_percentage": -98.77263,
+  "ath_date": "2023-12-15T02:44:54.593Z",
+  "atl": 0.0000021,
+  "atl_change_percentage": 9.82351,
+  "atl_date": "2024-03-23T09:19:48.282Z",
+  "roi": null,
+  "last_updated": "2024-04-01T06:27:31.478Z",
+  "platforms": {
+    "ethereum": "0xaf69d0518d341af4961b5fcfdb86a3e3453f1dc5"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "corite",
+  "symbol": "co",
+  "name": "Corite",
+  "image": "https://assets.coingecko.com/coins/images/25969/large/Corite-symbol-red-neg-2000px.png?1696525047",
+  "current_price": 0.00447086,
+  "market_cap": 980842,
+  "market_cap_rank": 2697,
+  "fully_diluted_valuation": 4471149,
+  "total_volume": 65320,
+  "high_24h": 0.00450196,
+  "low_24h": 0.00440469,
+  "price_change_24h": 0.00006617,
+  "price_change_percentage_24h": 1.50219,
+  "market_cap_change_24h": 10785.29,
+  "market_cap_change_percentage_24h": 1.11182,
+  "circulating_supply": 219371322,
+  "total_supply": 999999545.49955,
+  "max_supply": 1000000000,
+  "ath": 0.057615,
+  "ath_change_percentage": -92.23545,
+  "ath_date": "2023-02-20T16:45:15.613Z",
+  "atl": 0.00297531,
+  "atl_change_percentage": 50.3542,
+  "atl_date": "2023-11-13T01:01:48.025Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:09.181Z",
+  "platforms": {
+    "bsc": "0x936b6659ad0c1b244ba8efe639092acae30dc8d6"
+  }
+}

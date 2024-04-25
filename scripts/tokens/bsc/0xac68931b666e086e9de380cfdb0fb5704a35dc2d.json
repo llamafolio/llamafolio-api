@@ -1,0 +1,31 @@
+{
+  "id": "bnbtiger",
+  "symbol": "bnbtiger",
+  "name": "BNB Tiger Inu",
+  "image": "https://assets.coingecko.com/coins/images/22565/large/IMG-20220111-212721-633.jpg?1696521884",
+  "current_price": 1e-18,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 11328934,
+  "total_volume": 6833.06,
+  "high_24h": 1e-18,
+  "low_24h": 1e-18,
+  "price_change_24h": 0,
+  "price_change_percentage_24h": 0.01627,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1e+25,
+  "max_supply": null,
+  "ath": 3.3387e-13,
+  "ath_change_percentage": -99.99966,
+  "ath_date": "2023-10-28T11:30:06.537Z",
+  "atl": 0,
+  "atl_change_percentage": 34656.31889,
+  "atl_date": "2022-09-21T22:57:47.888Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:01.397Z",
+  "platforms": {
+    "bsc": "0xac68931b666e086e9de380cfdb0fb5704a35dc2d"
+  }
+}

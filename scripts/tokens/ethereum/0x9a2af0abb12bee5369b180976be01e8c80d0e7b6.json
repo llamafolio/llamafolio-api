@@ -1,0 +1,31 @@
+{
+  "id": "empire-token",
+  "symbol": "empire",
+  "name": "Empire",
+  "image": "https://assets.coingecko.com/coins/images/16390/large/pb_ranDy_400x400.png?1696515988",
+  "current_price": 0.00046984,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 469783,
+  "total_volume": 21300,
+  "high_24h": 0.00049285,
+  "low_24h": 0.00046956,
+  "price_change_24h": -0.000021173746315338,
+  "price_change_percentage_24h": -4.31224,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.175648,
+  "ath_change_percentage": -99.73255,
+  "ath_date": "2021-10-24T04:13:19.074Z",
+  "atl": 0.0003501,
+  "atl_change_percentage": 34.1827,
+  "atl_date": "2023-10-12T16:50:07.623Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:57.727Z",
+  "platforms": {
+    "ethereum": "0x9a2af0abb12bee5369b180976be01e8c80d0e7b6"
+  }
+}

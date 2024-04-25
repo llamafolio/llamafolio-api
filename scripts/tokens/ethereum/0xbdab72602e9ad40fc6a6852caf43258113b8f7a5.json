@@ -1,0 +1,31 @@
+{
+  "id": "sovryn",
+  "symbol": "sov",
+  "name": "Sovryn",
+  "image": "https://assets.coingecko.com/coins/images/16248/large/sovryn_logo_orange.png?1709174299",
+  "current_price": 1.91,
+  "market_cap": 113832695,
+  "market_cap_rank": 430,
+  "fully_diluted_valuation": 190807287,
+  "total_volume": 354423,
+  "high_24h": 2.11,
+  "low_24h": 1.91,
+  "price_change_24h": -0.17828246058593544,
+  "price_change_percentage_24h": -8.54383,
+  "market_cap_change_24h": -10964685.136267424,
+  "market_cap_change_percentage_24h": -8.78599,
+  "circulating_supply": 59658463.4813688,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 43.98,
+  "ath_change_percentage": -95.65598,
+  "ath_date": "2021-10-07T14:59:17.778Z",
+  "atl": 0.167206,
+  "atl_change_percentage": 1042.55279,
+  "atl_date": "2022-12-23T15:25:14.761Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:11.784Z",
+  "platforms": {
+    "ethereum": "0xbdab72602e9ad40fc6a6852caf43258113b8f7a5"
+  }
+}

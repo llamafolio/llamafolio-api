@@ -1,0 +1,31 @@
+{
+  "id": "fanbase",
+  "symbol": "wfnb",
+  "name": "Fanbase",
+  "image": "https://assets.coingecko.com/coins/images/32445/large/Fanbase.png?1698238933",
+  "current_price": 0.00196421,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 392842781,
+  "total_volume": 4918.81,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 200000000000,
+  "max_supply": 200000000000,
+  "ath": 0.00198446,
+  "ath_change_percentage": -1.02021,
+  "ath_date": "2024-04-16T13:30:31.240Z",
+  "atl": 0.00193956,
+  "atl_change_percentage": 1.2711,
+  "atl_date": "2024-04-16T16:00:29.299Z",
+  "roi": null,
+  "last_updated": "2024-04-16T18:30:47.222Z",
+  "platforms": {
+    "ethereum": "0x7016c6f4dba9a9a48a47a2fe73a1b9271432d1d5"
+  }
+}

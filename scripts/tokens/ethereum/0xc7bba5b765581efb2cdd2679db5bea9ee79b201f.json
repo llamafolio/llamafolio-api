@@ -1,0 +1,31 @@
+{
+  "id": "gems-2",
+  "symbol": "gem",
+  "name": "Gems",
+  "image": "https://assets.coingecko.com/coins/images/3945/large/Webp.net-resizeimage_%2817%29.jpg?1696504590",
+  "current_price": 0.00009387,
+  "market_cap": 64693,
+  "market_cap_rank": 3919,
+  "fully_diluted_valuation": 749019,
+  "total_volume": 18646.13,
+  "high_24h": 0.00011543,
+  "low_24h": 0.00009147,
+  "price_change_24h": -0.000021561636333776,
+  "price_change_percentage_24h": -18.67932,
+  "market_cap_change_24h": -14578.126658836278,
+  "market_cap_change_percentage_24h": -18.39027,
+  "circulating_supply": 690960092.7045522,
+  "total_supply": 8000000000,
+  "max_supply": null,
+  "ath": 0.03146888,
+  "ath_change_percentage": -99.70171,
+  "ath_date": "2018-04-26T14:22:58.461Z",
+  "atl": 0.00002379,
+  "atl_change_percentage": 294.63535,
+  "atl_date": "2020-05-14T03:25:27.901Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:58.595Z",
+  "platforms": {
+    "ethereum": "0xc7bba5b765581efb2cdd2679db5bea9ee79b201f"
+  }
+}

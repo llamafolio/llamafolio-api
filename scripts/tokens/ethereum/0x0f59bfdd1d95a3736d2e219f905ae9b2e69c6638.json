@@ -1,0 +1,31 @@
+{
+  "id": "kiwi-deployer-bot",
+  "symbol": "$kiwi",
+  "name": "KIWI DEPLOYER BOT",
+  "image": "https://assets.coingecko.com/coins/images/35164/large/2024-02-10_20.54.15.jpg?1707662977",
+  "current_price": 7.2553e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 49.7,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.00003514,
+  "ath_change_percentage": -97.93508,
+  "ath_date": "2024-02-12T02:48:31.145Z",
+  "atl": 7.07717e-7,
+  "atl_change_percentage": 2.517,
+  "atl_date": "2024-04-23T07:39:02.740Z",
+  "roi": null,
+  "last_updated": "2024-04-24T03:58:22.641Z",
+  "platforms": {
+    "ethereum": "0x0f59bfdd1d95a3736d2e219f905ae9b2e69c6638"
+  }
+}

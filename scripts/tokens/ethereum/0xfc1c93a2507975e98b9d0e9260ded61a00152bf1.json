@@ -1,0 +1,31 @@
+{
+  "id": "atlas-navi",
+  "symbol": "navi",
+  "name": "Atlas Navi",
+  "image": "https://assets.coingecko.com/coins/images/28389/large/token_icon_-_logo_ATLAS_NAVI_200x200_transparent.png?1696527388",
+  "current_price": 0.292603,
+  "market_cap": 25744337,
+  "market_cap_rank": 991,
+  "fully_diluted_valuation": 87895666,
+  "total_volume": 302361,
+  "high_24h": 0.300893,
+  "low_24h": 0.281831,
+  "price_change_24h": -0.001449604336874189,
+  "price_change_percentage_24h": -0.49297,
+  "market_cap_change_24h": -269100.79103565216,
+  "market_cap_change_percentage_24h": -1.03447,
+  "circulating_supply": 87868964,
+  "total_supply": 300000000,
+  "max_supply": 300000000,
+  "ath": 0.534155,
+  "ath_change_percentage": -45.203,
+  "ath_date": "2024-03-21T09:50:46.127Z",
+  "atl": 0.01423655,
+  "atl_change_percentage": 1955.98378,
+  "atl_date": "2023-10-22T00:09:03.507Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:52.639Z",
+  "platforms": {
+    "ethereum": "0xfc1c93a2507975e98b9d0e9260ded61a00152bf1"
+  }
+}

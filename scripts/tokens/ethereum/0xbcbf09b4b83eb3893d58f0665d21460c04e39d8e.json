@@ -1,0 +1,31 @@
+{
+  "id": "sherlock-defi",
+  "symbol": "slock",
+  "name": "Sherlock Defi",
+  "image": "https://assets.coingecko.com/coins/images/30020/large/20230425_212153_copy_200x200.jpg?1696528944",
+  "current_price": 0.00001,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1000.39,
+  "total_volume": 129.08,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.00164046,
+  "ath_change_percentage": -99.39018,
+  "ath_date": "2023-04-27T11:15:42.035Z",
+  "atl": 0.0000098,
+  "atl_change_percentage": 2.08853,
+  "atl_date": "2024-04-10T13:15:29.866Z",
+  "roi": null,
+  "last_updated": "2024-04-10T15:01:20.904Z",
+  "platforms": {
+    "ethereum": "0xbcbf09b4b83eb3893d58f0665d21460c04e39d8e"
+  }
+}

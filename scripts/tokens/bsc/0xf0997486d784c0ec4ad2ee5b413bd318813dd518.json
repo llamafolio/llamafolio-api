@@ -1,0 +1,31 @@
+{
+  "id": "big-crypto-game",
+  "symbol": "crypto",
+  "name": "Big Crypto Game",
+  "image": "https://assets.coingecko.com/coins/images/28306/large/bcg-token-symbol-500px-1.png?1696527310",
+  "current_price": 0.00397828,
+  "market_cap": 16720.38,
+  "market_cap_rank": 4172,
+  "fully_diluted_valuation": 19891.39,
+  "total_volume": 89.61,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 4202916.951,
+  "total_supply": 5000000,
+  "max_supply": 5000000,
+  "ath": 1.84,
+  "ath_change_percentage": -99.78365,
+  "ath_date": "2022-12-11T06:08:23.358Z",
+  "atl": 0.00344387,
+  "atl_change_percentage": 15.51769,
+  "atl_date": "2023-01-23T16:35:05.799Z",
+  "roi": null,
+  "last_updated": "2023-05-17T10:45:29.699Z",
+  "platforms": {
+    "bsc": "0xf0997486d784c0ec4ad2ee5b413bd318813dd518"
+  }
+}

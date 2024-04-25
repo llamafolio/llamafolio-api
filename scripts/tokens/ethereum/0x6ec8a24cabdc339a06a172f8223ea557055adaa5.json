@@ -1,0 +1,35 @@
+{
+  "id": "genaro-network",
+  "symbol": "gnx",
+  "name": "Genaro Network",
+  "image": "https://assets.coingecko.com/coins/images/1361/large/genaro-network.png?1696502420",
+  "current_price": 0.00080632,
+  "market_cap": 245201,
+  "market_cap_rank": 3403,
+  "fully_diluted_valuation": 544116,
+  "total_volume": 10480.31,
+  "high_24h": 0.00082524,
+  "low_24h": 0.00079964,
+  "price_change_24h": -0.000018920209833757,
+  "price_change_percentage_24h": -2.29269,
+  "market_cap_change_24h": -4852.861983496463,
+  "market_cap_change_percentage_24h": -1.94073,
+  "circulating_supply": 304181980.6941579,
+  "total_supply": 675000000,
+  "max_supply": null,
+  "ath": 1.17,
+  "ath_change_percentage": -99.93095,
+  "ath_date": "2018-01-09T00:00:00.000Z",
+  "atl": 0.00071096,
+  "atl_change_percentage": 13.29268,
+  "atl_date": "2023-08-17T22:58:50.733Z",
+  "roi": {
+    "times": -0.9946245191570863,
+    "currency": "usd",
+    "percentage": -99.46245191570863
+  },
+  "last_updated": "2024-04-25T09:09:20.225Z",
+  "platforms": {
+    "ethereum": "0x6ec8a24cabdc339a06a172f8223ea557055adaa5"
+  }
+}

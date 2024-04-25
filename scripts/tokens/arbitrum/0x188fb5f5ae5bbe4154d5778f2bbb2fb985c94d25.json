@@ -1,0 +1,31 @@
+{
+  "id": "openblox",
+  "symbol": "obx",
+  "name": "OpenBlox",
+  "image": "https://assets.coingecko.com/coins/images/26150/large/OBX_token-black_background_preview.png?1696525239",
+  "current_price": 0.00007861,
+  "market_cap": 278164,
+  "market_cap_rank": 3353,
+  "fully_diluted_valuation": 785454,
+  "total_volume": 8297.5,
+  "high_24h": 0.00008187,
+  "low_24h": 0.00007836,
+  "price_change_24h": -0.000002905916256637,
+  "price_change_percentage_24h": -3.56466,
+  "market_cap_change_24h": -2898.7950297233765,
+  "market_cap_change_percentage_24h": -1.03137,
+  "circulating_supply": 3541444444.307,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.02521963,
+  "ath_change_percentage": -99.68833,
+  "ath_date": "2022-07-01T02:25:12.046Z",
+  "atl": 0.0000707,
+  "atl_change_percentage": 11.17011,
+  "atl_date": "2023-09-08T15:19:51.931Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:38.490Z",
+  "platforms": {
+    "arbitrum": "0x188fb5f5ae5bbe4154d5778f2bbb2fb985c94d25"
+  }
+}

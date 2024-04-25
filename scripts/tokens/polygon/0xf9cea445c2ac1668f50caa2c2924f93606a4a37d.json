@@ -1,0 +1,31 @@
+{
+  "id": "calvaria-doe",
+  "symbol": "ria",
+  "name": "Calvaria: DoE",
+  "image": "https://assets.coingecko.com/coins/images/28817/large/icon200x200.png?1696527793",
+  "current_price": 0.00186623,
+  "market_cap": 335978,
+  "market_cap_rank": 3261,
+  "fully_diluted_valuation": 335978,
+  "total_volume": 29529,
+  "high_24h": 0.0152201,
+  "low_24h": 0.00169196,
+  "price_change_24h": -0.000041250734957103,
+  "price_change_percentage_24h": -2.16258,
+  "market_cap_change_24h": -6229.925188921276,
+  "market_cap_change_percentage_24h": -1.82051,
+  "circulating_supply": 180000000,
+  "total_supply": 180000000,
+  "max_supply": 1000000000,
+  "ath": 0.061025,
+  "ath_change_percentage": -96.94218,
+  "ath_date": "2023-02-08T11:01:43.784Z",
+  "atl": 0.00105099,
+  "atl_change_percentage": 77.55141,
+  "atl_date": "2023-12-05T08:31:26.051Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:57.416Z",
+  "platforms": {
+    "polygon": "0xf9cea445c2ac1668f50caa2c2924f93606a4a37d"
+  }
+}

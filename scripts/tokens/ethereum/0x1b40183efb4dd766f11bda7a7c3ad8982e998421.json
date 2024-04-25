@@ -1,0 +1,31 @@
+{
+  "id": "vesper-finance",
+  "symbol": "vsp",
+  "name": "Vesper Finance",
+  "image": "https://assets.coingecko.com/coins/images/13527/large/vesper_logo.jpg?1696513288",
+  "current_price": 0.466794,
+  "market_cap": 3952271,
+  "market_cap_rank": 1915,
+  "fully_diluted_valuation": 4641770,
+  "total_volume": 20363,
+  "high_24h": 0.517509,
+  "low_24h": 0.46372,
+  "price_change_24h": -0.02676476574463882,
+  "price_change_percentage_24h": -5.42281,
+  "market_cap_change_24h": -199932.2369311927,
+  "market_cap_change_percentage_24h": -4.81509,
+  "circulating_supply": 8514578.253494158,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 79.51,
+  "ath_change_percentage": -99.41715,
+  "ath_date": "2021-03-26T18:10:33.897Z",
+  "atl": 0.219044,
+  "atl_change_percentage": 111.55602,
+  "atl_date": "2023-07-12T03:31:06.593Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:11.150Z",
+  "platforms": {
+    "ethereum": "0x1b40183efb4dd766f11bda7a7c3ad8982e998421"
+  }
+}

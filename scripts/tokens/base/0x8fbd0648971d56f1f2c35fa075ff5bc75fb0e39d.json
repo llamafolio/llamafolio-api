@@ -1,0 +1,31 @@
+{
+  "id": "monkeyball",
+  "symbol": "mbs",
+  "name": "UNKJD",
+  "image": "https://assets.coingecko.com/coins/images/20841/large/monkeyball.png?1696520233",
+  "current_price": 0.01737765,
+  "market_cap": 7536628,
+  "market_cap_rank": 1573,
+  "fully_diluted_valuation": 17274009,
+  "total_volume": 81070,
+  "high_24h": 0.01876868,
+  "low_24h": 0.01724443,
+  "price_change_24h": -0.000597760938491735,
+  "price_change_percentage_24h": -3.32544,
+  "market_cap_change_24h": -299725.3164810585,
+  "market_cap_change_percentage_24h": -3.82481,
+  "circulating_supply": 436298718,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 2.58,
+  "ath_change_percentage": -99.32852,
+  "ath_date": "2021-12-27T02:26:31.054Z",
+  "atl": 0.01029326,
+  "atl_change_percentage": 68.10087,
+  "atl_date": "2023-10-25T16:45:19.587Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:19.996Z",
+  "platforms": {
+    "base": "0x8fbd0648971d56f1f2c35fa075ff5bc75fb0e39d"
+  }
+}

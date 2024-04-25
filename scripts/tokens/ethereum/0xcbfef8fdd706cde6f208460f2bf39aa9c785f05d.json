@@ -1,0 +1,31 @@
+{
+  "id": "kine-protocol",
+  "symbol": "kine",
+  "name": "Kine Protocol",
+  "image": "https://assets.coingecko.com/coins/images/14339/large/kine.jpg?1696514026",
+  "current_price": 0.161629,
+  "market_cap": 3259951,
+  "market_cap_rank": 2017,
+  "fully_diluted_valuation": 16128850,
+  "total_volume": 129653,
+  "high_24h": 0.170061,
+  "low_24h": 0.161207,
+  "price_change_24h": -0.004289698742834636,
+  "price_change_percentage_24h": -2.58542,
+  "market_cap_change_24h": -97141.29078482883,
+  "market_cap_change_percentage_24h": -2.89361,
+  "circulating_supply": 20211925.03950293,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 6.87,
+  "ath_change_percentage": -97.64557,
+  "ath_date": "2021-03-15T04:34:58.851Z",
+  "atl": 0.04072973,
+  "atl_change_percentage": 297.18178,
+  "atl_date": "2022-12-24T04:36:23.368Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:41.897Z",
+  "platforms": {
+    "ethereum": "0xcbfef8fdd706cde6f208460f2bf39aa9c785f05d"
+  }
+}

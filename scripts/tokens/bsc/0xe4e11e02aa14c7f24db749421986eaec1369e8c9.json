@@ -1,0 +1,31 @@
+{
+  "id": "minativerse",
+  "symbol": "mntc",
+  "name": "MINATIVERSE",
+  "image": "https://assets.coingecko.com/coins/images/32012/large/MNTC.jpg?1696530810",
+  "current_price": 1.9,
+  "market_cap": 11914083,
+  "market_cap_rank": 1345,
+  "fully_diluted_valuation": 21170043,
+  "total_volume": 2308781,
+  "high_24h": 1.93,
+  "low_24h": 1.86,
+  "price_change_24h": -0.011214132396743404,
+  "price_change_percentage_24h": -0.58575,
+  "market_cap_change_24h": -102228.82007559575,
+  "market_cap_change_percentage_24h": -0.85075,
+  "circulating_supply": 6275000,
+  "total_supply": 11150000,
+  "max_supply": 11150000,
+  "ath": 3.76,
+  "ath_change_percentage": -49.46117,
+  "ath_date": "2024-04-03T13:59:53.405Z",
+  "atl": 0.41039,
+  "atl_change_percentage": 363.52109,
+  "atl_date": "2023-11-14T06:14:40.529Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:02.919Z",
+  "platforms": {
+    "bsc": "0xe4e11e02aa14c7f24db749421986eaec1369e8c9"
+  }
+}

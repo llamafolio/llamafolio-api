@@ -1,0 +1,31 @@
+{
+  "id": "keko",
+  "symbol": "keko",
+  "name": "Keko",
+  "image": "https://assets.coingecko.com/coins/images/29967/large/ytX0JKjO_400x400.jpg?1696528893",
+  "current_price": 0.00227526,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 156993,
+  "total_volume": 111.49,
+  "high_24h": 0.00238934,
+  "low_24h": 0.00225154,
+  "price_change_24h": -0.000087962429023535,
+  "price_change_percentage_24h": -3.72215,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 69000000,
+  "max_supply": 69000000,
+  "ath": 0.01967554,
+  "ath_change_percentage": -88.49011,
+  "ath_date": "2023-04-25T02:40:44.753Z",
+  "atl": 0.00098702,
+  "atl_change_percentage": 129.44248,
+  "atl_date": "2023-10-12T17:35:31.532Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:45.706Z",
+  "platforms": {
+    "ethereum": "0x2c7f442aab99d5e18cfae2291c507c0b5f3c1eb5"
+  }
+}

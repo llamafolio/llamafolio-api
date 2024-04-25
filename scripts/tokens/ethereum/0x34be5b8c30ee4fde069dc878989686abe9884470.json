@@ -1,0 +1,31 @@
+{
+  "id": "senate",
+  "symbol": "senate",
+  "name": "SENATE",
+  "image": "https://assets.coingecko.com/coins/images/21272/large/siIBOmcs.png?1696520643",
+  "current_price": 0.09765,
+  "market_cap": 10715234,
+  "market_cap_rank": 1399,
+  "fully_diluted_valuation": 18718058,
+  "total_volume": 37399,
+  "high_24h": 0.102143,
+  "low_24h": 0.097035,
+  "price_change_24h": -0.004492575249261944,
+  "price_change_percentage_24h": -4.39836,
+  "market_cap_change_24h": -528168.2787639145,
+  "market_cap_change_percentage_24h": -4.69758,
+  "circulating_supply": 109822391.67373,
+  "total_supply": 191844790.888217,
+  "max_supply": 300000000,
+  "ath": 5.85,
+  "ath_change_percentage": -98.33056,
+  "ath_date": "2022-01-01T14:12:44.626Z",
+  "atl": 0.01847182,
+  "atl_change_percentage": 428.94162,
+  "atl_date": "2023-10-16T20:59:42.794Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:33.739Z",
+  "platforms": {
+    "ethereum": "0x34be5b8c30ee4fde069dc878989686abe9884470"
+  }
+}

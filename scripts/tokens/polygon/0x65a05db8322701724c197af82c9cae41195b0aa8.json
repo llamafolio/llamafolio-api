@@ -1,0 +1,31 @@
+{
+  "id": "shapeshift-fox-token",
+  "symbol": "fox",
+  "name": "ShapeShift FOX",
+  "image": "https://assets.coingecko.com/coins/images/9988/large/FOX.png?1696510025",
+  "current_price": 0.085858,
+  "market_cap": 53022466,
+  "market_cap_rank": 669,
+  "fully_diluted_valuation": 85779743,
+  "total_volume": 887465,
+  "high_24h": 0.09314,
+  "low_24h": 0.08578,
+  "price_change_24h": -0.00292881467491081,
+  "price_change_percentage_24h": -3.29872,
+  "market_cap_change_24h": -1878219.1994731575,
+  "market_cap_change_percentage_24h": -3.42112,
+  "circulating_supply": 618124226.7554235,
+  "total_supply": 1000001337,
+  "max_supply": 1000001337,
+  "ath": 1.65,
+  "ath_change_percentage": -94.80979,
+  "ath_date": "2021-04-05T21:56:55.679Z",
+  "atl": 0.00084893,
+  "atl_change_percentage": 10016.95439,
+  "atl_date": "2020-10-07T04:41:23.621Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:10.118Z",
+  "platforms": {
+    "polygon": "0x65a05db8322701724c197af82c9cae41195b0aa8"
+  }
+}

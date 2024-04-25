@@ -1,0 +1,31 @@
+{
+  "id": "dogcoin",
+  "symbol": "dogs",
+  "name": "Dogcoin",
+  "image": "https://assets.coingecko.com/coins/images/29065/large/1024_%281%29.png?1696528032",
+  "current_price": 5.353e-9,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2240056,
+  "total_volume": 815.8,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 418469102049242,
+  "max_supply": 1000000000000000,
+  "ath": 2.20028e-7,
+  "ath_change_percentage": -97.56714,
+  "ath_date": "2024-04-09T07:54:46.338Z",
+  "atl": 2.4656e-11,
+  "atl_change_percentage": 21610.27926,
+  "atl_date": "2024-04-06T21:54:27.379Z",
+  "roi": null,
+  "last_updated": "2024-04-10T17:00:42.305Z",
+  "platforms": {
+    "ethereum": "0xbccd27062ae1a2bea5731c904b96edfb163aba21"
+  }
+}

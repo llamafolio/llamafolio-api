@@ -1,0 +1,31 @@
+{
+  "id": "unmarshal",
+  "symbol": "marsh",
+  "name": "Unmarshal",
+  "image": "https://assets.coingecko.com/coins/images/14554/large/img_circle_256x256.png?1696514237",
+  "current_price": 0.178956,
+  "market_cap": 9459104,
+  "market_cap_rank": 1458,
+  "fully_diluted_valuation": 17933367,
+  "total_volume": 645016,
+  "high_24h": 0.19708,
+  "low_24h": 0.178892,
+  "price_change_24h": -0.015477573896421211,
+  "price_change_percentage_24h": -7.96034,
+  "market_cap_change_24h": -782247.6135242563,
+  "market_cap_change_percentage_24h": -7.63813,
+  "circulating_supply": 52745833.331612,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 11.89,
+  "ath_change_percentage": -98.49612,
+  "ath_date": "2021-03-30T15:19:27.231Z",
+  "atl": 0.03397061,
+  "atl_change_percentage": 426.53249,
+  "atl_date": "2022-11-21T04:24:35.469Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:50.473Z",
+  "platforms": {
+    "ethereum": "0x5a666c7d92e5fa7edcb6390e4efd6d0cdd69cf37"
+  }
+}

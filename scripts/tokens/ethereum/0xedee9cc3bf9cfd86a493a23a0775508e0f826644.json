@@ -1,0 +1,31 @@
+{
+  "id": "atalis",
+  "symbol": "als",
+  "name": "Atalis",
+  "image": "https://assets.coingecko.com/coins/images/35857/large/logo200.jpg?1709896205",
+  "current_price": 0.00008209,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 8208.83,
+  "total_volume": 79.21,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.02409079,
+  "ath_change_percentage": -99.65925,
+  "ath_date": "2024-03-09T09:33:40.300Z",
+  "atl": 0.00008109,
+  "atl_change_percentage": 1.22639,
+  "atl_date": "2024-04-18T00:37:39.921Z",
+  "roi": null,
+  "last_updated": "2024-04-18T02:22:57.461Z",
+  "platforms": {
+    "ethereum": "0xedee9cc3bf9cfd86a493a23a0775508e0f826644"
+  }
+}

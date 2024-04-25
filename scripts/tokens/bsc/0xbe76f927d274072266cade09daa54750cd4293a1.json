@@ -1,0 +1,31 @@
+{
+  "id": "egold-project-2",
+  "symbol": "egold",
+  "name": "EGold Project",
+  "image": "https://assets.coingecko.com/coins/images/34922/large/egold.jpeg?1706631386",
+  "current_price": 0.343248,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 413307,
+  "total_volume": 208.18,
+  "high_24h": 0.343658,
+  "low_24h": 0.339291,
+  "price_change_24h": 0.0035935,
+  "price_change_percentage_24h": 1.05799,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1204107.0585,
+  "max_supply": null,
+  "ath": 1.42,
+  "ath_change_percentage": -75.8953,
+  "ath_date": "2024-02-17T12:29:33.958Z",
+  "atl": 0.33567,
+  "atl_change_percentage": 2.25742,
+  "atl_date": "2024-04-16T18:09:57.866Z",
+  "roi": null,
+  "last_updated": "2024-04-25T04:17:49.965Z",
+  "platforms": {
+    "bsc": "0xbe76f927d274072266cade09daa54750cd4293a1"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "precipitate-ai",
+  "symbol": "rain",
+  "name": "Precipitate.ai",
+  "image": "https://assets.coingecko.com/coins/images/32405/large/RAIN_200-removebg-preview.png?1711371589",
+  "current_price": 0.00667053,
+  "market_cap": 6656681,
+  "market_cap_rank": 1650,
+  "fully_diluted_valuation": 6656681,
+  "total_volume": 58050,
+  "high_24h": 0.00685081,
+  "low_24h": 0.00581719,
+  "price_change_24h": -0.000078669782917682,
+  "price_change_percentage_24h": -1.16562,
+  "market_cap_change_24h": -82603.6089800112,
+  "market_cap_change_percentage_24h": -1.2257,
+  "circulating_supply": 1000000000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.050535,
+  "ath_change_percentage": -86.81493,
+  "ath_date": "2024-03-07T17:34:25.926Z",
+  "atl": 0.0007425,
+  "atl_change_percentage": 797.38971,
+  "atl_date": "2023-12-15T22:49:37.321Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:58.819Z",
+  "platforms": {
+    "ethereum": "0xe3944ab788a60ca266f1eec3c26925b95f6370ad"
+  }
+}

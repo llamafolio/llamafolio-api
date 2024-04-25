@@ -1,0 +1,31 @@
+{
+  "id": "bim",
+  "symbol": "bim",
+  "name": "BIM",
+  "image": "https://assets.coingecko.com/coins/images/30137/large/logo200x200.png?1696529058",
+  "current_price": 1.13,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 353761926,
+  "total_volume": 83692,
+  "high_24h": 1.13,
+  "low_24h": 1.12,
+  "price_change_24h": 0.00047207,
+  "price_change_percentage_24h": 0.04195,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 314000000,
+  "max_supply": 34367545,
+  "ath": 1.14,
+  "ath_change_percentage": -1.45244,
+  "ath_date": "2024-02-28T17:20:33.278Z",
+  "atl": 0.97606,
+  "atl_change_percentage": 15.3601,
+  "atl_date": "2023-12-12T15:40:02.447Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:27.938Z",
+  "platforms": {
+    "polygon": "0xe78649874bcdb7a9d1666e665f340723a0187482"
+  }
+}

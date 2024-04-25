@@ -1,0 +1,31 @@
+{
+  "id": "eggplant-finance",
+  "symbol": "eggp",
+  "name": "Eggplant Finance",
+  "image": "https://assets.coingecko.com/coins/images/15481/large/eggp.png?1696515126",
+  "current_price": 0.01072013,
+  "market_cap": 4664.41,
+  "market_cap_rank": 4250,
+  "fully_diluted_valuation": 5107.42,
+  "total_volume": 62.02,
+  "high_24h": 0.01080058,
+  "low_24h": 0.01050949,
+  "price_change_24h": 0.00006563,
+  "price_change_percentage_24h": 0.61599,
+  "market_cap_change_24h": 15.43,
+  "market_cap_change_percentage_24h": 0.33185,
+  "circulating_supply": 435413.506171277,
+  "total_supply": 476767.513,
+  "max_supply": null,
+  "ath": 9.55,
+  "ath_change_percentage": -99.88785,
+  "ath_date": "2021-05-17T09:56:47.481Z",
+  "atl": 0.01008862,
+  "atl_change_percentage": 6.18178,
+  "atl_date": "2024-03-05T20:51:48.682Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:20.987Z",
+  "platforms": {
+    "bsc": "0x21adb1c644663069e83059ac3f9d9ca1133d29e4"
+  }
+}

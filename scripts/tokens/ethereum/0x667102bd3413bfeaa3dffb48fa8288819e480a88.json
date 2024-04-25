@@ -1,0 +1,35 @@
+{
+  "id": "tokenize-xchange",
+  "symbol": "tkx",
+  "name": "Tokenize Xchange",
+  "image": "https://assets.coingecko.com/coins/images/4984/large/TKX_-_Logo_-_RGB-15.png?1696505519",
+  "current_price": 12.99,
+  "market_cap": 1038044322,
+  "market_cap_rank": 91,
+  "fully_diluted_valuation": 1297620284,
+  "total_volume": 58813660,
+  "high_24h": 13.51,
+  "low_24h": 12.94,
+  "price_change_24h": -0.4791590244014401,
+  "price_change_percentage_24h": -3.55644,
+  "market_cap_change_24h": -40608453.199382186,
+  "market_cap_change_percentage_24h": -3.76474,
+  "circulating_supply": 79995999.94518414,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 22.3,
+  "ath_change_percentage": -41.72185,
+  "ath_date": "2022-10-31T10:23:59.455Z",
+  "atl": 0.111255,
+  "atl_change_percentage": 11579.35748,
+  "atl_date": "2019-04-28T00:00:00.000Z",
+  "roi": {
+    "times": 43.72919850007484,
+    "currency": "usd",
+    "percentage": 4372.919850007484
+  },
+  "last_updated": "2024-04-25T09:00:18.521Z",
+  "platforms": {
+    "ethereum": "0x667102bd3413bfeaa3dffb48fa8288819e480a88"
+  }
+}

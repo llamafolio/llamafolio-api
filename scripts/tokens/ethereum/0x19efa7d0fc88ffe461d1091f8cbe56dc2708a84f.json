@@ -1,0 +1,31 @@
+{
+  "id": "unitao",
+  "symbol": "unitao",
+  "name": "UNITAO",
+  "image": "https://assets.coingecko.com/coins/images/35743/large/rsz_logo11.png?1709976563",
+  "current_price": 0.01557464,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 155746,
+  "total_volume": 480.74,
+  "high_24h": 0.01658036,
+  "low_24h": 0.01547189,
+  "price_change_24h": -0.000918249976371723,
+  "price_change_percentage_24h": -5.56755,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.928843,
+  "ath_change_percentage": -98.32322,
+  "ath_date": "2024-03-06T13:46:26.032Z",
+  "atl": 0.01373492,
+  "atl_change_percentage": 13.39445,
+  "atl_date": "2024-04-05T12:08:42.293Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:31:54.791Z",
+  "platforms": {
+    "ethereum": "0x19efa7d0fc88ffe461d1091f8cbe56dc2708a84f"
+  }
+}

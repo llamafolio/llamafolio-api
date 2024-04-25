@@ -1,0 +1,31 @@
+{
+  "id": "instadapp-dai",
+  "symbol": "idai",
+  "name": "Instadapp DAI",
+  "image": "https://assets.coingecko.com/coins/images/25821/large/iDAI_100x100.png?1696524906",
+  "current_price": 1.12,
+  "market_cap": 4649.68,
+  "market_cap_rank": 4252,
+  "fully_diluted_valuation": 4649.68,
+  "total_volume": 0,
+  "high_24h": 1.12,
+  "low_24h": 1.11,
+  "price_change_24h": -0.000333728574698267,
+  "price_change_percentage_24h": -0.03002,
+  "market_cap_change_24h": 5.91,
+  "market_cap_change_percentage_24h": 0.12737,
+  "circulating_supply": 4173.73640114713,
+  "total_supply": 4173.73640114713,
+  "max_supply": null,
+  "ath": 1.13,
+  "ath_change_percentage": -1.29172,
+  "ath_date": "2024-04-14T22:10:11.698Z",
+  "atl": 0.937928,
+  "atl_change_percentage": 18.76526,
+  "atl_date": "2023-03-11T08:00:06.690Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:35.161Z",
+  "platforms": {
+    "ethereum": "0x40a9d39aa50871df092538c5999b107f34409061"
+  }
+}

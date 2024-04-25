@@ -1,0 +1,31 @@
+{
+  "id": "my-master-war",
+  "symbol": "mat",
+  "name": "My Master War",
+  "image": "https://assets.coingecko.com/coins/images/18772/large/JiuEEvte_400x400.jpg?1696518236",
+  "current_price": 0.00487699,
+  "market_cap": 143949,
+  "market_cap_rank": 3655,
+  "fully_diluted_valuation": 486853,
+  "total_volume": 10978.51,
+  "high_24h": 0.00496748,
+  "low_24h": 0.00468273,
+  "price_change_24h": 0.00018526,
+  "price_change_percentage_24h": 3.94861,
+  "market_cap_change_24h": 5041.02,
+  "market_cap_change_percentage_24h": 3.62903,
+  "circulating_supply": 29567267.6208044,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 4.79,
+  "ath_change_percentage": -99.89817,
+  "ath_date": "2021-10-15T02:16:36.289Z",
+  "atl": 0.00158982,
+  "atl_change_percentage": 206.50352,
+  "atl_date": "2023-09-15T18:37:07.533Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:16.515Z",
+  "platforms": {
+    "bsc": "0xf3147987a00d35eecc10c731269003ca093740ca"
+  }
+}

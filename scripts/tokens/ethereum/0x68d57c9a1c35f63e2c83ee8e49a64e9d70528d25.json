@@ -1,0 +1,31 @@
+{
+  "id": "sirin-labs-token",
+  "symbol": "srn",
+  "name": "Sirin Labs",
+  "image": "https://assets.coingecko.com/coins/images/1872/large/sirin-labs-token.png?1696502868",
+  "current_price": 0.00027019,
+  "market_cap": 143952,
+  "market_cap_rank": 3654,
+  "fully_diluted_valuation": 154594,
+  "total_volume": 429.07,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 532779058.95786244,
+  "total_supply": 572166103,
+  "max_supply": null,
+  "ath": 3.51,
+  "ath_change_percentage": -99.99229,
+  "ath_date": "2018-01-23T00:00:00.000Z",
+  "atl": 0.00004709,
+  "atl_change_percentage": 473.7294,
+  "atl_date": "2023-12-03T19:20:40.541Z",
+  "roi": null,
+  "last_updated": "2024-04-11T00:01:34.617Z",
+  "platforms": {
+    "ethereum": "0x68d57c9a1c35f63e2c83ee8e49a64e9d70528d25"
+  }
+}

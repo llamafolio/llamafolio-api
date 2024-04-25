@@ -1,0 +1,31 @@
+{
+  "id": "peapods-finance",
+  "symbol": "peas",
+  "name": "Peapods Finance",
+  "image": "https://assets.coingecko.com/coins/images/33711/large/NAzHgbTW_400x400.png?1702856653",
+  "current_price": 3.85,
+  "market_cap": 38355797,
+  "market_cap_rank": 800,
+  "fully_diluted_valuation": 38355797,
+  "total_volume": 160804,
+  "high_24h": 4.28,
+  "low_24h": 3.85,
+  "price_change_24h": -0.3475154292193521,
+  "price_change_percentage_24h": -8.27364,
+  "market_cap_change_24h": -3528226.427045487,
+  "market_cap_change_percentage_24h": -8.4238,
+  "circulating_supply": 9955421.68379888,
+  "total_supply": 9955421.68379888,
+  "max_supply": 9955421.68379888,
+  "ath": 11.74,
+  "ath_change_percentage": -67.16828,
+  "ath_date": "2024-01-26T09:31:41.160Z",
+  "atl": 0.182074,
+  "atl_change_percentage": 2017.29269,
+  "atl_date": "2023-12-18T20:44:37.999Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:51.368Z",
+  "platforms": {
+    "ethereum": "0x02f92800f57bcd74066f5709f1daa1a4302df875"
+  }
+}

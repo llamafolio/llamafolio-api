@@ -1,0 +1,31 @@
+{
+  "id": "harrypotterobamasonic10in",
+  "symbol": "bitcoin",
+  "name": "HarryPotterObamaSonic10Inu (ETH)",
+  "image": "https://assets.coingecko.com/coins/images/30323/large/hpos10i_logo_casino_night-dexview.png?1696529224",
+  "current_price": 0.08661,
+  "market_cap": 86476611,
+  "market_cap_rank": 510,
+  "fully_diluted_valuation": 86476611,
+  "total_volume": 3228143,
+  "high_24h": 0.120312,
+  "low_24h": 0.083812,
+  "price_change_24h": -0.025499404506406666,
+  "price_change_percentage_24h": -22.74516,
+  "market_cap_change_24h": -24496387.760332078,
+  "market_cap_change_percentage_24h": -22.07419,
+  "circulating_supply": 999798155,
+  "total_supply": 999798155,
+  "max_supply": 1000000000,
+  "ath": 0.260483,
+  "ath_change_percentage": -66.62232,
+  "ath_date": "2024-03-10T04:45:29.194Z",
+  "atl": 0.00066337,
+  "atl_change_percentage": 13006.35992,
+  "atl_date": "2023-05-31T23:11:46.784Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:55.766Z",
+  "platforms": {
+    "ethereum": "0x72e4f9f808c49a2a61de9c5896298920dc4eeea9"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "lexa-ai",
+  "symbol": "lexa",
+  "name": "LEXA AI",
+  "image": "missing_large.png",
+  "current_price": 0.00043537,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 43537,
+  "total_volume": 544.25,
+  "high_24h": 0.00045395,
+  "low_24h": 0.0004299,
+  "price_change_24h": -0.000014135804784739,
+  "price_change_percentage_24h": -3.14474,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.01872134,
+  "ath_change_percentage": -97.67447,
+  "ath_date": "2024-02-20T22:44:38.164Z",
+  "atl": 0.00041153,
+  "atl_change_percentage": 5.79188,
+  "atl_date": "2024-04-22T02:29:25.380Z",
+  "roi": null,
+  "last_updated": "2024-04-25T02:21:37.139Z",
+  "platforms": {
+    "ethereum": "0xe59b14e43479dc30d77f553e4b5c6fc67e1f6caf"
+  }
+}

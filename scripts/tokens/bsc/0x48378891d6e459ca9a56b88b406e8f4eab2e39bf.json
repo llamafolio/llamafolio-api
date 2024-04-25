@@ -1,0 +1,31 @@
+{
+  "id": "furio",
+  "symbol": "$fur",
+  "name": "Furio",
+  "image": "https://assets.coingecko.com/coins/images/26035/large/furio.png?1696525112",
+  "current_price": 0.00218192,
+  "market_cap": 453.1,
+  "market_cap_rank": 4289,
+  "fully_diluted_valuation": 1903.26,
+  "total_volume": 93.11,
+  "high_24h": 0.00222397,
+  "low_24h": 0.00217255,
+  "price_change_24h": -0.000011271369347144,
+  "price_change_percentage_24h": -0.51392,
+  "market_cap_change_24h": 0.00095157,
+  "market_cap_change_percentage_24h": 0.00021,
+  "circulating_supply": 206237.823134162,
+  "total_supply": 866299,
+  "max_supply": 1000000,
+  "ath": 20.28,
+  "ath_change_percentage": -99.98915,
+  "ath_date": "2022-07-23T01:40:34.036Z",
+  "atl": 0.00217255,
+  "atl_change_percentage": 1.28571,
+  "atl_date": "2024-04-24T19:24:00.139Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:54.620Z",
+  "platforms": {
+    "bsc": "0x48378891d6e459ca9a56b88b406e8f4eab2e39bf"
+  }
+}

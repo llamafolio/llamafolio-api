@@ -1,0 +1,31 @@
+{
+  "id": "snail-trail",
+  "symbol": "slime",
+  "name": "Snail Trail",
+  "image": "https://assets.coingecko.com/coins/images/25394/large/logo_%283%29.png?1696524526",
+  "current_price": 0.00280889,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 842667,
+  "total_volume": 1254.49,
+  "high_24h": 0.00286093,
+  "low_24h": 0.00228,
+  "price_change_24h": 0.00038715,
+  "price_change_percentage_24h": 15.98659,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 300000000,
+  "max_supply": 300000000,
+  "ath": 0.01032056,
+  "ath_change_percentage": -72.73849,
+  "ath_date": "2023-12-12T12:50:41.409Z",
+  "atl": 0.00080588,
+  "atl_change_percentage": 249.12832,
+  "atl_date": "2023-10-19T01:50:23.482Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:58.037Z",
+  "platforms": {
+    "avalanche": "0x5a15bdcf9a3a8e799fa4381e666466a516f2d9c8"
+  }
+}

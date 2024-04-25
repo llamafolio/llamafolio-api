@@ -1,0 +1,31 @@
+{
+  "id": "footballstars",
+  "symbol": "fts",
+  "name": "FootballStars",
+  "image": "https://assets.coingecko.com/coins/images/15627/large/footballstars.PNG?1696515260",
+  "current_price": 0.0000013,
+  "market_cap": 1189219,
+  "market_cap_rank": 2584,
+  "fully_diluted_valuation": 1296304,
+  "total_volume": 52.45,
+  "high_24h": 0.0000013,
+  "low_24h": 0.00000128,
+  "price_change_24h": 8.535e-9,
+  "price_change_percentage_24h": 0.66244,
+  "market_cap_change_24h": 4310.54,
+  "market_cap_change_percentage_24h": 0.36379,
+  "circulating_supply": 917391649436.5942,
+  "total_supply": 1000000000000,
+  "max_supply": null,
+  "ath": 0.00008995,
+  "ath_change_percentage": -98.56423,
+  "ath_date": "2021-05-21T14:00:06.949Z",
+  "atl": 4.61214e-7,
+  "atl_change_percentage": 180.02448,
+  "atl_date": "2023-10-12T17:24:26.116Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:56:56.718Z",
+  "platforms": {
+    "bsc": "0x6507458bb53aec6be863161641ec28739c41cc97"
+  }
+}

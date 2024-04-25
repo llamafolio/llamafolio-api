@@ -1,0 +1,35 @@
+{
+  "id": "revain",
+  "symbol": "rev",
+  "name": "Revain",
+  "image": "https://assets.coingecko.com/coins/images/1107/large/256x256.png?1696502203",
+  "current_price": 0.00005898,
+  "market_cap": 4988951,
+  "market_cap_rank": 1797,
+  "fully_diluted_valuation": 5018748,
+  "total_volume": 765.33,
+  "high_24h": 0.00006486,
+  "low_24h": 0.00005894,
+  "price_change_24h": -0.000005829752965005,
+  "price_change_percentage_24h": -8.99574,
+  "market_cap_change_24h": -485578.37391834334,
+  "market_cap_change_percentage_24h": -8.86977,
+  "circulating_supply": 84551367443.6664,
+  "total_supply": 85056346011.834,
+  "max_supply": null,
+  "ath": 3.85,
+  "ath_change_percentage": -99.99847,
+  "ath_date": "2018-02-18T00:00:00.000Z",
+  "atl": 0.00000126,
+  "atl_change_percentage": 4576.39857,
+  "atl_date": "2024-01-08T11:38:44.037Z",
+  "roi": {
+    "times": -0.9988204808893111,
+    "currency": "usd",
+    "percentage": -99.88204808893111
+  },
+  "last_updated": "2024-04-25T08:55:13.660Z",
+  "platforms": {
+    "ethereum": "0x2ef52ed7de8c5ce03a4ef0efbe9b7450f2d7edc9"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "kangaroo-community",
+  "symbol": "kroo",
+  "name": "Kangaroo Community",
+  "image": "https://assets.coingecko.com/coins/images/31658/large/WhatsApp_Image_2023-09-07_at_15.08.54.jpeg?1696530473",
+  "current_price": 0.00001768,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 176784006,
+  "total_volume": 27748,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 10000000000000,
+  "max_supply": 10000000000000,
+  "ath": 0.03235679,
+  "ath_change_percentage": -99.94536,
+  "ath_date": "2023-10-26T18:19:36.874Z",
+  "atl": 4.85666e-7,
+  "atl_change_percentage": 3540.03575,
+  "atl_date": "2023-10-09T11:21:50.638Z",
+  "roi": null,
+  "last_updated": "2023-11-03T18:06:06.170Z",
+  "platforms": {
+    "bsc": "0x066d5f83835d17ada8fc0bd49ae1bcf2642ea2f7"
+  }
+}

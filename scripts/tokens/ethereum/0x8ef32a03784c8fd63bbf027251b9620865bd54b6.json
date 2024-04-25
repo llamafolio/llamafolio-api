@@ -1,0 +1,31 @@
+{
+  "id": "bullet-game",
+  "symbol": "bullet",
+  "name": "Bullet Gate Betting Token",
+  "image": "https://assets.coingecko.com/coins/images/31242/large/2023-08-09_14.53.31.png?1696530068",
+  "current_price": 0.01848719,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 184872,
+  "total_volume": 29.94,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.930815,
+  "ath_change_percentage": -98.01387,
+  "ath_date": "2023-08-11T20:35:37.621Z",
+  "atl": 0.01096243,
+  "atl_change_percentage": 68.64139,
+  "atl_date": "2023-10-14T12:45:41.120Z",
+  "roi": null,
+  "last_updated": "2024-04-18T09:56:46.495Z",
+  "platforms": {
+    "ethereum": "0x8ef32a03784c8fd63bbf027251b9620865bd54b6"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "arcs",
+  "symbol": "arx",
+  "name": "ARCS",
+  "image": "https://assets.coingecko.com/coins/images/10068/large/arcs.png?1696510099",
+  "current_price": 0.00179939,
+  "market_cap": 316103,
+  "market_cap_rank": 3290,
+  "fully_diluted_valuation": 718290,
+  "total_volume": 271621,
+  "high_24h": 0.00190561,
+  "low_24h": 0.00178078,
+  "price_change_24h": -0.000088985223646991,
+  "price_change_percentage_24h": -4.71226,
+  "market_cap_change_24h": -16310.372151267075,
+  "market_cap_change_percentage_24h": -4.90666,
+  "circulating_supply": 176030825.90650997,
+  "total_supply": 400000000,
+  "max_supply": 400000000,
+  "ath": 18.77,
+  "ath_change_percentage": -99.99044,
+  "ath_date": "2021-04-14T20:03:32.558Z",
+  "atl": 0.0009385,
+  "atl_change_percentage": 91.18717,
+  "atl_date": "2023-08-18T01:25:03.569Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:56.200Z",
+  "platforms": {
+    "ethereum": "0x7d8daff6d70cead12c6f077048552cf89130a2b1"
+  }
+}

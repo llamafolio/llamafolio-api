@@ -1,0 +1,31 @@
+{
+  "id": "genomesdao",
+  "symbol": "$gene",
+  "name": "GenomesDAO",
+  "image": "https://assets.coingecko.com/coins/images/20807/large/1637683704200x200.png?1696520200",
+  "current_price": 0.01043165,
+  "market_cap": 2822039,
+  "market_cap_rank": 2094,
+  "fully_diluted_valuation": 10419309,
+  "total_volume": 7991.25,
+  "high_24h": 0.01142357,
+  "low_24h": 0.01041718,
+  "price_change_24h": -0.000428291422783601,
+  "price_change_percentage_24h": -3.94377,
+  "market_cap_change_24h": -142930.48645166168,
+  "market_cap_change_percentage_24h": -4.82064,
+  "circulating_supply": 270847054.2630852,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.04076945,
+  "ath_change_percentage": -74.4366,
+  "ath_date": "2023-11-28T04:00:01.993Z",
+  "atl": 0.00011781,
+  "atl_change_percentage": 8746.59061,
+  "atl_date": "2023-01-01T18:55:16.141Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:30.218Z",
+  "platforms": {
+    "arbitrum": "0x59a729658e9245b0cf1f8cb9fb37945d2b06ea27"
+  }
+}

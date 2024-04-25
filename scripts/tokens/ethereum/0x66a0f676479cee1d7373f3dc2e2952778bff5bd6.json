@@ -1,0 +1,31 @@
+{
+  "id": "wise-token11",
+  "symbol": "wise",
+  "name": "Wise",
+  "image": "https://assets.coingecko.com/coins/images/13552/large/Wise.jpg.jpg?1696513309",
+  "current_price": 0.199877,
+  "market_cap": 13386398,
+  "market_cap_rank": 1301,
+  "fully_diluted_valuation": 108352579,
+  "total_volume": 67822,
+  "high_24h": 0.225855,
+  "low_24h": 0.196621,
+  "price_change_24h": -0.003096827605549135,
+  "price_change_percentage_24h": -1.52573,
+  "market_cap_change_24h": -308957.888771601,
+  "market_cap_change_percentage_24h": -2.25593,
+  "circulating_supply": 67110314.63867585,
+  "total_supply": 543206289,
+  "max_supply": 600000000,
+  "ath": 0.96738,
+  "ath_change_percentage": -79.39003,
+  "ath_date": "2021-01-09T14:35:27.467Z",
+  "atl": 0.081382,
+  "atl_change_percentage": 144.98977,
+  "atl_date": "2022-06-18T20:52:55.428Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:58.564Z",
+  "platforms": {
+    "ethereum": "0x66a0f676479cee1d7373f3dc2e2952778bff5bd6"
+  }
+}

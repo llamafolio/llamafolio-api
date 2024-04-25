@@ -1,0 +1,31 @@
+{
+  "id": "whale",
+  "symbol": "whale",
+  "name": "WHALE",
+  "image": "https://assets.coingecko.com/coins/images/11797/large/WHALE.png?1696511673",
+  "current_price": 0.717871,
+  "market_cap": 6557568,
+  "market_cap_rank": 1658,
+  "fully_diluted_valuation": 7169256,
+  "total_volume": 106594,
+  "high_24h": 0.727942,
+  "low_24h": 0.700649,
+  "price_change_24h": -0.006431203187224345,
+  "price_change_percentage_24h": -0.88792,
+  "market_cap_change_24h": -67220.71893840004,
+  "market_cap_change_percentage_24h": -1.01468,
+  "circulating_supply": 9146790.7159,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 52.37,
+  "ath_change_percentage": -98.63104,
+  "ath_date": "2021-03-13T20:04:39.297Z",
+  "atl": 0.149698,
+  "atl_change_percentage": 378.92438,
+  "atl_date": "2020-07-19T21:00:28.522Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:13.375Z",
+  "platforms": {
+    "polygon": "0xb9585ec9d4c97ad9ded7250bb9a199fe8eed0eca"
+  }
+}

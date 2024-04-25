@@ -1,0 +1,31 @@
+{
+  "id": "oiler",
+  "symbol": "oil",
+  "name": "Oiler",
+  "image": "https://assets.coingecko.com/coins/images/15249/large/oiler.png?1696514902",
+  "current_price": 0.02310016,
+  "market_cap": 700855,
+  "market_cap_rank": 2891,
+  "fully_diluted_valuation": 2310016,
+  "total_volume": 69.97,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 30339826.409753088,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 6.65,
+  "ath_change_percentage": -99.65271,
+  "ath_date": "2021-05-15T13:20:04.078Z",
+  "atl": 0.01960992,
+  "atl_change_percentage": 17.79836,
+  "atl_date": "2022-12-13T13:51:03.247Z",
+  "roi": null,
+  "last_updated": "2024-04-01T11:23:29.570Z",
+  "platforms": {
+    "ethereum": "0x0275e1001e293c46cfe158b3702aade0b99f88a5"
+  }
+}

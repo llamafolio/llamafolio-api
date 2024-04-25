@@ -1,0 +1,31 @@
+{
+  "id": "lodestar",
+  "symbol": "lode",
+  "name": "Lodestar",
+  "image": "https://assets.coingecko.com/coins/images/28218/large/Lodestar_PFP_350x350px.jpg?1696527220",
+  "current_price": 0.139831,
+  "market_cap": 1394567,
+  "market_cap_rank": 2484,
+  "fully_diluted_valuation": 2796728,
+  "total_volume": 44857,
+  "high_24h": 0.142973,
+  "low_24h": 0.139775,
+  "price_change_24h": -0.003059510413180616,
+  "price_change_percentage_24h": -2.14115,
+  "market_cap_change_24h": -29114.391648489283,
+  "market_cap_change_percentage_24h": -2.04501,
+  "circulating_supply": 9972843.06793093,
+  "total_supply": 20000000,
+  "max_supply": 20000000,
+  "ath": 2.56,
+  "ath_change_percentage": -94.53018,
+  "ath_date": "2023-04-15T17:43:18.872Z",
+  "atl": 0.080068,
+  "atl_change_percentage": 74.69956,
+  "atl_date": "2022-12-30T14:28:43.660Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:33.144Z",
+  "platforms": {
+    "arbitrum": "0xf19547f9ed24aa66b03c3a552d181ae334fbb8db"
+  }
+}

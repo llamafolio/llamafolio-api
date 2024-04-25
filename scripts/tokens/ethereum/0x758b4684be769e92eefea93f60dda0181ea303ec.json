@@ -1,0 +1,31 @@
+{
+  "id": "phonon-dao",
+  "symbol": "phonon",
+  "name": "Phonon DAO",
+  "image": "https://assets.coingecko.com/coins/images/22308/large/ezgif-2-e7fb84364d.png?1696521653",
+  "current_price": 0.00059062,
+  "market_cap": 4236997,
+  "market_cap_rank": 1871,
+  "fully_diluted_valuation": 5906203,
+  "total_volume": 51.14,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 7173808882.788986,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.01391468,
+  "ath_change_percentage": -95.75542,
+  "ath_date": "2022-01-12T23:28:33.577Z",
+  "atl": 0.00006616,
+  "atl_change_percentage": 792.75018,
+  "atl_date": "2023-10-26T19:34:39.962Z",
+  "roi": null,
+  "last_updated": "2024-04-21T12:28:33.669Z",
+  "platforms": {
+    "ethereum": "0x758b4684be769e92eefea93f60dda0181ea303ec"
+  }
+}

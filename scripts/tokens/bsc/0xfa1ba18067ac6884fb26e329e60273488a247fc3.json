@@ -1,0 +1,31 @@
+{
+  "id": "scrooge",
+  "symbol": "scrooge",
+  "name": "Scrooge (OLD)",
+  "image": "https://assets.coingecko.com/coins/images/21510/large/top-hat-200x200.png?1696520869",
+  "current_price": 1.9628e-11,
+  "market_cap": 7225.01,
+  "market_cap_rank": 4237,
+  "fully_diluted_valuation": 9689.53,
+  "total_volume": 0.601535,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 368088592202925.9,
+  "total_supply": 493647052378062,
+  "max_supply": 1000000000000000,
+  "ath": 6.507e-8,
+  "ath_change_percentage": -99.96983,
+  "ath_date": "2022-01-11T09:02:37.694Z",
+  "atl": 1.272e-11,
+  "atl_change_percentage": 54.30781,
+  "atl_date": "2023-05-19T12:35:44.574Z",
+  "roi": null,
+  "last_updated": "2023-08-03T10:30:25.769Z",
+  "platforms": {
+    "bsc": "0xfa1ba18067ac6884fb26e329e60273488a247fc3"
+  }
+}

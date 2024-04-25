@@ -1,0 +1,31 @@
+{
+  "id": "buddha",
+  "symbol": "buddha",
+  "name": "Buddha",
+  "image": "https://assets.coingecko.com/coins/images/34079/large/logo_CMC.png?1706009621",
+  "current_price": 0.00000707,
+  "market_cap": 705654,
+  "market_cap_rank": 2882,
+  "fully_diluted_valuation": 7056544,
+  "total_volume": 57038,
+  "high_24h": 0.00000741,
+  "low_24h": 0.00000695,
+  "price_change_24h": -1.7934772009e-7,
+  "price_change_percentage_24h": -2.47317,
+  "market_cap_change_24h": -22971.500174418907,
+  "market_cap_change_percentage_24h": -3.15272,
+  "circulating_supply": 100000000000,
+  "total_supply": 1000000000000,
+  "max_supply": null,
+  "ath": 0.00005536,
+  "ath_change_percentage": -87.21194,
+  "ath_date": "2023-12-31T13:25:48.426Z",
+  "atl": 0.00000516,
+  "atl_change_percentage": 37.14367,
+  "atl_date": "2024-03-24T13:35:43.527Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:14.887Z",
+  "platforms": {
+    "ethereum": "0xdefb0b264032e4e128b00d02b3fd0aa00331237b"
+  }
+}

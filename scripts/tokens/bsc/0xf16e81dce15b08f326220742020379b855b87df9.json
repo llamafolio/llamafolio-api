@@ -1,0 +1,31 @@
+{
+  "id": "ice-token",
+  "symbol": "ice",
+  "name": "Popsicle Finance",
+  "image": "https://assets.coingecko.com/coins/images/14586/large/ice.png?1696514266",
+  "current_price": 0.632938,
+  "market_cap": 4162284,
+  "market_cap_rank": 1887,
+  "fully_diluted_valuation": 15270638,
+  "total_volume": 441.31,
+  "high_24h": 0.668244,
+  "low_24h": 0.628761,
+  "price_change_24h": -0.02965346765631227,
+  "price_change_percentage_24h": -4.47538,
+  "market_cap_change_24h": -204081.3066883064,
+  "market_cap_change_percentage_24h": -4.67394,
+  "circulating_supply": 6584654.38861789,
+  "total_supply": 24157859,
+  "max_supply": null,
+  "ath": 66.04,
+  "ath_change_percentage": -99.03499,
+  "ath_date": "2021-11-06T18:39:46.590Z",
+  "atl": 0.01664439,
+  "atl_change_percentage": 3729.07751,
+  "atl_date": "2024-01-23T04:44:58.277Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:17.847Z",
+  "platforms": {
+    "bsc": "0xf16e81dce15b08f326220742020379b855b87df9"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "tdoge",
+  "symbol": "tdoge",
+  "name": "τDoge",
+  "image": "https://assets.coingecko.com/coins/images/15959/large/photo_2021-06-01_11-30-59.png?1696515570",
+  "current_price": 0.006486,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 748738,
+  "total_volume": 546.69,
+  "high_24h": 0.00692347,
+  "low_24h": 0.00641865,
+  "price_change_24h": -0.000309724319879647,
+  "price_change_percentage_24h": -4.55763,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 115648952,
+  "max_supply": null,
+  "ath": 0.32818,
+  "ath_change_percentage": -98.03247,
+  "ath_date": "2021-06-03T23:43:42.906Z",
+  "atl": 0.00293261,
+  "atl_change_percentage": 120.18009,
+  "atl_date": "2023-10-12T11:15:41.413Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:16:20.835Z",
+  "platforms": {
+    "bsc": "0xe550a593d09fbc8dcd557b5c88cea6946a8b404a"
+  }
+}

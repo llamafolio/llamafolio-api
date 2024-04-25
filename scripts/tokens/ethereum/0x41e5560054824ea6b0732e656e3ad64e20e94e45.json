@@ -1,0 +1,35 @@
+{
+  "id": "civic",
+  "symbol": "cvc",
+  "name": "Civic",
+  "image": "https://assets.coingecko.com/coins/images/788/large/civic-orange.png?1696501939",
+  "current_price": 0.156693,
+  "market_cap": 125532367,
+  "market_cap_rank": 410,
+  "fully_diluted_valuation": 156524147,
+  "total_volume": 9953908,
+  "high_24h": 0.173322,
+  "low_24h": 0.154613,
+  "price_change_24h": -0.015264719898445356,
+  "price_change_percentage_24h": -8.877,
+  "market_cap_change_24h": -12429344.558031231,
+  "market_cap_change_percentage_24h": -9.00927,
+  "circulating_supply": 802000010,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 1.35,
+  "ath_change_percentage": -88.374,
+  "ath_date": "2018-01-03T00:00:00.000Z",
+  "atl": 0.01102541,
+  "atl_change_percentage": 1322.19803,
+  "atl_date": "2020-03-13T02:15:34.328Z",
+  "roi": {
+    "times": 0.566934097107488,
+    "currency": "usd",
+    "percentage": 56.6934097107488
+  },
+  "last_updated": "2024-04-25T08:55:37.607Z",
+  "platforms": {
+    "ethereum": "0x41e5560054824ea6b0732e656e3ad64e20e94e45"
+  }
+}

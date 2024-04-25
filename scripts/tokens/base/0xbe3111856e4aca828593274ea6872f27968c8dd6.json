@@ -1,0 +1,31 @@
+{
+  "id": "krav",
+  "symbol": "krav",
+  "name": "Krav",
+  "image": "https://assets.coingecko.com/coins/images/31243/large/Screen_Shot_2023-08-05_at_2.13.21_PM.png?1696530069",
+  "current_price": 0.01539035,
+  "market_cap": 15397681,
+  "market_cap_rank": 1238,
+  "fully_diluted_valuation": 153976808,
+  "total_volume": 81898,
+  "high_24h": 0.01813635,
+  "low_24h": 0.01529651,
+  "price_change_24h": -0.00260257049948452,
+  "price_change_percentage_24h": -14.46442,
+  "market_cap_change_24h": -2557949.0483059604,
+  "market_cap_change_percentage_24h": -14.24594,
+  "circulating_supply": 1000000000,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.074706,
+  "ath_change_percentage": -79.3434,
+  "ath_date": "2024-04-09T12:07:22.594Z",
+  "atl": 0.00043183,
+  "atl_change_percentage": 3473.52217,
+  "atl_date": "2023-10-13T09:40:05.673Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:53:31.757Z",
+  "platforms": {
+    "base": "0xbe3111856e4aca828593274ea6872f27968c8dd6"
+  }
+}

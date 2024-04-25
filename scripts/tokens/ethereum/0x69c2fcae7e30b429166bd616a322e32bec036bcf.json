@@ -1,0 +1,31 @@
+{
+  "id": "muratiai",
+  "symbol": "muratiai",
+  "name": "MuratiAI",
+  "image": "https://assets.coingecko.com/coins/images/30433/large/Muratilogo.png?1696529321",
+  "current_price": 0.0000038,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 380803,
+  "total_volume": 127147,
+  "high_24h": 0.00000427,
+  "low_24h": 0.00000376,
+  "price_change_24h": -3.0290935881e-8,
+  "price_change_percentage_24h": -0.78984,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.00008874,
+  "ath_change_percentage": -95.71083,
+  "ath_date": "2023-05-22T09:20:41.397Z",
+  "atl": 0.00000215,
+  "atl_change_percentage": 76.61848,
+  "atl_date": "2023-11-26T17:17:03.281Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:38.073Z",
+  "platforms": {
+    "ethereum": "0x69c2fcae7e30b429166bd616a322e32bec036bcf"
+  }
+}

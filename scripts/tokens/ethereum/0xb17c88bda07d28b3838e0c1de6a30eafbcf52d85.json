@@ -1,0 +1,31 @@
+{
+  "id": "shyft-network-2",
+  "symbol": "shft",
+  "name": "Shyft Network",
+  "image": "https://assets.coingecko.com/coins/images/14534/large/TOKEN-Gradient.png?1696514218",
+  "current_price": 0.00929032,
+  "market_cap": 10662121,
+  "market_cap_rank": 1404,
+  "fully_diluted_valuation": 23450397,
+  "total_volume": 51389,
+  "high_24h": 0.00930571,
+  "low_24h": 0.00723515,
+  "price_change_24h": 0.00200004,
+  "price_change_percentage_24h": 27.43431,
+  "market_cap_change_24h": 2316520,
+  "market_cap_change_percentage_24h": 27.75738,
+  "circulating_supply": 1145760765.89107,
+  "total_supply": 2520000000,
+  "max_supply": 2520000000,
+  "ath": 6.34,
+  "ath_change_percentage": -99.8511,
+  "ath_date": "2021-03-28T10:56:14.218Z",
+  "atl": 0.00264242,
+  "atl_change_percentage": 257.13576,
+  "atl_date": "2023-07-12T05:35:46.274Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:11.860Z",
+  "platforms": {
+    "ethereum": "0xb17c88bda07d28b3838e0c1de6a30eafbcf52d85"
+  }
+}

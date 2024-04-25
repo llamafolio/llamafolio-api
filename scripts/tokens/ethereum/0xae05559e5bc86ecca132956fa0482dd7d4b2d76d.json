@@ -1,0 +1,31 @@
+{
+  "id": "flooring-protocol-microclonex",
+  "symbol": "uclonex",
+  "name": "FP μCloneX",
+  "image": "https://assets.coingecko.com/coins/images/32767/large/clonex_logo.30687847_%281%29.png?1699336155",
+  "current_price": 0.00159595,
+  "market_cap": 310195,
+  "market_cap_rank": 3302,
+  "fully_diluted_valuation": 310195,
+  "total_volume": 9640.32,
+  "high_24h": 0.00163649,
+  "low_24h": 0.00156009,
+  "price_change_24h": -0.000014457607705838,
+  "price_change_percentage_24h": -0.89776,
+  "market_cap_change_24h": -767.8240886075655,
+  "market_cap_change_percentage_24h": -0.24692,
+  "circulating_supply": 195000000,
+  "total_supply": 195000000,
+  "max_supply": 20000000000,
+  "ath": 0.00383859,
+  "ath_change_percentage": -58.55921,
+  "ath_date": "2024-02-26T00:55:15.467Z",
+  "atl": 0.00122112,
+  "atl_change_percentage": 30.26886,
+  "atl_date": "2024-04-14T03:14:30.520Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:03.057Z",
+  "platforms": {
+    "ethereum": "0xae05559e5bc86ecca132956fa0482dd7d4b2d76d"
+  }
+}

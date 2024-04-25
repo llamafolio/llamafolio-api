@@ -1,0 +1,31 @@
+{
+  "id": "injective-protocol",
+  "symbol": "inj",
+  "name": "Injective",
+  "image": "https://assets.coingecko.com/coins/images/12882/large/Secondary_Symbol.png?1696512670",
+  "current_price": 26.32,
+  "market_cap": 2369928179,
+  "market_cap_rank": 51,
+  "fully_diluted_valuation": 2632018754,
+  "total_volume": 113800007,
+  "high_24h": 29.35,
+  "low_24h": 26.08,
+  "price_change_24h": -2.4359301512751728,
+  "price_change_percentage_24h": -8.471,
+  "market_cap_change_24h": -224482102.9278717,
+  "market_cap_change_percentage_24h": -8.65253,
+  "circulating_supply": 90042222.33,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 52.62,
+  "ath_change_percentage": -49.99643,
+  "ath_date": "2024-03-14T15:06:22.124Z",
+  "atl": 0.657401,
+  "atl_change_percentage": 3902.46117,
+  "atl_date": "2020-11-03T16:19:30.576Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:25.150Z",
+  "platforms": {
+    "ethereum": "0xe28b3b32b6c345a34ff64674606124dd5aceca30"
+  }
+}

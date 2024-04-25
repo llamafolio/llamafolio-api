@@ -1,0 +1,35 @@
+{
+  "id": "lockchain",
+  "symbol": "loc",
+  "name": "LockTrip",
+  "image": "https://assets.coingecko.com/coins/images/1357/large/LOC_Transparent_New.png?1696502416",
+  "current_price": 0.222087,
+  "market_cap": 3666849,
+  "market_cap_rank": 1954,
+  "fully_diluted_valuation": 4127702,
+  "total_volume": 1725.15,
+  "high_24h": 0.223516,
+  "low_24h": 0.222047,
+  "price_change_24h": -0.00050828480497303,
+  "price_change_percentage_24h": -0.22834,
+  "market_cap_change_24h": -56205.51411886141,
+  "market_cap_change_percentage_24h": -1.50966,
+  "circulating_supply": 16510836.604324786,
+  "total_supply": 18585933,
+  "max_supply": null,
+  "ath": 11.34,
+  "ath_change_percentage": -98.03409,
+  "ath_date": "2021-06-27T22:19:13.795Z",
+  "atl": 0.00341704,
+  "atl_change_percentage": 6421.89976,
+  "atl_date": "2020-11-13T14:39:33.891Z",
+  "roi": {
+    "times": -0.259708582013534,
+    "currency": "usd",
+    "percentage": -25.9708582013534
+  },
+  "last_updated": "2024-04-25T08:47:38.045Z",
+  "platforms": {
+    "ethereum": "0x5e3346444010135322268a4630d2ed5f8d09446c"
+  }
+}

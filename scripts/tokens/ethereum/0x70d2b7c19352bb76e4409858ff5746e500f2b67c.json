@@ -1,0 +1,31 @@
+{
+  "id": "pawtocol",
+  "symbol": "upi",
+  "name": "Pawtocol",
+  "image": "https://assets.coingecko.com/coins/images/12186/large/pawtocol.jpg?1696512023",
+  "current_price": 0.00051407,
+  "market_cap": 127391,
+  "market_cap_rank": 3706,
+  "fully_diluted_valuation": 512798,
+  "total_volume": 27528,
+  "high_24h": 0.00054536,
+  "low_24h": 0.00050617,
+  "price_change_24h": -0.000031287876114577,
+  "price_change_percentage_24h": -5.73715,
+  "market_cap_change_24h": -9418.15623697835,
+  "market_cap_change_percentage_24h": -6.88415,
+  "circulating_supply": 248423577.0837,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.296409,
+  "ath_change_percentage": -99.82726,
+  "ath_date": "2021-04-04T04:24:51.186Z",
+  "atl": 0.00005674,
+  "atl_change_percentage": 802.33316,
+  "atl_date": "2020-09-26T20:59:05.779Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:24.866Z",
+  "platforms": {
+    "ethereum": "0x70d2b7c19352bb76e4409858ff5746e500f2b67c"
+  }
+}

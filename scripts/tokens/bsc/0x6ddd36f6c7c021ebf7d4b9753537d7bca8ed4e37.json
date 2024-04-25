@@ -1,0 +1,31 @@
+{
+  "id": "hamster-groomers",
+  "symbol": "groomer",
+  "name": "Hamster Groomers",
+  "image": "https://assets.coingecko.com/coins/images/30038/large/token_500.png?1696528961",
+  "current_price": 3.95445e-10,
+  "market_cap": 92229,
+  "market_cap_rank": 3807,
+  "fully_diluted_valuation": 212138,
+  "total_volume": 1079.91,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 221262034712502.94,
+  "total_supply": 536452300983245,
+  "max_supply": 986741883990935,
+  "ath": 1.314e-8,
+  "ath_change_percentage": -96.99044,
+  "ath_date": "2023-05-03T07:21:17.089Z",
+  "atl": 1.23662e-10,
+  "atl_change_percentage": 219.77869,
+  "atl_date": "2023-05-11T07:32:36.034Z",
+  "roi": null,
+  "last_updated": "2023-05-18T20:30:14.627Z",
+  "platforms": {
+    "bsc": "0x6ddd36f6c7c021ebf7d4b9753537d7bca8ed4e37"
+  }
+}

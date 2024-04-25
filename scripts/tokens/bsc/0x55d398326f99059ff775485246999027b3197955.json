@@ -1,0 +1,31 @@
+{
+  "id": "binance-bridged-usdt-bnb-smart-chain",
+  "symbol": "bsc-usd",
+  "name": "Binance Bridged USDT (BNB Smart Chain)",
+  "image": "https://assets.coingecko.com/coins/images/35021/large/USDT.png?1707233575",
+  "current_price": 0.998441,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3583367418,
+  "total_volume": 385517804,
+  "high_24h": 1.003,
+  "low_24h": 0.994902,
+  "price_change_24h": -0.000588554583420664,
+  "price_change_percentage_24h": -0.05891,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 3579997906.291635,
+  "max_supply": null,
+  "ath": 1.039,
+  "ath_change_percentage": -3.62303,
+  "ath_date": "2024-03-05T20:15:47.532Z",
+  "atl": 0.964098,
+  "atl_change_percentage": 3.8483,
+  "atl_date": "2024-02-28T17:35:31.154Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:40.652Z",
+  "platforms": {
+    "bsc": "0x55d398326f99059ff775485246999027b3197955"
+  }
+}

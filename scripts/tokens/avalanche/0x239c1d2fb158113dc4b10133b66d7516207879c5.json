@@ -1,0 +1,31 @@
+{
+  "id": "skypath",
+  "symbol": "sky",
+  "name": "Skypath",
+  "image": "https://assets.coingecko.com/coins/images/35110/large/Screenshot_2024-01-05_184224.png?1707390863",
+  "current_price": 0.01196181,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 447043,
+  "total_volume": 3805.67,
+  "high_24h": 0.01298754,
+  "low_24h": 0.01077092,
+  "price_change_24h": -0.00062993387306045,
+  "price_change_percentage_24h": -5.00275,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 37500000,
+  "max_supply": 37500000,
+  "ath": 0.03450458,
+  "ath_change_percentage": -65.45056,
+  "ath_date": "2024-02-15T00:59:14.439Z",
+  "atl": 0.00770766,
+  "atl_change_percentage": 54.66603,
+  "atl_date": "2024-04-03T17:49:39.283Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:39.514Z",
+  "platforms": {
+    "avalanche": "0x239c1d2fb158113dc4b10133b66d7516207879c5"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "pickle-finance",
+  "symbol": "pickle",
+  "name": "Pickle Finance",
+  "image": "https://assets.coingecko.com/coins/images/12435/large/0M4W6Yr6_400x400.jpg?1696512255",
+  "current_price": 1.43,
+  "market_cap": 2067569,
+  "market_cap_rank": 2275,
+  "fully_diluted_valuation": 4764979,
+  "total_volume": 22924,
+  "high_24h": 1.47,
+  "low_24h": 1.43,
+  "price_change_24h": -0.04279523963293652,
+  "price_change_percentage_24h": -2.90477,
+  "market_cap_change_24h": -57389.48938530311,
+  "market_cap_change_percentage_24h": -2.70074,
+  "circulating_supply": 1445311.7609032847,
+  "total_supply": 3330907.37138002,
+  "max_supply": 3330907.37138002,
+  "ath": 85.24,
+  "ath_change_percentage": -98.32176,
+  "ath_date": "2020-09-14T01:58:26.972Z",
+  "atl": 0.374906,
+  "atl_change_percentage": 281.58376,
+  "atl_date": "2023-11-15T13:49:45.829Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:02.470Z",
+  "platforms": {
+    "polygon": "0x2b88ad57897a8b496595925f43048301c37615da"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "prisma-mkusd",
+  "symbol": "mkusd",
+  "name": "Prisma mkUSD",
+  "image": "https://assets.coingecko.com/coins/images/31519/large/mkUSD_200.png?1696530329",
+  "current_price": 0.985371,
+  "market_cap": 18998976,
+  "market_cap_rank": 1138,
+  "fully_diluted_valuation": 18998976,
+  "total_volume": 1298120,
+  "high_24h": 0.989537,
+  "low_24h": 0.973358,
+  "price_change_24h": -0.00013813551980002,
+  "price_change_percentage_24h": -0.01402,
+  "market_cap_change_24h": -258181.60001837462,
+  "market_cap_change_percentage_24h": -1.3407,
+  "circulating_supply": 19326500.7115403,
+  "total_supply": 19326500.7115403,
+  "max_supply": null,
+  "ath": 1.03,
+  "ath_change_percentage": -4.44823,
+  "ath_date": "2023-09-07T03:39:12.639Z",
+  "atl": 0.945798,
+  "atl_change_percentage": 4.02448,
+  "atl_date": "2024-04-12T18:37:37.747Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:17.963Z",
+  "platforms": {
+    "ethereum": "0x4591dbff62656e7859afe5e45f6f47d3669fbb28"
+  }
+}

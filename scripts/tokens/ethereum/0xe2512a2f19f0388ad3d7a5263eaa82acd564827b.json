@@ -1,0 +1,31 @@
+{
+  "id": "shido-2",
+  "symbol": "shido",
+  "name": "Shido",
+  "image": "https://assets.coingecko.com/coins/images/32070/large/SHIDO.png?1696530867",
+  "current_price": 0.00112146,
+  "market_cap": 20116628,
+  "market_cap_rank": 1107,
+  "fully_diluted_valuation": 20122270,
+  "total_volume": 2018660,
+  "high_24h": 0.0011603,
+  "low_24h": 0.00098633,
+  "price_change_24h": 0.00004827,
+  "price_change_percentage_24h": 4.49815,
+  "market_cap_change_24h": 518270,
+  "market_cap_change_percentage_24h": 2.64446,
+  "circulating_supply": 17994952804.6905,
+  "total_supply": 18000000000,
+  "max_supply": 18000000000,
+  "ath": 0.0127717,
+  "ath_change_percentage": -91.25108,
+  "ath_date": "2024-01-21T15:29:36.736Z",
+  "atl": 0.00000629,
+  "atl_change_percentage": 17656.11148,
+  "atl_date": "2024-03-06T12:36:06.039Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:33.640Z",
+  "platforms": {
+    "ethereum": "0xe2512a2f19f0388ad3d7a5263eaa82acd564827b"
+  }
+}

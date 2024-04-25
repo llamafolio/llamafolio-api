@@ -1,0 +1,31 @@
+{
+  "id": "befitter",
+  "symbol": "fiu",
+  "name": "beFITTER",
+  "image": "https://assets.coingecko.com/coins/images/25995/large/FIU_Token.jpg?1696525073",
+  "current_price": 0.00026606,
+  "market_cap": 56262,
+  "market_cap_rank": 3957,
+  "fully_diluted_valuation": 266060,
+  "total_volume": 5008.12,
+  "high_24h": 0.00027782,
+  "low_24h": 0.00025614,
+  "price_change_24h": -0.000005095947565785,
+  "price_change_percentage_24h": -1.87934,
+  "market_cap_change_24h": -1075.5288603328154,
+  "market_cap_change_percentage_24h": -1.87578,
+  "circulating_supply": 211464369.81057334,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.217778,
+  "ath_change_percentage": -99.87775,
+  "ath_date": "2022-07-18T13:16:30.415Z",
+  "atl": 0.00022066,
+  "atl_change_percentage": 20.653,
+  "atl_date": "2023-12-07T17:23:50.930Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:28.124Z",
+  "platforms": {
+    "bsc": "0xef7d50069406a2f5a53806f7250a6c0f17ad9dcd"
+  }
+}

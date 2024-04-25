@@ -1,0 +1,31 @@
+{
+  "id": "sweth",
+  "symbol": "sweth",
+  "name": "Swell Ethereum",
+  "image": "https://assets.coingecko.com/coins/images/30326/large/_lB7zEtS_400x400.jpg?1696529227",
+  "current_price": 3309.27,
+  "market_cap": 665493496,
+  "market_cap_rank": 129,
+  "fully_diluted_valuation": 665493496,
+  "total_volume": 2814379,
+  "high_24h": 3467.31,
+  "low_24h": 3278.66,
+  "price_change_24h": -113.60737212702088,
+  "price_change_percentage_24h": -3.31906,
+  "market_cap_change_24h": -27317547.776385665,
+  "market_cap_change_percentage_24h": -3.943,
+  "circulating_supply": 201729.229004742,
+  "total_supply": 201729.229004742,
+  "max_supply": null,
+  "ath": 4273.24,
+  "ath_change_percentage": -22.67104,
+  "ath_date": "2024-03-12T00:20:37.288Z",
+  "atl": 1535.26,
+  "atl_change_percentage": 115.23738,
+  "atl_date": "2023-10-12T17:25:37.017Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:09.049Z",
+  "platforms": {
+    "ethereum": "0xf951e335afb289353dc249e82926178eac7ded78"
+  }
+}

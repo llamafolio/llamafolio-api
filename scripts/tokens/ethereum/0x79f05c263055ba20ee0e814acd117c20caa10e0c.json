@@ -1,0 +1,31 @@
+{
+  "id": "ice",
+  "symbol": "ice",
+  "name": "Ice Network",
+  "image": "https://assets.coingecko.com/coins/images/34674/large/ion-coingecko-200w.png?1714009819",
+  "current_price": 0.00380962,
+  "market_cap": 25175753,
+  "market_cap_rank": 999,
+  "fully_diluted_valuation": 80569778,
+  "total_volume": 3229493,
+  "high_24h": 0.0040527,
+  "low_24h": 0.00380448,
+  "price_change_24h": -0.000215718541736709,
+  "price_change_percentage_24h": -5.35901,
+  "market_cap_change_24h": -1484848.8369105645,
+  "market_cap_change_percentage_24h": -5.56945,
+  "circulating_supply": 6608938597.41,
+  "total_supply": 21150537435.26,
+  "max_supply": 21150537435.26,
+  "ath": 0.01587896,
+  "ath_change_percentage": -76.00156,
+  "ath_date": "2024-01-19T11:28:47.883Z",
+  "atl": 0.00313351,
+  "atl_change_percentage": 21.61149,
+  "atl_date": "2024-04-13T21:29:59.447Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:52.954Z",
+  "platforms": {
+    "ethereum": "0x79f05c263055ba20ee0e814acd117c20caa10e0c"
+  }
+}

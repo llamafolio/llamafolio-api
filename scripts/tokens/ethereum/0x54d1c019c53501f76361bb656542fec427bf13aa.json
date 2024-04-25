@@ -1,0 +1,31 @@
+{
+  "id": "peer-to-peer",
+  "symbol": "p2p",
+  "name": "Peer-to-Peer",
+  "image": "https://assets.coingecko.com/coins/images/33123/large/IMG_7077.PNG?1700794851",
+  "current_price": 0.01158667,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 11586.67,
+  "total_volume": 61.95,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000,
+  "max_supply": 1000000,
+  "ath": 0.827773,
+  "ath_change_percentage": -98.60026,
+  "ath_date": "2023-11-24T10:54:45.739Z",
+  "atl": 0.01031895,
+  "atl_change_percentage": 12.28537,
+  "atl_date": "2024-01-27T15:10:02.918Z",
+  "roi": null,
+  "last_updated": "2024-02-11T19:44:29.721Z",
+  "platforms": {
+    "ethereum": "0x54d1c019c53501f76361bb656542fec427bf13aa"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "infinity-network",
+  "symbol": "in",
+  "name": "Infinity Network",
+  "image": "https://assets.coingecko.com/coins/images/34018/large/20231227_182631.png?1703694391",
+  "current_price": 4.038e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 847.98,
+  "total_volume": 162.54,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 2100000000,
+  "max_supply": 2100000000,
+  "ath": 0.00192995,
+  "ath_change_percentage": -99.97908,
+  "ath_date": "2023-12-27T09:39:44.769Z",
+  "atl": 4.02317e-7,
+  "atl_change_percentage": 0.36853,
+  "atl_date": "2024-04-19T16:30:36.241Z",
+  "roi": null,
+  "last_updated": "2024-04-19T21:00:19.185Z",
+  "platforms": {
+    "bsc": "0xb06548161907872733cbe2b677a18b18fd59e97f"
+  }
+}

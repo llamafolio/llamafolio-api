@@ -1,0 +1,31 @@
+{
+  "id": "wolfsafepoorpeople",
+  "symbol": "wspp",
+  "name": "WolfSafePoorPeople",
+  "image": "https://assets.coingecko.com/coins/images/17090/large/wspplogo.png?1696516652",
+  "current_price": 1.6436e-11,
+  "market_cap": 222334,
+  "market_cap_rank": 3445,
+  "fully_diluted_valuation": 820881,
+  "total_volume": 444.57,
+  "high_24h": 1.6576e-11,
+  "low_24h": 1.6073e-11,
+  "price_change_24h": 1.29593e-13,
+  "price_change_percentage_24h": 0.79473,
+  "market_cap_change_24h": 1463.28,
+  "market_cap_change_percentage_24h": 0.66251,
+  "circulating_supply": 13542390331799896,
+  "total_supply": 49999999750000000,
+  "max_supply": 49999999750000000,
+  "ath": 5.03073e-10,
+  "ath_change_percentage": -96.73892,
+  "ath_date": "2021-11-07T02:15:27.442Z",
+  "atl": 1.001e-12,
+  "atl_change_percentage": 1538.16757,
+  "atl_date": "2022-09-12T15:18:15.798Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:08:57.908Z",
+  "platforms": {
+    "bsc": "0x46d502fac9aea7c5bc7b13c8ec9d02378c33d36f"
+  }
+}

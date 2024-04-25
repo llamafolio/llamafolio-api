@@ -1,0 +1,31 @@
+{
+  "id": "smooth-love-potion",
+  "symbol": "slp",
+  "name": "Smooth Love Potion",
+  "image": "https://assets.coingecko.com/coins/images/10366/large/SLP.png?1696510368",
+  "current_price": 0.00408958,
+  "market_cap": 169122033,
+  "market_cap_rank": 329,
+  "fully_diluted_valuation": null,
+  "total_volume": 15716625,
+  "high_24h": 0.00464671,
+  "low_24h": 0.00407623,
+  "price_change_24h": -0.000456791212004115,
+  "price_change_percentage_24h": -10.04739,
+  "market_cap_change_24h": -19524216.19109392,
+  "market_cap_change_percentage_24h": -10.34964,
+  "circulating_supply": 41369158816,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.399727,
+  "ath_change_percentage": -98.97573,
+  "ath_date": "2021-07-13T10:04:32.975Z",
+  "atl": 0.00130772,
+  "atl_change_percentage": 213.08516,
+  "atl_date": "2023-09-11T20:02:08.577Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:27.742Z",
+  "platforms": {
+    "ethereum": "0xcc8fa225d80b9c7d42f96e9570156c65d6caaa25"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "monsterra",
+  "symbol": "mstr",
+  "name": "Monsterra",
+  "image": "https://assets.coingecko.com/coins/images/24377/large/MSTR.png?1696523560",
+  "current_price": 0.10702,
+  "market_cap": 1385886,
+  "market_cap_rank": 2479,
+  "fully_diluted_valuation": 10605733,
+  "total_volume": 217229,
+  "high_24h": 0.11371,
+  "low_24h": 0.10676,
+  "price_change_24h": -0.005909047969789985,
+  "price_change_percentage_24h": -5.23252,
+  "market_cap_change_24h": -78410.29892125493,
+  "market_cap_change_percentage_24h": -5.35481,
+  "circulating_supply": 12949722,
+  "total_supply": 99100000,
+  "max_supply": 100000000,
+  "ath": 0.571843,
+  "ath_change_percentage": -81.19847,
+  "ath_date": "2022-08-28T07:29:03.680Z",
+  "atl": 0.03553694,
+  "atl_change_percentage": 202.54524,
+  "atl_date": "2024-01-01T07:41:00.215Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:59.786Z",
+  "platforms": {
+    "avalanche": "0xe397784960f814ba35c9ee0bc4c9dffdf86925f9"
+  }
+}

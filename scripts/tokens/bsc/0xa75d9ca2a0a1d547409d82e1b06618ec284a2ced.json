@@ -1,0 +1,31 @@
+{
+  "id": "wombex",
+  "symbol": "wmx",
+  "name": "Wombex",
+  "image": "https://assets.coingecko.com/coins/images/27844/large/WMX_logo.png?1696526863",
+  "current_price": 0.01611279,
+  "market_cap": 764753,
+  "market_cap_rank": 2835,
+  "fully_diluted_valuation": 1189588,
+  "total_volume": 3727.41,
+  "high_24h": 0.01680072,
+  "low_24h": 0.01518788,
+  "price_change_24h": 0.00026632,
+  "price_change_percentage_24h": 1.68062,
+  "market_cap_change_24h": 32714,
+  "market_cap_change_percentage_24h": 4.46884,
+  "circulating_supply": 47608900.2451982,
+  "total_supply": 74056554.5796398,
+  "max_supply": 100000000,
+  "ath": 0.479712,
+  "ath_change_percentage": -96.65336,
+  "ath_date": "2022-10-21T08:17:53.381Z",
+  "atl": 0.00925228,
+  "atl_change_percentage": 73.5168,
+  "atl_date": "2024-02-29T09:21:24.082Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:29.516Z",
+  "platforms": {
+    "bsc": "0xa75d9ca2a0a1d547409d82e1b06618ec284a2ced"
+  }
+}

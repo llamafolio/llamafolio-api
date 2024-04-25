@@ -1,0 +1,31 @@
+{
+  "id": "victoria-vr",
+  "symbol": "vr",
+  "name": "Victoria VR",
+  "image": "https://assets.coingecko.com/coins/images/21178/large/vr.png?1696520554",
+  "current_price": 0.02029699,
+  "market_cap": 129925911,
+  "market_cap_rank": 398,
+  "fully_diluted_valuation": 340698497,
+  "total_volume": 1273940,
+  "high_24h": 0.02205765,
+  "low_24h": 0.02019961,
+  "price_change_24h": -0.001736585669010932,
+  "price_change_percentage_24h": -7.88154,
+  "market_cap_change_24h": -11167193.251145735,
+  "market_cap_change_percentage_24h": -7.91477,
+  "circulating_supply": 6406706585,
+  "total_supply": 16800000000,
+  "max_supply": null,
+  "ath": 0.615957,
+  "ath_change_percentage": -96.70691,
+  "ath_date": "2021-12-10T18:45:35.946Z",
+  "atl": 0.00472369,
+  "atl_change_percentage": 329.41094,
+  "atl_date": "2023-01-03T15:02:01.730Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:21.689Z",
+  "platforms": {
+    "ethereum": "0x7d5121505149065b562c789a0145ed750e6e8cdd"
+  }
+}

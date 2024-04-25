@@ -1,0 +1,31 @@
+{
+  "id": "freqai",
+  "symbol": "freqai",
+  "name": "FREQAI",
+  "image": "https://assets.coingecko.com/coins/images/29122/large/The_Razors_Edge.png?1696528084",
+  "current_price": 0.00002728,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 27281,
+  "total_volume": 76.55,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00142109,
+  "ath_change_percentage": -98.08028,
+  "ath_date": "2023-02-19T10:41:04.313Z",
+  "atl": 0.00002711,
+  "atl_change_percentage": 0.64907,
+  "atl_date": "2023-07-23T16:19:38.254Z",
+  "roi": null,
+  "last_updated": "2023-07-24T00:05:26.009Z",
+  "platforms": {
+    "ethereum": "0xb685145d7f127b9093d7f9278bae902ef59ff486"
+  }
+}

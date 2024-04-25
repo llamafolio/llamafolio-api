@@ -1,0 +1,31 @@
+{
+  "id": "hachikoinu",
+  "symbol": "inu",
+  "name": "HachikoInu",
+  "image": "https://assets.coingecko.com/coins/images/16392/large/hachikoinu-200px.png?1696515990",
+  "current_price": 4.227e-9,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 4226954,
+  "total_volume": 401.56,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": null,
+  "ath": 3.02845e-7,
+  "ath_change_percentage": -98.60425,
+  "ath_date": "2022-08-14T16:46:41.832Z",
+  "atl": 6.96017e-10,
+  "atl_change_percentage": 507.30631,
+  "atl_date": "2023-07-11T09:23:51.715Z",
+  "roi": null,
+  "last_updated": "2024-04-23T07:59:18.406Z",
+  "platforms": {
+    "ethereum": "0xf32aa187d5bc16a2c02a6afb7df1459d0d107574"
+  }
+}

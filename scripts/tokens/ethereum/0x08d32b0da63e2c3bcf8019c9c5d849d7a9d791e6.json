@@ -1,0 +1,31 @@
+{
+  "id": "dentacoin",
+  "symbol": "dcn",
+  "name": "Dentacoin",
+  "image": "https://assets.coingecko.com/coins/images/850/large/dentacoin.png?1696501986",
+  "current_price": 0.00000149,
+  "market_cap": 1058276,
+  "market_cap_rank": 2655,
+  "fully_diluted_valuation": 11910154,
+  "total_volume": 0.00149076,
+  "high_24h": 0.00000156,
+  "low_24h": 0.00000142,
+  "price_change_24h": 7.1086e-8,
+  "price_change_percentage_24h": 5.00716,
+  "market_cap_change_24h": 49623,
+  "market_cap_change_percentage_24h": 4.91976,
+  "circulating_supply": 710839308006,
+  "total_supply": 8000000000000,
+  "max_supply": null,
+  "ath": 0.0059853,
+  "ath_change_percentage": -99.97509,
+  "ath_date": "2018-01-07T00:00:00.000Z",
+  "atl": 4.0235e-8,
+  "atl_change_percentage": 3605.12701,
+  "atl_date": "2021-01-27T19:51:03.335Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:37.764Z",
+  "platforms": {
+    "ethereum": "0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6"
+  }
+}

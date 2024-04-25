@@ -1,0 +1,31 @@
+{
+  "id": "ormeuscoin",
+  "symbol": "orme",
+  "name": "Ormeus Coin",
+  "image": "https://assets.coingecko.com/coins/images/964/large/ORMEUS_logo.png?1696502079",
+  "current_price": 0.00064898,
+  "market_cap": 11051.73,
+  "market_cap_rank": 4210,
+  "fully_diluted_valuation": 129796,
+  "total_volume": 24.55,
+  "high_24h": 0.0006505,
+  "low_24h": 0.00064052,
+  "price_change_24h": 0.00000164,
+  "price_change_percentage_24h": 0.25321,
+  "market_cap_change_24h": 1.77,
+  "market_cap_change_percentage_24h": 0.01603,
+  "circulating_supply": 17029321,
+  "total_supply": 200000000,
+  "max_supply": null,
+  "ath": 3.28,
+  "ath_change_percentage": -99.98024,
+  "ath_date": "2018-01-15T00:00:00.000Z",
+  "atl": 0.00014434,
+  "atl_change_percentage": 349.62146,
+  "atl_date": "2024-03-17T21:41:16.776Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:43:44.796Z",
+  "platforms": {
+    "bsc": "0x7e2afe446a30fa67600a5174df7f4002b8e15b03"
+  }
+}

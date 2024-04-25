@@ -1,0 +1,31 @@
+{
+  "id": "doont-buy",
+  "symbol": "dbuy",
+  "name": "Doont Buy",
+  "image": "https://assets.coingecko.com/coins/images/17895/large/VaxEiZ3.png?1696517415",
+  "current_price": 0.00089631,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 410111,
+  "total_volume": 159.18,
+  "high_24h": 0.00094363,
+  "low_24h": 0.00089478,
+  "price_change_24h": -0.000038742693571016,
+  "price_change_percentage_24h": -4.14336,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 457553587.655242,
+  "max_supply": null,
+  "ath": 0.121114,
+  "ath_change_percentage": -99.25995,
+  "ath_date": "2021-08-31T23:49:12.433Z",
+  "atl": 0.00056564,
+  "atl_change_percentage": 58.45941,
+  "atl_date": "2023-10-16T22:21:30.285Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:43.150Z",
+  "platforms": {
+    "ethereum": "0x4ece5c5cfb9b960a49aae739e15cdb6cfdcc5782"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "elon-cat-2",
+  "symbol": "eloncat",
+  "name": "Elon Cat",
+  "image": "https://assets.coingecko.com/coins/images/32101/large/eloncatlogo_.png?1696530898",
+  "current_price": 0.070228,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 124946,
+  "total_volume": 241.56,
+  "high_24h": 0.070559,
+  "low_24h": 0.067001,
+  "price_change_24h": 0.00189351,
+  "price_change_percentage_24h": 2.77093,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1777000,
+  "max_supply": 1777000,
+  "ath": 0.167838,
+  "ath_change_percentage": -58.21016,
+  "ath_date": "2023-10-08T23:35:10.712Z",
+  "atl": 0.00693118,
+  "atl_change_percentage": 911.93762,
+  "atl_date": "2023-11-12T23:05:57.796Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:02.735Z",
+  "platforms": {
+    "bsc": "0xcce8fd1eb636632e0c0cd2353264d56a37d2246b"
+  }
+}

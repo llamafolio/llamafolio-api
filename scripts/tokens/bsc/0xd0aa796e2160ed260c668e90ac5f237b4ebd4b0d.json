@@ -1,0 +1,31 @@
+{
+  "id": "waifu",
+  "symbol": "waifu",
+  "name": "Waifu",
+  "image": "https://assets.coingecko.com/coins/images/28181/large/200.png?1710945346",
+  "current_price": 0.00166089,
+  "market_cap": 81420,
+  "market_cap_rank": 3848,
+  "fully_diluted_valuation": 114655,
+  "total_volume": 20439,
+  "high_24h": 0.00189904,
+  "low_24h": 0.00164496,
+  "price_change_24h": -0.000185931337457651,
+  "price_change_percentage_24h": -10.06765,
+  "market_cap_change_24h": -9145.896605990303,
+  "market_cap_change_percentage_24h": -10.09865,
+  "circulating_supply": 48998682.6367,
+  "total_supply": 69000000,
+  "max_supply": 69000000,
+  "ath": 0.01300733,
+  "ath_change_percentage": -87.20486,
+  "ath_date": "2023-01-27T20:39:39.610Z",
+  "atl": 0.000038,
+  "atl_change_percentage": 4279.2017,
+  "atl_date": "2023-10-18T21:33:29.755Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:03.950Z",
+  "platforms": {
+    "bsc": "0xd0aa796e2160ed260c668e90ac5f237b4ebd4b0d"
+  }
+}

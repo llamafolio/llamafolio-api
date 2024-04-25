@@ -1,0 +1,31 @@
+{
+  "id": "galeon",
+  "symbol": "galeon",
+  "name": "Galeon",
+  "image": "https://assets.coingecko.com/coins/images/24261/large/Logo_CG_Galeon.png?1710864400",
+  "current_price": 0.02911986,
+  "market_cap": 19918611,
+  "market_cap_rank": 1112,
+  "fully_diluted_valuation": 75322543,
+  "total_volume": 113602,
+  "high_24h": 0.0294263,
+  "low_24h": 0.02771875,
+  "price_change_24h": -0.000206530696415776,
+  "price_change_percentage_24h": -0.70425,
+  "market_cap_change_24h": -46068.43471998721,
+  "market_cap_change_percentage_24h": -0.23075,
+  "circulating_supply": 682266092.881866,
+  "total_supply": 2580000000,
+  "max_supply": 4000000000,
+  "ath": 0.04084258,
+  "ath_change_percentage": -28.36107,
+  "ath_date": "2024-04-08T20:26:12.197Z",
+  "atl": 0.0095056,
+  "atl_change_percentage": 207.80994,
+  "atl_date": "2023-10-12T17:36:23.027Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:43.979Z",
+  "platforms": {
+    "bsc": "0x1d0ac23f03870f768ca005c84cbb6fb82aa884fd"
+  }
+}

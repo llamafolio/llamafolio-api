@@ -1,0 +1,31 @@
+{
+  "id": "giveth",
+  "symbol": "giv",
+  "name": "Giveth",
+  "image": "https://assets.coingecko.com/coins/images/21792/large/GIVToken_200x200.png?1696521145",
+  "current_price": 0.01311836,
+  "market_cap": 2761836,
+  "market_cap_rank": 2111,
+  "fully_diluted_valuation": 13098056,
+  "total_volume": 53045,
+  "high_24h": 0.01396587,
+  "low_24h": 0.01205777,
+  "price_change_24h": -0.000721982719626478,
+  "price_change_percentage_24h": -5.21651,
+  "market_cap_change_24h": -152176.08535747882,
+  "market_cap_change_percentage_24h": -5.22222,
+  "circulating_supply": 210858464.168388,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 1.017,
+  "ath_change_percentage": -98.7105,
+  "ath_date": "2021-12-28T07:33:54.071Z",
+  "atl": 0.00367537,
+  "atl_change_percentage": 256.71453,
+  "atl_date": "2022-12-17T10:22:58.350Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:57.362Z",
+  "platforms": {
+    "ethereum": "0x900db999074d9277c5da2a43f252d74366230da0"
+  }
+}

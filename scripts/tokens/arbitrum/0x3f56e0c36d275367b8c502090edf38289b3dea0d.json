@@ -1,0 +1,31 @@
+{
+  "id": "mai-arbitrum",
+  "symbol": "mimatic",
+  "name": "MAI (Arbitrum)",
+  "image": "https://assets.coingecko.com/coins/images/35517/large/mimatic-red.png?1709005586",
+  "current_price": 0.557784,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 6800821,
+  "total_volume": 3950.36,
+  "high_24h": 0.563204,
+  "low_24h": 0.547169,
+  "price_change_24h": 0.0035861,
+  "price_change_percentage_24h": 0.64708,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 12150005,
+  "max_supply": null,
+  "ath": 0.647614,
+  "ath_change_percentage": -13.92909,
+  "ath_date": "2024-03-02T21:29:03.484Z",
+  "atl": 0.503158,
+  "atl_change_percentage": 10.78166,
+  "atl_date": "2024-03-20T04:39:19.847Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:50.171Z",
+  "platforms": {
+    "arbitrum": "0x3f56e0c36d275367b8c502090edf38289b3dea0d"
+  }
+}

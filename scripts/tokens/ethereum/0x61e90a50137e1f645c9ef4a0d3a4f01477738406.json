@@ -1,0 +1,31 @@
+{
+  "id": "league-of-kingdoms",
+  "symbol": "loka",
+  "name": "League of Kingdoms",
+  "image": "https://assets.coingecko.com/coins/images/22572/large/loka_64pix.png?1696521891",
+  "current_price": 0.260964,
+  "market_cap": 29951999,
+  "market_cap_rank": 916,
+  "fully_diluted_valuation": 53508894,
+  "total_volume": 4069571,
+  "high_24h": 0.290293,
+  "low_24h": 0.259572,
+  "price_change_24h": -0.024979428361822487,
+  "price_change_percentage_24h": -8.73579,
+  "market_cap_change_24h": -2888172.8590456583,
+  "market_cap_change_percentage_24h": -8.79463,
+  "circulating_supply": 114916312.146545,
+  "total_supply": 205296640.782909,
+  "max_supply": null,
+  "ath": 5.37,
+  "ath_change_percentage": -95.15798,
+  "ath_date": "2022-04-02T11:35:07.173Z",
+  "atl": 0.173513,
+  "atl_change_percentage": 49.8722,
+  "atl_date": "2023-10-19T14:50:39.723Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:09.368Z",
+  "platforms": {
+    "ethereum": "0x61e90a50137e1f645c9ef4a0d3a4f01477738406"
+  }
+}

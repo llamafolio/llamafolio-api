@@ -1,0 +1,31 @@
+{
+  "id": "kampay",
+  "symbol": "kampay",
+  "name": "Kampay",
+  "image": "https://assets.coingecko.com/coins/images/8289/large/6130e86152bdb07e2848de00_200_4x.png?1696508490",
+  "current_price": 0.00032787,
+  "market_cap": 106954,
+  "market_cap_rank": 3759,
+  "fully_diluted_valuation": 326674,
+  "total_volume": 28.91,
+  "high_24h": 0.00159965,
+  "low_24h": 0.0003195,
+  "price_change_24h": 0.00000104,
+  "price_change_percentage_24h": 0.31672,
+  "market_cap_change_24h": -106.75191641919082,
+  "market_cap_change_percentage_24h": -0.09971,
+  "circulating_supply": 327403181.605804,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 7.2,
+  "ath_change_percentage": -99.99546,
+  "ath_date": "2019-06-26T18:48:31.950Z",
+  "atl": 0.00016777,
+  "atl_change_percentage": 94.64195,
+  "atl_date": "2024-03-31T18:55:35.132Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:53.159Z",
+  "platforms": {
+    "bsc": "0x8e984e03ab35795c60242c902ece2450242c90e9"
+  }
+}

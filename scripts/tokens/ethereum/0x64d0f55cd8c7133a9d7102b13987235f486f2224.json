@@ -1,0 +1,35 @@
+{
+  "id": "swissborg",
+  "symbol": "borg",
+  "name": "SwissBorg",
+  "image": "https://assets.coingecko.com/coins/images/2117/large/YJUrRy7r_400x400.png?1696503083",
+  "current_price": 0.195221,
+  "market_cap": 192152652,
+  "market_cap_rank": 307,
+  "fully_diluted_valuation": 192152652,
+  "total_volume": 1761867,
+  "high_24h": 0.200771,
+  "low_24h": 0.193238,
+  "price_change_24h": -0.005081361548908869,
+  "price_change_percentage_24h": -2.53685,
+  "market_cap_change_24h": -4362507.115947396,
+  "market_cap_change_percentage_24h": -2.21993,
+  "circulating_supply": 984204858.442,
+  "total_supply": 984204858.442,
+  "max_supply": 1000000000,
+  "ath": 1.64,
+  "ath_change_percentage": -88.10933,
+  "ath_date": "2021-05-04T17:14:50.120Z",
+  "atl": 0.00502687,
+  "atl_change_percentage": 3779.00495,
+  "atl_date": "2019-07-28T00:00:00.000Z",
+  "roi": {
+    "times": 0.952208149276389,
+    "currency": "usd",
+    "percentage": 95.2208149276389
+  },
+  "last_updated": "2024-04-25T08:55:45.086Z",
+  "platforms": {
+    "ethereum": "0x64d0f55cd8c7133a9d7102b13987235f486f2224"
+  }
+}

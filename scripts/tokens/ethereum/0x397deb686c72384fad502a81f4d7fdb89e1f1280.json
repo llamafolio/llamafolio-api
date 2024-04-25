@@ -1,0 +1,31 @@
+{
+  "id": "xels",
+  "symbol": "xels",
+  "name": "XELS",
+  "image": "https://assets.coingecko.com/coins/images/14729/large/Xels_logo_square_%281%29.png?1696514398",
+  "current_price": 0.284722,
+  "market_cap": 5537474,
+  "market_cap_rank": 1741,
+  "fully_diluted_valuation": 5955865,
+  "total_volume": 117176,
+  "high_24h": 0.286303,
+  "low_24h": 0.216002,
+  "price_change_24h": 0.059711,
+  "price_change_percentage_24h": 26.53688,
+  "market_cap_change_24h": 1267538,
+  "market_cap_change_percentage_24h": 29.68518,
+  "circulating_supply": 19524781.95942812,
+  "total_supply": 21000000,
+  "max_supply": 21000000,
+  "ath": 13.95,
+  "ath_change_percentage": -97.9577,
+  "ath_date": "2021-12-14T11:48:52.820Z",
+  "atl": 0.129467,
+  "atl_change_percentage": 120.08254,
+  "atl_date": "2023-06-10T13:54:43.561Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:26.960Z",
+  "platforms": {
+    "ethereum": "0x397deb686c72384fad502a81f4d7fdb89e1f1280"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "haki-token",
+  "symbol": "haki",
+  "name": "HAKI Token",
+  "image": "https://assets.coingecko.com/coins/images/7945/large/haki.png?1696508175",
+  "current_price": 13.15,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 131459,
+  "total_volume": 39.41,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 10000,
+  "max_supply": 10000,
+  "ath": 104.07,
+  "ath_change_percentage": -87.36852,
+  "ath_date": "2023-01-14T00:44:59.982Z",
+  "atl": 2.79,
+  "atl_change_percentage": 370.62158,
+  "atl_date": "2023-06-20T00:29:31.053Z",
+  "roi": null,
+  "last_updated": "2024-04-16T07:17:26.602Z",
+  "platforms": {
+    "ethereum": "0xf90c7f66eac7e2130bf677d69a250b2136cf6697"
+  }
+}

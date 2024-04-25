@@ -1,0 +1,31 @@
+{
+  "id": "dechat",
+  "symbol": "dechat",
+  "name": "Dechat",
+  "image": "https://assets.coingecko.com/coins/images/34560/large/DeChat_Logo_200_x_200.png?1705382843",
+  "current_price": 1.27,
+  "market_cap": 4708636,
+  "market_cap_rank": 1826,
+  "fully_diluted_valuation": 31797947,
+  "total_volume": 10128997,
+  "high_24h": 1.3,
+  "low_24h": 1.25,
+  "price_change_24h": -0.0257539909989708,
+  "price_change_percentage_24h": -1.98051,
+  "market_cap_change_24h": -97121.23751917947,
+  "market_cap_change_percentage_24h": -2.02093,
+  "circulating_supply": 3701997.1643610583,
+  "total_supply": 25000000,
+  "max_supply": 25000000,
+  "ath": 8.15,
+  "ath_change_percentage": -84.36754,
+  "ath_date": "2024-03-11T20:15:39.267Z",
+  "atl": 1.24,
+  "atl_change_percentage": 3.08413,
+  "atl_date": "2024-04-18T08:41:49.710Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:10.493Z",
+  "platforms": {
+    "bsc": "0xd69ee2e508363fed57f89917d5ca03e715ee5519"
+  }
+}

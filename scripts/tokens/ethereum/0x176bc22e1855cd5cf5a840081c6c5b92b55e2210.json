@@ -1,0 +1,31 @@
+{
+  "id": "gambex",
+  "symbol": "gbe",
+  "name": "Gambex",
+  "image": "https://assets.coingecko.com/coins/images/32745/large/gbe_cg.png?1699262150",
+  "current_price": 8.12,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2273101,
+  "total_volume": 59330,
+  "high_24h": 9.04,
+  "low_24h": 7.63,
+  "price_change_24h": -0.6844367767026363,
+  "price_change_percentage_24h": -7.77534,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 280000,
+  "max_supply": null,
+  "ath": 28.33,
+  "ath_change_percentage": -68.25304,
+  "ath_date": "2023-12-28T13:15:09.439Z",
+  "atl": 0.74859,
+  "atl_change_percentage": 1101.43425,
+  "atl_date": "2023-12-05T16:24:47.417Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:12.793Z",
+  "platforms": {
+    "ethereum": "0x176bc22e1855cd5cf5a840081c6c5b92b55e2210"
+  }
+}

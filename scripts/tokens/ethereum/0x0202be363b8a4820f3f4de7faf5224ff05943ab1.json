@@ -1,0 +1,31 @@
+{
+  "id": "unlend-finance",
+  "symbol": "uft",
+  "name": "UniLend Finance",
+  "image": "https://assets.coingecko.com/coins/images/12819/large/UniLend_Finance_logo_PNG.png?1696512611",
+  "current_price": 0.428128,
+  "market_cap": 42831767,
+  "market_cap_rank": 759,
+  "fully_diluted_valuation": 42831767,
+  "total_volume": 3835666,
+  "high_24h": 0.457357,
+  "low_24h": 0.426188,
+  "price_change_24h": -0.02479749186381064,
+  "price_change_percentage_24h": -5.47495,
+  "market_cap_change_24h": -2682714.2769217566,
+  "market_cap_change_percentage_24h": -5.8942,
+  "circulating_supply": 100000000,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 4.47,
+  "ath_change_percentage": -90.41745,
+  "ath_date": "2021-02-23T08:36:30.954Z",
+  "atl": 0.071023,
+  "atl_change_percentage": 503.10766,
+  "atl_date": "2022-05-12T12:54:56.306Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:52.180Z",
+  "platforms": {
+    "ethereum": "0x0202be363b8a4820f3f4de7faf5224ff05943ab1"
+  }
+}

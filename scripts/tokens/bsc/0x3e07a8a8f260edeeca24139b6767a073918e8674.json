@@ -1,0 +1,31 @@
+{
+  "id": "catge-coin",
+  "symbol": "catge",
+  "name": "Catge Coin",
+  "image": "https://assets.coingecko.com/coins/images/16045/large/Pics-Art-05-16-06-08-53.png?1696515655",
+  "current_price": 1.67287e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 167490,
+  "total_volume": 56.96,
+  "high_24h": 1.69542e-10,
+  "low_24h": 1.63605e-10,
+  "price_change_24h": 1.077e-12,
+  "price_change_percentage_24h": 0.64792,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": null,
+  "ath": 9.0268e-8,
+  "ath_change_percentage": -99.81519,
+  "ath_date": "2021-06-07T15:15:09.453Z",
+  "atl": 5.0659e-11,
+  "atl_change_percentage": 229.31012,
+  "atl_date": "2023-10-12T10:00:52.674Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:13.997Z",
+  "platforms": {
+    "bsc": "0x3e07a8a8f260edeeca24139b6767a073918e8674"
+  }
+}

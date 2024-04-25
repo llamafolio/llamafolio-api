@@ -1,0 +1,31 @@
+{
+  "id": "fund-of-yours",
+  "symbol": "foy",
+  "name": "Fund Of Yours",
+  "image": "https://assets.coingecko.com/coins/images/16648/large/foy200.png?1696516209",
+  "current_price": 0.00000178,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 178400,
+  "total_volume": 5321.52,
+  "high_24h": 0.00000179,
+  "low_24h": 0.0000015,
+  "price_change_24h": 9.2131e-8,
+  "price_change_percentage_24h": 5.44766,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000000,
+  "max_supply": null,
+  "ath": 0.00046816,
+  "ath_change_percentage": -99.61909,
+  "ath_date": "2021-08-15T09:42:05.937Z",
+  "atl": 2.89674e-7,
+  "atl_change_percentage": 515.61946,
+  "atl_date": "2023-06-10T01:10:56.014Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:31.229Z",
+  "platforms": {
+    "ethereum": "0xaf91e8afbe87642dc628786188a54b78580a4d76"
+  }
+}

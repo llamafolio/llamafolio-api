@@ -1,0 +1,31 @@
+{
+  "id": "plebbit",
+  "symbol": "pleb",
+  "name": "Plebbit",
+  "image": "https://assets.coingecko.com/coins/images/31903/large/WgMdNjT4_400x400.png?1696530713",
+  "current_price": 0.00000676,
+  "market_cap": 10092839,
+  "market_cap_rank": 1437,
+  "fully_diluted_valuation": 10092839,
+  "total_volume": 7022.72,
+  "high_24h": 0.00000727,
+  "low_24h": 0.00000676,
+  "price_change_24h": -4.40576684951e-7,
+  "price_change_percentage_24h": -6.12264,
+  "market_cap_change_24h": -661877.811852185,
+  "market_cap_change_percentage_24h": -6.1543,
+  "circulating_supply": 1494065210287.89,
+  "total_supply": 1494065210287.89,
+  "max_supply": 1494065210287.89,
+  "ath": 0.00001118,
+  "ath_change_percentage": -39.47774,
+  "ath_date": "2024-03-25T20:54:49.810Z",
+  "atl": 9.44616e-7,
+  "atl_change_percentage": 616.00612,
+  "atl_date": "2023-10-19T09:21:49.233Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:49:53.917Z",
+  "platforms": {
+    "ethereum": "0xea81dab2e0ecbc6b5c4172de4c22b6ef6e55bd8f"
+  }
+}

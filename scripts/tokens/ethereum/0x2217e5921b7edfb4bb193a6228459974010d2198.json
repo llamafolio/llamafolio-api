@@ -1,0 +1,31 @@
+{
+  "id": "qmall",
+  "symbol": "qmall",
+  "name": "Qmall",
+  "image": "https://assets.coingecko.com/coins/images/23630/large/tjVN6bQ5_400x400.jpg?1696522834",
+  "current_price": 0.04889116,
+  "market_cap": 3446268,
+  "market_cap_rank": 1981,
+  "fully_diluted_valuation": 4882317,
+  "total_volume": 91727,
+  "high_24h": 0.079153,
+  "low_24h": 0.04867409,
+  "price_change_24h": -0.03026188159368242,
+  "price_change_percentage_24h": -38.23212,
+  "market_cap_change_24h": -2135001.8573696986,
+  "market_cap_change_percentage_24h": -38.25298,
+  "circulating_supply": 70586731,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 1.36,
+  "ath_change_percentage": -96.41429,
+  "ath_date": "2022-05-05T10:18:53.740Z",
+  "atl": 0.03751445,
+  "atl_change_percentage": 30.15229,
+  "atl_date": "2024-02-28T20:11:43.457Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:38.890Z",
+  "platforms": {
+    "ethereum": "0x2217e5921b7edfb4bb193a6228459974010d2198"
+  }
+}

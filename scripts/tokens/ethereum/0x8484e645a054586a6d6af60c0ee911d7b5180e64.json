@@ -1,0 +1,31 @@
+{
+  "id": "dyor-token-2",
+  "symbol": "dyor",
+  "name": "DYOR",
+  "image": "https://assets.coingecko.com/coins/images/30149/large/dyor.jpeg?1696529070",
+  "current_price": 2.7285e-8,
+  "market_cap": 187841,
+  "market_cap_rank": 3528,
+  "fully_diluted_valuation": 187841,
+  "total_volume": 4812.61,
+  "high_24h": 2.8581e-8,
+  "low_24h": 2.7177e-8,
+  "price_change_24h": -5.05424541e-10,
+  "price_change_percentage_24h": -1.81868,
+  "market_cap_change_24h": -4212.898604989372,
+  "market_cap_change_percentage_24h": -2.19361,
+  "circulating_supply": 6900000000000,
+  "total_supply": 6900000000000,
+  "max_supply": 6900000000000,
+  "ath": 2.61185e-7,
+  "ath_change_percentage": -89.55876,
+  "ath_date": "2023-05-08T04:14:41.623Z",
+  "atl": 6.036e-9,
+  "atl_change_percentage": 351.84001,
+  "atl_date": "2023-10-13T16:01:02.022Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:16.495Z",
+  "platforms": {
+    "ethereum": "0x8484e645a054586a6d6af60c0ee911d7b5180e64"
+  }
+}

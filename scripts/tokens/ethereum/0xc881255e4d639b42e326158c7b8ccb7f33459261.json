@@ -1,0 +1,31 @@
+{
+  "id": "ammx",
+  "symbol": "ammx",
+  "name": "AMMX",
+  "image": "https://assets.coingecko.com/coins/images/34546/large/ammx_2.png?1705413208",
+  "current_price": 0.00237634,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 4990316,
+  "total_volume": 108984,
+  "high_24h": 0.00268412,
+  "low_24h": 0.00229792,
+  "price_change_24h": -0.00021664120306784,
+  "price_change_percentage_24h": -8.3549,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2100000000,
+  "max_supply": 2100000000,
+  "ath": 0.00540871,
+  "ath_change_percentage": -56.20043,
+  "ath_date": "2024-01-18T15:01:51.003Z",
+  "atl": 0.00037979,
+  "atl_change_percentage": 523.77106,
+  "atl_date": "2024-02-20T19:41:37.435Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:13.184Z",
+  "platforms": {
+    "ethereum": "0xc881255e4d639b42e326158c7b8ccb7f33459261"
+  }
+}

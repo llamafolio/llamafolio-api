@@ -1,0 +1,31 @@
+{
+  "id": "unido-ep",
+  "symbol": "udo",
+  "name": "Unido",
+  "image": "https://assets.coingecko.com/coins/images/14176/large/unido.jpg?1696513894",
+  "current_price": 0.0048315,
+  "market_cap": 372950,
+  "market_cap_rank": 3208,
+  "fully_diluted_valuation": 555661,
+  "total_volume": 34554,
+  "high_24h": 0.0049527,
+  "low_24h": 0.00482338,
+  "price_change_24h": -0.000098712013924127,
+  "price_change_percentage_24h": -2.00219,
+  "market_cap_change_24h": -7907.763010009541,
+  "market_cap_change_percentage_24h": -2.0763,
+  "circulating_supply": 77155315,
+  "total_supply": 114954387,
+  "max_supply": 115000000,
+  "ath": 1.003,
+  "ath_change_percentage": -99.51796,
+  "ath_date": "2021-03-22T17:24:42.774Z",
+  "atl": 0.00247867,
+  "atl_change_percentage": 95.15078,
+  "atl_date": "2023-10-11T06:39:42.921Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:58.259Z",
+  "platforms": {
+    "bsc": "0x70802af0ba10dd5bb33276b5b37574b6451db3d9"
+  }
+}

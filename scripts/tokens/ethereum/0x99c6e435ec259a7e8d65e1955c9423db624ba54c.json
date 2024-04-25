@@ -1,0 +1,31 @@
+{
+  "id": "finminity",
+  "symbol": "fmt",
+  "name": "Finminity",
+  "image": "https://assets.coingecko.com/coins/images/14696/large/finminity.png?1696514368",
+  "current_price": 0.01785945,
+  "market_cap": 49779,
+  "market_cap_rank": 3990,
+  "fully_diluted_valuation": 178594,
+  "total_volume": 113.23,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 2787261.0655555557,
+  "total_supply": 10000000,
+  "max_supply": null,
+  "ath": 9.03,
+  "ath_change_percentage": -99.80216,
+  "ath_date": "2021-04-12T20:24:08.843Z",
+  "atl": 0.0129594,
+  "atl_change_percentage": 37.81074,
+  "atl_date": "2023-06-12T08:12:47.772Z",
+  "roi": null,
+  "last_updated": "2024-04-22T14:09:58.201Z",
+  "platforms": {
+    "ethereum": "0x99c6e435ec259a7e8d65e1955c9423db624ba54c"
+  }
+}

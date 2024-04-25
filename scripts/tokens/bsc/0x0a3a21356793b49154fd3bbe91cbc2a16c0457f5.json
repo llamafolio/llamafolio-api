@@ -1,0 +1,31 @@
+{
+  "id": "redfox-labs-2",
+  "symbol": "rfox",
+  "name": "RFOX",
+  "image": "https://assets.coingecko.com/coins/images/12956/large/rfox.png?1696512744",
+  "current_price": 0.00425237,
+  "market_cap": 8035071,
+  "market_cap_rank": 1549,
+  "fully_diluted_valuation": 8497276,
+  "total_volume": 204674,
+  "high_24h": 0.00453155,
+  "low_24h": 0.00402622,
+  "price_change_24h": -0.000222771455165916,
+  "price_change_percentage_24h": -4.97798,
+  "market_cap_change_24h": -402342.71903150063,
+  "market_cap_change_percentage_24h": -4.76855,
+  "circulating_supply": 1880656337.827613,
+  "total_supply": 1988838078,
+  "max_supply": 1988838078,
+  "ath": 0.377778,
+  "ath_change_percentage": -98.88237,
+  "ath_date": "2021-04-09T12:20:41.898Z",
+  "atl": 0.00387113,
+  "atl_change_percentage": 9.06783,
+  "atl_date": "2024-04-18T07:12:08.324Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:14.708Z",
+  "platforms": {
+    "bsc": "0x0a3a21356793b49154fd3bbe91cbc2a16c0457f5"
+  }
+}

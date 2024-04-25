@@ -1,0 +1,31 @@
+{
+  "id": "elosys",
+  "symbol": "elo",
+  "name": "Elosys",
+  "image": "https://assets.coingecko.com/coins/images/34040/large/logo200x200.png?1703693735",
+  "current_price": 0.02891045,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1113052,
+  "total_volume": 60140,
+  "high_24h": 0.03333134,
+  "low_24h": 0.02789609,
+  "price_change_24h": 0.00101436,
+  "price_change_percentage_24h": 3.63622,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 38500000,
+  "max_supply": 38500000,
+  "ath": 0.319753,
+  "ath_change_percentage": -90.98085,
+  "ath_date": "2023-12-28T17:44:40.639Z",
+  "atl": 0.01287867,
+  "atl_change_percentage": 123.92851,
+  "atl_date": "2024-04-23T23:09:41.741Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:38.625Z",
+  "platforms": {
+    "ethereum": "0x61b34a012646cd7357f58ee9c0160c6d0021fa41"
+  }
+}

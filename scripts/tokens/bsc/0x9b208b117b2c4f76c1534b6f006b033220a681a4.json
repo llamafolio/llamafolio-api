@@ -1,0 +1,31 @@
+{
+  "id": "dingocoin",
+  "symbol": "dingo",
+  "name": "Dingocoin",
+  "image": "https://assets.coingecko.com/coins/images/15989/large/dingocoin.png?1696515602",
+  "current_price": 0.00001296,
+  "market_cap": 1392046,
+  "market_cap_rank": 2481,
+  "fully_diluted_valuation": 1392046,
+  "total_volume": 223207,
+  "high_24h": 0.00001365,
+  "low_24h": 0.00001287,
+  "price_change_24h": -3.03557020174e-7,
+  "price_change_percentage_24h": -2.28861,
+  "market_cap_change_24h": -30400.523680763785,
+  "market_cap_change_percentage_24h": -2.1372,
+  "circulating_supply": 107594400045.751,
+  "total_supply": 107594400045.751,
+  "max_supply": null,
+  "ath": 0.00040748,
+  "ath_change_percentage": -96.79621,
+  "ath_date": "2021-08-05T23:24:07.228Z",
+  "atl": 1.00217e-7,
+  "atl_change_percentage": 12926.37146,
+  "atl_date": "2021-06-28T03:32:20.996Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:05.898Z",
+  "platforms": {
+    "bsc": "0x9b208b117b2c4f76c1534b6f006b033220a681a4"
+  }
+}

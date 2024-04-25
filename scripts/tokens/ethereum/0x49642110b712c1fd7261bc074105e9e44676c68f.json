@@ -1,0 +1,31 @@
+{
+  "id": "dinolfg",
+  "symbol": "dino",
+  "name": "DinoLFG",
+  "image": "https://assets.coingecko.com/coins/images/28239/large/F1giO3rXsAAFOsG.jpg?1696527242",
+  "current_price": 0.01392023,
+  "market_cap": 4352118,
+  "market_cap_rank": 1864,
+  "fully_diluted_valuation": 4635606,
+  "total_volume": 122480,
+  "high_24h": 0.01502018,
+  "low_24h": 0.01360721,
+  "price_change_24h": -0.000492191866367973,
+  "price_change_percentage_24h": -3.41505,
+  "market_cap_change_24h": -164982.90000775736,
+  "market_cap_change_percentage_24h": -3.65241,
+  "circulating_supply": 312948493.4803548,
+  "total_supply": 333333333,
+  "max_supply": 333333333,
+  "ath": 0.162465,
+  "ath_change_percentage": -91.43156,
+  "ath_date": "2023-05-07T17:54:30.713Z",
+  "atl": 0.0017085,
+  "atl_change_percentage": 714.79329,
+  "atl_date": "2022-11-16T06:55:06.476Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:28.099Z",
+  "platforms": {
+    "ethereum": "0x49642110b712c1fd7261bc074105e9e44676c68f"
+  }
+}

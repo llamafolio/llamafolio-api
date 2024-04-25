@@ -1,0 +1,35 @@
+{
+  "id": "waves",
+  "symbol": "waves",
+  "name": "Waves",
+  "image": "https://assets.coingecko.com/coins/images/425/large/waves.png?1696501700",
+  "current_price": 2.41,
+  "market_cap": 240478624,
+  "market_cap_rank": 263,
+  "fully_diluted_valuation": 240478624,
+  "total_volume": 22461330,
+  "high_24h": 2.66,
+  "low_24h": 2.38,
+  "price_change_24h": -0.238234436917387,
+  "price_change_percentage_24h": -9.00567,
+  "market_cap_change_24h": -24621744.628792703,
+  "market_cap_change_percentage_24h": -9.28771,
+  "circulating_supply": 100000000,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 61.3,
+  "ath_change_percentage": -96.07802,
+  "ath_date": "2022-03-31T14:34:44.545Z",
+  "atl": 0.130878,
+  "atl_change_percentage": 1737.02533,
+  "atl_date": "2016-08-02T00:00:00.000Z",
+  "roi": {
+    "times": 11.803980915040318,
+    "currency": "usd",
+    "percentage": 1180.398091504032
+  },
+  "last_updated": "2024-04-25T08:55:28.075Z",
+  "platforms": {
+    "ethereum": "0x1cf4592ebffd730c7dc92c1bdffdfc3b9efcf29a"
+  }
+}

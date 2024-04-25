@@ -1,0 +1,31 @@
+{
+  "id": "larry",
+  "symbol": "larry",
+  "name": "Larry",
+  "image": "https://assets.coingecko.com/coins/images/30460/large/Safeimagekit-resized-img.png?1696529347",
+  "current_price": 0.00000604,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 260656,
+  "total_volume": 8233.94,
+  "high_24h": 0.0000061,
+  "low_24h": 0.00000578,
+  "price_change_24h": -1.9573742915e-8,
+  "price_change_percentage_24h": -0.32312,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 44000000000,
+  "max_supply": 44000000000,
+  "ath": 0.00010127,
+  "ath_change_percentage": -94.03764,
+  "ath_date": "2023-05-21T10:30:23.226Z",
+  "atl": 0.0000012,
+  "atl_change_percentage": 404.32035,
+  "atl_date": "2023-09-15T22:52:21.105Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:52.437Z",
+  "platforms": {
+    "ethereum": "0xd08623fb2a1f044025eec65886011cf5d0f06b01"
+  }
+}

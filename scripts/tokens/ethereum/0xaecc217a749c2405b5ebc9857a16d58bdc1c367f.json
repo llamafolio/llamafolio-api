@@ -1,0 +1,31 @@
+{
+  "id": "pawthereum",
+  "symbol": "pawth",
+  "name": "Pawthereum",
+  "image": "https://assets.coingecko.com/coins/images/19275/large/pawth.png?1696518718",
+  "current_price": 0.00003831,
+  "market_cap": 32367,
+  "market_cap_rank": 4084,
+  "fully_diluted_valuation": 32872,
+  "total_volume": 73.48,
+  "high_24h": 0.00004112,
+  "low_24h": 0.00003816,
+  "price_change_24h": -0.000002317674017838,
+  "price_change_percentage_24h": -5.70432,
+  "market_cap_change_24h": -2041.363917359322,
+  "market_cap_change_percentage_24h": -5.9328,
+  "circulating_supply": 844808993.0902714,
+  "total_supply": 858000000,
+  "max_supply": 1000000000,
+  "ath": 0.112412,
+  "ath_change_percentage": -99.96592,
+  "ath_date": "2021-11-14T19:58:49.921Z",
+  "atl": 0.00002727,
+  "atl_change_percentage": 40.46773,
+  "atl_date": "2024-04-21T03:39:02.091Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:14.866Z",
+  "platforms": {
+    "ethereum": "0xaecc217a749c2405b5ebc9857a16d58bdc1c367f"
+  }
+}

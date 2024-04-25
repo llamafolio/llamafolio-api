@@ -1,0 +1,31 @@
+{
+  "id": "brain-sync",
+  "symbol": "syncbrain",
+  "name": "Brain Sync",
+  "image": "https://assets.coingecko.com/coins/images/29472/large/our_logo.png?1696528417",
+  "current_price": 0.00026121,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 26121,
+  "total_volume": 16896.57,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.00980935,
+  "ath_change_percentage": -97.33715,
+  "ath_date": "2023-03-19T10:42:38.316Z",
+  "atl": 0.00025194,
+  "atl_change_percentage": 3.67873,
+  "atl_date": "2023-06-07T15:11:45.135Z",
+  "roi": null,
+  "last_updated": "2023-06-08T20:30:03.130Z",
+  "platforms": {
+    "bsc": "0xe82546b56b1b8a5f031bcd23ff6332282cb0124b"
+  }
+}

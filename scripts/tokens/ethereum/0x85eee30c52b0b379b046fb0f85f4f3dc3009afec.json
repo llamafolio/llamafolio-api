@@ -1,0 +1,31 @@
+{
+  "id": "keep-network",
+  "symbol": "keep",
+  "name": "Keep Network",
+  "image": "https://assets.coingecko.com/coins/images/3373/large/IuNzUb5b_400x400.jpg?1696504072",
+  "current_price": 0.165864,
+  "market_cap": 91075345,
+  "market_cap_rank": 501,
+  "fully_diluted_valuation": 165676996,
+  "total_volume": 22492,
+  "high_24h": 0.180568,
+  "low_24h": 0.164029,
+  "price_change_24h": -0.014364252810764616,
+  "price_change_percentage_24h": -7.97004,
+  "market_cap_change_24h": -8045905.822578743,
+  "market_cap_change_percentage_24h": -8.11724,
+  "circulating_supply": 549716300.2685891,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 6.1,
+  "ath_change_percentage": -97.28468,
+  "ath_date": "2020-05-15T00:00:00.000Z",
+  "atl": 0.01905196,
+  "atl_change_percentage": 769.41126,
+  "atl_date": "2024-02-06T08:49:47.167Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:30.349Z",
+  "platforms": {
+    "ethereum": "0x85eee30c52b0b379b046fb0f85f4f3dc3009afec"
+  }
+}

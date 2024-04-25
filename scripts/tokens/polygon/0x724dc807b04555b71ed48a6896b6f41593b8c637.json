@@ -1,0 +1,31 @@
+{
+  "id": "aave-v3-dpi",
+  "symbol": "adpi",
+  "name": "Aave v3 DPI",
+  "image": "https://assets.coingecko.com/coins/images/32926/large/dpi.png?1699826275",
+  "current_price": 99.94,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 0,
+  "high_24h": 107.54,
+  "low_24h": 98.95,
+  "price_change_24h": -6.519349120000001,
+  "price_change_percentage_24h": -6.12374,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 329.82,
+  "ath_change_percentage": -69.69798,
+  "ath_date": "2024-01-16T22:25:14.489Z",
+  "atl": 77.87,
+  "atl_change_percentage": 28.35113,
+  "atl_date": "2023-11-18T07:07:00.983Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:32.503Z",
+  "platforms": {
+    "polygon": "0x724dc807b04555b71ed48a6896b6f41593b8c637"
+  }
+}

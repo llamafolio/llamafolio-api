@@ -1,0 +1,31 @@
+{
+  "id": "ageur",
+  "symbol": "ageur",
+  "name": "agEUR",
+  "image": "https://assets.coingecko.com/coins/images/19479/large/agEUR-4.png?1710726218",
+  "current_price": 1.06,
+  "market_cap": 23519373,
+  "market_cap_rank": 1033,
+  "fully_diluted_valuation": 23519373,
+  "total_volume": 1023021,
+  "high_24h": 1.069,
+  "low_24h": 1.05,
+  "price_change_24h": -0.001136700560458337,
+  "price_change_percentage_24h": -0.10713,
+  "market_cap_change_24h": -83504.44090085477,
+  "market_cap_change_percentage_24h": -0.35379,
+  "circulating_supply": 22225150.3445229,
+  "total_supply": 22225150.3445229,
+  "max_supply": null,
+  "ath": 1.2,
+  "ath_change_percentage": -11.57215,
+  "ath_date": "2022-02-07T07:32:13.679Z",
+  "atl": 0.640182,
+  "atl_change_percentage": 65.42271,
+  "atl_date": "2023-03-15T02:32:40.142Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:46.661Z",
+  "platforms": {
+    "ethereum": "0x1a7e4e63778b4f12a199c062f3efdd288afcbce8"
+  }
+}

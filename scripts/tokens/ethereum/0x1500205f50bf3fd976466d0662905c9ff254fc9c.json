@@ -1,0 +1,31 @@
+{
+  "id": "bitboost",
+  "symbol": "bbt",
+  "name": "BitBoost",
+  "image": "https://assets.coingecko.com/coins/images/1194/large/bitboost.jpg?1696502276",
+  "current_price": 0.00582188,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 291094,
+  "total_volume": 0.00225611,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 50000000,
+  "max_supply": null,
+  "ath": 297.15,
+  "ath_change_percentage": -99.99804,
+  "ath_date": "2018-04-06T00:44:58.240Z",
+  "atl": 0.00016199,
+  "atl_change_percentage": 3493.89978,
+  "atl_date": "2020-11-13T08:29:36.487Z",
+  "roi": null,
+  "last_updated": "2024-04-16T13:15:27.104Z",
+  "platforms": {
+    "ethereum": "0x1500205f50bf3fd976466d0662905c9ff254fc9c"
+  }
+}

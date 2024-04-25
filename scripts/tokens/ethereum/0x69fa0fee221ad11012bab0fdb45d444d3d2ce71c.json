@@ -1,0 +1,31 @@
+{
+  "id": "thorstarter",
+  "symbol": "xrune",
+  "name": "Thorstarter",
+  "image": "https://assets.coingecko.com/coins/images/16835/large/thorstarter.jpg?1696516403",
+  "current_price": 0.01703657,
+  "market_cap": 1941207,
+  "market_cap_rank": 2313,
+  "fully_diluted_valuation": 9103630,
+  "total_volume": 25237,
+  "high_24h": 0.01839721,
+  "low_24h": 0.01700994,
+  "price_change_24h": -0.001139304393053087,
+  "price_change_percentage_24h": -6.26822,
+  "market_cap_change_24h": -132999.6765373866,
+  "market_cap_change_percentage_24h": -6.41207,
+  "circulating_supply": 114150522.06026253,
+  "total_supply": 535328769.27,
+  "max_supply": 1000000000,
+  "ath": 0.707193,
+  "ath_change_percentage": -97.59096,
+  "ath_date": "2021-11-14T19:13:26.582Z",
+  "atl": 0.00538997,
+  "atl_change_percentage": 216.079,
+  "atl_date": "2023-11-02T19:45:04.350Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:41.395Z",
+  "platforms": {
+    "ethereum": "0x69fa0fee221ad11012bab0fdb45d444d3d2ce71c"
+  }
+}

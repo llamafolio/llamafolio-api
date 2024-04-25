@@ -1,0 +1,31 @@
+{
+  "id": "mimo-parallel-governance-token",
+  "symbol": "mimo",
+  "name": "Mimo Governance",
+  "image": "https://assets.coingecko.com/coins/images/16449/large/mimodefi.PNG?1696516045",
+  "current_price": 0.00918252,
+  "market_cap": 4787238,
+  "market_cap_rank": 1816,
+  "fully_diluted_valuation": 7351569,
+  "total_volume": 13156.89,
+  "high_24h": 0.00982576,
+  "low_24h": 0.00880602,
+  "price_change_24h": -0.000609250726271797,
+  "price_change_percentage_24h": -6.22207,
+  "market_cap_change_24h": -326370.623400718,
+  "market_cap_change_percentage_24h": -6.38239,
+  "circulating_supply": 521950882.09360933,
+  "total_supply": 801539024,
+  "max_supply": null,
+  "ath": 0.431736,
+  "ath_change_percentage": -97.88313,
+  "ath_date": "2021-10-20T15:31:47.500Z",
+  "atl": 0.00782948,
+  "atl_change_percentage": 16.72922,
+  "atl_date": "2024-01-09T14:24:40.699Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:08.588Z",
+  "platforms": {
+    "ethereum": "0x90b831fa3bebf58e9744a14d638e25b4ee06f9bc"
+  }
+}

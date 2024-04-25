@@ -1,0 +1,31 @@
+{
+  "id": "squadfund",
+  "symbol": "sqf",
+  "name": "SquadFund",
+  "image": "https://assets.coingecko.com/coins/images/29904/large/squad_fund_3_copy_7.png?1696528833",
+  "current_price": 0.00008362,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 41808,
+  "total_volume": 0.03135646,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 500000000,
+  "max_supply": null,
+  "ath": 0.00050629,
+  "ath_change_percentage": -83.48427,
+  "ath_date": "2023-04-20T17:27:10.987Z",
+  "atl": 0.00008013,
+  "atl_change_percentage": 4.34821,
+  "atl_date": "2023-05-12T19:34:33.658Z",
+  "roi": null,
+  "last_updated": "2023-05-18T12:33:07.017Z",
+  "platforms": {
+    "bsc": "0x3e89a5e7cf9dfcff5a9aedf19ab6246c6b506582"
+  }
+}

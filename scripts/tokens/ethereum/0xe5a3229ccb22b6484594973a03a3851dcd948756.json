@@ -1,0 +1,31 @@
+{
+  "id": "rae-token",
+  "symbol": "rae",
+  "name": "Receive Access Ecosystem",
+  "image": "https://assets.coingecko.com/coins/images/9428/large/Copy_of_raetoken.png?1696509521",
+  "current_price": 1.15,
+  "market_cap": 6214177,
+  "market_cap_rank": 1687,
+  "fully_diluted_valuation": 6214177,
+  "total_volume": 12470.11,
+  "high_24h": 1.16,
+  "low_24h": 1.056,
+  "price_change_24h": 0.03236296,
+  "price_change_percentage_24h": 2.89669,
+  "market_cap_change_24h": 168452,
+  "market_cap_change_percentage_24h": 2.7863,
+  "circulating_supply": 5408191.05801387,
+  "total_supply": 5408191.05801387,
+  "max_supply": 34000000,
+  "ath": 14.04,
+  "ath_change_percentage": -91.81213,
+  "ath_date": "2020-02-12T16:32:27.205Z",
+  "atl": 0.03821664,
+  "atl_change_percentage": 2907.52295,
+  "atl_date": "2020-10-31T04:54:32.322Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:43.763Z",
+  "platforms": {
+    "ethereum": "0xe5a3229ccb22b6484594973a03a3851dcd948756"
+  }
+}

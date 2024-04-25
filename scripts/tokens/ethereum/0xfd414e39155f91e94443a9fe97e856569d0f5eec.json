@@ -1,0 +1,31 @@
+{
+  "id": "shibarium-perpetuals",
+  "symbol": "serp",
+  "name": "Shibarium Perpetuals",
+  "image": "https://assets.coingecko.com/coins/images/29465/large/photo_2023-03-15_22.44.48-removebg-preview_%281%29.png?1696528411",
+  "current_price": 0.00023231,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 232307,
+  "total_volume": 11621.41,
+  "high_24h": 0.00027001,
+  "low_24h": 0.00021255,
+  "price_change_24h": -0.000018934122768711,
+  "price_change_percentage_24h": -7.53624,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00879831,
+  "ath_change_percentage": -97.3612,
+  "ath_date": "2023-04-15T01:10:51.463Z",
+  "atl": 0.0001115,
+  "atl_change_percentage": 108.22234,
+  "atl_date": "2024-02-16T00:30:32.885Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:19.262Z",
+  "platforms": {
+    "ethereum": "0xfd414e39155f91e94443a9fe97e856569d0f5eec"
+  }
+}

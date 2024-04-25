@@ -1,0 +1,31 @@
+{
+  "id": "platypus-finance",
+  "symbol": "ptp",
+  "name": "Platypus Finance",
+  "image": "https://assets.coingecko.com/coins/images/21724/large/7r2U_2Ig_400x400.jpg?1696521079",
+  "current_price": 0.01156742,
+  "market_cap": 955699,
+  "market_cap_rank": 2715,
+  "fully_diluted_valuation": 3466570,
+  "total_volume": 29539,
+  "high_24h": 0.01273661,
+  "low_24h": 0.01150425,
+  "price_change_24h": -0.001169185462627729,
+  "price_change_percentage_24h": -9.17973,
+  "market_cap_change_24h": -100126.45864807372,
+  "market_cap_change_percentage_24h": -9.48324,
+  "circulating_supply": 82706988.9819921,
+  "total_supply": 300000000,
+  "max_supply": 300000000,
+  "ath": 16.69,
+  "ath_change_percentage": -99.93067,
+  "ath_date": "2022-01-16T07:08:24.929Z",
+  "atl": 0.00797196,
+  "atl_change_percentage": 45.1603,
+  "atl_date": "2023-10-15T17:25:27.794Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:29.602Z",
+  "platforms": {
+    "avalanche": "0x22d4002028f537599be9f666d1c4fa138522f9c8"
+  }
+}

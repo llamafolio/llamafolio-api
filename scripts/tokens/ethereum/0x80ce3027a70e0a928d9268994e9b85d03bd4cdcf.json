@@ -1,0 +1,31 @@
+{
+  "id": "lokr",
+  "symbol": "lkr",
+  "name": "Lokr",
+  "image": "https://assets.coingecko.com/coins/images/14692/large/lokr.png?1696514364",
+  "current_price": 0.00861231,
+  "market_cap": 327427,
+  "market_cap_rank": 3272,
+  "fully_diluted_valuation": 860151,
+  "total_volume": 333037,
+  "high_24h": 0.00866755,
+  "low_24h": 0.00835449,
+  "price_change_24h": 0.00014716,
+  "price_change_percentage_24h": 1.73847,
+  "market_cap_change_24h": 5058.38,
+  "market_cap_change_percentage_24h": 1.56913,
+  "circulating_supply": 38066291.58697325,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 1.79,
+  "ath_change_percentage": -99.51886,
+  "ath_date": "2021-04-07T15:46:14.384Z",
+  "atl": 0.00584568,
+  "atl_change_percentage": 47.1429,
+  "atl_date": "2022-12-06T04:55:17.269Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:13.321Z",
+  "platforms": {
+    "ethereum": "0x80ce3027a70e0a928d9268994e9b85d03bd4cdcf"
+  }
+}

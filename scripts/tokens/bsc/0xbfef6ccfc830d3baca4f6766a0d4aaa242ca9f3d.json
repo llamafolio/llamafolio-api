@@ -1,0 +1,31 @@
+{
+  "id": "nav-coin",
+  "symbol": "nav",
+  "name": "Navcoin",
+  "image": "https://assets.coingecko.com/coins/images/233/large/Navcoin_Logo.png?1696501588",
+  "current_price": 0.068119,
+  "market_cap": 5289250,
+  "market_cap_rank": 1769,
+  "fully_diluted_valuation": null,
+  "total_volume": 26395,
+  "high_24h": 0.070065,
+  "low_24h": 0.06831,
+  "price_change_24h": -0.001040873960407696,
+  "price_change_percentage_24h": -1.50503,
+  "market_cap_change_24h": -60916.302128894255,
+  "market_cap_change_percentage_24h": -1.13859,
+  "circulating_supply": 77024051.1001862,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 4.93,
+  "ath_change_percentage": -98.59848,
+  "ath_date": "2018-01-12T00:00:00.000Z",
+  "atl": 0.00055988,
+  "atl_change_percentage": 12229.2577,
+  "atl_date": "2014-10-31T00:00:00.000Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:54.697Z",
+  "platforms": {
+    "bsc": "0xbfef6ccfc830d3baca4f6766a0d4aaa242ca9f3d"
+  }
+}

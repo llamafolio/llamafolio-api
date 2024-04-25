@@ -1,0 +1,31 @@
+{
+  "id": "aave-link",
+  "symbol": "alink",
+  "name": "Aave LINK",
+  "image": "https://assets.coingecko.com/coins/images/14315/large/aLINK.412c6589.png?1696514004",
+  "current_price": 14.8,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 43872252,
+  "total_volume": 0,
+  "high_24h": 15.59,
+  "low_24h": 14.43,
+  "price_change_24h": -0.6941589602281404,
+  "price_change_percentage_24h": -4.51539,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2965154.68028197,
+  "max_supply": null,
+  "ath": 52.48,
+  "ath_change_percentage": -71.9275,
+  "ath_date": "2021-05-10T05:10:48.367Z",
+  "atl": 4.99,
+  "atl_change_percentage": 195.09656,
+  "atl_date": "2023-06-10T17:07:00.721Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:33.288Z",
+  "platforms": {
+    "fantom": "0x191c10aa4af7c30e871e70c95db0e4eb77237530"
+  }
+}

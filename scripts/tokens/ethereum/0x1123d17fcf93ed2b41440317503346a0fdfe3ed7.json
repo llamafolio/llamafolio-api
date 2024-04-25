@@ -1,0 +1,31 @@
+{
+  "id": "prometheum-prodigy",
+  "symbol": "pmpy",
+  "name": "Prometheum Prodigy",
+  "image": "https://assets.coingecko.com/coins/images/32522/large/IMG_1277.jpeg?1708596900",
+  "current_price": 0.0225585,
+  "market_cap": 14187798,
+  "market_cap_rank": 1276,
+  "fully_diluted_valuation": 14394771,
+  "total_volume": 842325,
+  "high_24h": 0.02509781,
+  "low_24h": 0.02205231,
+  "price_change_24h": -0.001985913866435808,
+  "price_change_percentage_24h": -8.0911,
+  "market_cap_change_24h": -1269321.0701992158,
+  "market_cap_change_percentage_24h": -8.21189,
+  "circulating_supply": 630224246.3954052,
+  "total_supply": 639418000,
+  "max_supply": 1000000000,
+  "ath": 0.04329694,
+  "ath_change_percentage": -49.03662,
+  "ath_date": "2024-03-14T14:50:56.312Z",
+  "atl": 0.00246501,
+  "atl_change_percentage": 795.15129,
+  "atl_date": "2023-11-03T18:44:37.313Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:33.091Z",
+  "platforms": {
+    "ethereum": "0x1123d17fcf93ed2b41440317503346a0fdfe3ed7"
+  }
+}

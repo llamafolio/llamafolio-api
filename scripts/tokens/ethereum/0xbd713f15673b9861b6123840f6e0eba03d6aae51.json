@@ -1,0 +1,31 @@
+{
+  "id": "eyebot",
+  "symbol": "eyebot",
+  "name": "Eyebot",
+  "image": "https://assets.coingecko.com/coins/images/33369/large/IMG_0672.jpeg?1701619837",
+  "current_price": 0.00051204,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 51204,
+  "total_volume": 21.21,
+  "high_24h": 0.00052773,
+  "low_24h": 0.00050752,
+  "price_change_24h": -0.000014756699077008,
+  "price_change_percentage_24h": -2.80122,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.02658761,
+  "ath_change_percentage": -98.07415,
+  "ath_date": "2023-12-04T20:24:49.559Z",
+  "atl": 0.00031251,
+  "atl_change_percentage": 63.84715,
+  "atl_date": "2024-02-12T14:31:16.199Z",
+  "roi": null,
+  "last_updated": "2024-04-25T06:30:59.790Z",
+  "platforms": {
+    "ethereum": "0xbd713f15673b9861b6123840f6e0eba03d6aae51"
+  }
+}

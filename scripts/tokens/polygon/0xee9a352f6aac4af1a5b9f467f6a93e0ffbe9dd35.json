@@ -1,0 +1,31 @@
+{
+  "id": "masq",
+  "symbol": "masq",
+  "name": "MASQ",
+  "image": "https://assets.coingecko.com/coins/images/13699/large/masq.png?1696513446",
+  "current_price": 0.239283,
+  "market_cap": 8205019,
+  "market_cap_rank": 1533,
+  "fully_diluted_valuation": 8949764,
+  "total_volume": 90734,
+  "high_24h": 0.25347,
+  "low_24h": 0.234083,
+  "price_change_24h": -0.010896304013352927,
+  "price_change_percentage_24h": -4.35539,
+  "market_cap_change_24h": -395320.7626232086,
+  "market_cap_change_percentage_24h": -4.59657,
+  "circulating_supply": 34379475,
+  "total_supply": 37500000,
+  "max_supply": 37500000,
+  "ath": 0.736361,
+  "ath_change_percentage": -67.60417,
+  "ath_date": "2023-12-04T06:31:42.118Z",
+  "atl": 0.03237155,
+  "atl_change_percentage": 636.91338,
+  "atl_date": "2022-09-21T22:54:07.114Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:00.797Z",
+  "platforms": {
+    "polygon": "0xee9a352f6aac4af1a5b9f467f6a93e0ffbe9dd35"
+  }
+}

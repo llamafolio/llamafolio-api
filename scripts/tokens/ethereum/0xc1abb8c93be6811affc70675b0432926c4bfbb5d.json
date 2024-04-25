@@ -1,0 +1,31 @@
+{
+  "id": "uerii",
+  "symbol": "uerii",
+  "name": "UERII",
+  "image": "https://assets.coingecko.com/coins/images/29388/large/Avatar512.png?1696528334",
+  "current_price": 0.00112061,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 780.27,
+  "high_24h": 0.00112122,
+  "low_24h": 0.00110976,
+  "price_change_24h": 0.00000769,
+  "price_change_percentage_24h": 0.69055,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": 100000000000,
+  "ath": 0.0011477,
+  "ath_change_percentage": -2.30688,
+  "ath_date": "2024-04-14T06:50:54.840Z",
+  "atl": 0.00108885,
+  "atl_change_percentage": 2.97296,
+  "atl_date": "2024-04-13T20:04:46.925Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:07:54.043Z",
+  "platforms": {
+    "ethereum": "0xc1abb8c93be6811affc70675b0432926c4bfbb5d"
+  }
+}

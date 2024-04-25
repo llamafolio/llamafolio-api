@@ -1,0 +1,31 @@
+{
+  "id": "bee-tools",
+  "symbol": "buzz",
+  "name": "Bee Tools",
+  "image": "https://assets.coingecko.com/coins/images/33089/large/TOKEN_IMAGE.jpg?1700602823",
+  "current_price": 0.00029707,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 29595,
+  "total_volume": 23.65,
+  "high_24h": 0.00030841,
+  "low_24h": 0.00029595,
+  "price_change_24h": -0.000010557350466269,
+  "price_change_percentage_24h": -3.4319,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.01782514,
+  "ath_change_percentage": -98.33344,
+  "ath_date": "2023-12-02T22:40:51.429Z",
+  "atl": 0.00028318,
+  "atl_change_percentage": 4.90331,
+  "atl_date": "2024-04-17T14:30:47.402Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:52.681Z",
+  "platforms": {
+    "ethereum": "0xa704662ecb62be83f88ca1a3b5277a381cb32dce"
+  }
+}

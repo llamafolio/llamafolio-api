@@ -1,0 +1,31 @@
+{
+  "id": "artificial-intelligence",
+  "symbol": "ai",
+  "name": "Artificial Intelligence",
+  "image": "https://assets.coingecko.com/coins/images/20632/large/200x200.png?1696520036",
+  "current_price": 2.05479e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 205479,
+  "total_volume": 40.07,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000,
+  "max_supply": 1000000000000,
+  "ath": 0.00008087,
+  "ath_change_percentage": -99.74591,
+  "ath_date": "2021-11-20T15:16:17.434Z",
+  "atl": 2.6406e-8,
+  "atl_change_percentage": 678.15623,
+  "atl_date": "2022-04-26T16:43:26.794Z",
+  "roi": null,
+  "last_updated": "2023-08-03T10:30:05.437Z",
+  "platforms": {
+    "bsc": "0x4c403b1879aa6a79ba9c599a393ccc5d9fd2e788"
+  }
+}

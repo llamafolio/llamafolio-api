@@ -1,0 +1,31 @@
+{
+  "id": "usd-coin-ethereum-bridged",
+  "symbol": "usdc.e",
+  "name": "Bridged USDC (Arbitrum)",
+  "image": "https://assets.coingecko.com/coins/images/30691/large/usdc.png?1696529560",
+  "current_price": 1.006,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 132522242,
+  "high_24h": 1.005,
+  "low_24h": 0.986903,
+  "price_change_24h": 0.0072698,
+  "price_change_percentage_24h": 0.72775,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.22,
+  "ath_change_percentage": -17.44357,
+  "ath_date": "2023-08-17T16:41:38.244Z",
+  "atl": 0.899904,
+  "atl_change_percentage": 11.54192,
+  "atl_date": "2023-07-06T00:51:48.244Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:43.821Z",
+  "platforms": {
+    "arbitrum": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8"
+  }
+}

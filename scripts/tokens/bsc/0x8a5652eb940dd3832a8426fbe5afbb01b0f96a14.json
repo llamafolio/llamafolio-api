@@ -1,0 +1,31 @@
+{
+  "id": "paraverse",
+  "symbol": "para",
+  "name": "Paraverse",
+  "image": "https://assets.coingecko.com/coins/images/32156/large/200x200.png?1696599835",
+  "current_price": 2.57904e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 245677059,
+  "total_volume": 26891,
+  "high_24h": 3.23386e-7,
+  "low_24h": 2.44044e-7,
+  "price_change_24h": -8.446864506e-9,
+  "price_change_percentage_24h": -3.17133,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000000,
+  "max_supply": 1000000000000000,
+  "ath": 0.00249998,
+  "ath_change_percentage": -99.99017,
+  "ath_date": "2023-10-06T14:35:15.985Z",
+  "atl": 4.8876e-10,
+  "atl_change_percentage": 50165.40762,
+  "atl_date": "2024-02-28T21:17:30.594Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:35.197Z",
+  "platforms": {
+    "bsc": "0x8a5652eb940dd3832a8426fbe5afbb01b0f96a14"
+  }
+}

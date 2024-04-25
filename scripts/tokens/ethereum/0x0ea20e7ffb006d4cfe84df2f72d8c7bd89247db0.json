@@ -1,0 +1,31 @@
+{
+  "id": "aave-amm-unicrvweth",
+  "symbol": "aammunicrvweth",
+  "name": "Aave AMM UniCRVWETH",
+  "image": "https://assets.coingecko.com/coins/images/17220/large/aAmmUniCRVWETH.png?1696516775",
+  "current_price": 794.84,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 0.03287696,
+  "total_volume": 0,
+  "high_24h": 847.42,
+  "low_24h": 787.8,
+  "price_change_24h": -47.230582508691214,
+  "price_change_percentage_24h": -5.65098,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 0.000041362733031869,
+  "max_supply": null,
+  "ath": 1773.24,
+  "ath_change_percentage": -55.37158,
+  "ath_date": "2021-11-25T18:08:41.020Z",
+  "atl": 272.41,
+  "atl_change_percentage": 190.50847,
+  "atl_date": "2022-06-18T21:00:55.117Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:32.989Z",
+  "platforms": {
+    "ethereum": "0x0ea20e7ffb006d4cfe84df2f72d8c7bd89247db0"
+  }
+}

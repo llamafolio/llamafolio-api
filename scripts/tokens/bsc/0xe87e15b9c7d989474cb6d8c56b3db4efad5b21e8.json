@@ -1,0 +1,31 @@
+{
+  "id": "hokkaidu-inu",
+  "symbol": "hokk",
+  "name": "HOKK Finance",
+  "image": "https://assets.coingecko.com/coins/images/14985/large/hokk.png?1696514647",
+  "current_price": 0.00031943,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 1512,
+  "high_24h": 0.00032895,
+  "low_24h": 0.00031747,
+  "price_change_24h": -0.000007326720391062,
+  "price_change_percentage_24h": -2.24228,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.03575312,
+  "ath_change_percentage": -99.10992,
+  "ath_date": "2021-11-15T00:00:00.000Z",
+  "atl": 1.538e-11,
+  "atl_change_percentage": 2069149102.81313,
+  "atl_date": "2021-11-11T00:00:00.000Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:53.161Z",
+  "platforms": {
+    "bsc": "0xe87e15b9c7d989474cb6d8c56b3db4efad5b21e8"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "railgun",
+  "symbol": "rail",
+  "name": "Railgun",
+  "image": "https://assets.coingecko.com/coins/images/16840/large/railgun.jpeg?1696516407",
+  "current_price": 1.48,
+  "market_cap": 85285803,
+  "market_cap_rank": 515,
+  "fully_diluted_valuation": 85285803,
+  "total_volume": 499630,
+  "high_24h": 1.63,
+  "low_24h": 1.43,
+  "price_change_24h": -0.1492972777604975,
+  "price_change_percentage_24h": -9.14543,
+  "market_cap_change_24h": -8549493.048105106,
+  "market_cap_change_percentage_24h": -9.11117,
+  "circulating_supply": 57500000,
+  "total_supply": 57500000,
+  "max_supply": 100000000,
+  "ath": 4.2,
+  "ath_change_percentage": -64.7122,
+  "ath_date": "2022-01-02T19:22:16.526Z",
+  "atl": 0.228324,
+  "atl_change_percentage": 549.54106,
+  "atl_date": "2022-11-09T22:15:17.837Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:47.893Z",
+  "platforms": {
+    "ethereum": "0xe76c6c83af64e4c60245d8c7de953df673a7a33d"
+  }
+}

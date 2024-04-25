@@ -1,0 +1,31 @@
+{
+  "id": "peachfolio",
+  "symbol": "pchf",
+  "name": "Peachfolio",
+  "image": "https://assets.coingecko.com/coins/images/16529/large/7d578071-601e-4ef6-9a98-cc7984b258c4.png?1696516092",
+  "current_price": 0.00041805,
+  "market_cap": 198163,
+  "market_cap_rank": 3497,
+  "fully_diluted_valuation": 397176,
+  "total_volume": 1601.26,
+  "high_24h": 0.00042042,
+  "low_24h": 0.00040949,
+  "price_change_24h": 0.00000192,
+  "price_change_percentage_24h": 0.46184,
+  "market_cap_change_24h": -439.21587518489105,
+  "market_cap_change_percentage_24h": -0.22115,
+  "circulating_supply": 474016226.61006856,
+  "total_supply": 950065815.722,
+  "max_supply": 1000000000,
+  "ath": 0.00744057,
+  "ath_change_percentage": -94.38146,
+  "ath_date": "2021-11-07T14:41:38.995Z",
+  "atl": 0.00016015,
+  "atl_change_percentage": 161.04522,
+  "atl_date": "2023-10-22T16:10:42.390Z",
+  "roi": null,
+  "last_updated": "2024-04-25T01:15:01.459Z",
+  "platforms": {
+    "bsc": "0xc1cbfb96a1d5361590b8df04ef78de2fa3178390"
+  }
+}

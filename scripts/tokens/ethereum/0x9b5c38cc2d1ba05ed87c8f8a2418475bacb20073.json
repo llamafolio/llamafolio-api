@@ -1,0 +1,31 @@
+{
+  "id": "vector-space-biosciences-inc",
+  "symbol": "sbio",
+  "name": "Vector Space Biosciences, Inc.",
+  "image": "https://assets.coingecko.com/coins/images/31837/large/Hex.png?1696530651",
+  "current_price": 0.199825,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 19982530,
+  "total_volume": 1782.02,
+  "high_24h": 0.250997,
+  "low_24h": 0.199708,
+  "price_change_24h": -0.049807476443542026,
+  "price_change_percentage_24h": -19.9523,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.870777,
+  "ath_change_percentage": -77.05263,
+  "ath_date": "2023-10-07T14:53:13.588Z",
+  "atl": 0.132008,
+  "atl_change_percentage": 51.37045,
+  "atl_date": "2023-12-14T05:23:36.050Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:35.030Z",
+  "platforms": {
+    "ethereum": "0x9b5c38cc2d1ba05ed87c8f8a2418475bacb20073"
+  }
+}

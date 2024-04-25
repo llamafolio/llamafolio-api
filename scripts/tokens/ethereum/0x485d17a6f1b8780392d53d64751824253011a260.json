@@ -1,0 +1,31 @@
+{
+  "id": "chronobank",
+  "symbol": "time",
+  "name": "chrono.tech",
+  "image": "https://assets.coingecko.com/coins/images/604/large/time-32x32.png?1696501802",
+  "current_price": 26.58,
+  "market_cap": 18851952,
+  "market_cap_rank": 1142,
+  "fully_diluted_valuation": 18851952,
+  "total_volume": 460620,
+  "high_24h": 27.5,
+  "low_24h": 25.58,
+  "price_change_24h": -0.7564521258379493,
+  "price_change_percentage_24h": -2.76719,
+  "market_cap_change_24h": -572785.7792901024,
+  "market_cap_change_percentage_24h": -2.94874,
+  "circulating_supply": 710112.8108,
+  "total_supply": 710112.8108,
+  "max_supply": null,
+  "ath": 569.25,
+  "ath_change_percentage": -95.3363,
+  "ath_date": "2022-01-11T09:33:02.946Z",
+  "atl": 0.379332,
+  "atl_change_percentage": 6898.61086,
+  "atl_date": "2020-03-13T02:19:52.337Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:09.165Z",
+  "platforms": {
+    "ethereum": "0x485d17a6f1b8780392d53d64751824253011a260"
+  }
+}

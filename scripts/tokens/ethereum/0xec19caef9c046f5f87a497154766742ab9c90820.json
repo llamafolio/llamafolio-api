@@ -1,0 +1,31 @@
+{
+  "id": "flooring-protocol-microy00ts",
+  "symbol": "uy00ts",
+  "name": "FP μY00ts",
+  "image": "https://assets.coingecko.com/coins/images/32780/large/y00ts_%281%29.png?1699350631",
+  "current_price": 0.00097345,
+  "market_cap": 555552,
+  "market_cap_rank": 3012,
+  "fully_diluted_valuation": 555552,
+  "total_volume": 30233,
+  "high_24h": 0.00105608,
+  "low_24h": 0.00096514,
+  "price_change_24h": -0.000064551830306709,
+  "price_change_percentage_24h": -6.21885,
+  "market_cap_change_24h": -23099.566701497068,
+  "market_cap_change_percentage_24h": -3.99197,
+  "circulating_supply": 572000000,
+  "total_supply": 572000000,
+  "max_supply": 15000000000,
+  "ath": 0.00240057,
+  "ath_change_percentage": -59.46255,
+  "ath_date": "2024-02-29T17:54:37.350Z",
+  "atl": 0.00065857,
+  "atl_change_percentage": 47.76385,
+  "atl_date": "2024-03-16T14:35:58.845Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:24.921Z",
+  "platforms": {
+    "ethereum": "0xec19caef9c046f5f87a497154766742ab9c90820"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "life-token-v2",
+  "symbol": "ltnv2",
+  "name": "Life v2",
+  "image": "https://assets.coingecko.com/coins/images/20568/large/1-j2MSwg_400x400.jpg?1696519976",
+  "current_price": 2.964e-9,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 29640,
+  "total_volume": 8.64,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 10000000000000,
+  "max_supply": null,
+  "ath": 0.0000012,
+  "ath_change_percentage": -99.75225,
+  "ath_date": "2021-11-25T01:02:23.947Z",
+  "atl": 2.713e-9,
+  "atl_change_percentage": 9.2523,
+  "atl_date": "2023-07-07T09:12:23.801Z",
+  "roi": null,
+  "last_updated": "2023-07-30T23:47:18.412Z",
+  "platforms": {
+    "bsc": "0x167e5455e4c978883b414e7f02c0147eec9a18e9"
+  }
+}

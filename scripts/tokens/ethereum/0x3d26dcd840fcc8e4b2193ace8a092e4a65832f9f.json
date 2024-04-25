@@ -1,0 +1,31 @@
+{
+  "id": "aave-amm-uniuniweth",
+  "symbol": "aammuniuniweth",
+  "name": "Aave AMM UniUNIWETH",
+  "image": "https://assets.coingecko.com/coins/images/17225/large/aAmmUniUNIWETH.png?1696516780",
+  "current_price": 756.27,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1625.45,
+  "total_volume": 0,
+  "high_24h": 789.81,
+  "low_24h": 739.33,
+  "price_change_24h": -27.744965955961334,
+  "price_change_percentage_24h": -3.56174,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2.14930490664746,
+  "max_supply": null,
+  "ath": 1561.79,
+  "ath_change_percentage": -51.89965,
+  "ath_date": "2021-11-10T17:08:56.151Z",
+  "atl": 241.22,
+  "atl_change_percentage": 211.43395,
+  "atl_date": "2022-06-18T21:00:55.167Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:31.873Z",
+  "platforms": {
+    "ethereum": "0x3d26dcd840fcc8e4b2193ace8a092e4a65832f9f"
+  }
+}

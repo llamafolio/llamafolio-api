@@ -1,0 +1,31 @@
+{
+  "id": "zaibot",
+  "symbol": "zai",
+  "name": "Zaibot",
+  "image": "https://assets.coingecko.com/coins/images/35781/large/zai.jpeg?1709795384",
+  "current_price": 0.230463,
+  "market_cap": 1627212,
+  "market_cap_rank": 2408,
+  "fully_diluted_valuation": 22987872,
+  "total_volume": 372984,
+  "high_24h": 0.236023,
+  "low_24h": 0.226811,
+  "price_change_24h": -0.001880736376420916,
+  "price_change_percentage_24h": -0.80946,
+  "market_cap_change_24h": -38604.06151372637,
+  "market_cap_change_percentage_24h": -2.31743,
+  "circulating_supply": 7078567.06962045,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.545121,
+  "ath_change_percentage": -57.9016,
+  "ath_date": "2024-03-17T18:00:57.636Z",
+  "atl": 0.211245,
+  "atl_change_percentage": 8.63562,
+  "atl_date": "2024-04-20T12:26:40.170Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:58.390Z",
+  "platforms": {
+    "ethereum": "0x68449870eea84453044bd430822827e21fd8f101"
+  }
+}

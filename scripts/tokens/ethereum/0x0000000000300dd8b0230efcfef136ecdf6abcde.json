@@ -1,0 +1,31 @@
+{
+  "id": "degenx",
+  "symbol": "dgnx",
+  "name": "DegenX",
+  "image": "https://assets.coingecko.com/coins/images/27204/large/logo-200-200.png?1705413440",
+  "current_price": 0.111655,
+  "market_cap": 2333292,
+  "market_cap_rank": 2210,
+  "fully_diluted_valuation": 2333292,
+  "total_volume": 225.82,
+  "high_24h": 0.123863,
+  "low_24h": 0.111375,
+  "price_change_24h": -0.011534059987204208,
+  "price_change_percentage_24h": -9.36292,
+  "market_cap_change_24h": -264449.58703559125,
+  "market_cap_change_percentage_24h": -10.17998,
+  "circulating_supply": 20943178.61751661,
+  "total_supply": 20943178.61751661,
+  "max_supply": 21000000,
+  "ath": 0.645497,
+  "ath_change_percentage": -82.72027,
+  "ath_date": "2023-04-18T11:54:53.699Z",
+  "atl": 0.02504867,
+  "atl_change_percentage": 345.29337,
+  "atl_date": "2022-12-12T20:50:57.682Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:19.013Z",
+  "platforms": {
+    "ethereum": "0x0000000000300dd8b0230efcfef136ecdf6abcde"
+  }
+}

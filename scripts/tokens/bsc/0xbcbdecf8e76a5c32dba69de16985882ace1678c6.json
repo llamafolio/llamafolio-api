@@ -1,0 +1,31 @@
+{
+  "id": "revenue-coin",
+  "symbol": "rvc",
+  "name": "Revenue Coin",
+  "image": "https://assets.coingecko.com/coins/images/21625/large/RVC_logo_200_200.png?1696520985",
+  "current_price": 0.00317603,
+  "market_cap": 2736539,
+  "market_cap_rank": 2120,
+  "fully_diluted_valuation": 5487672,
+  "total_volume": 11437.48,
+  "high_24h": 0.00318375,
+  "low_24h": 0.00293413,
+  "price_change_24h": -0.000004447826659704,
+  "price_change_percentage_24h": -0.13985,
+  "market_cap_change_24h": -7082.359373346437,
+  "market_cap_change_percentage_24h": -0.25814,
+  "circulating_supply": 862441188.282,
+  "total_supply": 1729481687,
+  "max_supply": 1729481687,
+  "ath": 0.04277222,
+  "ath_change_percentage": -92.58586,
+  "ath_date": "2021-12-18T08:18:42.845Z",
+  "atl": 0.00041931,
+  "atl_change_percentage": 656.29249,
+  "atl_date": "2023-11-07T12:15:29.369Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:35.072Z",
+  "platforms": {
+    "bsc": "0xbcbdecf8e76a5c32dba69de16985882ace1678c6"
+  }
+}

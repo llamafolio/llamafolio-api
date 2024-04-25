@@ -1,0 +1,31 @@
+{
+  "id": "tora-inu",
+  "symbol": "tora",
+  "name": "Tora Inu",
+  "image": "https://assets.coingecko.com/coins/images/28531/large/z9b6m1yS_400x400.png?1696527524",
+  "current_price": 0.00007321,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 73136,
+  "total_volume": 25.51,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 999057018.026196,
+  "max_supply": null,
+  "ath": 0.00157678,
+  "ath_change_percentage": -95.35727,
+  "ath_date": "2022-12-19T11:34:45.279Z",
+  "atl": 0.00006684,
+  "atl_change_percentage": 9.5301,
+  "atl_date": "2023-05-21T21:12:25.796Z",
+  "roi": null,
+  "last_updated": "2023-07-10T17:48:49.634Z",
+  "platforms": {
+    "ethereum": "0x7a3f7f6675514d4d611b442a4b76752f6ab77670"
+  }
+}

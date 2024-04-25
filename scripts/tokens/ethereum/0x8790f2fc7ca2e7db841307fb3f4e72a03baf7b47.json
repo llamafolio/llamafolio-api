@@ -1,0 +1,31 @@
+{
+  "id": "spillways",
+  "symbol": "spillways",
+  "name": "Spillways",
+  "image": "https://assets.coingecko.com/coins/images/28358/large/1669791775144_%281%29.png?1696527362",
+  "current_price": 0.00250551,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 250551,
+  "total_volume": 219.05,
+  "high_24h": 0.00251228,
+  "low_24h": 0.00250416,
+  "price_change_24h": -0.000002206851793896,
+  "price_change_percentage_24h": -0.088,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.04558816,
+  "ath_change_percentage": -94.50404,
+  "ath_date": "2023-02-23T15:35:55.084Z",
+  "atl": 0.00162491,
+  "atl_change_percentage": 54.19323,
+  "atl_date": "2023-01-10T13:29:45.399Z",
+  "roi": null,
+  "last_updated": "2024-04-24T20:05:39.319Z",
+  "platforms": {
+    "ethereum": "0x8790f2fc7ca2e7db841307fb3f4e72a03baf7b47"
+  }
+}

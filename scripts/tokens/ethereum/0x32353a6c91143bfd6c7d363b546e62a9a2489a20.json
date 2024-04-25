@@ -1,0 +1,31 @@
+{
+  "id": "adventure-gold",
+  "symbol": "agld",
+  "name": "Adventure Gold",
+  "image": "https://assets.coingecko.com/coins/images/18125/large/lpgblc4h_400x400.jpg?1696517628",
+  "current_price": 1.14,
+  "market_cap": 87844938,
+  "market_cap_rank": 506,
+  "fully_diluted_valuation": 87844938,
+  "total_volume": 10005988,
+  "high_24h": 1.29,
+  "low_24h": 1.13,
+  "price_change_24h": -0.12169392543645041,
+  "price_change_percentage_24h": -9.6483,
+  "market_cap_change_24h": -9883413.564994633,
+  "market_cap_change_percentage_24h": -10.11315,
+  "circulating_supply": 77310001,
+  "total_supply": 77310001,
+  "max_supply": 80000000,
+  "ath": 7.7,
+  "ath_change_percentage": -85.19227,
+  "ath_date": "2021-09-03T11:41:40.240Z",
+  "atl": 0.208231,
+  "atl_change_percentage": 447.72749,
+  "atl_date": "2022-11-09T23:40:23.330Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:48.350Z",
+  "platforms": {
+    "ethereum": "0x32353a6c91143bfd6c7d363b546e62a9a2489a20"
+  }
+}

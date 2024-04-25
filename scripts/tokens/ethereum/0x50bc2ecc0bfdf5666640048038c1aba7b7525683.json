@@ -1,0 +1,35 @@
+{
+  "id": "carvertical",
+  "symbol": "cv",
+  "name": "carVertical",
+  "image": "https://assets.coingecko.com/coins/images/2098/large/carvertical.png?1696503065",
+  "current_price": 0.00002561,
+  "market_cap": 191702,
+  "market_cap_rank": 3518,
+  "fully_diluted_valuation": 254308,
+  "total_volume": 16.17,
+  "high_24h": 0.00002581,
+  "low_24h": 0.00002547,
+  "price_change_24h": 7.2283e-8,
+  "price_change_percentage_24h": 0.28308,
+  "market_cap_change_24h": 635.07,
+  "market_cap_change_percentage_24h": 0.33238,
+  "circulating_supply": 7486268480.851621,
+  "total_supply": 9931143978,
+  "max_supply": null,
+  "ath": 0.009318,
+  "ath_change_percentage": -99.72519,
+  "ath_date": "2018-02-09T00:00:00.000Z",
+  "atl": 0.00001276,
+  "atl_change_percentage": 100.70377,
+  "atl_date": "2024-01-08T13:06:10.481Z",
+  "roi": {
+    "times": -0.9981155465496143,
+    "currency": "eth",
+    "percentage": -99.81155465496144
+  },
+  "last_updated": "2024-04-24T13:08:49.668Z",
+  "platforms": {
+    "ethereum": "0x50bc2ecc0bfdf5666640048038c1aba7b7525683"
+  }
+}

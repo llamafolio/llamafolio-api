@@ -1,0 +1,31 @@
+{
+  "id": "jetset",
+  "symbol": "jts",
+  "name": "Jetset",
+  "image": "https://assets.coingecko.com/coins/images/25295/large/lAsTdP6-_400x400.jpg?1696524434",
+  "current_price": 0.00124426,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1233500,
+  "total_volume": 16646.72,
+  "high_24h": 0.00124024,
+  "low_24h": 0.00066579,
+  "price_change_24h": 0.00057253,
+  "price_change_percentage_24h": 85.23209,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 995279701.280016,
+  "max_supply": 1000000000,
+  "ath": 0.00745547,
+  "ath_change_percentage": -83.36495,
+  "ath_date": "2022-05-11T06:00:02.051Z",
+  "atl": 0.0001093,
+  "atl_change_percentage": 1034.6825,
+  "atl_date": "2022-09-21T09:30:30.163Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:46.381Z",
+  "platforms": {
+    "bsc": "0x405be90996e7f995a08c2fbd8d8822ef5b03466c"
+  }
+}

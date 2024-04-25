@@ -1,0 +1,31 @@
+{
+  "id": "enreachdao",
+  "symbol": "nrch",
+  "name": "Enreach",
+  "image": "https://assets.coingecko.com/coins/images/14694/large/enreachdao.jpg?1696514366",
+  "current_price": 1.65,
+  "market_cap": 3649102,
+  "market_cap_rank": 1956,
+  "fully_diluted_valuation": 16478351,
+  "total_volume": 342,
+  "high_24h": 1.67,
+  "low_24h": 1.63,
+  "price_change_24h": -0.025076918526454994,
+  "price_change_percentage_24h": -1.49897,
+  "market_cap_change_24h": -57036.93319930881,
+  "market_cap_change_percentage_24h": -1.53899,
+  "circulating_supply": 2214439.402956359,
+  "total_supply": 9999804.445,
+  "max_supply": 9999804,
+  "ath": 9.58,
+  "ath_change_percentage": -82.79805,
+  "ath_date": "2022-03-29T03:29:19.046Z",
+  "atl": 1.007,
+  "atl_change_percentage": 63.56672,
+  "atl_date": "2023-07-18T08:18:43.250Z",
+  "roi": null,
+  "last_updated": "2024-04-24T22:01:38.994Z",
+  "platforms": {
+    "bsc": "0x69fa8e7f6bf1ca1fb0de61e1366f7412b827cc51"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "aether-games",
+  "symbol": "aeg",
+  "name": "Aether Games",
+  "image": "https://assets.coingecko.com/coins/images/29916/large/coin_200x198.png?1708678337",
+  "current_price": 0.074305,
+  "market_cap": 5960163,
+  "market_cap_rank": 1706,
+  "fully_diluted_valuation": 74198750,
+  "total_volume": 179825,
+  "high_24h": 0.077487,
+  "low_24h": 0.070838,
+  "price_change_24h": 0.00057565,
+  "price_change_percentage_24h": 0.78076,
+  "market_cap_change_24h": -99080.40049807448,
+  "market_cap_change_percentage_24h": -1.63519,
+  "circulating_supply": 80327000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.343817,
+  "ath_change_percentage": -78.41925,
+  "ath_date": "2024-03-07T10:29:23.478Z",
+  "atl": 0.070838,
+  "atl_change_percentage": 4.74322,
+  "atl_date": "2024-04-24T09:35:53.949Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:43.274Z",
+  "platforms": {
+    "polygon": "0xe3f2b1b2229c0333ad17d03f179b87500e7c5e01"
+  }
+}

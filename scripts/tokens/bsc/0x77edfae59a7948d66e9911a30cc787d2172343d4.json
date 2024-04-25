@@ -1,0 +1,31 @@
+{
+  "id": "label-foundation",
+  "symbol": "lbl",
+  "name": "LABEL Foundation",
+  "image": "https://assets.coingecko.com/coins/images/19202/large/tele_profile_%EB%8C%80%EC%A7%80_1_-_%282%29.png?1696518649",
+  "current_price": 0.00410844,
+  "market_cap": 4653626,
+  "market_cap_rank": 1834,
+  "fully_diluted_valuation": 12231696,
+  "total_volume": 705820,
+  "high_24h": 0.00439137,
+  "low_24h": 0.00402235,
+  "price_change_24h": -0.000259707242257401,
+  "price_change_percentage_24h": -5.94547,
+  "market_cap_change_24h": -343952.0419849176,
+  "market_cap_change_percentage_24h": -6.88237,
+  "circulating_supply": 1141369062.47,
+  "total_supply": 3000000000,
+  "max_supply": 3000000000,
+  "ath": 0.04601612,
+  "ath_change_percentage": -91.06738,
+  "ath_date": "2022-04-26T03:41:55.485Z",
+  "atl": 0.00135836,
+  "atl_change_percentage": 202.60289,
+  "atl_date": "2023-08-27T16:35:47.348Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:22.123Z",
+  "platforms": {
+    "bsc": "0x77edfae59a7948d66e9911a30cc787d2172343d4"
+  }
+}

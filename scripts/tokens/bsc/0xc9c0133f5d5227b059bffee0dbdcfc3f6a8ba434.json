@@ -1,0 +1,31 @@
+{
+  "id": "pepe-dash-ai",
+  "symbol": "pepedashai",
+  "name": "Pepe Dash AI",
+  "image": "https://assets.coingecko.com/coins/images/30478/large/IMG-1457_1_.png?1696529365",
+  "current_price": 0.0000575,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 57499,
+  "total_volume": 9.66,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00024347,
+  "ath_change_percentage": -76.3835,
+  "ath_date": "2023-05-21T22:52:44.197Z",
+  "atl": 0.00005507,
+  "atl_change_percentage": 4.41848,
+  "atl_date": "2023-07-06T23:24:36.526Z",
+  "roi": null,
+  "last_updated": "2023-08-02T08:07:31.275Z",
+  "platforms": {
+    "bsc": "0xc9c0133f5d5227b059bffee0dbdcfc3f6a8ba434"
+  }
+}

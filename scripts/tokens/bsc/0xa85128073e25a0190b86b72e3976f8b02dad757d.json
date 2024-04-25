@@ -1,0 +1,31 @@
+{
+  "id": "b2b-token",
+  "symbol": "b2b",
+  "name": "B2B Token",
+  "image": "https://assets.coingecko.com/coins/images/32936/large/B2B_LOGO-.png?1699871351",
+  "current_price": 0.153016,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3213335,
+  "total_volume": 48.39,
+  "high_24h": 0.155004,
+  "low_24h": 0.151054,
+  "price_change_24h": -0.001659261062140594,
+  "price_change_percentage_24h": -1.07274,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 21000000,
+  "max_supply": 21000000,
+  "ath": 0.961488,
+  "ath_change_percentage": -84.0855,
+  "ath_date": "2023-11-16T12:06:41.491Z",
+  "atl": 0.099372,
+  "atl_change_percentage": 53.98224,
+  "atl_date": "2024-02-20T00:46:57.119Z",
+  "roi": null,
+  "last_updated": "2024-04-25T07:49:28.891Z",
+  "platforms": {
+    "bsc": "0xa85128073e25a0190b86b72e3976f8b02dad757d"
+  }
+}

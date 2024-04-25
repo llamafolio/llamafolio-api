@@ -1,0 +1,31 @@
+{
+  "id": "sable",
+  "symbol": "sable",
+  "name": "Sable",
+  "image": "https://assets.coingecko.com/coins/images/30989/large/SableFinance_Coin-08.png?1696529827",
+  "current_price": 0.01592266,
+  "market_cap": 313461,
+  "market_cap_rank": 3295,
+  "fully_diluted_valuation": 1588793,
+  "total_volume": 39.23,
+  "high_24h": 0.01612454,
+  "low_24h": 0.01551733,
+  "price_change_24h": 0.00009288,
+  "price_change_percentage_24h": 0.58677,
+  "market_cap_change_24h": 192.93,
+  "market_cap_change_percentage_24h": 0.06159,
+  "circulating_supply": 19729480.625317097,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 0.091172,
+  "ath_change_percentage": -82.54749,
+  "ath_date": "2023-07-28T06:59:40.692Z",
+  "atl": 0.0075713,
+  "atl_change_percentage": 110.15996,
+  "atl_date": "2023-12-13T01:20:45.962Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:01.318Z",
+  "platforms": {
+    "bsc": "0x1ee098cbaf1f846d5df1993f7e2d10afb35a878d"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "hipenguins",
+  "symbol": "hipenguins",
+  "name": "hiPENGUINS",
+  "image": "https://assets.coingecko.com/coins/images/28381/large/63856bebcd8c700001b23c42_hiPENGUINS-_Logo.png?1696527381",
+  "current_price": 0.02771481,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 609726,
+  "total_volume": 148509,
+  "high_24h": 0.03035223,
+  "low_24h": 0.02751923,
+  "price_change_24h": -0.00136367076193223,
+  "price_change_percentage_24h": -4.68962,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 22000000,
+  "max_supply": null,
+  "ath": 0.066798,
+  "ath_change_percentage": -58.47823,
+  "ath_date": "2024-03-21T15:02:06.903Z",
+  "atl": 0.00418856,
+  "atl_change_percentage": 562.17924,
+  "atl_date": "2022-12-02T23:13:35.047Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:56.834Z",
+  "platforms": {
+    "ethereum": "0x669db4c47f89f21554ebd825a744888725fd9491"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "oxyo2",
+  "symbol": "krpza",
+  "name": "OxyO2",
+  "image": "https://assets.coingecko.com/coins/images/27591/large/oxyo2_logo_200x200.png?1696526623",
+  "current_price": 0.00295901,
+  "market_cap": 196693,
+  "market_cap_rank": 3499,
+  "fully_diluted_valuation": 2451332,
+  "total_volume": 9239.17,
+  "high_24h": 0.00319138,
+  "low_24h": 0.00294963,
+  "price_change_24h": -0.000154088548095456,
+  "price_change_percentage_24h": -4.94969,
+  "market_cap_change_24h": -11573.460175397166,
+  "market_cap_change_percentage_24h": -5.55706,
+  "circulating_supply": 66520076.84038235,
+  "total_supply": 829023542.340018,
+  "max_supply": 1000000000,
+  "ath": 0.120153,
+  "ath_change_percentage": -97.53726,
+  "ath_date": "2023-05-30T23:09:39.384Z",
+  "atl": 0.00245776,
+  "atl_change_percentage": 20.39666,
+  "atl_date": "2024-04-04T11:05:56.770Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:09.562Z",
+  "platforms": {
+    "bsc": "0x53940d46a35162255511ff7cade811891d49533c"
+  }
+}

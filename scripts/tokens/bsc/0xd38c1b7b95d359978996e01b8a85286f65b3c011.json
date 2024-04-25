@@ -1,0 +1,31 @@
+{
+  "id": "rage-fan",
+  "symbol": "rage",
+  "name": "Rage.Fan",
+  "image": "https://assets.coingecko.com/coins/images/14585/large/Copy_of_RAGE_FAN_LOGO_ONLY.png?1696514265",
+  "current_price": 0.00046076,
+  "market_cap": 60240,
+  "market_cap_rank": 3936,
+  "fully_diluted_valuation": 184400,
+  "total_volume": 13913.42,
+  "high_24h": 0.00046982,
+  "low_24h": 0.00045542,
+  "price_change_24h": -0.000008166266366951,
+  "price_change_percentage_24h": -1.74149,
+  "market_cap_change_24h": -1052.2923345124946,
+  "market_cap_change_percentage_24h": -1.71685,
+  "circulating_supply": 130671800,
+  "total_supply": 400000000,
+  "max_supply": null,
+  "ath": 0.381168,
+  "ath_change_percentage": -99.87897,
+  "ath_date": "2021-03-31T15:09:41.729Z",
+  "atl": 0.00043954,
+  "atl_change_percentage": 4.95791,
+  "atl_date": "2024-04-13T23:29:32.183Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:12.126Z",
+  "platforms": {
+    "bsc": "0xd38c1b7b95d359978996e01b8a85286f65b3c011"
+  }
+}

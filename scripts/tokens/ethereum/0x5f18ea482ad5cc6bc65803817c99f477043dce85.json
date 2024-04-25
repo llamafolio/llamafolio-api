@@ -1,0 +1,31 @@
+{
+  "id": "agility",
+  "symbol": "agi",
+  "name": "Agility",
+  "image": "https://assets.coingecko.com/coins/images/29781/large/14csBMea_400x400.jpg?1696528711",
+  "current_price": 0.00440179,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 35333,
+  "total_volume": 14092.29,
+  "high_24h": 0.00454161,
+  "low_24h": 0.00439317,
+  "price_change_24h": -0.000131701044181519,
+  "price_change_percentage_24h": -2.90507,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 8030000,
+  "max_supply": 1000000000,
+  "ath": 1.005,
+  "ath_change_percentage": -99.56199,
+  "ath_date": "2023-04-18T12:55:38.442Z",
+  "atl": 0.00268404,
+  "atl_change_percentage": 63.99188,
+  "atl_date": "2024-02-05T18:56:00.844Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:39.267Z",
+  "platforms": {
+    "ethereum": "0x5f18ea482ad5cc6bc65803817c99f477043dce85"
+  }
+}

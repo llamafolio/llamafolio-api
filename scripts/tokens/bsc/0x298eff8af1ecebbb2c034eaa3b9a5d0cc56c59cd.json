@@ -1,0 +1,35 @@
+{
+  "id": "phantasma",
+  "symbol": "soul",
+  "name": "Phantasma",
+  "image": "https://assets.coingecko.com/coins/images/4130/large/phantasma.png?1696504758",
+  "current_price": 0.149349,
+  "market_cap": 18545999,
+  "market_cap_rank": 1149,
+  "fully_diluted_valuation": 18545999,
+  "total_volume": 171749,
+  "high_24h": 0.156366,
+  "low_24h": 0.139138,
+  "price_change_24h": -0.006360740941208033,
+  "price_change_percentage_24h": -4.08501,
+  "market_cap_change_24h": -779737.7102730274,
+  "market_cap_change_percentage_24h": -4.03471,
+  "circulating_supply": 124129197.661631,
+  "total_supply": 124129197.661631,
+  "max_supply": null,
+  "ath": 3.96,
+  "ath_change_percentage": -96.22981,
+  "ath_date": "2021-12-01T08:14:28.872Z",
+  "atl": 0.00960482,
+  "atl_change_percentage": 1455.18716,
+  "atl_date": "2020-03-16T11:09:17.641Z",
+  "roi": {
+    "times": -0.3506576444655917,
+    "currency": "usd",
+    "percentage": -35.06576444655917
+  },
+  "last_updated": "2024-04-25T08:59:50.268Z",
+  "platforms": {
+    "bsc": "0x298eff8af1ecebbb2c034eaa3b9a5d0cc56c59cd"
+  }
+}

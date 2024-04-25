@@ -1,0 +1,31 @@
+{
+  "id": "pera-finance",
+  "symbol": "pera",
+  "name": "Pera Finance",
+  "image": "https://assets.coingecko.com/coins/images/16185/large/Pera-Finance-200x200.png?1696515787",
+  "current_price": 0.00058113,
+  "market_cap": 58306,
+  "market_cap_rank": 3944,
+  "fully_diluted_valuation": 73612,
+  "total_volume": 2236.6,
+  "high_24h": 0.00064095,
+  "low_24h": 0.00055162,
+  "price_change_24h": -0.000057781140972638,
+  "price_change_percentage_24h": -9.04367,
+  "market_cap_change_24h": -5122.216354584307,
+  "market_cap_change_percentage_24h": -8.07557,
+  "circulating_supply": 99288084.4705158,
+  "total_supply": 125350784,
+  "max_supply": null,
+  "ath": 0.459308,
+  "ath_change_percentage": -99.87186,
+  "ath_date": "2021-07-15T15:51:41.202Z",
+  "atl": 0.00029915,
+  "atl_change_percentage": 96.7471,
+  "atl_date": "2023-10-24T00:01:52.007Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:14.557Z",
+  "platforms": {
+    "avalanche": "0xfda866cfece71f4c17b4a5e5f9a00ac08c72eadc"
+  }
+}

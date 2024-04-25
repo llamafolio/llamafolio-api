@@ -1,0 +1,31 @@
+{
+  "id": "gyoza",
+  "symbol": "gyoza",
+  "name": "Gyoza",
+  "image": "https://assets.coingecko.com/coins/images/31083/large/logorecized_new.png?1696529916",
+  "current_price": 0.00168651,
+  "market_cap": 1664180,
+  "market_cap_rank": 2397,
+  "fully_diluted_valuation": 1686508,
+  "total_volume": 1626.07,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 986760458,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00428771,
+  "ath_change_percentage": -60.66645,
+  "ath_date": "2023-07-27T16:36:40.005Z",
+  "atl": 0.0013863,
+  "atl_change_percentage": 21.65517,
+  "atl_date": "2024-04-14T09:42:10.479Z",
+  "roi": null,
+  "last_updated": "2024-04-21T05:30:21.530Z",
+  "platforms": {
+    "ethereum": "0x4e51a6b3cc6d5ae69a0d44db9de846aeb5a582dd"
+  }
+}

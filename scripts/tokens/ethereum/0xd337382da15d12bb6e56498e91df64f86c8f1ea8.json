@@ -1,0 +1,31 @@
+{
+  "id": "aelysir",
+  "symbol": "ael",
+  "name": "Aelysir",
+  "image": "https://assets.coingecko.com/coins/images/12955/large/ael_logo.png?1696512743",
+  "current_price": 15.85,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3328014244,
+  "total_volume": 1782.86,
+  "high_24h": 16.47,
+  "low_24h": 15.72,
+  "price_change_24h": -0.5542698476502945,
+  "price_change_percentage_24h": -3.37929,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 210000000,
+  "max_supply": null,
+  "ath": 18.18,
+  "ath_change_percentage": -13.29074,
+  "ath_date": "2024-03-14T07:03:18.851Z",
+  "atl": 0.00094164,
+  "atl_change_percentage": 1674383.18554,
+  "atl_date": "2021-07-17T03:16:23.750Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:21.771Z",
+  "platforms": {
+    "ethereum": "0xd337382da15d12bb6e56498e91df64f86c8f1ea8"
+  }
+}

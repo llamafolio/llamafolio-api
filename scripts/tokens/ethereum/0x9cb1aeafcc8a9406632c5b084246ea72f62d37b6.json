@@ -1,0 +1,31 @@
+{
+  "id": "lbk",
+  "symbol": "lbk",
+  "name": "LBK",
+  "image": "https://assets.coingecko.com/coins/images/9492/large/lbk.jpeg?1696509578",
+  "current_price": 0.0105042,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 21091651,
+  "total_volume": 2290241,
+  "high_24h": 0.01142806,
+  "low_24h": 0.01050241,
+  "price_change_24h": -0.000883115257104574,
+  "price_change_percentage_24h": -7.75525,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2000000000,
+  "max_supply": null,
+  "ath": 0.104219,
+  "ath_change_percentage": -89.88748,
+  "ath_date": "2019-09-09T09:31:16.876Z",
+  "atl": 0.00450007,
+  "atl_change_percentage": 134.20097,
+  "atl_date": "2020-07-05T06:15:16.620Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:43.770Z",
+  "platforms": {
+    "ethereum": "0x9cb1aeafcc8a9406632c5b084246ea72f62d37b6"
+  }
+}

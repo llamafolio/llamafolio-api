@@ -1,0 +1,31 @@
+{
+  "id": "soonswap",
+  "symbol": "soon",
+  "name": "SoonVerse",
+  "image": "https://assets.coingecko.com/coins/images/29448/large/1.png?1696528395",
+  "current_price": 0.01125955,
+  "market_cap": 3445414,
+  "market_cap_rank": 1982,
+  "fully_diluted_valuation": 6859287,
+  "total_volume": 265234,
+  "high_24h": 0.01269769,
+  "low_24h": 0.01111384,
+  "price_change_24h": -0.001411978585610603,
+  "price_change_percentage_24h": -11.14293,
+  "market_cap_change_24h": -434559.1825638367,
+  "market_cap_change_percentage_24h": -11.20006,
+  "circulating_supply": 306157922.8670674,
+  "total_supply": 609513029.3,
+  "max_supply": 1000000000,
+  "ath": 0.04854671,
+  "ath_change_percentage": -76.80226,
+  "ath_date": "2023-05-10T04:53:37.123Z",
+  "atl": 0.00050064,
+  "atl_change_percentage": 2149.48013,
+  "atl_date": "2023-06-22T21:15:25.266Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:56:57.358Z",
+  "platforms": {
+    "ethereum": "0x574d22e2555cac0ce71e44778f6de2e7487ae229"
+  }
+}

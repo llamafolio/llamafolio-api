@@ -1,0 +1,31 @@
+{
+  "id": "swarm-bzz",
+  "symbol": "bzz",
+  "name": "Swarm",
+  "image": "https://assets.coingecko.com/coins/images/16509/large/Circle_Orange_onWhite.png?1696516071",
+  "current_price": 0.471883,
+  "market_cap": 29926926,
+  "market_cap_rank": 913,
+  "fully_diluted_valuation": 29933627,
+  "total_volume": 942826,
+  "high_24h": 0.481574,
+  "low_24h": 0.464065,
+  "price_change_24h": -0.009245621864934772,
+  "price_change_percentage_24h": -1.92165,
+  "market_cap_change_24h": -596139.4819093943,
+  "market_cap_change_percentage_24h": -1.95308,
+  "circulating_supply": 63237575.3785744,
+  "total_supply": 63251735.3785744,
+  "max_supply": null,
+  "ath": 21.11,
+  "ath_change_percentage": -97.76488,
+  "ath_date": "2021-06-22T05:18:06.262Z",
+  "atl": 0.211002,
+  "atl_change_percentage": 123.63925,
+  "atl_date": "2023-09-16T12:14:53.890Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:21.508Z",
+  "platforms": {
+    "ethereum": "0x19062190b1925b5b6689d7073fdfc8c2976ef8cb"
+  }
+}

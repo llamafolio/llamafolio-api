@@ -1,0 +1,31 @@
+{
+  "id": "magiccraft",
+  "symbol": "mcrt",
+  "name": "MagicCraft",
+  "image": "https://assets.coingecko.com/coins/images/21318/large/mcrt.png?1696520686",
+  "current_price": 0.00197017,
+  "market_cap": 8183901,
+  "market_cap_rank": 1535,
+  "fully_diluted_valuation": 12209403,
+  "total_volume": 438193,
+  "high_24h": 0.0020327,
+  "low_24h": 0.00196394,
+  "price_change_24h": -0.000061662793500031,
+  "price_change_percentage_24h": -3.03484,
+  "market_cap_change_24h": -256265.05844628066,
+  "market_cap_change_percentage_24h": -3.03626,
+  "circulating_supply": 4155828832.49102,
+  "total_supply": 6200000000,
+  "max_supply": 10000000000,
+  "ath": 0.083847,
+  "ath_change_percentage": -97.65336,
+  "ath_date": "2021-12-31T05:14:11.714Z",
+  "atl": 0.0008956,
+  "atl_change_percentage": 119.69517,
+  "atl_date": "2023-10-11T23:35:15.693Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:23.611Z",
+  "platforms": {
+    "fantom": "0xe705af5f63fcabdcdf5016aa838eaaac35d12890"
+  }
+}

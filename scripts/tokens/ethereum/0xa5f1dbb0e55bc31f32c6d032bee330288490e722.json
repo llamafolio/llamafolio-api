@@ -1,0 +1,31 @@
+{
+  "id": "day-by-day",
+  "symbol": "dbd",
+  "name": "Day By Day",
+  "image": "https://assets.coingecko.com/coins/images/21691/large/DBD-icon_200x200_%281%29.png?1696521046",
+  "current_price": 0.00670033,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 5330848,
+  "total_volume": 137494,
+  "high_24h": 0.00797391,
+  "low_24h": 0.00514228,
+  "price_change_24h": -0.000635683198912582,
+  "price_change_percentage_24h": -8.66524,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 800000000,
+  "max_supply": 800000000,
+  "ath": 0.40127,
+  "ath_change_percentage": -98.32507,
+  "ath_date": "2021-12-28T04:45:55.454Z",
+  "atl": 0.00309242,
+  "atl_change_percentage": 117.33754,
+  "atl_date": "2023-10-06T20:35:05.314Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:28.373Z",
+  "platforms": {
+    "ethereum": "0xa5f1dbb0e55bc31f32c6d032bee330288490e722"
+  }
+}

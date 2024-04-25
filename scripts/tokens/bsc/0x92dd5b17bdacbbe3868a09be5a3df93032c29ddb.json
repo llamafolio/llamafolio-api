@@ -1,0 +1,31 @@
+{
+  "id": "kubic",
+  "symbol": "kubic",
+  "name": "Kubic",
+  "image": "https://assets.coingecko.com/coins/images/16895/large/kubic.png?1696516466",
+  "current_price": 0.00012986,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1298619,
+  "total_volume": 18130.54,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": null,
+  "ath": 0.01969002,
+  "ath_change_percentage": -99.34047,
+  "ath_date": "2021-10-06T10:47:01.070Z",
+  "atl": 0.00008283,
+  "atl_change_percentage": 56.78302,
+  "atl_date": "2023-10-28T09:19:24.554Z",
+  "roi": null,
+  "last_updated": "2024-04-11T20:59:20.472Z",
+  "platforms": {
+    "bsc": "0x92dd5b17bdacbbe3868a09be5a3df93032c29ddb"
+  }
+}

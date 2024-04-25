@@ -1,0 +1,35 @@
+{
+  "id": "measurable-data-token",
+  "symbol": "mdt",
+  "name": "Measurable Data",
+  "image": "https://assets.coingecko.com/coins/images/2441/large/mdt_icon_120x120.png?1711452723",
+  "current_price": 0.076388,
+  "market_cap": 46101590,
+  "market_cap_rank": 725,
+  "fully_diluted_valuation": 76035114,
+  "total_volume": 5100246,
+  "high_24h": 0.08686,
+  "low_24h": 0.075978,
+  "price_change_24h": -0.009373561889318135,
+  "price_change_percentage_24h": -10.92977,
+  "market_cap_change_24h": -6171042.5045319125,
+  "market_cap_change_percentage_24h": -11.80549,
+  "circulating_supply": 606319736.1236151,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.168053,
+  "ath_change_percentage": -54.78225,
+  "ath_date": "2021-12-25T21:10:15.706Z",
+  "atl": 0.00173261,
+  "atl_change_percentage": 4285.87226,
+  "atl_date": "2018-12-18T00:00:00.000Z",
+  "roi": {
+    "times": -0.8781550325036434,
+    "currency": "eth",
+    "percentage": -87.81550325036433
+  },
+  "last_updated": "2024-04-25T08:59:55.631Z",
+  "platforms": {
+    "ethereum": "0x814e0908b12a99fecf5bc101bb5d0b8b5cdf7d26"
+  }
+}

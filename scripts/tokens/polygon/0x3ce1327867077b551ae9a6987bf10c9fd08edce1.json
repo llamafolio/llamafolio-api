@@ -1,0 +1,31 @@
+{
+  "id": "swisscheese",
+  "symbol": "swch",
+  "name": "SwissCheese",
+  "image": "https://assets.coingecko.com/coins/images/31344/large/IMG_7198.jpeg?1696530162",
+  "current_price": 0.470862,
+  "market_cap": 8649103,
+  "market_cap_rank": 1507,
+  "fully_diluted_valuation": 56874487,
+  "total_volume": 635573,
+  "high_24h": 0.482843,
+  "low_24h": 0.471523,
+  "price_change_24h": -0.008970486092432228,
+  "price_change_percentage_24h": -1.8695,
+  "market_cap_change_24h": -89399.84605467506,
+  "market_cap_change_percentage_24h": -1.02306,
+  "circulating_supply": 18248821.668668367,
+  "total_supply": 120000000,
+  "max_supply": 120000000,
+  "ath": 1.006,
+  "ath_change_percentage": -52.82639,
+  "ath_date": "2023-12-08T16:25:30.669Z",
+  "atl": 0.119823,
+  "atl_change_percentage": 296.01467,
+  "atl_date": "2023-09-26T05:13:06.338Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:30.537Z",
+  "platforms": {
+    "polygon": "0x3ce1327867077b551ae9a6987bf10c9fd08edce1"
+  }
+}

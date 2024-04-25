@@ -1,0 +1,31 @@
+{
+  "id": "beamswap",
+  "symbol": "glint",
+  "name": "BeamSwap",
+  "image": "https://assets.coingecko.com/coins/images/22893/large/glint.png?1696522190",
+  "current_price": 0.00072616,
+  "market_cap": 1256411,
+  "market_cap_rank": 2561,
+  "fully_diluted_valuation": 1995302,
+  "total_volume": 68893,
+  "high_24h": 0.00078021,
+  "low_24h": 0.00069676,
+  "price_change_24h": -0.000020413438504732,
+  "price_change_percentage_24h": -2.73429,
+  "market_cap_change_24h": -35914.91018465371,
+  "market_cap_change_percentage_24h": -2.77909,
+  "circulating_supply": 1730219713,
+  "total_supply": 2747755940,
+  "max_supply": 3000000000,
+  "ath": 0.01158009,
+  "ath_change_percentage": -93.80143,
+  "ath_date": "2022-02-08T08:12:15.617Z",
+  "atl": 0.00042191,
+  "atl_change_percentage": 70.13112,
+  "atl_date": "2023-09-11T15:39:06.812Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:03.109Z",
+  "platforms": {
+    "moonbeam": "0xcd3b51d98478d53f4515a306be565c6eebef1d58"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "libra-incentix",
+  "symbol": "lixx",
+  "name": "Libra Incentix",
+  "image": "https://assets.coingecko.com/coins/images/31996/large/lixx.jpg?1696530797",
+  "current_price": 0.00352611,
+  "market_cap": 23590692,
+  "market_cap_rank": 1032,
+  "fully_diluted_valuation": 52814984,
+  "total_volume": 1186012,
+  "high_24h": 0.00354598,
+  "low_24h": 0.00348202,
+  "price_change_24h": -5.30892812e-8,
+  "price_change_percentage_24h": -0.00151,
+  "market_cap_change_24h": -55810.504193443805,
+  "market_cap_change_percentage_24h": -0.23602,
+  "circulating_supply": 6699999799.999998,
+  "total_supply": 15000000000,
+  "max_supply": 15000000000,
+  "ath": 0.00454036,
+  "ath_change_percentage": -22.38049,
+  "ath_date": "2024-04-05T08:28:50.736Z",
+  "atl": 0.00096786,
+  "atl_change_percentage": 264.12456,
+  "atl_date": "2024-01-04T07:50:19.564Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:57.090Z",
+  "platforms": {
+    "bsc": "0x16530b5c105fcb7c50bc84a039a0a4ed806a5124"
+  }
+}

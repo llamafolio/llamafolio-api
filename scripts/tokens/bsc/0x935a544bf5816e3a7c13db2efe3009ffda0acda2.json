@@ -1,0 +1,35 @@
+{
+  "id": "bluzelle",
+  "symbol": "blz",
+  "name": "Bluzelle",
+  "image": "https://assets.coingecko.com/coins/images/2848/large/ColorIcon_3x.png?1696503607",
+  "current_price": 0.353954,
+  "market_cap": 151254901,
+  "market_cap_rank": 361,
+  "fully_diluted_valuation": 176667912,
+  "total_volume": 8717553,
+  "high_24h": 0.377469,
+  "low_24h": 0.34765,
+  "price_change_24h": -0.019289242222797987,
+  "price_change_percentage_24h": -5.16801,
+  "market_cap_change_24h": -8692627.367848217,
+  "market_cap_change_percentage_24h": -5.43467,
+  "circulating_supply": 428076890.7280512,
+  "total_supply": 500000000,
+  "max_supply": null,
+  "ath": 0.783089,
+  "ath_change_percentage": -54.90906,
+  "ath_date": "2018-02-10T00:00:00.000Z",
+  "atl": 0.00654948,
+  "atl_change_percentage": 5291.30145,
+  "atl_date": "2020-03-13T02:29:24.576Z",
+  "roi": {
+    "times": 1.9970706635598696,
+    "currency": "usd",
+    "percentage": 199.70706635598697
+  },
+  "last_updated": "2024-04-25T08:55:37.207Z",
+  "platforms": {
+    "bsc": "0x935a544bf5816e3a7c13db2efe3009ffda0acda2"
+  }
+}

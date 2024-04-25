@@ -1,0 +1,31 @@
+{
+  "id": "dice-bot",
+  "symbol": "dice",
+  "name": "Dice Bot",
+  "image": "https://assets.coingecko.com/coins/images/32654/large/Twitter_pfp.png?1698965261",
+  "current_price": 0.00008004,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 62250,
+  "total_volume": 479.3,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 777777777,
+  "max_supply": 777777777,
+  "ath": 0.00012686,
+  "ath_change_percentage": -36.91072,
+  "ath_date": "2023-11-11T17:15:42.438Z",
+  "atl": 0.00007235,
+  "atl_change_percentage": 10.62321,
+  "atl_date": "2024-01-03T23:36:02.718Z",
+  "roi": null,
+  "last_updated": "2024-02-09T09:19:38.329Z",
+  "platforms": {
+    "ethereum": "0x762fcf5183ae366c0629d0bcd30b40f331496d0f"
+  }
+}

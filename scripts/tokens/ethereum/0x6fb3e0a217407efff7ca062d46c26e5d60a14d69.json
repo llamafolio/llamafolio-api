@@ -1,0 +1,31 @@
+{
+  "id": "iotex",
+  "symbol": "iotx",
+  "name": "IoTeX",
+  "image": "https://assets.coingecko.com/coins/images/3334/large/iotex-logo.png?1696504041",
+  "current_price": 0.060327,
+  "market_cap": 569566639,
+  "market_cap_rank": 154,
+  "fully_diluted_valuation": 572877839,
+  "total_volume": 24522636,
+  "high_24h": 0.066039,
+  "low_24h": 0.060203,
+  "price_change_24h": -0.004524920573538983,
+  "price_change_percentage_24h": -6.97735,
+  "market_cap_change_24h": -43688520.5545907,
+  "market_cap_change_percentage_24h": -7.12404,
+  "circulating_supply": 9441378955,
+  "total_supply": 9496266827.32,
+  "max_supply": 9496266827.32,
+  "ath": 0.255593,
+  "ath_change_percentage": -76.39873,
+  "ath_date": "2021-11-13T16:54:18.643Z",
+  "atl": 0.00121576,
+  "atl_change_percentage": 4861.76835,
+  "atl_date": "2020-03-13T02:29:47.597Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:54.466Z",
+  "platforms": {
+    "ethereum": "0x6fb3e0a217407efff7ca062d46c26e5d60a14d69"
+  }
+}

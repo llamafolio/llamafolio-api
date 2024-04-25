@@ -1,0 +1,31 @@
+{
+  "id": "wexo",
+  "symbol": "wexo",
+  "name": "Wexo",
+  "image": "https://assets.coingecko.com/coins/images/33801/large/wexo_token_200x200.png?1702991908",
+  "current_price": 1.78,
+  "market_cap": 92674044,
+  "market_cap_rank": 496,
+  "fully_diluted_valuation": 1654893643,
+  "total_volume": 27.46,
+  "high_24h": 1.86,
+  "low_24h": 1.77,
+  "price_change_24h": -0.05879855923805932,
+  "price_change_percentage_24h": -3.19195,
+  "market_cap_change_24h": -2328035.140225932,
+  "market_cap_change_percentage_24h": -2.45051,
+  "circulating_supply": 51968000,
+  "total_supply": 928000000,
+  "max_supply": 928000000,
+  "ath": 2.43,
+  "ath_change_percentage": -26.60753,
+  "ath_date": "2024-03-10T09:49:42.847Z",
+  "atl": 1.22,
+  "atl_change_percentage": 46.21408,
+  "atl_date": "2024-01-03T12:15:05.860Z",
+  "roi": null,
+  "last_updated": "2024-04-24T22:24:55.576Z",
+  "platforms": {
+    "ethereum": "0xf31698ddad0d11160fe85c500397a470cd3d492e"
+  }
+}

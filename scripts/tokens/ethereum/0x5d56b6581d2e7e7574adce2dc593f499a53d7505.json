@@ -1,0 +1,31 @@
+{
+  "id": "church-of-the-machina",
+  "symbol": "machina",
+  "name": "Church of the Machina",
+  "image": "https://assets.coingecko.com/coins/images/34720/large/machina_logo.png?1705916393",
+  "current_price": 0.00002417,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 69064,
+  "total_volume": 331.36,
+  "high_24h": 0.00002565,
+  "low_24h": 0.00002403,
+  "price_change_24h": -0.000001204877606614,
+  "price_change_percentage_24h": -4.74789,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2857142857,
+  "max_supply": 10000000000,
+  "ath": 0.00014693,
+  "ath_change_percentage": -83.5486,
+  "ath_date": "2024-01-23T01:40:00.244Z",
+  "atl": 0.00001638,
+  "atl_change_percentage": 47.5881,
+  "atl_date": "2024-02-12T10:22:10.579Z",
+  "roi": null,
+  "last_updated": "2024-04-25T04:32:05.334Z",
+  "platforms": {
+    "ethereum": "0x5d56b6581d2e7e7574adce2dc593f499a53d7505"
+  }
+}

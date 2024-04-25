@@ -1,0 +1,31 @@
+{
+  "id": "jongro-boutique",
+  "symbol": "jobt",
+  "name": "Jongro Boutique",
+  "image": "missing_large.png",
+  "current_price": 10.58,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 15874947632,
+  "total_volume": 39077,
+  "high_24h": 10.61,
+  "low_24h": 10.57,
+  "price_change_24h": -0.01846322508106013,
+  "price_change_percentage_24h": -0.17415,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1500000000,
+  "max_supply": 1500000000,
+  "ath": 10.81,
+  "ath_change_percentage": -1.96499,
+  "ath_date": "2024-02-28T17:33:17.414Z",
+  "atl": 10.42,
+  "atl_change_percentage": 1.6775,
+  "atl_date": "2024-02-29T18:00:21.797Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:02.516Z",
+  "platforms": {
+    "bsc": "0xfaa07a05546069c4086cdc9396ad4556fc7c59e4"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "ginza-network",
+  "symbol": "ginza",
+  "name": "Ginza Network",
+  "image": "https://assets.coingecko.com/coins/images/19906/large/GDZGB-Qw_400x400.png?1696519326",
+  "current_price": 0.00179752,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1191119,
+  "total_volume": 85.54,
+  "high_24h": 0.00182727,
+  "low_24h": 0.00177116,
+  "price_change_24h": -0.00001132956764887,
+  "price_change_percentage_24h": -0.62634,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 660633971,
+  "max_supply": null,
+  "ath": 2.59,
+  "ath_change_percentage": -99.93036,
+  "ath_date": "2021-11-07T11:14:09.046Z",
+  "atl": 0.00171355,
+  "atl_change_percentage": 5.0766,
+  "atl_date": "2024-04-13T20:10:19.768Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:46.355Z",
+  "platforms": {
+    "bsc": "0x32d7da6a7cf25ed1b86e1b0ee9a62b0252d46b16"
+  }
+}

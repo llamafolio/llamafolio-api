@@ -1,0 +1,31 @@
+{
+  "id": "waultswap",
+  "symbol": "wex",
+  "name": "WaultSwap",
+  "image": "https://assets.coingecko.com/coins/images/14882/large/wex_v3.png?1696514546",
+  "current_price": 0.00066037,
+  "market_cap": 4956312,
+  "market_cap_rank": 1801,
+  "fully_diluted_valuation": 5263571,
+  "total_volume": 13012.57,
+  "high_24h": 0.00066215,
+  "low_24h": 0.00064422,
+  "price_change_24h": 0.00000993,
+  "price_change_percentage_24h": 1.52704,
+  "market_cap_change_24h": 62198,
+  "market_cap_change_percentage_24h": 1.27087,
+  "circulating_supply": 7518356517.5973,
+  "total_supply": 7984446277.00353,
+  "max_supply": null,
+  "ath": 0.381073,
+  "ath_change_percentage": -99.82681,
+  "ath_date": "2021-05-10T06:36:43.193Z",
+  "atl": 0.00000342,
+  "atl_change_percentage": 19202.76288,
+  "atl_date": "2022-07-20T16:19:23.805Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:14.629Z",
+  "platforms": {
+    "bsc": "0xa9c41a46a6b3531d28d5c32f6633dd2ff05dfb90"
+  }
+}

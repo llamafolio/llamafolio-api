@@ -1,0 +1,31 @@
+{
+  "id": "the-word",
+  "symbol": "twd",
+  "name": "THE WORD",
+  "image": "https://assets.coingecko.com/coins/images/34295/large/20240101_090728.png?1704606367",
+  "current_price": 0.00000362,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 362006,
+  "total_volume": 276.3,
+  "high_24h": 0.0000037,
+  "low_24h": 0.00000352,
+  "price_change_24h": -8.723791596e-9,
+  "price_change_percentage_24h": -0.2404,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000000,
+  "max_supply": 100000000000,
+  "ath": 0.00000639,
+  "ath_change_percentage": -43.37885,
+  "ath_date": "2024-01-15T14:29:37.162Z",
+  "atl": 0.00000163,
+  "atl_change_percentage": 121.97347,
+  "atl_date": "2024-01-12T22:24:42.230Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:22.049Z",
+  "platforms": {
+    "bsc": "0xf00cd9366a13e725ab6764ee6fc8bd21da22786e"
+  }
+}

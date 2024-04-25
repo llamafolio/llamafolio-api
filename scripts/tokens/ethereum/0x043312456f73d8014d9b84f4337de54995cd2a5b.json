@@ -1,0 +1,31 @@
+{
+  "id": "bonk2-0",
+  "symbol": "bonk2.0",
+  "name": "Bonk2.0",
+  "image": "https://assets.coingecko.com/coins/images/33685/large/20231211_114717.jpg?1702731710",
+  "current_price": 2.591e-9,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 259072,
+  "total_volume": 3429.69,
+  "high_24h": 2.902e-9,
+  "low_24h": 2.58e-9,
+  "price_change_24h": -2.61408848e-10,
+  "price_change_percentage_24h": -9.1654,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000000000,
+  "max_supply": 100000000000000,
+  "ath": 2.75615e-7,
+  "ath_change_percentage": -99.06006,
+  "ath_date": "2023-12-16T21:35:00.493Z",
+  "atl": 9.07709e-10,
+  "atl_change_percentage": 185.40275,
+  "atl_date": "2024-02-23T19:00:16.637Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:29.425Z",
+  "platforms": {
+    "ethereum": "0x043312456f73d8014d9b84f4337de54995cd2a5b"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "fancy-games",
+  "symbol": "fnc",
+  "name": "Fancy Games",
+  "image": "https://assets.coingecko.com/coins/images/21367/large/fnc.png?1696520733",
+  "current_price": 0.0009711,
+  "market_cap": 39285,
+  "market_cap_rank": 4043,
+  "fully_diluted_valuation": 971096,
+  "total_volume": 1.43,
+  "high_24h": 0.0009868,
+  "low_24h": 0.0009611,
+  "price_change_24h": -0.000014606821988211,
+  "price_change_percentage_24h": -1.48187,
+  "market_cap_change_24h": -2683.8475243163048,
+  "market_cap_change_percentage_24h": -6.39479,
+  "circulating_supply": 40454705,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 1.1,
+  "ath_change_percentage": -99.91187,
+  "ath_date": "2021-12-27T07:40:53.172Z",
+  "atl": 0.00074244,
+  "atl_change_percentage": 30.79858,
+  "atl_date": "2023-11-30T23:20:32.251Z",
+  "roi": null,
+  "last_updated": "2024-04-25T00:10:52.221Z",
+  "platforms": {
+    "ethereum": "0x7f280dac515121dcda3eac69eb4c13a52392cace"
+  }
+}

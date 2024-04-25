@@ -1,0 +1,31 @@
+{
+  "id": "astrospaces-io",
+  "symbol": "spaces",
+  "name": "AstroSpaces.io",
+  "image": "https://assets.coingecko.com/coins/images/22394/large/logo.jpg?1696521737",
+  "current_price": 4.02977e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 402977,
+  "total_volume": 40.3,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000,
+  "max_supply": null,
+  "ath": 0.00001442,
+  "ath_change_percentage": -97.20494,
+  "ath_date": "2023-01-07T19:54:11.273Z",
+  "atl": 2.88395e-7,
+  "atl_change_percentage": 39.73095,
+  "atl_date": "2023-04-08T11:08:27.752Z",
+  "roi": null,
+  "last_updated": "2023-08-03T07:00:04.172Z",
+  "platforms": {
+    "bsc": "0x156df0dd6300c73ac692d805720967cf4464776e"
+  }
+}

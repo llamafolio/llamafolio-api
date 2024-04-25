@@ -1,0 +1,31 @@
+{
+  "id": "bithash-token",
+  "symbol": "bt",
+  "name": "BitHash",
+  "image": "https://assets.coingecko.com/coins/images/13224/large/bt.png?1696513003",
+  "current_price": 0.47514,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 47621832,
+  "total_volume": 137971,
+  "high_24h": 0.50242,
+  "low_24h": 0.475545,
+  "price_change_24h": -0.025208736652051755,
+  "price_change_percentage_24h": -5.03823,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 3.05,
+  "ath_change_percentage": -84.38712,
+  "ath_date": "2021-09-02T11:34:34.706Z",
+  "atl": 0.128295,
+  "atl_change_percentage": 271.10973,
+  "atl_date": "2020-11-26T08:49:58.711Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:11.084Z",
+  "platforms": {
+    "ethereum": "0x6628606c321faf52b7230a57b26c01b19aa68e82"
+  }
+}

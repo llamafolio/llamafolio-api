@@ -1,0 +1,31 @@
+{
+  "id": "flooring-protocol-azuki",
+  "symbol": "uazuki",
+  "name": "FP μAzuki",
+  "image": "https://assets.coingecko.com/coins/images/32676/large/vsF28_QV_400x400.jpg?1698911738",
+  "current_price": 0.01288695,
+  "market_cap": 2770695,
+  "market_cap_rank": 2109,
+  "fully_diluted_valuation": 2770695,
+  "total_volume": 100.9,
+  "high_24h": 0.01297056,
+  "low_24h": 0.01231425,
+  "price_change_24h": 0.00011901,
+  "price_change_percentage_24h": 0.93213,
+  "market_cap_change_24h": 37866,
+  "market_cap_change_percentage_24h": 1.38559,
+  "circulating_supply": 215000000,
+  "total_supply": 215000000,
+  "max_supply": 10000000000,
+  "ath": 0.02513624,
+  "ath_change_percentage": -48.73158,
+  "ath_date": "2024-02-29T14:35:39.299Z",
+  "atl": 0.00909598,
+  "atl_change_percentage": 41.67748,
+  "atl_date": "2023-11-03T11:24:30.784Z",
+  "roi": null,
+  "last_updated": "2024-04-25T07:57:20.094Z",
+  "platforms": {
+    "ethereum": "0x3acfc40a19520d97648eb7c0891e747b7f2b0283"
+  }
+}

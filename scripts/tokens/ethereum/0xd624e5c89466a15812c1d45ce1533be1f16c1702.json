@@ -1,0 +1,31 @@
+{
+  "id": "ubd-network",
+  "symbol": "ubdn",
+  "name": "UBD Network",
+  "image": "https://assets.coingecko.com/coins/images/33678/large/UBD_Network.png?1702717194",
+  "current_price": 4.04,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 20186964,
+  "total_volume": 429997,
+  "high_24h": 4.38,
+  "low_24h": 4.03,
+  "price_change_24h": -0.322485533261176,
+  "price_change_percentage_24h": -7.39101,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 5001403,
+  "max_supply": null,
+  "ath": 12.78,
+  "ath_change_percentage": -68.39634,
+  "ath_date": "2024-04-11T10:10:24.544Z",
+  "atl": 0.947947,
+  "atl_change_percentage": 326.1,
+  "atl_date": "2024-02-20T01:04:04.434Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:16:00.556Z",
+  "platforms": {
+    "ethereum": "0xd624e5c89466a15812c1d45ce1533be1f16c1702"
+  }
+}

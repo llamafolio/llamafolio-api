@@ -1,0 +1,31 @@
+{
+  "id": "geyser",
+  "symbol": "gysr",
+  "name": "Geyser",
+  "image": "https://assets.coingecko.com/coins/images/12995/large/logo_padded_shifted.png?1696512785",
+  "current_price": 0.089896,
+  "market_cap": 847411,
+  "market_cap_rank": 2773,
+  "fully_diluted_valuation": 898957,
+  "total_volume": 663.37,
+  "high_24h": 0.095935,
+  "low_24h": 0.089767,
+  "price_change_24h": -0.004949329601495495,
+  "price_change_percentage_24h": -5.21833,
+  "market_cap_change_24h": -45120.15540688019,
+  "market_cap_change_percentage_24h": -5.0553,
+  "circulating_supply": 9426598.32445548,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 3136.29,
+  "ath_change_percentage": -99.99713,
+  "ath_date": "2020-11-05T02:30:22.867Z",
+  "atl": 0.02357691,
+  "atl_change_percentage": 281.28707,
+  "atl_date": "2023-10-12T22:53:05.653Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:31.918Z",
+  "platforms": {
+    "polygon": "0xc48f61a288a08f1b80c2edd74652e1276b6a168c"
+  }
+}

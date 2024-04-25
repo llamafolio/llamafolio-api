@@ -1,0 +1,31 @@
+{
+  "id": "onbuff",
+  "symbol": "onit",
+  "name": "ONBUFF",
+  "image": "https://assets.coingecko.com/coins/images/12252/large/d4suDHSzEZjDXc0uxFGPZXfDFp0L1tfoEusBx03zB1bvMLLbxa7Yq5naXAOutkirIlLXacFRRebX_hF2Ez69_fIPUfr2LuN0Z_UrXTLYds4aT95C6eHGXsZnezMHKAaOmjLpKto0xPTiYkXExvEvXrqL7O_J1wecb4eJsgwCoVprMLpm89BdKO9IyMmpNsfbW7JJFMiHgL8vq9fPhaeEi.jpg?1696512083",
+  "current_price": 0.03675941,
+  "market_cap": 28307515,
+  "market_cap_rank": 943,
+  "fully_diluted_valuation": 28307515,
+  "total_volume": 1340221,
+  "high_24h": 0.04049597,
+  "low_24h": 0.03646731,
+  "price_change_24h": -0.003118673691966348,
+  "price_change_percentage_24h": -7.82052,
+  "market_cap_change_24h": -2421187.0108147115,
+  "market_cap_change_percentage_24h": -7.87924,
+  "circulating_supply": 770075466,
+  "total_supply": 770075466,
+  "max_supply": 789885600,
+  "ath": 0.778144,
+  "ath_change_percentage": -95.23396,
+  "ath_date": "2020-09-08T00:12:22.866Z",
+  "atl": 0.02152274,
+  "atl_change_percentage": 72.31364,
+  "atl_date": "2021-01-04T10:20:06.459Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:43.159Z",
+  "platforms": {
+    "ethereum": "0x410e731c2970dce3add351064acf5ce9e33fdbf0"
+  }
+}

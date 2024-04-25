@@ -1,0 +1,31 @@
+{
+  "id": "boxbet",
+  "symbol": "bxbt",
+  "name": "BoxBet",
+  "image": "https://assets.coingecko.com/coins/images/32495/large/logo.png?1706725462",
+  "current_price": 0.211781,
+  "market_cap": 16258367,
+  "market_cap_rank": 1209,
+  "fully_diluted_valuation": 20293392,
+  "total_volume": 61887,
+  "high_24h": 0.257067,
+  "low_24h": 0.212104,
+  "price_change_24h": -0.04393035337296214,
+  "price_change_percentage_24h": -17.17965,
+  "market_cap_change_24h": -3438503.716137521,
+  "market_cap_change_percentage_24h": -17.45711,
+  "circulating_supply": 76769660.17924088,
+  "total_supply": 95822464.14218953,
+  "max_supply": 100000000,
+  "ath": 0.270894,
+  "ath_change_percentage": -21.70237,
+  "ath_date": "2024-04-22T06:30:08.653Z",
+  "atl": 0.01924149,
+  "atl_change_percentage": 1002.32603,
+  "atl_date": "2023-12-05T08:45:52.269Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:51:28.412Z",
+  "platforms": {
+    "ethereum": "0x33f289d91286535c47270c8479f6776fb3adeb3e"
+  }
+}

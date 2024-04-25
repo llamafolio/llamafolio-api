@@ -1,0 +1,31 @@
+{
+  "id": "first-digital-usd",
+  "symbol": "fdusd",
+  "name": "First Digital USD",
+  "image": "https://assets.coingecko.com/coins/images/31079/large/firstfigital.jpeg?1696529912",
+  "current_price": 1.003,
+  "market_cap": 4419464760,
+  "market_cap_rank": 26,
+  "fully_diluted_valuation": 4419464760,
+  "total_volume": 9837362716,
+  "high_24h": 1.005,
+  "low_24h": 0.992183,
+  "price_change_24h": 0.00334765,
+  "price_change_percentage_24h": 0.33488,
+  "market_cap_change_24h": 223946855,
+  "market_cap_change_percentage_24h": 5.33776,
+  "circulating_supply": 4406775065.04,
+  "total_supply": 4406775065.04,
+  "max_supply": null,
+  "ath": 1.041,
+  "ath_change_percentage": -4.07983,
+  "ath_date": "2023-10-23T22:55:15.103Z",
+  "atl": 0.942129,
+  "atl_change_percentage": 6.02154,
+  "atl_date": "2023-08-17T21:55:41.478Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:21.455Z",
+  "platforms": {
+    "ethereum": "0xc5f0f7b66764f6ec8c8dff7ba683102295e16409"
+  }
+}

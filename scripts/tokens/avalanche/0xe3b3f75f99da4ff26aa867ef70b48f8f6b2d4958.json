@@ -1,0 +1,31 @@
+{
+  "id": "megaweapon",
+  "symbol": "$weapon",
+  "name": "Megaweapon",
+  "image": "https://assets.coingecko.com/coins/images/20833/large/weapon.png?1696520226",
+  "current_price": 0.769128,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 7531458,
+  "total_volume": 18808.2,
+  "high_24h": 0.885813,
+  "low_24h": 0.76441,
+  "price_change_24h": -0.10662449997010282,
+  "price_change_percentage_24h": -12.17518,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 9839945,
+  "max_supply": 10000000,
+  "ath": 5.01,
+  "ath_change_percentage": -84.70776,
+  "ath_date": "2022-04-07T04:41:24.551Z",
+  "atl": 3.721e-9,
+  "atl_change_percentage": 20568784976.41999,
+  "atl_date": "2022-04-05T04:51:54.917Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:48.989Z",
+  "platforms": {
+    "avalanche": "0xe3b3f75f99da4ff26aa867ef70b48f8f6b2d4958"
+  }
+}

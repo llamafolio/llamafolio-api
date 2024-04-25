@@ -1,0 +1,31 @@
+{
+  "id": "derace",
+  "symbol": "derc",
+  "name": "DeRace",
+  "image": "https://assets.coingecko.com/coins/images/17438/large/DERC_logo_coingecko.png?1696516984",
+  "current_price": 0.290593,
+  "market_cap": 34875511,
+  "market_cap_rank": 845,
+  "fully_diluted_valuation": 34875511,
+  "total_volume": 1104834,
+  "high_24h": 0.310115,
+  "low_24h": 0.269968,
+  "price_change_24h": 0.01757882,
+  "price_change_percentage_24h": 6.43879,
+  "market_cap_change_24h": 2041171,
+  "market_cap_change_percentage_24h": 6.21657,
+  "circulating_supply": 120000000,
+  "total_supply": 120000000,
+  "max_supply": 120000000,
+  "ath": 8.24,
+  "ath_change_percentage": -96.46467,
+  "ath_date": "2021-11-25T23:04:24.757Z",
+  "atl": 0.106435,
+  "atl_change_percentage": 173.72486,
+  "atl_date": "2022-11-21T09:08:07.695Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:34.428Z",
+  "platforms": {
+    "polygon": "0xb35fcbcf1fd489fce02ee146599e893fdcdc60e6"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "landwolf",
+  "symbol": "wolf",
+  "name": "LandWolf",
+  "image": "https://assets.coingecko.com/coins/images/30982/large/landwolf.jpg?1696529821",
+  "current_price": 0.00071036,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 298011,
+  "total_volume": 7061.24,
+  "high_24h": 0.00077107,
+  "low_24h": 0.00070535,
+  "price_change_24h": -0.000046521957939581,
+  "price_change_percentage_24h": -6.1465,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 420690000,
+  "max_supply": 420690000,
+  "ath": 0.01537975,
+  "ath_change_percentage": -95.38118,
+  "ath_date": "2023-07-16T01:28:18.047Z",
+  "atl": 0.00000259,
+  "atl_change_percentage": 27276.95088,
+  "atl_date": "2024-01-15T05:13:23.874Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:59.779Z",
+  "platforms": {
+    "ethereum": "0xf6afc05fccea5a53f22a3e39ffee861e016bd9a0"
+  }
+}

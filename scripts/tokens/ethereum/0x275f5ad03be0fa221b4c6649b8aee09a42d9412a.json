@@ -1,0 +1,31 @@
+{
+  "id": "monavale",
+  "symbol": "mona",
+  "name": "Monavale",
+  "image": "https://assets.coingecko.com/coins/images/13298/large/monavale_logo.jpg?1696513070",
+  "current_price": 147.75,
+  "market_cap": 1540776,
+  "market_cap_rank": 2441,
+  "fully_diluted_valuation": 1669597,
+  "total_volume": 154.4,
+  "high_24h": 160.67,
+  "low_24h": 147.46,
+  "price_change_24h": -11.22679840696452,
+  "price_change_percentage_24h": -7.06182,
+  "market_cap_change_24h": -117074.48597681243,
+  "market_cap_change_percentage_24h": -7.06182,
+  "circulating_supply": 10428.12756878095,
+  "total_supply": 11300,
+  "max_supply": 11300,
+  "ath": 2843.59,
+  "ath_change_percentage": -94.80403,
+  "ath_date": "2021-03-20T03:07:37.893Z",
+  "atl": 116.16,
+  "atl_change_percentage": 27.19899,
+  "atl_date": "2024-04-14T14:37:31.448Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:49.278Z",
+  "platforms": {
+    "ethereum": "0x275f5ad03be0fa221b4c6649b8aee09a42d9412a"
+  }
+}

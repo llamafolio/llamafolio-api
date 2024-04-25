@@ -1,0 +1,31 @@
+{
+  "id": "defiato",
+  "symbol": "dfiat",
+  "name": "DeFiato",
+  "image": "https://assets.coingecko.com/coins/images/13386/large/Defiato.png?1696513149",
+  "current_price": 0.00176105,
+  "market_cap": 260708,
+  "market_cap_rank": 3375,
+  "fully_diluted_valuation": 440263,
+  "total_volume": 1.55,
+  "high_24h": 0.00193911,
+  "low_24h": 0.00175778,
+  "price_change_24h": -0.000178055658327337,
+  "price_change_percentage_24h": -9.18235,
+  "market_cap_change_24h": -25546.999086525146,
+  "market_cap_change_percentage_24h": -8.92455,
+  "circulating_supply": 148041250,
+  "total_supply": 250000000,
+  "max_supply": 250000000,
+  "ath": 0.186609,
+  "ath_change_percentage": -99.05629,
+  "ath_date": "2022-03-13T22:39:38.261Z",
+  "atl": 0.00121332,
+  "atl_change_percentage": 45.14289,
+  "atl_date": "2021-02-12T20:31:57.446Z",
+  "roi": null,
+  "last_updated": "2024-04-25T06:06:18.363Z",
+  "platforms": {
+    "avalanche": "0xafe3d2a31231230875dee1fa1eef14a412443d22"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "ureeqa",
+  "symbol": "urqa",
+  "name": "UREEQA",
+  "image": "https://assets.coingecko.com/coins/images/14605/large/R_O2enOX_400x400.png?1696514283",
+  "current_price": 0.01642099,
+  "market_cap": 667533,
+  "market_cap_rank": 2913,
+  "fully_diluted_valuation": 1642099,
+  "total_volume": 44886,
+  "high_24h": 0.01809696,
+  "low_24h": 0.01497549,
+  "price_change_24h": -0.001258417183172076,
+  "price_change_percentage_24h": -7.11798,
+  "market_cap_change_24h": -51156.19376490812,
+  "market_cap_change_percentage_24h": -7.11798,
+  "circulating_supply": 40651220,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 7.66,
+  "ath_change_percentage": -99.78588,
+  "ath_date": "2021-04-01T16:55:09.023Z",
+  "atl": 0.00623017,
+  "atl_change_percentage": 163.25571,
+  "atl_date": "2023-10-13T23:04:28.124Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:42.182Z",
+  "platforms": {
+    "avalanche": "0xbd3936ec8d83a5d4e73eca625ecfa006da8c8f52"
+  }
+}

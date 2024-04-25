@@ -1,0 +1,31 @@
+{
+  "id": "aave-v3-sdai",
+  "symbol": "asdai",
+  "name": "Aave v3 sDAI",
+  "image": "https://assets.coingecko.com/coins/images/32891/large/sdai.png?1699785595",
+  "current_price": 0.999797,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 0,
+  "high_24h": 1,
+  "low_24h": 0.999715,
+  "price_change_24h": -0.000237010000000093,
+  "price_change_percentage_24h": -0.0237,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.003,
+  "ath_change_percentage": -0.28453,
+  "ath_date": "2023-12-09T14:25:01.131Z",
+  "atl": 0.561068,
+  "atl_change_percentage": 78.19539,
+  "atl_date": "2023-11-14T10:00:03.915Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:10:33.859Z",
+  "platforms": {
+    "ethereum": "0x4c612e3b15b96ff9a6faed838f8d07d479a8dd4c"
+  }
+}

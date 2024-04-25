@@ -1,0 +1,31 @@
+{
+  "id": "scat",
+  "symbol": "cat",
+  "name": "Scat",
+  "image": "https://assets.coingecko.com/coins/images/30429/large/output-onlinepngtools.png?1696529317",
+  "current_price": 2.42776e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 647.15,
+  "high_24h": 2.57552e-10,
+  "low_24h": 2.42194e-10,
+  "price_change_24h": -1.2584036e-11,
+  "price_change_percentage_24h": -4.92796,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": 420,
+  "ath": 1.656e-9,
+  "ath_change_percentage": -85.34319,
+  "ath_date": "2024-02-07T17:56:14.397Z",
+  "atl": 7.7482e-11,
+  "atl_change_percentage": 213.33073,
+  "atl_date": "2023-10-14T12:46:38.932Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:01:57.565Z",
+  "platforms": {
+    "ethereum": "0x02d7a93829b365b7ad4c582dace1493aac50a290"
+  }
+}

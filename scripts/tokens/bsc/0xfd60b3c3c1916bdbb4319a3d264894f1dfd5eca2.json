@@ -1,0 +1,31 @@
+{
+  "id": "coinnavigator",
+  "symbol": "cng",
+  "name": "CoinNavigator",
+  "image": "https://assets.coingecko.com/coins/images/34842/large/cng-cg.jpg?1706245068",
+  "current_price": 3.83,
+  "market_cap": 3940696,
+  "market_cap_rank": 1920,
+  "fully_diluted_valuation": 3825918038,
+  "total_volume": 101088,
+  "high_24h": 4.01,
+  "low_24h": 3.82,
+  "price_change_24h": -0.15833178600279885,
+  "price_change_percentage_24h": -3.9687,
+  "market_cap_change_24h": -174414.80283561768,
+  "market_cap_change_percentage_24h": -4.2384,
+  "circulating_supply": 1030000,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 4.57,
+  "ath_change_percentage": -15.26479,
+  "ath_date": "2024-02-27T07:52:56.678Z",
+  "atl": 0.962665,
+  "atl_change_percentage": 302.13699,
+  "atl_date": "2024-02-02T03:51:45.488Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:57.377Z",
+  "platforms": {
+    "bsc": "0xfd60b3c3c1916bdbb4319a3d264894f1dfd5eca2"
+  }
+}

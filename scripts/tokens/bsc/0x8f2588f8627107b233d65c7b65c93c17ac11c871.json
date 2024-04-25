@@ -1,0 +1,31 @@
+{
+  "id": "astro-pepe",
+  "symbol": "astropepe",
+  "name": "Astro Pepe",
+  "image": "https://assets.coingecko.com/coins/images/30350/large/our_logo.png?1696529250",
+  "current_price": 1.71738e-10,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 72248,
+  "total_volume": 29609,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 420690000000000,
+  "max_supply": 420690000000000,
+  "ath": 4.96137e-10,
+  "ath_change_percentage": -65.38495,
+  "ath_date": "2023-05-16T09:40:04.874Z",
+  "atl": 1.7051e-10,
+  "atl_change_percentage": 0.72015,
+  "atl_date": "2023-05-18T18:30:02.228Z",
+  "roi": null,
+  "last_updated": "2023-05-18T20:30:05.027Z",
+  "platforms": {
+    "bsc": "0x8f2588f8627107b233d65c7b65c93c17ac11c871"
+  }
+}

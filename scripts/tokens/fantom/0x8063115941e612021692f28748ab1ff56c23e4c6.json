@@ -1,0 +1,31 @@
+{
+  "id": "pepemon-pepeballs",
+  "symbol": "ppblz",
+  "name": "Pepemon Pepeballs",
+  "image": "https://assets.coingecko.com/coins/images/12823/large/200pepebball-BIG.png?1696512615",
+  "current_price": 31.02,
+  "market_cap": 434244,
+  "market_cap_rank": 3135,
+  "fully_diluted_valuation": 434244,
+  "total_volume": 251.61,
+  "high_24h": 31.92,
+  "low_24h": 30.75,
+  "price_change_24h": -0.9029740372617212,
+  "price_change_percentage_24h": -2.82883,
+  "market_cap_change_24h": -14474.258408719732,
+  "market_cap_change_percentage_24h": -3.22569,
+  "circulating_supply": 14000,
+  "total_supply": 14000,
+  "max_supply": null,
+  "ath": 460.7,
+  "ath_change_percentage": -93.26738,
+  "ath_date": "2021-03-13T23:51:35.272Z",
+  "atl": 9.34,
+  "atl_change_percentage": 232.20014,
+  "atl_date": "2024-01-10T16:05:33.662Z",
+  "roi": null,
+  "last_updated": "2024-04-24T22:08:37.267Z",
+  "platforms": {
+    "fantom": "0x8063115941e612021692f28748ab1ff56c23e4c6"
+  }
+}

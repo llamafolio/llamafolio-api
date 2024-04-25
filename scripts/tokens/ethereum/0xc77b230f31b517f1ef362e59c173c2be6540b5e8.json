@@ -1,0 +1,35 @@
+{
+  "id": "vidy",
+  "symbol": "vidy",
+  "name": "VIDY",
+  "image": "https://assets.coingecko.com/coins/images/5088/large/vidy-logo.jpg?1696505610",
+  "current_price": 0.00002213,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 221284,
+  "total_volume": 22030,
+  "high_24h": 0.00002228,
+  "low_24h": 0.00002206,
+  "price_change_24h": -1.02568382012e-7,
+  "price_change_percentage_24h": -0.46137,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": null,
+  "ath": 0.00832861,
+  "ath_change_percentage": -99.73478,
+  "ath_date": "2021-04-05T16:20:43.651Z",
+  "atl": 0.00001907,
+  "atl_change_percentage": 15.84032,
+  "atl_date": "2024-04-13T22:09:32.232Z",
+  "roi": {
+    "times": -0.9955742229996102,
+    "currency": "usd",
+    "percentage": -99.55742229996102
+  },
+  "last_updated": "2024-04-25T09:14:42.793Z",
+  "platforms": {
+    "ethereum": "0xc77b230f31b517f1ef362e59c173c2be6540b5e8"
+  }
+}

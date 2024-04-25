@@ -1,0 +1,31 @@
+{
+  "id": "xwin-finance",
+  "symbol": "xwin",
+  "name": "xWIN Finance",
+  "image": "https://assets.coingecko.com/coins/images/15400/large/200x200_%28transparent_background%29.png?1696515046",
+  "current_price": 0.05003,
+  "market_cap": 534735,
+  "market_cap_rank": 3033,
+  "fully_diluted_valuation": 3054015,
+  "total_volume": 1016.24,
+  "high_24h": 0.051735,
+  "low_24h": 0.04957764,
+  "price_change_24h": -0.000704104967845169,
+  "price_change_percentage_24h": -1.38782,
+  "market_cap_change_24h": -8872.509310052148,
+  "market_cap_change_percentage_24h": -1.63215,
+  "circulating_supply": 10680645.4324002,
+  "total_supply": 61000000,
+  "max_supply": 100000000,
+  "ath": 10.61,
+  "ath_change_percentage": -99.52891,
+  "ath_date": "2021-05-12T05:33:26.560Z",
+  "atl": 0.0484574,
+  "atl_change_percentage": 3.12854,
+  "atl_date": "2024-04-19T02:50:49.799Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:51.560Z",
+  "platforms": {
+    "bsc": "0xd88ca08d8eec1e9e09562213ae83a7853ebb5d28"
+  }
+}

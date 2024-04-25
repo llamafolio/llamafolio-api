@@ -1,0 +1,31 @@
+{
+  "id": "oolong",
+  "symbol": "ウーロン",
+  "name": "OoLong",
+  "image": "https://assets.coingecko.com/coins/images/32627/large/rabbit2_200x200.png?1698822914",
+  "current_price": 0.0000118,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 11799.06,
+  "total_volume": 80.25,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.00015359,
+  "ath_change_percentage": -92.31795,
+  "ath_date": "2023-11-01T08:54:42.312Z",
+  "atl": 0.00001059,
+  "atl_change_percentage": 11.43193,
+  "atl_date": "2023-11-21T18:29:41.021Z",
+  "roi": null,
+  "last_updated": "2024-02-07T03:27:31.276Z",
+  "platforms": {
+    "ethereum": "0xde47a2460e4b6c36b26919ef9255b4f3f86de0a0"
+  }
+}

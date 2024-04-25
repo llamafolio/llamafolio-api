@@ -1,0 +1,31 @@
+{
+  "id": "thoreum-v2",
+  "symbol": "thoreum",
+  "name": "Thoreum V3",
+  "image": "https://assets.coingecko.com/coins/images/22759/large/Thoreum_V3_logo_200x200.png?1696522062",
+  "current_price": 11811.97,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 590598368598,
+  "total_volume": 12.33,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 50000000,
+  "max_supply": 50000000,
+  "ath": 15322.56,
+  "ath_change_percentage": -22.91124,
+  "ath_date": "2024-03-10T12:23:38.382Z",
+  "atl": 0.00119083,
+  "atl_change_percentage": 991907736.42911,
+  "atl_date": "2023-01-19T05:39:59.815Z",
+  "roi": null,
+  "last_updated": "2024-04-21T15:01:24.564Z",
+  "platforms": {
+    "bsc": "0xce1b3e5087e8215876af976032382dd338cf8401"
+  }
+}

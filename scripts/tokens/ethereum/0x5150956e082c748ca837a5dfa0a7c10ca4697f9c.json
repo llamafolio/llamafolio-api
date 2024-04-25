@@ -1,0 +1,31 @@
+{
+  "id": "zeedex",
+  "symbol": "zdex",
+  "name": "Zeedex",
+  "image": "https://assets.coingecko.com/coins/images/12412/large/Untitled-design-4.png?1696512234",
+  "current_price": 0.00836591,
+  "market_cap": 55053,
+  "market_cap_rank": 3963,
+  "fully_diluted_valuation": 83659,
+  "total_volume": 7.06,
+  "high_24h": 0.01183367,
+  "low_24h": 0.00834926,
+  "price_change_24h": -0.003463510968417343,
+  "price_change_percentage_24h": -29.27878,
+  "market_cap_change_24h": -22792.1534543156,
+  "market_cap_change_percentage_24h": -29.27878,
+  "circulating_supply": 6580650,
+  "total_supply": 10000000,
+  "max_supply": null,
+  "ath": 2.88,
+  "ath_change_percentage": -99.70981,
+  "ath_date": "2021-03-02T09:56:55.877Z",
+  "atl": 0.00130422,
+  "atl_change_percentage": 541.45021,
+  "atl_date": "2024-03-09T00:57:10.382Z",
+  "roi": null,
+  "last_updated": "2024-04-25T01:14:29.300Z",
+  "platforms": {
+    "ethereum": "0x5150956e082c748ca837a5dfa0a7c10ca4697f9c"
+  }
+}

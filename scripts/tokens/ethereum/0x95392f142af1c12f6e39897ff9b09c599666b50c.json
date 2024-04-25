@@ -1,0 +1,31 @@
+{
+  "id": "impostors-blood",
+  "symbol": "blood",
+  "name": "Impostors Blood",
+  "image": "https://assets.coingecko.com/coins/images/25527/large/RV4nKK2RDO47XzfSLgGs_llgXivhdfpI3tso0.png?1696524659",
+  "current_price": 0.02290132,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 4580264,
+  "total_volume": 693.44,
+  "high_24h": 0.02410419,
+  "low_24h": 0.02282176,
+  "price_change_24h": -0.000978033358074414,
+  "price_change_percentage_24h": -4.09573,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 200000000,
+  "max_supply": 200000000,
+  "ath": 0.125296,
+  "ath_change_percentage": -81.78442,
+  "ath_date": "2022-05-11T10:03:51.332Z",
+  "atl": 0.00969816,
+  "atl_change_percentage": 135.33794,
+  "atl_date": "2022-12-30T12:19:31.136Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:47.750Z",
+  "platforms": {
+    "ethereum": "0x95392f142af1c12f6e39897ff9b09c599666b50c"
+  }
+}

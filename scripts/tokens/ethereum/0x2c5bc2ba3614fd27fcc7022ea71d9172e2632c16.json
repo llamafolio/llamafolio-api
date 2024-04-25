@@ -1,0 +1,31 @@
+{
+  "id": "shib-original-vision",
+  "symbol": "sov",
+  "name": "Shib Original Vision",
+  "image": "https://assets.coingecko.com/coins/images/29601/large/photo_2023-03-19_19-07-40_2.png?1696528539",
+  "current_price": 4.742e-9,
+  "market_cap": 537520,
+  "market_cap_rank": 3029,
+  "fully_diluted_valuation": 951044,
+  "total_volume": 637.73,
+  "high_24h": 5.106e-9,
+  "low_24h": 4.735e-9,
+  "price_change_24h": -3.07932122e-10,
+  "price_change_percentage_24h": -6.09717,
+  "market_cap_change_24h": -35928.08662015223,
+  "market_cap_change_percentage_24h": -6.26527,
+  "circulating_supply": 113437057530578,
+  "total_supply": 200706133340071,
+  "max_supply": 200706133340071,
+  "ath": 4.30741e-7,
+  "ath_change_percentage": -98.87646,
+  "ath_date": "2023-04-15T17:11:48.252Z",
+  "atl": 2.883e-9,
+  "atl_change_percentage": 67.83695,
+  "atl_date": "2024-01-15T23:19:44.267Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:56:57.435Z",
+  "platforms": {
+    "ethereum": "0x2c5bc2ba3614fd27fcc7022ea71d9172e2632c16"
+  }
+}

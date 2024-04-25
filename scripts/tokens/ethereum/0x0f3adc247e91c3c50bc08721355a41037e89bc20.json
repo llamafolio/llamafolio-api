@@ -1,0 +1,31 @@
+{
+  "id": "anchor-protocol",
+  "symbol": "anc",
+  "name": "Anchor Protocol",
+  "image": "https://assets.coingecko.com/coins/images/14420/large/anchor_protocol_logo.jpg?1696514111",
+  "current_price": 0.01841798,
+  "market_cap": 6515765,
+  "market_cap_rank": 1663,
+  "fully_diluted_valuation": 18595785,
+  "total_volume": 124039,
+  "high_24h": 0.02029782,
+  "low_24h": 0.01839323,
+  "price_change_24h": -0.001825329390228496,
+  "price_change_percentage_24h": -9.01695,
+  "market_cap_change_24h": -528887.762555059,
+  "market_cap_change_percentage_24h": -7.50765,
+  "circulating_supply": 350389360.084083,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 8.23,
+  "ath_change_percentage": -99.77372,
+  "ath_date": "2021-03-19T08:34:07.726Z",
+  "atl": 0.00480209,
+  "atl_change_percentage": 287.856,
+  "atl_date": "2023-06-20T20:05:18.432Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:09.564Z",
+  "platforms": {
+    "ethereum": "0x0f3adc247e91c3c50bc08721355a41037e89bc20"
+  }
+}

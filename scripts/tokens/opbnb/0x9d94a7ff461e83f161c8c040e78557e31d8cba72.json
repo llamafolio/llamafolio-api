@@ -1,0 +1,31 @@
+{
+  "id": "thena",
+  "symbol": "the",
+  "name": "Thena",
+  "image": "https://assets.coingecko.com/coins/images/28864/large/Symbol-Color200x200.png?1706810126",
+  "current_price": 0.515345,
+  "market_cap": 14136621,
+  "market_cap_rank": 1278,
+  "fully_diluted_valuation": 76683732,
+  "total_volume": 1332518,
+  "high_24h": 0.529536,
+  "low_24h": 0.431572,
+  "price_change_24h": 0.072706,
+  "price_change_percentage_24h": 16.42566,
+  "market_cap_change_24h": 1939800,
+  "market_cap_change_percentage_24h": 15.90414,
+  "circulating_supply": 27561116.8537912,
+  "total_supply": 149504563.355005,
+  "max_supply": null,
+  "ath": 0.995914,
+  "ath_change_percentage": -48.34615,
+  "ath_date": "2023-02-20T13:31:21.034Z",
+  "atl": 0.057204,
+  "atl_change_percentage": 799.28086,
+  "atl_date": "2023-09-02T06:00:24.381Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:46.400Z",
+  "platforms": {
+    "opbnb": "0x9d94a7ff461e83f161c8c040e78557e31d8cba72"
+  }
+}

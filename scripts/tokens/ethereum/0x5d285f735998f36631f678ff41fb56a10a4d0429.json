@@ -1,0 +1,31 @@
+{
+  "id": "mixmarvel",
+  "symbol": "mix",
+  "name": "MixMarvel",
+  "image": "https://assets.coingecko.com/coins/images/8222/large/8878caf93b1e3b6cfb3b414bda3b5250.png?1696508428",
+  "current_price": 0.00218807,
+  "market_cap": 15253970,
+  "market_cap_rank": 1244,
+  "fully_diluted_valuation": 21842724,
+  "total_volume": 664763,
+  "high_24h": 0.00231113,
+  "low_24h": 0.00212135,
+  "price_change_24h": -0.000088611232895629,
+  "price_change_percentage_24h": -3.89212,
+  "market_cap_change_24h": -525186.7883926649,
+  "market_cap_change_percentage_24h": -3.32836,
+  "circulating_supply": 6983547550,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.146095,
+  "ath_change_percentage": -98.50457,
+  "ath_date": "2019-05-10T08:31:33.322Z",
+  "atl": 0.00083474,
+  "atl_change_percentage": 161.72711,
+  "atl_date": "2023-09-25T03:02:24.765Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:58.880Z",
+  "platforms": {
+    "ethereum": "0x5d285f735998f36631f678ff41fb56a10a4d0429"
+  }
+}

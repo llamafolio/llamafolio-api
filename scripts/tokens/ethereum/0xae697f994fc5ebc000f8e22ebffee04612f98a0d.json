@@ -1,0 +1,31 @@
+{
+  "id": "lgcy-network",
+  "symbol": "lgcy",
+  "name": "LGCY Network",
+  "image": "https://assets.coingecko.com/coins/images/12181/large/LGCY_network.jpg?1696512018",
+  "current_price": 0.0001346,
+  "market_cap": 1656318,
+  "market_cap_rank": 2401,
+  "fully_diluted_valuation": 6814652,
+  "total_volume": 28703,
+  "high_24h": 0.00017288,
+  "low_24h": 0.00012804,
+  "price_change_24h": -0.000036005291438948,
+  "price_change_percentage_24h": -21.10459,
+  "market_cap_change_24h": -443066.4441891059,
+  "market_cap_change_percentage_24h": -21.10459,
+  "circulating_supply": 12305592497.157898,
+  "total_supply": 50629368480.730576,
+  "max_supply": 100000000000,
+  "ath": 0.02085432,
+  "ath_change_percentage": -99.35458,
+  "ath_date": "2021-09-14T15:58:54.668Z",
+  "atl": 0.00008113,
+  "atl_change_percentage": 65.91469,
+  "atl_date": "2023-08-23T06:11:25.691Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:41.355Z",
+  "platforms": {
+    "ethereum": "0xae697f994fc5ebc000f8e22ebffee04612f98a0d"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "cat-cat-token",
+  "symbol": "cat",
+  "name": "Cat",
+  "image": "https://assets.coingecko.com/coins/images/28447/large/IMG_20221207_032252_321.jpg?1696527442",
+  "current_price": 1.275e-9,
+  "market_cap": 983868,
+  "market_cap_rank": 2695,
+  "fully_diluted_valuation": 1263964,
+  "total_volume": 61220,
+  "high_24h": 1.433e-9,
+  "low_24h": 1.255e-9,
+  "price_change_24h": -1.20679591e-10,
+  "price_change_percentage_24h": -8.64372,
+  "market_cap_change_24h": -113743.96661652823,
+  "market_cap_change_percentage_24h": -10.36286,
+  "circulating_supply": 769808175973405,
+  "total_supply": 988963945853091,
+  "max_supply": 1000000000000000,
+  "ath": 7.953e-9,
+  "ath_change_percentage": -83.98329,
+  "ath_date": "2024-03-27T06:30:56.791Z",
+  "atl": 8.2299e-11,
+  "atl_change_percentage": 1447.81676,
+  "atl_date": "2022-12-10T08:50:20.482Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:47.751Z",
+  "platforms": {
+    "bsc": "0x0173295183685f27c84db046b5f0bea3e683c24b"
+  }
+}

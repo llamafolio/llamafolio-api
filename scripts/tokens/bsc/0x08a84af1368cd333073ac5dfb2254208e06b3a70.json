@@ -1,0 +1,31 @@
+{
+  "id": "marumarunft",
+  "symbol": "maru",
+  "name": "marumaruNFT",
+  "image": "https://assets.coingecko.com/coins/images/27672/large/90e23f86-426d-4a0f-9d66-10da3d58baf5.png?1696526700",
+  "current_price": 0.03929016,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 78580314,
+  "total_volume": 111743,
+  "high_24h": 0.04539295,
+  "low_24h": 0.03878495,
+  "price_change_24h": -0.005391735574053419,
+  "price_change_percentage_24h": -12.06694,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 2000000000,
+  "max_supply": 2000000000,
+  "ath": 0.283437,
+  "ath_change_percentage": -86.23456,
+  "ath_date": "2023-05-26T03:54:38.954Z",
+  "atl": 0.00462989,
+  "atl_change_percentage": 742.70435,
+  "atl_date": "2022-12-17T02:29:18.340Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:26.314Z",
+  "platforms": {
+    "bsc": "0x08a84af1368cd333073ac5dfb2254208e06b3a70"
+  }
+}

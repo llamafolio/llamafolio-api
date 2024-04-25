@@ -1,0 +1,31 @@
+{
+  "id": "vyvo-us-dollar",
+  "symbol": "usdv",
+  "name": "Vyvo US Dollar",
+  "image": "https://assets.coingecko.com/coins/images/31718/large/_USDV_Solid%28200x200%29.png?1696530539",
+  "current_price": 0.998726,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 10.44,
+  "high_24h": 1.001,
+  "low_24h": 0.995842,
+  "price_change_24h": -0.00187199570614327,
+  "price_change_percentage_24h": -0.18709,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.43,
+  "ath_change_percentage": -30.28159,
+  "ath_date": "2023-11-01T09:27:22.227Z",
+  "atl": 0.959184,
+  "atl_change_percentage": 4.12252,
+  "atl_date": "2024-02-28T17:34:15.963Z",
+  "roi": null,
+  "last_updated": "2024-04-25T00:27:03.928Z",
+  "platforms": {
+    "bsc": "0x9a5350edf28c1f93bb36d6e94b5c425fde8e222d"
+  }
+}

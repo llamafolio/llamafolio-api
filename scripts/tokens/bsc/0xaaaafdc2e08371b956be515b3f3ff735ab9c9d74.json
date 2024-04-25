@@ -1,0 +1,35 @@
+{
+  "id": "azbit",
+  "symbol": "az",
+  "name": "Azbit",
+  "image": "https://assets.coingecko.com/coins/images/4504/large/azbit200x200.png?1696505089",
+  "current_price": 0.00000731,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 995831,
+  "total_volume": 16072.27,
+  "high_24h": 0.00000733,
+  "low_24h": 0.0000067,
+  "price_change_24h": 1.96154e-7,
+  "price_change_percentage_24h": 2.75841,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 138888888888,
+  "max_supply": 138888888888,
+  "ath": 0.00966724,
+  "ath_change_percentage": -99.92587,
+  "ath_date": "2019-09-06T01:58:02.757Z",
+  "atl": 4.9926e-8,
+  "atl_change_percentage": 14253.66292,
+  "atl_date": "2022-05-12T20:14:30.911Z",
+  "roi": {
+    "times": -0.9391060956111213,
+    "currency": "usd",
+    "percentage": -93.91060956111212
+  },
+  "last_updated": "2024-04-25T09:12:53.259Z",
+  "platforms": {
+    "bsc": "0xaaaafdc2e08371b956be515b3f3ff735ab9c9d74"
+  }
+}

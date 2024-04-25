@@ -1,0 +1,31 @@
+{
+  "id": "good-games-guild",
+  "symbol": "ggg",
+  "name": "Good Games Guild",
+  "image": "https://assets.coingecko.com/coins/images/19269/large/Logo_%282%29_%281%29.jpg?1696518713",
+  "current_price": 0.075394,
+  "market_cap": 3009444,
+  "market_cap_rank": 2062,
+  "fully_diluted_valuation": 7523609,
+  "total_volume": 507570,
+  "high_24h": 0.099328,
+  "low_24h": 0.073563,
+  "price_change_24h": -0.022682209446565155,
+  "price_change_percentage_24h": -23.12719,
+  "market_cap_change_24h": -947099.5304410267,
+  "market_cap_change_percentage_24h": -23.93755,
+  "circulating_supply": 40000000,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 16.86,
+  "ath_change_percentage": -99.54787,
+  "ath_date": "2021-11-25T00:43:03.630Z",
+  "atl": 0.03036038,
+  "atl_change_percentage": 151.10434,
+  "atl_date": "2022-12-28T21:23:17.002Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:41.610Z",
+  "platforms": {
+    "bsc": "0xd8047afecb86e44eff3add991b9f063ed4ca716b"
+  }
+}

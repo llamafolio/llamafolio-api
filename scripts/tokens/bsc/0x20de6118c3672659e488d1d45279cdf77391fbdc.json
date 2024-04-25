@@ -1,0 +1,31 @@
+{
+  "id": "bidz-coin",
+  "symbol": "bidz",
+  "name": "BIDZ Coin",
+  "image": "https://assets.coingecko.com/coins/images/26177/large/O99u27zU_400x400.png?1696525265",
+  "current_price": 0.01041453,
+  "market_cap": 10342881,
+  "market_cap_rank": 1424,
+  "fully_diluted_valuation": 144241279,
+  "total_volume": 83273,
+  "high_24h": 0.01133249,
+  "low_24h": 0.01013836,
+  "price_change_24h": -0.000852122944052512,
+  "price_change_percentage_24h": -7.56323,
+  "market_cap_change_24h": -774178.4212329406,
+  "market_cap_change_percentage_24h": -6.96388,
+  "circulating_supply": 993119999.9999987,
+  "total_supply": 13850000000,
+  "max_supply": 15000000000,
+  "ath": 0.096685,
+  "ath_change_percentage": -89.27346,
+  "ath_date": "2023-05-15T13:33:16.717Z",
+  "atl": 0.00010559,
+  "atl_change_percentage": 9721.77336,
+  "atl_date": "2022-11-27T20:05:17.244Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:05.031Z",
+  "platforms": {
+    "bsc": "0x20de6118c3672659e488d1d45279cdf77391fbdc"
+  }
+}

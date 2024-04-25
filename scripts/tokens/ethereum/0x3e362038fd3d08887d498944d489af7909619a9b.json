@@ -1,0 +1,31 @@
+{
+  "id": "chow-chow",
+  "symbol": "chow",
+  "name": "CHOW CHOW",
+  "image": "https://assets.coingecko.com/coins/images/34803/large/CHOW_CHOW.png?1706094366",
+  "current_price": 4.38891e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 341405,
+  "total_volume": 9657.8,
+  "high_24h": 4.41668e-7,
+  "low_24h": 3.51055e-7,
+  "price_change_24h": 8.7644e-8,
+  "price_change_percentage_24h": 24.9524,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 777742077778,
+  "max_supply": 777742077778,
+  "ath": 0.00000275,
+  "ath_change_percentage": -84.04412,
+  "ath_date": "2024-01-24T15:34:21.480Z",
+  "atl": 7.2259e-8,
+  "atl_change_percentage": 506.17133,
+  "atl_date": "2024-02-05T11:02:36.356Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:47.166Z",
+  "platforms": {
+    "ethereum": "0x3e362038fd3d08887d498944d489af7909619a9b"
+  }
+}

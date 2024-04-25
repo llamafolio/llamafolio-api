@@ -1,0 +1,31 @@
+{
+  "id": "zedxion",
+  "symbol": "zedxion",
+  "name": "Zedxion",
+  "image": "https://assets.coingecko.com/coins/images/18841/large/ZEDXION.png?1696518302",
+  "current_price": 0.233415,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1108030135,
+  "total_volume": 781431,
+  "high_24h": 0.236452,
+  "low_24h": 0.230606,
+  "price_change_24h": -0.001542019325722371,
+  "price_change_percentage_24h": -0.6563,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 4746558037,
+  "max_supply": 4746558037,
+  "ath": 1.45,
+  "ath_change_percentage": -83.96254,
+  "ath_date": "2021-10-07T12:36:02.592Z",
+  "atl": 3e-17,
+  "atl_change_percentage": 769588137037676900,
+  "atl_date": "2022-01-17T19:12:25.496Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:16:14.681Z",
+  "platforms": {
+    "bsc": "0xfbc4f3f645c4003a2e4f4e9b51077d2daa9a9341"
+  }
+}

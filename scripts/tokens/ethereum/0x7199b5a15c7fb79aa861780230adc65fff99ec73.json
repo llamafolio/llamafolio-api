@@ -1,0 +1,31 @@
+{
+  "id": "0xanon",
+  "symbol": "0xanon",
+  "name": "0xAnon",
+  "image": "https://assets.coingecko.com/coins/images/32836/large/IMG_20231108_161217_519.jpg?1699587007",
+  "current_price": 0.01492297,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 149230,
+  "total_volume": 358.75,
+  "high_24h": 0.01590241,
+  "low_24h": 0.0148664,
+  "price_change_24h": -0.000844233752890496,
+  "price_change_percentage_24h": -5.35437,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000,
+  "max_supply": 10000000,
+  "ath": 0.303582,
+  "ath_change_percentage": -95.08438,
+  "ath_date": "2024-02-24T23:35:03.026Z",
+  "atl": 0.00573003,
+  "atl_change_percentage": 160.43441,
+  "atl_date": "2024-01-27T19:14:49.210Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:11.587Z",
+  "platforms": {
+    "ethereum": "0x7199b5a15c7fb79aa861780230adc65fff99ec73"
+  }
+}

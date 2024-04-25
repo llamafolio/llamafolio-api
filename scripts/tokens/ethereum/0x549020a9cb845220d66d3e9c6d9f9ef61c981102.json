@@ -1,0 +1,31 @@
+{
+  "id": "sidus",
+  "symbol": "sidus",
+  "name": "Sidus",
+  "image": "https://assets.coingecko.com/coins/images/21401/large/SIDUS_coin_logo.png?1696520765",
+  "current_price": 0.00816964,
+  "market_cap": 87445350,
+  "market_cap_rank": 508,
+  "fully_diluted_valuation": 174075126,
+  "total_volume": 934082,
+  "high_24h": 0.00926421,
+  "low_24h": 0.00814976,
+  "price_change_24h": -0.000988466007496143,
+  "price_change_percentage_24h": -10.79334,
+  "market_cap_change_24h": -10863911.88035272,
+  "market_cap_change_percentage_24h": -11.05075,
+  "circulating_supply": 10726868396.922684,
+  "total_supply": 21353690696.8972,
+  "max_supply": 30000000000,
+  "ath": 0.193233,
+  "ath_change_percentage": -95.77288,
+  "ath_date": "2022-01-01T11:02:42.735Z",
+  "atl": 0.00070703,
+  "atl_change_percentage": 1055.27978,
+  "atl_date": "2023-10-19T16:31:02.273Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:53.198Z",
+  "platforms": {
+    "ethereum": "0x549020a9cb845220d66d3e9c6d9f9ef61c981102"
+  }
+}

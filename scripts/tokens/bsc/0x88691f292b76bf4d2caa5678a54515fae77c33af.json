@@ -1,0 +1,31 @@
+{
+  "id": "xpense-2",
+  "symbol": "xpe",
+  "name": "Xpense",
+  "image": "https://assets.coingecko.com/coins/images/32359/large/xpenselogonew.png?1700451287",
+  "current_price": 0.205129,
+  "market_cap": 4281436,
+  "market_cap_rank": 1865,
+  "fully_diluted_valuation": 4281436,
+  "total_volume": 40774,
+  "high_24h": 0.212734,
+  "low_24h": 0.203571,
+  "price_change_24h": -0.005510910978697909,
+  "price_change_percentage_24h": -2.61627,
+  "market_cap_change_24h": -110037.55316529609,
+  "market_cap_change_percentage_24h": -2.50571,
+  "circulating_supply": 20819052,
+  "total_supply": 20819052,
+  "max_supply": 200000000,
+  "ath": 0.875552,
+  "ath_change_percentage": -76.56827,
+  "ath_date": "2023-11-23T08:53:57.394Z",
+  "atl": 0.02769772,
+  "atl_change_percentage": 640.69954,
+  "atl_date": "2023-10-28T14:55:23.035Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:36.244Z",
+  "platforms": {
+    "bsc": "0x88691f292b76bf4d2caa5678a54515fae77c33af"
+  }
+}

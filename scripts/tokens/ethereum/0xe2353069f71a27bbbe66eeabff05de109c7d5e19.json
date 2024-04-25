@@ -1,0 +1,31 @@
+{
+  "id": "bonsai3",
+  "symbol": "seed",
+  "name": "Bonsai3",
+  "image": "https://assets.coingecko.com/coins/images/33162/large/logo-bonsai3200x200.png?1700830408",
+  "current_price": 0.01131115,
+  "market_cap": 4170045,
+  "market_cap_rank": 1885,
+  "fully_diluted_valuation": 11311153,
+  "total_volume": 109184,
+  "high_24h": 0.01289639,
+  "low_24h": 0.01127531,
+  "price_change_24h": -0.001390814751976175,
+  "price_change_percentage_24h": -10.9496,
+  "market_cap_change_24h": -513918.6794975572,
+  "market_cap_change_percentage_24h": -10.97188,
+  "circulating_supply": 368666666.67,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.0346252,
+  "ath_change_percentage": -67.28281,
+  "ath_date": "2023-12-10T18:35:07.899Z",
+  "atl": 0.00390076,
+  "atl_change_percentage": 190.41477,
+  "atl_date": "2024-03-22T20:34:48.357Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:51:32.817Z",
+  "platforms": {
+    "ethereum": "0xe2353069f71a27bbbe66eeabff05de109c7d5e19"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "bhive",
+  "symbol": "bhive",
+  "name": "bHIVE",
+  "image": "https://assets.coingecko.com/coins/images/27596/large/hive.png?1696526627",
+  "current_price": 0.213725,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 21372,
+  "total_volume": 15.16,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000,
+  "max_supply": 10000000,
+  "ath": 0.64515,
+  "ath_change_percentage": -66.87205,
+  "ath_date": "2022-10-07T16:32:05.995Z",
+  "atl": 0.17057,
+  "atl_change_percentage": 25.30018,
+  "atl_date": "2024-01-18T20:40:44.561Z",
+  "roi": null,
+  "last_updated": "2024-04-22T11:24:42.053Z",
+  "platforms": {
+    "bsc": "0x9faf07d1fbc130d698e227e50d1fb72657c0a342"
+  }
+}

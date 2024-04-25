@@ -1,0 +1,31 @@
+{
+  "id": "gamer-arena",
+  "symbol": "gau",
+  "name": "Gamer Arena",
+  "image": "https://assets.coingecko.com/coins/images/28151/large/200x200.png?1696527156",
+  "current_price": 0.102771,
+  "market_cap": 28631691,
+  "market_cap_rank": 942,
+  "fully_diluted_valuation": 51352496,
+  "total_volume": 2198341,
+  "high_24h": 0.107322,
+  "low_24h": 0.096253,
+  "price_change_24h": -0.002798723592579641,
+  "price_change_percentage_24h": -2.65107,
+  "market_cap_change_24h": -675611.5159728117,
+  "market_cap_change_percentage_24h": -2.30527,
+  "circulating_supply": 278776041.6666667,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 0.187875,
+  "ath_change_percentage": -45.31227,
+  "ath_date": "2024-03-27T14:54:56.494Z",
+  "atl": 0.00074241,
+  "atl_change_percentage": 13739.35863,
+  "atl_date": "2023-11-22T10:01:11.798Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:07.944Z",
+  "platforms": {
+    "avalanche": "0xca8ebfb8e1460aaac7c272cb9053b3d42412aac2"
+  }
+}

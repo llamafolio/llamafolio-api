@@ -1,0 +1,31 @@
+{
+  "id": "fxn-token",
+  "symbol": "fxn",
+  "name": "f(x) Protocol",
+  "image": "https://assets.coingecko.com/coins/images/31889/large/FXN_200x200.png?1696530700",
+  "current_price": 114.04,
+  "market_cap": 6615245,
+  "market_cap_rank": 1653,
+  "fully_diluted_valuation": 117581949,
+  "total_volume": 60305,
+  "high_24h": 122.32,
+  "low_24h": 113.9,
+  "price_change_24h": -7.039439125862387,
+  "price_change_percentage_24h": -5.8141,
+  "market_cap_change_24h": -378263.71002205275,
+  "market_cap_change_percentage_24h": -5.40878,
+  "circulating_supply": 58072.118837268776,
+  "total_supply": 1032196.5481794,
+  "max_supply": 2000000,
+  "ath": 219.95,
+  "ath_change_percentage": -47.95817,
+  "ath_date": "2024-03-14T01:58:24.698Z",
+  "atl": 12.22,
+  "atl_change_percentage": 836.7982,
+  "atl_date": "2023-09-29T17:04:34.273Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:23.597Z",
+  "platforms": {
+    "ethereum": "0x365accfca291e7d3914637abf1f7635db165bb09"
+  }
+}

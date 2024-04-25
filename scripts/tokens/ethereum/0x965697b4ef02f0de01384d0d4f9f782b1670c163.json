@@ -1,0 +1,31 @@
+{
+  "id": "oxygen",
+  "symbol": "oxy",
+  "name": "Oxygen",
+  "image": "https://assets.coingecko.com/coins/images/13509/large/8DjBZ79V_400x400.jpg?1696513271",
+  "current_price": 0.054928,
+  "market_cap": 11149009,
+  "market_cap_rank": 1382,
+  "fully_diluted_valuation": 550945255,
+  "total_volume": 43537,
+  "high_24h": 0.061901,
+  "low_24h": 0.053191,
+  "price_change_24h": -0.005806071675517625,
+  "price_change_percentage_24h": -9.55986,
+  "market_cap_change_24h": -1213499.9693793468,
+  "market_cap_change_percentage_24h": -9.81597,
+  "circulating_supply": 202361469.02,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 4.16,
+  "ath_change_percentage": -98.68409,
+  "ath_date": "2021-03-16T22:38:50.717Z",
+  "atl": 0.00344719,
+  "atl_change_percentage": 1486.83272,
+  "atl_date": "2024-01-31T15:06:51.698Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:02.334Z",
+  "platforms": {
+    "ethereum": "0x965697b4ef02f0de01384d0d4f9f782b1670c163"
+  }
+}

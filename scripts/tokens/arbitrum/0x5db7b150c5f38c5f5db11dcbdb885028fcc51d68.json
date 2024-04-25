@@ -1,0 +1,31 @@
+{
+  "id": "sterling-finance",
+  "symbol": "str",
+  "name": "Sterling Finance",
+  "image": "https://assets.coingecko.com/coins/images/29167/large/FullLogo_Transparent_NoBuffer.png?1696528125",
+  "current_price": 0.00721163,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 7211.63,
+  "total_volume": 14.4,
+  "high_24h": 0.00724349,
+  "low_24h": 0.00711652,
+  "price_change_24h": -0.000014426484978118,
+  "price_change_percentage_24h": -0.19965,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000,
+  "max_supply": 1005000,
+  "ath": 39.11,
+  "ath_change_percentage": -99.98156,
+  "ath_date": "2023-02-22T11:53:05.087Z",
+  "atl": 0.0062419,
+  "atl_change_percentage": 15.5621,
+  "atl_date": "2023-10-19T14:20:30.190Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:52.146Z",
+  "platforms": {
+    "arbitrum": "0x5db7b150c5f38c5f5db11dcbdb885028fcc51d68"
+  }
+}

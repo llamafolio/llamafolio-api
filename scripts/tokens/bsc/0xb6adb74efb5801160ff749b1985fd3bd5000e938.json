@@ -1,0 +1,31 @@
+{
+  "id": "gamezone",
+  "symbol": "gzone",
+  "name": "GameZone",
+  "image": "https://assets.coingecko.com/coins/images/18697/large/Th98fbg__400x400.jpg?1696518165",
+  "current_price": 0.01715644,
+  "market_cap": 7150574,
+  "market_cap_rank": 1606,
+  "fully_diluted_valuation": 7150574,
+  "total_volume": 26858,
+  "high_24h": 0.01735272,
+  "low_24h": 0.01705779,
+  "price_change_24h": -0.000015378209945398,
+  "price_change_percentage_24h": -0.08955,
+  "market_cap_change_24h": -15531.496197293513,
+  "market_cap_change_percentage_24h": -0.21674,
+  "circulating_supply": 417897144.543642,
+  "total_supply": 417897144.543642,
+  "max_supply": 1000000000,
+  "ath": 1.18,
+  "ath_change_percentage": -98.55367,
+  "ath_date": "2021-11-18T05:04:24.916Z",
+  "atl": 0.01402268,
+  "atl_change_percentage": 22.02361,
+  "atl_date": "2022-09-21T18:28:05.427Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:17.691Z",
+  "platforms": {
+    "bsc": "0xb6adb74efb5801160ff749b1985fd3bd5000e938"
+  }
+}

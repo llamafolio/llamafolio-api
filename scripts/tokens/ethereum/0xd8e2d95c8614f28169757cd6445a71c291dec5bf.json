@@ -1,0 +1,31 @@
+{
+  "id": "grumpy-cat-2c33af8d-87a8-4154-b004-0686166bdc45",
+  "symbol": "grumpycat",
+  "name": "Grumpy Cat",
+  "image": "https://assets.coingecko.com/coins/images/30322/large/logo_200x200.png?1696529223",
+  "current_price": 5.77516e-10,
+  "market_cap": 225713,
+  "market_cap_rank": 3434,
+  "fully_diluted_valuation": 240749,
+  "total_volume": 864.3,
+  "high_24h": 6.21553e-10,
+  "low_24h": 5.73633e-10,
+  "price_change_24h": -3.7773422e-11,
+  "price_change_percentage_24h": -6.13913,
+  "market_cap_change_24h": -18928.52750571785,
+  "market_cap_change_percentage_24h": -7.73724,
+  "circulating_supply": 391655503715679,
+  "total_supply": 417744754640014,
+  "max_supply": 420690000000000,
+  "ath": 4.0985e-8,
+  "ath_change_percentage": -98.59287,
+  "ath_date": "2023-06-15T19:27:20.238Z",
+  "atl": 4.4995e-11,
+  "atl_change_percentage": 1181.72945,
+  "atl_date": "2024-02-28T14:10:08.718Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:09:44.507Z",
+  "platforms": {
+    "ethereum": "0xd8e2d95c8614f28169757cd6445a71c291dec5bf"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "klubcoin",
+  "symbol": "klub",
+  "name": "KlubCoin",
+  "image": "https://assets.coingecko.com/coins/images/32869/large/klub.jpg?1701141365",
+  "current_price": 0.00452034,
+  "market_cap": 772958,
+  "market_cap_rank": 2833,
+  "fully_diluted_valuation": 4491300,
+  "total_volume": 97503,
+  "high_24h": 0.00460735,
+  "low_24h": 0.0036167,
+  "price_change_24h": 0.00079671,
+  "price_change_percentage_24h": 21.39606,
+  "market_cap_change_24h": 772958,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 172101195.14798206,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.0445681,
+  "ath_change_percentage": -90.2309,
+  "ath_date": "2024-01-07T17:01:30.607Z",
+  "atl": 0.00344044,
+  "atl_change_percentage": 26.55074,
+  "atl_date": "2024-04-14T03:39:43.292Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:53.174Z",
+  "platforms": {
+    "ethereum": "0x29d7139271398d0c2e22523fda06e023dcb07f8f"
+  }
+}

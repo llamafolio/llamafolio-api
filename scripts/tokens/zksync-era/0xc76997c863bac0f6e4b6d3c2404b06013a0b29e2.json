@@ -1,0 +1,31 @@
+{
+  "id": "heartx-utility-token",
+  "symbol": "hnx",
+  "name": "HeartX Utility Token",
+  "image": "https://assets.coingecko.com/coins/images/30531/large/HNX_icon.png?1696529404",
+  "current_price": 0.00019209,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 76.54,
+  "high_24h": 0.00019241,
+  "low_24h": 0.00019112,
+  "price_change_24h": 7.62717e-7,
+  "price_change_percentage_24h": 0.39865,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": 10000000000,
+  "ath": 0.00185807,
+  "ath_change_percentage": -89.66202,
+  "ath_date": "2023-06-30T06:14:24.406Z",
+  "atl": 0.00016369,
+  "atl_change_percentage": 17.35121,
+  "atl_date": "2023-11-07T22:36:32.814Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:24.465Z",
+  "platforms": {
+    "zksync-era": "0xc76997c863bac0f6e4b6d3c2404b06013a0b29e2"
+  }
+}

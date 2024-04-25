@@ -1,0 +1,31 @@
+{
+  "id": "snetwork",
+  "symbol": "snet",
+  "name": "Snetwork",
+  "image": "https://assets.coingecko.com/coins/images/5382/large/snetwork.png?1696505867",
+  "current_price": 0.00163011,
+  "market_cap": 388498,
+  "market_cap_rank": 3191,
+  "fully_diluted_valuation": 1628214,
+  "total_volume": 17821.36,
+  "high_24h": 0.00164155,
+  "low_24h": 0.00161593,
+  "price_change_24h": 2.11964e-7,
+  "price_change_percentage_24h": 0.013,
+  "market_cap_change_24h": 306.08,
+  "market_cap_change_percentage_24h": 0.07885,
+  "circulating_supply": 238603998.9726042,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 0.053809,
+  "ath_change_percentage": -96.9637,
+  "ath_date": "2018-08-26T20:40:28.963Z",
+  "atl": 0.00103034,
+  "atl_change_percentage": 58.56854,
+  "atl_date": "2022-12-20T02:46:59.101Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:59.442Z",
+  "platforms": {
+    "ethereum": "0xff19138b039d938db46bdda0067dc4ba132ec71c"
+  }
+}

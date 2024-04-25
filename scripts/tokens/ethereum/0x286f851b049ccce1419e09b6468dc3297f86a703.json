@@ -1,0 +1,31 @@
+{
+  "id": "hiseals",
+  "symbol": "hiseals",
+  "name": "hiSEALS",
+  "image": "https://assets.coingecko.com/coins/images/29191/large/63f46d084b94830001ea9a60_hiSEALS_-__Logo.png?1696528150",
+  "current_price": 0.00274897,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 81627,
+  "total_volume": 149858,
+  "high_24h": 0.00325919,
+  "low_24h": 0.00259332,
+  "price_change_24h": -0.000404521828810628,
+  "price_change_percentage_24h": -12.82773,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 30000000,
+  "max_supply": null,
+  "ath": 0.0398086,
+  "ath_change_percentage": -93.08725,
+  "ath_date": "2023-06-07T09:12:12.936Z",
+  "atl": 0.00048293,
+  "atl_change_percentage": 469.82498,
+  "atl_date": "2023-08-25T06:43:06.931Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:44.142Z",
+  "platforms": {
+    "ethereum": "0x286f851b049ccce1419e09b6468dc3297f86a703"
+  }
+}

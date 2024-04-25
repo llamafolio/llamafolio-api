@@ -1,0 +1,31 @@
+{
+  "id": "lp-yearn-crv-vault",
+  "symbol": "lp-ycrv",
+  "name": "LP Yearn CRV Vault",
+  "image": "https://assets.coingecko.com/coins/images/27624/large/yearncrvlp_32.png?1696526654",
+  "current_price": 1.2,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 0,
+  "high_24h": 1.2,
+  "low_24h": 1.2,
+  "price_change_24h": 0,
+  "price_change_percentage_24h": 0,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 1.2,
+  "ath_change_percentage": 0,
+  "ath_date": "2023-10-25T12:00:02.608Z",
+  "atl": 1.2,
+  "atl_change_percentage": 0,
+  "atl_date": "2023-10-25T12:00:02.608Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:50:26.830Z",
+  "platforms": {
+    "ethereum": "0xc97232527b62efb0d8ed38cf3ea103a6cca4037e"
+  }
+}

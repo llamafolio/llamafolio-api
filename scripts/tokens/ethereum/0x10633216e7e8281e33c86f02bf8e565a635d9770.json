@@ -1,0 +1,31 @@
+{
+  "id": "dvision-network",
+  "symbol": "dvi",
+  "name": "Dvision Network",
+  "image": "https://assets.coingecko.com/coins/images/13020/large/WGAhHOLv_400x400.png?1696512809",
+  "current_price": 0.02557784,
+  "market_cap": 6241861,
+  "market_cap_rank": 1684,
+  "fully_diluted_valuation": 25294257,
+  "total_volume": 716770,
+  "high_24h": 0.02776843,
+  "low_24h": 0.02529426,
+  "price_change_24h": -0.001914812090549452,
+  "price_change_percentage_24h": -6.96481,
+  "market_cap_change_24h": -543760.8901988203,
+  "market_cap_change_percentage_24h": -8.01343,
+  "circulating_supply": 246769890,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 3.05,
+  "ath_change_percentage": -99.17088,
+  "ath_date": "2021-11-21T08:03:11.886Z",
+  "atl": 0.00821249,
+  "atl_change_percentage": 208.38998,
+  "atl_date": "2023-11-21T08:31:24.905Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:16.043Z",
+  "platforms": {
+    "ethereum": "0x10633216e7e8281e33c86f02bf8e565a635d9770"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "demole",
+  "symbol": "dmlg",
+  "name": "Demole",
+  "image": "https://assets.coingecko.com/coins/images/19195/large/dmlg.png?1696518643",
+  "current_price": 0.00047351,
+  "market_cap": 150210,
+  "market_cap_rank": 3630,
+  "fully_diluted_valuation": 236924,
+  "total_volume": 12237.79,
+  "high_24h": 0.00051761,
+  "low_24h": 0.00046475,
+  "price_change_24h": 0.00000571,
+  "price_change_percentage_24h": 1.21961,
+  "market_cap_change_24h": 1166.14,
+  "market_cap_change_percentage_24h": 0.78241,
+  "circulating_supply": 317000000,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 0.522796,
+  "ath_change_percentage": -99.90915,
+  "ath_date": "2021-11-03T15:39:47.670Z",
+  "atl": 0.00013884,
+  "atl_change_percentage": 242.09852,
+  "atl_date": "2023-07-19T21:02:55.616Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:17.642Z",
+  "platforms": {
+    "bsc": "0x1c796c140de269e255372ea687ef7644bab87935"
+  }
+}

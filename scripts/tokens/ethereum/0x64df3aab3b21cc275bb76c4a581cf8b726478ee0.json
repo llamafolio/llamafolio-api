@@ -1,0 +1,31 @@
+{
+  "id": "cramer-coin",
+  "symbol": "$cramer",
+  "name": "Cramer Coin",
+  "image": "https://assets.coingecko.com/coins/images/27463/large/cramercoin.jpg?1696526502",
+  "current_price": 0.00060208,
+  "market_cap": 508122,
+  "market_cap_rank": 3057,
+  "fully_diluted_valuation": 600190,
+  "total_volume": 7671.1,
+  "high_24h": 0.00069322,
+  "low_24h": 0.00058239,
+  "price_change_24h": -0.000084363518173879,
+  "price_change_percentage_24h": -12.29001,
+  "market_cap_change_24h": -73194.4354431564,
+  "market_cap_change_percentage_24h": -12.59116,
+  "circulating_supply": 846601165.6641176,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.01241046,
+  "ath_change_percentage": -95.15622,
+  "ath_date": "2024-03-05T18:29:46.713Z",
+  "atl": 0.00041919,
+  "atl_change_percentage": 43.40453,
+  "atl_date": "2023-08-22T23:31:22.975Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:16.515Z",
+  "platforms": {
+    "ethereum": "0x64df3aab3b21cc275bb76c4a581cf8b726478ee0"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "blockchainspace",
+  "symbol": "guild",
+  "name": "BlockchainSpace",
+  "image": "https://assets.coingecko.com/coins/images/21271/large/BednjMw.png?1696520642",
+  "current_price": 0.00506788,
+  "market_cap": 2241013,
+  "market_cap_rank": 2233,
+  "fully_diluted_valuation": 5060838,
+  "total_volume": 39296,
+  "high_24h": 0.00511662,
+  "low_24h": 0.0050308,
+  "price_change_24h": -0.000047462128364959,
+  "price_change_percentage_24h": -0.92784,
+  "market_cap_change_24h": -25010.47609363729,
+  "market_cap_change_percentage_24h": -1.10372,
+  "circulating_supply": 442814562.19202924,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 1.79,
+  "ath_change_percentage": -99.71716,
+  "ath_date": "2021-12-08T16:15:10.270Z",
+  "atl": 0.00231507,
+  "atl_change_percentage": 118.81116,
+  "atl_date": "2023-11-01T12:09:01.690Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:47.931Z",
+  "platforms": {
+    "bsc": "0x0565805ca3a4105faee51983b0bd8ffb5ce1455c"
+  }
+}

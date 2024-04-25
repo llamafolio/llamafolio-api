@@ -1,0 +1,35 @@
+{
+  "id": "daostack",
+  "symbol": "gen",
+  "name": "DAOstack",
+  "image": "https://assets.coingecko.com/coins/images/3479/large/gen.png?1696504167",
+  "current_price": 3.045e-10,
+  "market_cap": 0.01426811,
+  "market_cap_rank": 4308,
+  "fully_diluted_valuation": 0.01826998,
+  "total_volume": 0,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 46857553.67690004,
+  "total_supply": 60000000,
+  "max_supply": null,
+  "ath": 0.661675,
+  "ath_change_percentage": -100,
+  "ath_date": "2020-08-13T03:49:42.808Z",
+  "atl": 1.86888e-10,
+  "atl_change_percentage": 62.93126,
+  "atl_date": "2023-10-12T09:31:55.069Z",
+  "roi": {
+    "times": -0.9999999996955004,
+    "currency": "usd",
+    "percentage": -99.99999996955003
+  },
+  "last_updated": "2024-04-23T05:43:41.394Z",
+  "platforms": {
+    "ethereum": "0x543ff227f64aa17ea132bf9886cab5db55dcaddf"
+  }
+}

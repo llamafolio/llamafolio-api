@@ -1,0 +1,31 @@
+{
+  "id": "bobacat",
+  "symbol": "psps",
+  "name": "BobaCat",
+  "image": "https://assets.coingecko.com/coins/images/31777/large/cg.png?1696530595",
+  "current_price": 0.03327291,
+  "market_cap": 19281978,
+  "market_cap_rank": 1125,
+  "fully_diluted_valuation": 19281978,
+  "total_volume": 278365,
+  "high_24h": 0.03720019,
+  "low_24h": 0.03325374,
+  "price_change_24h": -0.003287425138091951,
+  "price_change_percentage_24h": -8.99178,
+  "market_cap_change_24h": -1776133.5643611066,
+  "market_cap_change_percentage_24h": -8.43444,
+  "circulating_supply": 577172773.2514561,
+  "total_supply": 577172773.2514561,
+  "max_supply": 1000000000,
+  "ath": 0.094373,
+  "ath_change_percentage": -64.41621,
+  "ath_date": "2024-03-29T19:44:14.428Z",
+  "atl": 0.0001743,
+  "atl_change_percentage": 19166.82658,
+  "atl_date": "2023-11-14T22:09:31.209Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:52.667Z",
+  "platforms": {
+    "ethereum": "0x03049b395147713ae53c0617093675b4b86dde78"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "exohood",
+  "symbol": "exo",
+  "name": "Exohood",
+  "image": "https://assets.coingecko.com/coins/images/15590/large/LOGO_200x200_CIRCLE.png?1696515225",
+  "current_price": 0.00085664,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 861912,
+  "total_volume": 428.54,
+  "high_24h": 0.00097884,
+  "low_24h": 0.00084627,
+  "price_change_24h": -0.000108020909365692,
+  "price_change_percentage_24h": -11.19775,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": null,
+  "ath": 56.22,
+  "ath_change_percentage": -99.99847,
+  "ath_date": "2021-05-17T23:04:37.808Z",
+  "atl": 0.00001549,
+  "atl_change_percentage": 5451.61041,
+  "atl_date": "2021-10-18T22:20:06.906Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:46.483Z",
+  "platforms": {
+    "polygon": "0xbd8005612124dc30601e22d8b5d188a89767c640"
+  }
+}

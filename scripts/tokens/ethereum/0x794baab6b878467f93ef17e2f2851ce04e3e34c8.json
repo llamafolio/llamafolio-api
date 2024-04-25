@@ -1,0 +1,31 @@
+{
+  "id": "yin-finance",
+  "symbol": "yin",
+  "name": "YIN Finance",
+  "image": "https://assets.coingecko.com/coins/images/18272/large/e37387ae6ee756fd.jpg?1696517766",
+  "current_price": 0.01401636,
+  "market_cap": 132755,
+  "market_cap_rank": 3691,
+  "fully_diluted_valuation": 1400039,
+  "total_volume": 5853.02,
+  "high_24h": 0.01497214,
+  "low_24h": 0.01315411,
+  "price_change_24h": 0.00082098,
+  "price_change_percentage_24h": 6.22175,
+  "market_cap_change_24h": 7629.96,
+  "market_cap_change_percentage_24h": 6.09786,
+  "circulating_supply": 9482235.76427517,
+  "total_supply": 100000000,
+  "max_supply": 100000000,
+  "ath": 3.21,
+  "ath_change_percentage": -99.56335,
+  "ath_date": "2021-11-15T12:34:51.520Z",
+  "atl": 0.00573256,
+  "atl_change_percentage": 144.41028,
+  "atl_date": "2023-09-07T00:25:26.063Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:17.046Z",
+  "platforms": {
+    "ethereum": "0x794baab6b878467f93ef17e2f2851ce04e3e34c8"
+  }
+}

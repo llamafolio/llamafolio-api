@@ -1,0 +1,31 @@
+{
+  "id": "aiearn",
+  "symbol": "aie",
+  "name": "AIEarn",
+  "image": "https://assets.coingecko.com/coins/images/31985/large/AIE.jpg?1696530788",
+  "current_price": 0.00000197,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 1949771,
+  "total_volume": 24111,
+  "high_24h": 0.00000261,
+  "low_24h": 0.00000191,
+  "price_change_24h": -7.3181737153e-8,
+  "price_change_percentage_24h": -3.58094,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000000,
+  "max_supply": null,
+  "ath": 0.00000595,
+  "ath_change_percentage": -66.83409,
+  "ath_date": "2024-03-23T01:28:13.048Z",
+  "atl": 3.1024e-7,
+  "atl_change_percentage": 536.28018,
+  "atl_date": "2023-11-01T16:30:35.491Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:22.881Z",
+  "platforms": {
+    "bsc": "0x1e30bbee322b3b11c60cb434a47f1605c2a99483"
+  }
+}

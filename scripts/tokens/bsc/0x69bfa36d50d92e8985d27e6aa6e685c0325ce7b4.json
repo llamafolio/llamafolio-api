@@ -1,0 +1,31 @@
+{
+  "id": "cryptorg-token",
+  "symbol": "ctg",
+  "name": "Cryptorg",
+  "image": "https://assets.coingecko.com/coins/images/11474/large/crystal_200.png?1696511381",
+  "current_price": 0.095361,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 9536139,
+  "total_volume": 6618.69,
+  "high_24h": 0.096737,
+  "low_24h": 0.091303,
+  "price_change_24h": -0.001087053173500732,
+  "price_change_percentage_24h": -1.12709,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 0.302141,
+  "ath_change_percentage": -68.49869,
+  "ath_date": "2023-11-13T03:51:42.661Z",
+  "atl": 0.00239979,
+  "atl_change_percentage": 3866.11222,
+  "atl_date": "2020-07-01T18:28:11.548Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:26.838Z",
+  "platforms": {
+    "bsc": "0x69bfa36d50d92e8985d27e6aa6e685c0325ce7b4"
+  }
+}

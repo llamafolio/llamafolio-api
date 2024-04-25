@@ -1,0 +1,31 @@
+{
+  "id": "payx",
+  "symbol": "payx",
+  "name": "PayX",
+  "image": "https://assets.coingecko.com/coins/images/31795/large/pay-X-logo-200.png?1696530611",
+  "current_price": 0.00001949,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 19493.87,
+  "total_volume": 1185.54,
+  "high_24h": 0.00001989,
+  "low_24h": 0.00001933,
+  "price_change_24h": -3.99209732238e-7,
+  "price_change_percentage_24h": -2.00678,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00478509,
+  "ath_change_percentage": -99.59261,
+  "ath_date": "2023-10-07T23:50:07.709Z",
+  "atl": 0.00001716,
+  "atl_change_percentage": 13.56828,
+  "atl_date": "2024-04-19T02:24:37.815Z",
+  "roi": null,
+  "last_updated": "2024-04-24T22:01:52.870Z",
+  "platforms": {
+    "bsc": "0xb823746401d03ce7b4d748bb3e9c7a4912c68377"
+  }
+}

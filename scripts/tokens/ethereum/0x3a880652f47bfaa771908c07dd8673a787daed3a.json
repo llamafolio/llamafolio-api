@@ -1,0 +1,31 @@
+{
+  "id": "derivadao",
+  "symbol": "ddx",
+  "name": "DerivaDAO",
+  "image": "https://assets.coingecko.com/coins/images/13453/large/ddx_logo.png?1696513216",
+  "current_price": 0.055425,
+  "market_cap": 2949147,
+  "market_cap_rank": 2072,
+  "fully_diluted_valuation": 2949326,
+  "total_volume": 191.43,
+  "high_24h": 0.056724,
+  "low_24h": 0.055172,
+  "price_change_24h": -0.001067809880311202,
+  "price_change_percentage_24h": -1.89016,
+  "market_cap_change_24h": -59163.002459204756,
+  "market_cap_change_percentage_24h": -1.96665,
+  "circulating_supply": 53228696.0455996,
+  "total_supply": 53231922.0405258,
+  "max_supply": 100000000,
+  "ath": 15.28,
+  "ath_change_percentage": -99.63739,
+  "ath_date": "2021-08-31T19:47:57.389Z",
+  "atl": 0.03105819,
+  "atl_change_percentage": 78.40113,
+  "atl_date": "2024-02-03T05:30:55.304Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:56:01.913Z",
+  "platforms": {
+    "ethereum": "0x3a880652f47bfaa771908c07dd8673a787daed3a"
+  }
+}

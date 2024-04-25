@@ -1,0 +1,31 @@
+{
+  "id": "freebnk",
+  "symbol": "frbk",
+  "name": "FreeBnk",
+  "image": "https://assets.coingecko.com/coins/images/30681/large/Diagram_-_FreeBnk___Brand___Marketing_3.jpg?1696529550",
+  "current_price": 0.02533553,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 12594765,
+  "total_volume": 192289,
+  "high_24h": 0.0275377,
+  "low_24h": 0.01959351,
+  "price_change_24h": 0.00297747,
+  "price_change_percentage_24h": 13.3172,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 0.053432,
+  "ath_change_percentage": -52.81628,
+  "ath_date": "2024-04-21T07:25:01.420Z",
+  "atl": 0.01560429,
+  "atl_change_percentage": 61.56501,
+  "atl_date": "2024-04-19T13:40:33.434Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:58.225Z",
+  "platforms": {
+    "bsc": "0xfb60584f305b3fcf869d4ae48e082b2381fabde8"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "vector-eth",
+  "symbol": "veth",
+  "name": "Vector ETH",
+  "image": "https://assets.coingecko.com/coins/images/35085/large/vETH200.png?1709644096",
+  "current_price": 3045.89,
+  "market_cap": 17220793,
+  "market_cap_rank": 1176,
+  "fully_diluted_valuation": 17220793,
+  "total_volume": 8783201,
+  "high_24h": 3179.63,
+  "low_24h": 2659.13,
+  "price_change_24h": 386.76,
+  "price_change_percentage_24h": 14.54469,
+  "market_cap_change_24h": 937188,
+  "market_cap_change_percentage_24h": 5.75541,
+  "circulating_supply": 5655.63995646238,
+  "total_supply": 5655.63995646238,
+  "max_supply": null,
+  "ath": 4082.41,
+  "ath_change_percentage": -25.41446,
+  "ath_date": "2024-03-11T14:20:33.883Z",
+  "atl": 2346.97,
+  "atl_change_percentage": 29.73686,
+  "atl_date": "2024-02-07T16:21:15.294Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:18.671Z",
+  "platforms": {
+    "ethereum": "0x38d64ce1bdf1a9f24e0ec469c9cade61236fb4a0"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "dappstore",
+  "symbol": "dappx",
+  "name": "dAppstore",
+  "image": "https://assets.coingecko.com/coins/images/15780/large/large-logo.png?1696515404",
+  "current_price": 0.01120207,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 16775803,
+  "total_volume": 566519,
+  "high_24h": 0.01233408,
+  "low_24h": 0.01117802,
+  "price_change_24h": -0.001029084261063851,
+  "price_change_percentage_24h": -8.41363,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1500000000,
+  "max_supply": null,
+  "ath": 1.25,
+  "ath_change_percentage": -99.10364,
+  "ath_date": "2021-05-24T20:15:31.754Z",
+  "atl": 0.0006295,
+  "atl_change_percentage": 1682.41697,
+  "atl_date": "2023-09-29T00:48:19.664Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:52.179Z",
+  "platforms": {
+    "ethereum": "0x00d8318e44780edeefcf3020a5448f636788883c"
+  }
+}

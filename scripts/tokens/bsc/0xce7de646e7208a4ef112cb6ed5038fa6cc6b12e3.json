@@ -1,0 +1,31 @@
+{
+  "id": "tron-bsc",
+  "symbol": "trx",
+  "name": "TRON (BSC)",
+  "image": "https://assets.coingecko.com/coins/images/15468/large/NxLfA-LK_400x400.png?1696515114",
+  "current_price": 0.116742,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 34745862,
+  "total_volume": 5830.12,
+  "high_24h": 0.118361,
+  "low_24h": 0.112464,
+  "price_change_24h": 0.00000342,
+  "price_change_percentage_24h": 0.00293,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 295585024.678987,
+  "max_supply": null,
+  "ath": 0.147156,
+  "ath_change_percentage": -20.52175,
+  "ath_date": "2024-02-28T17:19:54.054Z",
+  "atl": 0.04530479,
+  "atl_change_percentage": 158.15541,
+  "atl_date": "2022-11-14T04:25:52.396Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:15:27.662Z",
+  "platforms": {
+    "bsc": "0xce7de646e7208a4ef112cb6ed5038fa6cc6b12e3"
+  }
+}

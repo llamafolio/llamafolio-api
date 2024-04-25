@@ -1,0 +1,31 @@
+{
+  "id": "treatdao-v2",
+  "symbol": "treat",
+  "name": "TreatDAO",
+  "image": "https://assets.coingecko.com/coins/images/19156/large/TREAT.jpg?1696518607",
+  "current_price": 0.00490965,
+  "market_cap": 613706,
+  "market_cap_rank": 2965,
+  "fully_diluted_valuation": 613706,
+  "total_volume": 2.67,
+  "high_24h": 0.00491945,
+  "low_24h": 0.00486803,
+  "price_change_24h": 0.00000514,
+  "price_change_percentage_24h": 0.10478,
+  "market_cap_change_24h": 642.37,
+  "market_cap_change_percentage_24h": 0.10478,
+  "circulating_supply": 125000000,
+  "total_supply": 125000000,
+  "max_supply": 125000000,
+  "ath": 0.078647,
+  "ath_change_percentage": -93.75735,
+  "ath_date": "2021-11-10T03:16:38.600Z",
+  "atl": 0.00181164,
+  "atl_change_percentage": 171.00582,
+  "atl_date": "2023-07-16T04:24:56.604Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:44.301Z",
+  "platforms": {
+    "bsc": "0x01bd7acb6ff3b6dd5aefa05cf085f2104f3fc53f"
+  }
+}

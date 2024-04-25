@@ -1,0 +1,31 @@
+{
+  "id": "vetme",
+  "symbol": "vetme",
+  "name": "VetMe",
+  "image": "https://assets.coingecko.com/coins/images/28787/large/VetMe.png?1709837744",
+  "current_price": 0.00254082,
+  "market_cap": 2356568,
+  "market_cap_rank": 2202,
+  "fully_diluted_valuation": 2540819,
+  "total_volume": 2397.69,
+  "high_24h": 0.00263363,
+  "low_24h": 0.002511,
+  "price_change_24h": -0.000064373581502713,
+  "price_change_percentage_24h": -2.47097,
+  "market_cap_change_24h": -59705.42600715812,
+  "market_cap_change_percentage_24h": -2.47097,
+  "circulating_supply": 927483365.278381,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00537621,
+  "ath_change_percentage": -52.65673,
+  "ath_date": "2024-03-10T08:59:33.355Z",
+  "atl": 0.00053728,
+  "atl_change_percentage": 373.73462,
+  "atl_date": "2023-06-16T14:59:37.074Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:48:50.757Z",
+  "platforms": {
+    "ethereum": "0xe7ef051c6ea1026a70967e8f04da143c67fa4e1f"
+  }
+}

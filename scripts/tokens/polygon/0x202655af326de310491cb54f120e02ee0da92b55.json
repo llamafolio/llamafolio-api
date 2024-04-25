@@ -1,0 +1,31 @@
+{
+  "id": "creta-world",
+  "symbol": "creta",
+  "name": "Creta World",
+  "image": "https://assets.coingecko.com/coins/images/29129/large/colour_icon.png?1696528090",
+  "current_price": 0.01694967,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 325907,
+  "high_24h": 0.01868577,
+  "low_24h": 0.0165993,
+  "price_change_24h": -0.000170545932309401,
+  "price_change_percentage_24h": -0.99617,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.065203,
+  "ath_change_percentage": -73.78589,
+  "ath_date": "2023-06-22T01:44:57.659Z",
+  "atl": 0.00136394,
+  "atl_change_percentage": 1153.16455,
+  "atl_date": "2023-03-11T16:49:03.455Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:14:39.023Z",
+  "platforms": {
+    "polygon": "0x202655af326de310491cb54f120e02ee0da92b55"
+  }
+}

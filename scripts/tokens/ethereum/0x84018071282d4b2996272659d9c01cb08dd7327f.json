@@ -1,0 +1,31 @@
+{
+  "id": "blendr-network",
+  "symbol": "blendr",
+  "name": "Blendr Network",
+  "image": "https://assets.coingecko.com/coins/images/35765/large/Blendr_Network.png?1709752266",
+  "current_price": 1.92,
+  "market_cap": 79135642,
+  "market_cap_rank": 535,
+  "fully_diluted_valuation": 81038801,
+  "total_volume": 1469379,
+  "high_24h": 2.12,
+  "low_24h": 1.92,
+  "price_change_24h": -0.11608122465093995,
+  "price_change_percentage_24h": -5.71312,
+  "market_cap_change_24h": -4322821.398289725,
+  "market_cap_change_percentage_24h": -5.17961,
+  "circulating_supply": 41013649.62913886,
+  "total_supply": 42000000,
+  "max_supply": 42000000,
+  "ath": 4.31,
+  "ath_change_percentage": -55.20947,
+  "ath_date": "2024-03-31T04:00:41.959Z",
+  "atl": 0.515125,
+  "atl_change_percentage": 275.0331,
+  "atl_date": "2024-03-08T15:19:16.128Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:46.291Z",
+  "platforms": {
+    "ethereum": "0x84018071282d4b2996272659d9c01cb08dd7327f"
+  }
+}

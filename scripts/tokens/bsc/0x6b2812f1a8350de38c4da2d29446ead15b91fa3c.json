@@ -1,0 +1,31 @@
+{
+  "id": "hanuman-universe",
+  "symbol": "hut",
+  "name": "Hanuman Universe",
+  "image": "https://assets.coingecko.com/coins/images/34759/large/logo-hut-2.png?1705984729",
+  "current_price": 1.54451e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 3999890,
+  "total_volume": 66.11,
+  "high_24h": 1.5729e-7,
+  "low_24h": 1.5036e-7,
+  "price_change_24h": 3.6489e-11,
+  "price_change_percentage_24h": 0.02363,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 26000000000000,
+  "max_supply": 26000000000000,
+  "ath": 2.23388e-7,
+  "ath_change_percentage": -31.00616,
+  "ath_date": "2024-01-23T04:44:43.090Z",
+  "atl": 1.39104e-7,
+  "atl_change_percentage": 10.7979,
+  "atl_date": "2024-04-16T16:02:35.292Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:11:08.880Z",
+  "platforms": {
+    "bsc": "0x6b2812f1a8350de38c4da2d29446ead15b91fa3c"
+  }
+}

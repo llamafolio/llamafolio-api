@@ -1,0 +1,31 @@
+{
+  "id": "kelp-earned-points",
+  "symbol": "kep",
+  "name": "Kelp Earned Points",
+  "image": "https://assets.coingecko.com/coins/images/35560/large/kep.png?1709163916",
+  "current_price": 0.133166,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": null,
+  "total_volume": 612880,
+  "high_24h": 0.140694,
+  "low_24h": 0.120847,
+  "price_change_24h": 0.0101026,
+  "price_change_percentage_24h": 8.20929,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": null,
+  "max_supply": null,
+  "ath": 0.204702,
+  "ath_change_percentage": -35.08876,
+  "ath_date": "2024-04-09T00:19:33.943Z",
+  "atl": 0.093697,
+  "atl_change_percentage": 41.81362,
+  "atl_date": "2024-03-01T12:54:51.346Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:57.787Z",
+  "platforms": {
+    "ethereum": "0x8e3a59427b1d87db234dd4ff63b25e4bf94672f4"
+  }
+}

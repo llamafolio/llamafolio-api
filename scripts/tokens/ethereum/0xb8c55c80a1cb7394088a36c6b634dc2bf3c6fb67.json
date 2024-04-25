@@ -1,0 +1,31 @@
+{
+  "id": "pepe-doge",
+  "symbol": "pepedoge",
+  "name": "Pepe Doge",
+  "image": "https://assets.coingecko.com/coins/images/29968/large/Pepedoge.jpeg?1696528894",
+  "current_price": 0.00000871,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 87126,
+  "total_volume": 95.84,
+  "high_24h": 0.00000875,
+  "low_24h": 0.00000865,
+  "price_change_24h": -1.922897463e-8,
+  "price_change_percentage_24h": -0.22022,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 10000000000,
+  "max_supply": 10000000000,
+  "ath": 0.00008746,
+  "ath_change_percentage": -90.08444,
+  "ath_date": "2023-04-25T03:29:42.783Z",
+  "atl": 0.00000235,
+  "atl_change_percentage": 268.75639,
+  "atl_date": "2023-09-11T20:01:48.758Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:42.444Z",
+  "platforms": {
+    "ethereum": "0xb8c55c80a1cb7394088a36c6b634dc2bf3c6fb67"
+  }
+}

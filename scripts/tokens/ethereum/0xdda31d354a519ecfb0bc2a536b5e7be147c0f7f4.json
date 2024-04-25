@@ -1,0 +1,31 @@
+{
+  "id": "everlodge",
+  "symbol": "eldg",
+  "name": "Everlodge",
+  "image": "https://assets.coingecko.com/coins/images/35532/large/1000034240.png?1709032461",
+  "current_price": 0.00564232,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 4513854,
+  "total_volume": 28153,
+  "high_24h": 0.01504132,
+  "low_24h": 0.00531897,
+  "price_change_24h": 0.00032335,
+  "price_change_percentage_24h": 6.07919,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 800000000,
+  "max_supply": 800000000,
+  "ath": 0.02984042,
+  "ath_change_percentage": -81.0917,
+  "ath_date": "2024-03-05T12:15:59.764Z",
+  "atl": 0.00283227,
+  "atl_change_percentage": 99.21509,
+  "atl_date": "2024-04-04T18:51:32.173Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:04:18.354Z",
+  "platforms": {
+    "ethereum": "0xdda31d354a519ecfb0bc2a536b5e7be147c0f7f4"
+  }
+}

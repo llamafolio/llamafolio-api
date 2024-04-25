@@ -1,0 +1,31 @@
+{
+  "id": "dia-data",
+  "symbol": "dia",
+  "name": "DIA",
+  "image": "https://assets.coingecko.com/coins/images/11955/large/Token_Logo.png?1696511815",
+  "current_price": 0.503354,
+  "market_cap": 55849539,
+  "market_cap_rank": 650,
+  "fully_diluted_valuation": 85233862,
+  "total_volume": 8214511,
+  "high_24h": 0.544938,
+  "low_24h": 0.501976,
+  "price_change_24h": -0.03585937287315,
+  "price_change_percentage_24h": -6.65031,
+  "market_cap_change_24h": -3719276.6165141836,
+  "market_cap_change_percentage_24h": -6.24366,
+  "circulating_supply": 110617604,
+  "total_supply": 168817248,
+  "max_supply": 200000000,
+  "ath": 5.73,
+  "ath_change_percentage": -91.1932,
+  "ath_date": "2021-05-05T12:14:13.955Z",
+  "atl": 0.208951,
+  "atl_change_percentage": 141.4678,
+  "atl_date": "2023-09-02T07:51:08.241Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:59:48.888Z",
+  "platforms": {
+    "bsc": "0x99956d38059cf7beda96ec91aa7bb2477e0901dd"
+  }
+}

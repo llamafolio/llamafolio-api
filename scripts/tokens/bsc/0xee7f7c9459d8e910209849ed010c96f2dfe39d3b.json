@@ -1,0 +1,31 @@
+{
+  "id": "almira-wallet",
+  "symbol": "almr",
+  "name": "Almira Wallet",
+  "image": "https://assets.coingecko.com/coins/images/29562/large/Untitled_design_%282%29.png?1696528502",
+  "current_price": 0.00027714,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 277135,
+  "total_volume": 1.75,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.188922,
+  "ath_change_percentage": -99.85331,
+  "ath_date": "2023-03-25T12:02:37.780Z",
+  "atl": 0.00027436,
+  "atl_change_percentage": 1.01229,
+  "atl_date": "2023-07-24T09:57:14.004Z",
+  "roi": null,
+  "last_updated": "2023-07-30T16:40:57.434Z",
+  "platforms": {
+    "bsc": "0xee7f7c9459d8e910209849ed010c96f2dfe39d3b"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "platypus-usd",
+  "symbol": "usp",
+  "name": "Platypus USD",
+  "image": "https://assets.coingecko.com/coins/images/28963/large/USP_4168x4168.png?1696527935",
+  "current_price": 0.339044,
+  "market_cap": 22186336,
+  "market_cap_rank": 1057,
+  "fully_diluted_valuation": 22186336,
+  "total_volume": 14917.94,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 65437888.7562428,
+  "total_supply": 65437888.7562428,
+  "max_supply": null,
+  "ath": 1.008,
+  "ath_change_percentage": -66.37409,
+  "ath_date": "2023-02-09T19:49:04.027Z",
+  "atl": 0.339044,
+  "atl_change_percentage": 0,
+  "atl_date": "2023-02-18T04:30:20.629Z",
+  "roi": null,
+  "last_updated": "2023-02-18T04:30:20.629Z",
+  "platforms": {
+    "avalanche": "0xdacde03d7ab4d81feddc3a20faa89abac9072ce2"
+  }
+}

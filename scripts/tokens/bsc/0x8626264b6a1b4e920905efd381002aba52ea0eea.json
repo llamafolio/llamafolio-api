@@ -1,0 +1,31 @@
+{
+  "id": "blackhat-coin",
+  "symbol": "blkc",
+  "name": "BlackHat Coin",
+  "image": "https://assets.coingecko.com/coins/images/15987/large/logo_light.png?1696515600",
+  "current_price": 0.03706034,
+  "market_cap": 409744,
+  "market_cap_rank": 3164,
+  "fully_diluted_valuation": 778267,
+  "total_volume": 10712.47,
+  "high_24h": 0.03717167,
+  "low_24h": 0.0368821,
+  "price_change_24h": -0.000043001822104906,
+  "price_change_percentage_24h": -0.1159,
+  "market_cap_change_24h": -371.2443179572583,
+  "market_cap_change_percentage_24h": -0.09052,
+  "circulating_supply": 11056128.7207931,
+  "total_supply": 21000000,
+  "max_supply": null,
+  "ath": 3.2,
+  "ath_change_percentage": -98.84383,
+  "ath_date": "2021-06-01T15:42:29.560Z",
+  "atl": 0.0002201,
+  "atl_change_percentage": 16710.0139,
+  "atl_date": "2022-11-09T23:25:58.507Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:58:56.363Z",
+  "platforms": {
+    "bsc": "0x8626264b6a1b4e920905efd381002aba52ea0eea"
+  }
+}

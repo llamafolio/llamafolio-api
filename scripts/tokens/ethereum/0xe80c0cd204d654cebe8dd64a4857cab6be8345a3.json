@@ -1,0 +1,31 @@
+{
+  "id": "jpeg-d",
+  "symbol": "jpeg",
+  "name": "JPEG'd (OLD)",
+  "image": "https://assets.coingecko.com/coins/images/24025/large/et_43CNi_400x400.jpg?1696523217",
+  "current_price": 0.00043057,
+  "market_cap": 29900412,
+  "market_cap_rank": 914,
+  "fully_diluted_valuation": 29900412,
+  "total_volume": 92403,
+  "high_24h": 0.00045375,
+  "low_24h": 0.00042947,
+  "price_change_24h": -0.000018927270852206,
+  "price_change_percentage_24h": -4.21072,
+  "market_cap_change_24h": -1394754.5720442273,
+  "market_cap_change_percentage_24h": -4.45677,
+  "circulating_supply": 69420000000,
+  "total_supply": 69420000000,
+  "max_supply": 69420000000,
+  "ath": 0.00715773,
+  "ath_change_percentage": -93.98942,
+  "ath_date": "2022-04-06T02:49:06.108Z",
+  "atl": 0.00030379,
+  "atl_change_percentage": 41.61964,
+  "atl_date": "2024-04-18T08:15:33.401Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:03:51.387Z",
+  "platforms": {
+    "ethereum": "0xe80c0cd204d654cebe8dd64a4857cab6be8345a3"
+  }
+}

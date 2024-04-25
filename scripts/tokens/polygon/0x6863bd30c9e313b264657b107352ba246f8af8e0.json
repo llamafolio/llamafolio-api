@@ -1,0 +1,31 @@
+{
+  "id": "blackpool-token",
+  "symbol": "bpt",
+  "name": "BlackPool",
+  "image": "https://assets.coingecko.com/coins/images/15887/large/uyO7dQzR_400x400.jpg?1696515502",
+  "current_price": 0.088055,
+  "market_cap": 1230924,
+  "market_cap_rank": 2567,
+  "fully_diluted_valuation": 4578874,
+  "total_volume": 20.31,
+  "high_24h": 0.09628,
+  "low_24h": 0.086646,
+  "price_change_24h": -0.004151675824841689,
+  "price_change_percentage_24h": -4.50256,
+  "market_cap_change_24h": -58520.520894663874,
+  "market_cap_change_percentage_24h": -4.53843,
+  "circulating_supply": 13978996.060749775,
+  "total_supply": 52000000,
+  "max_supply": 100000000,
+  "ath": 19.73,
+  "ath_change_percentage": -99.55308,
+  "ath_date": "2021-11-06T19:30:44.096Z",
+  "atl": 0.086502,
+  "atl_change_percentage": 1.92797,
+  "atl_date": "2024-04-23T23:05:29.082Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:39.432Z",
+  "platforms": {
+    "polygon": "0x6863bd30c9e313b264657b107352ba246f8af8e0"
+  }
+}

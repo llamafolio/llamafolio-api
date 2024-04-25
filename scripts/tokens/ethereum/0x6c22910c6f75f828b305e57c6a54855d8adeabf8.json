@@ -1,0 +1,31 @@
+{
+  "id": "satoshis-vision",
+  "symbol": "sats",
+  "name": "Satoshis Vision",
+  "image": "https://assets.coingecko.com/coins/images/29303/large/SATS_123-removebg-preview_%281%29.png?1696528255",
+  "current_price": 0.00833887,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 175116,
+  "total_volume": 347.63,
+  "high_24h": 0.00872414,
+  "low_24h": 0.00827048,
+  "price_change_24h": -0.000281799546865927,
+  "price_change_percentage_24h": -3.26888,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 21000000,
+  "max_supply": 21000000,
+  "ath": 0.190444,
+  "ath_change_percentage": -95.6418,
+  "ath_date": "2023-11-08T09:10:17.533Z",
+  "atl": 0.00164958,
+  "atl_change_percentage": 403.15302,
+  "atl_date": "2023-09-11T19:59:30.088Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:12:44.383Z",
+  "platforms": {
+    "ethereum": "0x6c22910c6f75f828b305e57c6a54855d8adeabf8"
+  }
+}

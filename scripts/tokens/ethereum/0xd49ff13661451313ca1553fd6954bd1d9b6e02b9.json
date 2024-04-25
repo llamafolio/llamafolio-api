@@ -1,0 +1,35 @@
+{
+  "id": "electrify-asia",
+  "symbol": "elec",
+  "name": "Electrify.Asia",
+  "image": "https://assets.coingecko.com/coins/images/3415/large/d45b1d82743c749d05697da200179874.jpg?1696504111",
+  "current_price": 0.00040636,
+  "market_cap": 217033,
+  "market_cap_rank": 3453,
+  "fully_diluted_valuation": 304616,
+  "total_volume": 14620.14,
+  "high_24h": 0.00041703,
+  "low_24h": 0.00040513,
+  "price_change_24h": -0.000009982963558644,
+  "price_change_percentage_24h": -2.3978,
+  "market_cap_change_24h": -4934.922776703286,
+  "market_cap_change_percentage_24h": -2.22326,
+  "circulating_supply": 534360133.8,
+  "total_supply": 749999996,
+  "max_supply": null,
+  "ath": 0.205302,
+  "ath_change_percentage": -99.80217,
+  "ath_date": "2018-04-27T10:05:01.226Z",
+  "atl": 0.00022927,
+  "atl_change_percentage": 77.14838,
+  "atl_date": "2020-04-14T02:04:29.442Z",
+  "roi": {
+    "times": -0.9949205547869289,
+    "currency": "usd",
+    "percentage": -99.49205547869289
+  },
+  "last_updated": "2024-04-25T09:09:20.917Z",
+  "platforms": {
+    "ethereum": "0xd49ff13661451313ca1553fd6954bd1d9b6e02b9"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "cropbytes",
+  "symbol": "cbx",
+  "name": "CropBytes",
+  "image": "https://assets.coingecko.com/coins/images/19907/large/cbx.png?1696519327",
+  "current_price": 0.01666741,
+  "market_cap": 4755212,
+  "market_cap_rank": 1820,
+  "fully_diluted_valuation": 8304767,
+  "total_volume": 18405.11,
+  "high_24h": 0.01745873,
+  "low_24h": 0.01634303,
+  "price_change_24h": -0.000689586737690387,
+  "price_change_percentage_24h": -3.97296,
+  "market_cap_change_24h": -214301.99669414386,
+  "market_cap_change_percentage_24h": -4.31233,
+  "circulating_supply": 286294139.77397,
+  "total_supply": 500000000,
+  "max_supply": 500000000,
+  "ath": 3.11,
+  "ath_change_percentage": -99.4664,
+  "ath_date": "2021-11-05T12:33:17.248Z",
+  "atl": 0.00601563,
+  "atl_change_percentage": 176.24731,
+  "atl_date": "2024-01-11T05:37:52.070Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:57:53.405Z",
+  "platforms": {
+    "ethereum": "0x37fc4b48ce93469dbea9918468993c735049642a"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "depay",
+  "symbol": "depay",
+  "name": "DePay",
+  "image": "https://assets.coingecko.com/coins/images/13183/large/DEPAY.png?1696512965",
+  "current_price": 0.256324,
+  "market_cap": 1706760,
+  "market_cap_rank": 2384,
+  "fully_diluted_valuation": 14617755,
+  "total_volume": 0.03272358,
+  "high_24h": 0.340894,
+  "low_24h": 0.249476,
+  "price_change_24h": 0.00150695,
+  "price_change_percentage_24h": 0.59138,
+  "market_cap_change_24h": 9643.61,
+  "market_cap_change_percentage_24h": 0.56823,
+  "circulating_supply": 6658594,
+  "total_supply": 57028332,
+  "max_supply": 57028332,
+  "ath": 7.78,
+  "ath_change_percentage": -96.70567,
+  "ath_date": "2021-02-15T22:13:04.860Z",
+  "atl": 0.118018,
+  "atl_change_percentage": 117.19146,
+  "atl_date": "2022-06-18T20:56:38.293Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:05:03.215Z",
+  "platforms": {
+    "bsc": "0xa0bed124a09ac2bd941b10349d8d224fe3c955eb"
+  }
+}

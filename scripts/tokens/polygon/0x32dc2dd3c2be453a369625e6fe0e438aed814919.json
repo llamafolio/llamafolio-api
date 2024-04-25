@@ -1,0 +1,35 @@
+{
+  "id": "selfkey",
+  "symbol": "key",
+  "name": "SelfKey",
+  "image": "https://assets.coingecko.com/coins/images/2034/large/selfkey.png?1696503004",
+  "current_price": 0.0069194,
+  "market_cap": 41533957,
+  "market_cap_rank": 768,
+  "fully_diluted_valuation": 41533957,
+  "total_volume": 5572388,
+  "high_24h": 0.00771312,
+  "low_24h": 0.00690186,
+  "price_change_24h": -0.000616922591528857,
+  "price_change_percentage_24h": -8.18599,
+  "market_cap_change_24h": -3920163.3170673773,
+  "market_cap_change_percentage_24h": -8.62444,
+  "circulating_supply": 5999999954,
+  "total_supply": 5999999954,
+  "max_supply": null,
+  "ath": 0.04331005,
+  "ath_change_percentage": -84.05056,
+  "ath_date": "2018-06-30T11:41:14.603Z",
+  "atl": 0.00054507,
+  "atl_change_percentage": 1167.30512,
+  "atl_date": "2020-04-16T00:34:00.710Z",
+  "roi": {
+    "times": -0.5387069778899226,
+    "currency": "usd",
+    "percentage": -53.87069778899226
+  },
+  "last_updated": "2024-04-25T09:04:07.688Z",
+  "platforms": {
+    "polygon": "0x32dc2dd3c2be453a369625e6fe0e438aed814919"
+  }
+}

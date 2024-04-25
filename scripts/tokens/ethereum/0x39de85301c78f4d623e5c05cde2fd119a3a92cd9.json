@@ -1,0 +1,31 @@
+{
+  "id": "blobs",
+  "symbol": "blobs",
+  "name": "blobs",
+  "image": "https://assets.coingecko.com/coins/images/35964/large/blobs200tnps.png?1710259853",
+  "current_price": 2.56326e-7,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 107834,
+  "total_volume": 2624.12,
+  "high_24h": 3.33167e-7,
+  "low_24h": 2.55198e-7,
+  "price_change_24h": -7.4497758945e-8,
+  "price_change_percentage_24h": -22.51887,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 420690000000,
+  "max_supply": 420690000000,
+  "ath": 0.00000876,
+  "ath_change_percentage": -97.07418,
+  "ath_date": "2024-03-13T09:41:05.336Z",
+  "atl": 2.41078e-7,
+  "atl_change_percentage": 6.32493,
+  "atl_date": "2024-04-20T14:37:17.684Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:06:27.822Z",
+  "platforms": {
+    "ethereum": "0x39de85301c78f4d623e5c05cde2fd119a3a92cd9"
+  }
+}

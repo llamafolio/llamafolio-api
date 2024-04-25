@@ -1,0 +1,31 @@
+{
+  "id": "artemisai",
+  "symbol": "atai",
+  "name": "ArtemisAI",
+  "image": "https://assets.coingecko.com/coins/images/34452/large/black_logo_big.png?1704931121",
+  "current_price": 0.00215194,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 2151944,
+  "total_volume": 3401.6,
+  "high_24h": 0.00221873,
+  "low_24h": 0.00209649,
+  "price_change_24h": -0.00004276249892786,
+  "price_change_percentage_24h": -1.94844,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 1000000000,
+  "max_supply": 1000000000,
+  "ath": 0.00941117,
+  "ath_change_percentage": -77.13416,
+  "ath_date": "2024-03-21T07:09:38.339Z",
+  "atl": 0.00028658,
+  "atl_change_percentage": 650.90804,
+  "atl_date": "2024-02-02T06:24:31.820Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:06:26.965Z",
+  "platforms": {
+    "ethereum": "0x92098551e613dfdcd4d7c7b2c35615709e4e0397"
+  }
+}

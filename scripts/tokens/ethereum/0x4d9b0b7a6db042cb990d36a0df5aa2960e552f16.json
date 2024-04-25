@@ -1,0 +1,31 @@
+{
+  "id": "hpohs888inu",
+  "symbol": "tether",
+  "name": "Hpohs888inu",
+  "image": "https://assets.coingecko.com/coins/images/31355/large/200xlogo.png?1696530172",
+  "current_price": 0.00002003,
+  "market_cap": 18571.34,
+  "market_cap_rank": 4155,
+  "fully_diluted_valuation": 18571.34,
+  "total_volume": 51.93,
+  "high_24h": 0.00002016,
+  "low_24h": 0.00001982,
+  "price_change_24h": 1.03273e-7,
+  "price_change_percentage_24h": 0.51824,
+  "market_cap_change_24h": -343.60376776213525,
+  "market_cap_change_percentage_24h": -1.81657,
+  "circulating_supply": 927123571.7156,
+  "total_supply": 927123571.7156,
+  "max_supply": 1000000000,
+  "ath": 0.00068783,
+  "ath_change_percentage": -97.08778,
+  "ath_date": "2023-08-21T11:50:41.808Z",
+  "atl": 0.00000882,
+  "atl_change_percentage": 126.99403,
+  "atl_date": "2023-10-19T09:19:44.539Z",
+  "roi": null,
+  "last_updated": "2024-04-25T03:40:35.044Z",
+  "platforms": {
+    "ethereum": "0x4d9b0b7a6db042cb990d36a0df5aa2960e552f16"
+  }
+}

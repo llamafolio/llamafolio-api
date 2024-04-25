@@ -1,0 +1,31 @@
+{
+  "id": "gala",
+  "symbol": "gala",
+  "name": "GALA",
+  "image": "https://assets.coingecko.com/coins/images/12493/large/GALA_token_image_-_200PNG.png?1709725869",
+  "current_price": 0.04611529,
+  "market_cap": 1608792747,
+  "market_cap_rank": 68,
+  "fully_diluted_valuation": 1608793849,
+  "total_volume": 178463024,
+  "high_24h": 0.051687,
+  "low_24h": 0.04563665,
+  "price_change_24h": -0.004286558456930434,
+  "price_change_percentage_24h": -8.50476,
+  "market_cap_change_24h": -150564057.67394543,
+  "market_cap_change_percentage_24h": -8.5579,
+  "circulating_supply": 34889752043.0163,
+  "total_supply": 34889775950.0362,
+  "max_supply": 50000000000,
+  "ath": 0.824837,
+  "ath_change_percentage": -94.41945,
+  "ath_date": "2021-11-26T01:03:48.731Z",
+  "atl": 0.00013475,
+  "atl_change_percentage": 34060.03255,
+  "atl_date": "2020-12-28T08:46:48.367Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:02:50.676Z",
+  "platforms": {
+    "ethereum": "0xd1d2eb1b1e90b638588728b4130137d262c87cae"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "power-ledger",
+  "symbol": "powr",
+  "name": "Powerledger",
+  "image": "https://assets.coingecko.com/coins/images/1104/large/Powerledger_Northstar_colour_digital_%282%29.png?1706702222",
+  "current_price": 0.293092,
+  "market_cap": 150857223,
+  "market_cap_rank": 362,
+  "fully_diluted_valuation": 292890051,
+  "total_volume": 13687477,
+  "high_24h": 0.324363,
+  "low_24h": 0.29187,
+  "price_change_24h": -0.027014006503058907,
+  "price_change_percentage_24h": -8.43907,
+  "market_cap_change_24h": -14748017.527164698,
+  "market_cap_change_percentage_24h": -8.90553,
+  "circulating_supply": 514809970.015476,
+  "total_supply": 999506122.99937,
+  "max_supply": 1000000000,
+  "ath": 1.89,
+  "ath_change_percentage": -84.47015,
+  "ath_date": "2018-01-07T00:00:00.000Z",
+  "atl": 0.03262537,
+  "atl_change_percentage": 800.12922,
+  "atl_date": "2020-03-13T02:22:32.160Z",
+  "roi": null,
+  "last_updated": "2024-04-25T08:55:42.227Z",
+  "platforms": {
+    "ethereum": "0x595832f8fc6bf59c85c527fec3740a1b7a361269"
+  }
+}

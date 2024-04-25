@@ -1,0 +1,31 @@
+{
+  "id": "scanai",
+  "symbol": "scan",
+  "name": "ScanAI",
+  "image": "https://assets.coingecko.com/coins/images/34970/large/1000005375.jpg?1706851346",
+  "current_price": 0.151303,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 15130.35,
+  "total_volume": 34.87,
+  "high_24h": null,
+  "low_24h": null,
+  "price_change_24h": null,
+  "price_change_percentage_24h": null,
+  "market_cap_change_24h": null,
+  "market_cap_change_percentage_24h": null,
+  "circulating_supply": 0,
+  "total_supply": 100000,
+  "max_supply": 100000,
+  "ath": 13.43,
+  "ath_change_percentage": -98.87357,
+  "ath_date": "2024-02-02T17:59:46.180Z",
+  "atl": 0.138172,
+  "atl_change_percentage": 9.50411,
+  "atl_date": "2024-02-03T23:14:30.951Z",
+  "roi": null,
+  "last_updated": "2024-04-12T08:52:46.982Z",
+  "platforms": {
+    "ethereum": "0xa8dfdfdf9d288e909a96178e15731a6f4048a7aa"
+  }
+}

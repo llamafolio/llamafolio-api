@@ -1,0 +1,31 @@
+{
+  "id": "teh-fund",
+  "symbol": "fund",
+  "name": "Teh Fund",
+  "image": "https://assets.coingecko.com/coins/images/28969/large/IMG_20230203_091543_056.png?1696527942",
+  "current_price": 0.01738302,
+  "market_cap": 869151,
+  "market_cap_rank": 2763,
+  "fully_diluted_valuation": 869151,
+  "total_volume": 469.71,
+  "high_24h": 0.01818741,
+  "low_24h": 0.01726022,
+  "price_change_24h": -0.000772100318778661,
+  "price_change_percentage_24h": -4.2528,
+  "market_cap_change_24h": -40809.88266446791,
+  "market_cap_change_percentage_24h": -4.4848,
+  "circulating_supply": 50000000,
+  "total_supply": 50000000,
+  "max_supply": 100000000,
+  "ath": 0.083211,
+  "ath_change_percentage": -79.12061,
+  "ath_date": "2023-04-16T18:24:41.772Z",
+  "atl": 0.00883801,
+  "atl_change_percentage": 96.58131,
+  "atl_date": "2023-02-22T13:32:52.598Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:20.888Z",
+  "platforms": {
+    "ethereum": "0x7d8d7c26179b7a6aebbf66a91c38ed92d5b4996b"
+  }
+}

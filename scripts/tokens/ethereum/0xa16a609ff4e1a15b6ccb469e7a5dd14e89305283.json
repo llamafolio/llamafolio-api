@@ -1,0 +1,31 @@
+{
+  "id": "spume",
+  "symbol": "spume",
+  "name": "Spume",
+  "image": "https://assets.coingecko.com/coins/images/27089/large/D6lMeW9k_400x400.jpeg?1696526138",
+  "current_price": 0.00072324,
+  "market_cap": 0,
+  "market_cap_rank": null,
+  "fully_diluted_valuation": 72024,
+  "total_volume": 4967.27,
+  "high_24h": 0.0008317,
+  "low_24h": 0.0006956,
+  "price_change_24h": -0.000108459994296605,
+  "price_change_percentage_24h": -13.04077,
+  "market_cap_change_24h": 0,
+  "market_cap_change_percentage_24h": 0,
+  "circulating_supply": 0,
+  "total_supply": 100000000,
+  "max_supply": null,
+  "ath": 0.721509,
+  "ath_change_percentage": -99.89825,
+  "ath_date": "2022-08-31T03:41:21.502Z",
+  "atl": 0.00060118,
+  "atl_change_percentage": 22.10901,
+  "atl_date": "2024-04-16T19:39:48.740Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:13:19.764Z",
+  "platforms": {
+    "ethereum": "0xa16a609ff4e1a15b6ccb469e7a5dd14e89305283"
+  }
+}

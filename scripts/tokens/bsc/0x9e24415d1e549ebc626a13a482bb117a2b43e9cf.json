@@ -1,0 +1,31 @@
+{
+  "id": "lovely-inu-finance",
+  "symbol": "lovely",
+  "name": "Lovely Inu finance",
+  "image": "https://assets.coingecko.com/coins/images/19053/large/lovely-inu-logo-new.png?1696518503",
+  "current_price": 9.8934e-8,
+  "market_cap": 6852156,
+  "market_cap_rank": 1635,
+  "fully_diluted_valuation": 7368261,
+  "total_volume": 2765868,
+  "high_24h": 1.04085e-7,
+  "low_24h": 9.8228e-8,
+  "price_change_24h": -4.43366135e-9,
+  "price_change_percentage_24h": -4.2892,
+  "market_cap_change_24h": -356106.7052646186,
+  "market_cap_change_percentage_24h": -4.94026,
+  "circulating_supply": 69746675281042,
+  "total_supply": 75000000000000,
+  "max_supply": 75000000000000,
+  "ath": 0.00000111,
+  "ath_change_percentage": -91.16929,
+  "ath_date": "2022-08-01T07:15:40.625Z",
+  "atl": 1.8449e-8,
+  "atl_change_percentage": 432.64508,
+  "atl_date": "2022-05-12T06:10:58.212Z",
+  "roi": null,
+  "last_updated": "2024-04-25T09:00:25.604Z",
+  "platforms": {
+    "bsc": "0x9e24415d1e549ebc626a13a482bb117a2b43e9cf"
+  }
+}
