@@ -4,6 +4,7 @@ import { groupBy } from '@lib/array'
 import { areBalancesStale } from '@lib/balance'
 import type { Category } from '@lib/category'
 import { chainById } from '@lib/chains'
+import { safeParseInt } from '@lib/fmt'
 import { sum, sumBI } from '@lib/math'
 import type { UnixTimestamp } from '@lib/type'
 
@@ -34,7 +35,7 @@ export function formatBalance(balance: any) {
     name: balance.name,
     address: balance.address,
     symbol: balance.symbol,
-    decimals: balance.decimals != null ? parseInt(balance.decimals) : balance.decimals,
+    decimals: safeParseInt(balance.decimals),
     category: balance.category as Category,
     stable: Boolean(balance.stable || underlyings?.every((underlying: any) => underlying.stable)),
     price: balance.price,
@@ -50,7 +51,7 @@ export function formatBalance(balance: any) {
     apyReward: balance.apyReward,
     apyMean30d: balance.apyMean30d,
     ilRisk: balance.ilRisk,
-    unlockAt: balance.unlockAt != null ? parseInt(balance.unlockAt) : balance.unlockAt,
+    unlockAt: safeParseInt(balance.unlockAt),
     side: balance.side,
     margin: balance.margin,
     entryPrice: balance.entryPrice,

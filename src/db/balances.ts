@@ -5,7 +5,7 @@ import { groupBy, groupBy2 } from '@lib/array'
 import { areBalancesStale } from '@lib/balance'
 import type { Category } from '@lib/category'
 import { type Chain, chainByChainId, chainById } from '@lib/chains'
-import { shortAddress, toDateTime, unixFromDateTime } from '@lib/fmt'
+import { safeParseInt, shortAddress, toDateTime, unixFromDateTime } from '@lib/fmt'
 import { sum, sumBI } from '@lib/math'
 import type { UnixTimestamp } from '@lib/type'
 
@@ -77,7 +77,7 @@ export function formatBalance(balance: any): FormattedBalance {
     name: balance.name,
     address: balance.address,
     symbol: balance.symbol,
-    decimals: balance.decimals != null ? parseInt(balance.decimals) : balance.decimals,
+    decimals: safeParseInt(balance.decimals),
     category: balance.category as Category,
     stable: Boolean(balance.stable || underlyings?.every((underlying: any) => underlying.stable)),
     price: balance.price,
@@ -93,7 +93,7 @@ export function formatBalance(balance: any): FormattedBalance {
     apyReward: balance.apyReward,
     apyMean30d: balance.apyMean30d,
     ilRisk: balance.ilRisk,
-    unlockAt: balance.unlockAt != null ? parseInt(balance.unlockAt) : balance.unlockAt,
+    unlockAt: safeParseInt(balance.unlockAt),
     //@ts-expect-error
     side: balance.side,
     margin: balance.margin,
