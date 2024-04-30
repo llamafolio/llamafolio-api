@@ -72,12 +72,12 @@ export function parseAddresses(str: string) {
     .sort()
 }
 
-export function safeParseInt(data?: string | null, defaultValue = undefined) {
+export function safeParseInt(data?: string | number | null | undefined, defaultValue = undefined) {
   if (data == null) {
     return defaultValue
   }
 
-  const parsed = parseInt(data)
+  const parsed = typeof data === 'string' ? parseInt(data) : data
   if (isNaN(parsed)) {
     return defaultValue
   }

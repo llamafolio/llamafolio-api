@@ -11,7 +11,7 @@ import type { Category } from '@lib/category'
 import { chainById } from '@lib/chains'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { getBalancesOf } from '@lib/erc20'
-import { unixFromDate } from '@lib/fmt'
+import { safeParseInt, unixFromDate } from '@lib/fmt'
 import { parseFloatBI } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { sendSlackMessage } from '@lib/slack'
@@ -128,6 +128,8 @@ export function sanitizeBalances<T extends Balance>(balances: T[]) {
       continue
     }
 
+    balance.decimals = safeParseInt(balance.decimals)
+
     const sanitizedBalance = { ...balance }
 
     if (balance.underlyings) {
@@ -138,6 +140,7 @@ export function sanitizeBalances<T extends Balance>(balances: T[]) {
 
           sanitizedBalance.underlyings = balance.underlyings.map((underlying) => ({
             ...underlying,
+            decimals: safeParseInt(underlying.decimals),
             amount:
               deltaMantissa > 0
                 ? balance.amount / 10n ** BigInt(deltaMantissaAbs)
@@ -148,7 +151,11 @@ export function sanitizeBalances<T extends Balance>(balances: T[]) {
     }
 
     if (balance.rewards) {
-      sanitizedBalance.rewards = balance.rewards.map((reward) => ({ ...reward, amount: reward.amount || 0n }))
+      sanitizedBalance.rewards = balance.rewards.map((reward) => ({
+        ...reward,
+        decimals: safeParseInt(reward.decimals),
+        amount: reward.amount || 0n,
+      }))
     }
 
     sanitizedBalances.push(sanitizedBalance)
