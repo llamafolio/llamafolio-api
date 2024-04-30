@@ -158,7 +158,14 @@ export function sanitizeBalances<T extends Balance>(balances: T[]) {
       }))
     }
 
-    sanitizedBalances.push(sanitizedBalance)
+    // Filter empty balances
+    if (
+      balance.amount > 0n ||
+      (balance.claimable && balance.claimable > 0n) ||
+      (balance.rewards && balance.rewards.some((reward) => reward.amount > 0n))
+    ) {
+      sanitizedBalances.push(sanitizedBalance)
+    }
   }
 
   return sanitizedBalances

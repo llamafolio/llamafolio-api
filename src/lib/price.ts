@@ -1,8 +1,10 @@
 import environment from '@environment'
-import type { Balance, BaseBalance, PricedBalance } from '@lib/adapter'
+import type { Balance, BaseBalance, BaseContext, PricedBalance } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
-import { type Chain, toDefiLlamaChain } from '@lib/chains'
-import { mulPrice, sum } from '@lib/math'
+import { type Chain, chainById, getRPCClient, toDefiLlamaChain } from '@lib/chains'
+import { unixFromDate } from '@lib/fmt'
+import { mulPrice, parseFloatBI, sum } from '@lib/math'
+import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { isNotNullish, type UnixTimestamp } from '@lib/type'
 
@@ -72,6 +74,21 @@ export async function fetchHistoricalTokenPrices(keys: string[], timestamp: Unix
   }
 }
 
+// 1inch oracles
+// See: https://github.com/1inch/spot-price-aggregator
+const oneInchOracles: { [chainId: string]: `0x${string}` } = {
+  42161: '0x0addd25a91563696d8567df78d5a01c9a991f9b8', // arbitrum
+  1313161554: '0x0addd25a91563696d8567df78d5a01c9a991f9b8', // aurora
+  43114: '0x0addd25a91563696d8567df78d5a01c9a991f9b8', // avalanche
+  8453: '0x0addd25a91563696d8567df78d5a01c9a991f9b8', // base
+  1: '0x0addd25a91563696d8567df78d5a01c9a991f9b8', // ethereum
+  250: '0x0addd25a91563696d8567df78d5a01c9a991f9b8', // fantom
+  100: '0x0addd25a91563696d8567df78d5a01c9a991f9b8', // gnosis
+  10: '0x0addd25a91563696d8567df78d5a01c9a991f9b8', // optimism
+  137: '0x0addd25a91563696d8567df78d5a01c9a991f9b8', // polygon
+  324: '0xc9bb6e4ff7deea48e045ced9c0ce016c7cfbd500', // zksync-era
+}
+
 export async function getTokenPrices(tokens: Token[]): Promise<PricesResponse> {
   const keys = new Set(tokens.map(getTokenKey).filter(isNotNullish))
 
@@ -112,36 +129,80 @@ export async function getHistoricalTokenPrices<T extends Token>(
   })
 }
 
+function getPricedBalance(balance: BaseBalance, prices: { [key: string]: CoinResponse }): PricedBalance {
+  const key = getTokenKey(balance)
+  if (!key) {
+    console.log('Failed to get price token key for balance', balance)
+    return balance
+  }
+
+  const price = prices[key]
+  if (price === undefined) {
+    console.log(
+      `Failed to get price on Defillama API for ${key} - token name: ${balance.name} - token symbol: ${balance.symbol} - token chain: ${balance.chain}`,
+    )
+    return balance
+  }
+
+  const decimals = balance.decimals || price.decimals
+  if (decimals === undefined) {
+    console.log(`Failed to get decimals for ${key}`)
+    return balance
+  }
+
+  return {
+    ...price,
+    ...balance,
+    balanceUSD: mulPrice(balance.amount || 0n, Number(decimals), price.price),
+    claimableUSD: balance.claimable ? mulPrice(balance.claimable || 0n, decimals, price.price) : undefined,
+  }
+}
+
 export async function getPricedBalances(balances: Balance[]): Promise<(Balance | PricedBalance)[]> {
-  // Filter empty balances
-  balances = balances.filter(
-    (balance) =>
-      balance.amount > 0n ||
-      (balance.claimable && balance.claimable > 0n) ||
-      (balance.rewards && balance.rewards.some((reward) => reward.amount > 0n)),
-  )
+  const balancesByChain: { [chain: string]: Balance[] } = {}
 
-  const priced: BaseBalance[] = balances.slice()
-
-  // add rewards
   for (const balance of balances) {
+    if (!balancesByChain[balance.chain]) {
+      balancesByChain[balance.chain] = []
+    }
+    balancesByChain[balance.chain].push(balance)
+
+    // add rewards
     if (balance.rewards) {
       for (const reward of balance.rewards) {
         if ((reward.amount && reward.amount > 0n) || (reward.claimable && reward.claimable > 0n)) {
-          priced.push(reward)
+          balancesByChain[balance.chain].push(reward as Balance)
+        }
+      }
+    }
+
+    // add underlyings
+    if (balance.underlyings) {
+      for (const underlying of balance.underlyings) {
+        const _underlying = underlying as BaseBalance
+        if (_underlying.amount && _underlying.amount > 0n) {
+          balancesByChain[balance.chain].push(_underlying as Balance)
         }
       }
     }
   }
 
-  // add underlyings
-  for (const balance of balances) {
-    if (balance.underlyings) {
-      for (const underlying of balance.underlyings) {
-        const _underlying = underlying as BaseBalance
-        if (_underlying.amount && _underlying.amount > 0n) {
-          priced.push(_underlying)
-        }
+  // add native currencies (denominators)
+  for (const chain in balancesByChain) {
+    const _chain = chainById[chain]
+    if (_chain?.nativeCurrency) {
+      balancesByChain[chain].push({ chain: chain as Chain, ..._chain.nativeCurrency } as Balance)
+    }
+  }
+
+  // try prices on DefiLlama (cross-chains) first (reduce # of onchain calls)
+  const defiLlamaKeys = new Set<string>()
+
+  for (const chain in balancesByChain) {
+    for (const balance of balancesByChain[chain]) {
+      const key = getTokenKey(balance)
+      if (key) {
+        defiLlamaKeys.add(key)
       }
     }
   }
@@ -149,49 +210,97 @@ export async function getPricedBalances(balances: Balance[]): Promise<(Balance |
   const prices: { [key: string]: CoinResponse } = {}
 
   // too many tokens fail, break down into multiple calls
-  const batchPrices = await Promise.all(sliceIntoChunks(priced as Token[], 150).map(getTokenPrices))
+  const batchPrices = await Promise.all(sliceIntoChunks(Array.from(defiLlamaKeys), 150).map(fetchTokenPrices))
   for (const batchPrice of batchPrices) {
     for (const key in batchPrice.coins) {
       prices[key] = batchPrice.coins[key]
     }
   }
 
-  function getPricedBalance(balance: BaseBalance): PricedBalance {
-    const key = getTokenKey(balance)
-    if (!key) {
-      console.log('Failed to get price token key for balance', balance)
-      return balance
-    }
+  // try onchain
+  const unpricedBalancesByChain: { [chain: string]: Balance[] } = {}
 
-    const price = prices[key]
-    if (price === undefined) {
-      console.log(
-        `Failed to get price on Defillama API for ${key} - token name: ${balance.name} - token symbol: ${balance.symbol} - token chain: ${balance.chain}`,
-      )
-      return balance
-    }
-
-    const decimals = balance.decimals || price.decimals
-    if (decimals === undefined) {
-      console.log(`Failed to get decimals for ${key}`)
-      return balance
-    }
-
-    return {
-      ...price,
-      ...balance,
-      balanceUSD: mulPrice(balance.amount || 0n, Number(decimals), price.price),
-      claimableUSD: balance.claimable ? mulPrice(balance.claimable || 0n, decimals, price.price) : undefined,
+  for (const chain in balancesByChain) {
+    for (const balance of balancesByChain[chain]) {
+      const key = getTokenKey(balance)
+      if (key && !prices[key]) {
+        if (!unpricedBalancesByChain[chain]) {
+          unpricedBalancesByChain[chain] = []
+        }
+        unpricedBalancesByChain[chain].push(balance)
+      }
     }
   }
 
+  await Promise.all(
+    Object.keys(unpricedBalancesByChain).map(async (chain) => {
+      const _chain = chainById[chain]
+      const nativeCurrencyKey = getTokenKey({ chain: chain as Chain, ..._chain.nativeCurrency } as Balance)
+      if (!nativeCurrencyKey || !prices[nativeCurrencyKey]) {
+        console.log(
+          `Failed to get price on Defillama API for ${nativeCurrencyKey} - token name: ${_chain.nativeCurrency.name} - token symbol: ${_chain.nativeCurrency.symbol} - token chain: ${chain}`,
+        )
+        return
+      }
+      const nativeCurrencyPrice = prices[nativeCurrencyKey].price
+      const balances = unpricedBalancesByChain[chain]
+      const oracle = oneInchOracles[_chain.chainId]
+      if (!oracle) {
+        return
+      }
+
+      const ctx: BaseContext = { chain: chain as Chain, adapterId: '', client: getRPCClient({ chain: chain as Chain }) }
+
+      const ratesToEth = await multicall({
+        ctx,
+        calls: unpricedBalancesByChain[chain].map((balance) => ({
+          target: oracle,
+          params: [balance.token || balance.address, true],
+        })),
+        abi: {
+          inputs: [
+            { internalType: 'contract IERC20', name: 'srcToken', type: 'address' },
+            { internalType: 'bool', name: 'useSrcWrappers', type: 'bool' },
+          ],
+          name: 'getRateToEth',
+          outputs: [{ internalType: 'uint256', name: 'weightedRate', type: 'uint256' }],
+          stateMutability: 'view',
+          type: 'function',
+        },
+      })
+
+      for (let idx = 0; idx < balances.length; idx++) {
+        const balance = balances[idx]
+        const rateToEthRes = ratesToEth[idx]
+        if (!rateToEthRes.success) {
+          continue
+        }
+
+        const key = getTokenKey(balance)
+        if (key && balance.decimals) {
+          const numerator = 10n ** BigInt(balance.decimals)
+          const nativeCurrencyDecimals = BigInt(_chain.nativeCurrency.decimals)
+          const denominator = 10n ** nativeCurrencyDecimals
+          const priceInDenominator = parseFloatBI((rateToEthRes.output * numerator) / denominator, 18)
+
+          prices[key] = {
+            ...balance,
+            price: priceInDenominator * nativeCurrencyPrice,
+            timestamp: unixFromDate(new Date()),
+          } as CoinResponse
+        }
+      }
+    }),
+  )
+
   const pricedBalances: (Balance | PricedBalance)[] = balances.map((balance) => {
     if (balance.rewards) {
-      const pricedRewards = balance.rewards.map(getPricedBalance)
+      const pricedRewards = balance.rewards.map((reward) => getPricedBalance(reward, prices))
       balance.rewards = pricedRewards
     }
+
     if (balance.underlyings) {
-      const pricedUnderlyings = balance.underlyings.map(getPricedBalance)
+      const pricedUnderlyings = balance.underlyings.map((underlying) => getPricedBalance(underlying, prices))
       return {
         ...balance,
         balanceUSD: sum(pricedUnderlyings.map((b) => b.balanceUSD || 0)),
@@ -199,7 +308,7 @@ export async function getPricedBalances(balances: Balance[]): Promise<(Balance |
       }
     }
 
-    return getPricedBalance(balance)
+    return getPricedBalance(balance, prices)
   })
 
   return pricedBalances
