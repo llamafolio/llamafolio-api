@@ -16,7 +16,7 @@ import isEqual from 'lodash/isEqual'
 import type { Logger } from 'pino'
 import type { PublicClient } from 'viem'
 
-export const GET_BALANCES_TIMEOUT = 15_000
+export const GET_BALANCES_TIMEOUT = 20_000
 
 export interface BaseContext {
   logger?: Logger

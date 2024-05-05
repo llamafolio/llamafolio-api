@@ -387,7 +387,7 @@ functions:
       - http:
           method: post
           path: /balances/{address}
-    timeout: 29
+    timeout: 35
     memorySize: 512
 
   updateCoingeckoCoins:
