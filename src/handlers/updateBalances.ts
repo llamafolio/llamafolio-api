@@ -95,6 +95,7 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
         for (const balance of group.balances) {
           balancesLength++
 
+          balance.chain = chain
           // use token when available
           balance.address = (balance.token || balance.address).toLowerCase()
           // metadata
@@ -165,7 +166,10 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
 
       for (const groupIdx in balancesByGroupIdx) {
         const groupBalances = balancesByGroupIdx[groupIdx].map(formatBalance)
-        const healthFactor = balancesByGroupIdx[groupIdx]?.[0]?.healthFactor || resolveHealthFactor(groupBalances)
+        let healthFactor = balancesByGroupIdx[groupIdx]?.[0]?.healthFactor || resolveHealthFactor(groupBalances)
+        if (isNaN(healthFactor) || !isFinite(healthFactor)) {
+          healthFactor = undefined
+        }
 
         for (const balance of balancesByGroupIdx[groupIdx]) {
           dbBalances.push({ ...balance, healthFactor })
