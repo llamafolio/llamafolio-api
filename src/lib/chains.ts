@@ -400,6 +400,9 @@ export function getRPCClient(options: RPCClientOptions): PublicClient {
       return createPublicClient({
         chain: viemChains.mainnet,
         transport: fallback([
+          http('https://rpc.mevblocker.io', httpTransportConfig),
+          http('https://eth-pokt.nodies.app', httpTransportConfig),
+          http('https://ethereum-rpc.publicnode.com', httpTransportConfig),
           http('https://rpc.ankr.com/eth', httpTransportConfig),
           http('https://cloudflare-eth.com', httpTransportConfig),
         ]),

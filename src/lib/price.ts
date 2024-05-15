@@ -1,10 +1,16 @@
+/* eslint-disable security/detect-non-literal-fs-filename */
 import environment from '@environment'
 import type { Balance, BaseBalance, PricedBalance } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
-import { type Chain, toDefiLlamaChain } from '@lib/chains'
+import { toDefiLlamaChain, type Chain } from '@lib/chains'
 import { mulPrice, sum } from '@lib/math'
 import type { Token } from '@lib/token'
 import { isNotNullish, type UnixTimestamp } from '@lib/type'
+import fs from 'fs'
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // Defillama prices API requires a prefix to know where the token comes from
 export function getTokenKey(contract: { chain: Chain; address: string; token?: string }) {
@@ -163,11 +169,28 @@ export async function getPricedBalances(balances: Balance[]): Promise<(Balance |
       return balance
     }
 
-    const price = prices[key]
+    let price = prices[key]
     if (price === undefined) {
-      console.log(
-        `Failed to get price on Defillama API for ${key} - token name: ${balance.name} - token symbol: ${balance.symbol} - token chain: ${balance.chain}`,
-      )
+      const tokensBasePath = path.join(__dirname, '../../scripts/tokens')
+      const tokenFilePath = path.join(tokensBasePath, `${balance.chain}/${balance.address}.json`)
+
+      if (fs.existsSync(tokenFilePath)) {
+        const tokenData = JSON.parse(fs.readFileSync(tokenFilePath, 'utf8'))
+        if (tokenData && tokenData.current_price !== undefined) {
+          price = {
+            price: tokenData.current_price,
+            symbol: balance.symbol as string,
+            timestamp: new Date(tokenData.last_updated).getTime(),
+          }
+
+          console.log(price)
+        }
+      } else {
+        console.log(
+          `Failed to get price on Defillama API for ${key} - token name: ${balance.name} - token symbol: ${balance.symbol} - token chain: ${balance.chain}`,
+        )
+      }
+
       return balance
     }
 
