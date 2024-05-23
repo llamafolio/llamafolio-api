@@ -69,11 +69,22 @@ const SimpleStakingERC20 = {
   } as const,
 }
 
+// This is the contract where users predeposit their tokens for Swell L2
 const depositContract = '0x38d43a6cb8da0e855a42fb6b0733a0498531d774'
 
 export async function getSwellL2Balances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
   return getSwellL2BalancesPendle(ctx, contracts)
 }
+
+/**
+ * This function is used to get the balances of the user in the Pendle pools in the Swell L2 contract
+ * We first get the staked balances of the user in the deposit contract.
+ * Then we get the list of pt from pendle pools that the user could stake in.
+ * Finally we set the balances of the user in the pendle pools and return them.
+ * @param ctx
+ * @param contracts
+ * @returns
+ */
 
 async function getSwellL2BalancesPendle(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
   const userStakedBalances = (

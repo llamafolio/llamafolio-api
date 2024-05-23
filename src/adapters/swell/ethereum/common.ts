@@ -21,6 +21,12 @@ interface TokenListResponse {
   }
 }
 
+/**
+ * This returns a list of tokens that are accepted by Swell in there predeposit l2 contract.
+ * There is no way to get this info onchain.
+ * @returns {Promise<SwellApiToken[]>}
+ */
+
 export async function getAcceptedTokens(): Promise<SwellApiToken[]> {
   try {
     const resp = await fetch(
@@ -34,6 +40,12 @@ export async function getAcceptedTokens(): Promise<SwellApiToken[]> {
   }
 }
 
+/**
+ * The Swell API format is different from the contract format. We convert the chainId (int) to
+ * the chainName (string) and the address to lowercase.
+ * @param tokens
+ * @returns
+ */
 export function fromSwellApiTokenToContract(tokens: SwellApiToken[]): Contract[] {
   return tokens.map((token) => ({
     chain: chainByChainId[token.chainId].id as Chain,
