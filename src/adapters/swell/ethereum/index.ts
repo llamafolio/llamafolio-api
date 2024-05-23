@@ -1,7 +1,8 @@
+import { fromSwellApiTokenToContract, getAcceptedTokens } from '@adapters/swell/ethereum/common'
 import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-import { getSwellBalances } from './balance'
+import { getSwellBalances, getSwellL2Balances } from './balance'
 
 const swETH: Contract = {
   chain: 'ethereum',
@@ -17,15 +18,22 @@ const rswETH: Contract = {
   symbol: 'rswETH',
 }
 
-export const getContracts = () => {
+export const getContracts = async () => {
+  const acceptedTokens = await getAcceptedTokens()
+
+  const pendleContracts = fromSwellApiTokenToContract(
+    acceptedTokens.filter((token: any) => token.tags.includes('Pendle')),
+  )
+
   return {
-    contracts: { LSTs: [swETH, rswETH] },
+    contracts: { LSTs: [swETH, rswETH], SwellL2PreDeposit: pendleContracts },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     LSTs: getSwellBalances,
+    SwellL2PreDeposit: getSwellL2Balances,
   })
 
   return {
